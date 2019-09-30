@@ -1,7 +1,7 @@
 {
-  "name": "electron-react-typescript",
-  "version": "0.0.6",
-  "description": "",
+  "name": "project-clippi",
+  "version": "0.0.1",
+  "description": "Slippi automation framework",
   "main": "./dist/main.js",
   "scripts": {
     "build-main": "cross-env NODE_ENV=production webpack --config webpack.main.prod.config.js",
@@ -75,17 +75,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com:Robinfr/electron-react-typescript.git"
+    "url": "git+ssh://git@github.com:vinceau/project-clippi.git"
   },
-  "author": {
-    "name": "Your name",
-    "email": "Your email"
-  },
-  "license": "SEE LICENSE",
-  "bugs": {
-    "url": "https://github.com/Robinfr/electron-react-typescript/issues"
-  },
-  "homepage": "https://github.com/Robinfr/electron-react-typescript",
+  "license": "GPLv3",
+  "homepage": "https://github.com/vinceau/project-clippi",
   "devDependencies": {
     "@babel/core": "^7.4.5",
     "@babel/plugin-proposal-class-properties": "^7.4.4",
