@@ -956,6 +956,11 @@
   dependencies:
     any-observable "^0.3.0"
 
+"@shelacek/ubjson@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@shelacek/ubjson/-/ubjson-1.0.1.tgz#009d39ea22fa80e036f97e936650951a8225fafe"
+  integrity sha512-0vlllP3M7fUElSd4239wmnv6SqDeymJgjRkb/iusOyDN4I0xjc8hrX4Zk/KYoAesgSdsnnSwhOU7g+IewmdaAw==
+
 "@sindresorhus/is@^0.14.0":
   version "0.14.0"
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-0.14.0.tgz#9fb3a3cf3132328151f353de4632e01e52102bea"
@@ -4958,6 +4963,13 @@ iconv-lite@0.4.24, iconv-lite@^0.4.17, iconv-lite@^0.4.24, iconv-lite@^0.4.4:
   dependencies:
     safer-buffer ">= 2.1.2 < 3"
 
+iconv-lite@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.5.0.tgz#59cdde0a2a297cc2aeb0c6445a195ee89f127550"
+  integrity sha512-NnEhI9hIEKHOzJ4f697DMz9IQEXr/MMJ5w64vN2/4Ai+wRnvV7SBrL0KLoRlwaKVghOc7LQ5YkPLuX146b6Ydw==
+  dependencies:
+    safer-buffer ">= 2.1.2 < 3"
+
 icss-replace-symbols@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/icss-replace-symbols/-/icss-replace-symbols-1.1.0.tgz#06ea6f83679a7749e386cfe1fe812ae5db223ded"
@@ -6816,6 +6828,11 @@ mkdirp@0.5.1, mkdirp@0.5.x, mkdirp@0.x, "mkdirp@>=0.5 0", mkdirp@^0.5.0, mkdirp@
   integrity sha1-MAV0OOrGz3+MR2fzhkjWaX11yQM=
   dependencies:
     minimist "0.0.8"
+
+moment@^2.24.0:
+  version "2.24.0"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.24.0.tgz#0d055d53f5052aa653c9f6eb68bb5d12bf5c2b5b"
+  integrity sha512-bV7f+6l2QigeBBZSM/6yTNq4P2fNpSWj/0e7jQcy87A8e7o2nAfP/34/2ky5Vw4B9S446EtIhodAzkFCcR4dQg==
 
 move-concurrently@^1.0.1:
   version "1.0.1"
@@ -8930,6 +8947,25 @@ slice-ansi@0.0.4:
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/slice-ansi/-/slice-ansi-0.0.4.tgz#edbf8903f66f7ce2f8eafd6ceed65e264c831b35"
   integrity sha1-7b+JA/ZvfOL46v1s7tZeJkyDGzU=
+
+"slp-realtime@github:vinceau/slp-realtime.git#084e6cb":
+  version "0.1.0"
+  resolved "https://codeload.github.com/vinceau/slp-realtime/tar.gz/084e6cb15bbedb7976cbd10f144dfcbbad393bf0"
+  dependencies:
+    "@shelacek/ubjson" "^1.0.1"
+    iconv-lite "^0.5.0"
+    lodash "^4.17.11"
+    semver "^6.3.0"
+
+"slp-wii-connect@github:vinceau/slp-wii-connect.git#7c5fecc":
+  version "0.0.1"
+  resolved "https://codeload.github.com/vinceau/slp-wii-connect/tar.gz/7c5fecc08944ba55beb9340c47a97d5cc78bfac3"
+  dependencies:
+    "@shelacek/ubjson" "^1.0.1"
+    iconv-lite "^0.5.0"
+    lodash "^4.17.11"
+    moment "^2.24.0"
+    slp-realtime "github:vinceau/slp-realtime.git#084e6cb"
 
 snapdragon-node@^2.0.1:
   version "2.1.1"
