@@ -77,7 +77,7 @@
     "type": "git",
     "url": "git+ssh://git@github.com:vinceau/project-clippi.git"
   },
-  "license": "GPLv3",
+  "license": "GPL-3.0-or-later",
   "homepage": "https://github.com/vinceau/project-clippi",
   "devDependencies": {
     "@babel/core": "^7.4.5",
