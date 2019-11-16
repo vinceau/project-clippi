@@ -2,9 +2,10 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { AppContainer } from 'react-hot-loader';
+import { PersistGate } from 'redux-persist/integration/react';
 
 import Application from './components/Application';
-import store from './store';
+import { store, persistor } from './store';
 
 import './lib/events';
 
@@ -17,7 +18,9 @@ const render = (Component: () => JSX.Element) => {
     ReactDOM.render(
         <AppContainer>
             <Provider store={store}>
-                <Component />
+                <PersistGate loading={null} persistor={persistor}>
+                    <Component />
+                </PersistGate>
             </Provider>
         </AppContainer>,
         mainElement
