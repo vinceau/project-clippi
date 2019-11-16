@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { ipcRenderer } from 'electron';
 import { IpcTwitchAuthenticate } from '../../../shared/ipcEvents';
-import { createTwitchClip } from '../../../shared/twitch';
+import { createTwitchClip, currentUser, isStreaming } from '../../../shared/twitch';
+import { HelixUser } from 'twitch';
 
 require('./TwitchConnect.scss');
 const connectImg = require('./connect.png');
@@ -12,6 +13,7 @@ interface TwitchConnectProps {
 
 export const TwitchConnect: React.SFC<TwitchConnectProps> = props => {
     const [name, setName] = React.useState('');
+    const [user, setUser] = React.useState<HelixUser | null>(null);
     const authenticate = () => {
         ipcRenderer.send(IpcTwitchAuthenticate, {
             scope: ['user_read', 'clips:edit']
@@ -24,6 +26,18 @@ export const TwitchConnect: React.SFC<TwitchConnectProps> = props => {
             console.log(`clip: ${clip}`);
         }
     };
+
+    const checkUser = async () => {
+        if (props.accessToken) {
+            const u = await currentUser(props.accessToken);
+            setUser(u);
+        }
+    };
+
+    React.useEffect(() => {
+        checkUser();
+    }, [props]);
+
     return (
         <div>
             {!props.accessToken ? (
@@ -33,6 +47,7 @@ export const TwitchConnect: React.SFC<TwitchConnectProps> = props => {
             ) : (
                 <div>
                     <p>Twitch access token: {props.accessToken}</p>
+                    {user && <img src={user.profilePictureUrl} />}
                     <form onSubmit={handleSubmit}>
                         <label>
                             Twitch broadcaster ID:
