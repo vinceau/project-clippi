@@ -21,6 +21,7 @@
         ],
         "variable-name": false,
         "jsx-alignment": true,
+        "object-shorthand-properties-first": false,
         "jsx-equals-spacing": [
             true,
             "never"
