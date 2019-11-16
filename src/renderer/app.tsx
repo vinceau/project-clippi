@@ -6,6 +6,8 @@ import { AppContainer } from 'react-hot-loader';
 import Application from './components/Application';
 import store from './store';
 
+import './lib/events';
+
 // Create main element
 const mainElement = document.createElement('div');
 document.body.appendChild(mainElement);

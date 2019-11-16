@@ -7,7 +7,10 @@
     ],
     "jsRules": {},
     "rules": {
-        "max-line-length": [true, 120],
+        "max-line-length": [
+            true,
+            120
+        ],
         "trailing-comma": false,
         "ter-indent": [
             true,
@@ -18,8 +21,12 @@
         ],
         "variable-name": false,
         "jsx-alignment": true,
-        "jsx-equals-spacing": [true, "never"],
+        "jsx-equals-spacing": [
+            true,
+            "never"
+        ],
         "jsx-no-string-ref": true,
+        "jsx-no-lambda": false,
         "jsx-self-close": true
     },
     "rulesDirectory": []
