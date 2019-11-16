@@ -1,3 +1,4 @@
 import { CounterAction } from './counterActions';
+import { TwitchAction } from './twitchActions';
 
-export type RootActions = CounterAction[keyof CounterAction];
+export type RootActions = TwitchAction[keyof TwitchAction] | CounterAction[keyof CounterAction];
