@@ -6,8 +6,6 @@ import TwitchContainer from '../containers/TwitchContainer';
 
 const Application = () => (
     <div>
-        Hello World from Electron!
-        <CounterContainer />
         <TwitchContainer />
     </div>
 );

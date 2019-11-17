@@ -9,6 +9,8 @@ import { store, persistor } from './store';
 
 import './lib/events';
 
+import './app.scss';
+
 // Create main element
 const mainElement = document.createElement('div');
 document.body.appendChild(mainElement);

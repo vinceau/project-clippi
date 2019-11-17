@@ -15,9 +15,20 @@ export const createTwitchClip = async (
     return null;
 };
 
-export const isStreaming = async (token: string): Promise<boolean> => {
-    const user = await currentUser(token);
-    return user !== null && (await user.getStream()) !== null;
+export const isStreaming = async (token: string, channelName?: string): Promise<boolean> => {
+    let user: HelixUser | null;
+    const twitchClient = await twitch.withCredentials(TwitchClientId, token);
+    if (channelName) {
+        user = await twitchClient.helix.users.getUserByName(channelName);
+    } else {
+        user = await currentUser(token);
+    }
+    if (!user) {
+        return false;
+    }
+    const s = await user.getStream();
+    console.log(s);
+    return s !== null;
 };
 
 export const currentUser = async (token: string): Promise<HelixUser | null> => {
