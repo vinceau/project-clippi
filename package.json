@@ -131,6 +131,7 @@
   },
   "dependencies": {
     "@types/react-router-dom": "^5.1.2",
+    "electron-ipc-socket": "^2.1.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-redux": "^7.0.3",

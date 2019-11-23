@@ -5,11 +5,21 @@ import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 
 import CounterContainer from '../containers/CounterContainer';
 import TwitchContainer from '../containers/TwitchContainer';
+import { SlippiConnect } from './SlippiConnect/SlippiConnect';
+
+const Main: React.FC<{}> = () => {
+    return (
+        <div>
+            <TwitchContainer />
+            <SlippiConnect />
+        </div>
+    );
+};
 
 const Application = () => (
     <Router>
         <Switch>
-            <Route path="/" exact={true} component={TwitchContainer} />
+            <Route path="/" exact={true} component={Main} />
             <Route path="/counter" component={CounterContainer} />
         </Switch>
     </Router>

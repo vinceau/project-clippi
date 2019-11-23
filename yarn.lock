@@ -3302,6 +3302,11 @@ diffie-hellman@^5.0.0:
     miller-rabin "^4.0.0"
     randombytes "^2.0.0"
 
+disposable-class@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/disposable-class/-/disposable-class-1.0.0.tgz#a1b1bd0a1ea91dcc8a0a4af28341f5ed28d7ca94"
+  integrity sha512-X0gQOvDh3bt+W4FrfslYX2qpjc0isBv7OsKhkgd/uN4fJ5aJvCRn9Ec/pueV88EunGVibE96xnhA2pa5Gyen3A==
+
 dmg-builder@6.7.2:
   version "6.7.2"
   resolved "https://registry.yarnpkg.com/dmg-builder/-/dmg-builder-6.7.2.tgz#4ba4955e7f35f159ce53c68d74d3ea74875f9afd"
@@ -3550,6 +3555,18 @@ electron-download@^4.1.0:
     rc "^1.2.1"
     semver "^5.4.1"
     sumchecker "^2.0.2"
+
+electron-ipc-socket@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/electron-ipc-socket/-/electron-ipc-socket-2.1.0.tgz#930c6b347619033891de256f1cbf2fdc52e99ca3"
+  integrity sha512-O0hn/hH0e2b1cg1mMh/cJ0NpJqgV/HUHYfUcwWwMx8cISxhdjNHGYEVwXaXH2X5hgxul4zeQc+rbq2mdyrfdxg==
+  dependencies:
+    disposable-class "^1.0.0"
+    is-error "^2.2.2"
+    is-promise "^2.1.0"
+    nanoevents "^2.0.0"
+    nanoid "^2.0.3"
+    pinterval "2.0.0"
 
 electron-osx-sign@0.4.11:
   version "0.4.11"
@@ -5398,6 +5415,11 @@ is-directory@^0.3.1:
   resolved "https://registry.yarnpkg.com/is-directory/-/is-directory-0.3.1.tgz#61339b6f2475fc772fd9c9d83f5c8575dc154ae1"
   integrity sha1-YTObbyR1/Hcv2cnYP1yFddwVSuE=
 
+is-error@^2.2.2:
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/is-error/-/is-error-2.2.2.tgz#c10ade187b3c93510c5470a5567833ee25649843"
+  integrity sha512-IOQqts/aHWbiisY5DuPJQ0gcbvaLFCa7fBa9xoLfxBZvQ+ZI/Zh9xoI7Gk+G64N0FdK4AbibytHht2tWgpJWLg==
+
 is-extendable@^0.1.0, is-extendable@^0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/is-extendable/-/is-extendable-0.1.1.tgz#62b110e289a471418e3ec36a617d472e301dfc89"
@@ -5433,6 +5455,11 @@ is-fullwidth-code-point@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/is-fullwidth-code-point/-/is-fullwidth-code-point-2.0.0.tgz#a3b30a5c4f199183167aaab93beefae3ddfb654f"
   integrity sha1-o7MKXE8ZkYMWeqq5O+764937ZU8=
+
+is-function@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/is-function/-/is-function-1.0.1.tgz#12cfb98b65b57dd3d193a3121f5f6e2f437602b5"
+  integrity sha1-Es+5i2W1fdPRk6MSH19uL0N2ArU=
 
 is-generator-fn@^2.0.0:
   version "2.1.0"
@@ -6934,6 +6961,16 @@ nan@^2.12.1, nan@^2.13.2:
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.14.0.tgz#7818f722027b2459a86f0295d434d1fc2336c52c"
   integrity sha512-INOFj37C7k3AfaNTtX8RhsTw7qRy7eLET14cROi9+5HAVbbHuIWUHEauBv5qT4Av2tWasiTY1Jw6puUNqRJXQg==
 
+nanoevents@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/nanoevents/-/nanoevents-2.0.0.tgz#5a6051ebbcdfd67efe94cca0e4a03d616e1a4949"
+  integrity sha512-6wRUNwBA07fyeun/xqG1UzmKd3ucgzcxTyaWcqjsNL0PaXy4YAezyHPnMdsPYEsOl/9wyQ85j39rPYF0FNDozQ==
+
+nanoid@^2.0.3:
+  version "2.1.7"
+  resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-2.1.7.tgz#d775e3e7c6470bbaaae3da9a647a80e228e0abf7"
+  integrity sha512-fmS3qwDldm4bE01HCIRqNk+f255CNjnAoeV3Zzzv0KemObHKqYgirVaZA9DtKcjogicWjYcHkJs4D5A8CjnuVQ==
+
 nanomatch@^1.2.9:
   version "1.2.13"
   resolved "https://registry.yarnpkg.com/nanomatch/-/nanomatch-1.2.13.tgz#b87a8aa4fc0de8fe6be88895b38983ff265bd119"
@@ -7799,6 +7836,14 @@ pinkie@^2.0.0:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/pinkie/-/pinkie-2.0.4.tgz#72556b80cfa0d48a974e80e77248e80ed4f7f870"
   integrity sha1-clVrgM+g1IqXToDnckjoDtT3+HA=
+
+pinterval@2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/pinterval/-/pinterval-2.0.0.tgz#c1b5fd95a2f94b290860bd26e4b0c353a41f6eeb"
+  integrity sha512-lhvYRDlpo7hmhaOxJVM8KoOkTvI2E+p3vwUYEHIk2W++b4CIiPwvIbeUrIj2W41tispyzcJSjcGHYurS+AhS0g==
+  dependencies:
+    is-function "^1.0.1"
+    is-promise "^2.1.0"
 
 pirates@^4.0.1:
   version "4.0.1"

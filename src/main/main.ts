@@ -1,8 +1,15 @@
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, ipcMain } from 'electron';
+import { Socket, Transport, Event, InboundRequest } from 'electron-ipc-socket';
 import * as path from 'path';
 import * as url from 'url';
 
 import './events';
+import {
+    IpcMainRendererSocket,
+    IpcMainBackgroundSocket,
+    IpcRendererToBackgroundEvent,
+    IpcBackgroundToRendererEvent
+} from '../shared/ipcEvents';
 
 let win: BrowserWindow | null;
 let workerWindow: BrowserWindow | null;
@@ -22,12 +29,33 @@ const createWindow = async () => {
         await installExtensions();
     }
 
+    // Main renderer window
     win = new BrowserWindow({ width: 800, height: 600 });
-    // create hidden worker window
+    const rendererSocket = new Socket(new Transport(ipcMain, win as any));
+
+    // Hidden worker window
     workerWindow = new BrowserWindow({
         show: false,
         webPreferences: { nodeIntegration: true }
     });
+    const backgroundSocket = new Socket(new Transport(ipcMain, workerWindow as any));
+
+    rendererSocket.open(IpcMainRendererSocket);
+    rendererSocket.onEvent(IpcRendererToBackgroundEvent, (evt: Event) => {
+        // console.log('Renderer process is ready. Event:');
+        // console.log(evt.name);
+        // console.log(evt.data);
+        backgroundSocket.send(evt.name, evt.data);
+    });
+
+    backgroundSocket.open(IpcMainBackgroundSocket);
+    backgroundSocket.onEvent(IpcBackgroundToRendererEvent, (evt: Event) => {
+        // console.log('Background process is ready. Event:');
+        // console.log(evt.name);
+        // console.log(evt.data);
+        rendererSocket.send(evt.name, evt.data);
+    });
+
     workerWindow.loadURL(
         url.format({
             pathname: path.join(__dirname, 'background.html'),
@@ -61,6 +89,7 @@ const createWindow = async () => {
 
     win.on('closed', () => {
         win = null;
+        workerWindow = null;
     });
 };
 
