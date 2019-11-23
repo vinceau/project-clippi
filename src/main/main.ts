@@ -28,22 +28,21 @@ const createWindow = async () => {
         show: false,
         webPreferences: { nodeIntegration: true }
     });
+    workerWindow.loadURL(
+        url.format({
+            pathname: path.join(__dirname, 'background.html'),
+            protocol: 'file:',
+            slashes: true
+        })
+    );
 
     if (process.env.NODE_ENV !== 'production') {
         process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = '1';
         win.loadURL(`http://localhost:2003`);
-        workerWindow.loadURL(`http://localhost:2003#counter`);
     } else {
         win.loadURL(
             url.format({
                 pathname: path.join(__dirname, 'index.html'),
-                protocol: 'file:',
-                slashes: true
-            })
-        );
-        workerWindow.loadURL(
-            url.format({
-                pathname: path.join(__dirname, 'index.html#counter'),
                 protocol: 'file:',
                 slashes: true
             })

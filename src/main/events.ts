@@ -11,3 +11,5 @@ ipcMain.on(IpcTwitchAuthenticate, async (event: any, arg: IpcTwitchAuthenticateA
     const token = await authenticateTwitch(arg.scope);
     event.sender.send(IpcTwitchTokenReceive, { token });
 });
+
+ipcMain.on('worker-message', (e: any, message: any) => console.log(message));
