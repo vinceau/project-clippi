@@ -1,4 +1,5 @@
 import { Reducer } from 'redux';
+import { produce } from 'immer';
 
 import { DECREMENT, INCREMENT, CounterAction } from '../actions/counterActions';
 
@@ -13,21 +14,16 @@ const defaultState: CounterState = {
 export const counterReducer: Reducer<CounterState> = (
     state = defaultState,
     action: CounterAction
-) => {
-    switch (action.type) {
-        case INCREMENT:
-            console.log('increment');
-            return {
-                ...state,
-                value: state.value + 1
-            };
-        case DECREMENT:
-            console.log('decrement');
-            return {
-                ...state,
-                value: state.value - 1
-            };
-        default:
-            return state;
-    }
-};
+) =>
+    produce(state, draft => {
+        switch (action.type) {
+            case INCREMENT:
+                console.log('increment');
+                draft.value += 1;
+                break;
+            case DECREMENT:
+                console.log('decrement');
+                draft.value -= 1;
+                break;
+        }
+    });

@@ -1,5 +1,6 @@
 import { Reducer } from 'redux';
 import { TwitchAction, TwitchSetToken } from '../actions/twitchActions';
+import { produce } from 'immer';
 
 export interface TwitchState {
     readonly accessToken: string | null;
@@ -12,14 +13,10 @@ const defaultState: TwitchState = {
 export const twitchReducer: Reducer<TwitchState, TwitchAction> = (
     state = defaultState,
     action: TwitchAction
-) => {
-    switch (action.type) {
-        case TwitchSetToken:
-            return {
-                ...state,
-                accessToken: action.accessToken
-            };
-        default:
-            return state;
-    }
-};
+) =>
+    produce(state, draft => {
+        switch (action.type) {
+            case TwitchSetToken:
+                draft.accessToken = action.accessToken;
+        }
+    });

@@ -12,6 +12,7 @@ const Main: React.FC<{}> = () => {
         <div>
             <TwitchContainer />
             <SlippiConnect />
+            <CounterContainer />
         </div>
     );
 };
