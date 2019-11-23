@@ -16,11 +16,13 @@ export const counterReducer: Reducer<CounterState> = (
 ) => {
     switch (action.type) {
         case INCREMENT:
+            console.log('increment');
             return {
                 ...state,
                 value: state.value + 1
             };
         case DECREMENT:
+            console.log('decrement');
             return {
                 ...state,
                 value: state.value - 1

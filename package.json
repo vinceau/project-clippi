@@ -130,9 +130,11 @@
     "webpack-merge": "^4.2.1"
   },
   "dependencies": {
+    "@types/react-router-dom": "^5.1.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-redux": "^7.0.3",
+    "react-router-dom": "^5.1.2",
     "redux": "^4.0.1",
     "redux-persist": "^6.0.0",
     "twitch": "^3.5.6",

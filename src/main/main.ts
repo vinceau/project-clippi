@@ -5,6 +5,7 @@ import * as url from 'url';
 import './events';
 
 let win: BrowserWindow | null;
+let workerWindow: BrowserWindow | null;
 
 const installExtensions = async () => {
     const installer = require('electron-devtools-installer');
@@ -22,14 +23,27 @@ const createWindow = async () => {
     }
 
     win = new BrowserWindow({ width: 800, height: 600 });
+    // create hidden worker window
+    workerWindow = new BrowserWindow({
+        show: false,
+        webPreferences: { nodeIntegration: true }
+    });
 
     if (process.env.NODE_ENV !== 'production') {
         process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = '1';
         win.loadURL(`http://localhost:2003`);
+        workerWindow.loadURL(`http://localhost:2003#counter`);
     } else {
         win.loadURL(
             url.format({
                 pathname: path.join(__dirname, 'index.html'),
+                protocol: 'file:',
+                slashes: true
+            })
+        );
+        workerWindow.loadURL(
+            url.format({
+                pathname: path.join(__dirname, 'index.html#counter'),
                 protocol: 'file:',
                 slashes: true
             })
@@ -40,6 +54,9 @@ const createWindow = async () => {
         // Open DevTools, see https://github.com/electron/electron/issues/12438 for why we wait for dom-ready
         win.webContents.once('dom-ready', () => {
             win!.webContents.openDevTools();
+        });
+        workerWindow.webContents.once('dom-ready', () => {
+            workerWindow!.webContents.openDevTools();
         });
     }
 
