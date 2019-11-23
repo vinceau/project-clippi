@@ -18,5 +18,6 @@ export const twitchReducer: Reducer<TwitchState, TwitchAction> = (
         switch (action.type) {
             case TwitchSetToken:
                 draft.accessToken = action.accessToken;
+                break;
         }
     });
