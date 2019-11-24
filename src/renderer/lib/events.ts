@@ -4,10 +4,12 @@ import {
     IpcMainRendererSocket,
     IpcRendererToBackgroundEvent,
     IpcTwitchRequestAuthTokenArgs,
-    IpcTwitchRequestAuthToken
+    IpcTwitchRequestAuthToken,
+    IpcRendererToBackgroundRequest
 } from '../../shared/ipcEvents';
 import { Socket, Event } from 'electron-ipc-socket';
 import { SlippiConnectEvent, SlippiConnectEventArgs } from '../../shared/slippiEvents';
+import { ConnectionStatus } from 'slp-realtime';
 
 // Async message handler
 // ipcRenderer.on(IpcTwitchTokenReceive, (event: any, arg: IpcTwitchTokenReceiveArgs) => {
@@ -49,4 +51,14 @@ export const fetchTwitchAuthToken = async (scopes: string | string[]): Promise<s
     const token = await socket.request(IpcTwitchRequestAuthToken, payload);
     console.log(`socket returned ${token}`);
     return token;
+};
+
+export const checkSlippiConnectionStatus = async (): Promise<ConnectionStatus> => {
+    const payload = {
+        name: 'get-slippi-connection-status'
+    };
+    console.log(`sending request over socket: ${payload}`);
+    const status = await socket.request(IpcRendererToBackgroundRequest, payload);
+    console.log(`socket returned status: ${status}`);
+    return status as ConnectionStatus;
 };

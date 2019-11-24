@@ -6,7 +6,8 @@ import {
     IpcMainBackgroundSocket,
     IpcRendererToBackgroundEvent,
     IpcBackgroundToRendererEvent,
-    IpcTwitchRequestAuthToken
+    IpcTwitchRequestAuthToken,
+    IpcRendererToBackgroundRequest
 } from '../shared/ipcEvents';
 
 let rendererSocket: Socket;
@@ -16,6 +17,15 @@ const setupRendererSocket = () => {
     // Forward background events to background socket
     rendererSocket.onEvent(IpcRendererToBackgroundEvent, (evt: Event) => {
         backgroundSocket.send(evt.name, evt.data);
+    });
+
+    rendererSocket.onRequest(IpcRendererToBackgroundRequest, async (req: InboundRequest) => {
+        console.log('received request from renderer to main');
+        console.log(`req.path: ${req.path}`);
+        console.log(req.data);
+        console.log(req);
+        const x = await backgroundSocket.request(req.path, req.data);
+        return x;
     });
 
     // Authenticate with Twitch and return the auth token
