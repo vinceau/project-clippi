@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { iRootState, Dispatch, models } from '../store/rematch';
-import { RematchDispatch, RematchRootState } from '@rematch/core';
+import { iRootState, Dispatch } from '../store/rematch';
 
 const Count: React.FC<CountProps> = props => (
     <div>
@@ -16,12 +15,7 @@ const mapState = (state: iRootState) => ({
     count: state.sharks
 });
 
-// const mapDispatch = ({ count: { increment, incrementAsync } }) => ({
-//     increment: () => increment(1),
-//     incrementAsync: () => incrementAsync(1),
-// })
-
-const mapDispatch = (dispatch: RematchDispatch<models>) => {
+const mapDispatch = (dispatch: Dispatch) => {
     console.log(dispatch);
     return {
         increment: () => dispatch.sharks.increment(1),
