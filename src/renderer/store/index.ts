@@ -13,6 +13,8 @@ export const store = init({
 
 export const persistor = getPersistor();
 
+export const { dispatch } = store;
+
 export type models = typeof models;
 export type Store = typeof store;
 export type Dispatch = typeof store.dispatch;
