@@ -6,13 +6,15 @@ import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import CounterContainer from '../containers/CounterContainer';
 import TwitchContainer from '../containers/TwitchContainer';
 import { SlippiConnect } from './SlippiConnect/SlippiConnect';
+import { CountContainer } from './Sharks';
 
 const Main: React.FC<{}> = () => {
     return (
         <div>
-            <TwitchContainer />
-            <SlippiConnect />
-            <CounterContainer />
+            {/* <TwitchContainer />
+            <SlippiConnect /> */}
+            {/* @ts-ignore */}
+            <CountContainer />
         </div>
     );
 };

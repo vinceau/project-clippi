@@ -130,6 +130,8 @@
     "webpack-merge": "^4.2.1"
   },
   "dependencies": {
+    "@rematch/core": "^1.2.0",
+    "@rematch/persist": "^1.1.6",
     "@types/react-router-dom": "^5.1.2",
     "electron-ipc-socket": "^2.1.0",
     "immer": "^5.0.0",
