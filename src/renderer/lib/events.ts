@@ -1,10 +1,10 @@
 import { ipcRenderer } from 'electron';
 import {
-    IpcTwitchTokenReceive,
-    IpcTwitchTokenReceiveArgs,
     IpcBackgroundToRendererEvent,
     IpcMainRendererSocket,
-    IpcRendererToBackgroundEvent
+    IpcRendererToBackgroundEvent,
+    IpcTwitchRequestAuthTokenArgs,
+    IpcTwitchRequestAuthToken
 } from '../../shared/ipcEvents';
 import { Socket, Event } from 'electron-ipc-socket';
 import { TwitchSetToken } from '../actions/twitchActions';
@@ -12,10 +12,10 @@ import { store } from '../store';
 import { SlippiConnectEvent, SlippiConnectEventArgs } from '../../shared/slippiEvents';
 
 // Async message handler
-ipcRenderer.on(IpcTwitchTokenReceive, (event: any, arg: IpcTwitchTokenReceiveArgs) => {
-    console.log(`received access token from main: ${arg.token}`);
-    store.dispatch({ type: TwitchSetToken, accessToken: arg.token });
-});
+// ipcRenderer.on(IpcTwitchTokenReceive, (event: any, arg: IpcTwitchTokenReceiveArgs) => {
+//     console.log(`received access token from main: ${arg.token}`);
+//     store.dispatch({ type: TwitchSetToken, accessToken: arg.token });
+// });
 
 const socket = new Socket(ipcRenderer);
 socket.open(IpcMainRendererSocket);
@@ -41,3 +41,14 @@ socket.onEvent(IpcBackgroundToRendererEvent, (evt: Event) => {
     console.log('received message from background:');
     console.log(evt);
 });
+
+export const fetchTwitchAuthToken = async (scopes: string | string[]): Promise<string> => {
+    console.log(`inside fetch twitch auth token. scopes: ${scopes}`);
+    const payload: IpcTwitchRequestAuthTokenArgs = {
+        scope: scopes
+    };
+    console.log(`sending request over socket: ${payload}`);
+    const token = await socket.request(IpcTwitchRequestAuthToken, payload);
+    console.log(`socket returned ${token}`);
+    return token;
+};

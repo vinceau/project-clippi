@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ipcRenderer } from 'electron';
-import { IpcTwitchAuthenticate } from '../../../shared/ipcEvents';
+// import { IpcTwitchAuthenticate } from '../../../shared/ipcEvents';
 import { createTwitchClip, currentUser, isStreaming } from '../../../shared/twitch';
 import { HelixUser } from 'twitch';
 
@@ -90,9 +90,9 @@ const TwitchClip: React.SFC<{ accessToken: string }> = props => {
 
 export const TwitchConnect: React.SFC<TwitchConnectProps> = props => {
     const authenticate = () => {
-        ipcRenderer.send(IpcTwitchAuthenticate, {
-            scope: ['user_read', 'clips:edit']
-        });
+        // ipcRenderer.send(IpcTwitchAuthenticate, {
+        //     scope: ['user_read', 'clips:edit']
+        // });
     };
     return (
         <div>
