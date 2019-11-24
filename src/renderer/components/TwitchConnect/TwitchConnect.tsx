@@ -1,15 +1,18 @@
 import * as React from 'react';
+
+import { useSelector, useDispatch } from 'react-redux';
 import { ipcRenderer } from 'electron';
 // import { IpcTwitchAuthenticate } from '../../../shared/ipcEvents';
 import { createTwitchClip, currentUser, isStreaming } from '../../../shared/twitch';
 import { HelixUser } from 'twitch';
+import { iRootState, Dispatch } from '../../store';
 
 require('./TwitchConnect.scss');
 const connectImg = require('./connect.png');
 
-interface TwitchConnectProps {
-    accessToken: string | null;
-}
+// interface TwitchConnectProps {
+//     accessToken: string | null;
+// }
 
 const TwitchUserStatus: React.SFC<{ user: HelixUser; live: boolean }> = props => {
     const status = props.live ? 'live' : 'offline';
@@ -88,20 +91,24 @@ const TwitchClip: React.SFC<{ accessToken: string }> = props => {
     );
 };
 
-export const TwitchConnect: React.SFC<TwitchConnectProps> = props => {
+export const TwitchConnect: React.SFC<{}> = props => {
+    const accessToken = useSelector((state: iRootState) => state.twitch.authToken);
+    const dispatch = useDispatch<Dispatch>();
     const authenticate = () => {
+        const scopes = ['user_read', 'clips:edit'];
+        dispatch.twitch.fetchTwitchToken(scopes);
         // ipcRenderer.send(IpcTwitchAuthenticate, {
         //     scope: ['user_read', 'clips:edit']
         // });
     };
     return (
         <div>
-            {!props.accessToken ? (
+            {!accessToken ? (
                 <div onClick={authenticate}>
                     <img src={connectImg} />
                 </div>
             ) : (
-                <TwitchClip accessToken={props.accessToken} />
+                <TwitchClip accessToken={accessToken} />
             )}
         </div>
     );

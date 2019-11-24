@@ -3,18 +3,14 @@ import * as React from 'react';
 
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 
-import CounterContainer from '../containers/CounterContainer';
-import TwitchContainer from '../containers/TwitchContainer';
-import { SlippiConnect } from './SlippiConnect/SlippiConnect';
-import { CountContainer } from './Sharks';
+// import { SlippiConnect } from './SlippiConnect/SlippiConnect';
+// import { CountContainer } from './Sharks';
+import { TwitchConnect } from './TwitchConnect/TwitchConnect';
 
 const Main: React.FC<{}> = () => {
     return (
         <div>
-            {/* <TwitchContainer />
-            <SlippiConnect /> */}
-            {/* @ts-ignore */}
-            <CountContainer />
+            <TwitchConnect />
         </div>
     );
 };
@@ -23,7 +19,6 @@ const Application = () => (
     <Router>
         <Switch>
             <Route path="/" exact={true} component={Main} />
-            <Route path="/counter" component={CounterContainer} />
         </Switch>
     </Router>
 );

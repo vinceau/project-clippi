@@ -13,7 +13,7 @@ const persistor = getPersistor();
 import './lib/events';
 
 import './app.scss';
-import { store } from './store/rematch';
+import { store } from './store';
 
 // Create main element
 const mainElement = document.createElement('div');

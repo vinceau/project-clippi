@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { iRootState, Dispatch } from '../store/rematch';
+import { iRootState, Dispatch } from '../store';
 
 const scopes = ['user_read', 'clips:edit'];
 

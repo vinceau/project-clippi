@@ -7,8 +7,6 @@ import {
     IpcTwitchRequestAuthToken
 } from '../../shared/ipcEvents';
 import { Socket, Event } from 'electron-ipc-socket';
-import { TwitchSetToken } from '../actions/twitchActions';
-import { store } from '../store';
 import { SlippiConnectEvent, SlippiConnectEventArgs } from '../../shared/slippiEvents';
 
 // Async message handler

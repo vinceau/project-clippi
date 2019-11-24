@@ -1,26 +1,17 @@
-import { applyMiddleware, createStore, Store } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import { persistStore, persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
+import { init, RematchRootState } from '@rematch/core';
+import * as models from './models';
+import createRematchPersist from '@rematch/persist';
 
-import { rootReducer, RootState } from '../reducers';
+const persistPlugin = createRematchPersist({
+    version: 1
+});
 
-const configureStore = (initialState?: RootState): Store<RootState | undefined> => {
-    const middlewares: any[] = [];
-    const enhancer = composeWithDevTools(applyMiddleware(...middlewares));
-    const persistConfig = {
-        storage,
-        key: 'root'
-    };
-    const pReducer = persistReducer(persistConfig, rootReducer);
-    return createStore(pReducer, initialState, enhancer);
-};
+export const store = init({
+    models,
+    plugins: [persistPlugin]
+});
 
-export const store = configureStore();
-export const persistor = persistStore(store);
-
-if (typeof module.hot !== 'undefined') {
-    module.hot.accept('../reducers', () =>
-        store.replaceReducer(require('../reducers').rootReducer)
-    );
-}
+export type models = typeof models;
+export type Store = typeof store;
+export type Dispatch = typeof store.dispatch;
+export type iRootState = RematchRootState<typeof models>;
