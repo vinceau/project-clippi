@@ -3,17 +3,11 @@ import * as ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { AppContainer } from 'react-hot-loader';
 import { PersistGate } from 'redux-persist/integration/react';
-
 import Application from './components/Application';
-// import { store, persistor } from './store';
-
-import { getPersistor } from '@rematch/persist';
-const persistor = getPersistor();
+import { store, persistor } from './store';
 
 import './lib/events';
-
 import './app.scss';
-import { store } from './store';
 
 // Create main element
 const mainElement = document.createElement('div');
