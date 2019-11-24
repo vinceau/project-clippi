@@ -80,6 +80,15 @@ r.on('comboEnd', () => {
     console.log('comboEnd');
 });
 
+r.on('statusChange', status => {
+    socket.send(IpcBackgroundToRendererEvent, {
+        name: 'slippi-status-change',
+        payload: {
+            status
+        }
+    });
+});
+
 const socket = new Socket(ipcRenderer);
 socket.open(IpcMainBackgroundSocket);
 socket.send(IpcBackgroundToRendererEvent, {
