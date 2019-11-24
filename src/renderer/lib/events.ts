@@ -9,7 +9,8 @@ import {
 } from '../../shared/ipcEvents';
 import { Socket, Event } from 'electron-ipc-socket';
 import { SlippiConnectEvent, SlippiConnectEventArgs } from '../../shared/slippiEvents';
-import { ConnectionStatus } from 'slp-realtime';
+import { ConnectionStatus } from '../../shared/slippi';
+import { dispatch } from '../store';
 
 // Async message handler
 // ipcRenderer.on(IpcTwitchTokenReceive, (event: any, arg: IpcTwitchTokenReceiveArgs) => {
@@ -40,6 +41,15 @@ export const listPathFiles = (path: string) => {
 socket.onEvent(IpcBackgroundToRendererEvent, (evt: Event) => {
     console.log('received message from background:');
     console.log(evt);
+    if (evt.data.name === 'slippi-status-change') {
+        const status = evt.data.payload.status as ConnectionStatus;
+        console.log(status);
+        // console.log(`status: ${status}`);
+        dispatch({
+            type: 'slippi/updateConnectionStatus',
+            payload: status
+        }); // .slippi['updateConnectionStatus'](evt.data.payload.status as ConnectionStatus);
+    }
 });
 
 export const fetchTwitchAuthToken = async (scopes: string | string[]): Promise<string> => {

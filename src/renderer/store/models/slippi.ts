@@ -1,6 +1,6 @@
 import { createModel } from '@rematch/core';
 import { produce } from 'immer';
-import { ConnectionStatus } from 'slp-realtime';
+import { ConnectionStatus } from '../../../shared/slippi';
 
 export interface SlippiState {
     port: string;
