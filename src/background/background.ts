@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import { ipcRenderer } from 'electron';
-import { SlippiRealtime, ConnectionStatus } from 'slp-realtime';
+import { SlippiRealtime, ConnectionStatus, ComboFilter } from 'slp-realtime';
 import {
     IpcMainBackgroundSocket,
     IpcBackgroundToRendererEvent,
@@ -9,6 +9,8 @@ import {
 } from '../shared/ipcEvents';
 import { Socket, Event, InboundRequest } from 'electron-ipc-socket';
 import { SlippiConnectEvent, SlippiConnectEventArgs } from '../shared/slippiEvents';
+
+const comboFilter = new ComboFilter();
 
 const r = new SlippiRealtime({
     writeSlpFiles: false,
@@ -76,8 +78,12 @@ r.on('comboStart', () => {
 r.on('comboExtend', () => {
     console.log('comboExtend');
 });
-r.on('comboEnd', () => {
-    console.log('comboEnd');
+r.on('comboEnd', (c, s) => {
+    if (comboFilter.isCombo(c, s)) {
+        console.log('fully sick combo was detected');
+    } else {
+        console.log('the combo ended');
+    }
 });
 
 r.on('statusChange', status => {
