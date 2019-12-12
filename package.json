@@ -93,7 +93,10 @@
     "@types/react-dom": "^16.8.4",
     "@types/react-hot-loader": "^4.1.0",
     "@types/react-redux": "^7.0.9",
+    "@types/react-router-dom": "^5.1.2",
+    "@types/react-tabs": "^2.3.1",
     "@types/react-test-renderer": "^16.8.1",
+    "@types/styled-components": "^4.4.1",
     "@types/webdriverio": "^4.8.7",
     "@types/webpack-env": "^1.13.3",
     "babel-loader": "^8.0.6",
@@ -132,15 +135,16 @@
   "dependencies": {
     "@rematch/core": "^1.2.0",
     "@rematch/persist": "^1.1.6",
-    "@types/react-router-dom": "^5.1.2",
     "electron-ipc-socket": "^2.1.0",
     "immer": "^5.0.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-redux": "^7.0.3",
     "react-router-dom": "^5.1.2",
+    "react-tabs": "^3.0.0",
     "redux": "^4.0.1",
     "redux-persist": "^6.0.0",
+    "styled-components": "^4.4.1",
     "twitch": "^3.5.6",
     "twitch-electron-auth-provider": "^3.5.6"
   }
