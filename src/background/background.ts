@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import { ipcRenderer } from 'electron';
-import { SlippiRealtime, ConnectionStatus, ComboFilter } from 'slp-realtime';
+import { SlippiLivestream, ComboFilter, ConnectionStatus } from 'slp-realtime';
 import {
     IpcMainBackgroundSocket,
     IpcBackgroundToRendererEvent,
@@ -12,10 +12,7 @@ import { SlippiConnectEvent, SlippiConnectEventArgs } from '../shared/slippiEven
 
 const comboFilter = new ComboFilter();
 
-const r = new SlippiRealtime({
-    writeSlpFiles: false,
-    writeSlpFileLocation: '.'
-});
+const r = new SlippiLivestream();
 
 const handleSlippiConnection = (arg: SlippiConnectEventArgs) => {
     const address = arg.address ? arg.address : '0.0.0.0';
@@ -59,26 +56,26 @@ const listFiles = (filePath: string) => {
     });
 };
 
-r.on('gameStart', () => {
+r.events.on('gameStart', () => {
     console.log('game started');
 });
-r.on('gameEnd', () => {
+r.events.on('gameEnd', () => {
     console.log('game ended');
 });
 
-r.on('spawn', () => {
+r.events.on('spawn', () => {
     console.log('spawn');
 });
-r.on('death', () => {
+r.events.on('death', () => {
     console.log('death');
 });
-r.on('comboStart', () => {
+r.events.on('comboStart', () => {
     console.log('comboStart');
 });
-r.on('comboExtend', () => {
+r.events.on('comboExtend', () => {
     console.log('comboExtend');
 });
-r.on('comboEnd', (c, s) => {
+r.events.on('comboEnd', (c, s) => {
     if (comboFilter.isCombo(c, s)) {
         console.log('fully sick combo was detected');
     } else {
@@ -86,7 +83,7 @@ r.on('comboEnd', (c, s) => {
     }
 });
 
-r.on('statusChange', status => {
+r.connection.on('statusChange', status => {
     socket.send(IpcBackgroundToRendererEvent, {
         name: 'slippi-status-change',
         payload: {
@@ -112,7 +109,7 @@ socket.onEvent(IpcRendererToBackgroundEvent, (evt: Event) => {
 
 const getSlippiConnectionStatus = async (): Promise<ConnectionStatus> => {
     console.log(`inside status getting function`);
-    const status = r.getConnectionStatus();
+    const status = r.connection.getStatus();
     console.log(`status is: ${status}`);
     return Promise.resolve(status);
 };
