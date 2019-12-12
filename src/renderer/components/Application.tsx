@@ -6,9 +6,7 @@ import { Main } from './Main/Main';
 
 const Application = () => (
     <Router>
-        <Switch>
-            <Route path="/" exact={true} component={Main} />
-        </Switch>
+        <Main />
     </Router>
 );
 
