@@ -32,6 +32,47 @@ export interface ComboFilterSettings {
 
 */
 
+const CharForm: React.FC<{ name: string; push: any; pop: any }> = props => {
+    const { name, push, pop } = props;
+    return (
+        <>
+            <div className="buttons">
+                <button type="button" onClick={() => push(name, undefined)}>
+                    Add Customer
+                </button>
+                <button type="button" onClick={() => pop(name)}>
+                    Remove Customer
+                </button>
+            </div>
+            <FieldArray name={name}>
+                {({ fields }) =>
+                    fields.map((name, index) => (
+                        <div key={name}>
+                            <label>Cust. #{index + 1}</label>
+                            <Field
+                                name={`${name}.firstName`}
+                                component="input"
+                                placeholder="First Name"
+                            />
+                            <Field
+                                name={`${name}.lastName`}
+                                component="input"
+                                placeholder="Last Name"
+                            />
+                            <span
+                                onClick={() => fields.remove(index)}
+                                style={{ cursor: 'pointer' }}
+                            >
+                                ❌
+                            </span>
+                        </div>
+                    ))
+                }
+            </FieldArray>
+        </>
+    );
+};
+
 type Values = Partial<ComboFilterSettings>;
 
 export const ComboForm = () => (
@@ -148,39 +189,7 @@ export const ComboForm = () => (
                             </label>
                         </div>
                     </div>
-                    <div className="buttons">
-                        <button type="button" onClick={() => push('customers', undefined)}>
-                            Add Customer
-                        </button>
-                        <button type="button" onClick={() => pop('customers')}>
-                            Remove Customer
-                        </button>
-                    </div>
-                    <FieldArray name="customers">
-                        {({ fields }) =>
-                            fields.map((name, index) => (
-                                <div key={name}>
-                                    <label>Cust. #{index + 1}</label>
-                                    <Field
-                                        name={`${name}.firstName`}
-                                        component="input"
-                                        placeholder="First Name"
-                                    />
-                                    <Field
-                                        name={`${name}.lastName`}
-                                        component="input"
-                                        placeholder="Last Name"
-                                    />
-                                    <span
-                                        onClick={() => fields.remove(index)}
-                                        style={{ cursor: 'pointer' }}
-                                    >
-                                        ❌
-                                    </span>
-                                </div>
-                            ))
-                        }
-                    </FieldArray>
+                    <CharForm name="chainGrabbers" pop={pop} push={push} />
                     <div>
                         <label>Best Stooge</label>
                         <div>
