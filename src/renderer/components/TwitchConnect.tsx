@@ -1,16 +1,42 @@
 import * as React from "react";
 
+import styled from "styled-components";
 import { HelixUser } from "twitch";
 
 import { createTwitchClip, currentUser, isStreaming } from "../../common/twitch";
 
 const TwitchUserStatus: React.SFC<{ user: HelixUser; live: boolean }> = props => {
     const status = props.live ? "live" : "offline";
+    const TwitchStatusContainer = styled.div`
+        display: flex;
+        background-color: rgba($color: #6441a5, $alpha: 0.8);
+        img {
+            height: 30px;
+            width: 30px;
+            padding-right: 5px;
+        }
+    `;
+    const TwitchStatusIndicator = styled.div`
+    display: flex;
+    align-items: center;
+    &::before {
+        content: '';
+        height: 5px;
+        width: 5px;
+        background-color: red;
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 5px;
+    }
+    &.live::before {
+        background-color: rgb(46, 236, 46);
+    }
+    `;
     return (
-        <div className="twitch--user--status--container">
+        <TwitchStatusContainer>
             <img src={props.user.profilePictureUrl} />
-            <div className={`twitch--status ${status}`}>{status}</div>
-        </div>
+            <TwitchStatusIndicator>{status}</TwitchStatusIndicator>
+        </TwitchStatusContainer>
     );
 };
 
