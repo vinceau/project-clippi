@@ -32,7 +32,6 @@
     "electron-webpack": "^2.7.4",
     "electron-webpack-ts": "^3.2.0",
     "node-sass": "^4.13.0",
-    "prettier": "^1.19.1",
     "react-hot-loader": "4.12.18",
     "sass-loader": "^8.0.0",
     "ts-unused-exports": "^5.1.0",
@@ -41,20 +40,5 @@
     "tslint-react": "^4.1.0",
     "typescript": "^3.7.3",
     "webpack": "4.41.2"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "{src,test,mocks}/**/*.{js,ts,tsx,json,css,scss,md}": [
-      "prettier --config ./.prettierrc --write",
-      "git add"
-    ],
-    "{src,test,mocks}/**/*.{js,ts,tsx}": [
-      "tslint --project ./tsconfig.json --fix",
-      "git add"
-    ]
   }
 }
