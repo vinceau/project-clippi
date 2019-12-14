@@ -10,7 +10,7 @@ import './lib/events';
 import './app.scss';
 
 // Create main element
-const mainElement = document.createElement('div');
+const mainElement = document.createElement('article');
 document.body.appendChild(mainElement);
 
 // Render components
