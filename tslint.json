@@ -1,8 +1,7 @@
 {
     "extends": [
         "tslint:recommended",
-        "tslint-react",
-        "tslint-microsoft-contrib"
+        "tslint-react"
     ],
     "rulesDirectory": [
         "node_modules/tslint-microsoft-contrib"
@@ -27,6 +26,7 @@
         "jsx-wrap-multiline": false,
         "one-variable-per-declaration": false,
         "jsx-no-multiline-js": false,
+        "jsx-no-lambda": false,
         "import-name": false,
         "no-relative-imports": false,
         "no-null-keyword": false,
@@ -54,12 +54,9 @@
         "typedef": true,
         "no-any": true,
         "no-angle-bracket-type-assertion": true,
-        "no-void-expression": true,
-        "no-use-before-declare": true,
         "promise-function-async": true,
         "prefer-readonly": true,
         "await-promise": true,
-        "react-this-binding-issue": true,
         "no-string-based-set-timeout": true,
         "no-unnecessary-type-assertion": true,
         "quotemark": [
