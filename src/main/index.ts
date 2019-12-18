@@ -1,5 +1,6 @@
+import * as path from "path";
+
 import { app, BrowserWindow } from "electron";
-import path from "path";
 import { format as formatUrl } from "url";
 
 const isDevelopment = process.env.NODE_ENV !== "production";
@@ -8,11 +9,16 @@ const isDevelopment = process.env.NODE_ENV !== "production";
 let mainWindow: BrowserWindow | null;
 
 function createMainWindow() {
-  const window = new BrowserWindow({webPreferences: {nodeIntegration: true}});
+  const window = new BrowserWindow({ webPreferences: { nodeIntegration: true } });
 
-  if (isDevelopment) {
-    window.webContents.openDevTools();
-  }
+  window.webContents.on('did-frame-finish-load', () => {
+    if (isDevelopment) {
+      window.webContents.openDevTools();
+      window.webContents.on("devtools-opened", () => {
+        window.focus();
+      });
+    }
+  });
 
   if (isDevelopment) {
     window.loadURL(`http://localhost:${process.env.ELECTRON_WEBPACK_WDS_PORT}`);
@@ -26,13 +32,6 @@ function createMainWindow() {
 
   window.on("closed", () => {
     mainWindow = null;
-  });
-
-  window.webContents.on("devtools-opened", () => {
-    window.focus();
-    setImmediate(() => {
-      window.focus();
-    });
   });
 
   return window;
