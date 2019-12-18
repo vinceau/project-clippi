@@ -1,4 +1,7 @@
 import * as React from "react";
+
+import { stages as stageUtils } from "slp-parser-js";
+
 import { useDispatch, useSelector } from "react-redux";
 
 import { Dispatch, iRootState } from "@/store";
@@ -29,8 +32,12 @@ const Count = () => {
                     Fetch token
                 </button>
             </div>
-            <p>Using Rematch Models</p>
+<div>
+    <p>Best stage is {stageUtils.getStageName(2)}</p>
+</div>
+<div>
 			<p>{authToken}</p>
+</div>
         </div>
     );
 };

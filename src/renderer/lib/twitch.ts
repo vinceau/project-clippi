@@ -1,5 +1,5 @@
-import {ipc} from "./rendererIpc";
 import { Message } from "common/types";
+import { ipc } from "./rendererIpc";
 
 export const fetchTwitchAuthToken = async (scopes: string | string[]): Promise<string> => {
     const token = await ipc.sendSyncWithTimeout(
@@ -7,5 +7,5 @@ export const fetchTwitchAuthToken = async (scopes: string | string[]): Promise<s
         0, // timeout
         { scopes }
     );
-        return token;
+    return token;
 };
