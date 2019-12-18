@@ -2,6 +2,8 @@ import * as path from "path";
 
 import { app, BrowserWindow } from "electron";
 import { format as formatUrl } from "url";
+import { setupListeners } from "./listeners";
+import { setupIPC } from "./mainIpc";
 
 const isDevelopment = process.env.NODE_ENV !== "production";
 
@@ -11,7 +13,7 @@ let mainWindow: BrowserWindow | null;
 function createMainWindow() {
   const window = new BrowserWindow({ webPreferences: { nodeIntegration: true } });
 
-  window.webContents.on('did-frame-finish-load', () => {
+  window.webContents.on("did-frame-finish-load", () => {
     if (isDevelopment) {
       window.webContents.openDevTools();
       window.webContents.on("devtools-opened", () => {
@@ -33,6 +35,9 @@ function createMainWindow() {
   window.on("closed", () => {
     mainWindow = null;
   });
+
+  const ipc = setupIPC(app, window);
+  setupListeners(app, window, ipc);
 
   return window;
 }

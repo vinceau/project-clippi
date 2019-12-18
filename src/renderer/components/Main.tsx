@@ -1,6 +1,10 @@
 import * as React from "react";
 import styled from "styled-components";
 
+import { Message } from "common/types";
+
+import { ipc } from "../lib/rendererIpc";
+
 import { Link, Route, Switch } from "react-router-dom";
 
 import { TwitchConnect } from "./TwitchConnect";
@@ -34,7 +38,23 @@ export const Main: React.FC<{}> = () => {
         text-align: center;
         height: 100%;
     `;
-    const TwitchPage: React.FC = () => <TwitchConnect accessToken="token" />;
+    const TwitchPage: React.FC = () => {
+        const handleClick = () => {
+            ipc.sendMessage(
+                Message.Notify,
+                {
+                    title: `some title`,
+                    notification: `some description`
+                },
+            );
+        };
+        return (
+            <div>
+                <TwitchConnect accessToken="token" />
+                <button onClick={handleClick}>notify</button>
+            </div>
+        );
+    };
     return (
         <Container>
             <Header>
