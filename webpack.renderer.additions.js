@@ -1,8 +1,8 @@
-const path = require("path");
+const pkg = require('./package.json');
 
 module.exports = {
-    externals: {
-          react: "react",
-    }
+    externals: [
+        ...Object.keys(pkg.dependencies || {}),
+    ]
 }
 
