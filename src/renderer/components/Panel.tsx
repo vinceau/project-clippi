@@ -1,11 +1,14 @@
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Dispatch, iRootState } from "../store";
+
+import { Dispatch, iRootState } from "@/store";
 
 const Count = () => {
     const dolphins = useSelector((state: iRootState) => state.dolphins);
     const sharks = useSelector((state: iRootState) => state.sharks);
-    const dispatch = useDispatch<Dispatch>();
+    const authToken = useSelector((state: iRootState) => state.twitch.authToken);
+	const dispatch = useDispatch<Dispatch>();
+	const scopes = ["user_read", "clips:edit"];
 
     return (
         <div style={{ display: "flex", flexDirection: "row" }}>
@@ -22,15 +25,12 @@ const Count = () => {
                 <button onClick={() => dispatch.sharks.incrementAsync(1)}>
                     Async +1
                 </button>
-                <button
-                    onClick={() =>
-                        dispatch({ type: "sharks/incrementAsync", payload: 2 })
-                    }
-                >
-                    Async +2
+                <button onClick={() => dispatch.twitch.fetchTwitchToken(scopes)}>
+                    Fetch token
                 </button>
             </div>
             <p>Using Rematch Models</p>
+			<p>{authToken}</p>
         </div>
     );
 };
