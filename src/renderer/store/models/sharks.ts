@@ -1,6 +1,6 @@
 import { createModel } from "@rematch/core";
 
-import { delay } from "../helpers";
+import { delay } from "../../lib/utils";
 
 export type SharksState = number;
 

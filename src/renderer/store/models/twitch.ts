@@ -1,10 +1,10 @@
 import { createModel } from "@rematch/core";
 import { produce } from "immer";
-import { fetchTwitchAuthToken } from "../lib/twitch";
+import { fetchTwitchAuthToken } from "../../lib/twitch";
 
 export interface TwitchState {
     authToken: string;
-};
+}
 
 const initialState: TwitchState = {
     authToken: ""
