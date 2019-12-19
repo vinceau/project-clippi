@@ -40,7 +40,7 @@ const TwitchUserStatus: React.SFC<{ user: HelixUser; live: boolean }> = props =>
     );
 };
 
-const TwitchClip: React.SFC<{ accessToken: string }> = props => {
+export const TwitchClip: React.SFC<{ accessToken: string }> = props => {
     const [name, setName] = React.useState("");
     const [live, setLive] = React.useState(false);
     const [user, setUser] = React.useState<HelixUser | null>(null);
@@ -110,25 +110,11 @@ const TwitchClip: React.SFC<{ accessToken: string }> = props => {
 };
 
 export const TwitchConnect: React.FC<{
-    accessToken: string;
+    clickHandler: () => void;
 }> = (props) => {
-    const authenticate = () => {
-        const scopes = ["user_read", "clips:edit"];
-        console.log(`Authenticating with twitch with scopes: ${scopes}`);
-        // dispatch.twitch.fetchTwitchToken(scopes);
-        // ipcRenderer.send(IpcTwitchAuthenticate, {
-        //     scope: ['user_read', 'clips:edit']
-        // });
-    };
     return (
-        <div>
-            {!props.accessToken ? (
-                <div onClick={authenticate}>
-                    <span>Connect with Twitch</span>
-                </div>
-            ) : (
-                <TwitchClip accessToken={props.accessToken} />
-            )}
+        <div onClick={props.clickHandler}>
+            <span>Connect with Twitch</span>
         </div>
     );
 };

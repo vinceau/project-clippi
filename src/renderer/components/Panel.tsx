@@ -5,13 +5,14 @@ import { stages as stageUtils } from "slp-parser-js";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Dispatch, iRootState } from "@/store";
+import { TwitchClip, TwitchConnect } from "./TwitchConnect";
 
 const Count = () => {
     const dolphins = useSelector((state: iRootState) => state.dolphins);
     const sharks = useSelector((state: iRootState) => state.sharks);
     const authToken = useSelector((state: iRootState) => state.twitch.authToken);
-	const dispatch = useDispatch<Dispatch>();
-	const scopes = ["user_read", "clips:edit"];
+    const dispatch = useDispatch<Dispatch>();
+    const scopes = ["user_read", "clips:edit"];
 
     return (
         <div style={{ display: "flex", flexDirection: "row" }}>
@@ -32,12 +33,14 @@ const Count = () => {
                     Fetch token
                 </button>
             </div>
-<div>
-    <p>Best stage is {stageUtils.getStageName(2)}</p>
-</div>
-<div>
-			<p>{authToken}</p>
-</div>
+            <div>
+                <p>Best stage is {stageUtils.getStageName(2)}</p>
+            </div>
+            {authToken ?
+                <TwitchClip accessToken={authToken} />
+                :
+                <TwitchConnect clickHandler={() => dispatch.twitch.fetchTwitchToken(scopes)} />
+            }
         </div>
     );
 };

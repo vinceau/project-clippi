@@ -7,7 +7,7 @@ import { ipc } from "../lib/rendererIpc";
 
 import { Link, Route, Switch } from "react-router-dom";
 
-import { TwitchConnect } from "./TwitchConnect";
+// import { TwitchConnect } from "./TwitchConnect";
 
 export const Main: React.FC<{}> = () => {
     const Container = styled.div`
@@ -50,7 +50,7 @@ export const Main: React.FC<{}> = () => {
         };
         return (
             <div>
-                <TwitchConnect accessToken="token" />
+                {/* <TwitchConnect accessToken="token" /> */}
                 <button onClick={handleClick}>notify</button>
             </div>
         );
