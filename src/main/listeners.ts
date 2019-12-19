@@ -1,11 +1,10 @@
-import { App, BrowserWindow } from "electron";
-
 import { IPC } from "common/ipc";
 import { Message } from "common/types";
-import { authenticateTwitch } from "./lib/twitch";
-import { showNotification, twitchClipNotification } from "./lib/notifications";
 
-export const setupListeners = (app: App, win: BrowserWindow, ipc: IPC) => {
+import { showNotification, twitchClipNotification } from "./lib/notifications";
+import { authenticateTwitch } from "./lib/twitch";
+
+export const setupListeners = (ipc: IPC) => {
 
     ipc.on(Message.AuthenticateTwitch, async (value, _error?: Error) => {
         if (_error) {

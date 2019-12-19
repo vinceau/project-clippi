@@ -41,7 +41,7 @@ function createMainWindow() {
   });
 
   const ipc = setupIPC(app, window);
-  setupListeners(app, window, ipc);
+  setupListeners(ipc);
 
   return window;
 }
