@@ -5,7 +5,7 @@ import { stages as stageUtils } from "slp-parser-js";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Dispatch, iRootState } from "@/store";
-import { TwitchClip, TwitchConnect } from "./TwitchConnect";
+import { TwitchClip, TwitchConnectButton } from "./TwitchConnect";
 import styled from "styled-components";
 
 const Count = () => {
@@ -42,12 +42,12 @@ const Count = () => {
             <div>
                 <p>Best stage is {stageUtils.getStageName(2)}</p>
 
-                <TwitchConnect clickHandler={() => {console.log("button clicked") }} />
+                <TwitchConnectButton onClick={() => {console.log("button clicked") }} />
             </div>
             {authToken ?
                 <TwitchClip accessToken={authToken} />
                 :
-                <TwitchConnect clickHandler={() => dispatch.twitch.fetchTwitchToken(scopes)} />
+                <TwitchConnectButton onClick={() => dispatch.twitch.fetchTwitchToken(scopes)} />
             }
  </Outer>
     );

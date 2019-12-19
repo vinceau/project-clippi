@@ -109,12 +109,17 @@ export const TwitchClip: React.SFC<{ accessToken: string }> = props => {
     );
 };
 
-export const TwitchConnect: React.FC<{
-    clickHandler: () => void;
+export const TwitchConnectButton: React.FC<{
+    onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }> = (props) => {
-    const size = "32px";
+    const size = "24px";
     const twitchColor = "#6441A4";
     const twitchIconImage = require("../styles/images/twitch.svg");
+    const ButtonText = styled.span`
+    color: white;
+    margin-left: 5px;
+    font-size: 14px;
+    `;
     const TwitchLogo = styled.div`
     background-color: white;
     mask: url(${twitchIconImage}) no-repeat 50% 50%;
@@ -122,14 +127,22 @@ export const TwitchConnect: React.FC<{
     display: inline-block;
     height: ${size};
     width: ${size};
+    margin: 5px;
     `;
     const TwitchButton = styled.button`
     background-color: ${twitchColor};
-    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    border: 0;
+    border-radius: 3px;
+    padding: 5px 0;
     `;
     return (
-        <TwitchButton onClick={props.clickHandler}>
-            <span><TwitchLogo />Connect with Twitch</span>
+        <TwitchButton onClick={props.onClick}>
+            <TwitchLogo />
+            <ButtonText>Connect with Twitch</ButtonText>
         </TwitchButton>
     );
 };
