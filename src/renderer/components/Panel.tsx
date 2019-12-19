@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Dispatch, iRootState } from "@/store";
 import { TwitchClip, TwitchConnectButton } from "./TwitchConnect";
 import styled from "styled-components";
+import { notify } from "../lib/utils";
 
 const Count = () => {
     const dolphins = useSelector((state: iRootState) => state.dolphins);
@@ -19,6 +20,11 @@ const Count = () => {
     flex-direction: column;
     align-items: center;
     `;
+
+    const handleClick = () => {
+        console.log("notify clicked");
+        notify("Notification title", "Notification body");
+    };
     return (
         <Outer>
             <div style={{ width: 120 }}>
@@ -27,6 +33,7 @@ const Count = () => {
                 <button onClick={dispatch.dolphins.increment}>+1</button>
                 <button onClick={dispatch.dolphins.incrementAsync}>Async +1</button>
             </div>
+            <button onClick={handleClick}>notify</button>
             <div style={{ width: 200 }}>
                 <h3>Sharks</h3>
                 <h1>{sharks}</h1>

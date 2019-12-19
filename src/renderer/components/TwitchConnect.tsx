@@ -4,6 +4,8 @@ import styled from "styled-components";
 import { HelixUser } from "twitch";
 
 import { createTwitchClip, currentUser, isStreaming } from "../../common/twitch";
+import { notifyTwitchClip } from "@/lib/twitch";
+import { notify } from "@/lib/utils";
 
 const TwitchUserStatus: React.SFC<{ image?: any; live: boolean }> = props => {
     const userImage = props.image !== undefined ? props.image : require("../styles/images/user.svg");
@@ -48,6 +50,11 @@ export const TwitchClip: React.SFC<{ accessToken: string }> = props => {
     const handleClip = async () => {
         const clip = await createTwitchClip(props.accessToken, name);
         console.log(`clip: ${clip}`);
+        if (clip !== null) {
+            await notifyTwitchClip(clip);
+        } else {
+            notify("Clip Error", "Failed to create clip")
+        }
     };
 
     const handleStatus = async () => {
