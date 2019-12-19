@@ -1,1 +1,4 @@
-# React Electron Typescript template
+# Project Clippi
+
+### An automation framework for Project Slippi
+
