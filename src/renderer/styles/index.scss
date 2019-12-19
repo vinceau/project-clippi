@@ -16,3 +16,8 @@ button {
         pointer-events: all !important;
     }
 }
+
+input[type="button"],
+button {
+    outline: none;
+}
