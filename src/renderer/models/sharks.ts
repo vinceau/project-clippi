@@ -5,7 +5,7 @@ import { delay } from "../helpers";
 export type SharksState = number;
 
 export const sharks = createModel({
-    state: 0,
+    state: 2,
     reducers: {
         increment: (state: SharksState, payload: number): SharksState =>
             state + payload,
