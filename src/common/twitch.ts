@@ -1,7 +1,7 @@
 import twitch, { HelixUser } from "twitch";
 
-export const TwitchClientId = process.env.ELECTRON_WEBPACK_APP_TWITCH_CLIENT_ID || '';
-export const TwitchRedirectURI = process.env.ELECTRON_WEBPACK_APP_TWITCH_REDIRECT_URI || '';
+export const TwitchClientId = process.env.ELECTRON_WEBPACK_APP_TWITCH_CLIENT_ID || "";
+export const TwitchRedirectURI = process.env.ELECTRON_WEBPACK_APP_TWITCH_REDIRECT_URI || "";
 
 export const createTwitchClip = async (
     token: string,
