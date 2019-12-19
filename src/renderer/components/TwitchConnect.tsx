@@ -112,9 +112,24 @@ export const TwitchClip: React.SFC<{ accessToken: string }> = props => {
 export const TwitchConnect: React.FC<{
     clickHandler: () => void;
 }> = (props) => {
+    const size = "32px";
+    const twitchColor = "#6441A4";
+    const twitchIconImage = require("../styles/images/twitch.svg");
+    const TwitchLogo = styled.div`
+    background-color: white;
+    mask: url(${twitchIconImage}) no-repeat 50% 50%;
+    mask-size: cover;
+    display: inline-block;
+    height: ${size};
+    width: ${size};
+    `;
+    const TwitchButton = styled.button`
+    background-color: ${twitchColor};
+    color: white;
+    `;
     return (
-        <div onClick={props.clickHandler}>
-            <span>Connect with Twitch</span>
-        </div>
+        <TwitchButton onClick={props.clickHandler}>
+            <span><TwitchLogo />Connect with Twitch</span>
+        </TwitchButton>
     );
 };

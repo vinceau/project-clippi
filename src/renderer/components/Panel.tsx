@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { Dispatch, iRootState } from "@/store";
 import { TwitchClip, TwitchConnect } from "./TwitchConnect";
+import styled from "styled-components";
 
 const Count = () => {
     const dolphins = useSelector((state: iRootState) => state.dolphins);
@@ -14,8 +15,13 @@ const Count = () => {
     const dispatch = useDispatch<Dispatch>();
     const scopes = ["user_read", "clips:edit"];
 
+    const Outer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    `;
     return (
-        <div style={{ display: "flex", flexDirection: "row" }}>
+        <Outer>
             <div style={{ width: 120 }}>
                 <h3>Dolphins</h3>
                 <h1>{dolphins}</h1>
@@ -35,13 +41,15 @@ const Count = () => {
             </div>
             <div>
                 <p>Best stage is {stageUtils.getStageName(2)}</p>
+
+                <TwitchConnect clickHandler={() => {console.log("button clicked") }} />
             </div>
             {authToken ?
                 <TwitchClip accessToken={authToken} />
                 :
                 <TwitchConnect clickHandler={() => dispatch.twitch.fetchTwitchToken(scopes)} />
             }
-        </div>
+ </Outer>
     );
 };
 
