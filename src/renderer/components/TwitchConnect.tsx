@@ -5,7 +5,8 @@ import { HelixUser } from "twitch";
 
 import { createTwitchClip, currentUser, isStreaming } from "../../common/twitch";
 
-const TwitchUserStatus: React.SFC<{ user: HelixUser; live: boolean }> = props => {
+const TwitchUserStatus: React.SFC<{ image?: any; live: boolean }> = props => {
+    const userImage = props.image !== undefined ? props.image : require("../styles/images/user.svg");
     const status = props.live ? "live" : "offline";
     const TwitchStatusContainer = styled.div`
         display: flex;
@@ -34,7 +35,7 @@ const TwitchUserStatus: React.SFC<{ user: HelixUser; live: boolean }> = props =>
     `;
     return (
         <TwitchStatusContainer>
-            <img src={props.user.profilePictureUrl} />
+            <img src={userImage} />
             <TwitchStatusIndicator>{status}</TwitchStatusIndicator>
         </TwitchStatusContainer>
     );
@@ -73,9 +74,10 @@ export const TwitchClip: React.SFC<{ accessToken: string }> = props => {
         })().catch(console.error);
     }, [props, live]);
 
+    const userImage = user ? user.profilePictureUrl : undefined;
     return (
         <div>
-            {user && <TwitchUserStatus user={user} live={live} />}
+            <TwitchUserStatus image={userImage} live={live} />
             <button
                 onClick={() => {
                     checkStatus().catch(console.error);
