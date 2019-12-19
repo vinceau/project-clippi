@@ -13,7 +13,6 @@ const Count = () => {
     const sharks = useSelector((state: iRootState) => state.sharks);
     const authToken = useSelector((state: iRootState) => state.twitch.authToken);
     const dispatch = useDispatch<Dispatch>();
-    const scopes = ["user_read", "clips:edit"];
 
     const Outer = styled.div`
     display: flex;
@@ -35,19 +34,19 @@ const Count = () => {
                 <button onClick={() => dispatch.sharks.incrementAsync(1)}>
                     Async +1
                 </button>
-                <button onClick={() => dispatch.twitch.fetchTwitchToken(scopes)}>
+                <button onClick={() => dispatch.twitch.fetchTwitchToken()}>
                     Fetch token
                 </button>
             </div>
             <div>
                 <p>Best stage is {stageUtils.getStageName(2)}</p>
 
-                <TwitchConnectButton onClick={() => {console.log("button clicked") }} />
+                <TwitchConnectButton onClick={() => {console.log("button clicked")}} />
             </div>
             {authToken ?
                 <TwitchClip accessToken={authToken} />
                 :
-                <TwitchConnectButton onClick={() => dispatch.twitch.fetchTwitchToken(scopes)} />
+                <TwitchConnectButton onClick={() => dispatch.twitch.fetchTwitchToken()} />
             }
  </Outer>
     );

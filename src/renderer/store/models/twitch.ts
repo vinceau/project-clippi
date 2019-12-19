@@ -19,7 +19,8 @@ export const twitch = createModel({
             })
     },
     effects: dispatch => ({
-        async fetchTwitchToken(scopes: string | string[]) {
+        async fetchTwitchToken() {
+            const scopes = ["user_read", "clips:edit"];
             console.log(`fetching twitch token with the following scopes: ${scopes}`);
             const token = await fetchTwitchAuthToken(scopes);
             // await delay(2000);
