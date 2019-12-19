@@ -6,6 +6,7 @@ import { Message } from "common/types";
 import { ipc } from "../lib/rendererIpc";
 
 import { Link, Route, Switch } from "react-router-dom";
+import { Panel } from "./Panel";
 
 // import { TwitchConnect } from "./TwitchConnect";
 
@@ -62,7 +63,7 @@ export const Main: React.FC<{}> = () => {
             </Header>
             <MainSection>
                 <Switch>
-                    <Route path="/" exact={true} component={TwitchPage} />
+                    <Route path="/" exact={true} component={Panel} />
                 </Switch>
             </MainSection>
             <Footer>
