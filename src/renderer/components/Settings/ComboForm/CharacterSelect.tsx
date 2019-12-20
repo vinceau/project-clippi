@@ -5,11 +5,23 @@ import { CharacterIcon } from "./CharacterIcon";
 
 const Option = (props: any) => {
     const { innerProps, innerRef } = props;
+    const CharacterLabel = styled.div`
+    &:hover {
+      background-color: #F8F8F8;
+    }
+      display: flex;
+      img {
+        width: 24px;
+        height: 24px;
+      }
+    `;
     return (
-      <article ref={innerRef} {...innerProps} className="custom-option">
-        <CharacterIcon character={props.data.value} />
-        <div className="sub">{props.data.label} </div>
-      </article>
+      <div ref={innerRef} {...innerProps}>
+        <CharacterLabel>
+              <CharacterIcon character={props.data.value} />
+              <span>{props.data.label}</span>
+        </CharacterLabel>
+      </div>
     );
   };
 
