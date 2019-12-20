@@ -1,7 +1,21 @@
 import * as React from "react";
-import Select from "react-select";
+import Select, { IndicatorProps } from "react-select";
 import styled from "styled-components";
+import { CharacterIcon } from "./CharacterIcon";
 
+const Option = (props: any) => {
+    const { innerProps, innerRef } = props;
+    return (
+      <article ref={innerRef} {...innerProps} className="custom-option">
+        <CharacterIcon character={props.data.value} />
+        <div className="sub">{props.data.label} </div>
+      </article>
+    );
+  };
+
+const  Indicator= (indicatorProps: IndicatorProps<any>) => (
+    <div>{indicatorProps.children}</div>
+  );
 
 export const ReactSelectAdapter = (props: any) => {
     const { input, ...rest } = props;
@@ -13,5 +27,6 @@ export const ReactSelectAdapter = (props: any) => {
         {...rest}
         searchable={true}
         isMulti={true}
+        components={{Option, Indicator}}
     />);
 };
