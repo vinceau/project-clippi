@@ -4,11 +4,13 @@ import styled from "styled-components";
 import { HelixUser } from "twitch";
 
 import { createTwitchClip, currentUser, isStreaming } from "../../common/twitch";
-import { notifyTwitchClip } from "@/lib/twitch";
-import { notify } from "@/lib/utils";
+import { notifyTwitchClip } from "../lib/twitch";
+import { notify } from "../lib/utils";
+import twitchIconImage from "../styles/images/twitch.svg";
+import defaultUserImage from "../styles/images/user.svg";
 
 const TwitchUserStatus: React.SFC<{ image?: any; live: boolean }> = props => {
-    const userImage = props.image !== undefined ? props.image : require("../styles/images/user.svg");
+    const userImage = props.image !== undefined ? props.image : defaultUserImage;
     const status = props.live ? "live" : "offline";
     const TwitchStatusContainer = styled.div`
         display: flex;
@@ -123,7 +125,6 @@ export const TwitchConnectButton: React.FC<{
 }> = (props) => {
     const size = "24px";
     const twitchColor = "#6441A4";
-    const twitchIconImage = require("../styles/images/twitch.svg");
     const ButtonText = styled.span`
     color: white;
     margin-left: 5px;

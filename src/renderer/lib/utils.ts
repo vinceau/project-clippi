@@ -1,7 +1,8 @@
 import * as path from "path";
-import * as url from 'url'
+import * as url from "url";
 
 import { Message } from "common/types";
+import { remote } from "electron";
 import { ipc } from "./rendererIpc";
 
 export const delay = async (ms: number): Promise<void> => {
@@ -18,14 +19,14 @@ export const notify = (title: string, body: string) => {
     );
 };
 
-declare const __static: string;
-
 const isDevelopment = process.env.NODE_ENV !== "production";
 
 // see https://github.com/electron-userland/electron-webpack/issues/99#issuecomment-459251702
 export const getStatic = (val: string): string => {
     if (isDevelopment) {
-        return url.resolve("/", val);
+        return url.resolve(window.location.origin, val);
     }
-    return path.resolve(__static, val);
+    const appPath = remote.app.getAppPath();
+    const imagePath = path.join(appPath, "../static");
+    return path.resolve(path.join(imagePath, val));
 };
