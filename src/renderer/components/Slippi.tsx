@@ -1,12 +1,12 @@
 import * as React from "react";
-import { connectToSlippi } from "@/lib/realtime";
 
-export const SlippiPage: React.FC = (
-) => {
-    const [port, setPort] = React.useState("1667");
+export const SlippiPage: React.FC<{
+    initialPort: string
+    onSubmit: (port: string) => void;
+}> = props => {
+    const [port, setPort] = React.useState(props.initialPort);
     const handleConnect = () => {
-        const portNum = parseInt(port, 10);
-        connectToSlippi(portNum).catch(console.error);
+        props.onSubmit(port);
     };
     return (
         <div>

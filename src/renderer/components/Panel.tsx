@@ -26,15 +26,18 @@ const Count = () => {
         console.log("notify clicked");
         notify("Notification title", "Notification body");
     };
-    const handleConnect = () => {
-        connectToSlippi(slippiPort).catch(console.error);
+    const handleConnect = (port: string) => {
+        console.log('updating port in redux');
+        dispatch.slippi.setPort(port);
+        console.log('connecting to port');
+        connectToSlippi(parseInt(port, 10)).catch(console.error);
     };
 
     return (
         <Outer>
             <div style={{ width: 120 }}>
                 <h1>Slippi</h1>
-                <SlippiPage />
+                <SlippiPage initialPort={slippiPort} onSubmit={handleConnect} />
             </div>
             <button onClick={handleClick}>notify</button>
             <div style={{ width: 200 }}>
