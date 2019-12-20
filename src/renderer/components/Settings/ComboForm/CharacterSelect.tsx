@@ -1,19 +1,21 @@
 import * as React from "react";
-import Select, { IndicatorProps } from "react-select";
+import Select, { IndicatorProps, components, OptionProps, OptionTypeBase, MultiValueProps } from "react-select";
 import styled from "styled-components";
 import { CharacterIcon } from "./CharacterIcon";
 
-const Option = (props: any) => {
+const MultiValueRemove: React.ComponentType<MultiValueProps<OptionTypeBase>> = (props) => {
+  return (
+      <components.MultiValueRemove {...props}><CharacterIcon character={props.data.value}/></components.MultiValueRemove>
+  );
+};
+
+const Option: React.ComponentType<OptionProps<OptionTypeBase>> = (props) => {
     const { innerProps, innerRef } = props;
     const CharacterLabel = styled.div`
     &:hover {
       background-color: #F8F8F8;
     }
       display: flex;
-      img {
-        width: 24px;
-        height: 24px;
-      }
     `;
     return (
       <div ref={innerRef} {...innerProps}>
@@ -39,6 +41,16 @@ export const ReactSelectAdapter = (props: any) => {
         {...rest}
         searchable={true}
         isMulti={true}
-        components={{Option, Indicator}}
+        components={{MultiValueRemove, Option, Indicator}}
+        styles={{
+          multiValue: (base: any) => ({
+            ...base,
+            backgroundColor: "transparent",
+          }),
+          multiValueLabel: (base: any) => ({
+            ...base,
+            display: "none",
+          }),
+        }}
     />);
 };
