@@ -11,6 +11,7 @@ import { delay } from "@/lib/utils";
 import styled from "styled-components";
 
 import "./ComboForm/NameTagForm.scss";
+import { PercentageSlider } from "./ComboForm/PercentageSlider";
 
 const onSubmit = async (values: Values) => {
     await delay(300);
@@ -150,6 +151,12 @@ export const ComboForm = () => {
                                     type="text"
                                     placeholder="Last Name"
                                 />
+                            </div>
+                            <div>
+                                <label>Large Hit Threshold</label>
+                                <div>
+                                    <PercentageSlider name="largeHitThreshold" />
+                                </div>
                             </div>
                             <div>
                                 <label>Combo Must Kill</label>
