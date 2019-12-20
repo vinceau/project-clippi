@@ -97,14 +97,14 @@ const CharForm: React.FC<{ name: string; values: any; push: any; pop: any }> = p
                                         style={{ cursor: 'pointer' }}
                                     >
                                         x
-                            </span>
+                                    </span>
                                 </NameTag>
                             ))
                         }
                     </FieldArray>
                 </div>
                 <div className="tags--input">
-                    <input autoCapitalize="none" autoComplete="off" autoCorrect="off" spellCheck="false" tabIndex="0" type="text" aria-autocomplete="list" onKeyDown={onKeyDown} value={tag} onChange={e => setTag(e.target.value)} />
+                    <input autoCapitalize="none" autoComplete="off" autoCorrect="off" spellCheck="false" tabIndex={0} type="text" aria-autocomplete="list" onKeyDown={onKeyDown} value={tag} onChange={e => setTag(e.target.value)} />
                 </div>
             </div>
         </div>
@@ -156,7 +156,7 @@ export const ComboForm = () => {
                                 <Field name="comboMustKill" component="input" type="checkbox" />
                             </div>
                             <div>
-                                <label>Exclude CPUs Must Kill</label>
+                                <label>Exclude CPUs</label>
                                 <Field name="excludeCPUs" component="input" type="checkbox" />
                             </div>
                             <div>
