@@ -8,6 +8,8 @@ import { ComboFilterSettings } from "slp-realtime";
 import { CharacterSelect } from "./ComboForm/CharacterSelect";
 import Styles from "./Styles";
 import { delay } from "@/lib/utils";
+import { NameTagSelect } from "./ComboForm/NameTagSelect";
+import styled from "styled-components";
 
 const onSubmit = async (values: Values) => {
     await delay(300);
@@ -18,6 +20,10 @@ const onSubmit = async (values: Values) => {
 /*
 export interface ComboFilterSettings {
   chainGrabbers: Character[];
+  characterFilter: {
+    characters: [],
+    negate: false,
+  },
   nameTags: string[];
   minComboPercent: number;
   comboMustKill: boolean;
@@ -32,44 +38,69 @@ export interface ComboFilterSettings {
 
 */
 
-const CharForm: React.FC<{ name: string; push: any; pop: any }> = props => {
-    const { name, push, pop } = props;
+const CharForm: React.FC<{ name: string; values: any; push: any; pop: any }> = props => {
+    const [tag, setTag] = React.useState("");
+    const { name, push, values } = props;
+    const currentTags: string[] = values[name] || [];
+    const submit = () => {
+        if (tag && !currentTags.includes(tag)) {
+            push(name, tag);
+            setTag("");
+        }
+    }
+    const onKeyDown = (event: any) => {
+        if (event.which === 13) {
+            // Disable sending the related form
+            event.preventDefault();
+            submit();
+        }
+    };
+    const NameTag = styled.span`
+    background-color: rgb(230, 230, 230);
+    border-radius: 2px;
+    display: flex;
+    margin: 2px;
+    min-width: 0px;
+    box-sizing: border-box;
+    label {
+        border-radius: 2px;
+        color: rgb(51, 51, 51);
+        font-size: 85%;
+        overflow: hidden;
+        padding: 3px 3px 3px 6px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        box-sizing: border-box;
+    }
+    span {
+        box-align: center;
+        align-items: center;
+        border-radius: 2px;
+        display: flex;
+        padding-left: 4px;
+        padding-right: 4px;
+        box-sizing: border-box;
+    }
+    `;
     return (
-        <>
-            <div className="buttons">
-                <button type="button" onClick={() => push(name, undefined)}>
-                    Add Customer
-                </button>
-                <button type="button" onClick={() => pop(name)}>
-                    Remove Customer
-                </button>
-            </div>
+        <div>
             <FieldArray name={name}>
                 {({ fields }) =>
-                    fields.map((name, index) => (
-                        <div key={name}>
-                            <label>Cust. #{index + 1}</label>
-                            <Field
-                                name={`${name}.firstName`}
-                                component="input"
-                                placeholder="First Name"
-                            />
-                            <Field
-                                name={`${name}.lastName`}
-                                component="input"
-                                placeholder="Last Name"
-                            />
+                    fields.map((n, index) => (
+                        <NameTag key={`fields--${n}--${index}--${fields[index]}`}>
+                            <label>{fields.value[index]}</label>
                             <span
                                 onClick={() => fields.remove(index)}
                                 style={{ cursor: 'pointer' }}
                             >
-                                ❌
+                                x
                             </span>
-                        </div>
+                        </NameTag>
                     ))
                 }
             </FieldArray>
-        </>
+            <input type="text" onKeyDown={onKeyDown} value={tag} onChange={e => setTag(e.target.value)} />
+        </div>
     );
 };
 
@@ -94,158 +125,166 @@ export const ComboForm = () => {
                     values,
                     form
                 }) => (
-                    <form onSubmit={handleSubmit}>
-                        <div>
-                            <label>First Name</label>
-                            <Field
-                                name="firstName"
-                                component="input"
-                                type="text"
-                                placeholder="First Name"
-                            />
-                        </div>
-                        <div>
-                            <label>Last Name</label>
-                            <Field
-                                name="lastName"
-                                component="input"
-                                type="text"
-                                placeholder="Last Name"
-                            />
-                        </div>
-                        <div>
-                            <label>Combo Must Kill</label>
-                            <Field name="comboMustKill" component="input" type="checkbox" />
-                        </div>
-                        <div>
-                            <label>Exclude CPUs Must Kill</label>
-                            <Field name="excludeCPUs" component="input" type="checkbox" />
-                        </div>
-                        <div>
-                            <label>Exclude Chain-grabs</label>
-                            <Field name="excludeChainGrabs" component="input" type="checkbox" />
-                        </div>
-                        <div>
-                            <label>Exclude Wobbles</label>
-                            <Field name="excludeWobbles" component="input" type="checkbox" />
-                        </div>
-                        <div>
-                            <label>Favorite Color</label>
-                            <Field name="favoriteColor" component="select">
-                                <option />
-                                <option value="#ff0000">❤️ Red</option>
-                                <option value="#00ff00">💚 Green</option>
-                                <option value="#0000ff">💙 Blue</option>
-                            </Field>
-                        </div>
-                        <div>
-                            <label>Favorite Number</label>
-                            <Field name="num" component={CharacterSelect}/>
-                        </div>
-                        <div>
-                            <label>Toppings</label>
-                            <Field name="toppings" component="select" multiple={true}>
-                                <option value="chicken">🐓 Chicken</option>
-                                <option value="ham">🐷 Ham</option>
-                                <option value="mushrooms">🍄 Mushrooms</option>
-                                <option value="cheese">🧀 Cheese</option>
-                                <option value="tuna">🐟 Tuna</option>
-                                <option value="pineapple">🍍 Pineapple</option>
-                            </Field>
-                        </div>
-                        <div>
-                            <label>Sauces</label>
+                        <form onSubmit={handleSubmit}>
                             <div>
-                                <label>
-                                    <Field
-                                        name="sauces"
-                                        component="input"
-                                        type="checkbox"
-                                        value="ketchup"
-                                    />{' '}
-                                    Ketchup
-                                </label>
-                                <label>
-                                    <Field
-                                        name="sauces"
-                                        component="input"
-                                        type="checkbox"
-                                        value="mustard"
-                                    />{' '}
-                                    Mustard
-                                </label>
-                                <label>
-                                    <Field
-                                        name="sauces"
-                                        component="input"
-                                        type="checkbox"
-                                        value="mayonnaise"
-                                    />{' '}
-                                    Mayonnaise
-                                </label>
-                                <label>
-                                    <Field
-                                        name="sauces"
-                                        component="input"
-                                        type="checkbox"
-                                        value="guacamole"
-                                    />{' '}
-                                    Guacamole 🥑
-                                </label>
+                                <label>First Name</label>
+                                <Field
+                                    name="firstName"
+                                    component="input"
+                                    type="text"
+                                    placeholder="First Name"
+                                />
                             </div>
-                        </div>
-                        <CharForm name="chainGrabbers" pop={pop} push={push} />
-                        <div>
-                            <label>Best Stooge</label>
                             <div>
-                                <label>
-                                    <Field
-                                        name="stooge"
-                                        component="input"
-                                        type="radio"
-                                        value="larry"
-                                    />{' '}
-                                    Larry
-                                </label>
-                                <label>
-                                    <Field
-                                        name="stooge"
-                                        component="input"
-                                        type="radio"
-                                        value="moe"
-                                    />{' '}
-                                    Moe
-                                </label>
-                                <label>
-                                    <Field
-                                        name="stooge"
-                                        component="input"
-                                        type="radio"
-                                        value="curly"
-                                    />{' '}
-                                    Curly
-                                </label>
+                                <label>Last Name</label>
+                                <Field
+                                    name="lastName"
+                                    component="input"
+                                    type="text"
+                                    placeholder="Last Name"
+                                />
                             </div>
-                        </div>
-                        <div>
-                            <label>Notes</label>
-                            <Field name="notes" component="textarea" placeholder="Notes" />
-                        </div>
-                        <div className="buttons">
-                            <button type="submit" disabled={submitting || pristine}>
-                                Submit
+                            <div>
+                                <label>Combo Must Kill</label>
+                                <Field name="comboMustKill" component="input" type="checkbox" />
+                            </div>
+                            <div>
+                                <label>Exclude CPUs Must Kill</label>
+                                <Field name="excludeCPUs" component="input" type="checkbox" />
+                            </div>
+                            <div>
+                                <label>Exclude Chain-grabs</label>
+                                <Field name="excludeChainGrabs" component="input" type="checkbox" />
+                            </div>
+                            <div>
+                                <label>Exclude Wobbles</label>
+                                <Field name="excludeWobbles" component="input" type="checkbox" />
+                            </div>
+                            <div>
+                                <label>Favorite Color</label>
+                                <Field name="favoriteColor" component="select">
+                                    <option />
+                                    <option value="#ff0000">❤️ Red</option>
+                                    <option value="#00ff00">💚 Green</option>
+                                    <option value="#0000ff">💙 Blue</option>
+                                </Field>
+                            </div>
+                            <div>
+                                <label>Tags Filter</label>
+                                <Field name="tags" component={NameTagSelect} />
+                            </div>
+                            <div>
+                                <label>Chain Grabbers</label>
+                                <Field name="chainGrabbers" component={CharacterSelect} />
+                            </div>
+                            <div>
+                                <label>Character Filter</label>
+                                <Field name="charFilter" component={CharacterSelect} />
+                            </div>
+                            <CharForm name="nameTags" pop={pop} push={push} values={values} />
+                            <div>
+                                <label>Toppings</label>
+                                <Field name="toppings" component="select" multiple={true}>
+                                    <option value="chicken">🐓 Chicken</option>
+                                    <option value="ham">🐷 Ham</option>
+                                    <option value="mushrooms">🍄 Mushrooms</option>
+                                    <option value="cheese">🧀 Cheese</option>
+                                    <option value="tuna">🐟 Tuna</option>
+                                    <option value="pineapple">🍍 Pineapple</option>
+                                </Field>
+                            </div>
+                            <div>
+                                <label>Sauces</label>
+                                <div>
+                                    <label>
+                                        <Field
+                                            name="sauces"
+                                            component="input"
+                                            type="checkbox"
+                                            value="ketchup"
+                                        />{' '}
+                                        Ketchup
+                                </label>
+                                    <label>
+                                        <Field
+                                            name="sauces"
+                                            component="input"
+                                            type="checkbox"
+                                            value="mustard"
+                                        />{' '}
+                                        Mustard
+                                </label>
+                                    <label>
+                                        <Field
+                                            name="sauces"
+                                            component="input"
+                                            type="checkbox"
+                                            value="mayonnaise"
+                                        />{' '}
+                                        Mayonnaise
+                                </label>
+                                    <label>
+                                        <Field
+                                            name="sauces"
+                                            component="input"
+                                            type="checkbox"
+                                            value="guacamole"
+                                        />{' '}
+                                        Guacamole 🥑
+                                </label>
+                                </div>
+                            </div>
+                            <div>
+                                <label>Best Stooge</label>
+                                <div>
+                                    <label>
+                                        <Field
+                                            name="stooge"
+                                            component="input"
+                                            type="radio"
+                                            value="larry"
+                                        />{' '}
+                                        Larry
+                                </label>
+                                    <label>
+                                        <Field
+                                            name="stooge"
+                                            component="input"
+                                            type="radio"
+                                            value="moe"
+                                        />{' '}
+                                        Moe
+                                </label>
+                                    <label>
+                                        <Field
+                                            name="stooge"
+                                            component="input"
+                                            type="radio"
+                                            value="curly"
+                                        />{' '}
+                                        Curly
+                                </label>
+                                </div>
+                            </div>
+                            <div>
+                                <label>Notes</label>
+                                <Field name="notes" component="textarea" placeholder="Notes" />
+                            </div>
+                            <div className="buttons">
+                                <button type="submit" disabled={submitting || pristine}>
+                                    Submit
                             </button>
-                            <button
-                                type="button"
-                                onClick={form.reset}
-                                disabled={submitting || pristine}
-                            >
-                                Reset
+                                <button
+                                    type="button"
+                                    onClick={form.reset}
+                                    disabled={submitting || pristine}
+                                >
+                                    Reset
                             </button>
-                        </div>
-                        <pre>{(JSON as any).stringify(values, 0, 2)}</pre>
-                    </form>
-                )}
+                            </div>
+                            <pre>{(JSON as any).stringify(values, 0, 2)}</pre>
+                        </form>
+                    )}
             />
         </Styles>
     );
