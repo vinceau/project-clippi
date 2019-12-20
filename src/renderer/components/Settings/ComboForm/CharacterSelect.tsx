@@ -1,6 +1,7 @@
 import * as React from "react";
 import Select, { components, OptionProps, OptionTypeBase, MultiValueProps } from "react-select";
 import styled from "styled-components";
+import { getAllCharacters } from "slp-realtime";
 import { CharacterIcon } from "./CharacterIcon";
 
 const MultiValueRemove: React.ComponentType<MultiValueProps<OptionTypeBase>> = (props) => {
@@ -27,7 +28,7 @@ const Option: React.ComponentType<OptionProps<OptionTypeBase>> = (props) => {
     );
   };
 
-export const ReactSelectAdapter = (props: any) => {
+const ReactSelectAdapter = (props: any) => {
     const { input, ...rest } = props;
     const SelectContainer = styled(Select)`
         width: 100%;
@@ -50,3 +51,19 @@ export const ReactSelectAdapter = (props: any) => {
         }}
     />);
 };
+
+export const CharacterSelect = (props: any) => {
+  const chars = getAllCharacters()
+  .sort((a, b) => {
+      if (a.name < b.name) { return -1; }
+      if (a.name > b.name) { return 1; }
+      return 0;
+  })
+  .map(c => {
+      return {
+          value: c.id,
+          label: c.name,
+      };
+  });
+  return <ReactSelectAdapter {...props} options={chars} />
+}

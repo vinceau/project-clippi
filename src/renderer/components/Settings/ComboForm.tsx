@@ -3,10 +3,9 @@ import * as React from "react";
 import { Form, Field } from "react-final-form";
 import arrayMutators from "final-form-arrays";
 import { FieldArray } from "react-final-form-arrays";
-import { ComboFilterSettings, getAllCharacters } from "slp-realtime";
+import { ComboFilterSettings } from "slp-realtime";
 
-import { ReactSelectAdapter } from "./ComboForm/CharacterSelect";
-import { CharacterIcon } from "./ComboForm/CharacterIcon";
+import { CharacterSelect } from "./ComboForm/CharacterSelect";
 import Styles from "./Styles";
 import { delay } from "@/lib/utils";
 
@@ -77,23 +76,6 @@ const CharForm: React.FC<{ name: string; push: any; pop: any }> = props => {
 type Values = Partial<ComboFilterSettings>;
 
 export const ComboForm = () => {
-    const chars = getAllCharacters()
-    .sort((a, b) => {
-        if (a.name < b.name) { return -1; }
-        if (a.name > b.name) { return 1; }
-        return 0;
-    })
-    .map(c => {
-        return {
-            value: c.id,
-            label: c.name,
-        };
-    });
-    // const chars = [
-    //     { value: 'chocolate', label: 'Chocolate' },
-    //     { value: 'strawberry', label: 'Strawberry' },
-    //     { value: 'vanilla', label: 'Vanilla' }
-    // ];
     return (
         <Styles>
             <Form
@@ -113,9 +95,6 @@ export const ComboForm = () => {
                     form
                 }) => (
                     <form onSubmit={handleSubmit}>
-                        <div>
-                            {getAllCharacters().map(c => <CharacterIcon character={c.id} />)}
-                        </div>
                         <div>
                             <label>First Name</label>
                             <Field
@@ -161,7 +140,7 @@ export const ComboForm = () => {
                         </div>
                         <div>
                             <label>Favorite Number</label>
-                            <Field name="num" component={ReactSelectAdapter} options={chars} />
+                            <Field name="num" component={CharacterSelect}/>
                         </div>
                         <div>
                             <label>Toppings</label>
