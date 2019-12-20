@@ -8,7 +8,6 @@ import { ComboFilterSettings } from "slp-realtime";
 import { CharacterSelect } from "./ComboForm/CharacterSelect";
 import Styles from "./Styles";
 import { delay } from "@/lib/utils";
-import { NameTagSelect } from "./ComboForm/NameTagSelect";
 import styled from "styled-components";
 
 const onSubmit = async (values: Values) => {
@@ -170,10 +169,6 @@ export const ComboForm = () => {
                                 </Field>
                             </div>
                             <div>
-                                <label>Tags Filter</label>
-                                <Field name="tags" component={NameTagSelect} />
-                            </div>
-                            <div>
                                 <label>Chain Grabbers</label>
                                 <Field name="chainGrabbers" component={CharacterSelect} />
                             </div>
@@ -181,7 +176,10 @@ export const ComboForm = () => {
                                 <label>Character Filter</label>
                                 <Field name="charFilter" component={CharacterSelect} />
                             </div>
-                            <CharForm name="nameTags" pop={pop} push={push} values={values} />
+                            <div>
+                                <label>Name Tag Filter</label>
+                                <CharForm name="nameTags" pop={pop} push={push} values={values} />
+                            </div>
                             <div>
                                 <label>Toppings</label>
                                 <Field name="toppings" component="select" multiple={true}>
