@@ -1,5 +1,5 @@
 import * as React from "react";
-import Select, { IndicatorProps, components, OptionProps, OptionTypeBase, MultiValueProps } from "react-select";
+import Select, { components, OptionProps, OptionTypeBase, MultiValueProps } from "react-select";
 import styled from "styled-components";
 import { CharacterIcon } from "./CharacterIcon";
 
@@ -27,10 +27,6 @@ const Option: React.ComponentType<OptionProps<OptionTypeBase>> = (props) => {
     );
   };
 
-const  Indicator= (indicatorProps: IndicatorProps<any>) => (
-    <div>{indicatorProps.children}</div>
-  );
-
 export const ReactSelectAdapter = (props: any) => {
     const { input, ...rest } = props;
     const SelectContainer = styled(Select)`
@@ -41,7 +37,7 @@ export const ReactSelectAdapter = (props: any) => {
         {...rest}
         searchable={true}
         isMulti={true}
-        components={{MultiValueRemove, Option, Indicator}}
+        components={{MultiValueRemove, Option}}
         styles={{
           multiValue: (base: any) => ({
             ...base,
