@@ -1,5 +1,5 @@
-import { dolphins } from "./dolphins";
+import { slippi } from "./slippi";
 import { sharks } from "./sharks";
 import { twitch } from "./twitch";
 
-export { dolphins, sharks, twitch };
+export { slippi, sharks, twitch };

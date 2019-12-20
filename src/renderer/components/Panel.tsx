@@ -1,16 +1,17 @@
 import * as React from "react";
 
 import { stages as stageUtils } from "slp-parser-js";
-
+import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Dispatch, iRootState } from "@/store";
 import { TwitchClip, TwitchConnectButton } from "./TwitchConnect";
-import styled from "styled-components";
 import { notify } from "../lib/utils";
+import { connectToSlippi } from "@/lib/realtime";
+import { SlippiPage } from "./Slippi";
 
 const Count = () => {
-    const dolphins = useSelector((state: iRootState) => state.dolphins);
+    const slippiPort = useSelector((state: iRootState) => state.slippi.port);
     const sharks = useSelector((state: iRootState) => state.sharks);
     const authToken = useSelector((state: iRootState) => state.twitch.authToken);
     const dispatch = useDispatch<Dispatch>();
@@ -25,13 +26,15 @@ const Count = () => {
         console.log("notify clicked");
         notify("Notification title", "Notification body");
     };
+    const handleConnect = () => {
+        connectToSlippi(slippiPort).catch(console.error);
+    };
+
     return (
         <Outer>
             <div style={{ width: 120 }}>
-                <h3>Dolphins</h3>
-                <h1>{dolphins}</h1>
-                <button onClick={dispatch.dolphins.increment}>+1</button>
-                <button onClick={dispatch.dolphins.incrementAsync}>Async +1</button>
+                <h1>Slippi</h1>
+                <SlippiPage />
             </div>
             <button onClick={handleClick}>notify</button>
             <div style={{ width: 200 }}>
