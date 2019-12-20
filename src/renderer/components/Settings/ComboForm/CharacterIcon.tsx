@@ -1,14 +1,21 @@
 import * as React from "react";
 import { Character } from "slp-realtime";
 import { getStatic } from "@/lib/utils";
+import styled from "styled-components";
 
 // const pathToCats = require.context("../../../styles/images/icons/chars", true);
 export const CharacterIcon: React.FC<{
-    character: Character
+    character: Character,
+    size?: number,
 }> = props => {
+    const imgSize = props.size || 24;
+    const Img = styled.img`
+    height: ${imgSize}px;
+    width: ${imgSize}px;
+    `;
     const filename = characterToFilename(props.character);
     const imgSrc = getStatic(`/images/character-icons/${filename}`);
-    return <img src={imgSrc} />;
+    return <Img src={imgSrc} />;
 };
 
 const characterToFilename = (character: Character): string => {
