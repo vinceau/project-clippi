@@ -1,13 +1,10 @@
-import * as React from 'react';
+import * as React from "react";
 
-import { ComboForm } from './ComboForm';
-import { getStatic } from '@/lib/utils';
+import { ComboForm } from "./ComboForm";
 
 export const SettingsPage: React.FC<{}> = () => {
-    const imgSrc = getStatic('/images/bowser_default.png');
     return (
         <div>
-            <img src={imgSrc} />
             <h1>Settings</h1>
             <ComboForm />
         </div>
