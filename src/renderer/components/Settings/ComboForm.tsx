@@ -1,18 +1,17 @@
 /* eslint-disable jsx-a11y/accessible-emoji */
-import * as React from 'react';
-import Styles from './Styles';
-import { Form, Field } from 'react-final-form';
-
-import arrayMutators from 'final-form-arrays';
-import { FieldArray } from 'react-final-form-arrays';
+import * as React from "react";
+import { Form, Field } from "react-final-form";
+import arrayMutators from "final-form-arrays";
+import { FieldArray } from "react-final-form-arrays";
 import { ComboFilterSettings, getAllCharacters } from "slp-realtime";
-import { ReactSelectAdapter } from './ComboForm/CharacterSelect';
-import { CharacterIcon } from './ComboForm/CharacterIcon';
 
-const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+import { ReactSelectAdapter } from "./ComboForm/CharacterSelect";
+import { CharacterIcon } from "./ComboForm/CharacterIcon";
+import Styles from "./Styles";
+import { delay } from "@/lib/utils";
 
 const onSubmit = async (values: Values) => {
-    await sleep(300);
+    await delay(300);
     // @ts-ignore
     window.alert(JSON.stringify(values, 0, 2));
 };
@@ -78,7 +77,13 @@ const CharForm: React.FC<{ name: string; push: any; pop: any }> = props => {
 type Values = Partial<ComboFilterSettings>;
 
 export const ComboForm = () => {
-    const chars = getAllCharacters().map(c => {
+    const chars = getAllCharacters()
+    .sort((a, b) => {
+        if (a.name < b.name) { return -1; }
+        if (a.name > b.name) { return 1; }
+        return 0;
+    })
+    .map(c => {
         return {
             value: c.id,
             label: c.name,
