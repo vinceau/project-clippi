@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 import { Link, Route, Switch } from "react-router-dom";
 import { Panel } from "./Panel";
+import { SettingsPage } from "./Settings/Settings";
 
 // import { TwitchConnect } from "./TwitchConnect";
 
@@ -43,6 +44,7 @@ export const Main: React.FC<{}> = () => {
             <MainSection>
                 <Switch>
                     <Route path="/" exact={true} component={Panel} />
+                    <Route path="/settings" exact={true} component={SettingsPage} />
                 </Switch>
             </MainSection>
             <Footer>
@@ -51,6 +53,9 @@ export const Main: React.FC<{}> = () => {
                         <Link to={`/`}>Home</Link>
                     </NavButton>
                 </NavMenu>
+                <NavButton>
+                        <Link to={`/settings`}>Settings</Link>
+                    </NavButton>
             </Footer>
         </Container>
     );
