@@ -1,0 +1,53 @@
+.string--array--form {
+    box-align: center;
+    align-items: center;
+    background-color: rgb(255, 255, 255);
+    border-color: rgb(204, 204, 204);
+    border-radius: 4px;
+    border-style: solid;
+    border-width: 1px;
+    cursor: default;
+    display: flex;
+    flex-wrap: wrap;
+    box-pack: justify;
+    justify-content: space-between;
+    min-height: 38px;
+    outline: currentcolor none 0px !important;
+    position: relative;
+    transition: all 100ms ease 0s;
+    box-sizing: border-box;
+    .form--container {
+        -moz-box-align: center;
+        align-items: center;
+        display: flex;
+        flex: 1 1 0%;
+        flex-wrap: wrap;
+        padding: 2px 8px;
+        position: relative;
+        overflow: hidden;
+        box-sizing: border-box;
+    }
+
+    .tags-list {
+        box-align: center;
+        align-items: center;
+        display: flex;
+        flex: 1 1 0%;
+        flex-wrap: wrap;
+        padding: 2px 8px;
+        position: relative;
+        overflow: hidden;
+        box-sizing: border-box;
+    }
+    .tags--input input {
+        box-sizing: content-box;
+        width: auto;
+        background: rgba(0, 0, 0, 0) none repeat scroll 0px center;
+        border: 0px none;
+        font-size: inherit;
+        opacity: 1;
+        outline: currentcolor none 0px;
+        padding: 0px;
+        color: inherit;
+    }
+}

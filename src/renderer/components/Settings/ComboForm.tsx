@@ -10,6 +10,8 @@ import Styles from "./Styles";
 import { delay } from "@/lib/utils";
 import styled from "styled-components";
 
+import "./ComboForm/NameTagForm.scss";
+
 const onSubmit = async (values: Values) => {
     await delay(300);
     // @ts-ignore
@@ -82,23 +84,29 @@ const CharForm: React.FC<{ name: string; values: any; push: any; pop: any }> = p
     }
     `;
     return (
-        <div>
-            <FieldArray name={name}>
-                {({ fields }) =>
-                    fields.map((n, index) => (
-                        <NameTag key={`fields--${n}--${index}--${fields[index]}`}>
-                            <label>{fields.value[index]}</label>
-                            <span
-                                onClick={() => fields.remove(index)}
-                                style={{ cursor: 'pointer' }}
-                            >
-                                x
+        <div className="string--array--form">
+            <div className="form--container">
+                <div className="tags-list">
+                    <FieldArray name={name}>
+                        {({ fields }) =>
+                            fields.map((n, index) => (
+                                <NameTag key={`fields--${n}--${index}--${fields[index]}`}>
+                                    <label>{fields.value[index]}</label>
+                                    <span
+                                        onClick={() => fields.remove(index)}
+                                        style={{ cursor: 'pointer' }}
+                                    >
+                                        x
                             </span>
-                        </NameTag>
-                    ))
-                }
-            </FieldArray>
-            <input type="text" onKeyDown={onKeyDown} value={tag} onChange={e => setTag(e.target.value)} />
+                                </NameTag>
+                            ))
+                        }
+                    </FieldArray>
+                </div>
+                <div className="tags--input">
+                    <input autoCapitalize="none" autoComplete="off" autoCorrect="off" spellCheck="false" tabIndex="0" type="text" aria-autocomplete="list" onKeyDown={onKeyDown} value={tag} onChange={e => setTag(e.target.value)} />
+                </div>
+            </div>
         </div>
     );
 };
