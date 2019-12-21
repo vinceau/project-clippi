@@ -61,8 +61,9 @@ const ReactSelectAdapter = (props: any) => {
   />);
 };
 
-export const CharacterSelect = (props: any) => {
-  const { name, ...rest } = props;
+export const CharacterSelect: React.FC<{
+  name: string;
+}> = (props: any) => {
   const chars = sortedCharacters.map(c => ({
     value: c.id,
     label: c.name,
@@ -72,20 +73,15 @@ export const CharacterSelect = (props: any) => {
     value: c,
     label: getCharacterName(c),
   });
-
-  return (<Field name={props.name}>
-    {fprops => {
-      const { input, ...frest } = fprops;
-      const value = input.value && input.value.map ? input.value.map(valueToOption) : input.value;
-      const onChange = (v: any) => input.onChange(v.map(optionToValue));
-      const newInput = {
-        ...input,
-        value,
-        onChange,
-      };
-      return (
-        <ReactSelectAdapter {...rest} {...frest} input={newInput} options={chars} />
-      );
-    }}
-  </Field>);
+  const parseValue = (value: any) => (value && value.map ? value.map(optionToValue) : value);
+  const formatValue = (value: any) => (value && value.map ? value.map(valueToOption) : value);
+  return (
+    <Field
+      name={props.name}
+      parse={parseValue}
+      format={formatValue}
+      component={ReactSelectAdapter}
+      options={chars}
+    />
+  );
 };
