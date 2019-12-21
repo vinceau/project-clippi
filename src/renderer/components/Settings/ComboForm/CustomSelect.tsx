@@ -3,6 +3,14 @@ import * as React from "react";
 import Select from "react-select";
 import { Field } from "react-final-form";
 import styled from "styled-components";
+import { Character, CharacterInfo, getAllCharacters, getCharacterName } from "slp-realtime";
+
+const sortedCharacters: CharacterInfo[] = getAllCharacters()
+    .sort((a, b) => {
+        if (a.name < b.name) { return -1; }
+        if (a.name > b.name) { return 1; }
+        return 0;
+    });
 
 const ReactSelectAdapter = (props: any) => {
     const { input, ...rest } = props;
@@ -17,38 +25,54 @@ const ReactSelectAdapter = (props: any) => {
     />);
 };
 
+interface Option {
+    label: string;
+    value: any;
+}
+
 const CharacterSelect = (props: any) => {
-    const { input, options, ...rest } = props;
-    const stringToOption = (s: string) => {
-        console.log(`inside string to option. got this string`);
-        console.log(s);
-        return {
-            value: s,
-            label: s,
-        };
-    };
-    const newOptions = options.map(stringToOption);
+    const { valueToOption, optionToValue, input, ...rest } = props;
     const { value, onChange, ...iRest } = input;
     let newValue = value;
-    if (value.map) {
-        newValue = value.map(c => stringToOption(c));
+    if (value.map && value.length > 0) {
+        newValue = value.map((c: Character) => valueToOption(c));
     }
     const newInput = {
         value: newValue,
         onChange: (v: any) => {
-            console.log('inside on change');
-            console.log(v);
-            onChange(v.map(c => c.value));
+            const newV = v.map(optionToValue);
+            onChange(newV);
         },
     };
-    return <ReactSelectAdapter {...iRest} input={newInput} options={newOptions} />
+    return <ReactSelectAdapter {...rest} {...iRest} input={newInput} />
 };
 
-export const CustomSelect: React.FC<{ name: string }> = props => {
-    const options = ["hello", "world", "foo", "bar", "baz"];
+export const CustomSelect: React.FC<{ name: string, }> = props => {
+    const chars = sortedCharacters.map(c => {
+        return {
+            value: c.id,
+            label: c.name,
+        };
+    });
+    const optionToValue = (o: Option): Character => {
+        return o.value;
+    }
+    const valueToOption = (c: Character): Option => {
+        return {
+            value: c,
+            label: getCharacterName(c),
+        };
+    };
     return (<Field name={props.name}>
-        {fprops => (
-            <CharacterSelect {...fprops} options={options} />
-        )}
+        {fprops => {
+            return (
+                <CharacterSelect
+                    {...fprops}
+                    options={chars}
+                    optionToValue={optionToValue}
+                    valueToOption={valueToOption}
+                />
+            );
+        }}
     </Field>);
 };
