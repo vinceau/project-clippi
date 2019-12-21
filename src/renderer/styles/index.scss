@@ -1,0 +1,23 @@
+html,
+body {
+    margin: 0;
+}
+
+body {
+    color: blue;
+}
+
+button {
+    &:hover {
+        cursor: pointer;
+    }
+    &:disabled {
+        cursor: default;
+        pointer-events: all !important;
+    }
+}
+
+input[type="button"],
+button {
+    outline: none;
+}

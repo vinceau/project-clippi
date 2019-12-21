@@ -1,13 +1,13 @@
-import { createModel } from '@rematch/core';
-import { fetchTwitchAuthToken } from '../../lib/events';
-import { produce } from 'immer';
+import { createModel } from "@rematch/core";
+import { produce } from "immer";
+import { fetchTwitchAuthToken } from "../../lib/twitch";
 
 export interface TwitchState {
     authToken: string;
 }
 
 const initialState: TwitchState = {
-    authToken: ''
+    authToken: ""
 };
 
 export const twitch = createModel({
@@ -18,12 +18,15 @@ export const twitch = createModel({
                 draft.authToken = payload;
             })
     },
-    effects: {
-        async fetchTwitchToken(scopes: string | string[]) {
+    effects: dispatch => ({
+        async fetchTwitchToken() {
+            const scopes = ["user_read", "clips:edit"];
             console.log(`fetching twitch token with the following scopes: ${scopes}`);
             const token = await fetchTwitchAuthToken(scopes);
+            // await delay(2000);
+            // const token = "abc";
             console.log(`got back token: ${token}`);
-            this.setAuthToken(token);
-        }
-    }
+            dispatch.twitch.setAuthToken(token);
+        },
+    }),
 });

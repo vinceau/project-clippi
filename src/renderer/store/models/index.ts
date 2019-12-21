@@ -1,4 +1,5 @@
-import { twitch } from './twitch';
-import { slippi } from './slippi';
+import { slippi } from "./slippi";
+import { sharks } from "./sharks";
+import { twitch } from "./twitch";
 
-export { twitch, slippi };
+export { slippi, sharks, twitch };

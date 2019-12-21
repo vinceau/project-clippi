@@ -64,7 +64,7 @@ export default styled.div`
             line-height: 2em;
             margin: 5px;
             & > label {
-                color: white;
+                color: black;
                 width: 180px;
                 font-size: 1em;
                 line-height: 32px;

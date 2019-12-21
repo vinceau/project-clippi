@@ -1,27 +1,25 @@
-import { createModel } from '@rematch/core';
-import { produce } from 'immer';
-import { ConnectionStatus } from '../../../shared/slippi';
+import { createModel } from "@rematch/core";
+
+import produce from "immer";
 
 export interface SlippiState {
     port: string;
-    connectionStatus: ConnectionStatus;
+    settings: string; // JSON stringified settings
 }
 
 const initialState: SlippiState = {
-    port: '',
-    connectionStatus: ConnectionStatus.DISCONNECTED
+    port: "",
+    settings: "{}",
 };
 
 export const slippi = createModel({
     state: initialState,
     reducers: {
-        setPort: (state: SlippiState, payload: string): SlippiState =>
-            produce(state, draft => {
-                draft.port = payload;
-            }),
-        updateConnectionStatus: (state: SlippiState, payload: ConnectionStatus): SlippiState =>
-            produce(state, draft => {
-                draft.connectionStatus = payload;
-            })
-    }
+        setPort: (state: SlippiState, payload: string): SlippiState => produce(state, draft => {
+            draft.port = payload;
+        }),
+        updateSettings: (state: SlippiState, payload: string): SlippiState => produce(state, draft => {
+            draft.settings = payload;
+        }),
+    },
 });
