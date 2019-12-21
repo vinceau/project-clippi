@@ -3,21 +3,22 @@ import * as React from "react";
 import { Form, Field } from "react-final-form";
 import arrayMutators from "final-form-arrays";
 import { FieldArray } from "react-final-form-arrays";
-import { ComboFilterSettings } from "slp-realtime";
+import { ComboFilterSettings, getCharacterInfo, Character } from "slp-realtime";
 
 import { CharacterSelect } from "./ComboForm/CharacterSelect";
 import Styles from "./Styles";
-import { delay } from "@/lib/utils";
+// import { delay } from "@/lib/utils";
 import styled from "styled-components";
 
 import "./ComboForm/NameTagForm.scss";
 import { PercentageSlider } from "./ComboForm/PercentageSlider";
+import { produce } from "immer";
 
-const onSubmit = async (values: Values) => {
-    await delay(300);
-    // @ts-ignore
-    window.alert(JSON.stringify(values, 0, 2));
-};
+// const onSubmit = async (values: Values) => {
+//     await delay(300);
+//     // @ts-ignore
+//     window.alert(JSON.stringify(values, 0, 2));
+// };
 
 /*
 export interface ComboFilterSettings {
@@ -114,7 +115,78 @@ const CharForm: React.FC<{ name: string; values: any; push: any; pop: any }> = p
 
 type Values = Partial<ComboFilterSettings>;
 
-export const ComboForm = () => {
+interface CharOption {
+    value: Character;
+    label: string;
+}
+
+const mapCharactersToOptions = (charId: Character): CharOption => {
+    const c = getCharacterInfo(charId);
+    return {
+        value: c.id,
+        label: c.name,
+    };
+};
+
+const mapCharOptionToCharacter = (c: CharOption): Character => {
+    return c.value;
+};
+
+const mapFormValuesToSettings = (values: any): Values => {
+        let cg: Character[] = [];
+        let newCharFilter: Character[] = [];
+        let lh = 0;
+        const { chainGrabbers, charFilter, largeHitThreshold, ...rest} = values;
+        if (chainGrabbers) {
+            cg = chainGrabbers.map(mapCharOptionToCharacter);
+        }
+        if (charFilter) {
+            newCharFilter = charFilter.map(mapCharOptionToCharacter);
+        }
+        if (largeHitThreshold) {
+            lh = largeHitThreshold / 100;
+        }
+        const newValues = {
+            ...rest,
+            chainGrabbers: cg,
+            characterFilter: {
+                characters: newCharFilter,
+            },
+            largeHitThreshold: lh,
+        };
+        return newValues;
+}
+
+const mapSettingsToFormValues = (initialValues: Values): any => {
+    let chainGrabbers: CharOption[] = [];
+    let characterFilter: CharOption[] = [];
+    let lh = 0;
+    if (initialValues.chainGrabbers) {
+        chainGrabbers = initialValues.chainGrabbers.map(mapCharactersToOptions);
+    }
+    if (initialValues.characterFilter) {
+        characterFilter = initialValues.characterFilter.characters.map(mapCharactersToOptions);
+    }
+    if (initialValues.largeHitThreshold) {
+        lh = initialValues.largeHitThreshold * 100;
+    }
+    const newValues = Object.assign(initialValues, {
+        chainGrabbers,
+        charFilter: characterFilter,
+        largeHitThreshold: lh,
+    });
+    return newValues;
+}
+
+export const ComboForm: React.FC<{
+    initialValues: Values;
+    onSubmit: (values: Values) => void;
+}> = props => {
+    console.log(props.initialValues);
+    const initialValues = mapSettingsToFormValues(props.initialValues);
+    const onSubmit = (values: any) => {
+        props.onSubmit(mapFormValuesToSettings(values));
+    };
     return (
         <Styles>
             <Form
@@ -122,7 +194,7 @@ export const ComboForm = () => {
                 mutators={{
                     ...arrayMutators
                 }}
-                initialValues={{ comboMustKill: true }}
+                initialValues={initialValues}
                 render={({
                     handleSubmit,
                     form: {

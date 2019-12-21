@@ -1,7 +1,7 @@
 import { SlippiLivestream, ComboFilter, ConnectionStatus } from "slp-realtime";
 import { notify } from "./utils";
 
-const comboFilter = new ComboFilter();
+export const comboFilter = new ComboFilter();
 comboFilter.updateSettings({excludeCPUs: false, comboMustKill: false, minComboPercent: 40});
 
 const r = new SlippiLivestream();
