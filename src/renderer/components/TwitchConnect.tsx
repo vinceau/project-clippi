@@ -145,6 +145,7 @@ export const TwitchConnectButton: React.FC<{
     align-items: center;
     justify-content: center;
     width: 100%;
+    max-width: 220px;
     border: 0;
     border-radius: 3px;
     padding: 5px 0;
