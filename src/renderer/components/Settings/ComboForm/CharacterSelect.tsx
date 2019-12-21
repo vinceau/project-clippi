@@ -4,7 +4,7 @@ import { Character,CharacterInfo, getAllCharacters, getCharacterName } from "slp
 import styled from "styled-components";
 import { Field } from "react-final-form";
 
-import { CharacterIcon } from "./CharacterIcon";
+import { CharacterIcon } from "../../CharacterIcon";
 
 const sortedCharacters: CharacterInfo[] = getAllCharacters()
   .sort((a, b) => {
