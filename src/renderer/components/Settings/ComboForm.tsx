@@ -174,14 +174,14 @@ export const ComboForm: React.FC<{
                             </div>
                             <div className="buttons">
                                 <button type="submit" disabled={submitting || pristine}>
-                                    Submit
+                                    Save
                             </button>
                             <button
                                     type="button"
                                     onClick={form.reset}
                                     disabled={submitting || pristine}
                                 >
-                                    Reset
+                                    Discard Changes
                             </button>
                             </div>
                             <pre>{(JSON as any).stringify(values, 0, 2)}</pre>
