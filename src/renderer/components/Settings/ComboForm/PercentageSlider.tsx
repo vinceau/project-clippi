@@ -11,6 +11,7 @@ export const PercentageSlider: React.FC<{
     return (
         <div>
             <Field
+                parse={(v) => parseFloat(v)}
                 name={props.name}
                 component="input"
                 type="range"
@@ -19,6 +20,7 @@ export const PercentageSlider: React.FC<{
                 step={`${parseInt(max, 10) / 100}`}
             />
             <Field
+                parse={(v) => parseFloat(v)}
                 name={props.name}
                 min={min}
                 max={max}
