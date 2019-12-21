@@ -12,8 +12,6 @@ import styled from "styled-components";
 
 import "./ComboForm/NameTagForm.scss";
 import { PercentageSlider } from "./ComboForm/PercentageSlider";
-import { produce } from "immer";
-import { CustomSelect } from "./ComboForm/CustomSelect";
 
 // const onSubmit = async (values: Values) => {
 //     await delay(300);
@@ -116,86 +114,19 @@ const CharForm: React.FC<{ name: string; values: any; push: any; pop: any }> = p
 
 type Values = Partial<ComboFilterSettings>;
 
-interface CharOption {
-    value: Character;
-    label: string;
-}
-
-const mapCharactersToOptions = (charId: Character): CharOption => {
-    const c = getCharacterInfo(charId);
-    return {
-        value: c.id,
-        label: c.name,
-    };
-};
-
-const mapCharOptionToCharacter = (c: CharOption): Character => {
-    return c.value;
-};
-
-const mapFormValuesToSettings = (values: any): Values => {
-        let cg: Character[] = [];
-        let newCharFilter: Character[] = [];
-        let lh = 0;
-        const { chainGrabbers, charFilter, largeHitThreshold, ...rest} = values;
-        if (chainGrabbers) {
-            cg = chainGrabbers.map(mapCharOptionToCharacter);
-        }
-        if (charFilter) {
-            newCharFilter = charFilter.map(mapCharOptionToCharacter);
-        }
-        if (largeHitThreshold) {
-            lh = largeHitThreshold / 100;
-        }
-        const newValues = {
-            ...rest,
-            chainGrabbers: cg,
-            characterFilter: {
-                characters: newCharFilter,
-            },
-            largeHitThreshold: lh,
-        };
-        return newValues;
-}
-
-const mapSettingsToFormValues = (initialValues: Values): any => {
-    let chainGrabbers: CharOption[] = [];
-    let characterFilter: CharOption[] = [];
-    let lh = 0;
-    if (initialValues.chainGrabbers) {
-        chainGrabbers = initialValues.chainGrabbers.map(mapCharactersToOptions);
-    }
-    if (initialValues.characterFilter) {
-        characterFilter = initialValues.characterFilter.characters.map(mapCharactersToOptions);
-    }
-    if (initialValues.largeHitThreshold) {
-        lh = initialValues.largeHitThreshold * 100;
-    }
-    const newValues = Object.assign(initialValues, {
-        chainGrabbers,
-        charFilter: characterFilter,
-        largeHitThreshold: lh,
-    });
-    return newValues;
-}
 
 export const ComboForm: React.FC<{
     initialValues: Values;
     onSubmit: (values: Values) => void;
 }> = props => {
-    console.log(props.initialValues);
-    const initialValues = mapSettingsToFormValues(props.initialValues);
-    const onSubmit = (values: any) => {
-        props.onSubmit(mapFormValuesToSettings(values));
-    };
     return (
         <Styles>
             <Form
-                onSubmit={onSubmit}
+                onSubmit={props.onSubmit}
                 mutators={{
                     ...arrayMutators
                 }}
-                initialValues={initialValues}
+                initialValues={props.initialValues}
                 render={({
                     handleSubmit,
                     form: {
@@ -257,16 +188,12 @@ export const ComboForm: React.FC<{
                                 </Field>
                             </div>
                             <div>
-                                <label>Some string</label>
-                                <CustomSelect name="someString" />
-                            </div>
-                            <div>
                                 <label>Chain Grabbers</label>
-                                <Field name="chainGrabbers" component={CharacterSelect} />
+                                <CharacterSelect name="chainGrabbers" />
                             </div>
                             <div>
                                 <label>Character Filter</label>
-                                <Field name="charFilter" component={CharacterSelect} />
+                                <CharacterSelect name="characterFilter" />
                             </div>
                             <div>
                                 <label>Name Tag Filter</label>
