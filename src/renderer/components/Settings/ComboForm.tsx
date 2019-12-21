@@ -13,6 +13,7 @@ import styled from "styled-components";
 import "./ComboForm/NameTagForm.scss";
 import { PercentageSlider } from "./ComboForm/PercentageSlider";
 import { produce } from "immer";
+import { CustomSelect } from "./ComboForm/CustomSelect";
 
 // const onSubmit = async (values: Values) => {
 //     await delay(300);
@@ -254,6 +255,10 @@ export const ComboForm: React.FC<{
                                     <option value="#00ff00">💚 Green</option>
                                     <option value="#0000ff">💙 Blue</option>
                                 </Field>
+                            </div>
+                            <div>
+                                <label>Some string</label>
+                                <CustomSelect name="someString" />
                             </div>
                             <div>
                                 <label>Chain Grabbers</label>
