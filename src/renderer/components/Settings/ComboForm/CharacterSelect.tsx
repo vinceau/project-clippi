@@ -67,7 +67,7 @@ export const CharacterSelect = (props: any) => {
     value: c.id,
     label: c.name,
   }));
-  const optionToValue = (o:any): Character => o.value;
+  const optionToValue = (o: any): Character => o.value;
   const valueToOption = (c: Character) => ({
     value: c,
     label: getCharacterName(c),
@@ -77,7 +77,7 @@ export const CharacterSelect = (props: any) => {
     {fprops => {
       const { input, ...frest } = fprops;
       const value = input.value && input.value.map ? input.value.map(valueToOption) : input.value;
-      const onChange = v => input.onChange(v.map(optionToValue));
+      const onChange = (v: any) => input.onChange(v.map(optionToValue));
       const newInput = {
         ...input,
         value,
@@ -89,4 +89,3 @@ export const CharacterSelect = (props: any) => {
     }}
   </Field>);
 };
-

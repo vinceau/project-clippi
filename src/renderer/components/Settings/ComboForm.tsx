@@ -176,7 +176,7 @@ export const ComboForm: React.FC<{
                                 <button type="submit" disabled={submitting || pristine}>
                                     Submit
                             </button>
-                                <button
+                            <button
                                     type="button"
                                     onClick={form.reset}
                                     disabled={submitting || pristine}
