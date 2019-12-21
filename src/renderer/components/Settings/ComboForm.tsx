@@ -139,10 +139,16 @@ export const ComboForm: React.FC<{
                 }) => (
                         <form onSubmit={handleSubmit}>
                             <div>
-                                <label>Large Hit Threshold</label>
-                                <div>
-                                    <PercentageSlider name="largeHitThreshold" min="0" max="1" />
-                                </div>
+                                <label>Character Filter</label>
+                                <CharacterSelect name="characterFilter" />
+                            </div>
+                            <div>
+                                <label>Minimum Combo Percent</label>
+                                <Field name="minComboPercent" component="input" type="number" parse={(v: any) => parseInt(v, 10)} />
+                            </div>
+                            <div>
+                                <label>Name Tag Filter</label>
+                                <CharForm name="nameTags" pop={pop} push={push} values={values} />
                             </div>
                             <div>
                                 <label>Combo Must Kill</label>
@@ -165,24 +171,32 @@ export const ComboForm: React.FC<{
                                 <CharacterSelect name="chainGrabbers" />
                             </div>
                             <div>
-                                <label>Character Filter</label>
-                                <CharacterSelect name="characterFilter" />
+                                <label>Large Hit Threshold</label>
+                                <div>
+                                    <PercentageSlider name="largeHitThreshold" min="0" max="1" />
+                                </div>
                             </div>
                             <div>
-                                <label>Name Tag Filter</label>
-                                <CharForm name="nameTags" pop={pop} push={push} values={values} />
+                                <label>Chaingrab Threshold</label>
+                                <div>
+                                    <PercentageSlider name="chainGrabThreshold" min="0" max="1" />
+                                </div>
+                            </div>
+                            <div>
+                                <label>Min. Pummels per Wobble</label>
+                                <Field name="wobbleThreshold" component="input" type="number" parse={(v: any) => parseInt(v, 10)} />
                             </div>
                             <div className="buttons">
                                 <button type="submit" disabled={submitting || pristine}>
                                     Save
-                            </button>
-                            <button
+                                </button>
+                                <button
                                     type="button"
                                     onClick={form.reset}
                                     disabled={submitting || pristine}
                                 >
                                     Discard Changes
-                            </button>
+                                </button>
                             </div>
                             <pre>{(JSON as any).stringify(values, 0, 2)}</pre>
                         </form>
