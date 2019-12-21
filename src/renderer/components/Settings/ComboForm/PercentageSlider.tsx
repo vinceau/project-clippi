@@ -16,6 +16,7 @@ export const PercentageSlider: React.FC<{
                 type="range"
                 min={min}
                 max={max}
+                step={`${parseInt(max, 10) / 100}`}
             />
             <Field
                 name={props.name}
