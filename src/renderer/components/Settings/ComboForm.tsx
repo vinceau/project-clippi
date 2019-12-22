@@ -41,7 +41,7 @@ export const ComboForm: React.FC<{
     initialValues: Values;
     onSubmit: (values: Values) => void;
 }> = props => {
-    const [ selection, setSelection ] = React.useState({});
+    const [ selection, setSelection ] = React.useState(undefined);
     return (
         <Styles>
             <Form
