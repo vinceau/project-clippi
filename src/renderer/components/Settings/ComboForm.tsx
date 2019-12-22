@@ -4,7 +4,7 @@ import { Form, Field } from "react-final-form";
 import arrayMutators from "final-form-arrays";
 import { ComboFilterSettings } from "slp-realtime";
 
-import { CharacterSelect } from "./ComboForm/CharacterSelect";
+import { CharacterSelect, characterSelectOptions, CharacterSelectAdapter } from "./ComboForm/CharacterSelect";
 import Styles from "./Styles";
 
 import "./ComboForm/NameTagForm.scss";
@@ -41,6 +41,7 @@ export const ComboForm: React.FC<{
     initialValues: Values;
     onSubmit: (values: Values) => void;
 }> = props => {
+    const [ selection, setSelection ] = React.useState({});
     return (
         <Styles>
             <Form
@@ -112,6 +113,8 @@ export const ComboForm: React.FC<{
                                 <label>Min. Pummels per Wobble</label>
                                 <Field name="wobbleThreshold" component="input" type="number" parse={(v: any) => parseInt(v, 10)} />
                             </div>
+                            <div><CharacterSelectAdapter value={selection} onChange={setSelection} options={characterSelectOptions}/></div>
+                            <div>Selection: <pre>{JSON.stringify(selection)}</pre></div>
                             <div className="buttons">
                                 <button type="submit" disabled={submitting || pristine}>
                                     Save

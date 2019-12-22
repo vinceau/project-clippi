@@ -13,6 +13,11 @@ export const sortedCharacters: CharacterInfo[] = getAllCharacters()
     return 0;
   });
 
+export const characterSelectOptions = sortedCharacters.map(c => ({
+      value: c.id,
+      label: c.name,
+    }));
+
 const MultiValueRemove: React.ComponentType<MultiValueProps<OptionTypeBase>> = (props) => {
   return (
     <components.MultiValueRemove {...props}><CharacterIcon character={props.data.value} /></components.MultiValueRemove>
@@ -37,7 +42,7 @@ const Option: React.ComponentType<OptionProps<OptionTypeBase>> = (props) => {
   );
 };
 
-const ReactSelectAdapter = (props: any) => {
+export const CharacterSelectAdapter = (props: any) => {
   const { input, ...rest } = props;
   const SelectContainer = styled(Select)`
         width: 100%;
@@ -71,10 +76,7 @@ export const CharacterSelect: React.FC = (props: any) => {
   if (props.options) {
     selectOptions = options.map(valueToOption);
   } else {
-    selectOptions = sortedCharacters.map(c => ({
-      value: c.id,
-      label: c.name,
-    }));
+    selectOptions = characterSelectOptions;
   }
   const parseValue = (value: any) => (value === undefined ? value : value.map ? value.map(optionToValue) : optionToValue(value));
   const formatValue = (value: any) => (value === undefined ? value : value.map ? value.map(valueToOption) : valueToOption(value));
@@ -83,7 +85,7 @@ export const CharacterSelect: React.FC = (props: any) => {
       {...rest}
       parse={parseValue}
       format={formatValue}
-      component={ReactSelectAdapter}
+      component={CharacterSelectAdapter}
       options={selectOptions}
     />
   );
