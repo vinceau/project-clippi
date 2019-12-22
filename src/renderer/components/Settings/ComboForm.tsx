@@ -171,6 +171,10 @@ export const ComboForm: React.FC<{
                                 <CharacterSelect name="chainGrabbers" isMulti={true} />
                             </div>
                             <div>
+                                <label>Single char</label>
+                                <CharacterSelect name="test" />
+                            </div>
+                            <div>
                                 <label>Large Hit Threshold</label>
                                 <div>
                                     <PercentageSlider name="largeHitThreshold" min="0" max="1" />
