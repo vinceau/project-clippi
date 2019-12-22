@@ -46,7 +46,6 @@ const ReactSelectAdapter = (props: any) => {
     {...input}
     {...rest}
     searchable={true}
-    isMulti={true}
     components={{ MultiValueRemove, Option }}
     styles={{
       multiValue: (base: any) => ({
@@ -61,9 +60,7 @@ const ReactSelectAdapter = (props: any) => {
   />);
 };
 
-export const CharacterSelect: React.FC<{
-  name: string;
-}> = (props: any) => {
+export const CharacterSelect: React.FC = (props: any) => {
   const chars = sortedCharacters.map(c => ({
     value: c.id,
     label: c.name,
@@ -73,11 +70,11 @@ export const CharacterSelect: React.FC<{
     value: c,
     label: getCharacterName(c),
   });
-  const parseValue = (value: any) => (value && value.map ? value.map(optionToValue) : value);
-  const formatValue = (value: any) => (value && value.map ? value.map(valueToOption) : value);
+  const parseValue = (value: any) => (value === undefined ? value : value.map ? value.map(optionToValue) : optionToValue(value));
+  const formatValue = (value: any) => (value === undefined ? value : value.map ? value.map(valueToOption) : valueToOption(value));
   return (
     <Field
-      name={props.name}
+      {...props}
       parse={parseValue}
       format={formatValue}
       component={ReactSelectAdapter}

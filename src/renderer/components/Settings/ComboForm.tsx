@@ -140,7 +140,7 @@ export const ComboForm: React.FC<{
                         <form onSubmit={handleSubmit}>
                             <div>
                                 <label>Character Filter</label>
-                                <CharacterSelect name="characterFilter" />
+                                <CharacterSelect name="characterFilter" isMulti={true} />
                             </div>
                             <div>
                                 <label>Minimum Combo Percent</label>
@@ -168,7 +168,7 @@ export const ComboForm: React.FC<{
                             </div>
                             <div>
                                 <label>Chain Grabbers</label>
-                                <CharacterSelect name="chainGrabbers" />
+                                <CharacterSelect name="chainGrabbers" isMulti={true} />
                             </div>
                             <div>
                                 <label>Large Hit Threshold</label>
