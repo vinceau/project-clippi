@@ -1,5 +1,5 @@
 import * as React from "react";
-import Select, { components, MultiValueProps, OptionProps, OptionTypeBase } from "react-select";
+import Select, { components, MultiValueProps, OptionProps, OptionTypeBase, SingleValueProps } from "react-select";
 import { Character,CharacterInfo, getAllCharacters, getCharacterName } from "slp-realtime";
 import styled from "styled-components";
 import { Field } from "react-final-form";
@@ -18,27 +18,41 @@ export const characterSelectOptions = sortedCharacters.map(c => ({
       label: c.name,
     }));
 
+const SingleValue: React.ComponentType<SingleValueProps<OptionTypeBase>> = (props) => {
+  return (
+    <components.SingleValue {...props}><CharacterLabel characterId={props.data.value} name={props.data.label} /></components.SingleValue>
+  );
+};
+
 const MultiValueRemove: React.ComponentType<MultiValueProps<OptionTypeBase>> = (props) => {
   return (
     <components.MultiValueRemove {...props}><CharacterIcon character={props.data.value} /></components.MultiValueRemove>
   );
 };
 
-const Option: React.ComponentType<OptionProps<OptionTypeBase>> = (props) => {
-  const { innerProps, innerRef } = props;
-  const CharacterLabel = styled.div`
-    &:hover {
-      background-color: #F8F8F8;
-    }
+const CharacterLabel: React.FC<{characterId: Character, name: string}> = (props) => {
+  const Label = styled.div`
       display: flex;
     `;
   return (
-    <div ref={innerRef} {...innerProps}>
-      <CharacterLabel>
-        <CharacterIcon character={props.data.value} />
-        <span>{props.data.label}</span>
-      </CharacterLabel>
-    </div>
+      <Label>
+        <CharacterIcon character={props.characterId} />
+        <span>{props.name}</span>
+      </Label>
+  );
+};
+
+const Option: React.ComponentType<OptionProps<OptionTypeBase>> = (props) => {
+  const { innerProps, innerRef } = props;
+  const Outer = styled.div`
+    &:hover {
+      background-color: #F8F8F8;
+    }
+  `;
+  return (
+    <Outer ref={innerRef} {...innerProps}>
+      <CharacterLabel characterId={props.data.value} name={props.data.label} />
+    </Outer>
   );
 };
 
@@ -51,7 +65,7 @@ export const CharacterSelectAdapter = (props: any) => {
     {...input}
     {...rest}
     searchable={true}
-    components={{ MultiValueRemove, Option }}
+    components={{ MultiValueRemove, Option, SingleValue }}
     styles={{
       multiValue: (base: any) => ({
         ...base,
