@@ -6,7 +6,7 @@ import { Field } from "react-final-form";
 
 import { CharacterIcon } from "../../CharacterIcon";
 
-const sortedCharacters: CharacterInfo[] = getAllCharacters()
+export const sortedCharacters: CharacterInfo[] = getAllCharacters()
   .sort((a, b) => {
     if (a.name < b.name) { return -1; }
     if (a.name > b.name) { return 1; }
@@ -61,24 +61,30 @@ const ReactSelectAdapter = (props: any) => {
 };
 
 export const CharacterSelect: React.FC = (props: any) => {
-  const chars = sortedCharacters.map(c => ({
-    value: c.id,
-    label: c.name,
-  }));
+  const { options, ...rest } = props;
   const optionToValue = (o: any): Character => o.value;
   const valueToOption = (c: Character) => ({
     value: c,
     label: getCharacterName(c),
   });
+  let selectOptions;
+  if (props.options) {
+    selectOptions = options.map(valueToOption);
+  } else {
+    selectOptions = sortedCharacters.map(c => ({
+      value: c.id,
+      label: c.name,
+    }));
+  }
   const parseValue = (value: any) => (value === undefined ? value : value.map ? value.map(optionToValue) : optionToValue(value));
   const formatValue = (value: any) => (value === undefined ? value : value.map ? value.map(valueToOption) : valueToOption(value));
   return (
     <Field
-      {...props}
+      {...rest}
       parse={parseValue}
       format={formatValue}
       component={ReactSelectAdapter}
-      options={chars}
+      options={selectOptions}
     />
   );
 };
