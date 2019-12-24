@@ -43,7 +43,7 @@
     "@types/react-select": "^3.0.8",
     "@types/styled-components": "^4.4.1",
     "electron": "4.1.1",
-    "electron-builder": "21.2.0",
+    "electron-builder": "22.2.0",
     "electron-webpack": "^2.6.2",
     "electron-webpack-ts": "^3.1.1",
     "node-sass": "^4.11.0",
