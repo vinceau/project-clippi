@@ -5,8 +5,8 @@
   "license": "MIT",
   "scripts": {
     "start": "electron-webpack dev",
-    "compile": "electron-webpack",
-    "dist": "yarn compile && electron-builder",
+    "build": "electron-webpack",
+    "dist": "yarn build && electron-builder",
     "dist:dir": "yarn dist --dir -c.compression=store -c.mac.identity=null",
     "dist:all": "yarn run dist --x64 -wml",
     "dist:win": "yarn run dist --x64 -w",
