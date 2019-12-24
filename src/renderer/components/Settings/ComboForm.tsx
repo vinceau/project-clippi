@@ -11,6 +11,7 @@ import "./ComboForm/NameTagForm.scss";
 import { PercentageSlider } from "./ComboForm/PercentageSlider";
 import { NameTagForm } from "./ComboForm/NameTagForm";
 import { PerCharPercent } from "./ComboForm/PerCharPercent";
+import { Popout } from "./ComboForm/Popout";
 
 
 /*
@@ -108,6 +109,7 @@ export const ComboForm: React.FC<{
                                     <PercentageSlider name="largeHitThreshold" min="0" max="1" />
                                 </div>
                             </div>
+                            <div><Field name="something" component={Popout} /></div>
                             <div>
                                 <label>Chaingrab Threshold</label>
                                 <div>
