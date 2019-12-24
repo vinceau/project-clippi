@@ -1,6 +1,5 @@
 import * as React from "react";
 
-import { stages as stageUtils } from "slp-parser-js";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -51,17 +50,12 @@ const Count = () => {
                     Fetch token
                 </button>
             </div>
-            <div>
-                <p>Best stage is {stageUtils.getStageName(2)}</p>
-
-                <TwitchConnectButton onClick={() => {console.log("button clicked")}} />
-            </div>
             {authToken ?
                 <TwitchClip accessToken={authToken} />
                 :
                 <TwitchConnectButton onClick={() => dispatch.twitch.fetchTwitchToken()} />
             }
- </Outer>
+        </Outer>
     );
 };
 
