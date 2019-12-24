@@ -79,7 +79,7 @@ export const CharacterSelectAdapter = (props: any) => {
   />);
 };
 
-export const CharacterSelect: React.FC = (props: any) => {
+export const CharacterSelect = (props: any) => {
   const { options, ...rest } = props;
   const optionToValue = (o: any): Character => o.value;
   const valueToOption = (c: Character) => ({

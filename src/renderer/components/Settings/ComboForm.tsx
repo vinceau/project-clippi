@@ -10,6 +10,7 @@ import Styles from "./Styles";
 import "./ComboForm/NameTagForm.scss";
 import { PercentageSlider } from "./ComboForm/PercentageSlider";
 import { NameTagForm } from "./ComboForm/NameTagForm";
+import { PerCharPercent } from "./ComboForm/PerCharPercent";
 
 
 /*
@@ -72,6 +73,10 @@ export const ComboForm: React.FC<{
                             <div>
                                 <label>Name Tag Filter</label>
                                 <NameTagForm name="nameTags" pop={pop} push={push} values={values} />
+                            </div>
+                            <div>
+                                <label>Per Character Combo Percent</label>
+                                <PerCharPercent name="perChar" pop={pop} push={push} />
                             </div>
                             <div>
                                 <label>Combo Must Kill</label>

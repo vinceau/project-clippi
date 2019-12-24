@@ -1,4 +1,4 @@
-import { SlippiLivestream, ComboFilter, ConnectionStatus } from "slp-realtime";
+import { SlippiLivestream, ComboFilter } from "slp-realtime";
 import { notify } from "./utils";
 
 export const comboFilter = new ComboFilter();
@@ -44,9 +44,11 @@ r.events.on('comboEnd', (c, s) => {
     }
 });
 
+/*
 const getSlippiConnectionStatus = async (): Promise<ConnectionStatus> => {
     console.log(`inside status getting function`);
     const status = r.connection.getStatus();
     console.log(`status is: ${status}`);
     return Promise.resolve(status);
 };
+*/
