@@ -7,6 +7,9 @@
     "mac": {
       "category": "public.app-category.lifestyle"
     },
+    "win": {
+      "target": ["portable"]
+    },
     "dmg": {
       "icon": false
     },
