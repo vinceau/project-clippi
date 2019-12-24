@@ -13,11 +13,15 @@ const selectStyles = {
     menu: () => ({ boxShadow: 'inset 0 1px 0 rgba(0, 0, 0, 0.1)' }),
 };
 
-const stateOptions = [
+const stateOptions: Array<{
+value: string;
+label: string;
+isDisabled?: boolean;
+}> = [
     { value: 'AL', label: 'Alabama'},
-    { value: 'AK', label: 'Aksomething', isDisabled: true },
+    { value: 'AK', label: 'Aksomething'},
     { value: 'AB', label: 'be cool' },
-    { value: 'CD', label: 'change dir', isDisabled: true},
+    { value: 'CD', label: 'change dir'},
     { value: 'DE', label: 'deuschland' },
     { value: 'FG', label: 'foreground' },
 ];
@@ -46,6 +50,7 @@ export const Popout = (props: any) => {
         props.input.onChange(newValue);
     };
 
+    const selected: string[] = props.input.value ? Object.keys(props.input.value) : [];
     return (
         <>
         <Dropdown
@@ -70,7 +75,9 @@ export const Popout = (props: any) => {
                 isClearable={false}
                 menuIsOpen={true}
                 onChange={onSelectChange}
-                options={stateOptions}
+                options={stateOptions.map(v => produce(v, draft => {
+                    draft.isDisabled = selected.includes(v.value);
+                }))}
                 placeholder="Search..."
                 styles={selectStyles}
                 tabSelectsValue={false}
