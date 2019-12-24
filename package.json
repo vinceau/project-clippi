@@ -3,6 +3,18 @@
   "version": "0.0.1",
   "description": "Slippi automation framework",
   "license": "MIT",
+  "build": {
+    "mac": {
+      "category": "public.app-category.lifestyle"
+    },
+    "dmg": {
+      "icon": false
+    },
+    "linux": {
+      "target": ["AppImage"],
+      "category": "Office"
+    }
+  },
   "scripts": {
     "start": "electron-webpack dev",
     "build": "electron-webpack",
