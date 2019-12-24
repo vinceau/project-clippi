@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Character } from "slp-realtime";
+import { Character } from "@vinceau/slp-realtime";
 import { getStatic } from "@/lib/utils";
 import styled from "styled-components";
 

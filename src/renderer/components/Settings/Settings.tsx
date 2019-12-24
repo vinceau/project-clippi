@@ -6,7 +6,7 @@ import { Dispatch, iRootState } from "@/store";
 
 import { ComboForm } from "./ComboForm";
 import { comboFilter } from "@/lib/realtime";
-import { ComboFilterSettings } from "slp-realtime";
+import { ComboFilterSettings } from "@vinceau/slp-realtime";
 
 export const SettingsPage: React.FC<{}> = () => {
     const settings = useSelector((state: iRootState) => state.slippi.settings);

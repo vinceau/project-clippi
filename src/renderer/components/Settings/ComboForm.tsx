@@ -2,7 +2,7 @@
 import * as React from "react";
 import { Form, Field } from "react-final-form";
 import arrayMutators from "final-form-arrays";
-import { ComboFilterSettings } from "slp-realtime";
+import { ComboFilterSettings } from "@vinceau/slp-realtime";
 
 import { CharacterSelect, characterSelectOptions, CharacterSelectAdapter } from "./ComboForm/CharacterSelect";
 import Styles from "./Styles";

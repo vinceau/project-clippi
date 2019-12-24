@@ -1,4 +1,4 @@
-import { SlippiLivestream, ComboFilter } from "slp-realtime";
+import { SlippiLivestream, ComboFilter } from "@vinceau/slp-realtime";
 import { notify } from "./utils";
 
 export const comboFilter = new ComboFilter();

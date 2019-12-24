@@ -977,6 +977,26 @@
   resolved "https://registry.yarnpkg.com/@types/webpack-env/-/webpack-env-1.14.1.tgz#0d8a53f308f017c53a5ddc3d07f4d6fa76b790d7"
   integrity sha512-0Ki9jAAhKDSuLDXOIMADg54Hu60SuBTEsWaJGGy5cV+SSUQ63J2a+RrYYGrErzz39fXzTibhKrAQJAb8M7PNcA==
 
+"@vinceau/slp-realtime@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@vinceau/slp-realtime/-/slp-realtime-0.0.1.tgz#cda34434dcf206b7570f6a24a29f3704d4ab076e"
+  integrity sha512-8f3c2G1CkkcSOp3jj2KRh0uaZhUYfUcOyMszUF0B8z684u5u+y/qdHTOzDccQL7kLHDpP7rgVjXaEG/ZJmQuUw==
+  dependencies:
+    "@vinceau/slp-wii-connect" "^0.0.3"
+    lodash "^4.17.11"
+    moment "^2.24.0"
+    slp-parser-js "^4.0.0"
+    strict-event-emitter-types "^2.0.0"
+
+"@vinceau/slp-wii-connect@^0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@vinceau/slp-wii-connect/-/slp-wii-connect-0.0.3.tgz#43b755bdce4367749260a9f885100a662dee5810"
+  integrity sha512-W8SH9U0ENei25OUdCViFo0HTU5q9WVBnE0zZsxNEfGYa0aj1jimHmvdzKccHjiVVNCheNeqZUbPS7ObkmfsUqw==
+  dependencies:
+    "@shelacek/ubjson" "^1.0.1"
+    lodash "^4.17.11"
+    strict-event-emitter-types "^2.0.0"
+
 "@webassemblyjs/ast@1.8.5":
   version "1.8.5"
   resolved "https://registry.yarnpkg.com/@webassemblyjs/ast/-/ast-1.8.5.tgz#51b1c5fe6576a34953bf4b253df9f0d490d9e359"
@@ -5272,6 +5292,11 @@ modify-filename@^1.1.0:
   resolved "https://registry.yarnpkg.com/modify-filename/-/modify-filename-1.1.0.tgz#9a2dec83806fbb2d975f22beec859ca26b393aa1"
   integrity sha1-mi3sg4Bvuy2XXyK+7IWcoms5OqE=
 
+moment@^2.24.0:
+  version "2.24.0"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.24.0.tgz#0d055d53f5052aa653c9f6eb68bb5d12bf5c2b5b"
+  integrity sha512-bV7f+6l2QigeBBZSM/6yTNq4P2fNpSWj/0e7jQcy87A8e7o2nAfP/34/2ky5Vw4B9S446EtIhodAzkFCcR4dQg==
+
 move-concurrently@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/move-concurrently/-/move-concurrently-1.0.1.tgz#be2c005fda32e0b29af1f05d7c4b33214c701f92"
@@ -7299,7 +7324,7 @@ slice-ansi@^3.0.0:
     astral-regex "^2.0.0"
     is-fullwidth-code-point "^3.0.0"
 
-slp-parser-js@^4.1.0:
+slp-parser-js@^4.0.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/slp-parser-js/-/slp-parser-js-4.1.0.tgz#e7000978a360b1928d2496bdee815d9460e70996"
   integrity sha512-hyNvSzN2QPivwtbG1Dhb55s3jlyZuDpXVvhaC8Aann8UXLD2sNY13VJZEk0jTDwyaOhVHjGhVYH9rFWhpDdkGQ==
@@ -7573,6 +7598,11 @@ stream-shift@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/stream-shift/-/stream-shift-1.0.1.tgz#d7088281559ab2778424279b0877da3c392d5a3d"
   integrity sha512-AiisoFqQ0vbGcZgQPY1cdP2I76glaVA/RauYR4G4thNFgkTqr90yXTo4LYX60Jl+sIlPNHHdGSwo01AvbKUSVQ==
+
+strict-event-emitter-types@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/strict-event-emitter-types/-/strict-event-emitter-types-2.0.0.tgz#05e15549cb4da1694478a53543e4e2f4abcf277f"
+  integrity sha512-Nk/brWYpD85WlOgzw5h173aci0Teyv8YdIAEtV+N88nDB0dLlazZyJMIsN6eo1/AR61l+p6CJTG1JIyFaoNEEA==
 
 strict-uri-encode@^1.0.0:
   version "1.1.0"

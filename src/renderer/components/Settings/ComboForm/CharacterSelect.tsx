@@ -1,6 +1,6 @@
 import * as React from "react";
 import Select, { components, MultiValueProps, OptionProps, OptionTypeBase, SingleValueProps } from "react-select";
-import { Character,CharacterInfo, getAllCharacters, getCharacterName } from "slp-realtime";
+import { Character,CharacterInfo, getAllCharacters, getCharacterName } from "@vinceau/slp-realtime";
 import styled from "styled-components";
 import { Field } from "react-final-form";
 
