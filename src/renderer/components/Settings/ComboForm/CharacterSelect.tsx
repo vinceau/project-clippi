@@ -63,8 +63,8 @@ const Option: React.ComponentType<OptionProps<OptionTypeBase>> = (props) => {
   );
 };
 
-export const CharacterSelectAdapter = (props: any) => {
-  const { input, options, disabledOptions, ...rest } = props;
+export const CharacterSelect = (props: any) => {
+  const { value, onChange, options, disabledOptions, ...rest } = props;
   const disabledList = disabledOptions ? disabledOptions : [];
   const optionToValue = (o: any): Character => o.value;
   const valueToOption = (c: Character) => ({
@@ -72,24 +72,18 @@ export const CharacterSelectAdapter = (props: any) => {
     label: getCharacterName(c),
     isDisabled: disabledList.includes(c),
   });
-  const selectOptions = options ? options : sortedCharacterIDs;
-  const { value, onChange, ...irest } = input;
   const parseValue = (val: any) => (val === undefined || val === "" ? undefined : val.map ? val.map(optionToValue) : optionToValue(val));
   const formatValue = (val: any) => (val === undefined || val === "" ? undefined : val.map ? val.map(valueToOption) : valueToOption(val));
   const newValue = formatValue(value);
   const newOnChange = (v: any) => onChange(parseValue(v));
-  const newInput = {
-    ...input,
-    value: newValue,
-    onChange: newOnChange,
-  };
   const SelectContainer = styled(Select)`
     width: 100%;
   `;
+  const selectOptions = options ? options : sortedCharacterIDs;
   return (<SelectContainer
-    {...newInput}
-    {...irest}
     {...rest}
+    value={newValue}
+    onChange={newOnChange}
     options={selectOptions.map(valueToOption)}
     searchable={true}
     components={{ MultiValueRemove, Option, SingleValue }}
@@ -106,11 +100,14 @@ export const CharacterSelectAdapter = (props: any) => {
   />);
 };
 
-export const CharacterSelect = (props: any) => {
-  return (
-    <Field
-      {...props}
-      component={CharacterSelectAdapter}
-    />
-  );
+export const CharacterSelectAdapter = (props: any) => {
+  const { name, ...rest } = props;
+  return (<Field name={name}>
+    {fprops => {
+      const { input, ...frest } = fprops;
+      return (
+        <CharacterSelect {...rest} {...frest} {...input} />
+      );
+    }}
+  </Field>);
 };

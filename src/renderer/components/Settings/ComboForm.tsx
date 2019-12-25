@@ -4,7 +4,7 @@ import { Form, Field } from "react-final-form";
 import arrayMutators from "final-form-arrays";
 import { ComboFilterSettings, Character } from "@vinceau/slp-realtime";
 
-import { CharacterSelect, characterSelectOptions, CharacterSelectAdapter } from "./ComboForm/CharacterSelect";
+import { CharacterSelectAdapter, characterSelectOptions, CharacterSelect } from "./ComboForm/CharacterSelect";
 import Styles from "./Styles";
 
 import "./ComboForm/NameTagForm.scss";
@@ -65,7 +65,7 @@ export const ComboForm: React.FC<{
                         <form onSubmit={handleSubmit}>
                             <div>
                                 <label>Character Filter</label>
-                                <CharacterSelect name="characterFilter" isMulti={true} />
+                                <CharacterSelectAdapter name="characterFilter" isMulti={true} />
                             </div>
                             <div>
                                 <label>Minimum Combo Percent</label>
@@ -97,11 +97,11 @@ export const ComboForm: React.FC<{
                             </div>
                             <div>
                                 <label>Chain Grabbers</label>
-                                <CharacterSelect name="chainGrabbers" isMulti={true} />
+                                <CharacterSelectAdapter name="chainGrabbers" isMulti={true} />
                             </div>
                             <div>
                                 <label>Single char</label>
-                                <CharacterSelect name="someothertest" disabledOptions={[Character.BOWSER, Character.CAPTAIN_FALCON]} />
+                                <CharacterSelectAdapter name="someothertest" disabledOptions={[Character.BOWSER, Character.CAPTAIN_FALCON]} />
                             </div>
                             <div>
                                 <label>Large Hit Threshold</label>
