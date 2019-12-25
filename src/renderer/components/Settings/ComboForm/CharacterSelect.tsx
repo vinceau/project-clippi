@@ -64,7 +64,7 @@ const Option: React.ComponentType<OptionProps<OptionTypeBase>> = (props) => {
 };
 
 export const CharacterSelect = (props: any) => {
-  const { value, onChange, options, disabledOptions, ...rest } = props;
+  const { value, onChange, options, disabledOptions, components, ...rest } = props;
   const disabledList = disabledOptions ? disabledOptions : [];
   const optionToValue = (o: any): Character => o.value;
   const valueToOption = (c: Character) => ({
@@ -86,7 +86,7 @@ export const CharacterSelect = (props: any) => {
     onChange={newOnChange}
     options={selectOptions.map(valueToOption)}
     searchable={true}
-    components={{ MultiValueRemove, Option, SingleValue }}
+    components={{ ...components, MultiValueRemove, Option, SingleValue }}
     styles={{
       multiValue: (base: any) => ({
         ...base,
