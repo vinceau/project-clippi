@@ -2,17 +2,15 @@
 import * as React from "react";
 import { Form, Field } from "react-final-form";
 import arrayMutators from "final-form-arrays";
-import { ComboFilterSettings, Character, getCharacterName } from "@vinceau/slp-realtime";
+import { ComboFilterSettings } from "@vinceau/slp-realtime";
 
-import { CharacterSelectAdapter, characterSelectOptions, CharacterSelect } from "./ComboForm/CharacterSelect";
+import { CharacterSelectAdapter } from "./ComboForm/CharacterSelect";
 import Styles from "./Styles";
 
 import "./ComboForm/NameTagForm.scss";
 import { PercentageSlider } from "./ComboForm/PercentageSlider";
 import { NameTagForm } from "./ComboForm/NameTagForm";
-import { PerCharPercent } from "./ComboForm/PerCharPercent";
-import { Popout } from "./ComboForm/Popout";
-import { produce } from "immer";
+import { PerCharPercent, mapObjectToCharacterPercentArray, mapCharacterPercentArrayToObject } from "./ComboForm/PerCharPercent";
 
 
 /*
@@ -36,42 +34,12 @@ export interface ComboFilterSettings {
 
 */
 
-
 type Values = Partial<ComboFilterSettings>;
-
-
-const mapCharacterPercentArrayToObject = (name: string, values: any): any => produce(values, draft => {
-    const newValue = {};
-    draft[name].forEach((c: any) => {
-        newValue[c.character] = c.percent;
-    });
-    draft[name] = newValue;
-});
-
-const mapObjectToCharacterPercentArray = (name: string, values: any): any => produce(values, draft => {
-    const charPercents = draft[name];
-    const percentArray = [];
-    for (let [key, value] of Object.entries(charPercents)) {
-        percentArray.push({
-            character: parseInt(key, 10),
-            percent: value,
-        });
-    }
-    percentArray.sort((a, b) => {
-        const aName = getCharacterName(a.character);
-        const bName = getCharacterName(b.character);
-        if (aName < bName) { return -1; }
-        if (aName > bName) { return 1; }
-        return 0;
-      });
-    draft[name] = percentArray;
-});
 
 export const ComboForm: React.FC<{
     initialValues: Values;
     onSubmit: (values: Values) => void;
 }> = props => {
-    const [ selection, setSelection ] = React.useState(undefined);
     const initialValues = mapObjectToCharacterPercentArray("perCharacterMinComboPercent", props.initialValues);
     const onSubmit = (v: any) => {
         const convertBack = mapCharacterPercentArrayToObject("perCharacterMinComboPercent", v);
@@ -133,16 +101,11 @@ export const ComboForm: React.FC<{
                                 <CharacterSelectAdapter name="chainGrabbers" isMulti={true} />
                             </div>
                             <div>
-                                <label>Single char</label>
-                                <CharacterSelectAdapter name="someothertest" disabledOptions={[Character.BOWSER, Character.CAPTAIN_FALCON]} />
-                            </div>
-                            <div>
                                 <label>Large Hit Threshold</label>
                                 <div>
                                     <PercentageSlider name="largeHitThreshold" min="0" max="1" />
                                 </div>
                             </div>
-                            <div><Field name="something" component={Popout} /></div>
                             <div>
                                 <label>Chaingrab Threshold</label>
                                 <div>
@@ -153,7 +116,6 @@ export const ComboForm: React.FC<{
                                 <label>Min. Pummels per Wobble</label>
                                 <Field name="wobbleThreshold" component="input" type="number" parse={(v: any) => parseInt(v, 10)} />
                             </div>
-                            <div>Selection: <pre>{JSON.stringify(selection)}</pre></div>
                             <div className="buttons">
                                 <button type="submit" disabled={submitting || pristine}>
                                     Save
