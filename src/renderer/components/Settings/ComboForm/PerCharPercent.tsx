@@ -41,8 +41,9 @@ export const CharacterSelect = (props: any) => {
 
   */
 
-export const PerCharPercent: React.FC<{ name: string; push: any; pop: any }> = props => {
-    const { name, push, pop } = props;
+export const PerCharPercent: React.FC<{ name: string; values: any; push: any; pop: any }> = props => {
+    const { name, values, push, pop } = props;
+    const selectedCharacters = (values[name] || []).filter(c => Boolean(c)).map(c => c.character);
     const formatter = (value: any, name: string): any => {
         console.log(`inside formatter. ${name} value:`);
         console.log(value);
@@ -86,6 +87,7 @@ export const PerCharPercent: React.FC<{ name: string; push: any; pop: any }> = p
                         <div key={name} style={{display: "flex", flexDirection: "row"}}>
                             <CharacterSelectAdapter
                                 name={`${name}.character`}
+                                disabledOptions={selectedCharacters}
                             />
                             <Field name={`${name}.percent`} component="input" type="number" parse={(v: any) => parseInt(v, 10)} />
                             <span

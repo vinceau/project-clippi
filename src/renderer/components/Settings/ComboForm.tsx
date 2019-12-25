@@ -77,7 +77,7 @@ export const ComboForm: React.FC<{
                             </div>
                             <div>
                                 <label>Per Character Combo Percent</label>
-                                <PerCharPercent name="perChar" pop={pop} push={push} />
+                                <PerCharPercent name="perChar" pop={pop} push={push} values={values} />
                             </div>
                             <div>
                                 <label>Combo Must Kill</label>
