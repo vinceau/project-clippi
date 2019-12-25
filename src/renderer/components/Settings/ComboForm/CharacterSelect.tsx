@@ -30,15 +30,22 @@ const MultiValueRemove: React.ComponentType<MultiValueProps<OptionTypeBase>> = (
   );
 };
 
-const CharacterLabel: React.FC<{characterId: Character, name: string}> = (props) => {
-  const Label = styled.div`
-      display: flex;
-    `;
+const CharacterLabel: React.FC<{ characterId: Character, name: string, disabled?: boolean }> = (props) => {
+  const isDisabled = props.disabled;
+  const LabelContainer = styled.div`
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+    ${isDisabled && `opacity: 0.5;`}
+  `;
+  const Label = styled.span`
+    margin-left: 10px;
+  `;
   return (
-      <Label>
-        <CharacterIcon character={props.characterId} />
-        <span>{props.name}</span>
-      </Label>
+    <LabelContainer>
+      <CharacterIcon character={props.characterId} grayscale={isDisabled} />
+      <Label>{props.name}</Label>
+    </LabelContainer>
   );
 };
 
@@ -51,7 +58,7 @@ const Option: React.ComponentType<OptionProps<OptionTypeBase>> = (props) => {
   `;
   return (
     <Outer ref={innerRef} {...innerProps}>
-      <CharacterLabel characterId={props.data.value} name={props.data.label} />
+      <CharacterLabel characterId={props.data.value} name={props.data.label} disabled={props.data.isDisabled} />
     </Outer>
   );
 };
