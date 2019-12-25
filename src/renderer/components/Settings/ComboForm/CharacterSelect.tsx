@@ -35,8 +35,10 @@ const CharacterLabel: React.FC<{ characterId: Character, name: string, disabled?
   const LabelContainer = styled.div`
     display: flex;
     align-items: center;
-    padding: 5px 10px;
-    ${isDisabled && `opacity: 0.5;`}
+    ${isDisabled && `
+      opacity: 0.5;
+      cursor: not-allowed;
+    `}
   `;
   const Label = styled.span`
     margin-left: 10px;
@@ -52,6 +54,7 @@ const CharacterLabel: React.FC<{ characterId: Character, name: string, disabled?
 const Option: React.ComponentType<OptionProps<OptionTypeBase>> = (props) => {
   const { innerProps, innerRef } = props;
   const Outer = styled.div`
+    padding-left: 10px;
     &:hover {
       background-color: #F8F8F8;
     }
