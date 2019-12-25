@@ -3,6 +3,7 @@ import * as React from "react";
 import Select from 'react-select';
 import Button from '@atlaskit/button';
 import produce from "immer";
+import { Field } from "react-final-form";
 
 const colors = {
     neutral20: "#CCCCCC",
@@ -90,7 +91,9 @@ export const Popout = (props: any) => {
             <button onClick={handleOnChange}>Add</button>
             <div>
                 {props.input.value && Object.entries(props.input.value).map(([k, v]) => {
-                    return (<p key={`input--value--${k}--${v}`}>{k}: {v}</p>);
+                    return (<div key={`input--value--${k}--${v}`}>{k}: {v}
+                    <Field name={`${props.input.name}.${k}`} component="input"/>
+                    </div>);
                 })}
             </div>
         </>
