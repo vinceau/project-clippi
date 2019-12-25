@@ -4,6 +4,9 @@ import Select from 'react-select';
 import Button from '@atlaskit/button';
 import produce from "immer";
 import { Field } from "react-final-form";
+import { CharacterSelect } from "./CharacterSelect";
+import { Character } from "@vinceau/slp-realtime";
+import { CharacterIcon } from "@/components/CharacterIcon";
 
 const colors = {
     neutral20: "#CCCCCC",
@@ -42,18 +45,16 @@ export const Popout = (props: any) => {
     const handleOnChange = () => {
         console.log(`old props: ${JSON.stringify(props.value)}`);
         console.log("clicking add");
-        console.log(`setting ${value.value} to ${percent}`);
         const newValue = produce(props.input.value || {}, (draft: any) => {
-            draft[value.value] = percent;
+            draft[value] = percent;
         });
-        console.log(`setting ${value.value} to ${percent}`);
         console.log(`new props: ${JSON.stringify(newValue)}`);
         props.input.onChange(newValue);
     };
 
-    const selected: string[] = props.input.value ? Object.keys(props.input.value) : [];
+    const selected: Character[] = props.input.value ? Object.keys(props.input.value).map(c => parseInt(c, 10)) : [];
     return (
-        <>
+        <div style={{display: "flex", flexDirection: "column"}}>
         <Dropdown
             isOpen={isOpen}
             onClose={toggleOpen}
@@ -63,11 +64,11 @@ export const Popout = (props: any) => {
                     onClick={toggleOpen}
                     isSelected={isOpen}
                 >
-                    {value ? `State: ${value.label}` : 'Select a State'}
+                    {value !== undefined ? `Character: ${value}` : 'Select a character'}
                 </Button>
             }
         >
-            <Select
+            <CharacterSelect
                 autoFocus
                 backspaceRemovesValue={false}
                 components={{ DropdownIndicator, IndicatorSeparator: null }}
@@ -76,9 +77,7 @@ export const Popout = (props: any) => {
                 isClearable={false}
                 menuIsOpen={true}
                 onChange={onSelectChange}
-                options={stateOptions.map(v => produce(v, draft => {
-                    draft.isDisabled = selected.includes(v.value);
-                }))}
+                disabledOptions={selected}
                 placeholder="Search..."
                 styles={selectStyles}
                 tabSelectsValue={false}
@@ -91,12 +90,14 @@ export const Popout = (props: any) => {
             <button onClick={handleOnChange}>Add</button>
             <div>
                 {props.input.value && Object.entries(props.input.value).map(([k, v]) => {
-                    return (<div key={`input--value--${k}--${v}`}>{k}: {v}
-                    <Field name={`${props.input.name}.${k}`} component="input"/>
+                    const char: Character = parseInt(k, 10);
+                    return (<div key={`input--value--${k}--${v}`}>
+                        <CharacterIcon character={char} />
+                        <Field name={`${props.input.name}.${k}`} component="input"/>
                     </div>);
                 })}
             </div>
-        </>
+        </div>
     );
 };
 
@@ -113,6 +114,7 @@ const Menu = (props: any) => {
                 marginTop: 8,
                 position: 'absolute',
                 zIndex: 2,
+                width: "100%",
             }}
             {...props}
         />
