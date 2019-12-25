@@ -2,7 +2,7 @@
 import * as React from "react";
 import { Form, Field } from "react-final-form";
 import arrayMutators from "final-form-arrays";
-import { ComboFilterSettings } from "@vinceau/slp-realtime";
+import { ComboFilterSettings, Character } from "@vinceau/slp-realtime";
 
 import { CharacterSelect, characterSelectOptions, CharacterSelectAdapter } from "./ComboForm/CharacterSelect";
 import Styles from "./Styles";
@@ -101,7 +101,7 @@ export const ComboForm: React.FC<{
                             </div>
                             <div>
                                 <label>Single char</label>
-                                <CharacterSelect name="test" />
+                                <CharacterSelect name="someothertest" disabledOptions={[Character.BOWSER, Character.CAPTAIN_FALCON]} />
                             </div>
                             <div>
                                 <label>Large Hit Threshold</label>
@@ -120,7 +120,6 @@ export const ComboForm: React.FC<{
                                 <label>Min. Pummels per Wobble</label>
                                 <Field name="wobbleThreshold" component="input" type="number" parse={(v: any) => parseInt(v, 10)} />
                             </div>
-                            <div><CharacterSelectAdapter value={selection} onChange={setSelection} options={characterSelectOptions}/></div>
                             <div>Selection: <pre>{JSON.stringify(selection)}</pre></div>
                             <div className="buttons">
                                 <button type="submit" disabled={submitting || pristine}>

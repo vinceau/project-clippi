@@ -1,22 +1,19 @@
 import * as React from "react";
 import Select, { components, MultiValueProps, OptionProps, OptionTypeBase, SingleValueProps } from "react-select";
-import { Character,CharacterInfo, getAllCharacters, getCharacterName } from "@vinceau/slp-realtime";
+import { Character, CharacterInfo, getAllCharacters, getCharacterName } from "@vinceau/slp-realtime";
 import styled from "styled-components";
 import { Field } from "react-final-form";
 
 import { CharacterIcon } from "../../CharacterIcon";
 
-export const sortedCharacters: CharacterInfo[] = getAllCharacters()
+export const sortedCharacterInfos: CharacterInfo[] = getAllCharacters()
   .sort((a, b) => {
     if (a.name < b.name) { return -1; }
     if (a.name > b.name) { return 1; }
     return 0;
   });
 
-export const characterSelectOptions = sortedCharacters.map(c => ({
-      value: c.id,
-      label: c.name,
-    }));
+export const sortedCharacterIDs: Character[] = sortedCharacterInfos.map(c => c.id);
 
 const SingleValue: React.ComponentType<SingleValueProps<OptionTypeBase>> = (props) => {
   return (
@@ -67,13 +64,33 @@ const Option: React.ComponentType<OptionProps<OptionTypeBase>> = (props) => {
 };
 
 export const CharacterSelectAdapter = (props: any) => {
-  const { input, ...rest } = props;
+  const { input, options, disabledOptions, ...rest } = props;
+  const disabledList = disabledOptions ? disabledOptions : [];
+  const optionToValue = (o: any): Character => o.value;
+  const valueToOption = (c: Character) => ({
+    value: c,
+    label: getCharacterName(c),
+    isDisabled: disabledList.includes(c),
+  });
+  const selectOptions = options ? options : sortedCharacterIDs;
+  const { value, onChange, ...irest } = input;
+  const parseValue = (val: any) => (val === undefined || val === "" ? undefined : val.map ? val.map(optionToValue) : optionToValue(val));
+  const formatValue = (val: any) => (val === undefined || val === "" ? undefined : val.map ? val.map(valueToOption) : valueToOption(val));
+  const newValue = formatValue(value);
+  const newOnChange = (v: any) => onChange(parseValue(v));
+  const newInput = {
+    ...input,
+    value: newValue,
+    onChange: newOnChange,
+  };
   const SelectContainer = styled(Select)`
-        width: 100%;
-    `;
+    width: 100%;
+  `;
   return (<SelectContainer
-    {...input}
+    {...newInput}
+    {...irest}
     {...rest}
+    options={selectOptions.map(valueToOption)}
     searchable={true}
     components={{ MultiValueRemove, Option, SingleValue }}
     styles={{
@@ -90,27 +107,10 @@ export const CharacterSelectAdapter = (props: any) => {
 };
 
 export const CharacterSelect = (props: any) => {
-  const { options, ...rest } = props;
-  const optionToValue = (o: any): Character => o.value;
-  const valueToOption = (c: Character) => ({
-    value: c,
-    label: getCharacterName(c),
-  });
-  let selectOptions;
-  if (props.options) {
-    selectOptions = options.map(valueToOption);
-  } else {
-    selectOptions = characterSelectOptions;
-  }
-  const parseValue = (value: any) => (value === undefined ? value : value.map ? value.map(optionToValue) : optionToValue(value));
-  const formatValue = (value: any) => (value === undefined ? value : value.map ? value.map(valueToOption) : valueToOption(value));
   return (
     <Field
-      {...rest}
-      parse={parseValue}
-      format={formatValue}
+      {...props}
       component={CharacterSelectAdapter}
-      options={selectOptions}
     />
   );
 };
