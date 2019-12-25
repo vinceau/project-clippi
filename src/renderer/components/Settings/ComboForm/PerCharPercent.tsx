@@ -2,6 +2,7 @@ import * as React from "react";
 
 import { Field } from "react-final-form";
 import { FieldArray } from "react-final-form-arrays";
+import { CharacterSelectAdapter } from "./CharacterSelect";
 
 /*
 interface Value {
@@ -75,33 +76,18 @@ export const PerCharPercent: React.FC<{ name: string; push: any; pop: any }> = p
     //     return newV;
     // };
     return (
-        <>
-            <div className="buttons">
-                <button type="button" onClick={() => push(name, undefined)}>
-                    Add Customer
-                </button>
-                <button type="button" onClick={() => pop(name)}>
-                    Remove Customer
-                </button>
-            </div>
-            <FieldArray name={name} format={formatter} parse={parser}>
+        <div style={{display: "flex", flexDirection: "column", width: "100%"}}>
+            <FieldArray name={name}>
                 {({ fields }) => {
                     // console.log(fields);
                     return fields.map((name, index) => {
                         // console.log(name, index);
                         return (
-                        <div key={name}>
-                            <label>Cust. #{index + 1}</label>
-                            <Field
+                        <div key={name} style={{display: "flex", flexDirection: "row"}}>
+                            <CharacterSelectAdapter
                                 name={`${name}.character`}
-                                component="input"
-                                placeholder="First Name"
                             />
-                            <Field
-                                name={`${name}.percent`}
-                                component="input"
-                                placeholder="Last Name"
-                            />
+                            <Field name={`${name}.percent`} component="input" type="number" parse={(v: any) => parseInt(v, 10)} />
                             <span
                                 onClick={() => fields.remove(index)}
                                 style={{ cursor: 'pointer' }}
@@ -114,6 +100,11 @@ export const PerCharPercent: React.FC<{ name: string; push: any; pop: any }> = p
                 }
                 }
             </FieldArray>
-        </>
+            <div className="buttons">
+                <button type="button" onClick={() => push(name, undefined)}>
+                    Add Character
+                </button>
+            </div>
+        </div>
     );
 };
