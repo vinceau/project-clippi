@@ -22,6 +22,17 @@ jobs:
         with:
           node-version: 10
 
+      - name: Cache node modules
+        uses: actions/cache@v1
+        id: cache
+        with:
+          path: node_modules
+          key: ${{ runner.OS }}-build-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.OS }}-build-${{ env.cache-name }}-
+            ${{ runner.OS }}-build-
+            ${{ runner.OS }}-
+
       - name: Build/release Electron app
         uses: samuelmeuli/action-electron-builder@v1
         with:
