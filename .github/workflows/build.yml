@@ -32,6 +32,6 @@ jobs:
         yarn install
     - name: Build App
       run: |
-        yarn run dist
+        yarn run dist --publish never
       env:
         CI: true
