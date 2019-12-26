@@ -9,6 +9,14 @@ export const delay = async (ms: number): Promise<void> => {
     await new Promise(resolve => setTimeout(resolve, ms));
 };
 
+export const getFilePath = async (): Promise<string> => {
+    const p = await ipc.sendSyncWithTimeout(
+        Message.SelectDirectory,
+        0, // timeout
+    );
+    return p;
+};
+
 export const notify = (title: string, body: string) => {
     ipc.sendMessage(
         Message.Notify,

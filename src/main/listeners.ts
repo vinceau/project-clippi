@@ -3,6 +3,7 @@ import { Message } from "common/types";
 
 import { showNotification, twitchClipNotification } from "./lib/notifications";
 import { authenticateTwitch } from "./lib/twitch";
+import { selectDirectory } from "./lib/fileSystem";
 
 export const setupListeners = (ipc: IPC) => {
 
@@ -17,6 +18,14 @@ export const setupListeners = (ipc: IPC) => {
 
         const token = await authenticateTwitch(scopes);
         return token;
+    });
+
+    ipc.on(Message.SelectDirectory, async (value, _error?: Error) => {
+        if (_error) {
+            throw new Error("Should not have received error");
+        }
+
+        return await selectDirectory();
     });
 
     ipc.on(Message.NotifyTwitchClip, (value, _error?: Error) => {
