@@ -53,7 +53,7 @@ export const TwitchClip: React.SFC<{ accessToken: string }> = props => {
         const clip = await createTwitchClip(props.accessToken, name);
         console.log(`clip: ${clip}`);
         if (clip !== null) {
-            await notifyTwitchClip(clip);
+            notifyTwitchClip(clip);
         } else {
             notify("Clip Error", "Failed to create clip")
         }
