@@ -8,13 +8,17 @@
       "category": "public.app-category.lifestyle"
     },
     "win": {
-      "target": ["portable"]
+      "target": [
+        "portable"
+      ]
     },
     "dmg": {
       "icon": false
     },
     "linux": {
-      "target": ["AppImage"],
+      "target": [
+        "AppImage"
+      ],
       "category": "Office"
     }
   },
@@ -31,6 +35,7 @@
   "dependencies": {
     "@rematch/core": "^1.3.0",
     "@rematch/persist": "^1.1.6",
+    "@vinceau/slp-realtime": "^0.0.1",
     "electron-context-menu": "^0.15.1",
     "final-form": "^4.18.6",
     "final-form-arrays": "^3.0.2",
@@ -45,7 +50,6 @@
     "react-router-dom": "^4.3.1",
     "react-select": "^3.0.8",
     "redux": "^4.0.1",
-    "@vinceau/slp-realtime": "^0.0.1",
     "source-map-support": "^0.5.10",
     "styled-components": "^4.4.1",
     "twitch": "^3.5.6",

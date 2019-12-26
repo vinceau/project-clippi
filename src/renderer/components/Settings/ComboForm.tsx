@@ -4,13 +4,13 @@ import { Form, Field } from "react-final-form";
 import arrayMutators from "final-form-arrays";
 import { ComboFilterSettings } from "@vinceau/slp-realtime";
 
-import { CharacterSelect, characterSelectOptions, CharacterSelectAdapter } from "./ComboForm/CharacterSelect";
+import { CharacterSelectAdapter } from "./ComboForm/CharacterSelect";
 import Styles from "./Styles";
 
 import "./ComboForm/NameTagForm.scss";
 import { PercentageSlider } from "./ComboForm/PercentageSlider";
 import { NameTagForm } from "./ComboForm/NameTagForm";
-import { PerCharPercent } from "./ComboForm/PerCharPercent";
+import { PerCharPercent, mapObjectToCharacterPercentArray, mapCharacterPercentArrayToObject } from "./ComboForm/PerCharPercent";
 
 
 /*
@@ -34,23 +34,25 @@ export interface ComboFilterSettings {
 
 */
 
-
 type Values = Partial<ComboFilterSettings>;
-
 
 export const ComboForm: React.FC<{
     initialValues: Values;
     onSubmit: (values: Values) => void;
 }> = props => {
-    const [ selection, setSelection ] = React.useState(undefined);
+    const initialValues = mapObjectToCharacterPercentArray("perCharacterMinComboPercent", props.initialValues);
+    const onSubmit = (v: any) => {
+        const convertBack = mapCharacterPercentArrayToObject("perCharacterMinComboPercent", v);
+        props.onSubmit(convertBack);
+    };
     return (
         <Styles>
             <Form
-                onSubmit={props.onSubmit}
+                onSubmit={onSubmit}
                 mutators={{
                     ...arrayMutators
                 }}
-                initialValues={props.initialValues}
+                initialValues={initialValues}
                 render={({
                     handleSubmit,
                     form: {
@@ -64,7 +66,7 @@ export const ComboForm: React.FC<{
                         <form onSubmit={handleSubmit}>
                             <div>
                                 <label>Character Filter</label>
-                                <CharacterSelect name="characterFilter" isMulti={true} />
+                                <CharacterSelectAdapter name="characterFilter" isMulti={true} />
                             </div>
                             <div>
                                 <label>Minimum Combo Percent</label>
@@ -76,7 +78,7 @@ export const ComboForm: React.FC<{
                             </div>
                             <div>
                                 <label>Per Character Combo Percent</label>
-                                <PerCharPercent name="perChar" pop={pop} push={push} />
+                                <PerCharPercent name="perCharacterMinComboPercent" pop={pop} push={push} values={values} />
                             </div>
                             <div>
                                 <label>Combo Must Kill</label>
@@ -96,11 +98,7 @@ export const ComboForm: React.FC<{
                             </div>
                             <div>
                                 <label>Chain Grabbers</label>
-                                <CharacterSelect name="chainGrabbers" isMulti={true} />
-                            </div>
-                            <div>
-                                <label>Single char</label>
-                                <CharacterSelect name="test" />
+                                <CharacterSelectAdapter name="chainGrabbers" isMulti={true} />
                             </div>
                             <div>
                                 <label>Large Hit Threshold</label>
@@ -118,8 +116,6 @@ export const ComboForm: React.FC<{
                                 <label>Min. Pummels per Wobble</label>
                                 <Field name="wobbleThreshold" component="input" type="number" parse={(v: any) => parseInt(v, 10)} />
                             </div>
-                            <div><CharacterSelectAdapter value={selection} onChange={setSelection} options={characterSelectOptions}/></div>
-                            <div>Selection: <pre>{JSON.stringify(selection)}</pre></div>
                             <div className="buttons">
                                 <button type="submit" disabled={submitting || pristine}>
                                     Save

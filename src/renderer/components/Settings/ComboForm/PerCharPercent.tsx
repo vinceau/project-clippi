@@ -1,110 +1,63 @@
 import * as React from "react";
 
+import { Character, getCharacterName } from "@vinceau/slp-realtime";
+import { produce } from "immer";
 import { Field } from "react-final-form";
 import { FieldArray } from "react-final-form-arrays";
 
-/*
-interface Value {
-    character: any;
-    percent: any;
+import { CharacterSelectAdapter } from "./CharacterSelect";
+
+interface CharPercentOption {
+    character: Character;
+    percent: number;
 }
 
-export const CharacterSelect = (props: any) => {
-    const { name, ...rest } = props;
-    const chars = sortedCharacters.map(c => ({
-      value: c.id,
-      label: c.name,
-    }));
-    const optionToValue = (o: any): Character => o.value;
-    const valueToOption = (c: Character) => ({
-      value: c,
-      label: getCharacterName(c),
+export const mapCharacterPercentArrayToObject = (name: string, values: any): any => produce(values, (draft: any) => {
+    const newValue = {};
+    draft[name].forEach((c: CharPercentOption) => {
+        newValue[c.character] = c.percent;
     });
-  
-    return (<Field name={props.name}>
-      {fprops => {
-        const { input, ...frest } = fprops;
-        const value = input.value && input.value.map ? input.value.map(valueToOption) : input.value;
-        const onChange = (v: any) => input.onChange(v.map(optionToValue));
-        const newInput = {
-          ...input,
-          value,
-          onChange,
-        };
-        return (
-          <ReactSelectAdapter {...rest} {...frest} input={newInput} options={chars} />
-        );
-      }}
-    </Field>);
-  };
+    draft[name] = newValue;
+});
 
-  */
+export const mapObjectToCharacterPercentArray = (name: string, values: any): any => produce(values, (draft: any) => {
+    const charPercents = draft[name];
+    const percentArray: CharPercentOption[] = [];
+    for (const [key, value] of Object.entries(charPercents)) {
+        percentArray.push({
+            character: parseInt(key, 10),
+            percent: value as number,
+        });
+    }
+    percentArray.sort((a, b) => {
+        const aName = getCharacterName(a.character);
+        const bName = getCharacterName(b.character);
+        if (aName < bName) { return -1; }
+        if (aName > bName) { return 1; }
+        return 0;
+      });
+    draft[name] = percentArray;
+});
 
-export const PerCharPercent: React.FC<{ name: string; push: any; pop: any }> = props => {
-    const { name, push, pop } = props;
-    const formatter = (value: any, name: string): any => {
-        console.log(`inside formatter. ${name} value:`);
-        console.log(value);
-        return value;
-    };
-    const parser = (value: any, name: string): any => {
-        console.log(`inside parser. ${name} value:`);
-        console.log(value);
-        return value;
-    };
-    // const valueFormat = (v: Value[]): any => {
-    //     console.log('inside value format. got value:');
-    //     console.log(v);
-    //     const newV = {};
-    //     for (const val of v) {
-    //         newV[val.character] = val.percent;
-    //     }
-    //     return newV;
-    // };
-    // const valueParse = (v: any): Value[] => {
-    //     console.log('inside value parse. got value:');
-    //     console.log(v);
-    //     const newV: Value[] = [];
-    //     for (const [key, value] of Object.entries(v)) {
-    //         console.log(`${key}: ${value}`);
-    //         newV.push({
-    //             character: key,
-    //             percent: value,
-    //         });
-    //     }
-    //     return newV;
-    // };
+export const PerCharPercent: React.FC<{ name: string; values: any; push: any; pop: any }> = props => {
+    const { name, values, push } = props;
+    const selectedChars: CharPercentOption[] = values[name] || [];
+    const selectedCharIDs = selectedChars.filter(c => Boolean(c)).map(c => c.character);
     return (
-        <>
-            <div className="buttons">
-                <button type="button" onClick={() => push(name, undefined)}>
-                    Add Customer
-                </button>
-                <button type="button" onClick={() => pop(name)}>
-                    Remove Customer
-                </button>
-            </div>
-            <FieldArray name={name} format={formatter} parse={parser}>
+        <div style={{display: "flex", flexDirection: "column", width: "100%"}}>
+            <FieldArray name={name}>
                 {({ fields }) => {
-                    // console.log(fields);
-                    return fields.map((name, index) => {
-                        // console.log(name, index);
+                    return fields.map((n, index) => {
                         return (
-                        <div key={name}>
-                            <label>Cust. #{index + 1}</label>
-                            <Field
-                                name={`${name}.character`}
-                                component="input"
-                                placeholder="First Name"
+                        <div key={n} style={{display: "flex", flexDirection: "row"}}>
+                            <CharacterSelectAdapter
+                                name={`${n}.character`}
+                                disabledOptions={selectedCharIDs}
                             />
-                            <Field
-                                name={`${name}.percent`}
-                                component="input"
-                                placeholder="Last Name"
-                            />
+                            <Field name={`${n}.percent`} component="input" type="number" parse={(v: string) => parseInt(v, 10)} />
                             <span
                                 onClick={() => fields.remove(index)}
-                                style={{ cursor: 'pointer' }}
+                                style={{ cursor: "pointer" }}
                             >
                                 ❌
                             </span>
@@ -114,6 +67,11 @@ export const PerCharPercent: React.FC<{ name: string; push: any; pop: any }> = p
                 }
                 }
             </FieldArray>
-        </>
+            <div className="buttons">
+                <button type="button" onClick={() => push(name, undefined)}>
+                    Add Character
+                </button>
+            </div>
+        </div>
     );
 };
