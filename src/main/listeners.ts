@@ -20,7 +20,7 @@ export const setupListeners = (ipc: IPC) => {
         return token;
     });
 
-    ipc.on(Message.SelectDirectory, async (value, _error?: Error) => {
+    ipc.on(Message.SelectDirectory, async (_, _error?: Error) => {
         if (_error) {
             throw new Error("Should not have received error");
         }
