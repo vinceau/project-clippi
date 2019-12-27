@@ -1,13 +1,15 @@
 import * as React from "react";
 import styled from "styled-components";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+import { Link, Route, Switch } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Tooltip } from "react-tippy";
 
 // import { useDispatch, useSelector } from "react-redux";
 // import { Dispatch, iRootState } from "@/store";
-import { Link, Route, Switch } from "react-router-dom";
 import { Panel } from "./Panel";
 import { SettingsPage } from "./Settings/Settings";
+// import { Tooltip } from "./Tooltip";
 
 // import { TwitchConnect } from "./TwitchConnect";
 
@@ -19,17 +21,18 @@ const Header: React.FC<{
         flex: 0 1 auto;
         display: flex;
         justify-content: space-between;
+        padding: 20px;
     `;
     return (
         <HeaderContainer>
             <div>
-                <h1>Project Clippi</h1>
+                <span>Project Clippi</span>
             </div>
-            <div onClick={() => {
+            <span onClick={() => {
                 if (props.onSettingsButtonClick) {
                     props.onSettingsButtonClick();
                 }
-            }}><FontAwesomeIcon icon="cog" /></div>
+            }}><Tooltip arrow={true} duration={200} position="bottom" title="Settings"><FontAwesomeIcon icon="cog" /></Tooltip></span>
         </HeaderContainer>
     );
 };
