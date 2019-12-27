@@ -970,10 +970,10 @@
   resolved "https://registry.yarnpkg.com/@types/webpack-env/-/webpack-env-1.14.1.tgz#0d8a53f308f017c53a5ddc3d07f4d6fa76b790d7"
   integrity sha512-0Ki9jAAhKDSuLDXOIMADg54Hu60SuBTEsWaJGGy5cV+SSUQ63J2a+RrYYGrErzz39fXzTibhKrAQJAb8M7PNcA==
 
-"@vinceau/slp-realtime@^0.0.2":
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/@vinceau/slp-realtime/-/slp-realtime-0.0.2.tgz#e487c553d1d7a684cb97ace7103242790f65fa9a"
-  integrity sha512-WyEjy4BqfxezJzytAgjThXRvjtOwCiB/z91eCK2z/akuIfrVW1/mK+G69bwOaZXnFTw8Z8pV2G5QMfauiX3Y1A==
+"@vinceau/slp-realtime@^0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@vinceau/slp-realtime/-/slp-realtime-0.0.3.tgz#595a9be4ce0d37967ed56e8abf99d3f8add2e038"
+  integrity sha512-unHDLqF+llvwoCwWBi1kohf0AO0ZxoLwZYEMHlhmz+ZIzqShW4OZjgpcQNoJL1b1kWZhK3CWUWgIkMaZ69SmOw==
   dependencies:
     "@vinceau/slp-wii-connect" "^0.0.3"
     lodash "^4.17.11"
