@@ -17,12 +17,12 @@ const fileOptions = {
     properties: ["openFile"],
 };
 
-export const getFolderPath = async (options?: any): Promise<string> => {
+export const getFolderPath = async (options?: any): Promise<string | null> => {
     const dialogOptions = options ? options : folderOptions;
     return getFilePath(dialogOptions);
 };
 
-export const getFilePath = async (options?: any, save?: boolean): Promise<string> => {
+export const getFilePath = async (options?: any, save?: boolean): Promise<string | null> => {
     const dialogOptions = options ? options : fileOptions;
     try {
         const p = await ipc.sendSyncWithTimeout(
@@ -36,7 +36,7 @@ export const getFilePath = async (options?: any, save?: boolean): Promise<string
         return p;
     } catch (err) {
         console.error(err);
-        return "";
+        return null;
     }
 };
 

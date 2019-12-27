@@ -20,7 +20,11 @@ export const ComboFinder: React.FC<{}> = () => {
         dispatch.filesystem.getFilesPath();
     };
     const selectComboPath = () => {
-        getFilePath(undefined, true).then(p => setSaveComboPath(p)).catch(console.error);
+        getFilePath(undefined, true).then(p => {
+            if (p) {
+                setSaveComboPath(p);
+            }
+        }).catch(console.error);
     };
     const setSubfolders = (folders: boolean) => {
         dispatch.filesystem.setIncludeSubFolders(folders);

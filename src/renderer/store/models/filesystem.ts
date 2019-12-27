@@ -26,7 +26,9 @@ export const filesystem = createModel({
     effects: dispatch => ({
         async getFilesPath() {
             const path = await getFolderPath();
-            dispatch.filesystem.setFilesPath(path);
+            if (path) {
+                dispatch.filesystem.setFilesPath(path);
+            }
         },
     }),
 });
