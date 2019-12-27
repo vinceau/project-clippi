@@ -1,17 +1,16 @@
 import * as React from "react";
 
-import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
+import styled from "styled-components";
 
-import { Dispatch, iRootState } from "@/store";
-import { TwitchClip, TwitchConnectButton } from "./TwitchConnect";
-import { notify } from "../lib/utils";
 import { connectToSlippi } from "@/lib/realtime";
+import { Dispatch, iRootState } from "@/store";
+import { notify } from "../lib/utils";
 import { SlippiPage } from "./Slippi";
+import { TwitchClip, TwitchConnectButton } from "./TwitchConnect";
 
 const Count = () => {
     const slippiPort = useSelector((state: iRootState) => state.slippi.port);
-    const sharks = useSelector((state: iRootState) => state.sharks);
     const authToken = useSelector((state: iRootState) => state.twitch.authToken);
     const dispatch = useDispatch<Dispatch>();
 
@@ -26,9 +25,9 @@ const Count = () => {
         notify("Notification title", "Notification body");
     };
     const handleConnect = (port: string) => {
-        console.log('updating port in redux');
+        console.log("updating port in redux");
         dispatch.slippi.setPort(port);
-        console.log('connecting to port');
+        console.log("connecting to port");
         connectToSlippi(parseInt(port, 10)).catch(console.error);
     };
 
@@ -39,17 +38,6 @@ const Count = () => {
                 <SlippiPage initialPort={slippiPort} onSubmit={handleConnect} />
             </div>
             <button onClick={handleClick}>notify</button>
-            <div style={{ width: 200 }}>
-                <h3>Sharks</h3>
-                <h1>{sharks}</h1>
-                <button onClick={() => dispatch.sharks.increment(1)}>+1</button>
-                <button onClick={() => dispatch.sharks.incrementAsync(1)}>
-                    Async +1
-                </button>
-                <button onClick={() => dispatch.twitch.fetchTwitchToken()}>
-                    Fetch token
-                </button>
-            </div>
             {authToken ?
                 <TwitchClip accessToken={authToken} />
                 :

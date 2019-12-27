@@ -42,6 +42,7 @@
     "glob": "^7.1.6",
     "immer": "^5.0.1",
     "open": "^7.0.0",
+    "rc-progress": "^2.5.2",
     "react": "^16.8.3",
     "react-dom": "^16.8.3",
     "react-final-form": "^6.3.3",
