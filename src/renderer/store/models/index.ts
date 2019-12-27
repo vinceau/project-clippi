@@ -1,5 +1,6 @@
 import { filesystem } from "./filesystem";
 import { slippi } from "./slippi";
+import { tempContainer } from "./tempContainer";
 import { twitch } from "./twitch";
 
-export { slippi, filesystem, twitch };
+export { tempContainer, slippi, filesystem, twitch };

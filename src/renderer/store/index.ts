@@ -5,6 +5,7 @@ import * as models from "./models";
 
 const persistPlugin = createRematchPersist({
     version: 1,
+    blacklist: ["tempContainer"],
 });
 
 export const store = init({
