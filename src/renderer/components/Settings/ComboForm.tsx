@@ -12,6 +12,7 @@ import { mapCharacterPercentArrayToObject, mapObjectToCharacterPercentArray, Per
 
 import "./ComboForm/NameTagForm.scss";
 import Styles from "./Styles";
+import { PortSelectAdapter } from "./PortSelection";
 
 /*
 export interface ComboFilterSettings {
@@ -67,6 +68,10 @@ export const ComboForm: React.FC<{
                             <div>
                                 <label>Character Filter</label>
                                 <CharacterSelectAdapter name="characterFilter" isMulti={true} />
+                            </div>
+                            <div>
+                                <label>Port Filter</label>
+                                <PortSelectAdapter name="portFilter" />
                             </div>
                             <div>
                                 <label>Minimum Combo Percent</label>
