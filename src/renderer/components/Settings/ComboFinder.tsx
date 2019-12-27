@@ -26,7 +26,7 @@ export const ComboFinder: React.FC<{}> = () => {
     const findAndWriteCombos = async () => {
         const files = await findFiles("*.slp", filesPath, includeSubFolders);
         const callback = (i: number, filename: string, n: number): void => {
-            setPercent(i / (files.length - 1) * 100);
+            setPercent((i + 1) / files.length * 100);
             setLog(`Found ${n} combos in: ${filename}`);
         };
         const numCombos = await generateCombos(files, combosFilePath, callback);
