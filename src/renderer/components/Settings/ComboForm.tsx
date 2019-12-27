@@ -73,6 +73,10 @@ export const ComboForm: React.FC<{
                                 <Field name="minComboPercent" component="input" type="number" parse={(v: any) => parseInt(v, 10)} />
                             </div>
                             <div>
+                                <label>Minimum Combo Length</label>
+                                <Field name="minComboLength" component="input" type="number" parse={(v: any) => parseInt(v, 10)} />
+                            </div>
+                            <div>
                                 <label>Name Tag Filter</label>
                                 <NameTagForm name="nameTags" pop={pop} push={push} values={values} />
                             </div>
