@@ -9,6 +9,37 @@ export const delay = async (ms: number): Promise<void> => {
     await new Promise(resolve => setTimeout(resolve, ms));
 };
 
+const folderOptions = {
+    properties: ["openDirectory"],
+};
+
+const fileOptions = {
+    properties: ["openFile"],
+};
+
+export const getFolderPath = async (options?: any): Promise<string | null> => {
+    const dialogOptions = options ? options : folderOptions;
+    return getFilePath(dialogOptions);
+};
+
+export const getFilePath = async (options?: any, save?: boolean): Promise<string | null> => {
+    const dialogOptions = options ? options : fileOptions;
+    try {
+        const p = await ipc.sendSyncWithTimeout(
+            Message.SelectDirectory,
+            0, // timeout
+            {
+                options: dialogOptions,
+                save,
+            },
+        );
+        return p;
+    } catch (err) {
+        console.error(err);
+        return null;
+    }
+};
+
 export const notify = (title: string, body: string) => {
     ipc.sendMessage(
         Message.Notify,

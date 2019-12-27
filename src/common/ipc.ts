@@ -21,19 +21,19 @@ export class IPC {
         this.other = other;
     }
 
-    public sendMessage = <T extends Message>(route: T, value: RequestType<T>) => {
+    public sendMessage = <T extends Message>(route: T, value?: RequestType<T>) => {
         // log(`sendMessage ${route} ${JSON.stringify(value)} ${error}`);
         this.other().send(route, value, null);
     }
 
-    public replyToMessage = <T extends Message>(route: string, value: ResponseType<T> | null, error?: Error | null) => {
+    public replyToMessage = <T extends Message>(route: string, value?: ResponseType<T> | null, error?: Error | null) => {
         // log(`sendMessage ${route} ${JSON.stringify(value)} ${error}`);
         this.other().send(route, value, error);
     }
 
     // In order to use this, two routes must be defined in index.js, `${route}` and
     // `${route}-response`.
-    public sendSyncWithTimeout = async <T extends Message>(route: T, seconds: number, value: RequestType<T>) => new Promise<ResponseType<T>>((resolve, reject) => {
+    public sendSyncWithTimeout = async <T extends Message>(route: T, seconds: number, value?: RequestType<T>) => new Promise<ResponseType<T>>((resolve, reject) => {
         // log(`sendSyncWithTimeout ${route}`);
 
         (this.once as any)(routeResponse(route), ((response: ResponseType<T> | null, error?: Error) => {

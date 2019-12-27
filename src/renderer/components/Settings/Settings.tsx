@@ -4,9 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { Dispatch, iRootState } from "@/store";
 
-import { ComboForm } from "./ComboForm";
 import { comboFilter } from "@/lib/realtime";
 import { ComboFilterSettings } from "@vinceau/slp-realtime";
+import { ComboFinder } from "./ComboFinder";
+import { ComboForm } from "./ComboForm";
 
 export const SettingsPage: React.FC<{}> = () => {
     const settings = useSelector((state: iRootState) => state.slippi.settings);
@@ -22,6 +23,7 @@ export const SettingsPage: React.FC<{}> = () => {
     return (
         <div>
             <h1>Settings</h1>
+            <ComboFinder />
             <ComboForm initialValues={initial} onSubmit={onSubmit} />
         </div>
     );
