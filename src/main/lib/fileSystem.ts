@@ -1,17 +1,31 @@
 import { dialog } from "electron";
 
-const options = {
-    properties: ["openDirectory"],
+export const openFileSystemDialog = async (options: any, save?: boolean): Promise<string> => {
+    if (save) {
+        return saveDialog(options);
+    }
+    return openDialog(options);
 };
 
-export const selectDirectory = async (): Promise<string> => {
+const openDialog = async (options: any): Promise<string> => {
     return new Promise((resolve, reject) => {
-            (dialog as any).showOpenDialog(options, (dir: string[]) => {
-            console.log(dir);
-            if (!dir) {
-                reject("Could not get any directories");
+        (dialog as any).showOpenDialog(options, (res: string[] | undefined) => {
+            if (res && res.length > 0) {
+                resolve(res[0]);
             } else {
-                resolve(dir[0]);
+                reject("User cancelled file selection");
+            }
+        });
+    });
+};
+
+const saveDialog = async (options: any): Promise<string> => {
+    return new Promise((resolve, reject) => {
+        (dialog as any).showSaveDialog(options, (res: string | undefined) => {
+            if (res) {
+                resolve(res);
+            } else {
+                reject("User cancelled file selection");
             }
         });
     });

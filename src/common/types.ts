@@ -21,7 +21,7 @@ export type RequestType<X extends Message> =
     X extends Message.AuthenticateTwitch ? { scopes: string | string[] } :
     X extends Message.Notify ? { title: string; notification: string } :
     X extends Message.NotifyTwitchClip ? { clipId: string } :
-    X extends Message.SelectDirectory ? undefined :
+    X extends Message.SelectDirectory ? { options: any, save?: boolean } :
 
     // main to renderer
     never;
