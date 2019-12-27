@@ -8,6 +8,7 @@ import { ComboForm } from "./ComboForm";
 import { comboFilter } from "@/lib/realtime";
 import { ComboFilterSettings } from "@vinceau/slp-realtime";
 import { getFilePath, getFolderPath } from "@/lib/utils";
+import { findFiles } from "common/utils";
 
 export const SettingsPage: React.FC<{}> = () => {
     const settings = useSelector((state: iRootState) => state.slippi.settings);
@@ -16,13 +17,11 @@ export const SettingsPage: React.FC<{}> = () => {
     const [filePath, setFilePath] = React.useState<string>("");
     const [subfolders, setSubfolders] = React.useState<boolean>(false);
     const [saveComboPath, setSaveComboPath] = React.useState<string>("");
-    const selectPath = async () => {
-        const p = await getFolderPath();
-        setFilePath(p);
+    const selectPath = () => {
+        getFolderPath().then(p => setFilePath(p)).catch(console.error);
     };
-    const selectComboPath = async () => {
-        const p = await getFilePath(undefined, true);
-        setSaveComboPath(p);
+    const selectComboPath = () => {
+        getFilePath(undefined, true).then(p => setSaveComboPath(p)).catch(console.error);
     };
     const onSubmit = (values: Partial<ComboFilterSettings>) => {
         const newValues = comboFilter.updateSettings(values);
@@ -33,6 +32,11 @@ export const SettingsPage: React.FC<{}> = () => {
     };
     const findCombos = () => {
         console.log(`finding combos from the slp files in ${filePath} ${subfolders && "and all subfolders"} and saving to ${saveComboPath}`);
+        findFiles("*.slp", filePath, subfolders).then(files => {
+            files.forEach(f => {
+                console.log(`found file: ${f}`);
+            });
+        }).catch(console.error);
     };
     return (
         <div>
