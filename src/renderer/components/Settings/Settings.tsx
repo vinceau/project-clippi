@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Dispatch, iRootState } from "@/store";
 
 import { ComboForm } from "./ComboForm";
-import { comboFilter } from "@/lib/realtime";
+import { comboFilter, generateCombos } from "@/lib/realtime";
 import { ComboFilterSettings } from "@vinceau/slp-realtime";
 import { getFilePath, getFolderPath } from "@/lib/utils";
 import { findFiles } from "common/utils";
@@ -30,13 +30,13 @@ export const SettingsPage: React.FC<{}> = () => {
         console.log(`updating redux store: ${valueString}`);
         dispatch.slippi.updateSettings(valueString);
     };
+    const findAndWriteCombos = async () => {
+        const files = await findFiles("*.slp", filePath, subfolders);
+        await generateCombos(files, saveComboPath);
+    };
     const findCombos = () => {
         console.log(`finding combos from the slp files in ${filePath} ${subfolders && "and all subfolders"} and saving to ${saveComboPath}`);
-        findFiles("*.slp", filePath, subfolders).then(files => {
-            files.forEach(f => {
-                console.log(`found file: ${f}`);
-            });
-        }).catch(console.error);
+        findAndWriteCombos().catch(console.error);
     };
     return (
         <div>

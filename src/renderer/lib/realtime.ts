@@ -1,4 +1,9 @@
-import { SlippiLivestream, ComboFilter } from "@vinceau/slp-realtime";
+import fs from "fs";
+import { Writable } from "stream";
+
+import { ComboFilter, SlippiLivestream, SlippiRealtime, SlpStream, DolphinComboQueue } from "@vinceau/slp-realtime";
+import { ComboType } from "slp-parser-js";
+
 import { notify } from "./utils";
 
 export const comboFilter = new ComboFilter();
@@ -52,3 +57,49 @@ const getSlippiConnectionStatus = async (): Promise<ConnectionStatus> => {
     return Promise.resolve(status);
 };
 */
+
+export const generateCombos = async (filenames: string[], outputFile: string, callback?: (i: number, f: string) => void): Promise<void> => {
+    const queue = new DolphinComboQueue();
+    for (const [i, f] of filenames.entries()) {
+        console.log(`proceesing file: ${f}`);
+        const combos = await findCombos(f);
+        combos.forEach(c => {
+            queue.addCombo(f, c);
+        });
+        if (callback) {
+            callback(i, f);
+        }
+    }
+    console.log(`writing out combos to: ${outputFile}`);
+    await queue.writeFile(outputFile);
+};
+
+export const findCombos = async (filename: string): Promise<ComboType[]> => {
+    console.log(`finding combos in: ${filename}`);
+    const combosList = new Array<ComboType>();
+    const slpStream = new SlpStream({ singleGameMode: true });
+    const realtime = new SlippiRealtime(slpStream);
+
+    realtime.on("comboEnd", (c, s) => {
+        if (comboFilter.isCombo(c, s)) {
+            combosList.push(c);
+        }
+    });
+
+    await pipeFileContents(filename, slpStream);
+
+    console.log(`found ${combosList.length} combos in ${filename}`);
+    return combosList;
+};
+
+const pipeFileContents = async (filename: string, destination: Writable): Promise<void> => {
+  return new Promise((resolve): void => {
+    const readStream = fs.createReadStream(filename);
+    readStream.on("open", () => {
+      readStream.pipe(destination);
+    });
+    readStream.on("close", () => {
+      resolve();
+    });
+  });
+};
