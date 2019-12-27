@@ -28,7 +28,6 @@ const Header: React.FC<{
                     props.onSettingsButtonClick();
                 }
             }}>Settings</div>
-    {props.showSettings && <div>showing settings</div>}
         </HeaderContainer>
     );
 };

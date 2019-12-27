@@ -8,18 +8,25 @@ import { comboFilter } from "@/lib/realtime";
 import { ComboFilterSettings } from "@vinceau/slp-realtime";
 import { ComboFinder } from "./ComboFinder";
 import { ComboForm } from "./ComboForm";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const SettingsPage: React.FC<{
     showSettings: boolean;
 }> = props => {
+    const hiddenSettings = css`
+    visibility: hidden;
+    overflow: hidden;
+    height: 0;
+    `;
     const SettingsContainer = styled.div`
         position: absolute;
         width: 100%;
-        height: ${props.showSettings ? "100%" : "0"};
+        height: auto;
+        visibility: visible;
+        overflow: auto;
         background-color: rgba(0, 0, 0, 0.95);
         z-index: 1;
-        overflow: hidden;
+        ${!props.showSettings && hiddenSettings}
     `;
     const settings = useSelector((state: iRootState) => state.slippi.settings);
     const initial = comboFilter.updateSettings(JSON.parse(settings));
