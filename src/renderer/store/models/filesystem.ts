@@ -12,12 +12,14 @@ export interface FileSystemState {
     filesPath: string;
     combosFilePath: string;
     includeSubFolders: boolean;
+    deleteFilesWithNoCombos: boolean;
 }
 
 const initialState: FileSystemState = {
     filesPath: homeDirectory,
     combosFilePath: path.join(homeDirectory, "combos.json"),
     includeSubFolders: false,
+    deleteFilesWithNoCombos: false,
 };
 
 export const filesystem = createModel({
@@ -31,6 +33,9 @@ export const filesystem = createModel({
         }),
         setIncludeSubFolders: (state: FileSystemState, payload: boolean): FileSystemState => produce(state, draft => {
             draft.includeSubFolders = payload;
+        }),
+        setFileDeletion: (state: FileSystemState, payload: boolean): FileSystemState => produce(state, draft => {
+            draft.deleteFilesWithNoCombos = payload;
         }),
     },
     effects: dispatch => ({

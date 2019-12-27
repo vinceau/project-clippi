@@ -7,7 +7,7 @@ import { ComboType } from "slp-parser-js";
 import { notify } from "./utils";
 
 export const comboFilter = new ComboFilter();
-comboFilter.updateSettings({excludeCPUs: false, comboMustKill: false, minComboPercent: 40});
+comboFilter.updateSettings({ excludeCPUs: false, comboMustKill: false, minComboPercent: 40 });
 
 const r = new SlippiLivestream();
 console.log(r);
@@ -58,7 +58,24 @@ const getSlippiConnectionStatus = async (): Promise<ConnectionStatus> => {
 };
 */
 
-export const generateCombos = async (filenames: string[], outputFile: string, callback?: (i: number, f: string, numCombos: number) => void): Promise<number> => {
+const deleteFile = async (filepath: string): Promise<void> => {
+    return new Promise((resolve, reject) => {
+        fs.unlink(filepath, (err) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve();
+            }
+        });
+    });
+};
+
+export const generateCombos = async (
+    filenames: string[],
+    outputFile: string,
+    deleteZeroComboFiles?: boolean,
+    callback?: (i: number, f: string, numCombos: number) => void,
+): Promise<number> => {
     const queue = new DolphinComboQueue();
     for (const [i, f] of filenames.entries()) {
         console.log(`proceesing file: ${f}`);
@@ -68,6 +85,12 @@ export const generateCombos = async (filenames: string[], outputFile: string, ca
         });
         if (callback) {
             callback(i, f, combos.length);
+        }
+
+        // Delete the file if no combos were found
+        if (deleteZeroComboFiles && combos.length === 0) {
+            console.log(`${combos.length} combos found. Deleting: ${f}`);
+            await deleteFile(f);
         }
     }
     console.log(`writing out combos to: ${outputFile}`);
@@ -94,13 +117,13 @@ export const findCombos = async (filename: string): Promise<ComboType[]> => {
 };
 
 const pipeFileContents = async (filename: string, destination: Writable): Promise<void> => {
-  return new Promise((resolve): void => {
-    const readStream = fs.createReadStream(filename);
-    readStream.on("open", () => {
-      readStream.pipe(destination);
+    return new Promise((resolve): void => {
+        const readStream = fs.createReadStream(filename);
+        readStream.on("open", () => {
+            readStream.pipe(destination);
+        });
+        readStream.on("close", () => {
+            resolve();
+        });
     });
-    readStream.on("close", () => {
-      resolve();
-    });
-  });
 };
