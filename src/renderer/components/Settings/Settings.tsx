@@ -1,18 +1,27 @@
 import * as React from "react";
 
+import {
+    Link as LinkContainer,
+    Redirect,
+    Route,
+    Switch,
+    useRouteMatch
+} from "react-router-dom";
+
 import { useDispatch, useSelector } from "react-redux";
 
 import { Dispatch, iRootState } from "@/store";
 
 import { comboFilter } from "@/lib/realtime";
 import { ComboFilterSettings } from "@vinceau/slp-realtime";
+import styled, { css } from "styled-components";
 import { ComboFinder } from "./ComboFinder";
 import { ComboForm } from "./ComboForm";
-import styled, { css } from "styled-components";
 
 export const SettingsPage: React.FC<{
     showSettings: boolean;
 }> = props => {
+    const { path } = useRouteMatch();
     const hiddenSettings = css`
     visibility: hidden;
     overflow: hidden;
@@ -28,6 +37,39 @@ export const SettingsPage: React.FC<{
         z-index: 1;
         ${!props.showSettings && hiddenSettings}
     `;
+    return (
+        <SettingsContainer>
+            <h2>Settings</h2>
+
+            {/* <Redirect strict from={path} to={`${path}/profile`} /> */}
+
+            <LinkContainer to={`${path}/profile`}>
+                <button>ComboFinder</button>
+            </LinkContainer>
+            <LinkContainer to={`${path}/billing`}>
+                <button>Combo Settings</button>
+            </LinkContainer>
+            <LinkContainer to={`${path}/account`}>
+                <button>Account</button>
+            </LinkContainer>
+
+            <Switch>
+                <Route path={`${path}/profile`} component={PageSettingsProfile} />
+                <Route path={`${path}/billing`} component={PageSettingsBilling} />
+                <Route path={`${path}/account`} component={PageSettingsAccount} />
+            </Switch>
+        </SettingsContainer>
+    );
+};
+
+const PageSettingsProfile = () => {
+    return (
+        <div><ComboFinder /></div>
+    );
+};
+
+
+export const PageSettingsBilling = () => {
     const settings = useSelector((state: iRootState) => state.slippi.settings);
     const initial = comboFilter.updateSettings(JSON.parse(settings));
     const dispatch = useDispatch<Dispatch>();
@@ -39,10 +81,14 @@ export const SettingsPage: React.FC<{
         dispatch.slippi.updateSettings(valueString);
     };
     return (
-        <SettingsContainer>
-            <h1>Settings</h1>
-            <ComboFinder />
+        <div>
             <ComboForm initialValues={initial} onSubmit={onSubmit} />
-        </SettingsContainer>
+        </div>
+    );
+};
+
+const PageSettingsAccount = () => {
+    return (
+        <div>Accounts</div>
     );
 };

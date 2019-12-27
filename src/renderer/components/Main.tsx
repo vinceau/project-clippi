@@ -76,20 +76,12 @@ export const Main: React.FC<{}> = () => {
             }} />
             <MainSection>
                 <SettingsPage showSettings={showSettings}/>
-                <Switch>
-                    <Route path="/" exact={true} component={Panel} />
-                    {/* <Route path="/settings" exact={true} component={SettingsPage} /> */}
-                </Switch>
+                <Panel />
             </MainSection>
             <Footer>
-                <NavMenu>
-                    <NavButton>
-                        <Link to={`/`}>Home</Link>
-                    </NavButton>
-                </NavMenu>
-                <NavButton>
-                    <Link to={`/settings`}>Settings</Link>
-                </NavButton>
+<span>
+Project Clippi 2019
+</span>
             </Footer>
         </Container>
     );
