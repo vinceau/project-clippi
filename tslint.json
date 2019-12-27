@@ -90,10 +90,7 @@
                 "esSpecCompliant": true
             }
         ],
-        "no-increment-decrement": [
-            true,
-            "allow-for-loops"
-        ],
+        "no-increment-decrement": false,
         "align": [
             true,
             "parameters",

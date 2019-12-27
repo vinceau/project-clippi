@@ -1,11 +1,15 @@
 import * as path from "path";
 
+import { fork } from "child_process";
 import { app, BrowserWindow } from "electron";
 import { format as formatUrl } from "url";
 import { setupListeners } from "./listeners";
 import { setupIPC } from "./mainIpc";
 
 import contextMenu from "electron-context-menu";
+import { findOpenSocket } from "./lib/findSocket";
+
+let serverProcess;
 
 contextMenu();
 
@@ -62,6 +66,21 @@ app.on("activate", () => {
 });
 
 // create main BrowserWindow when electron is ready
-app.on("ready", () => {
+app.on("ready", async () => {
   mainWindow = createMainWindow();
+  const serverSocket = await findOpenSocket();
+
+  createBackgroundProcess(serverSocket);
 });
+
+const createBackgroundProcess = (socketName: string) => {
+  serverProcess = fork(path.join(__dirname, "../background/index.ts"), [
+    "--subprocess",
+    app.getVersion(),
+    socketName
+  ]);
+
+  serverProcess.on("message", msg => {
+    console.log(msg);
+  });
+};
