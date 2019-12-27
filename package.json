@@ -79,6 +79,7 @@
     "webpack-build-notifier": "^0.1.30"
   },
   "electronWebpack": {
+    "title": "Project Clippi",
     "renderer": {
       "webpackConfig": "webpack.renderer.additions.js"
     }
