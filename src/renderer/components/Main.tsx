@@ -1,5 +1,7 @@
 import * as React from "react";
 import styled from "styled-components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 
 // import { useDispatch, useSelector } from "react-redux";
 // import { Dispatch, iRootState } from "@/store";
@@ -27,7 +29,7 @@ const Header: React.FC<{
                 if (props.onSettingsButtonClick) {
                     props.onSettingsButtonClick();
                 }
-            }}>Settings</div>
+            }}><FontAwesomeIcon icon="cog" /></div>
         </HeaderContainer>
     );
 };

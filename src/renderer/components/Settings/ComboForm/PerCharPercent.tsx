@@ -4,6 +4,7 @@ import { Character, getCharacterName } from "@vinceau/slp-realtime";
 import { produce } from "immer";
 import { Field } from "react-final-form";
 import { FieldArray } from "react-final-form-arrays";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { CharacterSelectAdapter } from "./CharacterSelect";
 
@@ -59,7 +60,7 @@ export const PerCharPercent: React.FC<{ name: string; values: any; push: any; po
                                 onClick={() => fields.remove(index)}
                                 style={{ cursor: "pointer" }}
                             >
-                                ❌
+                                <FontAwesomeIcon icon="times" />
                             </span>
                         </div>
                     );
