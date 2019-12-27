@@ -1,17 +1,17 @@
 /* eslint-disable jsx-a11y/accessible-emoji */
 import * as React from "react";
-import { Form, Field } from "react-final-form";
-import arrayMutators from "final-form-arrays";
+
 import { ComboFilterSettings } from "@vinceau/slp-realtime";
+import arrayMutators from "final-form-arrays";
+import { Field, Form } from "react-final-form";
 
 import { CharacterSelectAdapter } from "./ComboForm/CharacterSelect";
-import Styles from "./Styles";
+import { NameTagForm } from "./ComboForm/NameTagForm";
+import { PercentageSlider } from "./ComboForm/PercentageSlider";
+import { mapCharacterPercentArrayToObject, mapObjectToCharacterPercentArray, PerCharPercent } from "./ComboForm/PerCharPercent";
 
 import "./ComboForm/NameTagForm.scss";
-import { PercentageSlider } from "./ComboForm/PercentageSlider";
-import { NameTagForm } from "./ComboForm/NameTagForm";
-import { PerCharPercent, mapObjectToCharacterPercentArray, mapCharacterPercentArrayToObject } from "./ComboForm/PerCharPercent";
-
+import Styles from "./Styles";
 
 /*
 export interface ComboFilterSettings {

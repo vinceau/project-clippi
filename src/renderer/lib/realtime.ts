@@ -1,8 +1,7 @@
 import fs from "fs";
 import { Writable } from "stream";
 
-import { ComboFilter, SlippiLivestream, SlippiRealtime, SlpStream, DolphinComboQueue } from "@vinceau/slp-realtime";
-import { ComboType } from "slp-parser-js";
+import { ComboFilter, ComboType, DolphinComboQueue, SlippiLivestream, SlippiRealtime, SlpStream } from "@vinceau/slp-realtime";
 
 import { notify } from "./utils";
 
