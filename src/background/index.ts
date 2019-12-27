@@ -1,3 +1,3 @@
-for (let counter = 0; counter < 1000000; counter++) {
+for (let counter = 0; counter < 100; counter++) {
     console.log(counter);
 }

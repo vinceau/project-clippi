@@ -79,9 +79,6 @@
     "webpack-build-notifier": "^0.1.30"
   },
   "electronWebpack": {
-    "main": {
-      "webpackConfig": "webpack.main.additions.js"
-    },
     "renderer": {
       "webpackConfig": "webpack.renderer.additions.js"
     }
