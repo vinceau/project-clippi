@@ -20,7 +20,9 @@ export const ComboFinder: React.FC<{}> = () => {
         dispatch.filesystem.getFilesPath();
     };
     const selectComboPath = () => {
-        getFilePath(undefined, true).then(p => {
+        getFilePath({
+            filters: [{ name: "JSON files", extensions: ["json"] }],
+        }, true).then(p => {
             if (p) {
                 setSaveComboPath(p);
             }
