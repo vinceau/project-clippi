@@ -1,8 +1,8 @@
 import * as React from "react";
 import styled from "styled-components";
 
-import { useDispatch, useSelector } from "react-redux";
-import { Dispatch, iRootState } from "@/store";
+// import { useDispatch, useSelector } from "react-redux";
+// import { Dispatch, iRootState } from "@/store";
 import { Link, Route, Switch } from "react-router-dom";
 import { Panel } from "./Panel";
 import { SettingsPage } from "./Settings/Settings";
@@ -33,8 +33,12 @@ const Header: React.FC<{
 };
 
 export const Main: React.FC<{}> = () => {
-    const { showSettings } = useSelector((state: iRootState) => state.tempContainer);
-    const dispatch = useDispatch<Dispatch>();
+    const [ showSettings, setShowSettings ] = React.useState(false);
+    const toggleSettings = () => {
+        setShowSettings(!showSettings);
+    };
+    // const { showSettings } = useSelector((state: iRootState) => state.tempContainer);
+    // const dispatch = useDispatch<Dispatch>();
     const Container = styled.div`
         display: flex;
         flex-flow: column;
@@ -63,7 +67,7 @@ export const Main: React.FC<{}> = () => {
     return (
         <Container>
             <Header showSettings={showSettings} onSettingsButtonClick={() => {
-                dispatch.tempContainer.toggleSettings();
+                toggleSettings();
             }} />
             <MainSection>
                 <SettingsPage showSettings={showSettings}/>
