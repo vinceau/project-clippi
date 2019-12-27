@@ -11,6 +11,7 @@ import { findFiles } from "common/utils";
 
 export const ComboFinder: React.FC<{}> = () => {
     const [log, setLog] = React.useState<string>("");
+    const [processing, setProcessing] = React.useState<boolean>(false);
     const [percent, setPercent] = React.useState<number>(0);
     const { filesPath, includeSubFolders } = useSelector((state: iRootState) => state.filesystem);
     const dispatch = useDispatch<Dispatch>();
@@ -26,13 +27,21 @@ export const ComboFinder: React.FC<{}> = () => {
     };
     const findAndWriteCombos = async () => {
         const files = await findFiles("*.slp", filesPath, includeSubFolders);
-        const callback = (i: number, filename: string): void => {
+        const callback = (i: number, filename: string, n: number): void => {
             setPercent(i / (files.length - 1) * 100);
-            setLog(`Finished processing: ${filename}`);
+            setLog(`Found ${n} combos in: ${filename}`);
         };
-        await generateCombos(files, saveComboPath, callback);
+        const numCombos = await generateCombos(files, saveComboPath, callback);
+        setLog(`Wrote ${numCombos} combos to: ${saveComboPath}`);
+        reset();
+    };
+    const reset = () => {
+        setSaveComboPath("");
+        setProcessing(false);
     };
     const findCombos = () => {
+        setPercent(0);
+        setProcessing(true);
         console.log(`finding combos from the slp files in ${filesPath} ${includeSubFolders && "and all subfolders"} and saving to ${saveComboPath}`);
         findAndWriteCombos().catch(console.error);
     };
@@ -54,7 +63,7 @@ export const ComboFinder: React.FC<{}> = () => {
                 <button onClick={selectComboPath}>select combopath</button>
             </div>
             <div>
-                <button onClick={findCombos} disabled={!saveComboPath}>find combos</button>
+                <button onClick={findCombos} disabled={!saveComboPath || processing}>find combos</button>
             </div>
             <div>
                 <p>{log}</p>

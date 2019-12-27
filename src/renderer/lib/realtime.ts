@@ -58,7 +58,7 @@ const getSlippiConnectionStatus = async (): Promise<ConnectionStatus> => {
 };
 */
 
-export const generateCombos = async (filenames: string[], outputFile: string, callback?: (i: number, f: string) => void): Promise<void> => {
+export const generateCombos = async (filenames: string[], outputFile: string, callback?: (i: number, f: string, numCombos: number) => void): Promise<number> => {
     const queue = new DolphinComboQueue();
     for (const [i, f] of filenames.entries()) {
         console.log(`proceesing file: ${f}`);
@@ -67,11 +67,12 @@ export const generateCombos = async (filenames: string[], outputFile: string, ca
             queue.addCombo(f, c);
         });
         if (callback) {
-            callback(i, f);
+            callback(i, f, combos.length);
         }
     }
     console.log(`writing out combos to: ${outputFile}`);
-    await queue.writeFile(outputFile);
+    const numCombos = await queue.writeFile(outputFile);
+    return numCombos;
 };
 
 export const findCombos = async (filename: string): Promise<ComboType[]> => {
