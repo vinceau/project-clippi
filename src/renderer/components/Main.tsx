@@ -1,20 +1,45 @@
 import * as React from "react";
 import styled from "styled-components";
 
+import { useDispatch, useSelector } from "react-redux";
+import { Dispatch, iRootState } from "@/store";
 import { Link, Route, Switch } from "react-router-dom";
 import { Panel } from "./Panel";
 import { SettingsPage } from "./Settings/Settings";
 
 // import { TwitchConnect } from "./TwitchConnect";
 
+const Header: React.FC<{
+    showSettings?: boolean;
+    onSettingsButtonClick?: () => void;
+}> = (props) => {
+    const HeaderContainer = styled.header`
+        flex: 0 1 auto;
+        display: flex;
+        justify-content: space-between;
+    `;
+    return (
+        <HeaderContainer>
+            <div>
+                <h1>Project Clippi</h1>
+            </div>
+            <div onClick={() => {
+                if (props.onSettingsButtonClick) {
+                    props.onSettingsButtonClick();
+                }
+            }}>Settings</div>
+    {props.showSettings && <div>showing settings</div>}
+        </HeaderContainer>
+    );
+};
+
 export const Main: React.FC<{}> = () => {
+    const { showSettings } = useSelector((state: iRootState) => state.tempContainer);
+    const dispatch = useDispatch<Dispatch>();
     const Container = styled.div`
         display: flex;
         flex-flow: column;
         height: 100%;
-    `;
-    const Header = styled.header`
-        flex: 0 1 auto;
     `;
     const MainSection = styled.main`
         display: flex;
@@ -38,13 +63,14 @@ export const Main: React.FC<{}> = () => {
     `;
     return (
         <Container>
-            <Header>
-                <h1>Project Clippi</h1>
-            </Header>
+            <Header showSettings={showSettings} onSettingsButtonClick={() => {
+                dispatch.tempContainer.toggleSettings();
+            }} />
             <MainSection>
+                <SettingsPage showSettings={showSettings}/>
                 <Switch>
                     <Route path="/" exact={true} component={Panel} />
-                    <Route path="/settings" exact={true} component={SettingsPage} />
+                    {/* <Route path="/settings" exact={true} component={SettingsPage} /> */}
                 </Switch>
             </MainSection>
             <Footer>
@@ -54,8 +80,8 @@ export const Main: React.FC<{}> = () => {
                     </NavButton>
                 </NavMenu>
                 <NavButton>
-                        <Link to={`/settings`}>Settings</Link>
-                    </NavButton>
+                    <Link to={`/settings`}>Settings</Link>
+                </NavButton>
             </Footer>
         </Container>
     );
