@@ -1,4 +1,5 @@
 {
+  "productName": "Project Clippi",
   "name": "project-clippi",
   "version": "0.0.1",
   "description": "Slippi automation framework",
@@ -82,7 +83,6 @@
     "webpack-build-notifier": "^0.1.30"
   },
   "electronWebpack": {
-    "title": "Project Clippi",
     "renderer": {
       "webpackConfig": "webpack.renderer.additions.js"
     }
