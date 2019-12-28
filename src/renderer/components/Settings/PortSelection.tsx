@@ -1,14 +1,9 @@
 import * as React from "react";
 import { Field } from "react-final-form";
-import { Grid, GridColumnProps, Checkbox, Form, CheckboxProps } from "semantic-ui-react";
-import styled from "styled-components";
+import { Checkbox, Grid, GridColumnProps } from "semantic-ui-react";
 
 export const PortSelection = (props: any) => {
-  const { value, onChange, ...rest } = props;
-  const port1: boolean = value.includes(0);
-  const port2: boolean = value.includes(1);
-  const port3: boolean = value.includes(2);
-  const port4: boolean = value.includes(3);
+  const { value, onChange } = props;
   const newOnChange = (port: number) => {
     let newValues: number[] = Array.from(value);
     if (value.includes(port)) {
@@ -25,23 +20,15 @@ export const PortSelection = (props: any) => {
     tablet: 4,
     computer: 4,
   };
+  const allPorts = [0, 1, 2, 3];
   return (
-    // <PortSelectionContainer>
-      <Grid>
-        <Grid.Column {...columnProps}>
-          <Checkbox label="Port 1" checked={port1} onChange={() => newOnChange(0)} />
+    <Grid>
+      {allPorts.map(p => (
+        <Grid.Column key={`port-selection-${p}`} {...columnProps}>
+          <Checkbox label={`Port ${p + 1}`} checked={value.includes(p)} onChange={() => newOnChange(p)} />
         </Grid.Column>
-        <Grid.Column {...columnProps}>
-          <Checkbox label="Port 2" checked={port2} onChange={() => newOnChange(1)} />
-        </Grid.Column>
-        <Grid.Column {...columnProps}>
-          <Checkbox label="Port 3" checked={port3} onChange={() => newOnChange(2)} />
-        </Grid.Column>
-        <Grid.Column {...columnProps}>
-          <Checkbox label="Port 4" checked={port4} onChange={() => newOnChange(3)} />
-        </Grid.Column>
-      </Grid>
-    // </PortSelectionContainer>
+      ))}
+    </Grid>
   );
 };
 
