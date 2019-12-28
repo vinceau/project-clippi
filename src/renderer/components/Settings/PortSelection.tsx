@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Field } from "react-final-form";
-import { Checkbox, Form, CheckboxProps } from "semantic-ui-react";
+import { Grid, GridColumnProps, Checkbox, Form, CheckboxProps } from "semantic-ui-react";
 import styled from "styled-components";
 
 export const PortSelection = (props: any) => {
@@ -20,17 +20,28 @@ export const PortSelection = (props: any) => {
     newValues.sort();
     onChange(newValues);
   };
-  const PortSelectionContainer = styled(Form.Group)`
-  display: flex;
-  justify-content: space-evenly;
-  `;
+  const columnProps: GridColumnProps = {
+    mobile: 8,
+    tablet: 4,
+    computer: 4,
+  };
   return (
-    <PortSelectionContainer>
-      <Checkbox label="Port 1" checked={port1} onChange={() => newOnChange(0)} />
-      <Checkbox label="Port 2" checked={port2} onChange={() => newOnChange(1)} />
-      <Checkbox label="Port 3" checked={port3} onChange={() => newOnChange(2)} />
-      <Checkbox label="Port 4" checked={port4} onChange={() => newOnChange(3)} />
-    </PortSelectionContainer>
+    // <PortSelectionContainer>
+      <Grid>
+        <Grid.Column {...columnProps}>
+          <Checkbox label="Port 1" checked={port1} onChange={() => newOnChange(0)} />
+        </Grid.Column>
+        <Grid.Column {...columnProps}>
+          <Checkbox label="Port 2" checked={port2} onChange={() => newOnChange(1)} />
+        </Grid.Column>
+        <Grid.Column {...columnProps}>
+          <Checkbox label="Port 3" checked={port3} onChange={() => newOnChange(2)} />
+        </Grid.Column>
+        <Grid.Column {...columnProps}>
+          <Checkbox label="Port 4" checked={port4} onChange={() => newOnChange(3)} />
+        </Grid.Column>
+      </Grid>
+    // </PortSelectionContainer>
   );
 };
 

@@ -1,5 +1,6 @@
 import * as React from "react";
 
+import { Button } from "semantic-ui-react";
 import { Character, getCharacterName } from "@vinceau/slp-realtime";
 import { produce } from "immer";
 import { Field } from "react-final-form";
@@ -68,11 +69,9 @@ export const PerCharPercent: React.FC<{ name: string; values: any; push: any; po
                 }
                 }
             </FieldArray>
-            <div className="buttons">
-                <button type="button" onClick={() => push(name, undefined)}>
-                    Add Character
-                </button>
-            </div>
+<div>
+            <Button content="Add character" icon="add user" labelPosition="left" onClick={() => push(name, undefined)} />
+</div>
         </div>
     );
 };
