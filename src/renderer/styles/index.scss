@@ -4,6 +4,10 @@ body {
     font: caption;
 }
 
+#app {
+    height: 100%;
+}
+
 button {
     &:hover {
         cursor: pointer;
