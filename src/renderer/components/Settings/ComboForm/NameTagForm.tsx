@@ -9,12 +9,12 @@ const NameTagLabel: React.FC<{
     onClick: () => void;
 }> = props => {
     return (
-    <Label>
-    {props.name}
-    <Icon name='delete' onClick={props.onClick} />
-    </Label>
-  );
-    };
+        <Label>
+            {props.name}
+            <Icon name='delete' onClick={props.onClick} />
+        </Label>
+    );
+};
 
 export const NameTagForm: React.FC<{ name: string; values: any; push: any; pop: any }> = props => {
     const [tag, setTag] = React.useState("");
@@ -33,8 +33,6 @@ export const NameTagForm: React.FC<{ name: string; values: any; push: any; pop: 
             submit();
         }
     };
-    const NameTag = styled.span`
-    `;
     return (
         <div className="string--array--form">
             <div className="form--container">
