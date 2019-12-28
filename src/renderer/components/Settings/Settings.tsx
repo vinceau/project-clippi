@@ -33,7 +33,7 @@ export const SettingsPage: React.FC<{
         height: auto;
         visibility: visible;
         overflow: auto;
-        background-color: rgba(0, 0, 0, 0.95);
+        background-color: rgba(255, 255, 255, 0.95);
         z-index: 1;
         ${!props.showSettings && hiddenSettings}
     `;

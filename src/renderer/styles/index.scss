@@ -1,10 +1,7 @@
 html,
 body {
     margin: 0;
-}
-
-body {
-    color: blue;
+    font: caption;
 }
 
 button {
@@ -17,7 +14,15 @@ button {
     }
 }
 
-input[type="button"],
-button {
-    outline: none;
+:not(input):not(textarea),
+:not(input):not(textarea)::after,
+:not(input):not(textarea)::before {
+    user-select: none;
+    cursor: default;
+}
+input,
+button,
+textarea,
+:focus {
+    outline: none; // You should add some other style for :focus to help UX/a11y
 }
