@@ -1,13 +1,13 @@
 import * as React from "react";
 
-import { Button } from "semantic-ui-react";
+import { Icon, Button } from "semantic-ui-react";
 import { Character, getCharacterName } from "@vinceau/slp-realtime";
 import { produce } from "immer";
 import { Field } from "react-final-form";
 import { FieldArray } from "react-final-form-arrays";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { CharacterSelectAdapter } from "./CharacterSelect";
+import { SemanticInput } from "./FormAdapters";
 
 interface CharPercentOption {
     character: Character;
@@ -56,13 +56,15 @@ export const PerCharPercent: React.FC<{ name: string; values: any; push: any; po
                                 name={`${n}.character`}
                                 disabledOptions={selectedCharIDs}
                             />
-                            <Field name={`${n}.percent`} component="input" type="number" parse={(v: string) => parseInt(v, 10)} />
-                            <span
-                                onClick={() => fields.remove(index)}
-                                style={{ cursor: "pointer" }}
-                            >
-                                <FontAwesomeIcon icon="times" />
-                            </span>
+                            <Field
+                                name={`${n}.percent`}
+                                component={SemanticInput}
+                                type="number"
+                                parse={(v: string) => parseInt(v, 10)}
+                                // label={{ basic: true, content: "%" }}
+                                // labelPosition="right"
+                                action={<Button onClick={() => fields.remove(index)} content="Remove" />}
+                            />
                         </div>
                     );
                         });
@@ -70,7 +72,7 @@ export const PerCharPercent: React.FC<{ name: string; values: any; push: any; po
                 }
             </FieldArray>
 <div>
-            <Button content="Add character" icon="add user" labelPosition="left" onClick={() => push(name, undefined)} />
+            <Button onClick={() => push(name, undefined)}><Icon name="add user"/> Add character</Button>
 </div>
         </div>
     );

@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/accessible-emoji */
 import * as React from "react";
 
-import { Grid, Form as SemanticForm } from 'semantic-ui-react'
+import { Form as SemanticForm } from 'semantic-ui-react'
 import { ComboFilterSettings } from "@vinceau/slp-realtime";
 import arrayMutators from "final-form-arrays";
 import { Field, Form } from "react-final-form";
@@ -50,18 +50,6 @@ export const ComboForm: React.FC<{
     };
     return (
         <div>
-            <Grid>
-  <Grid.Column mobile={16} tablet={8}>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tellus molestie nunc non blandit massa enim nec dui. Nunc sed augue lacus viverra. Gravida cum sociis natoque penatibus et magnis dis parturient montes. Ornare aenean euismod elementum nisi quis eleifend quam adipiscing. Euismod lacinia at quis risus. Tempus quam pellentesque nec nam aliquam sem et tortor. Amet consectetur adipiscing elit pellentesque habitant morbi. Arcu felis bibendum ut tristique et egestas quis. Dictum non consectetur a erat nam at lectus. Auctor neque vitae tempus quam pellentesque nec nam. Donec ultrices tincidunt arcu non. Augue lacus viverra vitae congue eu consequat ac felis.</p>
-  </Grid.Column>
-  <Grid.Column mobile={16} tablet={8}>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tellus molestie nunc non blandit massa enim nec dui. Nunc sed augue lacus viverra. Gravida cum sociis natoque penatibus et magnis dis parturient montes. Ornare aenean euismod elementum nisi quis eleifend quam adipiscing. Euismod lacinia at quis risus. Tempus quam pellentesque nec nam aliquam sem et tortor. Amet consectetur adipiscing elit pellentesque habitant morbi. Arcu felis bibendum ut tristique et egestas quis. Dictum non consectetur a erat nam at lectus. Auctor neque vitae tempus quam pellentesque nec nam. Donec ultrices tincidunt arcu non. Augue lacus viverra vitae congue eu consequat ac felis.</p>
-  </Grid.Column>
-  <Grid.Column only='mobile tablet' mobile={16} tablet={16}>
-    <h2>Articles</h2>
-  </Grid.Column>
-</Grid>
-
             <Form
                 onSubmit={onSubmit}
                 mutators={{
@@ -100,7 +88,7 @@ export const ComboForm: React.FC<{
                                 <NameTagForm name="nameTags" pop={pop} push={push} values={values} />
                             </SemanticForm.Field>
                             <SemanticForm.Field>
-                                <label>Per Character Combo Percent</label>
+                                <label>Character-specific Minimum Combo Percent</label>
                                 <PerCharPercent name="perCharacterMinComboPercent" pop={pop} push={push} values={values} />
                             </SemanticForm.Field>
                             <SemanticForm.Field>

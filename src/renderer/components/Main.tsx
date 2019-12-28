@@ -1,8 +1,7 @@
 import * as React from "react";
 import styled from "styled-components";
 
-import { Link, Route, Switch } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Icon } from "semantic-ui-react";
 import { Tooltip } from "react-tippy";
 
 // import { useDispatch, useSelector } from "react-redux";
@@ -32,7 +31,7 @@ const Header: React.FC<{
                 if (props.onSettingsButtonClick) {
                     props.onSettingsButtonClick();
                 }
-            }}><Tooltip arrow={true} duration={200} position="bottom" title="Settings"><FontAwesomeIcon icon="cog" /></Tooltip></span>
+            }}><Tooltip arrow={true} duration={200} position="bottom" title="Settings"><Icon name="cog" /></Tooltip></span>
         </HeaderContainer>
     );
 };
