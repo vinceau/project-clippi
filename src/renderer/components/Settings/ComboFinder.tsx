@@ -68,11 +68,8 @@ export const ComboFinder: React.FC<{}> = () => {
                 <button onClick={findCombos} disabled={!combosFilePath || comboFinderProcessing}>find combos</button>
             </div>
             <div>
-                <p>{comboFinderLog}</p>
-            </div>
-            <div>
                 {(comboFinderProcessing || complete) &&
-                    <Progress progress={true} percent={comboFinderPercent} success={complete} />
+                    <Progress progress={true} percent={comboFinderPercent} success={complete}>{comboFinderLog}</Progress>
                 }
             </div>
         </div>
