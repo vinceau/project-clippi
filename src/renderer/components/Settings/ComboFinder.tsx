@@ -9,6 +9,7 @@ import { Dispatch, iRootState } from "@/store";
 import { generateCombos } from "@/lib/realtime";
 import { notify } from "@/lib/utils";
 import { findFiles, openFolder } from "common/utils";
+import styled from "styled-components";
 
 export const ComboFinder: React.FC<{}> = () => {
     const { comboFinderPercent, comboFinderLog, comboFinderProcessing } = useSelector((state: iRootState) => state.tempContainer);
@@ -48,8 +49,13 @@ export const ComboFinder: React.FC<{}> = () => {
         openFolder(dir).catch(console.error);
     };
     const complete = comboFinderPercent === 100;
+    const ComboFinderContainer = styled.div`
+    i.icon {
+        margin: 0 !important;
+    }
+    `;
     return (
-        <div>
+        <ComboFinderContainer>
             <Form>
                 <Form.Field>
                     <label>SLP Replay Directory</label>
@@ -72,6 +78,6 @@ export const ComboFinder: React.FC<{}> = () => {
                     <Progress progress={true} percent={comboFinderPercent} success={complete}>{comboFinderLog}</Progress>
                 }
             </div>
-        </div>
+        </ComboFinderContainer>
     );
 };
