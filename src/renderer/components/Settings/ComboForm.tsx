@@ -10,8 +10,8 @@ import { NameTagForm } from "./ComboForm/NameTagForm";
 import { PercentageSlider } from "./ComboForm/PercentageSlider";
 import { mapCharacterPercentArrayToObject, mapObjectToCharacterPercentArray, PerCharPercent } from "./ComboForm/PerCharPercent";
 
-import "./ComboForm/NameTagForm.scss";
-import Styles from "./Styles";
+// import "./ComboForm/NameTagForm.scss";
+// import Styles from "./Styles";
 import { PortSelectAdapter } from "./PortSelection";
 
 /*
@@ -47,7 +47,7 @@ export const ComboForm: React.FC<{
         props.onSubmit(convertBack);
     };
     return (
-        <Styles>
+        <div>
             <Form
                 onSubmit={onSubmit}
                 mutators={{
@@ -141,6 +141,6 @@ export const ComboForm: React.FC<{
                         </form>
                     )}
             />
-        </Styles>
+        </div>
     );
 };

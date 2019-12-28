@@ -5,7 +5,8 @@ import {
     Redirect,
     Route,
     Switch,
-    useRouteMatch
+    useRouteMatch,
+    useHistory,
 } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -18,10 +19,19 @@ import styled, { css } from "styled-components";
 import { ComboFinder } from "./ComboFinder";
 import { ComboForm } from "./ComboForm";
 
+import { Grid, Menu, Segment } from 'semantic-ui-react'
+
 export const SettingsPage: React.FC<{
     showSettings: boolean;
 }> = props => {
     const { path } = useRouteMatch();
+    const history = useHistory();
+    const [activeItem, setActiveItem] = React.useState("bio");
+
+    const handleItemClick = (e: any, { name }: any) => {
+        history.push(`${path}/${name}`);
+        setActiveItem(name);
+    };
     const hiddenSettings = css`
     visibility: hidden;
     overflow: hidden;
@@ -37,36 +47,75 @@ export const SettingsPage: React.FC<{
         z-index: 1;
         ${!props.showSettings && hiddenSettings}
     `;
+
+    return (
+        <SettingsContainer>
+        <Grid>
+            <Grid.Column width={4}>
+                <Menu fluid vertical tabular>
+                    <Menu.Item
+                        name="combo-finder"
+                        active={activeItem === "combo-finder"}
+                        onClick={handleItemClick}
+                    >Combo Finder</Menu.Item>
+                    <Menu.Item
+                        name="combo-settings"
+                        active={activeItem === "combo-settings"}
+                        onClick={handleItemClick}
+                    />
+                    <Menu.Item
+                        name="account-settings"
+                        active={activeItem === "account-settings"}
+                        onClick={handleItemClick}
+                    />
+                </Menu>
+            </Grid.Column>
+
+            <Grid.Column stretched width={12}>
+                    <Switch>
+                        <Route path={`${path}/combo-finder`} component={PageSettingsProfile} />
+                        <Route path={`${path}/combo-settings`} component={PageSettingsBilling} />
+                        <Route path={`${path}/account-settings`} component={PageSettingsAccount} />
+                    </Switch>
+            </Grid.Column>
+        </Grid>
+</SettingsContainer>
+    );
+};
+
+/*
+export const OldSettingsPage: React.FC<{
+    showSettings: boolean;
+}> = props => {
     return (
         <SettingsContainer>
             <h2>Settings</h2>
 
-            {/* <Redirect strict from={path} to={`${path}/profile`} /> */}
+            <div style={{ display: "flex" }}>
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                    <LinkContainer to={`${path}/profile`}>
+                        ComboFinder
+            </LinkContainer>
+                    <LinkContainer to={`${path}/billing`}>
+                        Combo Settings
+            </LinkContainer>
+                    <LinkContainer to={`${path}/account`}>
+                        Account
+            </LinkContainer>
+                </div>
 
-<div style={{display: "flex"}}>
-<div style={{display: "flex", flexDirection: "column"}}>
-            <LinkContainer to={`${path}/profile`}>
-                ComboFinder
-            </LinkContainer>
-            <LinkContainer to={`${path}/billing`}>
-                Combo Settings
-            </LinkContainer>
-            <LinkContainer to={`${path}/account`}>
-                Account
-            </LinkContainer>
-</div>
-
-<div>
-            <Switch>
-                <Route path={`${path}/profile`} component={PageSettingsProfile} />
-                <Route path={`${path}/billing`} component={PageSettingsBilling} />
-                <Route path={`${path}/account`} component={PageSettingsAccount} />
-            </Switch>
-</div>
-</div>
+                <div>
+                    <Switch>
+                        <Route path={`${path}/profile`} component={PageSettingsProfile} />
+                        <Route path={`${path}/billing`} component={PageSettingsBilling} />
+                        <Route path={`${path}/account`} component={PageSettingsAccount} />
+                    </Switch>
+                </div>
+            </div>
         </SettingsContainer>
     );
 };
+*/
 
 const PageSettingsProfile = () => {
     return (
