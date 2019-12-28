@@ -1,5 +1,6 @@
 import * as path from "path";
-
+import fs from "fs";
+import open from "open";
 import glob from "glob";
 
 export const delay = async (ms: number): Promise<void> => {
@@ -25,4 +26,16 @@ export const findFiles = async (
             }
         });
     });
+};
+
+export const openFolder = async (dirPath: string): Promise<void> => {
+    if (!fs.existsSync(dirPath)) {
+        throw new Error(`${dirPath} does not exist`);
+    }
+
+    if (fs.lstatSync(dirPath).isDirectory()) {
+        await open(dirPath);
+    } else {
+        await open(path.dirname(dirPath))
+    }
 };

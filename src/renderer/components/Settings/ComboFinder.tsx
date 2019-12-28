@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Button, Checkbox, Form, CheckboxProps, Input } from 'semantic-ui-react'
+import { Icon, Button, Checkbox, Form, CheckboxProps, Input } from 'semantic-ui-react'
 import { Progress } from "semantic-ui-react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -8,7 +8,7 @@ import { Dispatch, iRootState } from "@/store";
 
 import { generateCombos } from "@/lib/realtime";
 import { notify } from "@/lib/utils";
-import { findFiles } from "common/utils";
+import { findFiles, openFolder } from "common/utils";
 
 export const ComboFinder: React.FC<{}> = () => {
     const { comboFinderPercent, comboFinderLog, comboFinderProcessing } = useSelector((state: iRootState) => state.tempContainer);
@@ -44,17 +44,20 @@ export const ComboFinder: React.FC<{}> = () => {
         console.log(`finding combos from the slp files in ${filesPath} ${includeSubFolders && "and all subfolders"} and saving to ${combosFilePath}`);
         findAndWriteCombos().catch(console.error);
     };
+    const open = (dir: string) => {
+        openFolder(dir).catch(console.error);
+    };
     const complete = comboFinderPercent === 100;
     return (
         <div>
             <Form>
                 <Form.Field>
                     <label>SLP Replay Directory</label>
-                    <Input value={filesPath} action={<Button onClick={selectPath}>Choose</Button>} />
+                    <Input label={<Button onClick={() => open(filesPath)}><Icon name="folder open outline" /></Button>} value={filesPath} action={<Button onClick={selectPath}>Choose</Button>} />
                 </Form.Field>
                 <Form.Field>
                     <label>Output File</label>
-                    <Input value={combosFilePath} action={<Button onClick={selectComboPath}>Save as</Button>} />
+                    <Input label={<Button onClick={() => open(combosFilePath)}><Icon name="folder open outline" /></Button>} value={combosFilePath} action={<Button onClick={selectComboPath}>Save as</Button>} />
                 </Form.Field>
                 <Form.Field>
                     <Checkbox label="Include subfolders" checked={includeSubFolders} onChange={onSubfolder} />
