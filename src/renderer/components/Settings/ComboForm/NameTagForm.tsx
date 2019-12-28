@@ -1,7 +1,20 @@
 import * as React from "react";
 
+import { Icon, Label } from 'semantic-ui-react'
 import { FieldArray } from "react-final-form-arrays";
 import styled from "styled-components";
+
+const NameTagLabel: React.FC<{
+    name: string;
+    onClick: () => void;
+}> = props => {
+    return (
+    <Label>
+    {props.name}
+    <Icon name='delete' onClick={props.onClick} />
+    </Label>
+  );
+    };
 
 export const NameTagForm: React.FC<{ name: string; values: any; push: any; pop: any }> = props => {
     const [tag, setTag] = React.useState("");
@@ -29,15 +42,11 @@ export const NameTagForm: React.FC<{ name: string; values: any; push: any; pop: 
                     <FieldArray name={name}>
                         {({ fields }) =>
                             fields.map((n, index) => (
-                                <NameTag key={`fields--${n}--${index}--${fields[index]}`}>
-                                    <label>{fields.value[index]}</label>
-                                    <span
-                                        onClick={() => fields.remove(index)}
-                                        style={{ cursor: 'pointer' }}
-                                    >
-                                        x
-                                    </span>
-                                </NameTag>
+                                <NameTagLabel
+                                    key={`fields--${n}--${index}--${fields[index]}`}
+                                    name={fields.value[index]}
+                                    onClick={() => fields.remove(index)}
+                                />
                             ))
                         }
                     </FieldArray>
