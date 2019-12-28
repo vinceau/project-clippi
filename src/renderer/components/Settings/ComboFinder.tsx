@@ -62,14 +62,14 @@ export const ComboFinder: React.FC<{}> = () => {
                     <Input label={<Button onClick={() => open(filesPath)}><Icon name="folder open outline" /></Button>} value={filesPath} action={<Button onClick={selectPath}>Choose</Button>} />
                 </Form.Field>
                 <Form.Field>
-                    <label>Output File</label>
-                    <Input label={<Button onClick={() => open(combosFilePath)}><Icon name="folder open outline" /></Button>} value={combosFilePath} action={<Button onClick={selectComboPath}>Save as</Button>} />
-                </Form.Field>
-                <Form.Field>
                     <Checkbox label="Include subfolders" checked={includeSubFolders} onChange={onSubfolder} />
                 </Form.Field>
                 <Form.Field>
                     <Checkbox label="Delete files with no combos" checked={deleteFilesWithNoCombos} onChange={onSetDeleteFiles} />
+                </Form.Field>
+                <Form.Field>
+                    <label>Output File</label>
+                    <Input label={<Button onClick={() => open(combosFilePath)}><Icon name="folder open outline" /></Button>} value={combosFilePath} action={<Button onClick={selectComboPath}>Save as</Button>} />
                 </Form.Field>
                 <Button type="submit" onClick={findCombos} disabled={!combosFilePath || comboFinderProcessing}>Process replays</Button>
             </Form>
