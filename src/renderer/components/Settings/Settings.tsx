@@ -43,21 +43,27 @@ export const SettingsPage: React.FC<{
 
             {/* <Redirect strict from={path} to={`${path}/profile`} /> */}
 
+<div style={{display: "flex"}}>
+<div style={{display: "flex", flexDirection: "column"}}>
             <LinkContainer to={`${path}/profile`}>
-                <button>ComboFinder</button>
+                ComboFinder
             </LinkContainer>
             <LinkContainer to={`${path}/billing`}>
-                <button>Combo Settings</button>
+                Combo Settings
             </LinkContainer>
             <LinkContainer to={`${path}/account`}>
-                <button>Account</button>
+                Account
             </LinkContainer>
+</div>
 
+<div>
             <Switch>
                 <Route path={`${path}/profile`} component={PageSettingsProfile} />
                 <Route path={`${path}/billing`} component={PageSettingsBilling} />
                 <Route path={`${path}/account`} component={PageSettingsAccount} />
             </Switch>
+</div>
+</div>
         </SettingsContainer>
     );
 };
