@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Button, Checkbox, Form, CheckboxProps } from 'semantic-ui-react'
+import { Button, Checkbox, Form, CheckboxProps, Input } from 'semantic-ui-react'
 import { Progress } from "semantic-ui-react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -47,29 +47,23 @@ export const ComboFinder: React.FC<{}> = () => {
     const complete = comboFinderPercent === 100;
     return (
         <div>
-<Form>
-            <Form.Field>
-                <span>slp folder: {filesPath}</span>
-            </Form.Field>
-            <Form.Field>
-                <span>save as: {combosFilePath}</span>
-            </Form.Field>
-            <Form.Field>
-                <Checkbox label="Include subfolders" checked={includeSubFolders} onChange={onSubfolder} />
-            </Form.Field>
-            <Form.Field>
-                <Checkbox label="Delete files with no combos" checked={deleteFilesWithNoCombos} onChange={onSetDeleteFiles} />
-            </Form.Field>
-            <Form.Field>
-                <Button onClick={selectPath}>select path</Button>
-            </Form.Field>
-            <Form.Field>
-                <Button onClick={selectComboPath}>select combopath</Button>
-            </Form.Field>
-            <Form.Field>
-                <Button onClick={findCombos} disabled={!combosFilePath || comboFinderProcessing}>find combos</Button>
-            </Form.Field>
-</Form>
+            <Form>
+                <Form.Field>
+                    <label>SLP Replay Directory</label>
+                    <Input value={filesPath} action={<Button onClick={selectPath}>Choose</Button>} />
+                </Form.Field>
+                <Form.Field>
+                    <label>Output File</label>
+                    <Input value={combosFilePath} action={<Button onClick={selectComboPath}>Save as</Button>} />
+                </Form.Field>
+                <Form.Field>
+                    <Checkbox label="Include subfolders" checked={includeSubFolders} onChange={onSubfolder} />
+                </Form.Field>
+                <Form.Field>
+                    <Checkbox label="Delete files with no combos" checked={deleteFilesWithNoCombos} onChange={onSetDeleteFiles} />
+                </Form.Field>
+                <Button type="submit" onClick={findCombos} disabled={!combosFilePath || comboFinderProcessing}>Process replays</Button>
+            </Form>
             <div>
                 {(comboFinderProcessing || complete) &&
                     <Progress progress={true} percent={comboFinderPercent} success={complete}>{comboFinderLog}</Progress>
