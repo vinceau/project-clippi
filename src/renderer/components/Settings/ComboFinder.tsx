@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Line } from "rc-progress";
+import { Progress } from "semantic-ui-react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Dispatch, iRootState } from "@/store";
@@ -28,7 +28,7 @@ export const ComboFinder: React.FC<{}> = () => {
     const findAndWriteCombos = async () => {
         const files = await findFiles("*.slp", filesPath, includeSubFolders);
         const callback = (i: number, filename: string, n: number): void => {
-            dispatch.tempContainer.setPercent((i + 1) / files.length * 100);
+            dispatch.tempContainer.setPercent(Math.round((i + 1) / files.length * 100));
             dispatch.tempContainer.setComboLog(`Found ${n} combos in: ${filename}`);
         };
         const numCombos = await generateCombos(files, combosFilePath, deleteFilesWithNoCombos, callback);
@@ -43,6 +43,7 @@ export const ComboFinder: React.FC<{}> = () => {
         console.log(`finding combos from the slp files in ${filesPath} ${includeSubFolders && "and all subfolders"} and saving to ${combosFilePath}`);
         findAndWriteCombos().catch(console.error);
     };
+    const complete = comboFinderPercent === 100;
     return (
         <div>
             <div>
@@ -70,7 +71,9 @@ export const ComboFinder: React.FC<{}> = () => {
                 <p>{comboFinderLog}</p>
             </div>
             <div>
-                <Line percent={comboFinderPercent} strokeWidth={4} />
+                {(comboFinderProcessing || complete) &&
+                    <Progress progress={true} percent={comboFinderPercent} success={complete} />
+                }
             </div>
         </div>
     );
