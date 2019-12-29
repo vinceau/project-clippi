@@ -74,7 +74,7 @@ export const Main: React.FC<{}> = () => {
                 toggleSettings();
             }} />
             <MainSection>
-                <SettingsPage showSettings={showSettings}/>
+                <SettingsPage onClose={() => setShowSettings(false)} showSettings={showSettings}/>
                 <Panel />
             </MainSection>
             <Footer>

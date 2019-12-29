@@ -19,10 +19,11 @@ import styled, { css } from "styled-components";
 import { ComboFinder } from "./ComboFinder";
 import { ComboForm } from "./ComboForm";
 
-import { Grid, Menu, Segment } from 'semantic-ui-react'
+import { Grid, Menu, Button } from 'semantic-ui-react'
 
 export const SettingsPage: React.FC<{
     showSettings: boolean;
+    onClose: () => void;
 }> = props => {
     const { path } = useRouteMatch();
     const history = useHistory();
@@ -40,17 +41,25 @@ export const SettingsPage: React.FC<{
     const SettingsContainer = styled.div`
         position: absolute;
         width: 100%;
-        height: auto;
+        height: 100%;
+        top: 0;
         visibility: visible;
         overflow: auto;
-        background-color: rgba(255, 255, 255, 0.95);
+        background-color: rgba(255, 255, 255, 1);
         z-index: 1;
         ${!props.showSettings && hiddenSettings}
+    `;
+    const StyledGrid = styled(Grid)`
+    margin-left: 0 !important;
+    margin-right: 0 !important;
     `;
 
     return (
         <SettingsContainer>
-        <Grid>
+            <div><h1>Settings</h1>
+            <Button content="Close" onClick={() => props.onClose()}/>
+            </div>
+        <StyledGrid>
             <Grid.Column width={4}>
                 <Menu fluid vertical tabular>
                     <Menu.Item
@@ -78,7 +87,7 @@ export const SettingsPage: React.FC<{
                         <Route path={`${path}/account-settings`} component={PageSettingsAccount} />
                     </Switch>
             </Grid.Column>
-        </Grid>
+        </StyledGrid>
 </SettingsContainer>
     );
 };
