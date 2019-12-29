@@ -16,7 +16,6 @@ export const SemanticCheckboxInput = (props: any) => {
 
 export const SemanticInput = (props: any) => {
     const { inputLabel, input, meta, ...rest } = props;
-    console.log(rest);
     return (
         <SemanticForm.Field error={meta.error && meta.touched}>
             {/* <RenderCount /> */}
