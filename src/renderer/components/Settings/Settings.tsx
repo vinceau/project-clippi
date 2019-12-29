@@ -19,7 +19,7 @@ import styled, { css } from "styled-components";
 import { ComboFinder } from "./ComboFinder";
 import { ComboForm } from "./ComboForm";
 
-import { Grid, Menu, Button } from 'semantic-ui-react'
+import { Container, Icon, Grid, Menu, Button } from "semantic-ui-react";
 
 export const SettingsPage: React.FC<{
     showSettings: boolean;
@@ -56,8 +56,10 @@ export const SettingsPage: React.FC<{
 
     return (
         <SettingsContainer>
-            <div><h1>Settings</h1>
-            <Button content="Close" onClick={() => props.onClose()}/>
+        <Container>
+            <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
+                <h1>Settings</h1>
+                <Button onClick={() => props.onClose()}><Icon name="close"/> Close</Button>
             </div>
         <StyledGrid>
             <Grid.Column width={4}>
@@ -88,6 +90,7 @@ export const SettingsPage: React.FC<{
                     </Switch>
             </Grid.Column>
         </StyledGrid>
+</Container>
 </SettingsContainer>
     );
 };
