@@ -18,6 +18,7 @@ import { device } from "@/styles/device";
 import { LabelledButton } from "../LabelledButton";
 import { ComboFinder } from "./ComboFinder";
 import { ComboForm } from "./ComboForm";
+import { SoundSettings } from "./SoundSettings";
 
 export const SettingsPage: React.FC<{
     showSettings: boolean;
@@ -55,7 +56,7 @@ export const SettingsPage: React.FC<{
     overflow: hidden;
     overflow-y: auto;
     height: 100vh;
-    @media ${device.tablet} {
+    @media ${device.mobileL} {
         flex-basis: 30%;
     }
     `;
@@ -64,7 +65,7 @@ export const SettingsPage: React.FC<{
     overflow: hidden;
     overflow-y: auto;
     height: 100vh;
-    @media ${device.tablet} {
+    @media ${device.mobileL} {
         flex-basis: 70%;
     }
     & > div {
@@ -83,7 +84,7 @@ export const SettingsPage: React.FC<{
                 margin-left: 0;
             }
         }
-        @media ${device.tablet} {
+        @media ${device.mobileL} {
             padding-top: 20px;
             padding-left: 10px;
             padding-right: 10px;
@@ -117,12 +118,17 @@ export const SettingsPage: React.FC<{
                             active={activeItem === "combo-settings"}
                             onClick={handleItemClick}
                         ><Icon name="filter" />Filter Options</Menu.Item>
-                        <Menu.Item header>Account Settings</Menu.Item>
+                        <Menu.Item header>Action Settings</Menu.Item>
                         <Menu.Item
                             name="account-settings"
                             active={activeItem === "account-settings"}
                             onClick={handleItemClick}
                         ><Icon name="twitch" />Twitch Integration</Menu.Item>
+                        <Menu.Item
+                            name="sound-settings"
+                            active={activeItem === "sound-settings"}
+                            onClick={handleItemClick}
+                        ><Icon name="volume down" />Sounds</Menu.Item>
                     </StyledMenu>
                 </MenuColumn>
                 <ContentColumn>
@@ -131,6 +137,7 @@ export const SettingsPage: React.FC<{
                             <Route path={`${path}/combo-finder`} component={PageSettingsProfile} />
                             <Route path={`${path}/combo-settings`} component={PageSettingsBilling} />
                             <Route path={`${path}/account-settings`} component={PageSettingsAccount} />
+                            <Route path={`${path}/sound-settings`} component={SoundSettings} />
                         </Switch>
                     </div>
                 </ContentColumn>
