@@ -21,6 +21,7 @@ import { ComboForm } from "./ComboForm";
 
 import { Container, Icon, Grid, Menu, Button } from "semantic-ui-react";
 import { device } from "@/styles/device";
+import { LabelledButton } from "../LabelledButton";
 
 export const SettingsPage: React.FC<{
     showSettings: boolean;
@@ -74,6 +75,10 @@ export const SettingsPage: React.FC<{
     @media ${device.tablet} {
         flex-basis: 70%;
     }
+    & > div {
+        padding-top: 50px;
+        padding-right: 100px;
+    }
     `;
     const StyledMenu = styled(Menu)`
     &&& {
@@ -93,12 +98,23 @@ export const SettingsPage: React.FC<{
         }
     }
     `;
+    const CloseButton = styled.div`
+        font-size: 25px;
+        position: fixed;
+        top: 20px;
+        right: 40px;
+    `;
     return (
         <SettingsContainer>
+            <CloseButton>
+                <LabelledButton onClick={props.onClose} title="Close">
+                    <Icon name="close" />
+                </LabelledButton>
+            </CloseButton>
             <Wrapper>
                 <MenuColumn>
-                <StyledMenu secondary={true} vertical={true}>
-                    <Menu.Item header>Combo Settings</Menu.Item>
+                    <StyledMenu secondary={true} vertical={true}>
+                        <Menu.Item header>Combo Settings</Menu.Item>
                         <Menu.Item
                             name="combo-finder"
                             active={activeItem === "combo-finder"}
@@ -109,7 +125,7 @@ export const SettingsPage: React.FC<{
                             active={activeItem === "combo-settings"}
                             onClick={handleItemClick}
                         ><Icon name="filter" />Filter Options</Menu.Item>
-                    <Menu.Item header>Account Settings</Menu.Item>
+                        <Menu.Item header>Account Settings</Menu.Item>
                         <Menu.Item
                             name="account-settings"
                             active={activeItem === "account-settings"}
@@ -118,11 +134,13 @@ export const SettingsPage: React.FC<{
                     </StyledMenu>
                 </MenuColumn>
                 <ContentColumn>
-                    <Switch>
-                        <Route path={`${path}/combo-finder`} component={PageSettingsProfile} />
-                        <Route path={`${path}/combo-settings`} component={PageSettingsBilling} />
-                        <Route path={`${path}/account-settings`} component={PageSettingsAccount} />
-                    </Switch>
+                    <div>
+                        <Switch>
+                            <Route path={`${path}/combo-finder`} component={PageSettingsProfile} />
+                            <Route path={`${path}/combo-settings`} component={PageSettingsBilling} />
+                            <Route path={`${path}/account-settings`} component={PageSettingsAccount} />
+                        </Switch>
+                    </div>
                 </ContentColumn>
             </Wrapper>
         </SettingsContainer>

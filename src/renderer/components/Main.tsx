@@ -8,13 +8,14 @@ import { Tooltip } from "react-tippy";
 // import { Dispatch, iRootState } from "@/store";
 import { Panel } from "./Panel";
 import { SettingsPage } from "./Settings/Settings";
+import { LabelledButton } from "./LabelledButton";
 // import { Tooltip } from "./Tooltip";
 
 // import { TwitchConnect } from "./TwitchConnect";
 
 const Header: React.FC<{
     showSettings?: boolean;
-    onSettingsButtonClick?: () => void;
+    onSettingsButtonClick: () => void;
 }> = (props) => {
     const HeaderContainer = styled.header`
         flex: 0 1 auto;
@@ -27,11 +28,9 @@ const Header: React.FC<{
             <div>
                 <span>Project Clippi</span>
             </div>
-            <span onClick={() => {
-                if (props.onSettingsButtonClick) {
-                    props.onSettingsButtonClick();
-                }
-            }}><Tooltip arrow={true} duration={200} position="bottom" title="Settings"><Icon name="cog" /></Tooltip></span>
+            <LabelledButton onClick={props.onSettingsButtonClick} title="Settings">
+                <Icon name="cog" />
+            </LabelledButton>
         </HeaderContainer>
     );
 };
