@@ -51,6 +51,10 @@ export class SoundPlayer {
         this.sounds.set(name, filePath);
     }
 
+    public removeSound(name: string): void {
+        this.sounds.delete(name);
+    }
+
     public async playSound(name: string): Promise<void> {
         this.stop();
 

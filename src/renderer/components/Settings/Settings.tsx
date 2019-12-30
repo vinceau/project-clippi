@@ -260,27 +260,8 @@ const SoundSettings = () => {
     const soundFiles = useSelector((state: iRootState) => state.filesystem.soundFiles);
     const sounds = sp.deserialize(soundFiles);
     const dispatch = useDispatch<Dispatch>();
-    // const onSubmit = (values: Partial<ComboFilterSettings>) => {
-    //     const newValues = comboFilter.updateSettings(values);
-    //     console.log(`updated combo filter with new values: ${newValues}`);
-    //     const valueString = JSON.stringify(newValues);
-    //     console.log(`updating redux store: ${valueString}`);
-    //     dispatch.slippi.updateSettings(valueString);
-    // };
-    const onChange = (f: any[]) => {
-        console.log(`got back ${f}`);
-        // const fl = [];
-        for (const ff of f) {
-            console.log(ff);
-            sp.addSound(ff.name, ff.path);
-            dispatch.filesystem.setSoundFiles(sp.serialize());
-        }
-        // console.log(f);
-        // setFileValue(fl);
-
-    };
     const onPlay = (name: string) => {
-        sp.playSound(name);
+        sp.playSound(name).catch(console.error);
     };
     const getSounds = async () => {
         const p = await getFilePath({
@@ -292,24 +273,18 @@ const SoundSettings = () => {
             dispatch.filesystem.setSoundFiles(sp.serialize());
         }
     };
+    const removeSound = (name: string) => {
+        sp.removeSound(name);
+        dispatch.filesystem.setSoundFiles(sp.serialize());
+    };
     return (
         <div>
             <h1>Sound Settings</h1>
             <Button onClick={() => getSounds().catch(console.error)}>
                 <Icon name="add" />
-            <label>
                 Add sounds
-            {/* <input
-                    style={{ display: "none" }}
-                    type="file"
-                    onChange={(e: any) => {
-                        console.log([...e.target.files]);
-                        onChange([...e.target.files]);
-                    }}
-                /> */}
-            </label>
             </Button>
-            <SoundTable onPlay={onPlay} sounds={sounds}/>
+            <SoundTable onPlay={onPlay} onStop={() => sp.stop()} onRemove={removeSound} sounds={sounds}/>
         </div>
     );
 };
@@ -317,20 +292,43 @@ const SoundSettings = () => {
 const SoundTable: React.FC<{
     sounds: Map<string, string>;
     onPlay: (name: string) => void;
+    onStop: () => void;
+    onRemove: (name: string) => void;
 }> = props => {
+    const [playing, setPlaying] = React.useState<string | null>(null);
     const rows: JSX.Element[] = [];
+    const onPlay = (name: string) => {
+        setPlaying(name);
+        props.onPlay(name);
+    };
+    const onStop = () => {
+        setPlaying(null);
+        props.onStop();
+    };
+    const onRemove = (name: string) => {
+        if (playing === name) {
+            onStop();
+        }
+        props.onRemove(name);
+    };
     props.sounds.forEach((value, key) => {
         rows.push((
-      <Table.Row key={value}>
+      <Table.Row key={`${value}--${key}`}>
         <Table.Cell>
             {key}
         </Table.Cell>
         <Table.Cell>
           {value}
         </Table.Cell>
-        <Table.Cell><span onClick={() => props.onPlay(key)}>Play</span></Table.Cell>
         <Table.Cell>
-Delete
+            {playing === key ?
+            <span onClick={() => onStop()}><Icon name="stop" /></span>
+            :
+            <span onClick={() => onPlay(key)}><Icon name="play"/></span>
+    }
+        </Table.Cell>
+        <Table.Cell>
+            <span onClick={() => onRemove(key)}><Icon name="remove"/></span>
         </Table.Cell>
       </Table.Row>
         ));
