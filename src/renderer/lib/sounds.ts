@@ -1,5 +1,5 @@
 import { Howl } from "howler";
-
+import { isDevelopment } from "./utils";
 import { readFile } from "common/utils";
 
 const objToStrMap = (obj: object) => {
@@ -18,6 +18,26 @@ const strMapToObj = (strMap: Map<string, string>): object => {
         obj[k] = v;
     }
     return obj;
+};
+
+const generateHowlOptions = async (soundPath: string): Promise<any> => {
+    if (isDevelopment) {
+        // If we're in a development server we need to read the data from the filesystem
+        // since we can't access the files from the server.
+        const soundData = await readFile(soundPath);
+        // Assume mp3 file extension if not specified
+        const fileExt = soundPath.split(".").pop() || "mp3";
+
+        return ({
+            src: `data:audio/${fileExt};base64,${soundData.toString("base64")}`,
+            format: fileExt.toLowerCase(), // always give file extension: this is optional but helps
+        });
+    }
+
+    return ({
+        src: [soundPath],
+        html5: true,
+    });
 };
 
 export class SoundPlayer {
@@ -64,15 +84,9 @@ export class SoundPlayer {
             if (!soundPath) {
                 throw new Error(`No sound with name: ${name}`);
             }
-            const soundData = await readFile(soundPath);
-            // Assume mp3 file extension if not specified
-            const fileExt = soundPath.split(".").pop() || "mp3";
 
-            console.log(soundData.toString("base64"));
-            this.currentSound = new Howl({
-                src: `data:audio/${fileExt};base64,${soundData.toString("base64")}`,
-                format: fileExt.toLowerCase(), // always give file extension: this is optional but helps
-            });
+            const howlOptions = await generateHowlOptions(soundPath);
+            this.currentSound = new Howl(howlOptions);
             this.howls.set(name, this.currentSound);
         }
         this.currentSound.play();

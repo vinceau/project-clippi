@@ -50,7 +50,7 @@ export const notify = (title: string, body: string) => {
     );
 };
 
-const isDevelopment = process.env.NODE_ENV !== "production";
+export const isDevelopment = process.env.NODE_ENV !== "production";
 
 // see https://github.com/electron-userland/electron-webpack/issues/99#issuecomment-459251702
 export const getStatic = (val: string): string => {
