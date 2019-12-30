@@ -36,6 +36,18 @@ export const openFolder = async (dirPath: string): Promise<void> => {
     if (fs.lstatSync(dirPath).isDirectory()) {
         await open(dirPath);
     } else {
-        await open(path.dirname(dirPath))
+        await open(path.dirname(dirPath));
     }
+};
+
+export const readFile = async (filePath: string): Promise<Buffer> => {
+    return new Promise((resolve, reject) => {
+        fs.readFile(filePath, (err, data) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(data);
+            }
+        });
+    });
 };

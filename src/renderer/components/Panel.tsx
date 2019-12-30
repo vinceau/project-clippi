@@ -9,33 +9,46 @@ import { Dispatch, iRootState } from "@/store";
 import { notify } from "../lib/utils";
 import { SlippiPage } from "./Slippi";
 import { TwitchClip, TwitchConnectButton } from "./TwitchConnect";
+import { sp } from "../lib/sounds";
 
 const noop = () => {
     console.log("inside callback");
 };
 
 const FileInput: React.FC<{
-    value: any;
+    value: string[];
     onChange: any;
-}> = ({ value, onChange = noop, ...rest }) => (
-  <div>
-    {Boolean(value && value.length) && (
-      <div>Selected files: {value.map((f: any) => f.name).join(", ")}</div>
-    )}
-    <label>
-      Click to select some files...
+}> = ({ value, onChange = noop, ...rest }) => {
+    console.log(value);
+    return (
+        <div>
+            {Boolean(value && value.length) && (
+                <div>Selected files: {
+                    value.map((fname: string) => {
+                        return <div key={fname} onClick={(e) => {
+                            e.preventDefault();
+                            console.log(`playing: ${fname}`);
+                            sp.playSound(fname).catch(console.error);
+                            console.log(`done playing ${fname}`);
+                        }}>Name: {fname}</div>
+                    })
+                }</div>
+            )}
+            <label>
+                Click to select some files...
       <input
-        {...rest}
-        style={{ display: "none" }}
-        type="file"
-        onChange={(e: any) => {
-          console.log([...e.target.files]);
-          onChange([...e.target.files]);
-        }}
-      />
-    </label>
-  </div>
-);
+                    {...rest}
+                    style={{ display: "none" }}
+                    type="file"
+                    onChange={(e: any) => {
+                        console.log([...e.target.files]);
+                        onChange([...e.target.files]);
+                    }}
+                />
+            </label>
+        </div>
+    );
+};
 
 
 const SoundPlayer = () => {
@@ -92,7 +105,26 @@ const Count = () => {
         connectToSlippi(parseInt(port, 10)).catch(console.error);
     };
 
-    const [fileValue, setFileValue] = React.useState<any>(null);
+    const [fileValue, setFileValue] = React.useState<string[]>([]);
+    const fileSelect = (f: any[]) => {
+        console.log(`got back ${f}`);
+        const fl = [];
+        for (const ff of f) {
+            console.log(ff);
+            sp.addSound(ff.name, ff.path);
+            fl.push(ff.name);
+
+            const reader = new FileReader();
+            reader.addEventListener("load", () => {
+                const data = reader.result;
+                console.log(data);
+            });
+            reader.readAsDataURL(ff);
+        }
+        console.log(f);
+        setFileValue(fl);
+
+    };
 
     return (
         <Outer>
@@ -102,7 +134,7 @@ const Count = () => {
             </div>
             <button onClick={handleClick}>notify</button>
             <SoundPlayer />
-            <FileInput value={fileValue} onChange={setFileValue} />
+            <FileInput value={fileValue} onChange={fileSelect} />
             {authToken ?
                 <TwitchClip accessToken={authToken} />
                 :
