@@ -1,5 +1,4 @@
 import * as React from "react";
-import path from "path";
 
 import {
     Route,
@@ -10,7 +9,7 @@ import {
 
 import { ComboFilterSettings } from "@vinceau/slp-realtime";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Icon, Menu, Header, Table } from "semantic-ui-react";
+import { Icon, Menu } from "semantic-ui-react";
 import styled, { css } from "styled-components";
 
 import { comboFilter } from "@/lib/realtime";
@@ -19,8 +18,6 @@ import { device } from "@/styles/device";
 import { LabelledButton } from "../LabelledButton";
 import { ComboFinder } from "./ComboFinder";
 import { ComboForm } from "./ComboForm";
-import { sp } from "@/lib/sounds";
-import { getFilePath } from "@/lib/utils";
 import { SoundSettings } from "./SoundSettings";
 
 export const SettingsPage: React.FC<{

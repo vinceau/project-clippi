@@ -1,6 +1,5 @@
 import * as React from "react";
 
-import { Howl } from "howler";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
@@ -9,11 +8,6 @@ import { Dispatch, iRootState } from "@/store";
 import { notify } from "../lib/utils";
 import { SlippiPage } from "./Slippi";
 import { TwitchClip, TwitchConnectButton } from "./TwitchConnect";
-import { sp } from "../lib/sounds";
-
-const noop = () => {
-    console.log("inside callback");
-};
 
 const Count = () => {
     const slippiPort = useSelector((state: iRootState) => state.slippi.port);
