@@ -20,6 +20,7 @@ import { ComboFinder } from "./ComboFinder";
 import { ComboForm } from "./ComboForm";
 
 import { Container, Icon, Grid, Menu, Button } from "semantic-ui-react";
+import { device } from "@/styles/device";
 
 export const SettingsPage: React.FC<{
     showSettings: boolean;
@@ -53,7 +54,85 @@ export const SettingsPage: React.FC<{
     margin-left: 0 !important;
     margin-right: 0 !important;
     `;
+    const Wrapper = styled.div`
+    display: flex;
+    `;
+    const MenuColumn = styled.div`
+    flex-basis: 100%;
+    overflow: hidden;
+    overflow-y: auto;
+    height: 100vh;
+    @media ${device.tablet} {
+        flex-basis: 40%;
+    }
+    @media ${device.laptop} {
+        flex-basis: 30%;
+    }
+    `;
+    const ContentColumn = styled.div`
+    flex-basis: 0%;
+    overflow: hidden;
+    overflow-y: auto;
+    height: 100vh;
+    @media ${device.tablet} {
+        flex-basis: 60%;
+    }
+    @media ${device.laptop} {
+        flex-basis: 70%;
+    }
+    `;
+    const StyledMenu = styled(Menu)`
+    &&& {
+        width: 100%;
+        padding: 30px 50px;
+        a.item {
+            & > i.icon {
+                float: left;
+                margin-right: 10px;
+                margin-left: 0;
+            }
+        }
+        @media ${device.tablet} {
+            padding: 0;
+        }
+    }
+    `;
+    return (
+        <SettingsContainer>
+            <Wrapper>
+                <MenuColumn>
+                <StyledMenu secondary={true} vertical={true}>
+                    <Menu.Item header>Combo Settings</Menu.Item>
+                        <Menu.Item
+                            name="combo-finder"
+                            active={activeItem === "combo-finder"}
+                            onClick={handleItemClick}
+                        ><Icon name="search" /> Combo Finder</Menu.Item>
+                        <Menu.Item
+                            name="combo-settings"
+                            active={activeItem === "combo-settings"}
+                            onClick={handleItemClick}
+                        ><Icon name="filter" />Filter Options</Menu.Item>
+                    <Menu.Item header>Account Settings</Menu.Item>
+                        <Menu.Item
+                            name="account-settings"
+                            active={activeItem === "account-settings"}
+                            onClick={handleItemClick}
+                        ><Icon name="twitch" />Twitch Integration</Menu.Item>
+                    </StyledMenu>
+                </MenuColumn>
+                <ContentColumn>
+                    <Switch>
+                        <Route path={`${path}/combo-finder`} component={PageSettingsProfile} />
+                        <Route path={`${path}/combo-settings`} component={PageSettingsBilling} />
+                        <Route path={`${path}/account-settings`} component={PageSettingsAccount} />
+                    </Switch>
+                </ContentColumn>
+            </Wrapper>
+        </SettingsContainer>
+    );
 
+    /*
     return (
         <SettingsContainer>
         <Container>
@@ -93,6 +172,7 @@ export const SettingsPage: React.FC<{
 </Container>
 </SettingsContainer>
     );
+    */
 };
 
 /*
