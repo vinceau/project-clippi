@@ -55,7 +55,7 @@ export const SettingsPage: React.FC<{
     overflow: hidden;
     overflow-y: auto;
     height: 100vh;
-    @media ${device.tablet} {
+    @media ${device.mobileL} {
         flex-basis: 30%;
     }
     `;
@@ -64,7 +64,7 @@ export const SettingsPage: React.FC<{
     overflow: hidden;
     overflow-y: auto;
     height: 100vh;
-    @media ${device.tablet} {
+    @media ${device.mobileL} {
         flex-basis: 70%;
     }
     & > div {
@@ -83,7 +83,7 @@ export const SettingsPage: React.FC<{
                 margin-left: 0;
             }
         }
-        @media ${device.tablet} {
+        @media ${device.mobileL} {
             padding-top: 20px;
             padding-left: 10px;
             padding-right: 10px;
