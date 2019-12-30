@@ -2,11 +2,11 @@ import * as React from "react";
 
 import styled from "styled-components";
 import { HelixUser } from "twitch";
+import { Icon } from "semantic-ui-react";
 
 import { createTwitchClip, currentUser, isStreaming } from "../../common/twitch";
 import { notifyTwitchClip } from "../lib/twitch";
 import { notify } from "../lib/utils";
-import twitchIconImage from "../styles/images/twitch.svg";
 import defaultUserImage from "../styles/images/user.svg";
 
 const TwitchUserStatus: React.SFC<{ image?: any; live: boolean }> = props => {
@@ -123,23 +123,13 @@ export const TwitchClip: React.SFC<{ accessToken: string }> = props => {
 export const TwitchConnectButton: React.FC<{
     onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }> = (props) => {
-    const size = "24px";
     const twitchColor = "#6441A4";
     const ButtonText = styled.span`
-    color: white;
     margin-left: 5px;
     font-size: 14px;
     `;
-    const TwitchLogo = styled.div`
-    background-color: white;
-    mask: url(${twitchIconImage}) no-repeat 50% 50%;
-    mask-size: cover;
-    display: inline-block;
-    height: ${size};
-    width: ${size};
-    margin: 5px;
-    `;
     const TwitchButton = styled.button`
+    color: white;
     background-color: ${twitchColor};
     display: flex;
     align-items: center;
@@ -149,10 +139,14 @@ export const TwitchConnectButton: React.FC<{
     border: 0;
     border-radius: 3px;
     padding: 5px 0;
+    i.icon {
+        font-size: 25px;
+        margin: 5px 0;
+    }
     `;
     return (
         <TwitchButton onClick={props.onClick}>
-            <TwitchLogo />
+            <Icon name="twitch" />
             <ButtonText>Connect with Twitch</ButtonText>
         </TwitchButton>
     );
