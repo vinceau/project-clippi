@@ -6,7 +6,8 @@ import { PersistGate } from "redux-persist/integration/react";
 import { Models, persistor, store } from "@/store";
 import { App } from "./components/App";
 
-import "./styles/index.scss";
+// tslint:disable-next-line: no-import-side-effect
+import "./styles";
 
 ReactDOM.render(
     <Provider store={store}>

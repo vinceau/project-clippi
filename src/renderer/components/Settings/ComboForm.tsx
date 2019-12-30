@@ -1,17 +1,20 @@
 /* eslint-disable jsx-a11y/accessible-emoji */
 import * as React from "react";
 
+import { Form as SemanticForm } from 'semantic-ui-react'
 import { ComboFilterSettings } from "@vinceau/slp-realtime";
 import arrayMutators from "final-form-arrays";
 import { Field, Form } from "react-final-form";
 
+import { SemanticCheckboxInput } from "./ComboForm/FormAdapters";
 import { CharacterSelectAdapter } from "./ComboForm/CharacterSelect";
 import { NameTagForm } from "./ComboForm/NameTagForm";
 import { PercentageSlider } from "./ComboForm/PercentageSlider";
 import { mapCharacterPercentArrayToObject, mapObjectToCharacterPercentArray, PerCharPercent } from "./ComboForm/PerCharPercent";
 
-import "./ComboForm/NameTagForm.scss";
-import Styles from "./Styles";
+// import "./ComboForm/NameTagForm.scss";
+// import Styles from "./Styles";
+import { PortSelectAdapter } from "./PortSelection";
 
 /*
 export interface ComboFilterSettings {
@@ -46,7 +49,7 @@ export const ComboForm: React.FC<{
         props.onSubmit(convertBack);
     };
     return (
-        <Styles>
+        <div>
             <Form
                 onSubmit={onSubmit}
                 mutators={{
@@ -63,47 +66,47 @@ export const ComboForm: React.FC<{
                     values,
                     form
                 }) => (
-                        <form onSubmit={handleSubmit}>
-                            <div>
+                        <SemanticForm onSubmit={handleSubmit}>
+                            <SemanticForm.Field>
                                 <label>Character Filter</label>
                                 <CharacterSelectAdapter name="characterFilter" isMulti={true} />
-                            </div>
-                            <div>
+                            </SemanticForm.Field>
+                            <SemanticForm.Field>
+                                <label>Port Filter</label>
+                                <PortSelectAdapter name="portFilter" />
+                            </SemanticForm.Field>
+                            <SemanticForm.Field>
                                 <label>Minimum Combo Percent</label>
                                 <Field name="minComboPercent" component="input" type="number" parse={(v: any) => parseInt(v, 10)} />
-                            </div>
-                            <div>
+                            </SemanticForm.Field>
+                            <SemanticForm.Field>
                                 <label>Minimum Combo Length</label>
                                 <Field name="minComboLength" component="input" type="number" parse={(v: any) => parseInt(v, 10)} />
-                            </div>
-                            <div>
+                            </SemanticForm.Field>
+                            <SemanticForm.Field>
                                 <label>Name Tag Filter</label>
                                 <NameTagForm name="nameTags" pop={pop} push={push} values={values} />
-                            </div>
-                            <div>
-                                <label>Per Character Combo Percent</label>
+                            </SemanticForm.Field>
+                            <SemanticForm.Field>
+                                <label>Character-specific Minimum Combo Percent</label>
                                 <PerCharPercent name="perCharacterMinComboPercent" pop={pop} push={push} values={values} />
-                            </div>
-                            <div>
-                                <label>Combo Must Kill</label>
-                                <Field name="comboMustKill" component="input" type="checkbox" />
-                            </div>
-                            <div>
-                                <label>Exclude CPUs</label>
-                                <Field name="excludeCPUs" component="input" type="checkbox" />
-                            </div>
-                            <div>
-                                <label>Exclude Chain-grabs</label>
-                                <Field name="excludeChainGrabs" component="input" type="checkbox" />
-                            </div>
-                            <div>
-                                <label>Exclude Wobbles</label>
-                                <Field name="excludeWobbles" component="input" type="checkbox" />
-                            </div>
-                            <div>
+                            </SemanticForm.Field>
+                            <SemanticForm.Field>
+                                <Field name="comboMustKill" label="Combo Must Kill" component={SemanticCheckboxInput} />
+                            </SemanticForm.Field>
+                            <SemanticForm.Field>
+                                <Field name="excludeCPUs" label="Exclude CPUs" component={SemanticCheckboxInput} />
+                            </SemanticForm.Field>
+                            <SemanticForm.Field>
+                                <Field name="excludeChainGrabs" label="Exclude Chain-grabs" component={SemanticCheckboxInput} />
+                            </SemanticForm.Field>
+                            <SemanticForm.Field>
+                                <Field name="excludeWobbles" label="Exclude Wobbles" component={SemanticCheckboxInput} />
+                            </SemanticForm.Field>
+                            <SemanticForm.Field>
                                 <label>Chain Grabbers</label>
                                 <CharacterSelectAdapter name="chainGrabbers" isMulti={true} />
-                            </div>
+                            </SemanticForm.Field>
                             <div>
                                 <label>Large Hit Threshold</label>
                                 <div>
@@ -133,9 +136,9 @@ export const ComboForm: React.FC<{
                                 </button>
                             </div>
                             <pre>{(JSON as any).stringify(values, 0, 2)}</pre>
-                        </form>
+                        </SemanticForm>
                     )}
             />
-        </Styles>
+        </div>
     );
 };
