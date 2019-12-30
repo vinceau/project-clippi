@@ -63,9 +63,6 @@ export const SettingsPage: React.FC<{
     overflow-y: auto;
     height: 100vh;
     @media ${device.tablet} {
-        flex-basis: 40%;
-    }
-    @media ${device.laptop} {
         flex-basis: 30%;
     }
     `;
@@ -75,16 +72,13 @@ export const SettingsPage: React.FC<{
     overflow-y: auto;
     height: 100vh;
     @media ${device.tablet} {
-        flex-basis: 60%;
-    }
-    @media ${device.laptop} {
         flex-basis: 70%;
     }
     `;
     const StyledMenu = styled(Menu)`
     &&& {
         width: 100%;
-        padding: 30px 50px;
+        padding: 50px;
         a.item {
             & > i.icon {
                 float: left;
@@ -93,7 +87,9 @@ export const SettingsPage: React.FC<{
             }
         }
         @media ${device.tablet} {
-            padding: 0;
+            padding-top: 20px;
+            padding-left: 10px;
+            padding-right: 10px;
         }
     }
     `;
