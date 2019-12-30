@@ -1,4 +1,5 @@
 import * as React from "react";
+import path from "path";
 
 import {
     Route,
@@ -9,7 +10,7 @@ import {
 
 import { ComboFilterSettings } from "@vinceau/slp-realtime";
 import { useDispatch, useSelector } from "react-redux";
-import { Icon, Menu, Header, Table } from "semantic-ui-react";
+import { Button, Icon, Menu, Header, Table } from "semantic-ui-react";
 import styled, { css } from "styled-components";
 
 import { comboFilter } from "@/lib/realtime";
@@ -19,6 +20,7 @@ import { LabelledButton } from "../LabelledButton";
 import { ComboFinder } from "./ComboFinder";
 import { ComboForm } from "./ComboForm";
 import { sp } from "@/lib/sounds";
+import { getFilePath } from "@/lib/utils";
 
 export const SettingsPage: React.FC<{
     showSettings: boolean;
@@ -277,27 +279,44 @@ const SoundSettings = () => {
         // setFileValue(fl);
 
     };
+    const onPlay = (name: string) => {
+        sp.playSound(name);
+    };
+    const getSounds = async () => {
+        const p = await getFilePath({
+            filters: [{ name: "Audio files", extensions: ["mp3", "wav"] }],
+        }, false);
+        if (p) {
+            const name = path.basename(p);
+            sp.addSound(name, p);
+            dispatch.filesystem.setSoundFiles(sp.serialize());
+        }
+    };
     return (
         <div>
             <h1>Sound Settings</h1>
+            <Button onClick={() => getSounds().catch(console.error)}>
+                <Icon name="add" />
             <label>
-                Click to add more sounds
-      <input
+                Add sounds
+            {/* <input
                     style={{ display: "none" }}
                     type="file"
                     onChange={(e: any) => {
                         console.log([...e.target.files]);
                         onChange([...e.target.files]);
                     }}
-                />
+                /> */}
             </label>
-            <SoundTable sounds={sounds}/>
+            </Button>
+            <SoundTable onPlay={onPlay} sounds={sounds}/>
         </div>
     );
 };
 
 const SoundTable: React.FC<{
     sounds: Map<string, string>;
+    onPlay: (name: string) => void;
 }> = props => {
     const rows: JSX.Element[] = [];
     props.sounds.forEach((value, key) => {
@@ -309,9 +328,7 @@ const SoundTable: React.FC<{
         <Table.Cell>
           {value}
         </Table.Cell>
-        <Table.Cell>
-            Play
-        </Table.Cell>
+        <Table.Cell><span onClick={() => props.onPlay(key)}>Play</span></Table.Cell>
         <Table.Cell>
 Delete
         </Table.Cell>
