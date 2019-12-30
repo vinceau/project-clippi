@@ -1,27 +1,23 @@
 import * as React from "react";
 
 import {
-    Link as LinkContainer,
-    Redirect,
     Route,
     Switch,
-    useRouteMatch,
     useHistory,
+    useRouteMatch,
 } from "react-router-dom";
 
+import { ComboFilterSettings } from "@vinceau/slp-realtime";
 import { useDispatch, useSelector } from "react-redux";
-
-import { Dispatch, iRootState } from "@/store";
+import { Icon, Menu } from "semantic-ui-react";
+import styled, { css } from "styled-components";
 
 import { comboFilter } from "@/lib/realtime";
-import { ComboFilterSettings } from "@vinceau/slp-realtime";
-import styled, { css } from "styled-components";
-import { ComboFinder } from "./ComboFinder";
-import { ComboForm } from "./ComboForm";
-
-import { Container, Icon, Grid, Menu, Button } from "semantic-ui-react";
+import { Dispatch, iRootState } from "@/store";
 import { device } from "@/styles/device";
 import { LabelledButton } from "../LabelledButton";
+import { ComboFinder } from "./ComboFinder";
+import { ComboForm } from "./ComboForm";
 
 export const SettingsPage: React.FC<{
     showSettings: boolean;
@@ -31,7 +27,7 @@ export const SettingsPage: React.FC<{
     const history = useHistory();
     const [activeItem, setActiveItem] = React.useState("bio");
 
-    const handleItemClick = (e: any, { name }: any) => {
+    const handleItemClick = (_: any, { name }: any) => {
         history.push(`${path}/${name}`);
         setActiveItem(name);
     };
@@ -50,10 +46,6 @@ export const SettingsPage: React.FC<{
         background-color: rgba(255, 255, 255, 1);
         z-index: 1;
         ${!props.showSettings && hiddenSettings}
-    `;
-    const StyledGrid = styled(Grid)`
-    margin-left: 0 !important;
-    margin-right: 0 !important;
     `;
     const Wrapper = styled.div`
     display: flex;
@@ -228,7 +220,6 @@ const PageSettingsProfile = () => {
         <div><ComboFinder /></div>
     );
 };
-
 
 export const PageSettingsBilling = () => {
     const settings = useSelector((state: iRootState) => state.slippi.settings);

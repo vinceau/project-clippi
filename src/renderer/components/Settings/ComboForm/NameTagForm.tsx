@@ -1,8 +1,7 @@
 import * as React from "react";
 
-import { Icon, Label } from 'semantic-ui-react'
 import { FieldArray } from "react-final-form-arrays";
-import styled from "styled-components";
+import { Icon, Label } from "semantic-ui-react";
 
 const NameTagLabel: React.FC<{
     name: string;
@@ -11,7 +10,7 @@ const NameTagLabel: React.FC<{
     return (
         <Label>
             {props.name}
-            <Icon name='delete' onClick={props.onClick} />
+            <Icon name="delete" onClick={props.onClick} />
         </Label>
     );
 };

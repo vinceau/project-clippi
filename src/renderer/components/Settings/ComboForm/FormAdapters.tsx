@@ -8,7 +8,7 @@ export const SemanticCheckboxInput = (props: any) => {
             <Checkbox
                 checked={input.value}
                 label={label}
-                onChange={(e, obj) => input.onChange(obj.checked)}
+                onChange={(_, obj) => input.onChange(obj.checked)}
             />
         </SemanticForm.Field>
     );
