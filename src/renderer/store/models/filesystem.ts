@@ -13,6 +13,7 @@ export interface FileSystemState {
     combosFilePath: string;
     includeSubFolders: boolean;
     deleteFilesWithNoCombos: boolean;
+    soundFiles: string;
 }
 
 const initialState: FileSystemState = {
@@ -20,11 +21,15 @@ const initialState: FileSystemState = {
     combosFilePath: path.join(homeDirectory, "combos.json"),
     includeSubFolders: false,
     deleteFilesWithNoCombos: false,
+    soundFiles: "{}",
 };
 
 export const filesystem = createModel({
     state: initialState,
     reducers: {
+        setSoundFiles: (state: FileSystemState, payload: string): FileSystemState => produce(state, draft => {
+            draft.soundFiles = payload;
+        }),
         setFilesPath: (state: FileSystemState, payload: string): FileSystemState => produce(state, draft => {
             draft.filesPath = payload;
         }),

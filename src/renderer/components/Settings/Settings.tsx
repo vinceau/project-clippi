@@ -9,7 +9,7 @@ import {
 
 import { ComboFilterSettings } from "@vinceau/slp-realtime";
 import { useDispatch, useSelector } from "react-redux";
-import { Icon, Menu } from "semantic-ui-react";
+import { Icon, Menu, Header, Table } from "semantic-ui-react";
 import styled, { css } from "styled-components";
 
 import { comboFilter } from "@/lib/realtime";
@@ -18,6 +18,7 @@ import { device } from "@/styles/device";
 import { LabelledButton } from "../LabelledButton";
 import { ComboFinder } from "./ComboFinder";
 import { ComboForm } from "./ComboForm";
+import { sp } from "@/lib/sounds";
 
 export const SettingsPage: React.FC<{
     showSettings: boolean;
@@ -117,12 +118,17 @@ export const SettingsPage: React.FC<{
                             active={activeItem === "combo-settings"}
                             onClick={handleItemClick}
                         ><Icon name="filter" />Filter Options</Menu.Item>
-                        <Menu.Item header>Account Settings</Menu.Item>
+                        <Menu.Item header>Action Settings</Menu.Item>
                         <Menu.Item
                             name="account-settings"
                             active={activeItem === "account-settings"}
                             onClick={handleItemClick}
                         ><Icon name="twitch" />Twitch Integration</Menu.Item>
+                        <Menu.Item
+                            name="sound-settings"
+                            active={activeItem === "sound-settings"}
+                            onClick={handleItemClick}
+                        ><Icon name="volume down" />Sounds</Menu.Item>
                     </StyledMenu>
                 </MenuColumn>
                 <ContentColumn>
@@ -131,6 +137,7 @@ export const SettingsPage: React.FC<{
                             <Route path={`${path}/combo-finder`} component={PageSettingsProfile} />
                             <Route path={`${path}/combo-settings`} component={PageSettingsBilling} />
                             <Route path={`${path}/account-settings`} component={PageSettingsAccount} />
+                            <Route path={`${path}/sound-settings`} component={SoundSettings} />
                         </Switch>
                     </div>
                 </ContentColumn>
@@ -243,4 +250,90 @@ const PageSettingsAccount = () => {
     return (
         <div>Accounts</div>
     );
+};
+
+
+
+const SoundSettings = () => {
+    const soundFiles = useSelector((state: iRootState) => state.filesystem.soundFiles);
+    const sounds = sp.deserialize(soundFiles);
+    const dispatch = useDispatch<Dispatch>();
+    // const onSubmit = (values: Partial<ComboFilterSettings>) => {
+    //     const newValues = comboFilter.updateSettings(values);
+    //     console.log(`updated combo filter with new values: ${newValues}`);
+    //     const valueString = JSON.stringify(newValues);
+    //     console.log(`updating redux store: ${valueString}`);
+    //     dispatch.slippi.updateSettings(valueString);
+    // };
+    const onChange = (f: any[]) => {
+        console.log(`got back ${f}`);
+        // const fl = [];
+        for (const ff of f) {
+            console.log(ff);
+            sp.addSound(ff.name, ff.path);
+            dispatch.filesystem.setSoundFiles(sp.serialize());
+        }
+        // console.log(f);
+        // setFileValue(fl);
+
+    };
+    return (
+        <div>
+            <h1>Sound Settings</h1>
+            <label>
+                Click to add more sounds
+      <input
+                    style={{ display: "none" }}
+                    type="file"
+                    onChange={(e: any) => {
+                        console.log([...e.target.files]);
+                        onChange([...e.target.files]);
+                    }}
+                />
+            </label>
+            <SoundTable sounds={sounds}/>
+        </div>
+    );
+};
+
+const SoundTable: React.FC<{
+    sounds: Map<string, string>;
+}> = props => {
+    const rows: JSX.Element[] = [];
+    props.sounds.forEach((value, key) => {
+        rows.push((
+      <Table.Row key={value}>
+        <Table.Cell>
+            {key}
+        </Table.Cell>
+        <Table.Cell>
+          {value}
+        </Table.Cell>
+        <Table.Cell>
+            Play
+        </Table.Cell>
+        <Table.Cell>
+Delete
+        </Table.Cell>
+      </Table.Row>
+        ));
+    });
+    return (
+        <div>
+ <Table celled padded>
+    <Table.Header>
+      <Table.Row>
+        <Table.HeaderCell singleLine>Name</Table.HeaderCell>
+        <Table.HeaderCell>File Path</Table.HeaderCell>
+        <Table.HeaderCell>Play</Table.HeaderCell>
+        <Table.HeaderCell>Delete</Table.HeaderCell>
+      </Table.Row>
+    </Table.Header>
+
+    <Table.Body>
+        {rows}
+    </Table.Body>
+  </Table>
+        </div>
+    ); 
 };
