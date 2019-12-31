@@ -6,64 +6,60 @@ import { Container, Item, Dropdown } from 'semantic-ui-react'
 import { NotifyInput } from "./ActionInputs";
 import { ActionEvent } from "@/lib/realtime";
 
-/*
-export enum ActionEvent {
-  GAME_START = "game-start",
-  GAME_END = "game-end",
-  PLAYER_SPAWN = "player-spawn",
-  PLAYER_DIED = "player-died",
-  COMBO_OCCURRED = "combo-occurred",
-}
-*/
-const friendOptions = [
-  {
-    key: ActionEvent.GAME_START,
-    text: "a new game starts",
-    value: ActionEvent.GAME_START,
-  },
-  {
-    key: ActionEvent.GAME_END,
-    text: "the game ends",
-    value: ActionEvent.GAME_END,
-  },
-  {
-    key: ActionEvent.PLAYER_DIED,
-    text: "someone dies",
-    value: ActionEvent.PLAYER_DIED,
-  },
-  {
-    key: ActionEvent.PLAYER_SPAWN,
-    text: "someone spawns",
-    value: ActionEvent.PLAYER_SPAWN,
-  },
-  {
-    key: ActionEvent.COMBO_OCCURRED,
-    text: "a combo occurs",
-    value: ActionEvent.COMBO_OCCURRED,
-  },
-];
+const mapEventToName: { [eventName: string]: string } = {
+  [ActionEvent.GAME_START]: "a new game starts",
+  [ActionEvent.GAME_END]: "the game ends",
+  [ActionEvent.PLAYER_DIED]: "someone dies",
+  [ActionEvent.PLAYER_SPAWN]: "someone spawns",
+  [ActionEvent.COMBO_OCCURRED]: "a combo occurs",
+};
 
-export const EventActions = () => {
-  const [value, setValue] = React.useState({});
-  const EventSelector = styled.span`
+const generateOptions = (events: string[]): Array<{ key: string; text: string; value: string }> => {
+  return events.map((e) => ({
+    key: e,
+    value: e,
+    text: mapEventToName[e],
+  }));
+};
+
+const EventSelector: React.FC<{
+  events: string[];
+  disabled?: string[];
+}> = props => {
+  const Outer = styled.span`
   &&&,
   * {
     font-size: 30px;
   }
   `;
+  const options = generateOptions(props.events);
+  return (
+    <Outer>
+      When {" "}
+      <Dropdown
+        inline
+        options={options}
+        defaultValue={options[0].value}
+      />
+    </Outer>
+  );
+};
+
+export const EventActions = () => {
+  const [value, setValue] = React.useState({});
+  const events = [
+    ActionEvent.GAME_START,
+    ActionEvent.GAME_END,
+    ActionEvent.PLAYER_DIED,
+    ActionEvent.PLAYER_SPAWN,
+    ActionEvent.COMBO_OCCURRED,
+  ];
   return (
     <Container>
-      <EventSelector>
-        When {" "}
-        <Dropdown
-          inline
-          options={friendOptions}
-          defaultValue={friendOptions[0].value}
-        />
-      </EventSelector>
-<Item.Group divided>
-      <NotifyInput value={value} onChange={setValue} />
-</Item.Group>
+      <EventSelector events={events} />
+      <Item.Group divided>
+        <NotifyInput value={value} onChange={setValue} />
+      </Item.Group>
       <pre>{JSON.stringify(value)}</pre>
     </Container>
   );
