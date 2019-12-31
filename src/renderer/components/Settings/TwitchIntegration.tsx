@@ -39,7 +39,7 @@ export const TwitchIntegration = () => {
                     onSignOut={onSignOut}
                 />
                 :
-                <Loader active={true} content="Loading" />
+                <Loader active={true} inline={true} content="Loading" />
             }
             <h3>Clips</h3>
             {rows}
