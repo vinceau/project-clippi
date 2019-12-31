@@ -5,6 +5,21 @@ import { ComboFilter, ComboType, DolphinComboQueue, SlippiLivestream, SlippiReal
 
 import { notify } from "./utils";
 
+import { eventActionManager } from "./actions";
+
+export enum ActionEvent {
+    GAME_START = "game-start",
+    GAME_END = "game-end",
+    PLAYER_SPAWN = "player-spawn",
+    PLAYER_DIED = "player-died",
+    COMBO_OCCURRED = "combo-occurred",
+}
+
+const errorHandler = (err: any) => {
+    console.error(err);
+    notify("Error occurred", JSON.stringify(err));
+};
+
 export const comboFilter = new ComboFilter();
 comboFilter.updateSettings({ excludeCPUs: false, comboMustKill: false, minComboPercent: 40 });
 
@@ -20,32 +35,25 @@ export const connectToSlippi = async (port?: number): Promise<boolean> => {
     return r.start(address, slpPort);
 };
 
-r.events.on("gameStart", () => {
-    console.log('game started');
+r.events.on("gameStart", (gameStart) => {
+    eventActionManager.emitEvent(ActionEvent.GAME_START, gameStart).catch(errorHandler);
 });
-r.events.on('gameEnd', () => {
-    console.log('game ended');
+r.events.on("gameEnd", (gameEnd) => {
+    eventActionManager.emitEvent(ActionEvent.GAME_END, gameEnd).catch(errorHandler);
 });
 
-r.events.on('spawn', () => {
-    console.log('spawn');
+r.events.on("spawn", (playerIndex, stock, settings) => {
+    eventActionManager.emitEvent(ActionEvent.PLAYER_SPAWN, playerIndex, stock, settings).catch(errorHandler);
 });
-r.events.on('death', () => {
-    console.log('death');
+r.events.on("death", (playerIndex, stock, settings) => {
+    eventActionManager.emitEvent(ActionEvent.PLAYER_DIED, playerIndex, stock, settings).catch(errorHandler);
 });
-r.events.on('comboStart', () => {
-    console.log('comboStart');
-});
-r.events.on('comboExtend', () => {
-    console.log('comboExtend');
-});
-r.events.on('comboEnd', (c, s) => {
-    if (comboFilter.isCombo(c, s)) {
-        console.log('fully sick combo was detected');
-        notify('fully sick combo', 'amaze');
-    } else {
-        console.log('the combo ended');
+
+r.events.on("comboEnd", (combo, settings) => {
+    if (!comboFilter.isCombo(combo, settings)) {
+        return;
     }
+    eventActionManager.emitEvent(ActionEvent.COMBO_OCCURRED, combo, settings).catch(errorHandler);
 });
 
 /*
