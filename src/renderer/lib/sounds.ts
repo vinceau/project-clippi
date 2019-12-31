@@ -60,6 +60,10 @@ export class SoundPlayer {
         delete this.sounds[name];
     }
 
+    public getSoundPath(name: string): string {
+        return this.sounds[name];
+    }
+
     public async playSound(name: string): Promise<void> {
         this.stop();
 
