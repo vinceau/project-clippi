@@ -7,7 +7,7 @@ import { connectToSlippi } from "@/lib/realtime";
 import { Dispatch, iRootState } from "@/store";
 import { notify } from "../lib/utils";
 import { SlippiPage } from "./Slippi";
-import { EventActions } from "./EventActions";
+import { Automator } from "./Automator/Automator";
 import { TwitchClip, TwitchConnectButton } from "./TwitchConnect";
 import { eventActionManager } from "@/lib/actions";
 
@@ -41,7 +41,7 @@ const Count = () => {
 
     return (
         <Outer>
-            <EventActions />
+            <Automator />
             <div style={{ width: 120 }}>
                 <h1>Slippi</h1>
                 <SlippiPage initialPort={slippiPort} onSubmit={handleConnect} />

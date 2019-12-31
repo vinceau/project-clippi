@@ -9,31 +9,26 @@ const friendOptions = [
       key: 'Jenny Hess',
       text: "a new game starts",
       value: 'Jenny Hess',
-      image: { avatar: true, src: '/images/avatar/small/jenny.jpg' },
     },
     {
       key: 'Elliot Fu',
       text: "the game ends",
       value: 'Elliot Fu',
-      image: { avatar: true, src: '/images/avatar/small/elliot.jpg' },
     },
     {
       key: 'Stevie Feliciano',
       text: "someone dies",
       value: 'Stevie Feliciano',
-      image: { avatar: true, src: '/images/avatar/small/stevie.jpg' },
     },
     {
       key: 'Christian',
       text: "someone respawns",
       value: 'Christian',
-      image: { avatar: true, src: '/images/avatar/small/christian.jpg' },
     },
     {
       key: 'combo',
       text: "a combo occurs",
       value: 'combo',
-      image: { avatar: true, src: '/images/avatar/small/christian.jpg' },
     },
   ];
 
