@@ -40,22 +40,24 @@ const generateHowlOptions = async (soundPath: string): Promise<any> => {
     });
 };
 
+export type SoundMap = { [name: string]: string };
+
 export class SoundPlayer {
-    public sounds: Map<string, string>;
+    public sounds: SoundMap;
     private readonly howls: Map<string, Howl>;
     private currentSound: Howl | undefined;
 
     public constructor(oldData?: string) {
-        this.sounds = new Map<string, string>(oldData ? JSON.parse(oldData) : undefined);
+        this.sounds = JSON.parse(oldData || "{}");
         this.howls = new Map<string, Howl>();
     }
 
     public serialize(): string {
-        return JSON.stringify(strMapToObj(this.sounds));
+        return JSON.stringify(this.sounds);
     }
 
-    public deserialize(jsonStr: string): Map<string, string> {
-        this.sounds = objToStrMap(JSON.parse(jsonStr));
+    public deserialize(jsonStr: string): SoundMap {
+        this.sounds = JSON.parse(jsonStr);
         return this.sounds;
     }
 
@@ -68,11 +70,11 @@ export class SoundPlayer {
     }
 
     public addSound(name: string, filePath: string): void {
-        this.sounds.set(name, filePath);
+        this.sounds[name] = filePath;
     }
 
     public removeSound(name: string): void {
-        this.sounds.delete(name);
+        delete this.sounds[name];
     }
 
     public async playSound(name: string): Promise<void> {
@@ -80,7 +82,7 @@ export class SoundPlayer {
 
         this.currentSound = this.howls.get(name);
         if (!this.currentSound) {
-            const soundPath = this.sounds.get(name);
+            const soundPath = this.sounds[name];
             if (!soundPath) {
                 throw new Error(`No sound with name: ${name}`);
             }

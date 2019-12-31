@@ -70,7 +70,7 @@ const SoundTable: React.FC<{
         }
         props.onRemove(name);
     };
-    props.sounds.forEach((value, key) => {
+    for (const [key, value] of Object.entries(props.sounds)) {
         rows.push((
             <Table.Row key={`${value}--${key}`}>
                 <Table.Cell>
@@ -91,7 +91,7 @@ const SoundTable: React.FC<{
                 </Table.Cell>
             </Table.Row>
         ));
-    });
+    };
     return (
         <div>
             <Table celled padded>
