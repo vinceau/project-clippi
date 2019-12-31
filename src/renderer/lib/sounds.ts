@@ -64,6 +64,17 @@ export class SoundPlayer {
         return this.sounds[name];
     }
 
+    public renameSound(oldName: string, newName: string): void {
+        if (!this.sounds[oldName]) {
+            throw new Error(`No sound called: ${oldName}`);
+        }
+        if (this.sounds[newName]) {
+            throw new Error(`${newName} already taken`);
+        }
+        this.sounds[newName] = this.sounds[oldName];
+        delete this.sounds[oldName];
+    }
+
     public async playSound(name: string): Promise<void> {
         this.stop();
 
