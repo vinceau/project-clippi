@@ -17,9 +17,6 @@ const Count = () => {
     const dispatch = useDispatch<Dispatch>();
 
     const Outer = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     `;
 
     const handleClick = () => {
