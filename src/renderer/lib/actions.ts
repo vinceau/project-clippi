@@ -3,6 +3,17 @@ import { createTwitchClip } from "common/twitch";
 // import { notifyTwitchClip } from "./twitch";
 import { store, dispatcher } from "../store";
 import { notify } from "./utils";
+import { sp } from "./sounds";
+
+export interface ActionPlaySoundParams {
+    sound: string;
+}
+
+const ActionPlaySound: ActionTypeGenerator = (params: ActionPlaySoundParams) => {
+    return async (...args: any[]): Promise<any> => {
+        await sp.playSound(params.sound);
+    };
+};
 
 export interface CreateTwitchClipParams {
     delay?: boolean;
@@ -36,6 +47,13 @@ const ActionCreateTwitchClip: ActionTypeGenerator = (params: CreateTwitchClipPar
 export const eventActionManager = new EventManager();
 
 eventActionManager.registerAction("twitch-clip", ActionCreateTwitchClip);
+eventActionManager.registerAction("play-sound", ActionPlaySound);
+eventActionManager.registerEvent("on-twitch-clip", {
+    name: "play-sound",
+    args: {
+        sound: "test.mp3",
+    },
+});
 eventActionManager.registerEvent("on-twitch-clip", {
     name: "twitch-clip",
     args: {
