@@ -45,7 +45,11 @@ export const SoundSettings: React.FC = () => {
                 <Button onClick={() => getSounds().catch(console.error)}>
                     <Icon name="add" />
                     Add sound
-            </Button>
+                </Button>
+                <Button onClick={() => sp.stop()}>
+                    <Icon name="stop" />
+                    Stop current sound
+                </Button>
             </Buttons>
             <SoundTable onPlay={onPlay} onRemove={removeSound} sounds={sounds} />
         </div>
