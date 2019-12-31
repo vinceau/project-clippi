@@ -28,8 +28,11 @@ const ActionCreateTwitchClip: ActionTypeGenerator = (params: CreateTwitchClipPar
         console.log(`creating clip with token: ${token}`);
         try {
             const clipID = await createTwitchClip(token, params.delay);
+            // Get timestamp in seconds
+            const timestamp = (new Date()).getTime() / 1000;
             dispatcher.twitch.addTwitchClip({
                 clipID,
+                timestamp,
             });
             return clipID;
         } catch (err) {
