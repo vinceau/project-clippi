@@ -1,10 +1,10 @@
 import * as React from "react";
 import path from "path";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Button, Icon, Table } from "semantic-ui-react";
 
-import { Dispatch, iRootState } from "@/store";
+import { Dispatch } from "@/store";
 import { sp } from "@/lib/sounds";
 import { getFilePath } from "@/lib/utils";
 import styled from "styled-components";
@@ -12,8 +12,6 @@ import { shell } from "electron";
 
 
 export const SoundSettings: React.FC = () => {
-    const soundFiles = useSelector((state: iRootState) => state.filesystem.soundFiles);
-    const sounds = sp.deserialize(soundFiles);
     const dispatch = useDispatch<Dispatch>();
     const onPlay = (name: string) => {
         const filePath = sp.getSoundPath(name);
@@ -51,7 +49,7 @@ export const SoundSettings: React.FC = () => {
                     Stop current sound
                 </Button>
             </Buttons>
-            <SoundTable onPlay={onPlay} onRemove={removeSound} sounds={sounds} />
+            <SoundTable onPlay={onPlay} onRemove={removeSound} sounds={sp.sounds} />
         </div>
     );
 };
@@ -81,7 +79,7 @@ const SoundRow: React.FC<{
             </Table.Cell>
         </Table.Row>
     );
-}
+};
 
 const SoundTable: React.FC<{
     sounds: { [name: string]: string};
