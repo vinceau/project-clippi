@@ -58,7 +58,9 @@ const SoundRow: React.FC<{
     onPlay: () => void;
     onRemove: () => void;
 }> = props => {
-
+    const Clickable = styled.span`
+    cursor: pointer;
+    `;
     return (
         <Table.Row key={props.path}>
             <Table.Cell>
@@ -68,10 +70,10 @@ const SoundRow: React.FC<{
                 {props.path}
             </Table.Cell>
             <Table.Cell>
-                <span onClick={props.onPlay}><Icon name="play" /></span>
+                <Clickable onClick={props.onPlay}><Icon name="play" /></Clickable>
             </Table.Cell>
             <Table.Cell>
-                <span onClick={props.onRemove}><Icon name="trash" /></span>
+                <Clickable onClick={props.onRemove}><Icon name="trash" /></Clickable>
             </Table.Cell>
         </Table.Row>
     );
@@ -102,7 +104,7 @@ const SoundTable: React.FC<{
                         <Table.HeaderCell singleLine>Name</Table.HeaderCell>
                         <Table.HeaderCell>File Path</Table.HeaderCell>
                         <Table.HeaderCell>Play</Table.HeaderCell>
-                        <Table.HeaderCell>Delete</Table.HeaderCell>
+                        <Table.HeaderCell>Remove</Table.HeaderCell>
                     </Table.Row>
                 </Table.Header>
                 <Table.Body>
