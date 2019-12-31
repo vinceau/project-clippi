@@ -10,7 +10,7 @@ export interface ActionPlaySoundParams {
 }
 
 const ActionPlaySound: ActionTypeGenerator = (params: ActionPlaySoundParams) => {
-    return async (...args: any[]): Promise<any> => {
+    return async (): Promise<any> => {
         await sp.playSound(params.sound);
     };
 };
@@ -21,7 +21,7 @@ export interface CreateTwitchClipParams {
 }
 
 const ActionCreateTwitchClip: ActionTypeGenerator = (params: CreateTwitchClipParams) => {
-    return async (...args: any[]): Promise<any> => {
+    return async (): Promise<any> => {
         const token = store.getState().twitch.authToken;
         console.log(`params:`);
         console.log(params);

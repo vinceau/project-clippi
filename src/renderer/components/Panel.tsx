@@ -13,7 +13,7 @@ import { eventActionManager } from "@/lib/actions";
 
 const Count = () => {
     const slippiPort = useSelector((state: iRootState) => state.slippi.port);
-    const { authToken, channelName, clips } = useSelector((state: iRootState) => state.twitch);
+    const { authToken } = useSelector((state: iRootState) => state.twitch);
     const dispatch = useDispatch<Dispatch>();
 
     const Outer = styled.div`
@@ -33,12 +33,8 @@ const Count = () => {
         connectToSlippi(parseInt(port, 10)).catch(console.error);
     };
     const customEvent = () => {
-        if (!channelName) {
-            dispatch.twitch.fetchTwitchUser();
-        }
         eventActionManager.emitEvent("on-twitch-clip").catch(console.error);
-    }
-
+    };
     return (
         <Outer>
             <Automator />

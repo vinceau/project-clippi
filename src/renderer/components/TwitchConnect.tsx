@@ -1,13 +1,9 @@
 import * as React from "react";
 
 import styled from "styled-components";
-import { HelixUser } from "twitch";
 import { Card, Image, Button, Icon } from "semantic-ui-react";
 
-import { useSelector, useDispatch } from "react-redux";
-import { Dispatch, iRootState } from "@/store";
-
-import { createTwitchClip, currentUser, isStreaming } from "../../common/twitch";
+import { createTwitchClip } from "../../common/twitch";
 import { notifyTwitchClip } from "../lib/twitch";
 import { notify } from "../lib/utils";
 import defaultUserImage from "../styles/images/user.svg";

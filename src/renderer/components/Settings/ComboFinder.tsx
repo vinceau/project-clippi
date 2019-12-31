@@ -10,7 +10,7 @@ import { Dispatch, iRootState } from "@/store";
 
 import { generateCombos } from "@/lib/realtime";
 import { notify } from "@/lib/utils";
-import { findFiles, openFolder } from "common/utils";
+import { findFiles } from "common/utils";
 import styled from "styled-components";
 
 export const ComboFinder: React.FC<{}> = () => {
