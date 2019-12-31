@@ -5,6 +5,11 @@ import { store, dispatcher } from "../store";
 import { notify } from "./utils";
 import { sp } from "./sounds";
 
+export enum Action {
+    CREATE_TWITCH_CLIP = "twitch-clip",
+    PLAY_SOUND = "play-sound",
+}
+
 export interface ActionPlaySoundParams {
     sound: string;
 }
@@ -49,16 +54,16 @@ const ActionCreateTwitchClip: ActionTypeGenerator = (params: CreateTwitchClipPar
 
 export const eventActionManager = new EventManager();
 
-eventActionManager.registerAction("twitch-clip", ActionCreateTwitchClip);
-eventActionManager.registerAction("play-sound", ActionPlaySound);
+eventActionManager.registerAction(Action.CREATE_TWITCH_CLIP, ActionCreateTwitchClip);
+eventActionManager.registerAction(Action.PLAY_SOUND, ActionPlaySound);
 eventActionManager.registerEvent("on-twitch-clip", {
-    name: "play-sound",
+    name: Action.PLAY_SOUND,
     args: {
         sound: "test.mp3",
     },
 });
 eventActionManager.registerEvent("on-twitch-clip", {
-    name: "twitch-clip",
+    name: Action.CREATE_TWITCH_CLIP,
     args: {
         delay: false,
     },
