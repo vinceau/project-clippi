@@ -8,7 +8,19 @@ import { sp } from "./sounds";
 export enum Action {
     CREATE_TWITCH_CLIP = "twitch-clip",
     PLAY_SOUND = "play-sound",
+    NOTIFY = "notify",
 }
+
+export interface ActionNotifyParams {
+    title: string;
+    body: string;
+}
+
+const ActionNotify: ActionTypeGenerator = (params: ActionNotifyParams) => {
+    return async (): Promise<any> => {
+        notify(params.title, params.body);
+    };
+};
 
 export interface ActionPlaySoundParams {
     sound: string;
@@ -56,15 +68,28 @@ export const eventActionManager = new EventManager();
 
 eventActionManager.registerAction(Action.CREATE_TWITCH_CLIP, ActionCreateTwitchClip);
 eventActionManager.registerAction(Action.PLAY_SOUND, ActionPlaySound);
-eventActionManager.registerEvent("on-twitch-clip", {
-    name: Action.PLAY_SOUND,
-    args: {
-        sound: "test.mp3",
+eventActionManager.registerAction(Action.NOTIFY, ActionNotify);
+
+eventActionManager.setEventActions("on-twitch-clip", [
+    {
+        name: Action.PLAY_SOUND,
+        args: {
+            sound: "test.mp3",
+        },
     },
-});
+    {
+        name: Action.NOTIFY,
+        args: {
+            title: "hello world",
+            body: "happy new year",
+        },
+    },
+]);
+/*
 eventActionManager.registerEvent("on-twitch-clip", {
     name: Action.CREATE_TWITCH_CLIP,
     args: {
         delay: false,
     },
 });
+*/
