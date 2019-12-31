@@ -1000,6 +1000,11 @@
   resolved "https://registry.yarnpkg.com/@types/webpack-env/-/webpack-env-1.14.1.tgz#0d8a53f308f017c53a5ddc3d07f4d6fa76b790d7"
   integrity sha512-0Ki9jAAhKDSuLDXOIMADg54Hu60SuBTEsWaJGGy5cV+SSUQ63J2a+RrYYGrErzz39fXzTibhKrAQJAb8M7PNcA==
 
+"@vinceau/event-actions@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@vinceau/event-actions/-/event-actions-0.0.1.tgz#8251070c70d3ab5e27b11c13f5e75a42f2901c9d"
+  integrity sha512-PAvxpv3/V4lhVB84sp65Z3byFY4dGxCTf1ifF9/e7+4QUtjUy8WnrAEufz/tzhsXdHSdALFhBHZYb3GJoUmFOw==
+
 "@vinceau/slp-realtime@^0.0.3":
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/@vinceau/slp-realtime/-/slp-realtime-0.0.3.tgz#595a9be4ce0d37967ed56e8abf99d3f8add2e038"

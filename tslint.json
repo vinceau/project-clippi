@@ -110,6 +110,7 @@
         "react-a11y-no-onchange": false,
         "react-a11y-role-has-required-aria-props": false,
         "completed-docs": false,
-        "jsx-alignment": false
+        "jsx-alignment": false,
+        "no-use-before-declare": false
     }
 }

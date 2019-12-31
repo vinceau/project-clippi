@@ -1,7 +1,11 @@
 import { createModel } from "@rematch/core";
 import produce from "immer";
 
+import { currentUser } from "common/twitch";
+import { HelixUser } from "twitch";
+
 export interface TempContainerState {
+    twitchUser: HelixUser | null;
     showSettings: boolean;
     comboFinderPercent: number;
     comboFinderLog: string;
@@ -9,6 +13,7 @@ export interface TempContainerState {
 }
 
 const initialState: TempContainerState = {
+    twitchUser: null,
     showSettings: false,
     comboFinderPercent: 0,
     comboFinderLog: "",
@@ -18,6 +23,9 @@ const initialState: TempContainerState = {
 export const tempContainer = createModel({
     state: initialState,
     reducers: {
+        setTwitchUser: (state: TempContainerState, payload: HelixUser): TempContainerState => produce(state, draft => {
+            draft.twitchUser = payload;
+        }),
         toggleSettings: (state: TempContainerState): TempContainerState => produce(state, draft => {
             draft.showSettings = !state.showSettings;
         }),
@@ -33,4 +41,14 @@ export const tempContainer = createModel({
             draft.comboFinderProcessing = payload;
         }),
     },
+    effects: dispatch => ({
+        async updateUser(token: string) {
+            const user = await currentUser(token);
+            if (!user) {
+                console.error(`Could not get user using token: ${token}`);
+                return;
+            }
+            dispatch.tempContainer.setTwitchUser(user);
+        },
+    }),
 });

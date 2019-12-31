@@ -2,98 +2,69 @@ import * as React from "react";
 
 import styled from "styled-components";
 import { HelixUser } from "twitch";
-import { Icon } from "semantic-ui-react";
+import { Card, Image, Button, Icon } from "semantic-ui-react";
+
+import { useSelector, useDispatch } from "react-redux";
+import { Dispatch, iRootState } from "@/store";
 
 import { createTwitchClip, currentUser, isStreaming } from "../../common/twitch";
 import { notifyTwitchClip } from "../lib/twitch";
 import { notify } from "../lib/utils";
 import defaultUserImage from "../styles/images/user.svg";
+import { shell } from "electron";
 
-const TwitchUserStatus: React.SFC<{ image?: any; live: boolean }> = props => {
-    const userImage = props.image !== undefined ? props.image : defaultUserImage;
-    const status = props.live ? "live" : "offline";
-    const TwitchStatusContainer = styled.div`
-        display: flex;
-        background-color: rgba($color: #6441a5, $alpha: 0.8);
-        img {
-            height: 30px;
-            width: 30px;
-            padding-right: 5px;
-        }
+export const TwitchUserStatus: React.SFC<{
+    displayName: string;
+    channel: string;
+    image?: any;
+    onSignOut: () => void;
+}> = props => {
+    const userImage = props.image ? props.image : defaultUserImage;
+    const StatusContainer = styled.div`
+    padding: 3px;
     `;
-    const TwitchStatusIndicator = styled.div`
-    display: flex;
-    align-items: center;
-    &::before {
-        content: '';
-        height: 5px;
-        width: 5px;
-        background-color: red;
-        border-radius: 50%;
-        display: inline-block;
-        margin-right: 5px;
-    }
-    &.live::before {
-        background-color: rgb(46, 236, 46);
-    }
-    `;
+    const url = `twitch.tv/${props.channel}`;
+    const linkClick = (e: any) => {
+        e.preventDefault();
+        shell.openExternal(`https://${url}`);
+    };
     return (
-        <TwitchStatusContainer>
-            <img src={userImage} />
-            <TwitchStatusIndicator>{status}</TwitchStatusIndicator>
-        </TwitchStatusContainer>
+        <StatusContainer>
+            <Card>
+                <Card.Content>
+                    <Image
+                        floated="right"
+                        size="mini"
+                        src={userImage}
+                    />
+                    <Card.Header>{props.displayName}</Card.Header>
+                    <Card.Meta><a href="#" onClick={linkClick}>{url}</a></Card.Meta>
+                </Card.Content>
+                <Card.Content extra>
+                    <Button basic fluid color="red" onClick={props.onSignOut}>
+                        Sign out
+                </Button>
+                </Card.Content>
+            </Card>
+        </StatusContainer>
     );
 };
 
 export const TwitchClip: React.SFC<{ accessToken: string }> = props => {
     const [name, setName] = React.useState("");
-    const [live, setLive] = React.useState(false);
-    const [user, setUser] = React.useState<HelixUser | null>(null);
-    const handleClip = async () => {
-        const clip = await createTwitchClip(props.accessToken, name);
-        console.log(`clip: ${clip}`);
-        if (clip !== null) {
+    const delay = false;
+    const handleClip = () => {
+        createTwitchClip(props.accessToken, delay, name).then(clip => {
+            console.log(`clip: ${clip}`);
             notifyTwitchClip(clip);
-        } else {
-            notify("Clip Error", "Failed to create clip")
-        }
+        }).catch((err) => {
+            console.error(err);
+            notify("Failed to create Twitch clip", `Are you sure ${name ? `${name} is` : "you are"} live?`);
+        });
     };
 
-    const handleStatus = async () => {
-        const userIsLive = await isStreaming(props.accessToken, name);
-        console.log(`${name} is live? ${userIsLive}`);
-    };
-
-    const checkUser = async () => {
-        const u = await currentUser(props.accessToken);
-        setUser(u);
-    };
-
-    const checkStatus = async () => {
-        console.log("checking status");
-        const isLive = await isStreaming(props.accessToken);
-        console.log(`status: ${isLive}`);
-        setLive(isLive);
-    };
-
-    React.useEffect(() => {
-        (async () => {
-            await checkUser();
-            await checkStatus();
-        })().catch(console.error);
-    }, [props, live]);
-
-    const userImage = user ? user.profilePictureUrl : undefined;
     return (
         <div>
-            <TwitchUserStatus image={userImage} live={live} />
-            <button
-                onClick={() => {
-                    checkStatus().catch(console.error);
-                }}
-            >
-                Refresh Status
-            </button>
             <form>
                 <label>
                     Twitch broadcaster ID:
@@ -102,18 +73,10 @@ export const TwitchClip: React.SFC<{ accessToken: string }> = props => {
                 <button
                     onClick={(e: any) => {
                         e.preventDefault();
-                        handleClip().catch(console.error);
+                        handleClip();
                     }}
                 >
                     clip
-                </button>
-                <button
-                    onClick={(e: any) => {
-                        e.preventDefault();
-                        handleStatus().catch(console.error);
-                    }}
-                >
-                    status
                 </button>
             </form>
         </div>

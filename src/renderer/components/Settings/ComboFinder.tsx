@@ -1,5 +1,7 @@
 import * as React from "react";
 
+import * as path from "path";
+import {shell} from "electron";
 import { Icon, Button, Checkbox, Form, CheckboxProps, Input } from 'semantic-ui-react'
 import { Progress } from "semantic-ui-react";
 import { useDispatch, useSelector } from "react-redux";
@@ -45,8 +47,11 @@ export const ComboFinder: React.FC<{}> = () => {
         console.log(`finding combos from the slp files in ${filesPath} ${includeSubFolders && "and all subfolders"} and saving to ${combosFilePath}`);
         findAndWriteCombos().catch(console.error);
     };
-    const open = (dir: string) => {
-        openFolder(dir).catch(console.error);
+    const maybeOpenFile = (fileName: string) => {
+        if (!shell.showItemInFolder(fileName)) {
+            const parentFolder = path.dirname(fileName);
+            shell.openItem(parentFolder);
+        }
     };
     const complete = comboFinderPercent === 100;
     const ComboFinderContainer = styled.div`
@@ -59,7 +64,7 @@ export const ComboFinder: React.FC<{}> = () => {
             <Form>
                 <Form.Field>
                     <label>SLP Replay Directory</label>
-                    <Input label={<Button onClick={() => open(filesPath)}><Icon name="folder open outline" /></Button>} value={filesPath} action={<Button onClick={selectPath}>Choose</Button>} />
+                    <Input label={<Button onClick={() => shell.openItem(filesPath)}><Icon name="folder open outline" /></Button>} value={filesPath} action={<Button onClick={selectPath}>Choose</Button>} />
                 </Form.Field>
                 <Form.Field>
                     <Checkbox label="Include subfolders" checked={includeSubFolders} onChange={onSubfolder} />
@@ -69,7 +74,7 @@ export const ComboFinder: React.FC<{}> = () => {
                 </Form.Field>
                 <Form.Field>
                     <label>Output File</label>
-                    <Input label={<Button onClick={() => open(combosFilePath)}><Icon name="folder open outline" /></Button>} value={combosFilePath} action={<Button onClick={selectComboPath}>Save as</Button>} />
+                    <Input label={<Button onClick={() => maybeOpenFile(combosFilePath)}><Icon name="folder open outline" /></Button>} value={combosFilePath} action={<Button onClick={selectComboPath}>Save as</Button>} />
                 </Form.Field>
                 <Button type="submit" onClick={findCombos} disabled={!combosFilePath || comboFinderProcessing}>Process replays</Button>
             </Form>

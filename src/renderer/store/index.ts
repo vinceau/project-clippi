@@ -13,6 +13,8 @@ export const store = init({
     plugins: [persistPlugin],
 });
 
+export const dispatcher = store.dispatch;
+
 export const persistor = getPersistor();
 export type Store = typeof store;
 export type Dispatch = typeof store.dispatch;

@@ -19,6 +19,7 @@ import { LabelledButton } from "../LabelledButton";
 import { ComboFinder } from "./ComboFinder";
 import { ComboForm } from "./ComboForm";
 import { SoundSettings } from "./SoundSettings";
+import { TwitchIntegration } from "./TwitchIntegration";
 
 export const SettingsPage: React.FC<{
     showSettings: boolean;
@@ -136,7 +137,7 @@ export const SettingsPage: React.FC<{
                         <Switch>
                             <Route path={`${path}/combo-finder`} component={PageSettingsProfile} />
                             <Route path={`${path}/combo-settings`} component={PageSettingsBilling} />
-                            <Route path={`${path}/account-settings`} component={PageSettingsAccount} />
+                            <Route path={`${path}/account-settings`} component={TwitchIntegration} />
                             <Route path={`${path}/sound-settings`} component={SoundSettings} />
                         </Switch>
                     </div>
@@ -243,11 +244,5 @@ export const PageSettingsBilling = () => {
         <div>
             <ComboForm initialValues={initial} onSubmit={onSubmit} />
         </div>
-    );
-};
-
-const PageSettingsAccount = () => {
-    return (
-        <div>Accounts</div>
     );
 };
