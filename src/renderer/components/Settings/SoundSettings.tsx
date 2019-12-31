@@ -89,7 +89,10 @@ const SoundTable: React.FC<{
     onRemove: (name: string) => void;
 }> = props => {
     const rows: JSX.Element[] = [];
-    for (const [key, value] of Object.entries(props.sounds)) {
+    const allSounds = Object.keys(props.sounds);
+    allSounds.sort();
+    for (const key of allSounds) {
+        const value = props.sounds[key];
         rows.push((
             <SoundRow
                 key={`${value}--${key}`}
