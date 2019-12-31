@@ -1,24 +1,7 @@
 import { Howl } from "howler";
 import { isDevelopment } from "./utils";
+
 import { readFile } from "common/utils";
-
-const objToStrMap = (obj: object) => {
-    const strMap = new Map();
-    for (const k of Object.keys(obj)) {
-        strMap.set(k, obj[k]);
-    }
-    return strMap;
-};
-
-const strMapToObj = (strMap: Map<string, string>): object => {
-    const obj = Object.create(null);
-    for (const [k, v] of strMap) {
-        // We don’t escape the key '__proto__'
-        // which can cause problems on older engines
-        obj[k] = v;
-    }
-    return obj;
-};
 
 const generateHowlOptions = async (soundPath: string): Promise<any> => {
     if (isDevelopment) {
