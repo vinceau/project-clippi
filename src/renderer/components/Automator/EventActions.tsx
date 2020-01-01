@@ -6,6 +6,7 @@ import { ActionEvent } from "@/lib/realtime";
 import { Container, Dropdown, Item } from "semantic-ui-react";
 import { ActionInput, NotifyInput } from "./ActionInputs";
 import { produce } from "immer";
+import { Action } from "@vinceau/event-actions";
 
 const allEvents: ActionEvent[] = [
   ActionEvent.GAME_START,
@@ -54,7 +55,7 @@ const EventSelector: React.FC<{
         inline
         options={options}
         value={props.value}
-        onChange={(e, {value}) => props.onChange(value)}
+        onChange={(e, { value }) => props.onChange(value)}
       />
     </Outer>
   );
@@ -81,13 +82,30 @@ export const EventActions = (props: any) => {
     });
     onChange(newValue);
   };
+  const onActionChange = (index: number, newAction: Action) => {
+    const newValue = produce(value, (draft: any) => {
+      draft.actions[index] = newAction;
+    });
+    onChange(newValue);
+  };
+  const disabledActions = value.actions.map(a => a.name);
   return (
     <Container>
       <EventSelector value={value.event} onChange={onEventChange} disabledEvents={disabledEvents} />
       <Item.Group divided>
-        { value.actions.map( a => (
-          <ActionInput key={`${value.name}--${a.name}`} value={a} />
-        )) }
+        {value.actions.map((a: Action, i: number) => {
+          const onInnerActionChange = (newVal: Action) => {
+            onActionChange(i, newVal);
+          };
+          return (
+            <ActionInput
+              key={`${value.name}--${a.name}`}
+              value={a}
+              onChange={onInnerActionChange}
+              disabledActions={disabledActions}
+            />
+          )
+        })}
         {/* <NotifyInput value={notifyValue} onChange={setValue} /> */}
       </Item.Group>
       <pre>{(JSON as any).stringify(value, 0, 2)}</pre>

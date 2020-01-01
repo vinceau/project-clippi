@@ -6,6 +6,55 @@ import { Action, ActionNotifyParams } from "@/lib/actions";
 import styled from "styled-components";
 import { addSound } from "../Settings/SoundSettings";
 import { sp } from "@/lib/sounds";
+import {produce} from "immer";
+
+const allActions: Action[] = [
+  Action.NOTIFY,
+  Action.CREATE_TWITCH_CLIP,
+  Action.PLAY_SOUND,
+];
+
+const mapEventToName: { [eventName: string]: string } = {
+  [Action.NOTIFY]: "display a notification",
+  [Action.CREATE_TWITCH_CLIP]: "create a Twitch clip",
+  [Action.PLAY_SOUND]: "play a sound",
+};
+
+const generateOptions = (actionsList: string[], selectedValue: string, disabledActions?: string[]): Array<{ key: string; text: string; value: string }> => {
+    const disabled = disabledActions || [];
+    return actionsList.map((e) => ({
+      key: e,
+      value: e,
+      text: mapEventToName[e],
+      disabled: e !== selectedValue && disabled.includes(e),
+    }));
+  };
+
+const ActionSelector: React.FC<{
+  value: Action,
+  onChange: (e: Action) => void;
+  disabledActions?: string[];
+}> = props => {
+  const Outer = styled.span`
+  &&&,
+  * {
+    font-size: 18px;
+  }
+  `;
+  const options = generateOptions(allActions, props.value, props.disabledActions);
+  return (
+    <Outer>
+      Then {" "}
+      <Dropdown
+        inline
+        options={options}
+        value={props.value}
+        onChange={(e, { value }) => props.onChange(value)}
+      />
+    </Outer>
+  );
+};
+
 
 const ActionInputContainer: React.FC<{
     header: any;
@@ -120,8 +169,25 @@ const SoundInput = (props: any) => {
     );
 };
 
+/*
+      {
+        name: string;
+        transform?: boolean;
+        args?: any;
+      }
+*/
+
 export const ActionInput = (props: any) => {
-    const { value } = props;
+    const { value, onChange, disabledActions } = props;
+    const onActionChange = (action: string) => {
+        const newValue = produce(value, draft => {
+            draft.name = action;
+            draft.args = {};
+        });
+        onChange(newValue);
+    };
+    let inner: JSX.Element;
+    const findInner = (): JSX.Element => {
     switch (value.name) {
         case Action.NOTIFY:
             return (
@@ -134,4 +200,12 @@ export const ActionInput = (props: any) => {
         default:
             return (<div>unknown action name: {value.name}</div>);
     }
+}
+inner = findInner();
+    return (
+        <div>
+            <ActionSelector value={value.name} onChange={onActionChange} disabledActions={disabledActions}/>
+    <div>{inner}</div>
+        </div>
+    );
 };
