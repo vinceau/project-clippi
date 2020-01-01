@@ -1,10 +1,9 @@
 import * as React from "react";
 
-import { Card, Checkbox, Dropdown, List, Item } from "semantic-ui-react";
+import { Card, Checkbox, Dropdown, List } from "semantic-ui-react";
 
 import { Action, ActionNotifyParams } from "@/lib/actions";
 import styled from "styled-components";
-import { addSound } from "../Settings/SoundSettings";
 import { sp } from "@/lib/sounds";
 import { produce } from "immer";
 import { InlineDropdown, InlineInput } from "../InlineInputs";
