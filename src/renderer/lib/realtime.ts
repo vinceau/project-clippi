@@ -149,9 +149,11 @@ export const fastFindAndWriteCombos = async (filesPath: string, includeSubFolder
 
     const queue = new DolphinComboQueue();
 
-    const stream = fg.stream(patterns, options);
+    // const stream = fg.stream(patterns, options);
+    const entries = await fg(patterns, options);
 
-    for await (const entry of stream) {
+
+    for (const entry of entries) {
         const filename = entry as string;
         const combos = await findCombos(filename);
         combos.forEach(c => {
