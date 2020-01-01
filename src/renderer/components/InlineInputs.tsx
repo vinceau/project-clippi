@@ -3,12 +3,12 @@ import * as React from "react";
 import { Dropdown, Input } from "semantic-ui-react";
 import styled, { css } from "styled-components";
 
-const generateOptions = (events: string[], mapOptionToLabel: (opt: string) => string, selectedValue?: string, disabledEvents?: string[]): Array<{ key: string; text: string; value: string }> => {
+const generateOptions = (events: string[], mapOptionToLabel?: (opt: string) => string, selectedValue?: string, disabledEvents?: string[]): Array<{ key: string; text: string; value: string }> => {
   const disabled = disabledEvents || [];
   return events.map((e) => ({
     key: e,
     value: e,
-    text: mapOptionToLabel(e),
+    text: mapOptionToLabel ? mapOptionToLabel(e) : e,
     disabled: e !== selectedValue && disabled.includes(e),
   }));
 };
@@ -17,7 +17,7 @@ export const InlineDropdown: React.FC<{
   value: string,
   options: string[];
   onChange: (e: string) => void;
-  mapOptionToLabel: (option: string) => string;
+  mapOptionToLabel?: (option: string) => string;
   fontSize?: number;
   prefix?: string;
   disabledOptions?: string[];
