@@ -1,43 +1,43 @@
 import * as React from "react";
 
-import { Dropdown, Input, Item } from "semantic-ui-react";
+import { Card, Dropdown, Input, Item } from "semantic-ui-react";
 
 import { Action, ActionNotifyParams } from "@/lib/actions";
 import styled from "styled-components";
 import { addSound } from "../Settings/SoundSettings";
 import { sp } from "@/lib/sounds";
-import {produce} from "immer";
+import { produce } from "immer";
 import { InlineDropdown } from "../InlineDropdown";
 
 const allActions: Action[] = [
-  Action.NOTIFY,
-  Action.CREATE_TWITCH_CLIP,
-  Action.PLAY_SOUND,
+    Action.NOTIFY,
+    Action.CREATE_TWITCH_CLIP,
+    Action.PLAY_SOUND,
 ];
 
 const mapEventToName: { [eventName: string]: string } = {
-  [Action.NOTIFY]: "display a notification",
-  [Action.CREATE_TWITCH_CLIP]: "create a Twitch clip",
-  [Action.PLAY_SOUND]: "play a sound",
+    [Action.NOTIFY]: "display a notification",
+    [Action.CREATE_TWITCH_CLIP]: "create a Twitch clip",
+    [Action.PLAY_SOUND]: "play a sound",
 };
 
 const ActionSelector: React.FC<{
-  value: Action,
-  onChange: (e: string) => void;
-  prefix?: string,
-  disabledActions?: string[];
+    value: Action,
+    onChange: (e: string) => void;
+    prefix?: string,
+    disabledActions?: string[];
 }> = props => {
-  return (
-      <InlineDropdown
-        prefix={props.prefix}
-        options={allActions}
-        value={props.value}
-        mapOptionToLabel={(opt: string) => mapEventToName[opt]}
-        onChange={props.onChange}
-        disabledOptions={props.disabledActions}
-        fontSize={18}
-      />
-  );
+    return (
+        <InlineDropdown
+            prefix={props.prefix}
+            options={allActions}
+            value={props.value}
+            mapOptionToLabel={(opt: string) => mapEventToName[opt]}
+            onChange={props.onChange}
+            disabledOptions={props.disabledActions}
+            fontSize={18}
+        />
+    );
 };
 
 const ActionInputContainer: React.FC<{
@@ -90,13 +90,18 @@ export const NotifyInput = (props: any) => {
         onChange(newValue);
     };
     return (
-        <>
-            {/* <CardExampleFluid /> */}
-            <ActionInputContainer header="Display a notification">
-                <InlineInput value={title} onChange={onTitleChange} placeholder="Title..." />
-                <InlineInput value={body} onChange={onBodyChange} placeholder="Body..." />
-            </ActionInputContainer>
-        </>
+        <Card.Group>
+            <Card>
+                <Card.Content>
+                    <Card.Header>
+                        <InlineInput value={title} onChange={onTitleChange} placeholder="Notification title" />
+                    </Card.Header>
+                    <Card.Description>
+                        <InlineInput value={body} onChange={onBodyChange} placeholder="Notification body" />
+                    </Card.Description>
+                </Card.Content>
+            </Card>
+        </Card.Group>
     );
 };
 
@@ -143,20 +148,16 @@ const SoundInput = (props: any) => {
         onChange(newValue);
     };
 
-    // const [v, setV] = React.useState("");
-    const defaultValue = options[0].value;
     return (
-            // <ActionInputContainer header={
         <span>
             Play {" "}
             <Dropdown
                 inline
-                value={value.sound || defaultValue}
+                value={value.sound}
                 onChange={(_, { value }) => onSoundChange(value)}
                 options={options}
             />
         </span>
-        // } />
     );
 };
 
@@ -201,9 +202,9 @@ export const ActionInput = (props: any) => {
     };
     return (
         <ActionInputContainer header={
-            <ActionSelector prefix={selectPrefix} value={value.name} onChange={onActionChange} disabledActions={disabledActions}/>
+            <ActionSelector prefix={selectPrefix} value={value.name} onChange={onActionChange} disabledActions={disabledActions} />
         }>
             <ActionArgsInput actionType={value.name} value={value.args} onChange={onArgsChange} />
-</ActionInputContainer>
+        </ActionInputContainer>
     );
 };
