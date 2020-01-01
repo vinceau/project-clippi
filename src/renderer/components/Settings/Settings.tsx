@@ -135,8 +135,8 @@ export const SettingsPage: React.FC<{
                 <ContentColumn>
                     <div>
                         <Switch>
-                            <Route path={`${path}/combo-finder`} component={PageSettingsProfile} />
-                            <Route path={`${path}/combo-settings`} component={PageSettingsBilling} />
+                            <Route path={`${path}/combo-finder`} component={ComboFinder} />
+                            <Route path={`${path}/combo-settings`} component={FilterOptions} />
                             <Route path={`${path}/account-settings`} component={TwitchIntegration} />
                             <Route path={`${path}/sound-settings`} component={SoundSettings} />
                         </Switch>
@@ -145,91 +145,9 @@ export const SettingsPage: React.FC<{
             </Wrapper>
         </SettingsContainer>
     );
-
-    /*
-    return (
-        <SettingsContainer>
-        <Container>
-            <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
-                <h1>Settings</h1>
-                <Button onClick={() => props.onClose()}><Icon name="close"/> Close</Button>
-            </div>
-        <StyledGrid>
-            <Grid.Column width={4}>
-                <Menu fluid vertical tabular>
-                    <Menu.Item
-                        name="combo-finder"
-                        active={activeItem === "combo-finder"}
-                        onClick={handleItemClick}
-                    >Combo Finder</Menu.Item>
-                    <Menu.Item
-                        name="combo-settings"
-                        active={activeItem === "combo-settings"}
-                        onClick={handleItemClick}
-                    />
-                    <Menu.Item
-                        name="account-settings"
-                        active={activeItem === "account-settings"}
-                        onClick={handleItemClick}
-                    />
-                </Menu>
-            </Grid.Column>
-
-            <Grid.Column stretched width={12}>
-                    <Switch>
-                        <Route path={`${path}/combo-finder`} component={PageSettingsProfile} />
-                        <Route path={`${path}/combo-settings`} component={PageSettingsBilling} />
-                        <Route path={`${path}/account-settings`} component={PageSettingsAccount} />
-                    </Switch>
-            </Grid.Column>
-        </StyledGrid>
-</Container>
-</SettingsContainer>
-    );
-    */
 };
 
-/*
-export const OldSettingsPage: React.FC<{
-    showSettings: boolean;
-}> = props => {
-    return (
-        <SettingsContainer>
-            <h2>Settings</h2>
-
-            <div style={{ display: "flex" }}>
-                <div style={{ display: "flex", flexDirection: "column" }}>
-                    <LinkContainer to={`${path}/profile`}>
-                        ComboFinder
-            </LinkContainer>
-                    <LinkContainer to={`${path}/billing`}>
-                        Combo Settings
-            </LinkContainer>
-                    <LinkContainer to={`${path}/account`}>
-                        Account
-            </LinkContainer>
-                </div>
-
-                <div>
-                    <Switch>
-                        <Route path={`${path}/profile`} component={PageSettingsProfile} />
-                        <Route path={`${path}/billing`} component={PageSettingsBilling} />
-                        <Route path={`${path}/account`} component={PageSettingsAccount} />
-                    </Switch>
-                </div>
-            </div>
-        </SettingsContainer>
-    );
-};
-*/
-
-const PageSettingsProfile = () => {
-    return (
-        <div><ComboFinder /></div>
-    );
-};
-
-export const PageSettingsBilling = () => {
+const FilterOptions = () => {
     const settings = useSelector((state: iRootState) => state.slippi.settings);
     const initial = comboFilter.updateSettings(JSON.parse(settings));
     const dispatch = useDispatch<Dispatch>();
@@ -239,6 +157,7 @@ export const PageSettingsBilling = () => {
     };
     return (
         <div>
+            <h2>Filter Options</h2>
             <ComboForm initialValues={initial} onSubmit={onSubmit} />
         </div>
     );
