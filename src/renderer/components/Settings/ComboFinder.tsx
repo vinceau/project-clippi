@@ -36,12 +36,18 @@ export const ComboFinder: React.FC<{}> = () => {
         // console.log('inside find and write');
         // const files = await findFiles("*.slp", filesPath, includeSubFolders);
         // console.log(`found files: ${files}`);
-        // const callback = (i: number, filename: string, n: number): void => {
-        //     dispatch.tempContainer.setPercent(Math.round((i + 1) / files.length * 100));
-        //     dispatch.tempContainer.setComboLog(`Found ${n} combos in: ${filename}`);
-        // };
+        const callback = (i: number, total: number, filename: string, n: number): void => {
+            dispatch.tempContainer.setPercent(Math.round((i + 1) / total * 100));
+            dispatch.tempContainer.setComboLog(`Found ${n} combos in: ${filename}`);
+        };
         // console.log('about to generate combos');
-        const numCombos = await fastFindAndWriteCombos(filesPath, includeSubFolders, combosFilePath, deleteFilesWithNoCombos);
+        const numCombos = await fastFindAndWriteCombos(
+            filesPath,
+            includeSubFolders,
+            combosFilePath,
+            deleteFilesWithNoCombos,
+            callback,
+        );
         const after = new Date();
         const timeTakenStr = timeDifferenceString(before, after);
         console.log(`finished generating ${numCombos} combos in ${timeTakenStr}`);

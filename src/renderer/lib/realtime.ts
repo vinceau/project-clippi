@@ -137,7 +137,13 @@ const pipeFileContents = async (filename: string, destination: Writable): Promis
     });
 };
 
-export const fastFindAndWriteCombos = async (filesPath: string, includeSubFolders: boolean, outputFile: string, deleteZeroComboFiles?: boolean): Promise<number> => {
+export const fastFindAndWriteCombos = async (
+    filesPath: string,
+    includeSubFolders: boolean,
+    outputFile: string,
+    deleteZeroComboFiles?: boolean,
+    callback?: (i: number, total: number, filename: string, numCombos: number) => void,
+): Promise<number> => {
     console.log("inside find and write");
     const patterns = ["**/*.slp"];
     const options = {
@@ -152,9 +158,7 @@ export const fastFindAndWriteCombos = async (filesPath: string, includeSubFolder
     // const stream = fg.stream(patterns, options);
     const entries = await fg(patterns, options);
 
-
-    for (const entry of entries) {
-        const filename = entry as string;
+    for (const [i, filename] of (entries.entries())) {
         const combos = await findCombos(filename);
         combos.forEach(c => {
             queue.addCombo(filename, c);
@@ -163,28 +167,14 @@ export const fastFindAndWriteCombos = async (filesPath: string, includeSubFolder
         if (deleteZeroComboFiles && combos.length === 0) {
             console.log(`${combos.length} combos found. Deleting: ${filename}`);
             await deleteFile(filename);
-            }
-        // .editorconfig
-        // services/index.js
+        }
+        if (callback) {
+            callback(i, entries.length, filename, combos.length);
+        }
     }
 
     console.log(`writing stuff out`);
     const numCombos = await queue.writeFile(outputFile);
     console.log(`wrote ${numCombos} out to ${outputFile}`);
     return numCombos;
-
-    /*
-    // console.log(`found files: ${files}`);
-    // const callback = (i: number, filename: string, n: number): void => {
-    //     dispatch.tempContainer.setPercent(Math.round((i + 1) / files.length * 100));
-    //     dispatch.tempContainer.setComboLog(`Found ${n} combos in: ${filename}`);
-    // };
-    console.log('about to generate combos');
-    const numCombos = await generateCombos(files, combosFilePath, deleteFilesWithNoCombos, callback);
-    console.log(`finished generating ${numCombos} combos`);
-    const message = `Wrote ${numCombos} combos to: ${combosFilePath}`;
-    dispatch.tempContainer.setComboLog(message);
-    notify("Combo Processing Complete", message);
-    dispatch.tempContainer.setComboFinderProcessing(false);
-    */
 };
