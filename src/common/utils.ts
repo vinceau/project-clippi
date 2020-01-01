@@ -17,11 +17,14 @@ export const findFiles = async (
     const searchFolder = folder ? folder : ".";
     const subfolders = includeSubfolders ? "**" : "";
     const pattern = path.join(searchFolder, subfolders, fileExt);
+    console.log(`looking for the pattern: ${pattern}`);
     return new Promise((resolve, reject) => {
         glob(pattern, options, (err, files) => {
             if (err) {
+                console.error(err);
                 reject(err);
             } else {
+                console.log(`resolving these files: ${files}`);
                 resolve(files);
             }
         });

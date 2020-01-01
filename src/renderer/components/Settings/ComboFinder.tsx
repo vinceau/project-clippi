@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { Dispatch, iRootState } from "@/store";
 
-import { generateCombos } from "@/lib/realtime";
+import { generateCombos, fastFindAndWriteCombos } from "@/lib/realtime";
 import { notify } from "@/lib/utils";
 import { findFiles } from "common/utils";
 import styled from "styled-components";
@@ -30,16 +30,21 @@ export const ComboFinder: React.FC<{}> = () => {
         dispatch.filesystem.setFileDeletion(Boolean(data.checked));
     };
     const findAndWriteCombos = async () => {
-        const files = await findFiles("*.slp", filesPath, includeSubFolders);
-        const callback = (i: number, filename: string, n: number): void => {
-            dispatch.tempContainer.setPercent(Math.round((i + 1) / files.length * 100));
-            dispatch.tempContainer.setComboLog(`Found ${n} combos in: ${filename}`);
-        };
-        const numCombos = await generateCombos(files, combosFilePath, deleteFilesWithNoCombos, callback);
+        // console.log('inside find and write');
+        // const files = await findFiles("*.slp", filesPath, includeSubFolders);
+        // console.log(`found files: ${files}`);
+        // const callback = (i: number, filename: string, n: number): void => {
+        //     dispatch.tempContainer.setPercent(Math.round((i + 1) / files.length * 100));
+        //     dispatch.tempContainer.setComboLog(`Found ${n} combos in: ${filename}`);
+        // };
+        // console.log('about to generate combos');
+        const numCombos = await fastFindAndWriteCombos(filesPath, includeSubFolders, combosFilePath, deleteFilesWithNoCombos);
+        console.log(`finished generating ${numCombos} combos`);
         const message = `Wrote ${numCombos} combos to: ${combosFilePath}`;
         dispatch.tempContainer.setComboLog(message);
         notify("Combo Processing Complete", message);
         dispatch.tempContainer.setComboFinderProcessing(false);
+        dispatch.tempContainer.setPercent(100);
     };
     const findCombos = () => {
         dispatch.tempContainer.setPercent(0);
@@ -76,7 +81,7 @@ export const ComboFinder: React.FC<{}> = () => {
                     <label>Output File</label>
                     <Input label={<Button onClick={() => maybeOpenFile(combosFilePath)}><Icon name="folder open outline" /></Button>} value={combosFilePath} action={<Button onClick={selectComboPath}>Save as</Button>} />
                 </Form.Field>
-                <Button type="submit" onClick={findCombos} disabled={!combosFilePath || comboFinderProcessing}>Process replays</Button>
+                <Button type="button" onClick={findCombos} disabled={!combosFilePath || comboFinderProcessing}>Process replays</Button>
             </Form>
             <div>
                 {(comboFinderProcessing || complete) &&

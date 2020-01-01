@@ -45,7 +45,20 @@ const EventSelector: React.FC<{
   );
 };
 
-export const EventActions = () => {
+
+/*
+  {
+    event: string;
+    actions: [
+      {
+        name: string;
+        transform?: boolean;
+        args?: any;
+      }
+    ];
+  }
+*/
+export const EventActions = (props: any) => {
   const [value, setValue] = React.useState({});
   const events = [
     ActionEvent.GAME_START,
