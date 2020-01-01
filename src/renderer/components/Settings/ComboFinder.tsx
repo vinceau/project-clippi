@@ -64,17 +64,18 @@ export const ComboFinder: React.FC<{}> = () => {
         }
     };
     const complete = comboFinderPercent === 100;
-    const ComboFinderContainer = styled.div`
-    i.icon {
+    const NoMarginIcon = styled(Icon)`
+    &&& {
         margin: 0 !important;
     }
     `;
     return (
-        <ComboFinderContainer>
+        <div>
+            <h2>Combo Finder</h2>
             <Form>
                 <Form.Field>
                     <label>SLP Replay Directory</label>
-                    <Input label={<Button onClick={() => shell.openItem(filesPath)}><Icon name="folder open outline" /></Button>} value={filesPath} action={<Button onClick={selectPath}>Choose</Button>} />
+                    <Input label={<Button onClick={() => shell.openItem(filesPath)}><NoMarginIcon name="folder open outline" /></Button>} value={filesPath} action={<Button onClick={selectPath}>Choose</Button>} />
                 </Form.Field>
                 <Form.Field>
                     <Checkbox label="Include subfolders" checked={includeSubFolders} onChange={onSubfolder} />
@@ -84,15 +85,18 @@ export const ComboFinder: React.FC<{}> = () => {
                 </Form.Field>
                 <Form.Field>
                     <label>Output File</label>
-                    <Input label={<Button onClick={() => maybeOpenFile(combosFilePath)}><Icon name="folder open outline" /></Button>} value={combosFilePath} action={<Button onClick={selectComboPath}>Save as</Button>} />
+                    <Input label={<Button onClick={() => maybeOpenFile(combosFilePath)}><NoMarginIcon name="folder open outline" /></Button>} value={combosFilePath} action={<Button onClick={selectComboPath}>Save as</Button>} />
                 </Form.Field>
-                <Button type="button" onClick={findCombos} disabled={!combosFilePath || comboFinderProcessing}>Process replays</Button>
+                <Button primary={true} type="button" onClick={findCombos} disabled={!combosFilePath || comboFinderProcessing}>
+                    <Icon name="fast forward" />
+                    Process replays
+                </Button>
             </Form>
             <div>
                 {(comboFinderProcessing || complete) &&
                     <Progress progress={true} percent={comboFinderPercent} success={complete}>{comboFinderLog}</Progress>
                 }
             </div>
-        </ComboFinderContainer>
+        </div>
     );
 };
