@@ -27,14 +27,7 @@ const ActionSelector: React.FC<{
   prefix?: string,
   disabledActions?: string[];
 }> = props => {
-  const Outer = styled.span`
-  &&&,
-  * {
-    font-size: 18px;
-  }
-  `;
   return (
-    <Outer>
       <InlineDropdown
         prefix={props.prefix}
         options={allActions}
@@ -42,8 +35,8 @@ const ActionSelector: React.FC<{
         mapOptionToLabel={(opt: string) => mapEventToName[opt]}
         onChange={props.onChange}
         disabledOptions={props.disabledActions}
+        fontSize={18}
       />
-    </Outer>
   );
 };
 

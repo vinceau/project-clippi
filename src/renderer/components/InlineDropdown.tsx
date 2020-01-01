@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import { Dropdown } from "semantic-ui-react";
+import styled, { css } from "styled-components";
 
 const generateOptions = (events: string[], mapOptionToLabel: (opt: string) => string, selectedValue?: string, disabledEvents?: string[]): Array<{ key: string; text: string; value: string }> => {
   const disabled = disabledEvents || [];
@@ -17,12 +18,22 @@ export const InlineDropdown: React.FC<{
   options: string[];
   onChange: (e: string) => void;
   mapOptionToLabel: (option: string) => string;
+  fontSize?: number;
   prefix?: string;
   disabledOptions?: string[];
 }> = props => {
+  const fontSize = (size: number) => css`
+    &&&,
+    * {
+      font-size: ${size}px;
+    }
+  `;
+  const Outer = styled.span`
+    ${props.fontSize ? fontSize(props.fontSize) : ""}
+  `;
   const options = generateOptions(props.options, props.mapOptionToLabel, props.value, props.disabledOptions);
   return (
-    <>
+    <Outer>
       {props.prefix ? `${props.prefix} ` : ""}
       <Dropdown
         inline
@@ -30,6 +41,6 @@ export const InlineDropdown: React.FC<{
         value={props.value}
         onChange={(e, { value }) => props.onChange(value)}
       />
-    </>
+    </Outer>
   );
 };

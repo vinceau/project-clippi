@@ -32,14 +32,7 @@ const EventSelector: React.FC<{
   onChange: (e: string) => void;
   disabledEvents?: string[];
 }> = props => {
-  const Outer = styled.span`
-  &&&,
-  * {
-    font-size: 30px;
-  }
-  `;
   return (
-    <Outer>
       <InlineDropdown
         prefix="When"
         options={allEvents}
@@ -47,8 +40,8 @@ const EventSelector: React.FC<{
         mapOptionToLabel={(opt: string) => mapEventToName[opt]}
         onChange={props.onChange}
         disabledOptions={props.disabledEvents}
+        fontSize={30}
       />
-    </Outer>
   );
 };
 
