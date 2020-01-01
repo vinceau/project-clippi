@@ -1,21 +1,8 @@
 import * as path from "path";
 import fs from "fs";
-import open from "open";
 
 export const delay = async (ms: number): Promise<void> => {
     await new Promise(resolve => setTimeout(resolve, ms));
-};
-
-export const openFolder = async (dirPath: string): Promise<void> => {
-    if (!fs.existsSync(dirPath)) {
-        throw new Error(`${dirPath} does not exist`);
-    }
-
-    if (fs.lstatSync(dirPath).isDirectory()) {
-        await open(dirPath);
-    } else {
-        await open(path.dirname(dirPath));
-    }
 };
 
 export const readFile = async (filePath: string): Promise<Buffer> => {
