@@ -10,24 +10,9 @@ import { iRootState, Dispatch, dispatcher } from "@/store";
 import { shell } from "electron";
 import styled from "styled-components";
 
-export const addSound = async (): Promise<string> => {
-    const p = await getFilePath({
-        filters: [{ name: "Audio files", extensions: ["mp3", "wav"] }],
-    }, false);
-    if (!p) {
-        throw new Error("User cancelled selection");
-    }
-    const name = path.basename(p);
-    dispatcher.filesystem.setSound({
-        name,
-        filePath: p,
-    });
-    return name;
-};
-
 export const AddSoundButton: React.FC = () => {
     return (
-        <Button onClick={() => addSound().catch(console.error)}>
+        <Button onClick={() => dispatcher.filesystem.addSound()}>
             <Icon name="add" />
             Add sound
         </Button>

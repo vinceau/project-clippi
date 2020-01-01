@@ -58,6 +58,18 @@ export const filesystem = createModel({
         }),
     },
     effects: dispatch => ({
+        async addSound() {
+            const p = await getFilePath({
+                filters: [{ name: "Audio files", extensions: ["mp3", "wav"] }],
+            }, false);
+            if (p) {
+                const name = path.basename(p);
+                dispatch.filesystem.setSound({
+                    name,
+                    filePath: p,
+                });
+            }
+        },
         async getFilesPath() {
             const p = await getFolderPath();
             if (p) {
