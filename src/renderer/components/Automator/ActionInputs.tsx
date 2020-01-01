@@ -1,13 +1,13 @@
 import * as React from "react";
 
-import { Card, Dropdown, Input, Item } from "semantic-ui-react";
+import { Card, Checkbox, Dropdown, Input, Item } from "semantic-ui-react";
 
 import { Action, ActionNotifyParams } from "@/lib/actions";
 import styled from "styled-components";
 import { addSound } from "../Settings/SoundSettings";
 import { sp } from "@/lib/sounds";
 import { produce } from "immer";
-import { InlineDropdown } from "../InlineDropdown";
+import { InlineDropdown, InlineInput } from "../InlineInputs";
 
 const allActions: Action[] = [
     Action.NOTIFY,
@@ -40,38 +40,7 @@ const ActionSelector: React.FC<{
     );
 };
 
-const ActionInputContainer: React.FC<{
-    header: any;
-}> = props => {
-    return (
-        // <Card fluid>
-        //     <Card.Header>{props.header}</Card.Header>
-        //     <Card.Description>
-        //         {props.children}
-        //     </Card.Description>
-        // </Card>
-        <Item>
-            {/* <Item.Image size='tiny' src='/images/wireframe/image.png' /> */}
-
-            <Item.Content>
-                <Item.Header>{props.header}</Item.Header>
-                <Item.Description>{props.children}</Item.Description>
-            </Item.Content>
-        </Item>
-    );
-};
-
-/*
-const CardExampleFluid = () => (
-    <Card.Group>
-      <Card fluid color='red' header='Option 1' />
-      <Card fluid color='orange' header='Option 2' />
-      <Card fluid color='yellow' header='Option 3' />
-    </Card.Group>
-  )
-  */
-
-export const NotifyInput = (props: any) => {
+const NotifyInput = (props: any) => {
     const { value, onChange } = props;
     const { title, body } = value as ActionNotifyParams;
     const onTitleChange = (newTitle: string) => {
@@ -105,33 +74,6 @@ export const NotifyInput = (props: any) => {
     );
 };
 
-const InlineInput = (props: any) => {
-    const { value, onChange, ...rest } = props;
-    const [newValue, setNewValue] = React.useState<string>(value || "");
-    const submitValue = () => {
-        console.log("submit value");
-        onChange(newValue);
-    };
-    const onKeyDown = (event: any) => {
-        if (event.keyCode === 13) {
-            submitValue();
-        }
-    };
-    const newOnChange = (_: any, data: any) => {
-        setNewValue(data.value);
-    };
-    return (
-        <Input
-            {...rest}
-            transparent={true}
-            value={newValue}
-            onChange={newOnChange}
-            onKeyDown={onKeyDown}
-            onBlur={submitValue}
-        />
-    );
-};
-
 const SoundInput = (props: any) => {
     const { value, onChange } = props;
     const mapOptions = (str: string) => ({
@@ -161,6 +103,27 @@ const SoundInput = (props: any) => {
     );
 };
 
+const TwitchClipInput = (props: any) => {
+    const { value, onChange } = props;
+    const onDelayChange = (delay?: boolean) => {
+        const newValue = produce(value, draft => {
+            draft.delay = delay;
+        });
+        onChange(newValue);
+    };
+    const toggle = () => onDelayChange(!value.delay);
+
+    return (
+        <div>
+            <Checkbox
+            label="Delay before clipping"
+            onChange={toggle}
+            checked={value.delay}
+            />
+        </div>
+    );
+};
+
 /*
       {
         name: string;
@@ -179,9 +142,9 @@ const ActionArgsInput = (props: any) => {
         case Action.PLAY_SOUND:
             return (<SoundInput {...rest} />);
         case Action.CREATE_TWITCH_CLIP:
-            return (<div>create twitch clip</div>);
+            return (<TwitchClipInput {...rest} />);
         default:
-            return (<div>unknown action name: {value.name}</div>);
+            return (<div>Unknown action: {actionType}</div>);
     }
 };
 
@@ -201,10 +164,15 @@ export const ActionInput = (props: any) => {
         onChange(newValue);
     };
     return (
-        <ActionInputContainer header={
-            <ActionSelector prefix={selectPrefix} value={value.name} onChange={onActionChange} disabledActions={disabledActions} />
-        }>
-            <ActionArgsInput actionType={value.name} value={value.args} onChange={onArgsChange} />
-        </ActionInputContainer>
+        <Item>
+            <Item.Content>
+                <Item.Header>
+                    <ActionSelector prefix={selectPrefix} value={value.name} onChange={onActionChange} disabledActions={disabledActions} />
+                </Item.Header>
+                <Item.Description>
+                    <ActionArgsInput actionType={value.name} value={value.args} onChange={onArgsChange} />
+                </Item.Description>
+            </Item.Content>
+        </Item>
     );
 };

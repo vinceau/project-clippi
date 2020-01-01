@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Dropdown } from "semantic-ui-react";
+import { Dropdown, Input } from "semantic-ui-react";
 import styled, { css } from "styled-components";
 
 const generateOptions = (events: string[], mapOptionToLabel: (opt: string) => string, selectedValue?: string, disabledEvents?: string[]): Array<{ key: string; text: string; value: string }> => {
@@ -43,4 +43,30 @@ export const InlineDropdown: React.FC<{
       />
     </Outer>
   );
+};
+
+export const InlineInput = (props: any) => {
+    const { value, onChange, ...rest } = props;
+    const [newValue, setNewValue] = React.useState<string>(value || "");
+    const submitValue = () => {
+        onChange(newValue);
+    };
+    const onKeyDown = (event: any) => {
+        if (event.keyCode === 13) {
+            submitValue();
+        }
+    };
+    const newOnChange = (_: any, data: any) => {
+        setNewValue(data.value);
+    };
+    return (
+        <Input
+            {...rest}
+            transparent={true}
+            value={newValue}
+            onChange={newOnChange}
+            onKeyDown={onKeyDown}
+            onBlur={submitValue}
+        />
+    );
 };

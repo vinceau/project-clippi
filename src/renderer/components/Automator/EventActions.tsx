@@ -7,7 +7,7 @@ import { Container, Dropdown, Item } from "semantic-ui-react";
 import { ActionInput, NotifyInput } from "./ActionInputs";
 import { produce } from "immer";
 import { Action } from "@vinceau/event-actions";
-import { InlineDropdown } from "../InlineDropdown";
+import { InlineDropdown } from "../InlineInputs";
 
 const allEvents: ActionEvent[] = [
   ActionEvent.GAME_START,
