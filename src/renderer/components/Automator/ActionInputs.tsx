@@ -3,12 +3,15 @@ import * as React from "react";
 import { Card, Checkbox, Icon, List } from "semantic-ui-react";
 
 import { Action, ActionCreateTwitchClipParams, ActionNotifyParams, ActionPlaySoundParams } from "@/lib/actions";
-import { sp } from "@/lib/sounds";
+import { useSelector } from "react-redux";
+import { iRootState } from "@/store";
+
 import { Action as ActionDefinition } from "@vinceau/event-actions";
 import { produce } from "immer";
 import styled, { css } from "styled-components";
 import { InlineDropdown, InlineInput } from "../InlineInputs";
 import { LabelledButton } from "../LabelledButton";
+import { AddSoundButton } from "../Settings/SoundSettings";
 
 const allActions: Action[] = [
     Action.NOTIFY,
@@ -70,7 +73,14 @@ const NotifyInput = (props: any) => {
 
 const SoundInput = (props: any) => {
     const { value, onChange } = props;
-    const allSounds = Object.keys(sp.sounds);
+    const soundFiles = useSelector((state: iRootState) => state.filesystem.soundFiles);
+    const allSounds = Object.keys(soundFiles);
+    if (allSounds.length === 0) {
+        return (
+            <AddSoundButton />
+        );
+    }
+
     const onSoundChange = (sound: string) => {
         const newValue = produce(value, (draft: ActionPlaySoundParams) => {
             draft.sound = sound;

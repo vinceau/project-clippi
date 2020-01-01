@@ -5,6 +5,7 @@ import produce from "immer";
 
 import { getFilePath, getFolderPath } from "@/lib/utils";
 import { remote } from "electron";
+import { SoundMap } from "@/lib/sounds";
 
 const homeDirectory = remote.app.getPath("home");
 
@@ -13,7 +14,7 @@ export interface FileSystemState {
     combosFilePath: string;
     includeSubFolders: boolean;
     deleteFilesWithNoCombos: boolean;
-    soundFiles: string;
+    soundFiles: SoundMap;
 }
 
 const initialState: FileSystemState = {
@@ -21,15 +22,28 @@ const initialState: FileSystemState = {
     combosFilePath: path.join(homeDirectory, "combos.json"),
     includeSubFolders: false,
     deleteFilesWithNoCombos: false,
-    soundFiles: "{}",
+    soundFiles: {},
 };
 
 export const filesystem = createModel({
     state: initialState,
     reducers: {
-        setSoundFiles: (state: FileSystemState, payload: string): FileSystemState => produce(state, draft => {
-            draft.soundFiles = payload;
-        }),
+        setSound: (state: FileSystemState, payload: { name: string, filePath: string}): FileSystemState => {
+            const newState = produce(state.soundFiles, draft => {
+                draft[payload.name] = payload.filePath;
+            });
+            return produce(state, draft => {
+                draft.soundFiles = newState;
+            });
+        },
+        removeSound: (state: FileSystemState, payload: string): FileSystemState => {
+            const newState = produce(state.soundFiles, draft => {
+                delete draft[payload];
+            });
+            return produce(state, draft => {
+                draft.soundFiles = newState;
+            });
+        },
         setFilesPath: (state: FileSystemState, payload: string): FileSystemState => produce(state, draft => {
             draft.filesPath = payload;
         }),

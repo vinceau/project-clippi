@@ -35,7 +35,7 @@ const storeSync = () => {
 
     // Restore sound files
     const soundFiles = state.filesystem.soundFiles;
-    sp.deserialize(soundFiles);
+    sp.sounds = soundFiles;
 
     // Restore combo settings
     const slippiSettings = state.slippi.settings;
