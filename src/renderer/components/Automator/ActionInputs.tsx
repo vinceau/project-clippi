@@ -75,30 +75,20 @@ const NotifyInput = (props: any) => {
 
 const SoundInput = (props: any) => {
     const { value, onChange } = props;
-    const mapOptions = (str: string) => ({
-        key: str,
-        value: str,
-        text: str,
-    });
     const allSounds = Object.keys(sp.sounds);
-    const options = allSounds.map(mapOptions);
     const onSoundChange = (sound: string) => {
         const newValue = produce(value, draft => {
             draft.sound = sound;
         });
         onChange(newValue);
     };
-
     return (
-        <span>
-            Play {" "}
-            <Dropdown
-                inline
-                value={value.sound}
-                onChange={(_, { value }) => onSoundChange(value)}
-                options={options}
-            />
-        </span>
+        <InlineDropdown
+            value={value.sound}
+            prefix="Play"
+            onChange={onSoundChange}
+            options={allSounds}
+        />
     );
 };
 
