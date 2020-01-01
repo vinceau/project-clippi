@@ -1,18 +1,17 @@
-import path from "path";
 import * as React from "react";
 
 import { useSelector, useDispatch } from "react-redux";
-import { Button, Icon, Table } from "semantic-ui-react";
+import { Button, Icon, Table, Segment, Header } from "semantic-ui-react";
 
 import { sp } from "@/lib/sounds";
-import { getFilePath } from "@/lib/utils";
+
 import { iRootState, Dispatch, dispatcher } from "@/store";
 import { shell } from "electron";
 import styled from "styled-components";
 
-export const AddSoundButton: React.FC = () => {
+export const AddSoundButton = (props: any) => {
     return (
-        <Button onClick={() => dispatcher.filesystem.addSound()}>
+        <Button onClick={() => dispatcher.filesystem.addSound()} {...props}>
             <Icon name="add" />
             Add sound
         </Button>
@@ -21,6 +20,7 @@ export const AddSoundButton: React.FC = () => {
 
 export const SoundSettings: React.FC = () => {
     const soundFiles = useSelector((state: iRootState) => state.filesystem.soundFiles);
+    const soundsExist = Object.keys(soundFiles).length > 0;
     const dispatch = useDispatch<Dispatch>();
     const onPlay = (name: string) => {
         const filePath = sp.getSoundPath(name);
@@ -37,14 +37,26 @@ export const SoundSettings: React.FC = () => {
     return (
         <div>
             <h2>Sounds</h2>
-            <Buttons>
-                <AddSoundButton />
-                <Button onClick={() => sp.stop()}>
-                    <Icon name="stop" />
-                    Stop current sound
+            {soundsExist ?
+                <>
+                    <Buttons>
+                        <AddSoundButton />
+                        <Button onClick={() => sp.stop()}>
+                            <Icon name="stop" />
+                            Stop current sound
                 </Button>
-            </Buttons>
-            <SoundTable onPlay={onPlay} onRemove={removeSound} sounds={soundFiles} />
+                    </Buttons>
+                    <SoundTable onPlay={onPlay} onRemove={removeSound} sounds={soundFiles} />
+                </>
+                :
+                <Segment placeholder>
+                    <Header icon>
+                        <Icon name="music" />
+                        You have not added any sounds
+                        </Header>
+                    <AddSoundButton primary={true} />
+                </Segment>
+            }
         </div>
     );
 };
@@ -77,7 +89,7 @@ const SoundRow: React.FC<{
 };
 
 const SoundTable: React.FC<{
-    sounds: { [name: string]: string};
+    sounds: { [name: string]: string };
     onPlay: (name: string) => void;
     onRemove: (name: string) => void;
 }> = props => {
