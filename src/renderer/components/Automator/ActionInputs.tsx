@@ -7,6 +7,7 @@ import styled from "styled-components";
 import { addSound } from "../Settings/SoundSettings";
 import { sp } from "@/lib/sounds";
 import {produce} from "immer";
+import { InlineDropdown } from "../InlineDropdown";
 
 const allActions: Action[] = [
   Action.NOTIFY,
@@ -20,19 +21,9 @@ const mapEventToName: { [eventName: string]: string } = {
   [Action.PLAY_SOUND]: "play a sound",
 };
 
-const generateOptions = (actionsList: string[], selectedValue: string, disabledActions?: string[]): Array<{ key: string; text: string; value: string }> => {
-    const disabled = disabledActions || [];
-    return actionsList.map((e) => ({
-      key: e,
-      value: e,
-      text: mapEventToName[e],
-      disabled: e !== selectedValue && disabled.includes(e),
-    }));
-  };
-
 const ActionSelector: React.FC<{
   value: Action,
-  onChange: (e: Action) => void;
+  onChange: (e: string) => void;
   disabledActions?: string[];
 }> = props => {
   const Outer = styled.span`
@@ -41,20 +32,19 @@ const ActionSelector: React.FC<{
     font-size: 18px;
   }
   `;
-  const options = generateOptions(allActions, props.value, props.disabledActions);
   return (
     <Outer>
       Then {" "}
-      <Dropdown
-        inline
-        options={options}
+      <InlineDropdown
+        options={allActions}
         value={props.value}
-        onChange={(e, { value }) => props.onChange(value)}
+        mapOptionToLabel={(opt: string) => mapEventToName[opt]}
+        onChange={props.onChange}
+        disabledOptions={props.disabledActions}
       />
     </Outer>
   );
 };
-
 
 const ActionInputContainer: React.FC<{
     header: any;

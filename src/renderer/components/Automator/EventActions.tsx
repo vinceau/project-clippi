@@ -7,6 +7,7 @@ import { Container, Dropdown, Item } from "semantic-ui-react";
 import { ActionInput, NotifyInput } from "./ActionInputs";
 import { produce } from "immer";
 import { Action } from "@vinceau/event-actions";
+import { InlineDropdown } from "../InlineDropdown";
 
 const allEvents: ActionEvent[] = [
   ActionEvent.GAME_START,
@@ -26,19 +27,9 @@ const mapEventToName: { [eventName: string]: string } = {
   [ActionEvent.TEST_EVENT]: "a test event occurs",
 };
 
-const generateOptions = (events: string[], selectedValue: string, disabledEvents?: string[]): Array<{ key: string; text: string; value: string }> => {
-  const disabled = disabledEvents || [];
-  return events.map((e) => ({
-    key: e,
-    value: e,
-    text: mapEventToName[e],
-    disabled: e !== selectedValue && disabled.includes(e),
-  }));
-};
-
 const EventSelector: React.FC<{
   value: ActionEvent,
-  onChange: (e: ActionEvent) => void;
+  onChange: (e: string) => void;
   disabledEvents?: string[];
 }> = props => {
   const Outer = styled.span`
@@ -47,15 +38,15 @@ const EventSelector: React.FC<{
     font-size: 30px;
   }
   `;
-  const options = generateOptions(allEvents, props.value, props.disabledEvents);
   return (
     <Outer>
       When {" "}
-      <Dropdown
-        inline
-        options={options}
+      <InlineDropdown
+        options={allEvents}
         value={props.value}
-        onChange={(e, { value }) => props.onChange(value)}
+        mapOptionToLabel={(opt: string) => mapEventToName[opt]}
+        onChange={props.onChange}
+        disabledOptions={props.disabledEvents}
       />
     </Outer>
   );
