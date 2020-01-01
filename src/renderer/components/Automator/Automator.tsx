@@ -2,10 +2,10 @@ import * as React from "react";
 
 import { ActionEvent } from "@/lib/realtime";
 import { Action as ActionDefinition } from "@vinceau/event-actions";
-import { EventActions, AddEventDropdown } from "./EventActions";
+import { AddEventDropdown, EventActions } from "./EventActions";
 
-import { useDispatch, useSelector } from "react-redux";
 import { Dispatch, iRootState } from "@/store";
+import { useDispatch, useSelector } from "react-redux";
 
 export interface EventActionConfig {
     event: ActionEvent;

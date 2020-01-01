@@ -1,10 +1,10 @@
+import { EventActionConfig } from "@/components/Automator/Automator";
 import { ActionTypeGenerator, EventManager } from "@vinceau/event-actions";
 import { createTwitchClip } from "common/twitch";
 // import { notifyTwitchClip } from "./twitch";
 import { dispatcher, store } from "../store";
 import { sp } from "./sounds";
 import { notify } from "./utils";
-import { EventActionConfig } from "@/components/Automator/Automator";
 
 export enum Action {
     CREATE_TWITCH_CLIP = "twitch-clip",
@@ -73,7 +73,7 @@ export const updateEventActionManager = (actions: EventActionConfig[]) => {
         mapping[a.event] = a.actions;
     }
     eventActionManager.eventActions = mapping;
-}
+};
 
 eventActionManager.registerAction(Action.CREATE_TWITCH_CLIP, ActionCreateTwitchClip);
 eventActionManager.registerAction(Action.PLAY_SOUND, ActionPlaySound);

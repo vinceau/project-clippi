@@ -3,9 +3,9 @@ import createRematchPersist, { getPersistor } from "@rematch/persist";
 
 import * as models from "./models";
 
-import { sp } from "@/lib/sounds";
 import { updateEventActionManager } from "@/lib/actions";
 import { comboFilter } from "@/lib/realtime";
+import { sp } from "@/lib/sounds";
 
 const persistPlugin = createRematchPersist({
     version: 1,

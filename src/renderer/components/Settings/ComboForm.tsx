@@ -14,8 +14,8 @@ import { mapCharacterPercentArrayToObject, mapObjectToCharacterPercentArray, Per
 
 // import "./ComboForm/NameTagForm.scss";
 // import Styles from "./Styles";
-import { PortSelectAdapter } from "./PortSelection";
 import { CodeBlock } from "./CodeBlock";
+import { PortSelectAdapter } from "./PortSelection";
 
 /*
 export interface ComboFilterSettings {

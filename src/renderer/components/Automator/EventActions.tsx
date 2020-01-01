@@ -2,14 +2,14 @@ import * as React from "react";
 
 import styled, { css } from "styled-components";
 
-import { Action as ActionDefinition } from "@vinceau/event-actions";
 import { ActionEvent } from "@/lib/realtime";
-import { Container, List, Icon } from "semantic-ui-react";
-import { ActionInput, AddActionInput } from "./ActionInputs";
-import { produce } from "immer";
+import { Action as ActionDefinition } from "@vinceau/event-actions";
 import { Action } from "@vinceau/event-actions";
+import { produce } from "immer";
+import { Container, Icon, List } from "semantic-ui-react";
 import { InlineDropdown } from "../InlineInputs";
 import { LabelledButton } from "../LabelledButton";
+import { ActionInput, AddActionInput } from "./ActionInputs";
 
 import { generateRandomEvent } from "@/lib/events";
 import { CodeBlock } from "../Settings/CodeBlock";
