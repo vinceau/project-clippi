@@ -1,16 +1,16 @@
 import * as React from "react";
 
 import * as path from "path";
-import {shell} from "electron";
-import { Icon, Button, Checkbox, Form, CheckboxProps, Input } from 'semantic-ui-react'
+import { shell } from "electron";
+import { Icon, Button, Checkbox, Form, CheckboxProps, Input } from "semantic-ui-react";
 import { Progress } from "semantic-ui-react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Dispatch, iRootState } from "@/store";
 
-import { generateCombos, fastFindAndWriteCombos } from "@/lib/realtime";
+import { fastFindAndWriteCombos } from "@/lib/realtime";
 import { notify } from "@/lib/utils";
-import { findFiles, millisToString, timeDifferenceString } from "common/utils";
+import { timeDifferenceString } from "common/utils";
 import styled from "styled-components";
 
 export const ComboFinder: React.FC<{}> = () => {
