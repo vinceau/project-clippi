@@ -1,13 +1,13 @@
 import * as React from "react";
 
+import { Button, Card, Icon, Image } from "semantic-ui-react";
 import styled from "styled-components";
-import { Card, Image, Button, Icon } from "semantic-ui-react";
 
+import { shell } from "electron";
 import { createTwitchClip } from "../../common/twitch";
 import { notifyTwitchClip } from "../lib/twitch";
 import { notify } from "../lib/utils";
 import defaultUserImage from "../styles/images/user.svg";
-import { shell } from "electron";
 
 export const TwitchUserStatus: React.SFC<{
     displayName: string;

@@ -3,13 +3,13 @@ import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
-import { connectToSlippi, ActionEvent } from "@/lib/realtime";
+import { eventActionManager } from "@/lib/actions";
+import { ActionEvent, connectToSlippi } from "@/lib/realtime";
 import { Dispatch, iRootState } from "@/store";
 import { notify } from "../lib/utils";
-import { SlippiPage } from "./Slippi";
 import { Automator } from "./Automator/Automator";
+import { SlippiPage } from "./Slippi";
 import { TwitchClip, TwitchConnectButton } from "./TwitchConnect";
-import { eventActionManager } from "@/lib/actions";
 
 const Count = () => {
     const slippiPort = useSelector((state: iRootState) => state.slippi.port);

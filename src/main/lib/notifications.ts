@@ -1,6 +1,6 @@
 import * as path from "path";
 
-import { app, shell, BrowserWindow, Notification, NotificationConstructorOptions } from "electron";
+import { app, BrowserWindow, Notification, NotificationConstructorOptions, shell } from "electron";
 
 export const showNotification = (title: string, body: string, onClick?: () => void): void => {
     const options: NotificationConstructorOptions = {

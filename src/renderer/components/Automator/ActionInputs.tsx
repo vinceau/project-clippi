@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { Input, Item } from "semantic-ui-react";
 
-import { ActionNotifyParams, Action } from "@/lib/actions";
+import { Action, ActionNotifyParams } from "@/lib/actions";
 
 const ActionInputContainer: React.FC<{
     header: string;
@@ -16,7 +16,7 @@ const ActionInputContainer: React.FC<{
         // </Card>
             <Item>
             {/* <Item.Image size='tiny' src='/images/wireframe/image.png' /> */}
-      
+
             <Item.Content>
     <Item.Header>{props.header}</Item.Header>
               <Item.Description>{props.children}</Item.Description>

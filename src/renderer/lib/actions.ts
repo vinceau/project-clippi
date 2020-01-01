@@ -1,9 +1,9 @@
 import { ActionTypeGenerator, EventManager } from "@vinceau/event-actions";
 import { createTwitchClip } from "common/twitch";
 // import { notifyTwitchClip } from "./twitch";
-import { store, dispatcher } from "../store";
-import { notify } from "./utils";
+import { dispatcher, store } from "../store";
 import { sp } from "./sounds";
+import { notify } from "./utils";
 
 export enum Action {
     CREATE_TWITCH_CLIP = "twitch-clip",

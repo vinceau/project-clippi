@@ -1,10 +1,10 @@
 import * as React from "react";
 
-import * as path from "path";
 import { shell } from "electron";
-import { Icon, Button, Checkbox, Form, CheckboxProps, Input } from "semantic-ui-react";
-import { Progress } from "semantic-ui-react";
+import * as path from "path";
 import { useDispatch, useSelector } from "react-redux";
+import { Button, Checkbox, CheckboxProps, Form, Icon, Input } from "semantic-ui-react";
+import { Progress } from "semantic-ui-react";
 
 import { Dispatch, iRootState } from "@/store";
 

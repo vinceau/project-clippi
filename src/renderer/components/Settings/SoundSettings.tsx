@@ -1,15 +1,14 @@
-import * as React from "react";
 import path from "path";
+import * as React from "react";
 
 import { useDispatch } from "react-redux";
 import { Button, Icon, Table } from "semantic-ui-react";
 
-import { Dispatch } from "@/store";
 import { sp } from "@/lib/sounds";
 import { getFilePath } from "@/lib/utils";
-import styled from "styled-components";
+import { Dispatch } from "@/store";
 import { shell } from "electron";
-
+import styled from "styled-components";
 
 export const SoundSettings: React.FC = () => {
     const dispatch = useDispatch<Dispatch>();
@@ -100,7 +99,7 @@ const SoundTable: React.FC<{
                 onRemove={() => props.onRemove(key)}
             />
         ));
-    };
+    }
     return (
         <div>
             <Table celled padded>

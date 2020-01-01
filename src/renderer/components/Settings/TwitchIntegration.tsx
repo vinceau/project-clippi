@@ -4,13 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { Dispatch, iRootState } from "@/store";
 
-import { Icon, Loader, Table } from "semantic-ui-react";
-import { TwitchUserStatus, TwitchConnectButton } from "../TwitchConnect";
-import { format } from "timeago.js";
 import { TwitchClip } from "@/store/models/twitch";
-import styled from "styled-components";
 import { shell } from "electron";
-
+import { Icon, Loader, Table } from "semantic-ui-react";
+import styled from "styled-components";
+import { format } from "timeago.js";
+import { TwitchConnectButton, TwitchUserStatus } from "../TwitchConnect";
 
 export const ClipsTable: React.FC = props => {
     return (
@@ -40,7 +39,7 @@ const ClipRow: React.FC<{
     const onClick = (e: any) => {
         e.preventDefault();
         props.onClick();
-    }
+    };
     return (
         <Table.Row key={props.clip.clipID}>
             <Table.Cell>
@@ -54,8 +53,7 @@ const ClipRow: React.FC<{
             </Table.Cell>
         </Table.Row>
     );
-}
-
+};
 
 export const TwitchIntegration = () => {
     const { twitchUser } = useSelector((state: iRootState) => state.tempContainer);
@@ -98,7 +96,7 @@ export const TwitchIntegration = () => {
 
     const onSignOut = () => {
         dispatch.twitch.clearAuthToken();
-    }
+    };
     return (
         <div>
             <h2>Twitch Integration</h2>

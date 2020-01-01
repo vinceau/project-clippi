@@ -1,9 +1,9 @@
 import * as React from "react";
 
-import { EventActions } from "./EventActions";
-import { Action as ActionDefinition } from "@vinceau/event-actions";
-import { ActionEvent } from "@/lib/realtime";
 import { Action } from "@/lib/actions";
+import { ActionEvent } from "@/lib/realtime";
+import { Action as ActionDefinition } from "@vinceau/event-actions";
+import { EventActions } from "./EventActions";
 
 interface EventActionConfig {
     name: ActionEvent;
@@ -43,4 +43,4 @@ export const Automator: React.FC = () => {
             }
         </div>
     );
-}
+};

@@ -4,8 +4,8 @@ import { HashRouter as Router } from "react-router-dom";
 
 import { useSelector } from "react-redux";
 
-import { iRootState } from "@/store";
 import { sp } from "@/lib/sounds";
+import { iRootState } from "@/store";
 
 import { Main } from "./Main";
 

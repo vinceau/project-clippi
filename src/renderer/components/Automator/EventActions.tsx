@@ -2,10 +2,9 @@ import * as React from "react";
 
 import styled from "styled-components";
 
-import { Container, Item, Dropdown } from "semantic-ui-react";
-import { ActionInput, NotifyInput } from "./ActionInputs";
 import { ActionEvent } from "@/lib/realtime";
-
+import { Container, Dropdown, Item } from "semantic-ui-react";
+import { ActionInput, NotifyInput } from "./ActionInputs";
 
 const allEvents: ActionEvent[] = [
   ActionEvent.GAME_START,
@@ -58,7 +57,6 @@ const EventSelector: React.FC<{
   );
 };
 
-
 /*
   {
     event: string;
@@ -76,7 +74,7 @@ export const EventActions = (props: any) => {
   // const [notifyValue, setValue] = React.useState({});
   return (
     <Container>
-      <EventSelector value={ value.name } disabledEvents={ disabledEvents } />
+      <EventSelector value={value.name} disabledEvents={disabledEvents} />
       <Item.Group divided>
         { value.actions.map( a => (
           <ActionInput key={`${value.name}--${a.name}`} value={a} />

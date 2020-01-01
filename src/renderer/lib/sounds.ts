@@ -23,7 +23,9 @@ const generateHowlOptions = async (soundPath: string): Promise<any> => {
     });
 };
 
-export type SoundMap = { [name: string]: string };
+export interface SoundMap {
+    [name: string]: string;
+}
 
 export class SoundPlayer {
     public sounds: SoundMap;
