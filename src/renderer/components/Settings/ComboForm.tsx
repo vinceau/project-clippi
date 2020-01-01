@@ -15,6 +15,7 @@ import { mapCharacterPercentArrayToObject, mapObjectToCharacterPercentArray, Per
 // import "./ComboForm/NameTagForm.scss";
 // import Styles from "./Styles";
 import { PortSelectAdapter } from "./PortSelection";
+import { CodeBlock } from "./CodeBlock";
 
 /*
 export interface ComboFilterSettings {
@@ -135,7 +136,7 @@ export const ComboForm: React.FC<{
                                     Discard Changes
                                 </button>
                             </div>
-                            <pre>{(JSON as any).stringify(values, 0, 2)}</pre>
+                            <CodeBlock values={values} />
                         </SemanticForm>
                     )}
             />

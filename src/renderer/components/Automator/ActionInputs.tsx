@@ -1,8 +1,9 @@
 import * as React from "react";
 
-import { Card, Icon, Checkbox, Dropdown, List } from "semantic-ui-react";
+import { Card, Icon, Checkbox, List } from "semantic-ui-react";
 
-import { Action, ActionNotifyParams } from "@/lib/actions";
+import { Action as ActionDefinition } from "@vinceau/event-actions";
+import { Action, ActionCreateTwitchClipParams, ActionNotifyParams, ActionPlaySoundParams } from "@/lib/actions";
 import styled, { css } from "styled-components";
 import { sp } from "@/lib/sounds";
 import { produce } from "immer";
@@ -71,7 +72,7 @@ const SoundInput = (props: any) => {
     const { value, onChange } = props;
     const allSounds = Object.keys(sp.sounds);
     const onSoundChange = (sound: string) => {
-        const newValue = produce(value, draft => {
+        const newValue = produce(value, (draft: ActionPlaySoundParams) => {
             draft.sound = sound;
         });
         onChange(newValue);
@@ -89,7 +90,7 @@ const SoundInput = (props: any) => {
 const TwitchClipInput = (props: any) => {
     const { value, onChange } = props;
     const onDelayChange = (delay?: boolean) => {
-        const newValue = produce(value, draft => {
+        const newValue = produce(value, (draft: ActionCreateTwitchClipParams) => {
             draft.delay = delay;
         });
         onChange(newValue);
@@ -156,14 +157,14 @@ const ActionIcon = (props: any) => {
 export const ActionInput = (props: any) => {
     const { value, onChange, onRemove, selectPrefix, disabledActions } = props;
     const onActionChange = (action: string) => {
-        const newValue = produce(value, draft => {
+        const newValue = produce(value, (draft: ActionDefinition) => {
             draft.name = action;
             draft.args = {};
         });
         onChange(newValue);
     };
     const onArgsChange = (args: any) => {
-        const newValue = produce(value, draft => {
+        const newValue = produce(value, (draft: ActionDefinition) => {
             draft.args = args;
         });
         onChange(newValue);

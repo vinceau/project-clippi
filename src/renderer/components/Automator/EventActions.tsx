@@ -2,14 +2,17 @@ import * as React from "react";
 
 import styled, { css } from "styled-components";
 
+import { Action as ActionDefinition } from "@vinceau/event-actions";
 import { ActionEvent } from "@/lib/realtime";
-import { Container, Dropdown, List, Icon } from "semantic-ui-react";
+import { Container, List, Icon } from "semantic-ui-react";
 import { ActionInput, AddActionInput } from "./ActionInputs";
 import { produce } from "immer";
 import { Action } from "@vinceau/event-actions";
 import { InlineDropdown } from "../InlineInputs";
 import { LabelledButton } from "../LabelledButton";
+
 import { generateRandomEvent } from "@/lib/events";
+import { CodeBlock } from "../Settings/CodeBlock";
 
 const allEvents: ActionEvent[] = [
   ActionEvent.GAME_START,
@@ -50,7 +53,7 @@ const EventHeader = styled.div`
 `;
 
 export const EventActions = (props: any) => {
-  const { value, onChange, onRemove, disabledOptions, ...rest } = props;
+  const { value, onChange, onRemove, disabledOptions } = props;
   // const [notifyValue, setValue] = React.useState({});
   const onEventChange = (newEvent: string) => {
     const newValue = produce(value, (draft: any) => {
@@ -70,7 +73,7 @@ export const EventActions = (props: any) => {
     });
     onChange(newValue);
   };
-  const disabledActions = value.actions.map(a => a.name);
+  const disabledActions = value.actions.map((a: ActionDefinition) => a.name);
   const onActionAdd = (action: string) => {
     const newValue = produce(value, (draft: any) => {
       draft.actions.push({
@@ -114,7 +117,7 @@ export const EventActions = (props: any) => {
         })}
         <AddActionInput onChange={onActionAdd} disabledActions={disabledActions} />
       </List>
-      <pre>{(JSON as any).stringify(value, 0, 2)}</pre>
+      <CodeBlock values={value} />
     </Container>
   );
 };

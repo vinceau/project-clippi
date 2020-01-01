@@ -33,12 +33,12 @@ const ActionPlaySound: ActionTypeGenerator = (params: ActionPlaySoundParams) => 
     };
 };
 
-export interface CreateTwitchClipParams {
+export interface ActionCreateTwitchClipParams {
     delay?: boolean;
     // notify?: boolean;
 }
 
-const ActionCreateTwitchClip: ActionTypeGenerator = (params: CreateTwitchClipParams) => {
+const ActionCreateTwitchClip: ActionTypeGenerator = (params: ActionCreateTwitchClipParams) => {
     return async (): Promise<any> => {
         const token = store.getState().twitch.authToken;
         console.log(`params:`);

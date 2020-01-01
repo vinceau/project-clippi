@@ -33,7 +33,7 @@ export const InlineDropdown = (props: any) => {
         {...rest}
         options={newOptions}
         value={value}
-        onChange={(e, { value }) => onChange(value)}
+        onChange={(_: any, { value }) => onChange(value)}
       />
     </Outer>
   );
