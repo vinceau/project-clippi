@@ -40,8 +40,8 @@ const EventSelector: React.FC<{
   `;
   return (
     <Outer>
-      When {" "}
       <InlineDropdown
+        prefix="When"
         options={allEvents}
         value={props.value}
         mapOptionToLabel={(opt: string) => mapEventToName[opt]}
@@ -88,9 +88,11 @@ export const EventActions = (props: any) => {
           const onInnerActionChange = (newVal: Action) => {
             onActionChange(i, newVal);
           };
+          const prefix = i === 0 ? "Then " : "And ";
           return (
             <ActionInput
               key={`${value.name}--${a.name}`}
+              selectPrefix={prefix}
               value={a}
               onChange={onInnerActionChange}
               disabledActions={disabledActions}

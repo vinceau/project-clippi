@@ -17,15 +17,19 @@ export const InlineDropdown: React.FC<{
   options: string[];
   onChange: (e: string) => void;
   mapOptionToLabel: (option: string) => string;
+  prefix?: string;
   disabledOptions?: string[];
 }> = props => {
   const options = generateOptions(props.options, props.mapOptionToLabel, props.value, props.disabledOptions);
   return (
-    <Dropdown
-      inline
-      options={options}
-      value={props.value}
-      onChange={(e, { value }) => props.onChange(value)}
-    />
+    <>
+      {props.prefix ? `${props.prefix} ` : ""}
+      <Dropdown
+        inline
+        options={options}
+        value={props.value}
+        onChange={(e, { value }) => props.onChange(value)}
+      />
+    </>
   );
 };

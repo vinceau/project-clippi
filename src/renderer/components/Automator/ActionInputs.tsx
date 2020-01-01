@@ -24,6 +24,7 @@ const mapEventToName: { [eventName: string]: string } = {
 const ActionSelector: React.FC<{
   value: Action,
   onChange: (e: string) => void;
+  prefix?: string,
   disabledActions?: string[];
 }> = props => {
   const Outer = styled.span`
@@ -34,8 +35,8 @@ const ActionSelector: React.FC<{
   `;
   return (
     <Outer>
-      Then {" "}
       <InlineDropdown
+        prefix={props.prefix}
         options={allActions}
         value={props.value}
         mapOptionToLabel={(opt: string) => mapEventToName[opt]}
@@ -168,7 +169,7 @@ const SoundInput = (props: any) => {
 */
 
 export const ActionInput = (props: any) => {
-    const { value, onChange, disabledActions } = props;
+    const { value, onChange, selectPrefix, disabledActions } = props;
     const onActionChange = (action: string) => {
         const newValue = produce(value, draft => {
             draft.name = action;
@@ -194,7 +195,7 @@ export const ActionInput = (props: any) => {
 inner = findInner();
     return (
         <div>
-            <ActionSelector value={value.name} onChange={onActionChange} disabledActions={disabledActions}/>
+            <ActionSelector prefix={selectPrefix} value={value.name} onChange={onActionChange} disabledActions={disabledActions}/>
     <div>{inner}</div>
         </div>
     );
