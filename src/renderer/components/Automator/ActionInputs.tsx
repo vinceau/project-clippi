@@ -200,6 +200,8 @@ export const ActionInput = (props: any) => {
 export const AddActionInput = (props: any) => {
     const { onChange, disabledActions } = props;
     const unusedOptions = allActions.filter(a => !disabledActions.includes(a));
+    const noOtherActions = unusedOptions.length === allActions.length;
+    const addText = noOtherActions ? "Then..." : "And also...";
     const shouldShow = css`
         ${unusedOptions.length === 0 && "display: none;"}
     `;
@@ -219,7 +221,7 @@ export const AddActionInput = (props: any) => {
             <List.Icon name="add" verticalAlign="top" size="large" />
             <List.Content>
                 <ListHeader>
-                    <ActionSelector text="And also..." selectOnBlur={false} onChange={onChange} options={unusedOptions} />
+                    <ActionSelector text={addText} selectOnBlur={false} onChange={onChange} options={unusedOptions} />
                 </ListHeader>
             </List.Content>
         </Container>
