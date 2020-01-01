@@ -65,7 +65,7 @@ export const Automator: React.FC = () => {
                 return (
                     <EventActions
                         key={e.event}
-                        disabledEvents={disabledEvents}
+                        disabledOptions={disabledEvents}
                         value={e}
                         onChange={onChange}
                         onRemove={onRemove}

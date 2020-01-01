@@ -28,24 +28,6 @@ const mapEventToName: { [eventName: string]: string } = {
   [ActionEvent.TEST_EVENT]: "a test event occurs",
 };
 
-const EventSelector: React.FC<{
-  value: ActionEvent,
-  onChange: (e: string) => void;
-  disabledEvents?: string[];
-}> = props => {
-  return (
-    <InlineDropdown
-      prefix="When"
-      options={allEvents}
-      value={props.value}
-      mapOptionToLabel={(opt: string) => mapEventToName[opt]}
-      onChange={props.onChange}
-      disabledOptions={props.disabledEvents}
-      fontSize={30}
-    />
-  );
-};
-
 /*
   {
     event: string;
@@ -59,7 +41,7 @@ const EventSelector: React.FC<{
   }
 */
 export const EventActions = (props: any) => {
-  const { value, onChange, onRemove, disabledEvents, ...rest } = props;
+  const { value, onChange, onRemove, disabledOptions, ...rest } = props;
   // const [notifyValue, setValue] = React.useState({});
   const onEventChange = (newEvent: string) => {
     const newValue = produce(value, (draft: any) => {
@@ -99,7 +81,15 @@ export const EventActions = (props: any) => {
   return (
     <Container>
       <EventHeader>
-        <EventSelector value={value.event} onChange={onEventChange} disabledEvents={disabledEvents} />
+        <InlineDropdown
+          prefix="When"
+          options={allEvents}
+          mapOptionToLabel={(opt: string) => mapEventToName[opt]}
+          fontSize={30}
+          value={value.event}
+          onChange={onEventChange}
+          disabledOptions={disabledOptions}
+        />
         <LabelledButton onClick={onRemove} title="Remove"><Icon name="remove" size="big" /></LabelledButton>
       </EventHeader>
       <List divided>
