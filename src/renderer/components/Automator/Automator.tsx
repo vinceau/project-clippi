@@ -3,7 +3,7 @@ import * as React from "react";
 import { Action } from "@/lib/actions";
 import { ActionEvent } from "@/lib/realtime";
 import { Action as ActionDefinition } from "@vinceau/event-actions";
-import { EventActions } from "./EventActions";
+import { EventActions, AddEventDropdown } from "./EventActions";
 import { produce } from "immer";
 
 interface EventActionConfig {
@@ -47,6 +47,15 @@ const demoData: EventActionConfig[] = [
 export const Automator: React.FC = () => {
     const [val, setVal] = React.useState<EventActionConfig[]>(demoData);
     const disabledEvents = val.map(e => e.event);
+    const addEvent = (event: ActionEvent) => {
+        const nextVal = produce(val, draft => {
+            draft.push({
+                event,
+                actions: [],
+            });
+        });
+        setVal(nextVal);
+    }
     return (
         <div>
             { val.map((e, i) => {
@@ -73,6 +82,7 @@ export const Automator: React.FC = () => {
                 );
             })
             }
+            <AddEventDropdown onChange={addEvent} disabledOptions={disabledEvents} />
         </div>
     );
 };

@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 import { ActionEvent } from "@/lib/realtime";
 import { Container, Dropdown, List, Icon } from "semantic-ui-react";
@@ -40,6 +40,14 @@ const mapEventToName: { [eventName: string]: string } = {
     ];
   }
 */
+
+const EventHeader = styled.div`
+  padding: 10px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
 export const EventActions = (props: any) => {
   const { value, onChange, onRemove, disabledOptions, ...rest } = props;
   // const [notifyValue, setValue] = React.useState({});
@@ -62,12 +70,6 @@ export const EventActions = (props: any) => {
     onChange(newValue);
   };
   const disabledActions = value.actions.map(a => a.name);
-  const EventHeader = styled.div`
-  padding: 10px 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  `;
   const onActionAdd = (action: string) => {
     const newValue = produce(value, (draft: any) => {
       draft.actions.push({
@@ -93,25 +95,54 @@ export const EventActions = (props: any) => {
         <LabelledButton onClick={onRemove} title="Remove"><Icon name="remove" size="big" /></LabelledButton>
       </EventHeader>
       <List divided>
-          {value.actions.map((a: Action, i: number) => {
-            const onInnerActionChange = (newVal: Action) => {
-              onActionChange(i, newVal);
-            };
-            const prefix = i === 0 ? "Then " : "And ";
-            return (
-              <ActionInput
-                key={`${value.name}--${a.name}`}
-                selectPrefix={prefix}
-                value={a}
-                onChange={onInnerActionChange}
-                disabledActions={disabledActions}
-                onRemove={() => onActionRemove(i)}
-              />
-            );
-          })}
-          <AddActionInput onChange={onActionAdd} disabledActions={disabledActions} />
+        {value.actions.map((a: Action, i: number) => {
+          const onInnerActionChange = (newVal: Action) => {
+            onActionChange(i, newVal);
+          };
+          const prefix = i === 0 ? "Then " : "And ";
+          return (
+            <ActionInput
+              key={`${value.name}--${a.name}`}
+              selectPrefix={prefix}
+              value={a}
+              onChange={onInnerActionChange}
+              disabledActions={disabledActions}
+              onRemove={() => onActionRemove(i)}
+            />
+          );
+        })}
+        <AddActionInput onChange={onActionAdd} disabledActions={disabledActions} />
       </List>
       <pre>{(JSON as any).stringify(value, 0, 2)}</pre>
     </Container>
+  );
+};
+
+export const AddEventDropdown = (props: any) => {
+  const { onChange, disabledOptions } = props;
+  const unusedOptions = allEvents.filter(a => !disabledOptions.includes(a));
+  const addText = "Natalie Tran makes a lamington video...";
+  const shouldShow = css`
+      ${unusedOptions.length === 0 && "display: none;"}
+  `;
+  const CustomContainer = styled(Container)`
+  &&& {
+      ${shouldShow}
+  }
+  `;
+  return (
+    <CustomContainer>
+      <EventHeader>
+        <InlineDropdown
+          prefix="When"
+          text={addText}
+          selectOnBlur={false}
+          onChange={onChange}
+          options={unusedOptions}
+          mapOptionToLabel={(opt: string) => mapEventToName[opt]}
+          fontSize={30}
+        />
+      </EventHeader>
+    </CustomContainer>
   );
 };
