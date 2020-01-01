@@ -14,8 +14,6 @@ import { findFiles, millisToString, timeDifferenceString } from "common/utils";
 import styled from "styled-components";
 
 export const ComboFinder: React.FC<{}> = () => {
-    const [timeTaken, setTimeTaken] = React.useState("");
-
     const { comboFinderPercent, comboFinderLog, comboFinderProcessing } = useSelector((state: iRootState) => state.tempContainer);
     const { filesPath, combosFilePath, includeSubFolders, deleteFilesWithNoCombos } = useSelector((state: iRootState) => state.filesystem);
     const dispatch = useDispatch<Dispatch>();
@@ -33,14 +31,10 @@ export const ComboFinder: React.FC<{}> = () => {
     };
     const findAndWriteCombos = async () => {
         const before = new Date();
-        // console.log('inside find and write');
-        // const files = await findFiles("*.slp", filesPath, includeSubFolders);
-        // console.log(`found files: ${files}`);
         const callback = (i: number, total: number, filename: string, n: number): void => {
             dispatch.tempContainer.setPercent(Math.round((i + 1) / total * 100));
             dispatch.tempContainer.setComboLog(`Found ${n} combos in: ${filename}`);
         };
-        // console.log('about to generate combos');
         const numCombos = await fastFindAndWriteCombos(
             filesPath,
             includeSubFolders,
@@ -56,7 +50,6 @@ export const ComboFinder: React.FC<{}> = () => {
         dispatch.tempContainer.setPercent(100);
         dispatch.tempContainer.setComboLog(message);
         notify(`Combo Processing Complete`, message);
-        setTimeTaken(timeTakenStr);
     };
     const findCombos = () => {
         dispatch.tempContainer.setPercent(0);
@@ -95,7 +88,6 @@ export const ComboFinder: React.FC<{}> = () => {
                 </Form.Field>
                 <Button type="button" onClick={findCombos} disabled={!combosFilePath || comboFinderProcessing}>Process replays</Button>
             </Form>
-            <p>{timeTaken}</p>
             <div>
                 {(comboFinderProcessing || complete) &&
                     <Progress progress={true} percent={comboFinderPercent} success={complete}>{comboFinderLog}</Progress>
