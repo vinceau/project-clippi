@@ -10,10 +10,12 @@ import { Dispatch, iRootState } from "@/store";
 
 import { generateCombos, fastFindAndWriteCombos } from "@/lib/realtime";
 import { notify } from "@/lib/utils";
-import { findFiles } from "common/utils";
+import { findFiles, millisToString } from "common/utils";
 import styled from "styled-components";
 
 export const ComboFinder: React.FC<{}> = () => {
+    const [timeTaken, setTimeTaken] = React.useState("");
+
     const { comboFinderPercent, comboFinderLog, comboFinderProcessing } = useSelector((state: iRootState) => state.tempContainer);
     const { filesPath, combosFilePath, includeSubFolders, deleteFilesWithNoCombos } = useSelector((state: iRootState) => state.filesystem);
     const dispatch = useDispatch<Dispatch>();
@@ -30,6 +32,7 @@ export const ComboFinder: React.FC<{}> = () => {
         dispatch.filesystem.setFileDeletion(Boolean(data.checked));
     };
     const findAndWriteCombos = async () => {
+        const before = new Date();
         // console.log('inside find and write');
         // const files = await findFiles("*.slp", filesPath, includeSubFolders);
         // console.log(`found files: ${files}`);
@@ -39,12 +42,15 @@ export const ComboFinder: React.FC<{}> = () => {
         // };
         // console.log('about to generate combos');
         const numCombos = await fastFindAndWriteCombos(filesPath, includeSubFolders, combosFilePath, deleteFilesWithNoCombos);
-        console.log(`finished generating ${numCombos} combos`);
-        const message = `Wrote ${numCombos} combos to: ${combosFilePath}`;
-        dispatch.tempContainer.setComboLog(message);
-        notify("Combo Processing Complete", message);
+        const after = new Date();
+        const timeTakenStr = millisToString(after - before);
+        console.log(`finished generating ${numCombos} combos in ${timeTakenStr}`);
+        const message = `Wrote ${numCombos} combos to: ${combosFilePath} in ${timeTakenStr}`;
         dispatch.tempContainer.setComboFinderProcessing(false);
         dispatch.tempContainer.setPercent(100);
+        dispatch.tempContainer.setComboLog(message);
+        notify(`Combo Processing Complete`, message);
+        setTimeTaken(timeTakenStr);
     };
     const findCombos = () => {
         dispatch.tempContainer.setPercent(0);
@@ -83,6 +89,7 @@ export const ComboFinder: React.FC<{}> = () => {
                 </Form.Field>
                 <Button type="button" onClick={findCombos} disabled={!combosFilePath || comboFinderProcessing}>Process replays</Button>
             </Form>
+            <p>{timeTaken}</p>
             <div>
                 {(comboFinderProcessing || complete) &&
                     <Progress progress={true} percent={comboFinderPercent} success={complete}>{comboFinderLog}</Progress>

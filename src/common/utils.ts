@@ -54,3 +54,14 @@ export const readFile = async (filePath: string): Promise<Buffer> => {
         });
     });
 };
+
+export const millisToString = (millis: number): string => {
+    const date = new Date(millis);
+    let str = "";
+    str += date.getUTCDate() - 1 + " days, ";
+    str += date.getUTCHours() + " hours, ";
+    str += date.getUTCMinutes() + " minutes, ";
+    str += date.getUTCSeconds() + " seconds, ";
+    str += date.getUTCMilliseconds() + " millis";
+    return str;
+};
