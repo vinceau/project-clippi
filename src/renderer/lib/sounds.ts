@@ -23,7 +23,9 @@ const generateHowlOptions = async (soundPath: string): Promise<any> => {
     });
 };
 
-export type SoundMap = { [name: string]: string };
+export interface SoundMap {
+    [name: string]: string;
+}
 
 export class SoundPlayer {
     public sounds: SoundMap;
@@ -58,6 +60,21 @@ export class SoundPlayer {
 
     public removeSound(name: string): void {
         delete this.sounds[name];
+    }
+
+    public getSoundPath(name: string): string {
+        return this.sounds[name];
+    }
+
+    public renameSound(oldName: string, newName: string): void {
+        if (!this.sounds[oldName]) {
+            throw new Error(`No sound called: ${oldName}`);
+        }
+        if (this.sounds[newName]) {
+            throw new Error(`${newName} already taken`);
+        }
+        this.sounds[newName] = this.sounds[oldName];
+        delete this.sounds[oldName];
     }
 
     public async playSound(name: string): Promise<void> {

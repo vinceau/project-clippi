@@ -13,7 +13,7 @@ export const LabelledButton: React.FC<{
     `;
     return (
         <Outer onClick={props.onClick}>
-            <Tooltip arrow={true} duration={200} position="bottom" title={props.title}>
+            <Tooltip arrow={true} duration={200} position="bottom" title={props.title} style={{ display: "inline-block" }}>
                 {props.children}
             </Tooltip>
         </Outer>

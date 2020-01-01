@@ -1,9 +1,9 @@
 import { IPC } from "common/ipc";
 import { Message } from "common/types";
 
+import { openFileSystemDialog } from "./lib/fileSystem";
 import { showNotification, twitchClipNotification } from "./lib/notifications";
 import { authenticateTwitch } from "./lib/twitch";
-import { openFileSystemDialog } from "./lib/fileSystem";
 
 export const setupListeners = (ipc: IPC) => {
 

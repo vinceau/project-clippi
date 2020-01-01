@@ -1,30 +1,34 @@
-import * as React from "react";
 import path from "path";
+import * as React from "react";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Button, Icon, Table } from "semantic-ui-react";
 
-import { Dispatch, iRootState } from "@/store";
 import { sp } from "@/lib/sounds";
 import { getFilePath } from "@/lib/utils";
+import { Dispatch, dispatcher } from "@/store";
+import { shell } from "electron";
 import styled from "styled-components";
 
+export const addSound = async (): Promise<string> => {
+    const p = await getFilePath({
+        filters: [{ name: "Audio files", extensions: ["mp3", "wav"] }],
+    }, false);
+    if (!p) {
+        throw new Error("User cancelled selection");
+    }
+    const name = path.basename(p);
+    sp.addSound(name, p);
+    dispatcher.filesystem.setSoundFiles(sp.serialize());
+    return name;
+};
 
 export const SoundSettings: React.FC = () => {
-    const soundFiles = useSelector((state: iRootState) => state.filesystem.soundFiles);
-    const sounds = sp.deserialize(soundFiles);
     const dispatch = useDispatch<Dispatch>();
     const onPlay = (name: string) => {
-        sp.playSound(name).catch(console.error);
-    };
-    const getSounds = async () => {
-        const p = await getFilePath({
-            filters: [{ name: "Audio files", extensions: ["mp3", "wav"] }],
-        }, false);
-        if (p) {
-            const name = path.basename(p);
-            sp.addSound(name, p);
-            dispatch.filesystem.setSoundFiles(sp.serialize());
+        const filePath = sp.getSoundPath(name);
+        if (filePath) {
+            shell.openItem(filePath);
         }
     };
     const removeSound = (name: string) => {
@@ -38,60 +42,67 @@ export const SoundSettings: React.FC = () => {
         <div>
             <h2>Sounds</h2>
             <Buttons>
-                <Button onClick={() => getSounds().catch(console.error)}>
+                <Button onClick={() => addSound().catch(console.error)}>
                     <Icon name="add" />
                     Add sound
-            </Button>
+                </Button>
+                <Button onClick={() => sp.stop()}>
+                    <Icon name="stop" />
+                    Stop current sound
+                </Button>
             </Buttons>
-            <SoundTable onPlay={onPlay} onStop={() => sp.stop()} onRemove={removeSound} sounds={sounds} />
+            <SoundTable onPlay={onPlay} onRemove={removeSound} sounds={sp.sounds} />
         </div>
     );
 };
 
+const SoundRow: React.FC<{
+    name: string;
+    path: string;
+    onPlay: () => void;
+    onRemove: () => void;
+}> = props => {
+    const Clickable = styled.span`
+    cursor: pointer;
+    `;
+    return (
+        <Table.Row key={props.path}>
+            <Table.Cell>
+                {props.name}
+            </Table.Cell>
+            <Table.Cell>
+                {props.path}
+            </Table.Cell>
+            <Table.Cell>
+                <Clickable onClick={props.onPlay}><Icon name="play" /></Clickable>
+            </Table.Cell>
+            <Table.Cell>
+                <Clickable onClick={props.onRemove}><Icon name="trash" /></Clickable>
+            </Table.Cell>
+        </Table.Row>
+    );
+};
+
 const SoundTable: React.FC<{
-    sounds: Map<string, string>;
+    sounds: { [name: string]: string};
     onPlay: (name: string) => void;
-    onStop: () => void;
     onRemove: (name: string) => void;
 }> = props => {
-    const [playing, setPlaying] = React.useState<string | null>(null);
     const rows: JSX.Element[] = [];
-    const onPlay = (name: string) => {
-        setPlaying(name);
-        props.onPlay(name);
-    };
-    const onStop = () => {
-        setPlaying(null);
-        props.onStop();
-    };
-    const onRemove = (name: string) => {
-        if (playing === name) {
-            onStop();
-        }
-        props.onRemove(name);
-    };
-    for (const [key, value] of Object.entries(props.sounds)) {
+    const allSounds = Object.keys(props.sounds);
+    allSounds.sort();
+    for (const key of allSounds) {
+        const value = props.sounds[key];
         rows.push((
-            <Table.Row key={`${value}--${key}`}>
-                <Table.Cell>
-                    {key}
-                </Table.Cell>
-                <Table.Cell>
-                    {value}
-                </Table.Cell>
-                <Table.Cell>
-                    {playing === key ?
-                        <span onClick={() => onStop()}><Icon name="stop" /></span>
-                        :
-                        <span onClick={() => onPlay(key)}><Icon name="play" /></span>
-                    }
-                </Table.Cell>
-                <Table.Cell>
-                    <span onClick={() => onRemove(key)}><Icon name="remove" /></span>
-                </Table.Cell>
-            </Table.Row>
+            <SoundRow
+                key={`${value}--${key}`}
+                name={key}
+                path={value}
+                onPlay={() => props.onPlay(key)}
+                onRemove={() => props.onRemove(key)}
+            />
         ));
-    };
+    }
     return (
         <div>
             <Table celled padded>
@@ -100,10 +111,9 @@ const SoundTable: React.FC<{
                         <Table.HeaderCell singleLine>Name</Table.HeaderCell>
                         <Table.HeaderCell>File Path</Table.HeaderCell>
                         <Table.HeaderCell>Play</Table.HeaderCell>
-                        <Table.HeaderCell>Delete</Table.HeaderCell>
+                        <Table.HeaderCell>Remove</Table.HeaderCell>
                     </Table.Row>
                 </Table.Header>
-
                 <Table.Body>
                     {rows}
                 </Table.Body>

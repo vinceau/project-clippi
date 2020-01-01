@@ -5,14 +5,24 @@ export const TwitchRedirectURI = process.env.ELECTRON_WEBPACK_APP_TWITCH_REDIREC
 
 export const createTwitchClip = async (
     token: string,
-    channelName: string
-): Promise<string | null> => {
+    createAfterDelay?: boolean,
+    channelName?: string,
+): Promise<string> => {
     const twitchClient = await twitch.withCredentials(TwitchClientId, token);
-    const user = await twitchClient.helix.users.getUserByName(channelName);
-    if (user !== null && (await user.getStream()) !== null) {
-        return twitchClient.helix.clips.createClip({ channelId: user.id });
+    let user: HelixUser | null;
+    if (channelName) {
+        user = await twitchClient.helix.users.getUserByName(channelName);
+    } else {
+        // Default to the token user if not provided
+        user = await currentUser(token);
     }
-    return null;
+    if (!user) {
+        throw new Error(`Invalid Twitch user`);
+    }
+    return twitchClient.helix.clips.createClip({
+        channelId: user.id,
+        createAfterDelay,
+    });
 };
 
 export const isStreaming = async (token: string, channelName?: string): Promise<boolean> => {

@@ -19,6 +19,7 @@ import { LabelledButton } from "../LabelledButton";
 import { ComboFinder } from "./ComboFinder";
 import { ComboForm } from "./ComboForm";
 import { SoundSettings } from "./SoundSettings";
+import { TwitchIntegration } from "./TwitchIntegration";
 
 export const SettingsPage: React.FC<{
     showSettings: boolean;
@@ -136,7 +137,7 @@ export const SettingsPage: React.FC<{
                         <Switch>
                             <Route path={`${path}/combo-finder`} component={PageSettingsProfile} />
                             <Route path={`${path}/combo-settings`} component={PageSettingsBilling} />
-                            <Route path={`${path}/account-settings`} component={PageSettingsAccount} />
+                            <Route path={`${path}/account-settings`} component={TwitchIntegration} />
                             <Route path={`${path}/sound-settings`} component={SoundSettings} />
                         </Switch>
                     </div>
@@ -233,21 +234,12 @@ export const PageSettingsBilling = () => {
     const initial = comboFilter.updateSettings(JSON.parse(settings));
     const dispatch = useDispatch<Dispatch>();
     const onSubmit = (values: Partial<ComboFilterSettings>) => {
-        const newValues = comboFilter.updateSettings(values);
-        console.log(`updated combo filter with new values: ${newValues}`);
-        const valueString = JSON.stringify(newValues);
-        console.log(`updating redux store: ${valueString}`);
+        const valueString = JSON.stringify(values);
         dispatch.slippi.updateSettings(valueString);
     };
     return (
         <div>
             <ComboForm initialValues={initial} onSubmit={onSubmit} />
         </div>
-    );
-};
-
-const PageSettingsAccount = () => {
-    return (
-        <div>Accounts</div>
     );
 };

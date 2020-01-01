@@ -1,8 +1,8 @@
-import * as React from "react";
-import Select, { components, MultiValueProps, OptionProps, OptionTypeBase, SingleValueProps } from "react-select";
 import { Character, CharacterInfo, getAllCharacters, getCharacterName } from "@vinceau/slp-realtime";
-import styled from "styled-components";
+import * as React from "react";
 import { Field } from "react-final-form";
+import Select, { components, MultiValueProps, OptionProps, OptionTypeBase, SingleValueProps } from "react-select";
+import styled from "styled-components";
 
 import { CharacterIcon } from "../../CharacterIcon";
 

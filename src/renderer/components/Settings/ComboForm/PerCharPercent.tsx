@@ -1,10 +1,10 @@
 import * as React from "react";
 
-import { Icon, Button } from "semantic-ui-react";
 import { Character, getCharacterName } from "@vinceau/slp-realtime";
 import { produce } from "immer";
 import { Field } from "react-final-form";
 import { FieldArray } from "react-final-form-arrays";
+import { Button, Icon } from "semantic-ui-react";
 
 import { CharacterSelectAdapter } from "./CharacterSelect";
 import { SemanticInput } from "./FormAdapters";

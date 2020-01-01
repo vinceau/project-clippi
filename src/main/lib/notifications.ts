@@ -1,8 +1,6 @@
 import * as path from "path";
 
-import open from "open";
-
-import { app, BrowserWindow, Notification, NotificationConstructorOptions } from "electron";
+import { app, BrowserWindow, Notification, NotificationConstructorOptions, shell } from "electron";
 
 export const showNotification = (title: string, body: string, onClick?: () => void): void => {
     const options: NotificationConstructorOptions = {
@@ -30,6 +28,6 @@ export const showNotification = (title: string, body: string, onClick?: () => vo
 
 export const twitchClipNotification = (clipId: string): void => {
     showNotification("Twitch Clip Created", "Click to view", () => {
-        open(`https://clips.twitch.tv/${clipId}`).catch(console.error);
+        shell.openExternal(`https://clips.twitch.tv/${clipId}`);
     });
 };
