@@ -1,4 +1,3 @@
-import * as path from "path";
 import fs from "fs";
 
 export const delay = async (ms: number): Promise<void> => {

@@ -25,6 +25,7 @@ const ActionInputContainer: React.FC<{
     );
 };
 
+/*
 const CardExampleFluid = () => (
     <Card.Group>
       <Card fluid color='red' header='Option 1' />
@@ -32,6 +33,7 @@ const CardExampleFluid = () => (
       <Card fluid color='yellow' header='Option 3' />
     </Card.Group>
   )
+  */
 
 export const NotifyInput = (props: any) => {
     const { value, onChange } = props;
