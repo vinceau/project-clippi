@@ -57,28 +57,34 @@ export const Automator: React.FC = () => {
     };
     const disabledEvents = val.map(e => e.event);
     const addEvent = (event: ActionEvent) => {
-        const nextVal = produce(val, draft => {
-            draft.push({
-                event,
-                actions: [],
-            });
-        });
-        setVal(nextVal);
+        // const nextVal = produce(val, draft => {
+        //     draft.push({
+        //         event,
+        //         actions: [],
+        //     });
+        // });
+        // setVal(nextVal);
+        dispatch.slippi.addNewEventAction(event);
     }
     return (
         <div>
             { val.map((e, i) => {
                 const onChange = (newVal: EventActionConfig) => {
-                    const nextVal = produce(val, draft => {
-                        draft[i] = newVal;
+                    // const nextVal = produce(val, draft => {
+                    //     draft[i] = newVal;
+                    // });
+                    // setVal(nextVal);
+                    dispatch.slippi.updateActionEvent({
+                        index: i,
+                        event: newVal,
                     });
-                    setVal(nextVal);
                 };
                 const onRemove = () => {
-                    const nextVal = produce(val, draft => {
-                        draft.splice(i, 1);
-                    });
-                    setVal(nextVal);
+                    dispatch.slippi.removeActionEvent(i);
+                    // const nextVal = produce(val, draft => {
+                    //     draft.splice(i, 1);
+                    // });
+                    // setVal(nextVal);
                 };
                 return (
                     <EventActions
