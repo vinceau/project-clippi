@@ -23,8 +23,8 @@ const allEvents: ActionEvent[] = [
 const mapEventToName: { [eventName: string]: string } = {
   [ActionEvent.GAME_START]: "a new game starts",
   [ActionEvent.GAME_END]: "the game ends",
-  [ActionEvent.PLAYER_DIED]: "someone dies",
-  [ActionEvent.PLAYER_SPAWN]: "someone spawns",
+  [ActionEvent.PLAYER_DIED]: "a player dies",
+  [ActionEvent.PLAYER_SPAWN]: "a player spawns",
   [ActionEvent.COMBO_OCCURRED]: "a combo occurs",
   [ActionEvent.TEST_EVENT]: "a test event occurs",
 };
