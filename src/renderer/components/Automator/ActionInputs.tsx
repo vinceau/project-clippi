@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Card, Checkbox, Dropdown, Input, Item } from "semantic-ui-react";
+import { Card, Checkbox, Dropdown, List, Item } from "semantic-ui-react";
 
 import { Action, ActionNotifyParams } from "@/lib/actions";
 import styled from "styled-components";
@@ -148,6 +148,28 @@ const ActionArgsInput = (props: any) => {
     }
 };
 
+const ActionIcon = (props: any) => {
+    const { actionType, ...rest } = props;
+    switch (actionType) {
+        case Action.NOTIFY:
+            return (
+                <List.Icon name="exclamation circle" {...rest} />
+            );
+        case Action.PLAY_SOUND:
+            return (
+                <List.Icon name="music" {...rest} />
+            );
+        case Action.CREATE_TWITCH_CLIP:
+            return (
+                <List.Icon name="twitch" {...rest} />
+            );
+        default:
+            return (
+                <List.Icon name="question" {...rest} />
+            );
+    }
+};
+
 export const ActionInput = (props: any) => {
     const { value, onChange, selectPrefix, disabledActions } = props;
     const onActionChange = (action: string) => {
@@ -163,16 +185,27 @@ export const ActionInput = (props: any) => {
         });
         onChange(newValue);
     };
+    const Container = styled(List.Item)`
+    &&& {
+        padding: 10px 0;
+    }
+    `;
+    const ListHeader = styled(List.Header)`
+    &&& {
+        padding-bottom: 10px;
+    }
+    `;
     return (
-        <Item>
-            <Item.Content>
-                <Item.Header>
+        <Container>
+            <ActionIcon actionType={value.name} verticalAlign="top" size="large" />
+            <List.Content>
+                <ListHeader>
                     <ActionSelector prefix={selectPrefix} value={value.name} onChange={onActionChange} disabledActions={disabledActions} />
-                </Item.Header>
-                <Item.Description>
+                </ListHeader>
+                <List.Description>
                     <ActionArgsInput actionType={value.name} value={value.args} onChange={onArgsChange} />
-                </Item.Description>
-            </Item.Content>
-        </Item>
+                </List.Description>
+            </List.Content>
+        </Container>
     );
 };

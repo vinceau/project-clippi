@@ -3,7 +3,7 @@ import * as React from "react";
 import styled from "styled-components";
 
 import { ActionEvent } from "@/lib/realtime";
-import { Container, Dropdown, Item } from "semantic-ui-react";
+import { Container, Dropdown, List, Item } from "semantic-ui-react";
 import { ActionInput, NotifyInput } from "./ActionInputs";
 import { produce } from "immer";
 import { Action } from "@vinceau/event-actions";
@@ -33,15 +33,15 @@ const EventSelector: React.FC<{
   disabledEvents?: string[];
 }> = props => {
   return (
-      <InlineDropdown
-        prefix="When"
-        options={allEvents}
-        value={props.value}
-        mapOptionToLabel={(opt: string) => mapEventToName[opt]}
-        onChange={props.onChange}
-        disabledOptions={props.disabledEvents}
-        fontSize={30}
-      />
+    <InlineDropdown
+      prefix="When"
+      options={allEvents}
+      value={props.value}
+      mapOptionToLabel={(opt: string) => mapEventToName[opt]}
+      onChange={props.onChange}
+      disabledOptions={props.disabledEvents}
+      fontSize={30}
+    />
   );
 };
 
@@ -73,27 +73,35 @@ export const EventActions = (props: any) => {
     onChange(newValue);
   };
   const disabledActions = value.actions.map(a => a.name);
+  const EventHeader = styled.div`
+  padding: 10px 0;
+  `;
+  const ActionsContainer = styled.div`
+  padding-left: 20px;
+  `;
   return (
     <Container>
-      <EventSelector value={value.event} onChange={onEventChange} disabledEvents={disabledEvents} />
-      <Item.Group divided>
-        {value.actions.map((a: Action, i: number) => {
-          const onInnerActionChange = (newVal: Action) => {
-            onActionChange(i, newVal);
-          };
-          const prefix = i === 0 ? "Then " : "And ";
-          return (
-            <ActionInput
-              key={`${value.name}--${a.name}`}
-              selectPrefix={prefix}
-              value={a}
-              onChange={onInnerActionChange}
-              disabledActions={disabledActions}
-            />
-          )
-        })}
-        {/* <NotifyInput value={notifyValue} onChange={setValue} /> */}
-      </Item.Group>
+      <EventHeader>
+        <EventSelector value={value.event} onChange={onEventChange} disabledEvents={disabledEvents} />
+      </EventHeader>
+      <List divided>
+          {value.actions.map((a: Action, i: number) => {
+            const onInnerActionChange = (newVal: Action) => {
+              onActionChange(i, newVal);
+            };
+            const prefix = i === 0 ? "Then " : "And ";
+            return (
+              <ActionInput
+                key={`${value.name}--${a.name}`}
+                selectPrefix={prefix}
+                value={a}
+                onChange={onInnerActionChange}
+                disabledActions={disabledActions}
+              />
+            );
+          })}
+          {/* <NotifyInput value={notifyValue} onChange={setValue} /> */}
+      </List>
       <pre>{(JSON as any).stringify(value, 0, 2)}</pre>
     </Container>
   );
