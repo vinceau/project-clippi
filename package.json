@@ -31,7 +31,9 @@
     "dist:all": "yarn run dist --x64 -wml",
     "dist:win": "yarn run dist --x64 -w",
     "dist:mac": "yarn run dist -m",
-    "dist:linux": "yarn run dist -l"
+    "dist:linux": "yarn run dist -l",
+    "lint": "tslint -p .",
+    "lint:fix": "yarn run lint --fix"
   },
   "dependencies": {
     "@rematch/core": "^1.3.0",
