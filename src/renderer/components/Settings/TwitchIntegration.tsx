@@ -6,7 +6,7 @@ import { Dispatch, iRootState } from "@/store";
 
 import { TwitchClip } from "@/store/models/twitch";
 import { shell } from "electron";
-import { Icon, Loader, Table } from "semantic-ui-react";
+import { Segment, Header, Icon, Loader, Table } from "semantic-ui-react";
 import styled from "styled-components";
 import { format } from "timeago.js";
 import { TwitchConnectButton, TwitchUserStatus } from "../TwitchConnect";
@@ -112,8 +112,17 @@ export const TwitchIntegration = () => {
                     :
                     <Loader active={true} inline={true} content="Loading" />
             }
-            <h3>Clips</h3>
-            {rows.length > 0 && <ClipsTable>{rows}</ClipsTable>}
+            <h2>Clips</h2>
+            {rows.length > 0 ?
+                <ClipsTable>{rows}</ClipsTable>
+                :
+                <Segment placeholder>
+                    <Header icon>
+                        <Icon name="twitch" />
+                        You have not created any Twitch clips
+                    </Header>
+                </Segment>
+            }
         </div>
     );
 };
