@@ -4,6 +4,7 @@ import { createTwitchClip } from "common/twitch";
 import { dispatcher, store } from "../store";
 import { sp } from "./sounds";
 import { notify } from "./utils";
+import { EventActionConfig } from "@/components/Automator/Automator";
 
 export enum Action {
     CREATE_TWITCH_CLIP = "twitch-clip",
@@ -65,6 +66,15 @@ const ActionCreateTwitchClip: ActionTypeGenerator = (params: CreateTwitchClipPar
 };
 
 export const eventActionManager = new EventManager();
+
+export const updateEventActionManager = (actions: EventActionConfig[]) => {
+    console.log(actions);
+    const mapping: any = {};
+    for (const a of actions)  {
+        mapping[a.event] = a.actions;
+    }
+    eventActionManager.eventActions = mapping;
+}
 
 eventActionManager.registerAction(Action.CREATE_TWITCH_CLIP, ActionCreateTwitchClip);
 eventActionManager.registerAction(Action.PLAY_SOUND, ActionPlaySound);

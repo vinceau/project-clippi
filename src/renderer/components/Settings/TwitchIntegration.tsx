@@ -89,7 +89,7 @@ export const TwitchIntegration = () => {
 
     // If the name is not provided
     React.useEffect(() => {
-        if (!twitchUser) {
+        if (!twitchUser && authToken) {
             dispatch.tempContainer.updateUser(authToken);
         }
     });
