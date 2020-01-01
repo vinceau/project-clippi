@@ -4,7 +4,7 @@ import * as React from "react";
 import { ComboFilterSettings } from "@vinceau/slp-realtime";
 import arrayMutators from "final-form-arrays";
 import { Field, Form } from "react-final-form";
-import { Form as SemanticForm } from "semantic-ui-react";
+import { Button, Form as SemanticForm } from "semantic-ui-react";
 
 import { CharacterSelectAdapter } from "./ComboForm/CharacterSelect";
 import { SemanticCheckboxInput } from "./ComboForm/FormAdapters";
@@ -108,33 +108,33 @@ export const ComboForm: React.FC<{
                                 <label>Chain Grabbers</label>
                                 <CharacterSelectAdapter name="chainGrabbers" isMulti={true} />
                             </SemanticForm.Field>
-                            <div>
+                            <SemanticForm.Field>
                                 <label>Large Hit Threshold</label>
                                 <div>
                                     <PercentageSlider name="largeHitThreshold" min="0" max="1" />
                                 </div>
-                            </div>
-                            <div>
+                            </SemanticForm.Field>
+                            <SemanticForm.Field>
                                 <label>Chaingrab Threshold</label>
                                 <div>
                                     <PercentageSlider name="chainGrabThreshold" min="0" max="1" />
                                 </div>
-                            </div>
-                            <div>
+                            </SemanticForm.Field>
+                            <SemanticForm.Field>
                                 <label>Min. Pummels per Wobble</label>
                                 <Field name="wobbleThreshold" component="input" type="number" parse={(v: any) => parseInt(v, 10)} />
-                            </div>
+                            </SemanticForm.Field>
                             <div className="buttons">
-                                <button type="submit" disabled={submitting || pristine}>
+                                <Button primary type="submit" disabled={submitting || pristine}>
                                     Save
-                                </button>
-                                <button
+                                </Button>
+                                <Button
                                     type="button"
                                     onClick={form.reset}
                                     disabled={submitting || pristine}
                                 >
                                     Discard Changes
-                                </button>
+                                </Button>
                             </div>
                             <CodeBlock values={values} />
                         </SemanticForm>
