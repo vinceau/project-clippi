@@ -1021,15 +1021,15 @@
   resolved "https://registry.yarnpkg.com/@types/webpack-env/-/webpack-env-1.14.1.tgz#0d8a53f308f017c53a5ddc3d07f4d6fa76b790d7"
   integrity sha512-0Ki9jAAhKDSuLDXOIMADg54Hu60SuBTEsWaJGGy5cV+SSUQ63J2a+RrYYGrErzz39fXzTibhKrAQJAb8M7PNcA==
 
-"@vinceau/event-actions@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@vinceau/event-actions/-/event-actions-0.0.1.tgz#8251070c70d3ab5e27b11c13f5e75a42f2901c9d"
-  integrity sha512-PAvxpv3/V4lhVB84sp65Z3byFY4dGxCTf1ifF9/e7+4QUtjUy8WnrAEufz/tzhsXdHSdALFhBHZYb3GJoUmFOw==
+"@vinceau/event-actions@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@vinceau/event-actions/-/event-actions-0.0.2.tgz#60724dfa1f1a071e1e8f7391b6105806f3e71723"
+  integrity sha512-w6deDkm705eX8nbHUk6HHXo9wWpS6YNFnP0RJIMFds04af2S9AEThVdRibVoZOYfI+To+KX2gzPKRZe+io880w==
 
-"@vinceau/slp-realtime@^0.0.3":
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/@vinceau/slp-realtime/-/slp-realtime-0.0.3.tgz#595a9be4ce0d37967ed56e8abf99d3f8add2e038"
-  integrity sha512-unHDLqF+llvwoCwWBi1kohf0AO0ZxoLwZYEMHlhmz+ZIzqShW4OZjgpcQNoJL1b1kWZhK3CWUWgIkMaZ69SmOw==
+"@vinceau/slp-realtime@^0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@vinceau/slp-realtime/-/slp-realtime-0.0.4.tgz#03beff00bdf6dc7e0cb049e3ebeacb541207bc22"
+  integrity sha512-RBBFjOtNc/eqPNTt1LqwaGkAM0cDovgBbcfUnEY2WGNn6id/JWdQNpRwS2N7OK32hQG8zI/iuXRK7hlcIu+tLA==
   dependencies:
     "@vinceau/slp-wii-connect" "^0.0.3"
     lodash "^4.17.11"
