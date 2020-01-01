@@ -144,13 +144,14 @@ const SoundInput = (props: any) => {
     };
 
     // const [v, setV] = React.useState("");
+    const defaultValue = options[0].value;
     return (
             <ActionInputContainer header={
         <span>
             Play {" "}
             <Dropdown
                 inline
-                value={value.sound}
+                value={value.sound || defaultValue}
                 onChange={(_, { value }) => onSoundChange(value)}
                 options={options}
             />
