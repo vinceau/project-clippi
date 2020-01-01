@@ -128,7 +128,7 @@ const InlineInput = (props: any) => {
 };
 
 const SoundInput = (props: any) => {
-    const { value } = props;
+    const { value, onChange } = props;
     const mapOptions = (str: string) => ({
         key: str,
         value: str,
@@ -136,6 +136,12 @@ const SoundInput = (props: any) => {
     });
     const allSounds = Object.keys(sp.sounds);
     const options = allSounds.map(mapOptions);
+    const onSoundChange = (sound: string) => {
+        const newValue = produce(value, draft => {
+            draft.sound = sound;
+        });
+        onChange(newValue);
+    };
 
     // const [v, setV] = React.useState("");
     return (
@@ -144,8 +150,8 @@ const SoundInput = (props: any) => {
             Play {" "}
             <Dropdown
                 inline
-                value={value}
-                // onChange={(_, { value }) => setV(value as any)}
+                value={value.sound}
+                onChange={(_, { value }) => onSoundChange(value)}
                 options={options}
             />
         </span>
@@ -161,6 +167,22 @@ const SoundInput = (props: any) => {
       }
 */
 
+const ActionArgsInput = (props: any) => {
+    const { actionType, ...rest } = props;
+    switch (actionType) {
+        case Action.NOTIFY:
+            return (
+                <NotifyInput {...rest} />
+            );
+        case Action.PLAY_SOUND:
+            return (<SoundInput {...rest} />);
+        case Action.CREATE_TWITCH_CLIP:
+            return (<div>create twitch clip</div>);
+        default:
+            return (<div>unknown action name: {value.name}</div>);
+    }
+};
+
 export const ActionInput = (props: any) => {
     const { value, onChange, selectPrefix, disabledActions } = props;
     const onActionChange = (action: string) => {
@@ -170,26 +192,16 @@ export const ActionInput = (props: any) => {
         });
         onChange(newValue);
     };
-    let inner: JSX.Element;
-    const findInner = (): JSX.Element => {
-    switch (value.name) {
-        case Action.NOTIFY:
-            return (
-                <NotifyInput value={value.args} />
-            );
-        case Action.PLAY_SOUND:
-            return (<SoundInput value={value.args.sound} />);
-        case Action.CREATE_TWITCH_CLIP:
-            return (<div>create twitch clip</div>);
-        default:
-            return (<div>unknown action name: {value.name}</div>);
-    }
-}
-inner = findInner();
+    const onArgsChange = (args: any) => {
+        const newValue = produce(value, draft => {
+            draft.args = args;
+        });
+        onChange(newValue);
+    };
     return (
         <div>
             <ActionSelector prefix={selectPrefix} value={value.name} onChange={onActionChange} disabledActions={disabledActions}/>
-    <div>{inner}</div>
+            <ActionArgsInput actionType={value.name} value={value.args} onChange={onArgsChange} />
         </div>
     );
 };
