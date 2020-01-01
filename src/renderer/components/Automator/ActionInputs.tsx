@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Card, Input, Item } from 'semantic-ui-react'
+import { Input, Item } from "semantic-ui-react";
 
 import { ActionNotifyParams } from "@/lib/actions";
 
