@@ -10,7 +10,7 @@ import { Dispatch, iRootState } from "@/store";
 
 import { generateCombos, fastFindAndWriteCombos } from "@/lib/realtime";
 import { notify } from "@/lib/utils";
-import { findFiles, millisToString } from "common/utils";
+import { findFiles, millisToString, timeDifferenceString } from "common/utils";
 import styled from "styled-components";
 
 export const ComboFinder: React.FC<{}> = () => {
@@ -43,7 +43,7 @@ export const ComboFinder: React.FC<{}> = () => {
         // console.log('about to generate combos');
         const numCombos = await fastFindAndWriteCombos(filesPath, includeSubFolders, combosFilePath, deleteFilesWithNoCombos);
         const after = new Date();
-        const timeTakenStr = millisToString(after - before);
+        const timeTakenStr = timeDifferenceString(before, after);
         console.log(`finished generating ${numCombos} combos in ${timeTakenStr}`);
         const message = `Wrote ${numCombos} combos to: ${combosFilePath} in ${timeTakenStr}`;
         dispatch.tempContainer.setComboFinderProcessing(false);

@@ -65,3 +65,8 @@ export const millisToString = (millis: number): string => {
     str += date.getUTCMilliseconds() + " millis";
     return str;
 };
+
+export const timeDifferenceString = (before: Date, after: Date): string => {
+    const diff = Math.abs(after.getTime() - before.getTime());
+    return millisToString(diff);
+};
