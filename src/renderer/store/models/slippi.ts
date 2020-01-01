@@ -26,13 +26,6 @@ export const slippi = createModel({
         updateSettings: (state: SlippiState, payload: string): SlippiState => produce(state, draft => {
             draft.settings = payload;
         }),
-        updateEvents: (state: SlippiState, payload: EventActionConfig[]): SlippiState => {
-            const newState = produce(state, draft => {
-                draft.events = payload;
-            });
-            updateEventActionManager(newState.events);
-            return newState;
-        },
         addNewEventAction: (state: SlippiState, payload: ActionEvent): SlippiState => {
             const newState = produce(state, draft => {
                 draft.events.push({

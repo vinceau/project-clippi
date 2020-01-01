@@ -68,7 +68,6 @@ const ActionCreateTwitchClip: ActionTypeGenerator = (params: CreateTwitchClipPar
 export const eventActionManager = new EventManager();
 
 export const updateEventActionManager = (actions: EventActionConfig[]) => {
-    console.log(actions);
     const mapping: any = {};
     for (const a of actions)  {
         mapping[a.event] = a.actions;
