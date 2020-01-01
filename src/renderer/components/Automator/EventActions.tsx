@@ -3,11 +3,12 @@ import * as React from "react";
 import styled from "styled-components";
 
 import { ActionEvent } from "@/lib/realtime";
-import { Container, Dropdown, List, Item } from "semantic-ui-react";
+import { Container, Dropdown, List, Icon } from "semantic-ui-react";
 import { ActionInput, AddActionInput } from "./ActionInputs";
 import { produce } from "immer";
 import { Action } from "@vinceau/event-actions";
 import { InlineDropdown } from "../InlineInputs";
+import { LabelledButton } from "../LabelledButton";
 
 const allEvents: ActionEvent[] = [
   ActionEvent.GAME_START,
@@ -58,7 +59,7 @@ const EventSelector: React.FC<{
   }
 */
 export const EventActions = (props: any) => {
-  const { value, onChange, disabledEvents, ...rest } = props;
+  const { value, onChange, onRemove, disabledEvents, ...rest } = props;
   // const [notifyValue, setValue] = React.useState({});
   const onEventChange = (newEvent: string) => {
     const newValue = produce(value, (draft: any) => {
@@ -81,6 +82,9 @@ export const EventActions = (props: any) => {
   const disabledActions = value.actions.map(a => a.name);
   const EventHeader = styled.div`
   padding: 10px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   `;
   const onActionAdd = (action: string) => {
     const newValue = produce(value, (draft: any) => {
@@ -96,6 +100,7 @@ export const EventActions = (props: any) => {
     <Container>
       <EventHeader>
         <EventSelector value={value.event} onChange={onEventChange} disabledEvents={disabledEvents} />
+        <LabelledButton onClick={onRemove} title="Remove"><Icon name="remove" size="big" /></LabelledButton>
       </EventHeader>
       <List divided>
           {value.actions.map((a: Action, i: number) => {

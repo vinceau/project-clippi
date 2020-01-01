@@ -56,8 +56,20 @@ export const Automator: React.FC = () => {
                     });
                     setVal(nextVal);
                 };
+                const onRemove = () => {
+                    const nextVal = produce(val, draft => {
+                        draft.splice(i, 1);
+                    });
+                    setVal(nextVal);
+                };
                 return (
-                    <EventActions key={e.event} disabledEvents={disabledEvents} value={e} onChange={onChange} />
+                    <EventActions
+                        key={e.event}
+                        disabledEvents={disabledEvents}
+                        value={e}
+                        onChange={onChange}
+                        onRemove={onRemove}
+                    />
                 );
             })
             }
