@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { Input, Item } from "semantic-ui-react";
 
-import { ActionNotifyParams } from "@/lib/actions";
+import { ActionNotifyParams, Action } from "@/lib/actions";
 
 const ActionInputContainer: React.FC<{
     header: string;
@@ -89,4 +89,18 @@ const InlineInput = (props: any) => {
             onBlur={submitValue}
         />
     );
+};
+
+export const ActionInput = (props: any) => {
+    const { value } = props;
+    switch (value.name) {
+        case Action.NOTIFY:
+            return (<div>notify</div>);
+        case Action.PLAY_SOUND:
+            return (<div>play sound</div>);
+        case Action.CREATE_TWITCH_CLIP:
+            return (<div>create twitch clip</div>);
+        default:
+            return (<div>unknown action name: {value.name}</div>);
+    }
 };

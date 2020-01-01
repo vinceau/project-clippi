@@ -15,6 +15,7 @@ export enum ActionEvent {
     PLAYER_SPAWN = "player-spawn",
     PLAYER_DIED = "player-died",
     COMBO_OCCURRED = "combo-occurred",
+    TEST_EVENT = "test-event",
 }
 
 const errorHandler = (err: any) => {

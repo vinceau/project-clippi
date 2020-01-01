@@ -3,7 +3,7 @@ import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
-import { connectToSlippi } from "@/lib/realtime";
+import { connectToSlippi, ActionEvent } from "@/lib/realtime";
 import { Dispatch, iRootState } from "@/store";
 import { notify } from "../lib/utils";
 import { SlippiPage } from "./Slippi";
@@ -30,7 +30,7 @@ const Count = () => {
         connectToSlippi(parseInt(port, 10)).catch(console.error);
     };
     const customEvent = () => {
-        eventActionManager.emitEvent("on-twitch-clip").catch(console.error);
+        eventActionManager.emitEvent(ActionEvent.TEST_EVENT).catch(console.error);
     };
     return (
         <Outer>
