@@ -15,7 +15,7 @@ const allActions: Action[] = [
 ];
 
 const mapEventToName: { [eventName: string]: string } = {
-    [Action.NOTIFY]: "display a notification",
+    [Action.NOTIFY]: "show a notification",
     [Action.CREATE_TWITCH_CLIP]: "create a Twitch clip",
     [Action.PLAY_SOUND]: "play a sound",
 };
