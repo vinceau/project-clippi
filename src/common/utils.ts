@@ -1,34 +1,9 @@
 import * as path from "path";
 import fs from "fs";
 import open from "open";
-import glob from "glob";
 
 export const delay = async (ms: number): Promise<void> => {
     await new Promise(resolve => setTimeout(resolve, ms));
-};
-
-export const findFiles = async (
-    fileExt: string,
-    folder?: string,
-    includeSubfolders?: boolean,
-    globOptions?: glob.IOptions,
-): Promise<string[]> => {
-    const options = globOptions ? globOptions : { nodir: true };
-    const searchFolder = folder ? folder : ".";
-    const subfolders = includeSubfolders ? "**" : "";
-    const pattern = path.join(searchFolder, subfolders, fileExt);
-    console.log(`looking for the pattern: ${pattern}`);
-    return new Promise((resolve, reject) => {
-        glob(pattern, options, (err, files) => {
-            if (err) {
-                console.error(err);
-                reject(err);
-            } else {
-                console.log(`resolving these files: ${files}`);
-                resolve(files);
-            }
-        });
-    });
 };
 
 export const openFolder = async (dirPath: string): Promise<void> => {
