@@ -1,12 +1,13 @@
 import * as React from "react";
 
-import { Card, Checkbox, Dropdown, List } from "semantic-ui-react";
+import { Card, Icon, Checkbox, Dropdown, List } from "semantic-ui-react";
 
 import { Action, ActionNotifyParams } from "@/lib/actions";
 import styled, { css } from "styled-components";
 import { sp } from "@/lib/sounds";
 import { produce } from "immer";
 import { InlineDropdown, InlineInput } from "../InlineInputs";
+import { LabelledButton } from "../LabelledButton";
 
 const allActions: Action[] = [
     Action.NOTIFY,
@@ -98,9 +99,9 @@ const TwitchClipInput = (props: any) => {
     return (
         <div>
             <Checkbox
-            label="Delay before clipping"
-            onChange={toggle}
-            checked={value.delay}
+                label="Delay before clipping"
+                onChange={toggle}
+                checked={value.delay}
             />
         </div>
     );
@@ -135,25 +136,25 @@ const ActionIcon = (props: any) => {
     switch (actionType) {
         case Action.NOTIFY:
             return (
-                <List.Icon name="exclamation circle" {...rest} />
+                <Icon name="exclamation circle" {...rest} />
             );
         case Action.PLAY_SOUND:
             return (
-                <List.Icon name="music" {...rest} />
+                <Icon name="music" {...rest} />
             );
         case Action.CREATE_TWITCH_CLIP:
             return (
-                <List.Icon name="twitch" {...rest} />
+                <Icon name="twitch" {...rest} />
             );
         default:
             return (
-                <List.Icon name="question" {...rest} />
+                <Icon name="question" {...rest} />
             );
     }
 };
 
 export const ActionInput = (props: any) => {
-    const { value, onChange, selectPrefix, disabledActions } = props;
+    const { value, onChange, onRemove, selectPrefix, disabledActions } = props;
     const onActionChange = (action: string) => {
         const newValue = produce(value, draft => {
             draft.name = action;
@@ -179,7 +180,11 @@ export const ActionInput = (props: any) => {
     `;
     return (
         <Container>
-            <ActionIcon actionType={value.name} verticalAlign="top" size="large" />
+            <i className="icon">
+                <LabelledButton title="Click to remove" onClick={onRemove}>
+                    <ActionIcon actionType={value.name} size="large" />
+                </LabelledButton>
+            </i>
             <List.Content>
                 <ListHeader>
                     <ActionSelector prefix={selectPrefix} value={value.name} onChange={onActionChange} disabledOptions={disabledActions} />

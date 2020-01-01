@@ -72,6 +72,12 @@ export const EventActions = (props: any) => {
     });
     onChange(newValue);
   };
+  const onActionRemove = (index: number) => {
+    const newValue = produce(value, (draft: any) => {
+      draft.actions.splice(index, 1);
+    });
+    onChange(newValue);
+  };
   const disabledActions = value.actions.map(a => a.name);
   const EventHeader = styled.div`
   padding: 10px 0;
@@ -85,6 +91,7 @@ export const EventActions = (props: any) => {
     });
     onChange(newValue);
   };
+
   return (
     <Container>
       <EventHeader>
@@ -103,6 +110,7 @@ export const EventActions = (props: any) => {
                 value={a}
                 onChange={onInnerActionChange}
                 disabledActions={disabledActions}
+                onRemove={() => onActionRemove(i)}
               />
             );
           })}
