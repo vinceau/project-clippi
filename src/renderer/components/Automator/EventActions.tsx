@@ -25,13 +25,13 @@ const mapEventToName: { [eventName: string]: string } = {
   [ActionEvent.TEST_EVENT]: "a test event occurs",
 };
 
-const generateOptions = (events: string[], disabledEvents?: string[]): Array<{ key: string; text: string; value: string }> => {
+const generateOptions = (events: string[], selectedValue: string, disabledEvents?: string[]): Array<{ key: string; text: string; value: string }> => {
   const disabled = disabledEvents || [];
   return events.map((e) => ({
     key: e,
     value: e,
     text: mapEventToName[e],
-    disabled: disabled.includes(e),
+    disabled: e !== selectedValue && disabled.includes(e),
   }));
 };
 
@@ -46,7 +46,7 @@ const EventSelector: React.FC<{
     font-size: 30px;
   }
   `;
-  const options = generateOptions(allEvents, props.disabledEvents);
+  const options = generateOptions(allEvents, props.value, props.disabledEvents);
   return (
     <Outer>
       When {" "}
