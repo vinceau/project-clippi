@@ -234,10 +234,7 @@ export const PageSettingsBilling = () => {
     const initial = comboFilter.updateSettings(JSON.parse(settings));
     const dispatch = useDispatch<Dispatch>();
     const onSubmit = (values: Partial<ComboFilterSettings>) => {
-        const newValues = comboFilter.updateSettings(values);
-        console.log(`updated combo filter with new values: ${newValues}`);
-        const valueString = JSON.stringify(newValues);
-        console.log(`updating redux store: ${valueString}`);
+        const valueString = JSON.stringify(values);
         dispatch.slippi.updateSettings(valueString);
     };
     return (
