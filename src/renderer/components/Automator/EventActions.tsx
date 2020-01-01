@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 import { ActionEvent } from "@/lib/realtime";
 import { Container, Dropdown, List, Item } from "semantic-ui-react";
-import { ActionInput, NotifyInput } from "./ActionInputs";
+import { ActionInput, AddActionInput } from "./ActionInputs";
 import { produce } from "immer";
 import { Action } from "@vinceau/event-actions";
 import { InlineDropdown } from "../InlineInputs";
@@ -76,9 +76,15 @@ export const EventActions = (props: any) => {
   const EventHeader = styled.div`
   padding: 10px 0;
   `;
-  const ActionsContainer = styled.div`
-  padding-left: 20px;
-  `;
+  const onActionAdd = (action: string) => {
+    const newValue = produce(value, (draft: any) => {
+      draft.actions.push({
+        name: action,
+        args: {},
+      });
+    });
+    onChange(newValue);
+  };
   return (
     <Container>
       <EventHeader>
@@ -100,7 +106,7 @@ export const EventActions = (props: any) => {
               />
             );
           })}
-          {/* <NotifyInput value={notifyValue} onChange={setValue} /> */}
+          <AddActionInput onChange={onActionAdd} disabledActions={disabledActions} />
       </List>
       <pre>{(JSON as any).stringify(value, 0, 2)}</pre>
     </Container>

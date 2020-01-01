@@ -3,7 +3,7 @@ import * as React from "react";
 import { Card, Checkbox, Dropdown, List } from "semantic-ui-react";
 
 import { Action, ActionNotifyParams } from "@/lib/actions";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { sp } from "@/lib/sounds";
 import { produce } from "immer";
 import { InlineDropdown, InlineInput } from "../InlineInputs";
@@ -20,20 +20,13 @@ const mapEventToName: { [eventName: string]: string } = {
     [Action.PLAY_SOUND]: "play a sound",
 };
 
-const ActionSelector: React.FC<{
-    value: Action,
-    onChange: (e: string) => void;
-    prefix?: string,
-    disabledActions?: string[];
-}> = props => {
+const ActionSelector = (props: any) => {
+    const { options, ...rest } = props;
     return (
         <InlineDropdown
-            prefix={props.prefix}
-            options={allActions}
-            value={props.value}
+            {...rest}
+            options={options || allActions}
             mapOptionToLabel={(opt: string) => mapEventToName[opt]}
-            onChange={props.onChange}
-            disabledOptions={props.disabledActions}
             fontSize={18}
         />
     );
@@ -189,11 +182,40 @@ export const ActionInput = (props: any) => {
             <ActionIcon actionType={value.name} verticalAlign="top" size="large" />
             <List.Content>
                 <ListHeader>
-                    <ActionSelector prefix={selectPrefix} value={value.name} onChange={onActionChange} disabledActions={disabledActions} />
+                    <ActionSelector prefix={selectPrefix} value={value.name} onChange={onActionChange} disabledOptions={disabledActions} />
                 </ListHeader>
                 <List.Description>
                     <ActionArgsInput actionType={value.name} value={value.args} onChange={onArgsChange} />
                 </List.Description>
+            </List.Content>
+        </Container>
+    );
+};
+
+export const AddActionInput = (props: any) => {
+    const { onChange, disabledActions } = props;
+    const unusedOptions = allActions.filter(a => !disabledActions.includes(a));
+    const shouldShow = css`
+        ${unusedOptions.length === 0 && "display: none;"}
+    `;
+    const Container = styled(List.Item)`
+    &&& {
+        ${shouldShow}
+        padding: 10px 0;
+    }
+    `;
+    const ListHeader = styled(List.Header)`
+    &&& {
+        padding-bottom: 10px;
+    }
+    `;
+    return (
+        <Container>
+            <List.Icon name="add" verticalAlign="top" size="large" />
+            <List.Content>
+                <ListHeader>
+                    <ActionSelector text="And also..." selectOnBlur={false} onChange={onChange} options={unusedOptions} />
+                </ListHeader>
             </List.Content>
         </Container>
     );
