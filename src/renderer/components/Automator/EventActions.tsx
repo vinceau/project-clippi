@@ -9,6 +9,7 @@ import { produce } from "immer";
 import { Action } from "@vinceau/event-actions";
 import { InlineDropdown } from "../InlineInputs";
 import { LabelledButton } from "../LabelledButton";
+import { generateRandomEvent } from "@/lib/events";
 
 const allEvents: ActionEvent[] = [
   ActionEvent.GAME_START,
@@ -121,7 +122,7 @@ export const EventActions = (props: any) => {
 export const AddEventDropdown = (props: any) => {
   const { onChange, disabledOptions } = props;
   const unusedOptions = allEvents.filter(a => !disabledOptions.includes(a));
-  const addText = "Natalie Tran makes a lamington video...";
+  const addText = generateRandomEvent();
   const shouldShow = css`
       ${unusedOptions.length === 0 && "display: none;"}
   `;
