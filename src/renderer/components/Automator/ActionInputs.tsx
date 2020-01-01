@@ -146,7 +146,7 @@ const SoundInput = (props: any) => {
     // const [v, setV] = React.useState("");
     const defaultValue = options[0].value;
     return (
-            <ActionInputContainer header={
+            // <ActionInputContainer header={
         <span>
             Play {" "}
             <Dropdown
@@ -156,7 +156,7 @@ const SoundInput = (props: any) => {
                 options={options}
             />
         </span>
-        } />
+        // } />
     );
 };
 
@@ -200,9 +200,10 @@ export const ActionInput = (props: any) => {
         onChange(newValue);
     };
     return (
-        <div>
+        <ActionInputContainer header={
             <ActionSelector prefix={selectPrefix} value={value.name} onChange={onActionChange} disabledActions={disabledActions}/>
+        }>
             <ActionArgsInput actionType={value.name} value={value.args} onChange={onArgsChange} />
-        </div>
+</ActionInputContainer>
     );
 };
