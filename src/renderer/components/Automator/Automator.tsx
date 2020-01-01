@@ -4,15 +4,16 @@ import { Action } from "@/lib/actions";
 import { ActionEvent } from "@/lib/realtime";
 import { Action as ActionDefinition } from "@vinceau/event-actions";
 import { EventActions } from "./EventActions";
+import { produce } from "immer";
 
 interface EventActionConfig {
-    name: ActionEvent;
+    event: ActionEvent;
     actions: ActionDefinition[];
 }
 
 const demoData: EventActionConfig[] = [
     {
-        name: ActionEvent.TEST_EVENT,
+        event: ActionEvent.TEST_EVENT,
         actions: [
             {
                 name: Action.PLAY_SOUND,
@@ -32,12 +33,19 @@ const demoData: EventActionConfig[] = [
 ];
 
 export const Automator: React.FC = () => {
-    const disabledEvents = demoData.map(e => e.name);
+    const [val, setVal] = React.useState<EventActionConfig[]>(demoData);
+    const disabledEvents = val.map(e => e.event);
     return (
         <div>
-            { demoData.map(e => {
+            { val.map((e, i) => {
+                const onChange = (newVal: EventActionConfig) => {
+                    const nextVal = produce(val, draft => {
+                        draft[i] = newVal;
+                    });
+                    setVal(nextVal);
+                };
                 return (
-                    <EventActions key={e.name} disabledEvents={disabledEvents} value={e} />
+                    <EventActions key={e.event} disabledEvents={disabledEvents} value={e} onChange={onChange} />
                 );
             })
             }

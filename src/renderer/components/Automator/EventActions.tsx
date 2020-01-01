@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { ActionEvent } from "@/lib/realtime";
 import { Container, Dropdown, Item } from "semantic-ui-react";
 import { ActionInput, NotifyInput } from "./ActionInputs";
+import { produce } from "immer";
 
 const allEvents: ActionEvent[] = [
   ActionEvent.GAME_START,
@@ -36,6 +37,7 @@ const generateOptions = (events: string[], disabledEvents?: string[]): Array<{ k
 
 const EventSelector: React.FC<{
   value: ActionEvent,
+  onChange: (e: ActionEvent) => void;
   disabledEvents?: string[];
 }> = props => {
   const Outer = styled.span`
@@ -52,6 +54,7 @@ const EventSelector: React.FC<{
         inline
         options={options}
         value={props.value}
+        onChange={(e, {value}) => props.onChange(value)}
       />
     </Outer>
   );
@@ -70,18 +73,24 @@ const EventSelector: React.FC<{
   }
 */
 export const EventActions = (props: any) => {
-  const { value, disabledEvents, ...rest } = props;
+  const { value, onChange, disabledEvents, ...rest } = props;
   // const [notifyValue, setValue] = React.useState({});
+  const onEventChange = (newEvent: string) => {
+    const newValue = produce(value, (draft: any) => {
+      draft.event = newEvent;
+    });
+    onChange(newValue);
+  };
   return (
     <Container>
-      <EventSelector value={value.name} disabledEvents={disabledEvents} />
+      <EventSelector value={value.event} onChange={onEventChange} disabledEvents={disabledEvents} />
       <Item.Group divided>
         { value.actions.map( a => (
           <ActionInput key={`${value.name}--${a.name}`} value={a} />
         )) }
         {/* <NotifyInput value={notifyValue} onChange={setValue} /> */}
       </Item.Group>
-      <pre>{JSON.stringify(value)}</pre>
+      <pre>{(JSON as any).stringify(value, 0, 2)}</pre>
     </Container>
   );
 };

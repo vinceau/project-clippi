@@ -6,9 +6,22 @@ import { Button, Icon, Table } from "semantic-ui-react";
 
 import { sp } from "@/lib/sounds";
 import { getFilePath } from "@/lib/utils";
-import { Dispatch } from "@/store";
+import { Dispatch, dispatcher } from "@/store";
 import { shell } from "electron";
 import styled from "styled-components";
+
+export const addSound = async (): Promise<string> => {
+    const p = await getFilePath({
+        filters: [{ name: "Audio files", extensions: ["mp3", "wav"] }],
+    }, false);
+    if (!p) {
+        throw new Error("User cancelled selection");
+    }
+    const name = path.basename(p);
+    sp.addSound(name, p);
+    dispatcher.filesystem.setSoundFiles(sp.serialize());
+    return name;
+};
 
 export const SoundSettings: React.FC = () => {
     const dispatch = useDispatch<Dispatch>();
@@ -16,16 +29,6 @@ export const SoundSettings: React.FC = () => {
         const filePath = sp.getSoundPath(name);
         if (filePath) {
             shell.openItem(filePath);
-        }
-    };
-    const getSounds = async () => {
-        const p = await getFilePath({
-            filters: [{ name: "Audio files", extensions: ["mp3", "wav"] }],
-        }, false);
-        if (p) {
-            const name = path.basename(p);
-            sp.addSound(name, p);
-            dispatch.filesystem.setSoundFiles(sp.serialize());
         }
     };
     const removeSound = (name: string) => {
@@ -39,7 +42,7 @@ export const SoundSettings: React.FC = () => {
         <div>
             <h2>Sounds</h2>
             <Buttons>
-                <Button onClick={() => getSounds().catch(console.error)}>
+                <Button onClick={() => addSound().catch(console.error)}>
                     <Icon name="add" />
                     Add sound
                 </Button>

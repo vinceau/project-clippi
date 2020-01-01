@@ -1,11 +1,14 @@
 import * as React from "react";
 
-import { Input, Item } from "semantic-ui-react";
+import { Dropdown, Input, Item } from "semantic-ui-react";
 
 import { Action, ActionNotifyParams } from "@/lib/actions";
+import styled from "styled-components";
+import { addSound } from "../Settings/SoundSettings";
+import { sp } from "@/lib/sounds";
 
 const ActionInputContainer: React.FC<{
-    header: string;
+    header: any;
 }> = props => {
     return (
         // <Card fluid>
@@ -14,14 +17,14 @@ const ActionInputContainer: React.FC<{
         //         {props.children}
         //     </Card.Description>
         // </Card>
-            <Item>
+        <Item>
             {/* <Item.Image size='tiny' src='/images/wireframe/image.png' /> */}
 
             <Item.Content>
-    <Item.Header>{props.header}</Item.Header>
-              <Item.Description>{props.children}</Item.Description>
+                <Item.Header>{props.header}</Item.Header>
+                <Item.Description>{props.children}</Item.Description>
             </Item.Content>
-          </Item>
+        </Item>
     );
 };
 
@@ -55,18 +58,18 @@ export const NotifyInput = (props: any) => {
     };
     return (
         <>
-        {/* <CardExampleFluid /> */}
-        <ActionInputContainer header="Display a notification">
-            <InlineInput value={title} onChange={onTitleChange} placeholder="Title..." />
-            <InlineInput value={body} onChange={onBodyChange} placeholder="Body..." />
-        </ActionInputContainer>
+            {/* <CardExampleFluid /> */}
+            <ActionInputContainer header="Display a notification">
+                <InlineInput value={title} onChange={onTitleChange} placeholder="Title..." />
+                <InlineInput value={body} onChange={onBodyChange} placeholder="Body..." />
+            </ActionInputContainer>
         </>
     );
 };
 
 const InlineInput = (props: any) => {
     const { value, onChange, ...rest } = props;
-    const [ newValue, setNewValue ] = React.useState<string>(value || "");
+    const [newValue, setNewValue] = React.useState<string>(value || "");
     const submitValue = () => {
         console.log("submit value");
         onChange(newValue);
@@ -91,13 +94,41 @@ const InlineInput = (props: any) => {
     );
 };
 
+const SoundInput = (props: any) => {
+    const { value } = props;
+    const mapOptions = (str: string) => ({
+        key: str,
+        value: str,
+        text: str,
+    });
+    const allSounds = Object.keys(sp.sounds);
+    const options = allSounds.map(mapOptions);
+
+    // const [v, setV] = React.useState("");
+    return (
+            <ActionInputContainer header={
+        <span>
+            Play {" "}
+            <Dropdown
+                inline
+                value={value}
+                // onChange={(_, { value }) => setV(value as any)}
+                options={options}
+            />
+        </span>
+        } />
+    );
+};
+
 export const ActionInput = (props: any) => {
     const { value } = props;
     switch (value.name) {
         case Action.NOTIFY:
-            return (<div>notify</div>);
+            return (
+                <NotifyInput value={value.args} />
+            );
         case Action.PLAY_SOUND:
-            return (<div>play sound</div>);
+            return (<SoundInput value={value.args.sound} />);
         case Action.CREATE_TWITCH_CLIP:
             return (<div>create twitch clip</div>);
         default:
