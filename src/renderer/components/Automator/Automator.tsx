@@ -13,6 +13,18 @@ interface EventActionConfig {
 
 const demoData: EventActionConfig[] = [
     {
+        event: ActionEvent.COMBO_OCCURRED,
+        actions: [
+            {
+                name: Action.NOTIFY,
+                args: {
+                    title: "wow",
+                    body: "so amaze",
+                },
+            },
+        ],
+    },
+    {
         event: ActionEvent.TEST_EVENT,
         actions: [
             {
