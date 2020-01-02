@@ -4,7 +4,7 @@ import * as React from "react";
 import { ComboFilterSettings } from "@vinceau/slp-realtime";
 import arrayMutators from "final-form-arrays";
 import { Field, Form } from "react-final-form";
-import { Button, Form as SemanticForm } from "semantic-ui-react";
+import { Accordion, Icon, Button, Form as SemanticForm } from "semantic-ui-react";
 
 import { CharacterSelectAdapter } from "./ComboForm/CharacterSelect";
 import { SemanticCheckboxInput } from "./ComboForm/FormAdapters";
@@ -44,6 +44,7 @@ export const ComboForm: React.FC<{
     initialValues: Values;
     onSubmit: (values: Values) => void;
 }> = props => {
+    const [ showAdvanced, setShowAdvanced ] = React.useState(false);
     const initialValues = mapObjectToCharacterPercentArray("perCharacterMinComboPercent", props.initialValues);
     const onSubmit = (v: any) => {
         const convertBack = mapCharacterPercentArrayToObject("perCharacterMinComboPercent", v);
@@ -104,26 +105,37 @@ export const ComboForm: React.FC<{
                             <SemanticForm.Field>
                                 <Field name="excludeWobbles" label="Exclude Wobbles" component={SemanticCheckboxInput} />
                             </SemanticForm.Field>
-                            <SemanticForm.Field>
-                                <label>Chain Grabbers</label>
-                                <CharacterSelectAdapter name="chainGrabbers" isMulti={true} />
-                            </SemanticForm.Field>
-                            <SemanticForm.Field>
-                                <label>Large Hit Threshold</label>
-                                <div>
-                                    <PercentageSlider name="largeHitThreshold" min="0" max="1" />
-                                </div>
-                            </SemanticForm.Field>
-                            <SemanticForm.Field>
-                                <label>Chaingrab Threshold</label>
-                                <div>
-                                    <PercentageSlider name="chainGrabThreshold" min="0" max="1" />
-                                </div>
-                            </SemanticForm.Field>
-                            <SemanticForm.Field>
-                                <label>Min. Pummels per Wobble</label>
-                                <Field name="wobbleThreshold" component="input" type="number" parse={(v: any) => parseInt(v, 10)} />
-                            </SemanticForm.Field>
+
+                            <Accordion>
+                                <Accordion.Title active={showAdvanced} onClick={() => setShowAdvanced(!showAdvanced)}>
+                                    <Icon name="dropdown" />
+                                    Advanced Options
+                                </Accordion.Title>
+                                <Accordion.Content active={showAdvanced}>
+
+                                    <SemanticForm.Field>
+                                        <label>Chain Grabbers</label>
+                                        <CharacterSelectAdapter name="chainGrabbers" isMulti={true} />
+                                    </SemanticForm.Field>
+                                    <SemanticForm.Field>
+                                        <label>Large Hit Threshold</label>
+                                        <div>
+                                            <PercentageSlider name="largeHitThreshold" min="0" max="1" />
+                                        </div>
+                                    </SemanticForm.Field>
+                                    <SemanticForm.Field>
+                                        <label>Chaingrab Threshold</label>
+                                        <div>
+                                            <PercentageSlider name="chainGrabThreshold" min="0" max="1" />
+                                        </div>
+                                    </SemanticForm.Field>
+                                    <SemanticForm.Field>
+                                        <label>Min. Pummels per Wobble</label>
+                                        <Field name="wobbleThreshold" component="input" type="number" parse={(v: any) => parseInt(v, 10)} />
+                                    </SemanticForm.Field>
+
+                                </Accordion.Content>
+                            </Accordion>
                             <div className="buttons">
                                 <Button primary type="submit" disabled={submitting || pristine}>
                                     Save
