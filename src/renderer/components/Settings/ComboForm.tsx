@@ -52,7 +52,10 @@ export const ComboForm: React.FC<{
         const convertBack = mapCharacterPercentArrayToObject("perCharacterMinComboPercent", v);
         props.onSubmit(convertBack);
     };
-    const ButtonContainer = ({ submitting, form }) => {
+    const ButtonContainer: React.FC<{
+        submitting: boolean;
+        form: any;
+    }> = ({ submitting, form }) => {
         const OuterContainer = styled.div`
     padding: 10px 0;
     `;

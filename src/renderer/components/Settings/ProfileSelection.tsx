@@ -15,7 +15,7 @@ const generateOptions = (opts: string[]) => {
 export const ProfileSelector = (props: any) => {
     const { initialOptions, value, onChange, ...rest } = props;
     const options = generateOptions(initialOptions);
-    const handleChange = (_: any, { value }) => onChange(value);
+    const handleChange = (_: any, { value }: any) => onChange(value);
     const Text = styled.span`
     font-weight: bold;
     margin-right: 5px;
