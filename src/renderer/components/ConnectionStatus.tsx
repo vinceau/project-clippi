@@ -114,18 +114,6 @@ export const ConnectionStatusDisplay: React.FC<{
     );
 };
 
-
-const statusToButtonLabel = (status: ConnectionStatus): string => {
-    switch (status) {
-        case ConnectionStatus.DISCONNECTED:
-            return "Connect";
-        case ConnectionStatus.CONNECTED:
-            return "Disconnect";
-        default:
-            return "Connecting...";
-    }
-};
-
 export const SlippiConnectionStatusCard: React.SFC<{
     port: string;
     status: ConnectionStatus;
@@ -144,7 +132,6 @@ export const SlippiConnectionStatusCard: React.SFC<{
     text-transform: capitalize;
     margin-right: 10px;
     `;
-    const isConnecting = props.status !== ConnectionStatus.DISCONNECTED && props.status !== ConnectionStatus.CONNECTED;
     return (
         <StatusContainer>
             <Card>

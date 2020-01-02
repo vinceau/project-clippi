@@ -57,14 +57,17 @@ export const ComboForm: React.FC<{
         form: any;
     }> = ({ submitting, form }) => {
         const OuterContainer = styled.div`
-    padding: 10px 0;
-    `;
+        padding: 10px 0;
+        & > button {
+            margin-bottom: 3px !important;
+        }
+        `;
         return (
             <OuterContainer>
                 <Button primary type="submit" disabled={submitting}>
                     <Icon name="save" />
                     Save Profile
-            </Button>
+                </Button>
                 <Button
                     type="button"
                     onClick={form.reset}
@@ -72,7 +75,7 @@ export const ComboForm: React.FC<{
                 >
                     <Icon name="undo" />
                     Discard Changes
-            </Button>
+                </Button>
                 <Button
                     negative={true}
                     type="button"
