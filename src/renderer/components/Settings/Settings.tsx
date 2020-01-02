@@ -15,9 +15,12 @@ import styled, { css } from "styled-components";
 import { comboFilter } from "@/lib/realtime";
 import { Dispatch, iRootState } from "@/store";
 import { device } from "@/styles/device";
-import { LabelledButton } from "../LabelledButton";
+import SlippiLogo from "@/styles/images/slippi-logo.svg";
+import { CustomIcon, LabelledButton } from "../Misc";
+import { SlippiPage } from "../Slippi";
 import { ComboFinder } from "./ComboFinder";
 import { ComboForm } from "./ComboForm";
+import { ProfileSelector } from "./ProfileSelection";
 import { SoundSettings } from "./SoundSettings";
 import { TwitchIntegration } from "./TwitchIntegration";
 
@@ -57,8 +60,13 @@ export const SettingsPage: React.FC<{
     overflow: hidden;
     overflow-y: auto;
     height: 100vh;
+    background-color: #F9FAFB;
+    border-right: solid 1px #d4d4d5;
     @media ${device.mobileL} {
         flex-basis: 30%;
+    }
+    @media ${device.tablet} {
+        flex-basis: 25%;
     }
     `;
     const ContentColumn = styled.div`
@@ -66,8 +74,12 @@ export const SettingsPage: React.FC<{
     overflow: hidden;
     overflow-y: auto;
     height: 100vh;
+    padding-left: 25px;
     @media ${device.mobileL} {
         flex-basis: 70%;
+    }
+    @media ${device.tablet} {
+        flex-basis: 75%;
     }
     & > div {
         padding-top: 50px;
@@ -108,6 +120,12 @@ export const SettingsPage: React.FC<{
             <Wrapper>
                 <MenuColumn>
                     <StyledMenu secondary={true} vertical={true}>
+                        <Menu.Item header>Slippi Settings</Menu.Item>
+                        <Menu.Item
+                            name="slippi-settings"
+                            active={activeItem === "slippi-settings"}
+                            onClick={handleItemClick}
+                        ><CustomIcon image={SlippiLogo} color="#353636" />Relay Connection</Menu.Item>
                         <Menu.Item header>Combo Settings</Menu.Item>
                         <Menu.Item
                             name="combo-finder"
@@ -135,8 +153,9 @@ export const SettingsPage: React.FC<{
                 <ContentColumn>
                     <div>
                         <Switch>
-                            <Route path={`${path}/combo-finder`} component={PageSettingsProfile} />
-                            <Route path={`${path}/combo-settings`} component={PageSettingsBilling} />
+                            <Route path={`${path}/slippi-settings`} component={SlippiPage} />
+                            <Route path={`${path}/combo-finder`} component={ComboFinder} />
+                            <Route path={`${path}/combo-settings`} component={FilterOptions} />
                             <Route path={`${path}/account-settings`} component={TwitchIntegration} />
                             <Route path={`${path}/sound-settings`} component={SoundSettings} />
                         </Switch>
@@ -145,101 +164,38 @@ export const SettingsPage: React.FC<{
             </Wrapper>
         </SettingsContainer>
     );
-
-    /*
-    return (
-        <SettingsContainer>
-        <Container>
-            <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
-                <h1>Settings</h1>
-                <Button onClick={() => props.onClose()}><Icon name="close"/> Close</Button>
-            </div>
-        <StyledGrid>
-            <Grid.Column width={4}>
-                <Menu fluid vertical tabular>
-                    <Menu.Item
-                        name="combo-finder"
-                        active={activeItem === "combo-finder"}
-                        onClick={handleItemClick}
-                    >Combo Finder</Menu.Item>
-                    <Menu.Item
-                        name="combo-settings"
-                        active={activeItem === "combo-settings"}
-                        onClick={handleItemClick}
-                    />
-                    <Menu.Item
-                        name="account-settings"
-                        active={activeItem === "account-settings"}
-                        onClick={handleItemClick}
-                    />
-                </Menu>
-            </Grid.Column>
-
-            <Grid.Column stretched width={12}>
-                    <Switch>
-                        <Route path={`${path}/combo-finder`} component={PageSettingsProfile} />
-                        <Route path={`${path}/combo-settings`} component={PageSettingsBilling} />
-                        <Route path={`${path}/account-settings`} component={PageSettingsAccount} />
-                    </Switch>
-            </Grid.Column>
-        </StyledGrid>
-</Container>
-</SettingsContainer>
-    );
-    */
 };
 
-/*
-export const OldSettingsPage: React.FC<{
-    showSettings: boolean;
-}> = props => {
-    return (
-        <SettingsContainer>
-            <h2>Settings</h2>
+const FilterOptions = () => {
+    const {currentProfile, comboProfiles} = useSelector((state: iRootState) => state.slippi);
+    // const [profile, setProfile] = React.useState<string>(currentProfile);
+    const profileOptions = Object.keys(comboProfiles);
 
-            <div style={{ display: "flex" }}>
-                <div style={{ display: "flex", flexDirection: "column" }}>
-                    <LinkContainer to={`${path}/profile`}>
-                        ComboFinder
-            </LinkContainer>
-                    <LinkContainer to={`${path}/billing`}>
-                        Combo Settings
-            </LinkContainer>
-                    <LinkContainer to={`${path}/account`}>
-                        Account
-            </LinkContainer>
-                </div>
-
-                <div>
-                    <Switch>
-                        <Route path={`${path}/profile`} component={PageSettingsProfile} />
-                        <Route path={`${path}/billing`} component={PageSettingsBilling} />
-                        <Route path={`${path}/account`} component={PageSettingsAccount} />
-                    </Switch>
-                </div>
-            </div>
-        </SettingsContainer>
-    );
-};
-*/
-
-const PageSettingsProfile = () => {
-    return (
-        <div><ComboFinder /></div>
-    );
-};
-
-export const PageSettingsBilling = () => {
-    const settings = useSelector((state: iRootState) => state.slippi.settings);
-    const initial = comboFilter.updateSettings(JSON.parse(settings));
+    let initial = comboFilter.getSettings();
+    const slippiSettings = comboProfiles[currentProfile];
+    if (slippiSettings) {
+        initial = comboFilter.updateSettings(JSON.parse(slippiSettings));
+    }
     const dispatch = useDispatch<Dispatch>();
     const onSubmit = (values: Partial<ComboFilterSettings>) => {
+        // console.log(values);
         const valueString = JSON.stringify(values);
-        dispatch.slippi.updateSettings(valueString);
+        dispatch.slippi.saveProfile({
+            name: currentProfile,
+            settings: valueString,
+        });
+    };
+    const setProfile = (profile: string) => {
+        dispatch.slippi.setCurrentProfile(profile);
+    };
+    const onDelete = () => {
+        dispatch.slippi.deleteProfile(currentProfile);
     };
     return (
         <div>
-            <ComboForm initialValues={initial} onSubmit={onSubmit} />
+            <h2>Filter Options</h2>
+            <ProfileSelector initialOptions={profileOptions} value={currentProfile} onChange={setProfile} />
+            <ComboForm initialValues={initial} onSubmit={onSubmit} onDelete={onDelete} />
         </div>
     );
 };

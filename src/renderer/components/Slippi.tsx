@@ -1,17 +1,31 @@
 import * as React from "react";
 
-export const SlippiPage: React.FC<{
-    initialPort: string
-    onSubmit: (port: string) => void;
-}> = props => {
-    const [port, setPort] = React.useState(props.initialPort);
-    const handleConnect = () => {
-        props.onSubmit(port);
-    };
+import { slippiLivestream } from "@/lib/realtime";
+import { Dispatch, iRootState } from "@/store";
+import { ConnectionStatus } from "@vinceau/slp-realtime";
+import { useDispatch, useSelector } from "react-redux";
+import { SlippiConnectionPlaceholder, SlippiConnectionStatusCard } from "./ConnectionStatus";
+
+export const SlippiPage: React.FC = () => {
+    const { port } = useSelector((state: iRootState) => state.slippi);
+    const { slippiConnectionStatus } = useSelector((state: iRootState) => state.tempContainer);
+    const dispatch = useDispatch<Dispatch>();
+
     return (
         <div>
-            Port: <input type="text" value={port} onChange={e => setPort(e.target.value)} />
-            <button onClick={handleConnect}>Connect to slippi</button>
+            <h2>Relay Connection</h2>
+            {slippiConnectionStatus === ConnectionStatus.CONNECTED ?
+                <SlippiConnectionStatusCard
+                    status={slippiConnectionStatus}
+                    port={port}
+                    onDisconnect={() => slippiLivestream.connection.disconnect()}
+                />
+                :
+                <SlippiConnectionPlaceholder
+                    port={port}
+                    onClick={dispatch.slippi.connectToSlippi}
+                />
+            }
         </div>
     );
 };

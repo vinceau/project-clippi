@@ -13,13 +13,15 @@ export enum Action {
 }
 
 export interface ActionNotifyParams {
-    title: string;
-    body: string;
+    title?: string;
+    body?: string;
 }
 
 const ActionNotify: ActionTypeGenerator = (params: ActionNotifyParams) => {
     return async (): Promise<any> => {
-        notify(params.title, params.body);
+        const title = params.title || "";
+        const body = params.body || "";
+        notify(title, body);
     };
 };
 

@@ -7,6 +7,7 @@ import { notify } from "./utils";
 
 import { eventActionManager } from "./actions";
 
+import { dispatcher } from "@/store";
 import fg from "fast-glob";
 
 export enum ActionEvent {
@@ -26,33 +27,37 @@ const errorHandler = (err: any) => {
 export const comboFilter = new ComboFilter();
 comboFilter.updateSettings({ excludeCPUs: false, comboMustKill: false, minComboPercent: 40 });
 
-const r = new SlippiLivestream();
-console.log(r);
-console.log(r.connection);
+export const slippiLivestream = new SlippiLivestream();
+console.log(slippiLivestream);
+console.log(slippiLivestream.connection);
+
+slippiLivestream.connection.on("statusChange", (status) => {
+    dispatcher.tempContainer.setSlippiConnectionStatus(status);
+});
 
 export const connectToSlippi = async (port?: number): Promise<boolean> => {
     console.log(`attempt to connect to slippi on port: ${port}`);
     const address = "0.0.0.0";
     const slpPort = port ? port : 1667;
-    console.log(r.connection);
-    return r.start(address, slpPort);
+    console.log(slippiLivestream.connection);
+    return slippiLivestream.start(address, slpPort);
 };
 
-r.events.on("gameStart", (gameStart) => {
+slippiLivestream.events.on("gameStart", (gameStart) => {
     eventActionManager.emitEvent(ActionEvent.GAME_START, gameStart).catch(errorHandler);
 });
-r.events.on("gameEnd", (gameEnd) => {
+slippiLivestream.events.on("gameEnd", (gameEnd) => {
     eventActionManager.emitEvent(ActionEvent.GAME_END, gameEnd).catch(errorHandler);
 });
 
-r.events.on("spawn", (playerIndex, stock, settings) => {
+slippiLivestream.events.on("spawn", (playerIndex, stock, settings) => {
     eventActionManager.emitEvent(ActionEvent.PLAYER_SPAWN, playerIndex, stock, settings).catch(errorHandler);
 });
-r.events.on("death", (playerIndex, stock, settings) => {
+slippiLivestream.events.on("death", (playerIndex, stock, settings) => {
     eventActionManager.emitEvent(ActionEvent.PLAYER_DIED, playerIndex, stock, settings).catch(errorHandler);
 });
 
-r.events.on("comboEnd", (combo, settings) => {
+slippiLivestream.events.on("comboEnd", (combo, settings) => {
     if (!comboFilter.isCombo(combo, settings)) {
         return;
     }
