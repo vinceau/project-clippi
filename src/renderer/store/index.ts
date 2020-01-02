@@ -3,7 +3,7 @@ import createRematchPersist, { getPersistor } from "@rematch/persist";
 
 import * as models from "./models";
 
-import { updateEventActionManager } from "@/lib/actions";
+import { updateEventActionManager } from "@/actions";
 import { comboFilter } from "@/lib/realtime";
 import { sp } from "@/lib/sounds";
 

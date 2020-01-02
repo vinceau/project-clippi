@@ -1,13 +1,10 @@
 import * as React from "react";
+
 import { ActionTypeGenerator } from "@vinceau/event-actions";
 import { Form, TextArea } from "semantic-ui-react";
-import { notify } from "@/lib/utils";
-import { eventActionManager } from "@/lib/actions";
 
-interface ActionComponent {
-    action: ActionTypeGenerator;
-    Component: React.FC;
-}
+import { notify } from "@/lib/utils";
+import { ActionComponent } from "./types";
 
 interface ActionNotifyParams {
     message: string;
@@ -39,8 +36,7 @@ const NotifyInput = (props: any) => {
 };
 
 export const ActionNotify: ActionComponent = {
+    label: "show a notification",
     action: ActionNotifyFunc,
     Component: NotifyInput,
 };
-
-eventActionManager.registerAction("notify", ActionNotify.action);

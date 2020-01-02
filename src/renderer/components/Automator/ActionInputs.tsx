@@ -1,30 +1,16 @@
 import * as React from "react";
 
-import { Checkbox, Form, Icon, List, TextArea } from "semantic-ui-react";
+import { Icon, List } from "semantic-ui-react";
 
-import { Action, ActionCreateTwitchClipParams, ActionPlaySoundParams } from "@/lib/actions";
-import { iRootState } from "@/store";
-import { useSelector } from "react-redux";
+import { Action, actionComponents } from "@/actions";
 
 import { Action as ActionDefinition } from "@vinceau/event-actions";
 import { produce } from "immer";
 import styled, { css } from "styled-components";
 import { InlineDropdown } from "../InlineInputs";
 import { LabelledButton } from "../Misc";
-import { AddSoundButton } from "../Settings/SoundSettings";
-import { ActionNotify } from "@/actions/ActionNotify";
 
-const allActions: Action[] = [
-    Action.NOTIFY,
-    Action.CREATE_TWITCH_CLIP,
-    Action.PLAY_SOUND,
-];
-
-const mapEventToName: { [eventName: string]: string } = {
-    [Action.NOTIFY]: "show a notification",
-    [Action.CREATE_TWITCH_CLIP]: "create a Twitch clip",
-    [Action.PLAY_SOUND]: "play a sound",
-};
+const allActions = Object.keys(actionComponents);
 
 const ActionSelector = (props: any) => {
     const { options, ...rest } = props;
@@ -32,59 +18,11 @@ const ActionSelector = (props: any) => {
         <InlineDropdown
             {...rest}
             options={options || allActions}
-            mapOptionToLabel={(opt: string) => mapEventToName[opt]}
+            mapOptionToLabel={(opt: string) => actionComponents[opt].label}
             fontSize={18}
         />
     );
 };
-
-const SoundInput = (props: any) => {
-    const { value, onChange } = props;
-    const soundFiles = useSelector((state: iRootState) => state.filesystem.soundFiles);
-    const allSounds = Object.keys(soundFiles);
-    if (allSounds.length === 0) {
-        return (
-            <AddSoundButton />
-        );
-    }
-
-    const onSoundChange = (sound: string) => {
-        const newValue = produce(value, (draft: ActionPlaySoundParams) => {
-            draft.sound = sound;
-        });
-        onChange(newValue);
-    };
-    return (
-        <InlineDropdown
-            value={value.sound}
-            prefix="Play"
-            onChange={onSoundChange}
-            options={allSounds}
-        />
-    );
-};
-
-const TwitchClipInput = (props: any) => {
-    const { value, onChange } = props;
-    const onDelayChange = (delay?: boolean) => {
-        const newValue = produce(value, (draft: ActionCreateTwitchClipParams) => {
-            draft.delay = delay;
-        });
-        onChange(newValue);
-    };
-    const toggle = () => onDelayChange(!value.delay);
-
-    return (
-        <div>
-            <Checkbox
-                label="Delay before clipping"
-                onChange={toggle}
-                checked={value.delay}
-            />
-        </div>
-    );
-};
-
 /*
       {
         name: string;
@@ -95,18 +33,10 @@ const TwitchClipInput = (props: any) => {
 
 const ActionArgsInput = (props: any) => {
     const { actionType, ...rest } = props;
-    switch (actionType) {
-        case Action.NOTIFY:
-            return (
-                <ActionNotify.Component {...rest} />
-            );
-        case Action.PLAY_SOUND:
-            return (<SoundInput {...rest} />);
-        case Action.CREATE_TWITCH_CLIP:
-            return (<TwitchClipInput {...rest} />);
-        default:
-            return (<div>Unknown action: {actionType}</div>);
-    }
+    const Component = actionComponents[actionType].Component;
+    return (
+        <Component {...rest} />
+    );
 };
 
 const ActionIcon = (props: any) => {

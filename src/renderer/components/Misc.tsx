@@ -4,7 +4,7 @@ import styled, { css } from "styled-components";
 
 import { Tooltip } from "react-tippy";
 
-import { eventActionManager } from "@/lib/actions";
+import { eventActionManager } from "@/actions";
 import { ActionEvent } from "@/lib/realtime";
 import { notify } from "../lib/utils";
 

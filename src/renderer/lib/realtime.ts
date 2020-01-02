@@ -5,7 +5,7 @@ import { ComboFilter, ComboType, DolphinComboQueue, SlippiLivestream, SlippiReal
 
 import { notify } from "./utils";
 
-import { eventActionManager } from "./actions";
+import { eventActionManager } from "../actions";
 
 import { dispatcher } from "@/store";
 import fg from "fast-glob";
