@@ -20,6 +20,7 @@ import { ComboFinder } from "./ComboFinder";
 import { ComboForm } from "./ComboForm";
 import { SoundSettings } from "./SoundSettings";
 import { TwitchIntegration } from "./TwitchIntegration";
+import { ProfileSelector } from "./ProfileSelection";
 
 export const SettingsPage: React.FC<{
     showSettings: boolean;
@@ -148,16 +149,34 @@ export const SettingsPage: React.FC<{
 };
 
 const FilterOptions = () => {
-    const settings = useSelector((state: iRootState) => state.slippi.settings);
-    const initial = comboFilter.updateSettings(JSON.parse(settings));
+    const {currentProfile, comboProfiles} = useSelector((state: iRootState) => state.slippi);
+    // const [profile, setProfile] = React.useState<string>(currentProfile);
+    const profileOptions = Object.keys(comboProfiles);
+
+    let initial = comboFilter.getSettings();
+    const slippiSettings = comboProfiles[currentProfile];
+    if (slippiSettings) {
+        initial = comboFilter.updateSettings(JSON.parse(slippiSettings));
+    }
     const dispatch = useDispatch<Dispatch>();
     const onSubmit = (values: Partial<ComboFilterSettings>) => {
+        // console.log(values);
         const valueString = JSON.stringify(values);
-        dispatch.slippi.updateSettings(valueString);
+        dispatch.slippi.saveProfile({
+            name: currentProfile,
+            settings: valueString,
+        });
+    };
+    const setProfile = (profile: string) => {
+        dispatch.slippi.setCurrentProfile(profile);
     };
     return (
         <div>
             <h2>Filter Options</h2>
+            <pre>
+                {currentProfile}
+            </pre>
+            <ProfileSelector initialOptions={profileOptions} value={currentProfile} onChange={setProfile} />
             <ComboForm initialValues={initial} onSubmit={onSubmit} />
         </div>
     );

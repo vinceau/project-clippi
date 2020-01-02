@@ -38,8 +38,10 @@ const storeSync = () => {
     sp.sounds = soundFiles;
 
     // Restore combo settings
-    const slippiSettings = state.slippi.settings;
-    comboFilter.updateSettings(JSON.parse(slippiSettings));
+    const slippiSettings = state.slippi.comboProfiles[state.slippi.currentProfile];
+    if (slippiSettings) {
+        comboFilter.updateSettings(JSON.parse(slippiSettings));
+    }
 };
 
 store.subscribe(() => {

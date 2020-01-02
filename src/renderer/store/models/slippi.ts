@@ -2,18 +2,24 @@ import { createModel } from "@rematch/core";
 
 import { EventActionConfig } from "@/components/Automator/Automator";
 
-import { ActionEvent } from "@/lib/realtime";
+import { ActionEvent, comboFilter } from "@/lib/realtime";
 import produce from "immer";
 
 export interface SlippiState {
     port: string;
-    settings: string; // JSON stringified settings
+    currentProfile: string; // profile name
+    comboProfiles: { [name: string]: string}; // profile name -> JSON stringified settings
     events: EventActionConfig[];
 }
 
+const defaultSettings = JSON.stringify(comboFilter.getSettings());
+
 const initialState: SlippiState = {
     port: "",
-    settings: "{}",
+    currentProfile: "default",
+    comboProfiles: {
+        default: defaultSettings,
+    },
     events: [],
 };
 
@@ -23,9 +29,26 @@ export const slippi = createModel({
         setPort: (state: SlippiState, payload: string): SlippiState => produce(state, draft => {
             draft.port = payload;
         }),
-        updateSettings: (state: SlippiState, payload: string): SlippiState => produce(state, draft => {
-            draft.settings = payload;
-        }),
+        setCurrentProfile: (state: SlippiState, payload: string): SlippiState => {
+            const newProfile = !Object.keys(state.comboProfiles).includes(payload);
+            const newComboProfiles = produce(state.comboProfiles, draft => {
+                if (newProfile) {
+                    draft[payload] = draft[state.currentProfile];
+                }
+            });
+            return produce(state, draft => {
+                draft.currentProfile = payload;
+                draft.comboProfiles = newComboProfiles;
+            });
+        },
+        saveProfile: (state: SlippiState, payload: { name: string, settings: string }): SlippiState => {
+            const newState = produce(state.comboProfiles, draft => {
+                draft[payload.name] = payload.settings;
+            });
+            return produce(state, draft => {
+                draft.comboProfiles = newState;
+            });
+        },
         addNewEventAction: (state: SlippiState, payload: ActionEvent): SlippiState => produce(state, draft => {
             draft.events.push({
                 event: payload,
