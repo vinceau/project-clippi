@@ -1,15 +1,15 @@
 import * as React from "react";
 
-import { Form, TextArea, Card, Checkbox, Icon, List } from "semantic-ui-react";
+import { Form, TextArea, Checkbox, Icon, List } from "semantic-ui-react";
 
-import { Action, ActionCreateTwitchClipParams, ActionNotifyParams, ActionPlaySoundParams } from "@/lib/actions";
+import { Action, ActionCreateTwitchClipParams, ActionPlaySoundParams } from "@/lib/actions";
 import { iRootState } from "@/store";
 import { useSelector } from "react-redux";
 
 import { Action as ActionDefinition } from "@vinceau/event-actions";
 import { produce } from "immer";
 import styled, { css } from "styled-components";
-import { InlineDropdown, InlineInput } from "../InlineInputs";
+import { InlineDropdown } from "../InlineInputs";
 import { LabelledButton } from "../Misc";
 import { AddSoundButton } from "../Settings/SoundSettings";
 
