@@ -15,7 +15,7 @@ interface ActionCreateTwitchClipParams {
 }
 
 const actionCreateClip: ActionTypeGenerator = (params: ActionCreateTwitchClipParams) => {
-    return async (): Promise<any> => {
+    return async (): Promise<string | null> => {
         const token = store.getState().twitch.authToken;
         console.log(`params:`);
         console.log(params);
@@ -32,7 +32,7 @@ const actionCreateClip: ActionTypeGenerator = (params: ActionCreateTwitchClipPar
         } catch (err) {
             console.error(err);
             notify("Failed to create Twitch clip. Are you sure you are live?");
-            return;
+            return null;
         }
     };
 };

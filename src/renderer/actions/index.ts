@@ -1,4 +1,4 @@
-import { Action as ActionDefinition, EventManager } from "@vinceau/event-actions";
+import { Action as ActionDefinition, EventActions, EventManager } from "@vinceau/event-actions";
 
 import { ActionEvent } from "@/lib/realtime";
 import { ActionNotify } from "./ActionNotify";
@@ -20,7 +20,7 @@ export interface EventActionConfig {
 export const eventActionManager = new EventManager();
 
 export const updateEventActionManager = (actions: EventActionConfig[]) => {
-    const mapping: any = {};
+    const mapping: EventActions = {};
     for (const a of actions)  {
         mapping[a.event] = a.actions;
     }

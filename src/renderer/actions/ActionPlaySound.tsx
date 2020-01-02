@@ -15,7 +15,7 @@ interface ActionPlaySoundParams {
 }
 
 const ActionPlaySoundFunc: ActionTypeGenerator = (params: ActionPlaySoundParams) => {
-    return async (): Promise<any> => {
+    return async (): Promise<void> => {
         await sp.playSound(params.sound);
     };
 };
