@@ -45,8 +45,8 @@ export const ConnectionStatusDisplay: React.FC<{
         width: 10px;
         background-color: ${color};
         border-radius: 50%;
-        display: block;
-        margin-right: 10px;
+        display: inline-block;
+        margin-right: 5px;
         ${shouldPulse && animated}
     `;
 
