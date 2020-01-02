@@ -1,7 +1,6 @@
 import { EventActionConfig } from "@/components/Automator/Automator";
 import { ActionTypeGenerator, EventManager } from "@vinceau/event-actions";
 import { createTwitchClip } from "common/twitch";
-// import { notifyTwitchClip } from "./twitch";
 import { dispatcher, store } from "../store";
 import { sp } from "./sounds";
 import { notify } from "./utils";
@@ -60,10 +59,6 @@ const ActionCreateTwitchClip: ActionTypeGenerator = (params: ActionCreateTwitchC
             notify("Failed to create Twitch clip", "Are you sure you are live?");
             return;
         }
-        // const clipID = "CoweringFineStapleRedCoat";
-        // if (params.notify) {
-        //     notifyTwitchClip(clipID);
-        // }
     };
 };
 

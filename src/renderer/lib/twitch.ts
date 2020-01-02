@@ -9,10 +9,3 @@ export const fetchTwitchAuthToken = async (scopes: string | string[]): Promise<s
     );
     return token;
 };
-
-export const notifyTwitchClip = (clipId: string): void => {
-    ipc.sendMessage(
-        Message.NotifyTwitchClip,
-        { clipId }
-    );
-};

@@ -30,15 +30,6 @@ export const setupListeners = (ipc: IPC) => {
         return await openFileSystemDialog(options, save);
     });
 
-    ipc.on(Message.NotifyTwitchClip, (value, _error?: Error) => {
-        if (_error) {
-            throw new Error("Should not have received error");
-        }
-
-        const { clipId } = value;
-        twitchClipNotification(clipId);
-    });
-
     ipc.on(Message.Notify, (value, _error?: Error) => {
         if (_error) {
             throw new Error("Should not have received error");
