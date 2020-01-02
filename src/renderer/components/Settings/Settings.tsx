@@ -125,7 +125,7 @@ export const SettingsPage: React.FC<{
                             name="slippi-settings"
                             active={activeItem === "slippi-settings"}
                             onClick={handleItemClick}
-                        ><CustomIcon image={SlippiLogo} color="#353636" /> Slippi Settings</Menu.Item>
+                        ><CustomIcon image={SlippiLogo} color="#353636" />Relay Connection</Menu.Item>
                         <Menu.Item header>Combo Settings</Menu.Item>
                         <Menu.Item
                             name="combo-finder"
