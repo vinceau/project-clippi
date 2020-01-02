@@ -9,7 +9,7 @@ import { Dispatch, iRootState } from "@/store";
 import { useDispatch, useSelector } from "react-redux";
 import { Automator } from "./Automator/Automator";
 import { ConnectionStatusDisplay } from "./ConnectionStatus";
-import { DevTools, LabelledButton } from "./Misc";
+import { DevTools, Labelled } from "./Misc";
 import { SettingsPage } from "./Settings/Settings";
 
 const Header: React.FC<{
@@ -43,9 +43,9 @@ const Header: React.FC<{
                             onPortChange={dispatch.slippi.setPort}
                         />
                     </div>
-                    <LabelledButton onClick={props.onSettingsButtonClick} title="Settings">
+                    <Labelled onClick={props.onSettingsButtonClick} title="Settings">
                         <Icon name="cog" size="big" />
-                    </LabelledButton>
+                    </Labelled>
                 </Inner>
             </Container>
         </HeaderContainer>

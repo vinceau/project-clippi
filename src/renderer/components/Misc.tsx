@@ -24,17 +24,17 @@ export const DevTools = () => {
     );
 };
 
-export const LabelledButton = (props: any) => {
+export const Labelled = (props: any) => {
     const { onClick, children, ...rest } = props;
-    const Outer = styled.span`
-    cursor: pointer;
-    `;
+    const pointerStyle = {
+        cursor: "pointer",
+    };
     return (
-        <Outer onClick={props.onClick}>
+        <span style={onClick ? pointerStyle : undefined} onClick={onClick}>
             <Tooltip arrow={true} duration={200} position="bottom" style={{ display: "inline-block" }} {...rest}>
-                {props.children}
+                {children}
             </Tooltip>
-        </Outer>
+        </span>
     );
 };
 

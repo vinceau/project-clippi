@@ -9,7 +9,7 @@ import styled, { css } from "styled-components";
 import slippiLogoSVG from "@/styles/images/slippi-logo.svg";
 import slippiLogo from "@/styles/images/slippi.png";
 import { InlineInput } from "./InlineInputs";
-import { CustomIcon, LabelledButton } from "./Misc";
+import { CustomIcon, Labelled } from "./Misc";
 
 const statusToLabel = (status: ConnectionStatus): string => {
     switch (status) {
@@ -103,11 +103,11 @@ export const ConnectionStatusDisplay: React.FC<{
         <Outer>
             <img src={slippiLogo} style={{ height: "35px", width: "35px" }} />
             <ConnectInfo>
-                <LabelledButton title={statusToClickLabel(props.status)} onClick={handleClick} position="right">
+                <Labelled title={statusToClickLabel(props.status)} onClick={handleClick} position="right">
                     <Header sub>
                         <ScanningDot shouldPulse={shouldPulse} color={color} /> {statusToLabel(props.status)}
                     </Header>
-                </LabelledButton>
+                </Labelled>
                 <span>Relay Port: <InlineInput value={props.port} onChange={props.onPortChange} /></span>
             </ConnectInfo>
         </Outer>

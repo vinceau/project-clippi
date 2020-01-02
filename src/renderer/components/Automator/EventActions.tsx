@@ -8,7 +8,7 @@ import { Action } from "@vinceau/event-actions";
 import { produce } from "immer";
 import { Container, Icon, List } from "semantic-ui-react";
 import { InlineDropdown } from "../InlineInputs";
-import { LabelledButton } from "../Misc";
+import { Labelled } from "../Misc";
 import { ActionInput, AddActionInput } from "./ActionInputs";
 
 import { generateRandomEvent } from "@/lib/events";
@@ -100,7 +100,7 @@ export const EventActions = (props: any) => {
           onChange={onEventChange}
           disabledOptions={disabledOptions}
         />
-        <LabelledButton onClick={onRemove} title="Remove"><Icon name="remove" size="big" /></LabelledButton>
+        <Labelled onClick={onRemove} title="Remove"><Icon name="remove" size="big" /></Labelled>
       </EventHeader>
       <List divided>
         {value.actions.map((a: Action, i: number) => {

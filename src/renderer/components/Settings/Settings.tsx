@@ -16,7 +16,7 @@ import { comboFilter } from "@/lib/realtime";
 import { Dispatch, iRootState } from "@/store";
 import { device } from "@/styles/device";
 import SlippiLogo from "@/styles/images/slippi-logo.svg";
-import { CustomIcon, LabelledButton } from "../Misc";
+import { CustomIcon, Labelled } from "../Misc";
 import { SlippiPage } from "../Slippi";
 import { ComboFinder } from "./ComboFinder";
 import { ComboForm } from "./ComboForm";
@@ -113,9 +113,9 @@ export const SettingsPage: React.FC<{
     return (
         <SettingsContainer>
             <CloseButton>
-                <LabelledButton onClick={props.onClose} title="Close">
+                <Labelled onClick={props.onClose} title="Close">
                     <Icon name="close" />
-                </LabelledButton>
+                </Labelled>
             </CloseButton>
             <Wrapper>
                 <MenuColumn>

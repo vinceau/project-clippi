@@ -8,7 +8,7 @@ import { Action as ActionDefinition } from "@vinceau/event-actions";
 import { produce } from "immer";
 import styled, { css } from "styled-components";
 import { InlineDropdown } from "../InlineInputs";
-import { LabelledButton } from "../Misc";
+import { Labelled } from "../Misc";
 
 const allActions = Object.keys(actionComponents);
 
@@ -83,9 +83,9 @@ export const ActionInput = (props: any) => {
     return (
         <Container>
             <i className="icon">
-                <LabelledButton title="Click to remove" onClick={onRemove}>
+                <Labelled title="Click to remove" onClick={onRemove}>
                     <ActionIcon actionType={value.name} size="large" />
-                </LabelledButton>
+                </Labelled>
             </i>
             <List.Content>
                 <ListHeader>
