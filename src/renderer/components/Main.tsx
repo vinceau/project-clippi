@@ -8,8 +8,9 @@ import { Dispatch, iRootState } from "@/store";
 import { useDispatch, useSelector } from "react-redux";
 import { Automator } from "./Automator/Automator";
 import { ConnectionStatusDisplay } from "./ConnectionStatus";
-import { LabelledButton } from "./Misc";
+import { LabelledButton, DevTools } from "./Misc";
 import { SettingsPage } from "./Settings/Settings";
+import { isDevelopment } from "@/lib/utils";
 
 const Header: React.FC<{
     showSettings?: boolean;
@@ -78,6 +79,7 @@ export const Main: React.FC<{}> = () => {
                 toggleSettings();
             }} />
             <MainSection>
+                {isDevelopment && <DevTools />}
                 <Automator />
             </MainSection>
         </Container>

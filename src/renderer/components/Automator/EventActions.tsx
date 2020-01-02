@@ -13,6 +13,7 @@ import { ActionInput, AddActionInput } from "./ActionInputs";
 
 import { generateRandomEvent } from "@/lib/events";
 import { CodeBlock } from "../Settings/CodeBlock";
+import { isDevelopment } from "@/lib/utils";
 
 const allEvents: ActionEvent[] = [
   ActionEvent.GAME_START,
@@ -20,8 +21,11 @@ const allEvents: ActionEvent[] = [
   ActionEvent.PLAYER_DIED,
   ActionEvent.PLAYER_SPAWN,
   ActionEvent.COMBO_OCCURRED,
-  ActionEvent.TEST_EVENT,
 ];
+
+if (isDevelopment) {
+  allEvents.push(ActionEvent.TEST_EVENT);
+}
 
 const mapEventToName: { [eventName: string]: string } = {
   [ActionEvent.GAME_START]: "a new game starts",
