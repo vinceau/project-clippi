@@ -1,6 +1,6 @@
-import { EventActionConfig } from "@/components/Automator/Automator";
-import { EventManager } from "@vinceau/event-actions";
+import { Action as ActionDefinition, EventManager } from "@vinceau/event-actions";
 
+import { ActionEvent } from "@/lib/realtime";
 import { ActionNotify } from "./ActionNotify";
 import { ActionPlaySound } from "./ActionPlaySound";
 import { ActionTwitchClip } from "./ActionTwitchClip";
@@ -10,6 +10,11 @@ export enum Action {
     CREATE_TWITCH_CLIP = "twitch-clip",
     PLAY_SOUND = "play-sound",
     NOTIFY = "notify",
+}
+
+export interface EventActionConfig {
+    event: ActionEvent;
+    actions: ActionDefinition[];
 }
 
 export const eventActionManager = new EventManager();
