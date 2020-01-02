@@ -12,8 +12,8 @@ import { LabelledButton } from "../Misc";
 import { ActionInput, AddActionInput } from "./ActionInputs";
 
 import { generateRandomEvent } from "@/lib/events";
-import { CodeBlock } from "../Settings/CodeBlock";
 import { isDevelopment } from "@/lib/utils";
+import { CodeBlock } from "../Settings/CodeBlock";
 
 const allEvents: ActionEvent[] = [
   ActionEvent.GAME_START,

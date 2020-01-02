@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Form, TextArea, Checkbox, Icon, List } from "semantic-ui-react";
+import { Checkbox, Form, Icon, List, TextArea } from "semantic-ui-react";
 
 import { Action, ActionCreateTwitchClipParams, ActionPlaySoundParams } from "@/lib/actions";
 import { iRootState } from "@/store";

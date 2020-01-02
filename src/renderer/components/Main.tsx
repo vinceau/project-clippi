@@ -4,13 +4,13 @@ import styled from "styled-components";
 import { Container, Icon } from "semantic-ui-react";
 
 import { slippiLivestream } from "@/lib/realtime";
+import { isDevelopment } from "@/lib/utils";
 import { Dispatch, iRootState } from "@/store";
 import { useDispatch, useSelector } from "react-redux";
 import { Automator } from "./Automator/Automator";
 import { ConnectionStatusDisplay } from "./ConnectionStatus";
-import { LabelledButton, DevTools } from "./Misc";
+import { DevTools, LabelledButton } from "./Misc";
 import { SettingsPage } from "./Settings/Settings";
-import { isDevelopment } from "@/lib/utils";
 
 const Header: React.FC<{
     showSettings?: boolean;
