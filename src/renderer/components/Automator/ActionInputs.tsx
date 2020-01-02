@@ -12,6 +12,7 @@ import styled, { css } from "styled-components";
 import { InlineDropdown } from "../InlineInputs";
 import { LabelledButton } from "../Misc";
 import { AddSoundButton } from "../Settings/SoundSettings";
+import { ActionNotify } from "@/actions/ActionNotify";
 
 const allActions: Action[] = [
     Action.NOTIFY,
@@ -34,27 +35,6 @@ const ActionSelector = (props: any) => {
             mapOptionToLabel={(opt: string) => mapEventToName[opt]}
             fontSize={18}
         />
-    );
-};
-
-const NotifyInputOuter = styled.div`
-    max-width: 500px;
-`;
-const NotifyInput = (props: any) => {
-    const { value, onChange } = props;
-    const defaultValue = value && value.message ? value.message : "";
-    const [ msg, setMsg ] = React.useState(defaultValue);
-    return (
-        <NotifyInputOuter>
-            <Form>
-                <TextArea
-                    onBlur={() => onChange(({ message: msg }))}
-                    value={msg}
-                    onChange={(_: any, {value}: any) => setMsg(value)}
-                    placeholder="Here's a notification!"
-                />
-            </Form>
-        </NotifyInputOuter>
     );
 };
 
@@ -118,7 +98,7 @@ const ActionArgsInput = (props: any) => {
     switch (actionType) {
         case Action.NOTIFY:
             return (
-                <NotifyInput {...rest} />
+                <ActionNotify.Component {...rest} />
             );
         case Action.PLAY_SOUND:
             return (<SoundInput {...rest} />);

@@ -11,17 +11,6 @@ export enum Action {
     NOTIFY = "notify",
 }
 
-export interface ActionNotifyParams {
-    message: string;
-    title?: string;
-}
-
-const ActionNotify: ActionTypeGenerator = (params: ActionNotifyParams) => {
-    return async (): Promise<any> => {
-        notify(params.message, params.title);
-    };
-};
-
 export interface ActionPlaySoundParams {
     sound: string;
 }
@@ -72,4 +61,3 @@ export const updateEventActionManager = (actions: EventActionConfig[]) => {
 
 eventActionManager.registerAction(Action.CREATE_TWITCH_CLIP, ActionCreateTwitchClip);
 eventActionManager.registerAction(Action.PLAY_SOUND, ActionPlaySound);
-eventActionManager.registerAction(Action.NOTIFY, ActionNotify);
