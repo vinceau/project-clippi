@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Segment, Image, Card, Button, Header } from "semantic-ui-react";
+import { Segment, Image, Input, Card, Button, Header } from "semantic-ui-react";
 import { ConnectionStatus } from "@vinceau/slp-realtime";
 
 import styled, { css } from "styled-components";
@@ -129,8 +129,6 @@ const statusToButtonLabel = (status: ConnectionStatus): string => {
 export const SlippiConnectionStatusCard: React.SFC<{
     port: string;
     status: ConnectionStatus;
-    onPortChange: (port: string) => void;
-    onConnect: () => void;
     onDisconnect: () => void;
 }> = props => {
     const userImage = slippiLogo;
@@ -138,20 +136,13 @@ export const SlippiConnectionStatusCard: React.SFC<{
     padding: 3px;
     `;
     const handleButtonClick = () => {
-        switch (props.status) {
-            case ConnectionStatus.DISCONNECTED:
-                props.onConnect();
-                return;
-            case ConnectionStatus.CONNECTED:
-                props.onDisconnect();
-                return;
-        }
+        props.onDisconnect();
     };
     const color = statusToColor(props.status);
     const shouldPulse = props.status !== ConnectionStatus.DISCONNECTED;
     const StatusSpan = styled.span`
     text-transform: capitalize;
-    margin-right: 5px;
+    margin-right: 10px;
     `;
     const isConnecting = props.status !== ConnectionStatus.DISCONNECTED && props.status !== ConnectionStatus.CONNECTED;
     return (
@@ -170,12 +161,12 @@ export const SlippiConnectionStatusCard: React.SFC<{
                         <ScanningDot color={color} shouldPulse={shouldPulse} />
                     </Card.Header>
                     <Card.Meta>
-                        <span>Relay Port: <InlineInput value={props.port} onChange={props.onPortChange} /></span>
+                        <span>Relay Port: {props.port}</span>
                     </Card.Meta>
                 </Card.Content>
                 <Card.Content extra>
-                    <Button basic fluid color={shouldPulse ? "red" : "green"} onClick={handleButtonClick} disabled={isConnecting}>
-                        {statusToButtonLabel(props.status)}
+                    <Button basic fluid color="red" onClick={handleButtonClick}>
+                        Disconnect
                     </Button>
                 </Card.Content>
             </Card>
@@ -183,14 +174,28 @@ export const SlippiConnectionStatusCard: React.SFC<{
     );
 };
 
-export const SlippiConnectionPlaceholder = () => {
+export const SlippiConnectionPlaceholder: React.FC<{
+    port: string;
+    onClick: (port: string) => void;
+}> = props => {
+    const CenteredInput = styled(Input)`
+    &&& {
+        max-width: initial !important;
+    }
+    `;
+    const [ p, setP] = React.useState(props.port);
     return (
         <Segment placeholder>
             <Header icon>
                 <CustomIcon image={slippiLogoSVG} size={54} color="#353636" />
                 You are not connected to a Slippi Relay
             </Header>
-            <Button primary>Connect</Button>
+            <CenteredInput
+                action={<Button primary onClick={() => props.onClick(p)}>Connect</Button>}
+                placeholder="Port"
+                value={p}
+                onChange={(_: any, { value }) => setP(value)}
+            />
         </Segment>
     );
 };
