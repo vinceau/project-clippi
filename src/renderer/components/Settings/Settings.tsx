@@ -176,11 +176,8 @@ const FilterOptions = () => {
     return (
         <div>
             <h2>Filter Options</h2>
-            <pre>
-                {currentProfile}
-            </pre>
             <ProfileSelector initialOptions={profileOptions} value={currentProfile} onChange={setProfile} />
-            <ComboForm profile={currentProfile} initialValues={initial} onSubmit={onSubmit} onDelete={onDelete} />
+            <ComboForm initialValues={initial} onSubmit={onSubmit} onDelete={onDelete} />
         </div>
     );
 };

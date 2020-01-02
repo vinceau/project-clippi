@@ -42,7 +42,6 @@ export interface ComboFilterSettings {
 type Values = Partial<ComboFilterSettings>;
 
 export const ComboForm: React.FC<{
-    profile: string;
     initialValues: Values;
     onDelete: () => void;
     onSubmit: (values: Values) => void;
