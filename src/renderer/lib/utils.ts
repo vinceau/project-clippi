@@ -41,20 +41,13 @@ export const getFilePath = async (options?: any, save?: boolean): Promise<string
 };
 
 export const notify = (title?: string, body?: string) => {
-    const myNotification = new Notification(title || "", {
-            body,
-        });
-
-    myNotification.onclick = () => {
-        console.log("Notification clicked")
-    };
-    // ipc.sendMessage(
-    //     Message.Notify,
-    //     {
-    //         title: title || "",
-    //         notification: body || "",
-    //     },
-    // );
+    ipc.sendMessage(
+        Message.Notify,
+        {
+            title: title || "",
+            notification: body || "",
+        },
+    );
 };
 
 export const isDevelopment = process.env.NODE_ENV !== "production";
