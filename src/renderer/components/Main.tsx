@@ -8,6 +8,7 @@ import { Panel } from "./Panel";
 import { SettingsPage } from "./Settings/Settings";
     import { Dispatch, iRootState } from "@/store";
 import { useDispatch, useSelector } from "react-redux";
+import { ConnectionStatusDisplay } from "./ConnectionStatus";
 
 const Header: React.FC<{
     connectionStatus: any;
@@ -24,7 +25,7 @@ const Header: React.FC<{
         <HeaderContainer>
             <div>
                 <span>Project Clippi</span>
-    <span>Status: {props.connectionStatus}</span>
+                <ConnectionStatusDisplay status={props.connectionStatus} />
             </div>
             <LabelledButton onClick={props.onSettingsButtonClick} title="Settings">
                 <Icon name="cog" />
