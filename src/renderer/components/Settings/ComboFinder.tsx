@@ -69,6 +69,9 @@ export const ComboFinder: React.FC<{}> = () => {
         margin: 0 !important;
     }
     `;
+    const ProgressContainer = styled.div`
+    padding: 10px 0;
+    `;
     return (
         <div>
             <h2>Combo Finder</h2>
@@ -92,11 +95,11 @@ export const ComboFinder: React.FC<{}> = () => {
                     Process replays
                 </Button>
             </Form>
-            <div>
+            <ProgressContainer>
                 {(comboFinderProcessing || complete) &&
                     <Progress progress={true} percent={comboFinderPercent} success={complete}>{comboFinderLog}</Progress>
                 }
-            </div>
+            </ProgressContainer>
         </div>
     );
 };
