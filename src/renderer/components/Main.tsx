@@ -4,12 +4,12 @@ import styled from "styled-components";
 import { Container, Icon } from "semantic-ui-react";
 
 import { LabelledButton } from "./Misc";
-import { Panel } from "./Panel";
 import { SettingsPage } from "./Settings/Settings";
 import { Dispatch, iRootState } from "@/store";
 import { useDispatch, useSelector } from "react-redux";
 import { ConnectionStatusDisplay } from "./ConnectionStatus";
 import { slippiLivestream } from "@/lib/realtime";
+import { Automator } from "./Automator/Automator";
 
 const Header: React.FC<{
     showSettings?: boolean;
@@ -69,22 +69,17 @@ export const Main: React.FC<{}> = () => {
         flex-flow: column;
         flex: 1 1 auto;
         overflow-y: auto;
-    `;
-    const Footer = styled.footer`
-        flex: 0 1 40px;
+        padding-bottom: 50px;
     `;
     return (
         <Container>
+            <SettingsPage onClose={() => setShowSettings(false)} showSettings={showSettings} />
             <Header showSettings={showSettings} onSettingsButtonClick={() => {
                 toggleSettings();
             }} />
             <MainSection>
-                <SettingsPage onClose={() => setShowSettings(false)} showSettings={showSettings} />
-                <Panel />
+                <Automator />
             </MainSection>
-            <Footer>
-                <span>Project Clippi 2019</span>
-            </Footer>
         </Container>
     );
 };
