@@ -15,12 +15,14 @@ import styled, { css } from "styled-components";
 import { comboFilter } from "@/lib/realtime";
 import { Dispatch, iRootState } from "@/store";
 import { device } from "@/styles/device";
-import { LabelledButton } from "../LabelledButton";
+import { LabelledButton, CustomIcon } from "../Misc";
 import { ComboFinder } from "./ComboFinder";
 import { ComboForm } from "./ComboForm";
 import { SoundSettings } from "./SoundSettings";
 import { TwitchIntegration } from "./TwitchIntegration";
 import { ProfileSelector } from "./ProfileSelection";
+import { SlippiPage } from "../Slippi";
+import SlippiLogo from "@/styles/images/slippi-logo.svg";
 
 export const SettingsPage: React.FC<{
     showSettings: boolean;
@@ -118,6 +120,12 @@ export const SettingsPage: React.FC<{
             <Wrapper>
                 <MenuColumn>
                     <StyledMenu secondary={true} vertical={true}>
+                        <Menu.Item header>Slippi Settings</Menu.Item>
+                        <Menu.Item
+                            name="slippi-settings"
+                            active={activeItem === "slippi-settings"}
+                            onClick={handleItemClick}
+                        ><CustomIcon image={SlippiLogo} /> Slippi Settings</Menu.Item>
                         <Menu.Item header>Combo Settings</Menu.Item>
                         <Menu.Item
                             name="combo-finder"
@@ -145,6 +153,7 @@ export const SettingsPage: React.FC<{
                 <ContentColumn>
                     <div>
                         <Switch>
+                            <Route path={`${path}/slippi-settings`} component={SlippiPage} />
                             <Route path={`${path}/combo-finder`} component={ComboFinder} />
                             <Route path={`${path}/combo-settings`} component={FilterOptions} />
                             <Route path={`${path}/account-settings`} component={TwitchIntegration} />

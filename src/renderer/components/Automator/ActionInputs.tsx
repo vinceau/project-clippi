@@ -10,7 +10,7 @@ import { Action as ActionDefinition } from "@vinceau/event-actions";
 import { produce } from "immer";
 import styled, { css } from "styled-components";
 import { InlineDropdown, InlineInput } from "../InlineInputs";
-import { LabelledButton } from "../LabelledButton";
+import { LabelledButton } from "../Misc";
 import { AddSoundButton } from "../Settings/SoundSettings";
 
 const allActions: Action[] = [

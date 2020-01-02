@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { Container, Icon } from "semantic-ui-react";
 
-import { LabelledButton } from "./LabelledButton";
+import { LabelledButton } from "./Misc";
 import { Panel } from "./Panel";
 import { SettingsPage } from "./Settings/Settings";
 import { Dispatch, iRootState } from "@/store";

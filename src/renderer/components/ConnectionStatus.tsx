@@ -8,7 +8,7 @@ import { pulseAnimation } from "@/styles/animations";
 
 import slippiLogo from "@/styles/images/slippi.png";
 import { InlineInput } from "./InlineInputs";
-import { LabelledButton } from "./LabelledButton";
+import { LabelledButton } from "./Misc";
 
 const statusToLabel = (status: ConnectionStatus): string => {
     switch (status) {

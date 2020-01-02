@@ -8,7 +8,7 @@ import { Action } from "@vinceau/event-actions";
 import { produce } from "immer";
 import { Container, Icon, List } from "semantic-ui-react";
 import { InlineDropdown } from "../InlineInputs";
-import { LabelledButton } from "../LabelledButton";
+import { LabelledButton } from "../Misc";
 import { ActionInput, AddActionInput } from "./ActionInputs";
 
 import { generateRandomEvent } from "@/lib/events";
