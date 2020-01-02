@@ -2,6 +2,7 @@ import * as React from "react";
 
 import { FieldArray } from "react-final-form-arrays";
 import { Icon, Label } from "semantic-ui-react";
+import styled from "styled-components";
 
 const NameTagLabel: React.FC<{
     name: string;
@@ -14,6 +15,10 @@ const NameTagLabel: React.FC<{
         </Label>
     );
 };
+
+const TagsList = styled.div`
+    padding-top: 10px;
+`;
 
 export const NameTagForm: React.FC<{ name: string; values: any; push: any; pop: any }> = props => {
     const [tag, setTag] = React.useState("");
@@ -33,25 +38,23 @@ export const NameTagForm: React.FC<{ name: string; values: any; push: any; pop: 
         }
     };
     return (
-        <div className="string--array--form">
-            <div className="form--container">
-                <div className="tags-list">
-                    <FieldArray name={name}>
-                        {({ fields }) =>
-                            fields.map((n, index) => (
-                                <NameTagLabel
-                                    key={`fields--${n}--${index}--${fields[index]}`}
-                                    name={fields.value[index]}
-                                    onClick={() => fields.remove(index)}
-                                />
-                            ))
-                        }
-                    </FieldArray>
-                </div>
-                <div className="tags--input">
-                    <input autoCapitalize="none" autoComplete="off" autoCorrect="off" spellCheck="false" tabIndex={0} type="text" aria-autocomplete="list" onKeyDown={onKeyDown} value={tag} onChange={e => setTag(e.target.value)} />
-                </div>
+        <div>
+            <div>
+                <input placeholder="Type your tags here..." autoCapitalize="none" autoComplete="off" autoCorrect="off" spellCheck="false" tabIndex={0} type="text" aria-autocomplete="list" onKeyDown={onKeyDown} value={tag} onChange={e => setTag(e.target.value)} />
             </div>
+            <TagsList>
+                <FieldArray name={name}>
+                    {({ fields }) =>
+                        fields.map((n, index) => (
+                            <NameTagLabel
+                                key={`fields--${n}--${index}--${fields[index]}`}
+                                name={fields.value[index]}
+                                onClick={() => fields.remove(index)}
+                            />
+                        ))
+                    }
+                </FieldArray>
+            </TagsList>
         </div>
     );
 };
