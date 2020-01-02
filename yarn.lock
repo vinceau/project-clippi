@@ -1033,10 +1033,10 @@
   resolved "https://registry.yarnpkg.com/@vinceau/event-actions/-/event-actions-0.0.2.tgz#60724dfa1f1a071e1e8f7391b6105806f3e71723"
   integrity sha512-w6deDkm705eX8nbHUk6HHXo9wWpS6YNFnP0RJIMFds04af2S9AEThVdRibVoZOYfI+To+KX2gzPKRZe+io880w==
 
-"@vinceau/slp-realtime@^0.0.5":
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/@vinceau/slp-realtime/-/slp-realtime-0.0.5.tgz#e07fa8f987b362208e44719362af1997f29611d6"
-  integrity sha512-kwLyN+3ZvpJNNQ3fK6Jzbikn3QS8AUsk1tR4c3SaH7lG4/jfzn2orT/5qpabSmEiAeFQ3uyCqV449/UwID190g==
+"@vinceau/slp-realtime@^0.0.6":
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/@vinceau/slp-realtime/-/slp-realtime-0.0.6.tgz#00002c1571fcc95ba16db6d4eeaf1a93628087ea"
+  integrity sha512-N2Vi/+041fml9L3jS/zvZQ3liEhWxJFx4dhRDUbRPf1syOKEqpQB1Hc41Hgi4opAfCGEpnHKpTq96OKcKYVfow==
   dependencies:
     "@vinceau/slp-wii-connect" "^0.0.3"
     lodash "^4.17.11"
