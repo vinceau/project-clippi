@@ -165,11 +165,6 @@ export const SlippiConnectionPlaceholder: React.FC<{
     port: string;
     onClick: (port: string) => void;
 }> = props => {
-    const CenteredInput = styled(Input)`
-    &&& {
-        max-width: initial !important;
-    }
-    `;
     const [ p, setP] = React.useState(props.port);
     return (
         <Segment placeholder>
@@ -177,7 +172,8 @@ export const SlippiConnectionPlaceholder: React.FC<{
                 <CustomIcon image={slippiLogoSVG} size={54} color="#353636" />
                 You are not connected to a Slippi Relay
             </Header>
-            <CenteredInput
+            <Input
+                style={{ maxWidth: "initial"}}
                 action={<Button primary onClick={() => props.onClick(p)}>Connect</Button>}
                 placeholder="Port"
                 value={p}
