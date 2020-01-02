@@ -11,7 +11,7 @@ import { notify } from "../lib/utils";
 export const DevTools = () => {
     const handleClick = () => {
         console.log("notify clicked");
-        notify("Notification title", "Notification body");
+        notify("Here's a notification", "A notification title");
     };
     const customEvent = () => {
         eventActionManager.emitEvent(ActionEvent.TEST_EVENT).catch(console.error);

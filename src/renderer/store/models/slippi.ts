@@ -88,7 +88,7 @@ export const slippi = createModel({
                 await startSlippiConnection(parseInt(port, 10));
             } catch (err) {
                 console.error(err);
-                notify("Failed to connect", `Connection on port ${port} failed! Is the relay running?`);
+                notify(`Failed to connect to port ${port}! Is the relay running?`);
             }
             dispatch.slippi.setPort(port);
         },

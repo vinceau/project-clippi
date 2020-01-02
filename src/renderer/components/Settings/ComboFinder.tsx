@@ -49,7 +49,7 @@ export const ComboFinder: React.FC<{}> = () => {
         dispatch.tempContainer.setComboFinderProcessing(false);
         dispatch.tempContainer.setPercent(100);
         dispatch.tempContainer.setComboLog(message);
-        notify(`Combo Processing Complete`, message);
+        notify(message, `Combo Processing Complete`);
     };
     const findCombos = () => {
         dispatch.tempContainer.setPercent(0);

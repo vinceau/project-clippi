@@ -51,10 +51,10 @@ export const TwitchClip: React.SFC<{ accessToken: string }> = props => {
     const handleClip = () => {
         createTwitchClip(props.accessToken, delay, name).then(clip => {
             console.log(`clip: ${clip}`);
-            notify(clip);
+            notify(`Created Twitch clip: ${clip}`);
         }).catch((err) => {
             console.error(err);
-            notify("Failed to create Twitch clip", `Are you sure ${name ? `${name} is` : "you are"} live?`);
+            notify(`Failed to create Twitch clip. Are you sure ${name ? `${name} is` : "you are"} live?`);
         });
     };
 

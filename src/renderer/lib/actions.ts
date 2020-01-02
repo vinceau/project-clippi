@@ -12,15 +12,13 @@ export enum Action {
 }
 
 export interface ActionNotifyParams {
+    message: string;
     title?: string;
-    body?: string;
 }
 
 const ActionNotify: ActionTypeGenerator = (params: ActionNotifyParams) => {
     return async (): Promise<any> => {
-        const title = params.title || "";
-        const body = params.body || "";
-        notify(title, body);
+        notify(params.message, params.title);
     };
 };
 
@@ -56,7 +54,7 @@ const ActionCreateTwitchClip: ActionTypeGenerator = (params: ActionCreateTwitchC
             return clipID;
         } catch (err) {
             console.error(err);
-            notify("Failed to create Twitch clip", "Are you sure you are live?");
+            notify("Failed to create Twitch clip. Are you sure you are live?");
             return;
         }
     };

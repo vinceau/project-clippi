@@ -21,7 +21,7 @@ export enum ActionEvent {
 
 const errorHandler = (err: any) => {
     console.error(err);
-    notify("Error occurred", JSON.stringify(err));
+    notify("Error occurred!");
 };
 
 export const comboFilter = new ComboFilter();

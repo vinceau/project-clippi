@@ -2,7 +2,7 @@ import { IPC } from "common/ipc";
 import { Message } from "common/types";
 
 import { openFileSystemDialog } from "./lib/fileSystem";
-import { showNotification, twitchClipNotification } from "./lib/notifications";
+import { showNotification } from "./lib/notifications";
 import { authenticateTwitch } from "./lib/twitch";
 
 export const setupListeners = (ipc: IPC) => {
@@ -35,7 +35,7 @@ export const setupListeners = (ipc: IPC) => {
             throw new Error("Should not have received error");
         }
 
-        const { title, notification } = value;
-        showNotification(title, notification);
+        const { title, message } = value;
+        showNotification(message, title);
     });
 };
