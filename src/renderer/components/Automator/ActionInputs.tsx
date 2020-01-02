@@ -31,14 +31,6 @@ const ActionSelector = (props: any) => {
       }
 */
 
-const ActionArgsInput = (props: any) => {
-    const { actionType, ...rest } = props;
-    const Component = actionComponents[actionType].Component;
-    return (
-        <Component {...rest} />
-    );
-};
-
 const ActionIcon = (props: any) => {
     const { actionType, ...rest } = props;
     switch (actionType) {
@@ -86,6 +78,8 @@ export const ActionInput = (props: any) => {
         padding-bottom: 10px;
     }
     `;
+
+    const ActionArgsInput = actionComponents[value.name].Component;
     return (
         <Container>
             <i className="icon">
@@ -98,7 +92,7 @@ export const ActionInput = (props: any) => {
                     <ActionSelector prefix={selectPrefix} value={value.name} onChange={onActionChange} disabledOptions={disabledActions} />
                 </ListHeader>
                 <List.Description>
-                    <ActionArgsInput actionType={value.name} value={value.args} onChange={onArgsChange} />
+                    <ActionArgsInput value={value.args} onChange={onArgsChange} />
                 </List.Description>
             </List.Content>
         </Container>
