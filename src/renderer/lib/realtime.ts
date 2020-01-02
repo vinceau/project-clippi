@@ -8,6 +8,7 @@ import { notify } from "./utils";
 import { eventActionManager } from "./actions";
 
 import fg from "fast-glob";
+import { dispatcher } from "@/store";
 
 export enum ActionEvent {
     GAME_START = "game-start",
@@ -29,6 +30,10 @@ comboFilter.updateSettings({ excludeCPUs: false, comboMustKill: false, minComboP
 const r = new SlippiLivestream();
 console.log(r);
 console.log(r.connection);
+
+r.connection.on("statusChange", (status) => {
+    dispatcher.tempContainer.setSlippiConnectionStatus(status);
+});
 
 export const connectToSlippi = async (port?: number): Promise<boolean> => {
     console.log(`attempt to connect to slippi on port: ${port}`);

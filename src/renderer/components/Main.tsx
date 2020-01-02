@@ -6,8 +6,11 @@ import { Icon } from "semantic-ui-react";
 import { LabelledButton } from "./LabelledButton";
 import { Panel } from "./Panel";
 import { SettingsPage } from "./Settings/Settings";
+    import { Dispatch, iRootState } from "@/store";
+import { useDispatch, useSelector } from "react-redux";
 
 const Header: React.FC<{
+    connectionStatus: any;
     showSettings?: boolean;
     onSettingsButtonClick: () => void;
 }> = (props) => {
@@ -21,6 +24,7 @@ const Header: React.FC<{
         <HeaderContainer>
             <div>
                 <span>Project Clippi</span>
+    <span>Status: {props.connectionStatus}</span>
             </div>
             <LabelledButton onClick={props.onSettingsButtonClick} title="Settings">
                 <Icon name="cog" />
@@ -30,6 +34,9 @@ const Header: React.FC<{
 };
 
 export const Main: React.FC<{}> = () => {
+    const { slippiConnectionStatus } = useSelector((state: iRootState) => state.tempContainer);
+    // const dispatch = useDispatch<Dispatch>();
+
     const [showSettings, setShowSettings] = React.useState(false);
     const toggleSettings = () => {
         setShowSettings(!showSettings);
@@ -50,7 +57,7 @@ export const Main: React.FC<{}> = () => {
     `;
     return (
         <Container>
-            <Header showSettings={showSettings} onSettingsButtonClick={() => {
+            <Header showSettings={showSettings} connectionStatus={slippiConnectionStatus} onSettingsButtonClick={() => {
                 toggleSettings();
             }} />
             <MainSection>

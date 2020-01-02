@@ -8,6 +8,7 @@ import { Button, Icon } from "semantic-ui-react";
 
 import { CharacterSelectAdapter } from "./CharacterSelect";
 import { SemanticInput } from "./FormAdapters";
+
 import styled from "styled-components";
 
 interface CharPercentOption {

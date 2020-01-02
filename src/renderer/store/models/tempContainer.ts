@@ -3,8 +3,10 @@ import produce from "immer";
 
 import { currentUser } from "common/twitch";
 import { HelixUser } from "twitch";
+import { ConnectionStatus } from "@vinceau/slp-realtime";
 
 export interface TempContainerState {
+    slippiConnectionStatus: ConnectionStatus;
     twitchUser: HelixUser | null;
     showSettings: boolean;
     comboFinderPercent: number;
@@ -13,6 +15,7 @@ export interface TempContainerState {
 }
 
 const initialState: TempContainerState = {
+    slippiConnectionStatus: ConnectionStatus.DISCONNECTED,
     twitchUser: null,
     showSettings: false,
     comboFinderPercent: 0,
@@ -23,6 +26,9 @@ const initialState: TempContainerState = {
 export const tempContainer = createModel({
     state: initialState,
     reducers: {
+        setSlippiConnectionStatus: (state: TempContainerState, payload: ConnectionStatus): TempContainerState => produce(state, draft => {
+            draft.slippiConnectionStatus = payload;
+        }),
         setTwitchUser: (state: TempContainerState, payload: HelixUser): TempContainerState => produce(state, draft => {
             draft.twitchUser = payload;
         }),
