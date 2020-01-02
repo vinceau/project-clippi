@@ -5,6 +5,8 @@ import { EventActionConfig } from "@/components/Automator/Automator";
 import { ActionEvent, comboFilter } from "@/lib/realtime";
 import produce from "immer";
 
+const DEFAULT_PROFILE = "default";
+
 export interface SlippiState {
     port: string;
     currentProfile: string; // profile name
@@ -16,9 +18,9 @@ const defaultSettings = JSON.stringify(comboFilter.getSettings());
 
 const initialState: SlippiState = {
     port: "",
-    currentProfile: "default",
+    currentProfile: DEFAULT_PROFILE,
     comboProfiles: {
-        default: defaultSettings,
+        [DEFAULT_PROFILE]: defaultSettings,
     },
     events: [],
 };
@@ -46,6 +48,19 @@ export const slippi = createModel({
                 draft[payload.name] = payload.settings;
             });
             return produce(state, draft => {
+                draft.comboProfiles = newState;
+            });
+        },
+        deleteProfile: (state: SlippiState, payload: string): SlippiState => {
+            const newState = produce(state.comboProfiles, draft => {
+                if (payload !== DEFAULT_PROFILE) {
+                    delete draft[payload];
+                } else {
+                    draft[DEFAULT_PROFILE] = defaultSettings;
+                }
+            });
+            return produce(state, draft => {
+                draft.currentProfile = DEFAULT_PROFILE;
                 draft.comboProfiles = newState;
             });
         },

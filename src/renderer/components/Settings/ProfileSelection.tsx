@@ -1,6 +1,5 @@
 import * as React from "react";
 
-import { produce } from "immer";
 import { Dropdown } from "semantic-ui-react";
 
 const generateOptions = (opts: string[]) => {
@@ -13,21 +12,8 @@ const generateOptions = (opts: string[]) => {
 
 export const ProfileSelector = (props: any) => {
     const { initialOptions, value, onChange, ...rest } = props;
-    const [options, setOptions] = React.useState(generateOptions(initialOptions));
-
-    const handleAddition = (_: any, { value }) => {
-        const newOptions = produce(options, draft => {
-            draft.push({
-                key: value,
-                text: value,
-                value,
-            });
-        });
-        setOptions(newOptions);
-    };
-
+    const options = generateOptions(initialOptions);
     const handleChange = (_: any, { value }) => onChange(value);
-
     return (
         <Dropdown
             {...rest}
@@ -38,7 +24,7 @@ export const ProfileSelector = (props: any) => {
             fluid
             allowAdditions
             value={value}
-            onAddItem={handleAddition}
+            onAddItem={handleChange}
             onChange={handleChange}
         />
     );

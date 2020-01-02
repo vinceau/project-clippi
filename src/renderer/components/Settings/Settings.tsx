@@ -170,6 +170,9 @@ const FilterOptions = () => {
     const setProfile = (profile: string) => {
         dispatch.slippi.setCurrentProfile(profile);
     };
+    const onDelete = () => {
+        dispatch.slippi.deleteProfile(currentProfile);
+    };
     return (
         <div>
             <h2>Filter Options</h2>
@@ -177,7 +180,7 @@ const FilterOptions = () => {
                 {currentProfile}
             </pre>
             <ProfileSelector initialOptions={profileOptions} value={currentProfile} onChange={setProfile} />
-            <ComboForm initialValues={initial} onSubmit={onSubmit} />
+            <ComboForm profile={currentProfile} initialValues={initial} onSubmit={onSubmit} onDelete={onDelete} />
         </div>
     );
 };
