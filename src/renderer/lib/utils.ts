@@ -44,8 +44,8 @@ export const notify = (message: string, title?: string) => {
     ipc.sendMessage(
         Message.Notify,
         {
-            title: title || "",
-            notification: body || "",
+            message,
+            title,
         },
     );
 };

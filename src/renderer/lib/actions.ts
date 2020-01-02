@@ -73,27 +73,3 @@ export const updateEventActionManager = (actions: EventActionConfig[]) => {
 eventActionManager.registerAction(Action.CREATE_TWITCH_CLIP, ActionCreateTwitchClip);
 eventActionManager.registerAction(Action.PLAY_SOUND, ActionPlaySound);
 eventActionManager.registerAction(Action.NOTIFY, ActionNotify);
-
-eventActionManager.setEventActions("on-twitch-clip", [
-    {
-        name: Action.PLAY_SOUND,
-        args: {
-            sound: "test.mp3",
-        },
-    },
-    {
-        name: Action.NOTIFY,
-        args: {
-            title: "hello world",
-            body: "happy new year",
-        },
-    },
-]);
-/*
-eventActionManager.registerEvent("on-twitch-clip", {
-    name: Action.CREATE_TWITCH_CLIP,
-    args: {
-        delay: false,
-    },
-});
-*/

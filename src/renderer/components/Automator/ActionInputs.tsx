@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Card, Checkbox, Icon, List } from "semantic-ui-react";
+import { Form, TextArea, Card, Checkbox, Icon, List } from "semantic-ui-react";
 
 import { Action, ActionCreateTwitchClipParams, ActionNotifyParams, ActionPlaySoundParams } from "@/lib/actions";
 import { iRootState } from "@/store";
@@ -37,37 +37,24 @@ const ActionSelector = (props: any) => {
     );
 };
 
+const NotifyInputOuter = styled.div`
+    max-width: 500px;
+`;
 const NotifyInput = (props: any) => {
     const { value, onChange } = props;
-    const { title, body } = value as ActionNotifyParams;
-    const onTitleChange = (newTitle: string) => {
-        const newValue = {
-            title: newTitle,
-            body,
-        };
-        onChange(newValue);
-    };
-
-    const onBodyChange = (newBody: string) => {
-        const newValue = {
-            title,
-            body: newBody,
-        };
-        onChange(newValue);
-    };
+    const defaultValue = value && value.message ? value.message : "";
+    const [ msg, setMsg ] = React.useState(defaultValue);
     return (
-        <Card.Group>
-            <Card>
-                <Card.Content>
-                    <Card.Header>
-                        <InlineInput value={title} onChange={onTitleChange} placeholder="Notification title" />
-                    </Card.Header>
-                    <Card.Description>
-                        <InlineInput value={body} onChange={onBodyChange} placeholder="Notification body" />
-                    </Card.Description>
-                </Card.Content>
-            </Card>
-        </Card.Group>
+        <NotifyInputOuter>
+            <Form>
+                <TextArea
+                    onBlur={() => onChange(({ message: msg }))}
+                    value={msg}
+                    onChange={(_: any, {value}: any) => setMsg(value)}
+                    placeholder="Here's a notification!"
+                />
+            </Form>
+        </NotifyInputOuter>
     );
 };
 
