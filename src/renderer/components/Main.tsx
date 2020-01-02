@@ -17,19 +17,21 @@ const Header: React.FC<{
 }> = (props) => {
     const HeaderContainer = styled.header`
         flex: 0 1 auto;
+    `;
+    const Inner = styled.div`
         display: flex;
         justify-content: space-between;
-        padding: 20px;
     `;
     return (
         <HeaderContainer>
-            <div>
-                <span>Project Clippi</span>
-                <ConnectionStatusDisplay status={props.connectionStatus} />
-            </div>
-            <LabelledButton onClick={props.onSettingsButtonClick} title="Settings">
-                <Icon name="cog" />
-            </LabelledButton>
+            <Inner>
+                <div>
+                    <ConnectionStatusDisplay status={props.connectionStatus} />
+                </div>
+                <LabelledButton onClick={props.onSettingsButtonClick} title="Settings">
+                    <Icon name="cog" />
+                </LabelledButton>
+            </Inner>
         </HeaderContainer>
     );
 };
