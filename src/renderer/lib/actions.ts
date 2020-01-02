@@ -1,7 +1,6 @@
 import { EventActionConfig } from "@/components/Automator/Automator";
 import { ActionTypeGenerator, EventManager } from "@vinceau/event-actions";
 import { createTwitchClip } from "common/twitch";
-// import { notifyTwitchClip } from "./twitch";
 import { dispatcher, store } from "../store";
 import { sp } from "./sounds";
 import { notify } from "./utils";
@@ -13,15 +12,13 @@ export enum Action {
 }
 
 export interface ActionNotifyParams {
+    message: string;
     title?: string;
-    body?: string;
 }
 
 const ActionNotify: ActionTypeGenerator = (params: ActionNotifyParams) => {
     return async (): Promise<any> => {
-        const title = params.title || "";
-        const body = params.body || "";
-        notify(title, body);
+        notify(params.message, params.title);
     };
 };
 
@@ -57,13 +54,9 @@ const ActionCreateTwitchClip: ActionTypeGenerator = (params: ActionCreateTwitchC
             return clipID;
         } catch (err) {
             console.error(err);
-            notify("Failed to create Twitch clip", "Are you sure you are live?");
+            notify("Failed to create Twitch clip. Are you sure you are live?");
             return;
         }
-        // const clipID = "CoweringFineStapleRedCoat";
-        // if (params.notify) {
-        //     notifyTwitchClip(clipID);
-        // }
     };
 };
 
@@ -80,27 +73,3 @@ export const updateEventActionManager = (actions: EventActionConfig[]) => {
 eventActionManager.registerAction(Action.CREATE_TWITCH_CLIP, ActionCreateTwitchClip);
 eventActionManager.registerAction(Action.PLAY_SOUND, ActionPlaySound);
 eventActionManager.registerAction(Action.NOTIFY, ActionNotify);
-
-eventActionManager.setEventActions("on-twitch-clip", [
-    {
-        name: Action.PLAY_SOUND,
-        args: {
-            sound: "test.mp3",
-        },
-    },
-    {
-        name: Action.NOTIFY,
-        args: {
-            title: "hello world",
-            body: "happy new year",
-        },
-    },
-]);
-/*
-eventActionManager.registerEvent("on-twitch-clip", {
-    name: Action.CREATE_TWITCH_CLIP,
-    args: {
-        delay: false,
-    },
-});
-*/

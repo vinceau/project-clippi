@@ -5,7 +5,6 @@ import styled from "styled-components";
 
 import { shell } from "electron";
 import { createTwitchClip } from "../../common/twitch";
-import { notifyTwitchClip } from "../lib/twitch";
 import { notify } from "../lib/utils";
 import defaultUserImage from "../styles/images/user.svg";
 
@@ -52,10 +51,10 @@ export const TwitchClip: React.SFC<{ accessToken: string }> = props => {
     const handleClip = () => {
         createTwitchClip(props.accessToken, delay, name).then(clip => {
             console.log(`clip: ${clip}`);
-            notifyTwitchClip(clip);
+            notify(`Created Twitch clip: ${clip}`);
         }).catch((err) => {
             console.error(err);
-            notify("Failed to create Twitch clip", `Are you sure ${name ? `${name} is` : "you are"} live?`);
+            notify(`Failed to create Twitch clip. Are you sure ${name ? `${name} is` : "you are"} live?`);
         });
     };
 

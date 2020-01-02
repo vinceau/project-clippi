@@ -4,6 +4,26 @@ import styled, { css } from "styled-components";
 
 import { Tooltip } from "react-tippy";
 
+import { eventActionManager } from "@/lib/actions";
+import { ActionEvent } from "@/lib/realtime";
+import { notify } from "../lib/utils";
+
+export const DevTools = () => {
+    const handleClick = () => {
+        console.log("notify clicked");
+        notify("Here's a notification", "A notification title");
+    };
+    const customEvent = () => {
+        eventActionManager.emitEvent(ActionEvent.TEST_EVENT).catch(console.error);
+    };
+    return (
+        <div>
+            <button onClick={handleClick}>notify</button>
+            <button onClick={customEvent}>trigger test event</button>
+        </div>
+    );
+};
+
 export const LabelledButton = (props: any) => {
     const { onClick, children, ...rest } = props;
     const Outer = styled.span`

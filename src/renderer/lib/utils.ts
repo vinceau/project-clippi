@@ -40,12 +40,12 @@ export const getFilePath = async (options?: any, save?: boolean): Promise<string
     }
 };
 
-export const notify = (title?: string, body?: string) => {
+export const notify = (message: string, title?: string) => {
     ipc.sendMessage(
         Message.Notify,
         {
-            title: title || "",
-            notification: body || "",
+            message,
+            title,
         },
     );
 };
