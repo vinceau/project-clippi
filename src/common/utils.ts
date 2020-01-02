@@ -18,12 +18,24 @@ export const readFile = async (filePath: string): Promise<Buffer> => {
 
 export const millisToString = (millis: number): string => {
     const date = new Date(millis);
+    const days = date.getUTCDate() - 1;
+    const hours = date.getUTCHours();
+    const minutes =  date.getUTCMinutes();
+    const seconds =  date.getUTCSeconds();
+    // const millis =  date.getUTCMilliseconds();
     let str = "";
-    str += date.getUTCDate() - 1 + " days, ";
-    str += date.getUTCHours() + " hours, ";
-    str += date.getUTCMinutes() + " minutes, ";
-    str += date.getUTCSeconds() + " seconds, ";
-    str += date.getUTCMilliseconds() + " millis";
+    if (days > 0 ) {
+        str += `${days} days, `;
+    }
+    if (hours > 0 ) {
+        str += `${hours} hours, `;
+    }
+    if (minutes > 0 ) {
+        str += `${minutes} minutes, `;
+    }
+    if (seconds > 0 ) {
+        str += `${seconds} seconds, `;
+    }
     return str;
 };
 
