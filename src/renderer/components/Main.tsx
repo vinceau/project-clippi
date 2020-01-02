@@ -27,6 +27,7 @@ const Header: React.FC<{
     const Inner = styled.div`
         display: flex;
         justify-content: space-between;
+        align-items: center;
     `;
     return (
         <HeaderContainer>
