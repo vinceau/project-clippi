@@ -1,14 +1,15 @@
 import * as React from "react";
 
-import { Image, Card, Button, Header } from "semantic-ui-react";
+import { Segment, Image, Card, Button, Header } from "semantic-ui-react";
 import { ConnectionStatus } from "@vinceau/slp-realtime";
 
 import styled, { css } from "styled-components";
 import { pulseAnimation } from "@/styles/animations";
 
 import slippiLogo from "@/styles/images/slippi.png";
+import slippiLogoSVG from "@/styles/images/slippi-logo.svg";
 import { InlineInput } from "./InlineInputs";
-import { LabelledButton } from "./Misc";
+import { LabelledButton, CustomIcon } from "./Misc";
 
 const statusToLabel = (status: ConnectionStatus): string => {
     switch (status) {
@@ -179,5 +180,17 @@ export const SlippiConnectionStatusCard: React.SFC<{
                 </Card.Content>
             </Card>
         </StatusContainer>
+    );
+};
+
+export const SlippiConnectionPlaceholder = () => {
+    return (
+        <Segment placeholder>
+            <Header icon>
+                <CustomIcon image={slippiLogoSVG} size={54} color="#353636" />
+                You are not connected to a Slippi Relay
+            </Header>
+            <Button primary>Connect</Button>
+        </Segment>
     );
 };

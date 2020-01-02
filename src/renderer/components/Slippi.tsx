@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { Dispatch, iRootState } from "@/store";
 import { useDispatch, useSelector } from "react-redux";
 import { slippiLivestream } from "@/lib/realtime";
-import { SlippiConnectionStatusCard } from "./ConnectionStatus";
+import { SlippiConnectionStatusCard, SlippiConnectionPlaceholder } from "./ConnectionStatus";
 
 export const SlippiPage: React.FC = (props: any) => {
     const { port } = useSelector((state: iRootState) => state.slippi);
@@ -22,6 +22,7 @@ export const SlippiPage: React.FC = (props: any) => {
         align-items: center;
     `;
     return (
+        <div>
         <SlippiConnectionStatusCard
             status={slippiConnectionStatus}
             port={port}
@@ -29,5 +30,7 @@ export const SlippiPage: React.FC = (props: any) => {
             onDisconnect={() => slippiLivestream.connection.disconnect()}
             onPortChange={dispatch.slippi.setPort}
         />
+        <SlippiConnectionPlaceholder />
+</div>
     );
 };
