@@ -15,14 +15,14 @@ import styled, { css } from "styled-components";
 import { comboFilter } from "@/lib/realtime";
 import { Dispatch, iRootState } from "@/store";
 import { device } from "@/styles/device";
-import { LabelledButton, CustomIcon } from "../Misc";
+import SlippiLogo from "@/styles/images/slippi-logo.svg";
+import { CustomIcon, LabelledButton } from "../Misc";
+import { SlippiPage } from "../Slippi";
 import { ComboFinder } from "./ComboFinder";
 import { ComboForm } from "./ComboForm";
+import { ProfileSelector } from "./ProfileSelection";
 import { SoundSettings } from "./SoundSettings";
 import { TwitchIntegration } from "./TwitchIntegration";
-import { ProfileSelector } from "./ProfileSelection";
-import { SlippiPage } from "../Slippi";
-import SlippiLogo from "@/styles/images/slippi-logo.svg";
 
 export const SettingsPage: React.FC<{
     showSettings: boolean;

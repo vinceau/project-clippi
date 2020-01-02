@@ -7,8 +7,8 @@ import { notify } from "./utils";
 
 import { eventActionManager } from "./actions";
 
-import fg from "fast-glob";
 import { dispatcher } from "@/store";
+import fg from "fast-glob";
 
 export enum ActionEvent {
     GAME_START = "game-start",

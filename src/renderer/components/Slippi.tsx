@@ -1,10 +1,10 @@
 import * as React from "react";
 
-import { Dispatch, iRootState } from "@/store";
-import { useDispatch, useSelector } from "react-redux";
 import { slippiLivestream } from "@/lib/realtime";
-import { SlippiConnectionStatusCard, SlippiConnectionPlaceholder } from "./ConnectionStatus";
+import { Dispatch, iRootState } from "@/store";
 import { ConnectionStatus } from "@vinceau/slp-realtime";
+import { useDispatch, useSelector } from "react-redux";
+import { SlippiConnectionPlaceholder, SlippiConnectionStatusCard } from "./ConnectionStatus";
 
 export const SlippiPage: React.FC = () => {
     const { port } = useSelector((state: iRootState) => state.slippi);

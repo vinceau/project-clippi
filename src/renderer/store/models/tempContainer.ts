@@ -1,9 +1,9 @@
 import { createModel } from "@rematch/core";
 import produce from "immer";
 
+import { ConnectionStatus } from "@vinceau/slp-realtime";
 import { currentUser } from "common/twitch";
 import { HelixUser } from "twitch";
-import { ConnectionStatus } from "@vinceau/slp-realtime";
 
 export interface TempContainerState {
     slippiConnectionStatus: ConnectionStatus;

@@ -2,9 +2,9 @@ import { createModel } from "@rematch/core";
 
 import { EventActionConfig } from "@/components/Automator/Automator";
 
-import { ActionEvent, connectToSlippi as startSlippiConnection, comboFilter } from "@/lib/realtime";
-import produce from "immer";
+import { ActionEvent, comboFilter, connectToSlippi as startSlippiConnection } from "@/lib/realtime";
 import { notify } from "@/lib/utils";
+import produce from "immer";
 
 const DEFAULT_PROFILE = "default";
 

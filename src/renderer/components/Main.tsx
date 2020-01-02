@@ -3,13 +3,13 @@ import styled from "styled-components";
 
 import { Container, Icon } from "semantic-ui-react";
 
-import { LabelledButton } from "./Misc";
-import { SettingsPage } from "./Settings/Settings";
+import { slippiLivestream } from "@/lib/realtime";
 import { Dispatch, iRootState } from "@/store";
 import { useDispatch, useSelector } from "react-redux";
-import { ConnectionStatusDisplay } from "./ConnectionStatus";
-import { slippiLivestream } from "@/lib/realtime";
 import { Automator } from "./Automator/Automator";
+import { ConnectionStatusDisplay } from "./ConnectionStatus";
+import { LabelledButton } from "./Misc";
+import { SettingsPage } from "./Settings/Settings";
 
 const Header: React.FC<{
     showSettings?: boolean;
@@ -38,7 +38,7 @@ const Header: React.FC<{
                             status={slippiConnectionStatus}
                             port={port}
                             onConnectClick={() => dispatch.slippi.connectToSlippi(port)}
-                            onDisconnectClick={() => slippiLivestream.connection.disconnect() }
+                            onDisconnectClick={() => slippiLivestream.connection.disconnect()}
                             onPortChange={dispatch.slippi.setPort}
                         />
                     </div>

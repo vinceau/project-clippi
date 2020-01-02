@@ -19,4 +19,3 @@ const pulse = (size: string, color: string) => keyframes`
 export const pulseAnimation = (size: string, color: string) => css`
     ${pulse(size, color)} 1.5s infinite;
 `;
-

@@ -3,9 +3,9 @@ import * as path from "path";
 import { createModel } from "@rematch/core";
 import produce from "immer";
 
+import { SoundMap } from "@/lib/sounds";
 import { getFilePath, getFolderPath } from "@/lib/utils";
 import { remote } from "electron";
-import { SoundMap } from "@/lib/sounds";
 
 const homeDirectory = remote.app.getPath("home");
 

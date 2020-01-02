@@ -4,7 +4,7 @@ import * as React from "react";
 import { ComboFilterSettings } from "@vinceau/slp-realtime";
 import arrayMutators from "final-form-arrays";
 import { Field, Form } from "react-final-form";
-import { Accordion, Icon, Button, Form as SemanticForm } from "semantic-ui-react";
+import { Accordion, Button, Form as SemanticForm, Icon } from "semantic-ui-react";
 
 import { CharacterSelectAdapter } from "./ComboForm/CharacterSelect";
 import { SemanticCheckboxInput } from "./ComboForm/FormAdapters";
@@ -14,9 +14,9 @@ import { mapCharacterPercentArrayToObject, mapObjectToCharacterPercentArray, Per
 
 // import "./ComboForm/NameTagForm.scss";
 // import Styles from "./Styles";
+import styled from "styled-components";
 import { CodeBlock } from "./CodeBlock";
 import { PortSelectAdapter } from "./PortSelection";
-import styled from "styled-components";
 
 /*
 export interface ComboFilterSettings {

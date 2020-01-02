@@ -3,8 +3,8 @@ import * as React from "react";
 import { Card, Checkbox, Icon, List } from "semantic-ui-react";
 
 import { Action, ActionCreateTwitchClipParams, ActionNotifyParams, ActionPlaySoundParams } from "@/lib/actions";
-import { useSelector } from "react-redux";
 import { iRootState } from "@/store";
+import { useSelector } from "react-redux";
 
 import { Action as ActionDefinition } from "@vinceau/event-actions";
 import { produce } from "immer";

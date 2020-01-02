@@ -6,7 +6,7 @@ import { Dispatch, iRootState } from "@/store";
 
 import { TwitchClip } from "@/store/models/twitch";
 import { shell } from "electron";
-import { Segment, Header, Icon, Loader, Table } from "semantic-ui-react";
+import { Header, Icon, Loader, Segment, Table } from "semantic-ui-react";
 import styled from "styled-components";
 import { format } from "timeago.js";
 import { TwitchConnectButton, TwitchUserStatus } from "../TwitchConnect";

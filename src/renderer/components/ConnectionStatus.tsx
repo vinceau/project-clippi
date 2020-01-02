@@ -1,15 +1,15 @@
 import * as React from "react";
 
-import { Segment, Image, Input, Card, Button, Header } from "semantic-ui-react";
 import { ConnectionStatus } from "@vinceau/slp-realtime";
+import { Button, Card, Header, Image, Input, Segment } from "semantic-ui-react";
 
-import styled, { css } from "styled-components";
 import { pulseAnimation } from "@/styles/animations";
+import styled, { css } from "styled-components";
 
-import slippiLogo from "@/styles/images/slippi.png";
 import slippiLogoSVG from "@/styles/images/slippi-logo.svg";
+import slippiLogo from "@/styles/images/slippi.png";
 import { InlineInput } from "./InlineInputs";
-import { LabelledButton, CustomIcon } from "./Misc";
+import { CustomIcon, LabelledButton } from "./Misc";
 
 const statusToLabel = (status: ConnectionStatus): string => {
     switch (status) {
@@ -67,7 +67,7 @@ export const ScanningDot: React.FC<{
     `;
     return (<InnerScanningDot />);
 
-}
+};
 
 export const ConnectionStatusDisplay: React.FC<{
     port: string;
@@ -181,7 +181,7 @@ export const SlippiConnectionPlaceholder: React.FC<{
                 action={<Button primary onClick={() => props.onClick(p)}>Connect</Button>}
                 placeholder="Port"
                 value={p}
-                onChange={(_: any, { value }) => setP(value)}
+                onChange={(_: any, { value }: any) => setP(value)}
             />
         </Segment>
     );

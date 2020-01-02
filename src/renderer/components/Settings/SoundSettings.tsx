@@ -1,11 +1,11 @@
 import * as React from "react";
 
-import { useSelector, useDispatch } from "react-redux";
-import { Button, Icon, Table, Segment, Header } from "semantic-ui-react";
+import { useDispatch, useSelector } from "react-redux";
+import { Button, Header, Icon, Segment, Table } from "semantic-ui-react";
 
 import { sp } from "@/lib/sounds";
 
-import { iRootState, Dispatch, dispatcher } from "@/store";
+import { Dispatch, dispatcher, iRootState } from "@/store";
 import { shell } from "electron";
 import styled from "styled-components";
 
