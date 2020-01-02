@@ -2,8 +2,9 @@ import { createModel } from "@rematch/core";
 
 import { EventActionConfig } from "@/components/Automator/Automator";
 
-import { ActionEvent, comboFilter } from "@/lib/realtime";
+import { ActionEvent, connectToSlippi as startSlippiConnection, comboFilter } from "@/lib/realtime";
 import produce from "immer";
+import { notify } from "@/lib/utils";
 
 const DEFAULT_PROFILE = "default";
 
@@ -17,7 +18,7 @@ export interface SlippiState {
 const defaultSettings = JSON.stringify(comboFilter.getSettings());
 
 const initialState: SlippiState = {
-    port: "",
+    port: "1667",
     currentProfile: DEFAULT_PROFILE,
     comboProfiles: {
         [DEFAULT_PROFILE]: defaultSettings,
@@ -28,9 +29,12 @@ const initialState: SlippiState = {
 export const slippi = createModel({
     state: initialState,
     reducers: {
-        setPort: (state: SlippiState, payload: string): SlippiState => produce(state, draft => {
-            draft.port = payload;
-        }),
+        setPort: (state: SlippiState, payload: string): SlippiState => {
+            console.log(`setting port to ${payload}`);
+            return produce(state, draft => {
+                draft.port = payload;
+            });
+        },
         setCurrentProfile: (state: SlippiState, payload: string): SlippiState => {
             const newProfile = !Object.keys(state.comboProfiles).includes(payload);
             const newComboProfiles = produce(state.comboProfiles, draft => {
@@ -77,4 +81,16 @@ export const slippi = createModel({
             draft.events.splice(payload, 1);
         }),
     },
+    effects: dispatch => ({
+        async connectToSlippi(port: string) {
+            try {
+                console.log(`connecting on port: ${port}`);
+                await startSlippiConnection(parseInt(port, 10));
+            } catch (err) {
+                console.error(err);
+                notify("Failed to connect", `Connection on port ${port} failed! Is the relay running?`);
+            }
+            dispatch.slippi.setPort(port);
+        },
+    }),
 });

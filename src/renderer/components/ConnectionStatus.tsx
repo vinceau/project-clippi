@@ -1,9 +1,14 @@
 import * as React from "react";
 
+import { Header } from "semantic-ui-react";
 import { ConnectionStatus } from "@vinceau/slp-realtime";
 
-import styled, {css} from "styled-components";
+import styled, { css } from "styled-components";
 import { pulseAnimation } from "@/styles/animations";
+
+import slippiLogo from "@/styles/images/slippi.png";
+import { InlineInput } from "./InlineInputs";
+import { LabelledButton } from "./LabelledButton";
 
 const statusToLabel = (status: ConnectionStatus): string => {
     switch (status) {
@@ -20,6 +25,17 @@ const statusToLabel = (status: ConnectionStatus): string => {
     }
 };
 
+const statusToClickLabel = (status: ConnectionStatus): string => {
+    switch (status) {
+        case ConnectionStatus.DISCONNECTED:
+            return "Click to connect";
+        case ConnectionStatus.CONNECTED:
+            return "Click to disconnect";
+        default:
+            return "";
+    }
+};
+
 const statusToColor = (status: ConnectionStatus): string => {
     switch (status) {
         case ConnectionStatus.CONNECTED:
@@ -33,6 +49,10 @@ const statusToColor = (status: ConnectionStatus): string => {
 };
 
 export const ConnectionStatusDisplay: React.FC<{
+    port: string;
+    onPortChange: (port: string) => void;
+    onConnectClick: () => void;
+    onDisconnectClick: () => void;
     status: ConnectionStatus;
 }> = props => {
     const color = statusToColor(props.status);
@@ -49,10 +69,38 @@ export const ConnectionStatusDisplay: React.FC<{
         margin-right: 5px;
         ${shouldPulse && animated}
     `;
+    const Outer = styled.div`
+    padding: 10px 0;
+    display: flex;
+    `;
+    const ConnectInfo = styled.div`
+    margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    `;
+    const handleClick = () => {
+        switch (props.status) {
+            case ConnectionStatus.DISCONNECTED:
+                props.onConnectClick();
+                return;
+            case ConnectionStatus.CONNECTED:
+                props.onDisconnectClick();
+                return;
+        }
+    };
 
     return (
-        <div>
-            <ScanningDot /> {statusToLabel(props.status)}
-        </div>
+        <Outer>
+            <img src={slippiLogo} style={{ height: "35px", width: "35px" }} />
+            <ConnectInfo>
+                <LabelledButton title={statusToClickLabel(props.status)} onClick={handleClick} position="right">
+                    <Header sub>
+                        <ScanningDot /> {statusToLabel(props.status)}
+                    </Header>
+                </LabelledButton>
+                <span>Relay Port: <InlineInput value={props.port} onChange={props.onPortChange} /></span>
+            </ConnectInfo>
+        </Outer>
     );
 };
