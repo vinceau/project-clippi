@@ -58,8 +58,13 @@ export const SettingsPage: React.FC<{
     overflow: hidden;
     overflow-y: auto;
     height: 100vh;
+    background-color: #F9FAFB;
+    border-right: solid 1px #d4d4d5;
     @media ${device.mobileL} {
         flex-basis: 30%;
+    }
+    @media ${device.tablet} {
+        flex-basis: 25%;
     }
     `;
     const ContentColumn = styled.div`
@@ -67,8 +72,12 @@ export const SettingsPage: React.FC<{
     overflow: hidden;
     overflow-y: auto;
     height: 100vh;
+    padding-left: 25px;
     @media ${device.mobileL} {
         flex-basis: 70%;
+    }
+    @media ${device.tablet} {
+        flex-basis: 75%;
     }
     & > div {
         padding-top: 50px;

@@ -22,7 +22,7 @@ const Header: React.FC<{
     const HeaderContainer = styled.header`
         flex: 0 1 auto;
         background-color: #F9FAFB;
-        border-bottom: 1px solid rgba(0,0,0,.15);
+        border-bottom: 1px solid #d4d4d5;
     `;
     const Inner = styled.div`
         display: flex;
@@ -43,7 +43,7 @@ const Header: React.FC<{
                         />
                     </div>
                     <LabelledButton onClick={props.onSettingsButtonClick} title="Settings">
-                        <Icon name="cog" />
+                        <Icon name="cog" size="big" />
                     </LabelledButton>
                 </Inner>
             </Container>
