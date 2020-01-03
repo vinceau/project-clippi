@@ -1,6 +1,6 @@
 import { createModel } from "@rematch/core";
 
-import { EventActionConfig } from "@/components/Automator/Automator";
+import { EventActionConfig } from "@/actions";
 
 import { ActionEvent, comboFilter, connectToSlippi as startSlippiConnection } from "@/lib/realtime";
 import { notify } from "@/lib/utils";
@@ -13,6 +13,8 @@ export interface SlippiState {
     currentProfile: string; // profile name
     comboProfiles: { [name: string]: string}; // profile name -> JSON stringified settings
     events: EventActionConfig[];
+    obsAddress: string;
+    obsPort: string;
 }
 
 const defaultSettings = JSON.stringify(comboFilter.getSettings());
@@ -24,11 +26,23 @@ const initialState: SlippiState = {
         [DEFAULT_PROFILE]: defaultSettings,
     },
     events: [],
+    obsAddress: "localhost",
+    obsPort: "4444",
 };
 
 export const slippi = createModel({
     state: initialState,
     reducers: {
+        setOBSAddress: (state: SlippiState, payload: string): SlippiState => {
+            return produce(state, draft => {
+                draft.obsAddress = payload;
+            });
+        },
+        setOBSPort: (state: SlippiState, payload: string): SlippiState => {
+            return produce(state, draft => {
+                draft.obsPort = payload;
+            });
+        },
         setPort: (state: SlippiState, payload: string): SlippiState => {
             console.log(`setting port to ${payload}`);
             return produce(state, draft => {
