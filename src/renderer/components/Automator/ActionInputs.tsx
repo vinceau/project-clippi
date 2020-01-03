@@ -68,6 +68,9 @@ export const ActionInput = (props: any) => {
         });
         onChange(newValue);
     };
+    if (!actionComponents[value.name]) {
+        return null;
+    }
     const ActionIcon = actionComponents[value.name].Icon;
     const ActionArgsInput = actionComponents[value.name].Component;
     return (
