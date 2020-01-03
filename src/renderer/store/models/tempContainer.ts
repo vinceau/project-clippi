@@ -3,6 +3,7 @@ import produce from "immer";
 
 import { ConnectionStatus } from "@vinceau/slp-realtime";
 import { currentUser } from "common/twitch";
+import { Scene } from "obs-websocket-js";
 import { HelixUser } from "twitch";
 
 export interface TempContainerState {
@@ -13,7 +14,7 @@ export interface TempContainerState {
     comboFinderLog: string;
     comboFinderProcessing: boolean;
     obsConnected: boolean;
-    obsScenes: string[];
+    obsScenes: Scene[];
 }
 
 const initialState: TempContainerState = {
@@ -30,7 +31,7 @@ const initialState: TempContainerState = {
 export const tempContainer = createModel({
     state: initialState,
     reducers: {
-        setOBSScenes: (state: TempContainerState, payload: string[]): TempContainerState => produce(state, draft => {
+        setOBSSceneItems: (state: TempContainerState, payload: Scene[]): TempContainerState =>  produce(state, draft => {
             draft.obsScenes = payload;
         }),
         setOBSConnected: (state: TempContainerState, payload: boolean): TempContainerState => produce(state, draft => {

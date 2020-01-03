@@ -1,4 +1,4 @@
-import OBSWebSocket from "obs-websocket-js";
+import OBSWebSocket, { Scene } from "obs-websocket-js";
 
 import { dispatcher, store } from "@/store";
 import { notify } from "./utils";
@@ -44,14 +44,29 @@ export const connectToOBSAndNotify = (): void => {
 
 export const updateScenes = async (): Promise<void> => {
     const data = await obs.send("GetSceneList");
-    const sceneNames = data.scenes.map(scene => scene.name);
-    console.log(`got the following scene names:`);
-    console.log(sceneNames);
-    dispatcher.tempContainer.setOBSScenes(sceneNames);
+    dispatcher.tempContainer.setOBSSceneItems(data.scenes);
 };
 
 export const setScene = async (scene: string): Promise<void> => {
     await obs.send("SetCurrentScene", {
         "scene-name": scene,
     });
+};
+
+export const getAllSceneItems = (): string [] => {
+    const scenes = store.getState().tempContainer.obsScenes;
+    const allItems: string[] = [];
+    scenes.forEach(scene => {
+        const items = scene.sources.map(source => source.name);
+        allItems.push(...items);
+    });
+    const set = new Set(allItems);
+    const uniqueNames = Array.from(set);
+    uniqueNames.sort();
+    return uniqueNames;
+};
+
+export const getAllScenes = (): string[] => {
+    const scenes = store.getState().tempContainer.obsScenes;
+    return scenes.map(s => s.name);
 };

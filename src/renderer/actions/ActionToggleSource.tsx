@@ -7,7 +7,7 @@ import { Button } from "semantic-ui-react";
 
 import { InlineDropdown } from "@/components/Misc/InlineInputs";
 import { CustomIcon } from "@/components/Misc/Misc";
-import { connectToOBSAndNotify } from "@/lib/obs";
+import { connectToOBSAndNotify, getAllSceneItems } from "@/lib/obs";
 import { iRootState } from "@/store";
 import { ActionComponent } from "./types";
 
@@ -32,11 +32,16 @@ const ActionIcon = () => {
 
 const SourceNameInput = (props: any) => {
     const { value, onChange } = props;
-    const allSources: string[] = ["abc", "def"]; //useSelector((state: iRootState) => state.tempContainer.obsSources);
-    if (allSources.length === 0) {
+    const { obsConnected } = useSelector((state: iRootState) => state.tempContainer);
+    if (!obsConnected) {
         return (
             <Button content={`Connect to OBS`} type="button" onClick={connectToOBSAndNotify} />
         );
+    }
+
+    const allSources = getAllSceneItems();
+    if (allSources.length === 0) {
+        return (<div>No scene items found.</div>);
     }
 
     const onSourceChange = (Source: string) => {

@@ -7,7 +7,7 @@ import { Button } from "semantic-ui-react";
 
 import { InlineDropdown } from "@/components/Misc/InlineInputs";
 import { CustomIcon } from "@/components/Misc/Misc";
-import { connectToOBSAndNotify, setScene } from "@/lib/obs";
+import { connectToOBSAndNotify, setScene, getAllScenes } from "@/lib/obs";
 import { iRootState } from "@/store";
 import { ActionComponent } from "./types";
 
@@ -31,7 +31,8 @@ const ActionIcon = () => {
 
 const SceneNameInput = (props: any) => {
     const { value, onChange } = props;
-    const allScenes = useSelector((state: iRootState) => state.tempContainer.obsScenes);
+    const allScenes = getAllScenes();
+    allScenes.sort();
     if (allScenes.length === 0) {
         return (
             <Button content={`Connect to OBS`} type="button" onClick={connectToOBSAndNotify} />
