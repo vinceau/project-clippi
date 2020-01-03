@@ -11,6 +11,10 @@ obs.on("ConnectionOpened", () => {
     updateScenes().catch(console.error);
 });
 
+obs.on("ScenesChanged", () => {
+    updateScenes().catch(console.error);
+});
+
 obs.on("ConnectionClosed", () => {
     dispatcher.tempContainer.setOBSConnected(false);
 });
