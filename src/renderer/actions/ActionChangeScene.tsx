@@ -31,12 +31,16 @@ const ActionIcon = () => {
 
 const SceneNameInput = (props: any) => {
     const { value, onChange } = props;
-    const allScenes = getAllScenes();
-    allScenes.sort();
-    if (allScenes.length === 0) {
+    const { obsConnected } = useSelector((state: iRootState) => state.tempContainer);
+    if (!obsConnected) {
         return (
             <Button content={`Connect to OBS`} type="button" onClick={connectToOBSAndNotify} />
         );
+    }
+
+    const allScenes = getAllScenes();
+    if (allScenes.length === 0) {
+        return (<div>No scene items found.</div>);
     }
 
     const onSceneChange = (scene: string) => {
