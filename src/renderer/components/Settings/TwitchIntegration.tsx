@@ -9,7 +9,7 @@ import { shell } from "electron";
 import { Header, Icon, Loader, Segment, Table } from "semantic-ui-react";
 import styled from "styled-components";
 import { format } from "timeago.js";
-import { TwitchConnectButton, TwitchUserStatus } from "../TwitchConnect";
+import { TwitchConnectButton, TwitchUserStatus } from "../Misc/TwitchConnect";
 
 export const ClipsTable: React.FC = props => {
     return (

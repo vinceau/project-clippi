@@ -1,12 +1,12 @@
 import * as React from "react";
 
-import { InlineDropdown } from "@/components/InlineInputs";
+import { InlineDropdown } from "@/components/Misc/InlineInputs";
 import { iRootState } from "@/store";
 import { ActionTypeGenerator } from "@vinceau/event-actions";
 import { produce } from "immer";
 import { useSelector } from "react-redux";
 
-import { CustomIcon } from "@/components/Misc";
+import { CustomIcon } from "@/components/Misc/Misc";
 import { setScene } from "@/lib/obs";
 import { ActionComponent } from "./types";
 

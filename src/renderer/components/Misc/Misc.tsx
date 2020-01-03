@@ -7,7 +7,7 @@ import { Tooltip } from "react-tippy";
 import { isDevelopment } from "@/lib/utils";
 import { eventActionManager } from "@/actions";
 import { ActionEvent } from "@/lib/realtime";
-import { notify } from "../lib/utils";
+import { notify } from "../../lib/utils";
 import { setScene, connectToOBS } from "@/lib/obs";
 
 export const DevTools = () => {

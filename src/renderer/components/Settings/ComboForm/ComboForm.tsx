@@ -15,7 +15,7 @@ import { mapCharacterPercentArrayToObject, mapObjectToCharacterPercentArray, Per
 // import "./ComboForm/NameTagForm.scss";
 // import Styles from "./Styles";
 import styled from "styled-components";
-import { CodeBlock } from "../../Misc";
+import { CodeBlock } from "../../Misc/Misc";
 import { PortSelectAdapter } from "./PortSelection";
 
 /*

@@ -13,7 +13,7 @@ import styled, { css } from "styled-components";
 import { device } from "@/styles/device";
 import SlippiLogo from "@/styles/images/slippi-logo.svg";
 import OBSLogo from "@/styles/images/obs.svg";
-import { CustomIcon, Labelled } from "../Misc";
+import { CustomIcon, Labelled } from "../Misc/Misc";
 import { SlippiPage } from "./SlippiPage";
 import { ComboFinder } from "./ComboFinder";
 import { SoundSettings } from "./SoundSettings";

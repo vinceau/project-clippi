@@ -7,13 +7,13 @@ import { Action as ActionDefinition } from "@vinceau/event-actions";
 import { Action } from "@vinceau/event-actions";
 import { produce } from "immer";
 import { Container, Icon, List, Divider } from "semantic-ui-react";
-import { InlineDropdown } from "../InlineInputs";
-import { Labelled } from "../Misc";
+import { InlineDropdown } from "../Misc/InlineInputs";
+import { Labelled } from "../Misc/Misc";
 import { ActionInput, AddActionInput } from "./ActionInputs";
 
 import { generateRandomEvent } from "@/lib/events";
 import { isDevelopment } from "@/lib/utils";
-import { CodeBlock } from "../Misc";
+import { CodeBlock } from "../Misc/Misc";
 
 const allEvents: ActionEvent[] = [
   ActionEvent.GAME_START,
