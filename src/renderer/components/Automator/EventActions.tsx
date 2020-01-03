@@ -56,6 +56,12 @@ const EventHeader = styled.div`
   justify-content: space-between;
 `;
 
+const EventHeaderButtons = styled.div`
+  & > span {
+    padding: 5px;
+  }
+`;
+
 export const EventActions = (props: any) => {
   const { value, onChange, onRemove, disabledOptions } = props;
   // const [notifyValue, setValue] = React.useState({});
@@ -103,10 +109,10 @@ export const EventActions = (props: any) => {
           onChange={onEventChange}
           disabledOptions={disabledOptions}
         />
-        <div>
+        <EventHeaderButtons>
           <Labelled onClick={testRunActions} title="Test run"><Icon name="play" size="big" /></Labelled>
           <Labelled onClick={onRemove} title="Remove"><Icon name="remove" size="big" /></Labelled>
-        </div>
+        </EventHeaderButtons>
       </EventHeader>
       <List divided>
         {value.actions.map((a: Action, i: number) => {
