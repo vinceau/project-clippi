@@ -6,7 +6,7 @@ import { ActionEvent } from "@/lib/realtime";
 import { Action as ActionDefinition } from "@vinceau/event-actions";
 import { Action } from "@vinceau/event-actions";
 import { produce } from "immer";
-import { Container, Icon, List } from "semantic-ui-react";
+import { Container, Icon, List, Divider } from "semantic-ui-react";
 import { InlineDropdown } from "../InlineInputs";
 import { Labelled } from "../Misc";
 import { ActionInput, AddActionInput } from "./ActionInputs";
@@ -122,6 +122,7 @@ export const EventActions = (props: any) => {
         <AddActionInput onChange={onActionAdd} disabledActions={disabledActions} />
       </List>
       <CodeBlock values={value} />
+      <Divider />
     </Container>
   );
 };
