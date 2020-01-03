@@ -15,6 +15,7 @@ export interface SlippiState {
     events: EventActionConfig[];
     obsAddress: string;
     obsPort: string;
+    obsPassword: string;
 }
 
 const defaultSettings = JSON.stringify(comboFilter.getSettings());
@@ -26,8 +27,9 @@ const initialState: SlippiState = {
         [DEFAULT_PROFILE]: defaultSettings,
     },
     events: [],
-    obsAddress: "localhost",
+    obsAddress: "192.168.1.118",
     obsPort: "4444",
+    obsPassword: "",
 };
 
 export const slippi = createModel({

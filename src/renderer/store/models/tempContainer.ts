@@ -12,6 +12,8 @@ export interface TempContainerState {
     comboFinderPercent: number;
     comboFinderLog: string;
     comboFinderProcessing: boolean;
+    obsConnected: boolean;
+    obsScenes: string[];
 }
 
 const initialState: TempContainerState = {
@@ -21,11 +23,19 @@ const initialState: TempContainerState = {
     comboFinderPercent: 0,
     comboFinderLog: "",
     comboFinderProcessing: false,
+    obsConnected: false,
+    obsScenes: [],
 };
 
 export const tempContainer = createModel({
     state: initialState,
     reducers: {
+        setOBSScenes: (state: TempContainerState, payload: string[]): TempContainerState => produce(state, draft => {
+            draft.obsScenes = payload;
+        }),
+        setOBSConnected: (state: TempContainerState, payload: boolean): TempContainerState => produce(state, draft => {
+            draft.obsConnected = payload;
+        }),
         setSlippiConnectionStatus: (state: TempContainerState, payload: ConnectionStatus): TempContainerState => produce(state, draft => {
             draft.slippiConnectionStatus = payload;
         }),
