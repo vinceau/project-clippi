@@ -50,7 +50,7 @@ const SceneNameInput = (props: any) => {
             value={value.scene}
             prefix="Scene: "
             onChange={onSceneChange}
-            options={allScenes}
+            customOptions={allScenes}
         />
     );
 };

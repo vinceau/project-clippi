@@ -102,7 +102,7 @@ export const EventActions = (props: any) => {
       <EventHeader>
         <InlineDropdown
           prefix="When"
-          options={allEvents}
+          customOptions={allEvents}
           mapOptionToLabel={(opt: string) => mapEventToName[opt]}
           fontSize={30}
           value={value.event}
@@ -159,7 +159,7 @@ export const AddEventDropdown = (props: any) => {
           text={addText}
           selectOnBlur={false}
           onChange={onChange}
-          options={unusedOptions}
+          customOptions={unusedOptions}
           mapOptionToLabel={(opt: string) => mapEventToName[opt]}
           fontSize={30}
         />

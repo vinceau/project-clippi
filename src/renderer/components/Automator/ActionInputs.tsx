@@ -17,7 +17,7 @@ const ActionSelector = (props: any) => {
     return (
         <InlineDropdown
             {...rest}
-            options={options || allActions}
+            customOptions={options || allActions}
             mapOptionToLabel={(opt: string) => actionComponents[opt].label}
             fontSize={18}
         />

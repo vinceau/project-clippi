@@ -48,7 +48,7 @@ const PlaySoundInput = (props: any) => {
             value={value.sound}
             prefix="Play"
             onChange={onSoundChange}
-            options={allSounds}
+            customOptions={allSounds}
         />
     );
 };

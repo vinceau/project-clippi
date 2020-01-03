@@ -7,20 +7,20 @@ import { Button } from "semantic-ui-react";
 
 import { InlineDropdown } from "@/components/Misc/InlineInputs";
 import { CustomIcon } from "@/components/Misc/Misc";
-import { connectToOBSAndNotify, getAllSceneItems } from "@/lib/obs";
+import { connectToOBSAndNotify, getAllSceneItems, setSourceItemVisibility } from "@/lib/obs";
 import { iRootState } from "@/store";
 import { ActionComponent } from "./types";
 
 import obsIcon from "../styles/images/obs.svg";
 
 interface ActionToggleSourceParams {
-    Source: string;
+    source: string;
+    visible: boolean;
 }
 
 const actionToggleSource: ActionTypeGenerator = (params: ActionToggleSourceParams) => {
     return async (): Promise<void> => {
-        console.log("toggling source");
-        // await setSource(params.Source);
+        await setSourceItemVisibility(params.source, params.visible);
     };
 };
 
@@ -30,7 +30,7 @@ const ActionIcon = () => {
     );
 };
 
-const SourceNameInput = (props: any) => {
+const SourceNameInput = (props: { value: ActionToggleSourceParams, onChange: any}) => {
     const { value, onChange } = props;
     const { obsConnected } = useSelector((state: iRootState) => state.tempContainer);
     if (!obsConnected) {
@@ -44,19 +44,43 @@ const SourceNameInput = (props: any) => {
         return (<div>No scene items found.</div>);
     }
 
-    const onSourceChange = (Source: string) => {
-        const newValue = produce(value, (draft: ActionToggleSourceParams) => {
-            draft.Source = Source;
+    const onSourceChange = (source: string) => {
+        const newValue = produce(value, (draft) => {
+            draft.source = source;
+        });
+        onChange(newValue);
+    };
+    const onVisibilityChange = (visible: boolean) => {
+        const newValue = produce(value, (draft) => {
+            draft.visible = visible;
         });
         onChange(newValue);
     };
     return (
+        <span>
         <InlineDropdown
-            value={value.Source}
-            prefix="Source: "
-            onChange={onSourceChange}
-            options={allSources}
+            value={value.visible || false}
+            onChange={onVisibilityChange}
+            options={[
+            {
+                key: "hide",
+                value: false,
+                text: "Hide ",
+            },
+            {
+                key: "show",
+                value: true,
+                text: "Show ",
+            },
+        ]}
         />
+        <InlineDropdown
+            value={value.source}
+            prefix="the source: "
+            onChange={onSourceChange}
+            customOptions={allSources}
+        />
+        </span>
     );
 };
 
