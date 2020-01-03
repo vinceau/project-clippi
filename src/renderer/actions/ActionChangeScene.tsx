@@ -1,13 +1,14 @@
 import * as React from "react";
 
-import { InlineDropdown } from "@/components/Misc/InlineInputs";
-import { iRootState } from "@/store";
 import { ActionTypeGenerator } from "@vinceau/event-actions";
 import { produce } from "immer";
 import { useSelector } from "react-redux";
+import { Button } from "semantic-ui-react";
 
+import { InlineDropdown } from "@/components/Misc/InlineInputs";
 import { CustomIcon } from "@/components/Misc/Misc";
-import { setScene } from "@/lib/obs";
+import { connectToOBSAndNotify, setScene } from "@/lib/obs";
+import { iRootState } from "@/store";
 import { ActionComponent } from "./types";
 
 import obsIcon from "../styles/images/obs.svg";
@@ -33,7 +34,7 @@ const SceneNameInput = (props: any) => {
     const allScenes = useSelector((state: iRootState) => state.tempContainer.obsScenes);
     if (allScenes.length === 0) {
         return (
-            <span>No scenes available</span>
+            <Button content={`Connect to OBS`} type="button" onClick={connectToOBSAndNotify} />
         );
     }
 

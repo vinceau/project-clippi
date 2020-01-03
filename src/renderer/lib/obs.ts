@@ -1,6 +1,7 @@
 import OBSWebSocket from "obs-websocket-js";
 
 import { dispatcher, store } from "@/store";
+import { notify } from "./utils";
 
 const obs = new OBSWebSocket();
 
@@ -25,6 +26,16 @@ const _connectToOBS = async (address: string, port: string, password?: string): 
 export const connectToOBS = async (): Promise<void> => {
     const { obsAddress, obsPort, obsPassword } = store.getState().slippi;
     return _connectToOBS(obsAddress, obsPort, obsPassword);
+};
+
+export const connectToOBSAndNotify = (): void => {
+    const { obsAddress, obsPort, obsPassword } = store.getState().slippi;
+    _connectToOBS(obsAddress, obsPort, obsPassword).then(() => {
+        notify(`Successfully connected to OBS`);
+    }).catch(err => {
+        console.error(err);
+        notify(`Could not connect to ${obsAddress}:${obsPort}`);
+    });
 };
 
 export const updateScenes = async (): Promise<void> => {

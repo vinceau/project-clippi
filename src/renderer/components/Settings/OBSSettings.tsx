@@ -3,26 +3,17 @@ import * as React from "react";
 import { Dispatch, iRootState } from "@/store";
 import { useDispatch, useSelector } from "react-redux";
 
+import { connectToOBSAndNotify } from "@/lib/obs";
 import { Button, Form } from "semantic-ui-react";
-import { connectToOBS } from "@/lib/obs";
-import { notify } from "@/lib/utils";
 
 export const OBSSettings = () => {
     const { obsAddress, obsPort, obsPassword } = useSelector((state: iRootState) => state.slippi);
     const dispatch = useDispatch<Dispatch>();
-    const onSubmit = () => {
-        connectToOBS().then(() => {
-            notify(`Successfully connected to OBS`);
-        }).catch(err => {
-            console.error(err);
-            notify(`Could not connect to ${obsAddress}:${obsPort}`);
-        });
-    };
 
     return (<div>
         <h2>OBS Configuration</h2>
         <div style={{ maxWidth: "500px" }}>
-            <Form onSubmit={onSubmit}>
+            <Form onSubmit={connectToOBSAndNotify}>
                 <Form.Field>
                     <label>IP Address</label>
                     <input
