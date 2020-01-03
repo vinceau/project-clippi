@@ -4,9 +4,11 @@ import styled, { css } from "styled-components";
 
 import { Tooltip } from "react-tippy";
 
+import { isDevelopment } from "@/lib/utils";
 import { eventActionManager } from "@/actions";
 import { ActionEvent } from "@/lib/realtime";
-import { notify } from "../lib/utils";
+import { notify } from "../../lib/utils";
+import { setScene, connectToOBS } from "@/lib/obs";
 
 export const DevTools = () => {
     const handleClick = () => {
@@ -16,8 +18,12 @@ export const DevTools = () => {
     const customEvent = () => {
         eventActionManager.emitEvent(ActionEvent.TEST_EVENT).catch(console.error);
     };
+    const [sceneName, setSceneName] = React.useState("");
     return (
         <div>
+            <input value={sceneName} onChange={(e) => setSceneName(e.target.value)} />
+            <button onClick={() => setScene(sceneName).catch(console.error)}>change obs scene</button>
+            <button onClick={() => connectToOBS().catch(console.error)}>connect to obs</button>
             <button onClick={handleClick}>notify</button>
             <button onClick={customEvent}>trigger test event</button>
         </div>
@@ -64,4 +70,13 @@ export const CustomIcon: React.FC<{
     return (
         <Outer aria-hidden="true" className="icon" />
     );
+};
+
+export const CodeBlock: React.FC<{
+    values: any
+}> = (props) => {
+    if (isDevelopment) {
+        return (<pre>{(JSON as any).stringify(props.values, 0, 2)}</pre>);
+    }
+    return null;
 };

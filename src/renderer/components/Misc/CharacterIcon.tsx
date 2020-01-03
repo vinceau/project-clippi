@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { getStatic } from "@/lib/utils";
 import { Character, getCharacterShortName } from "@vinceau/slp-realtime";
 
-// const pathToCats = require.context("../../../styles/images/icons/chars", true);
 export const CharacterIcon: React.FC<{
     character: Character,
     size?: number,

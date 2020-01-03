@@ -5,7 +5,7 @@ import {produce} from "immer";
 import { useSelector } from "react-redux";
 import { Icon } from "semantic-ui-react";
 
-import { InlineDropdown } from "@/components/InlineInputs";
+import { InlineDropdown } from "@/components/Misc/InlineInputs";
 import { AddSoundButton } from "@/components/Settings/SoundSettings";
 import { sp } from "@/lib/sounds";
 import { iRootState } from "@/store";
