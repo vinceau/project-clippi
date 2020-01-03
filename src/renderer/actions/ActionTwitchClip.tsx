@@ -38,7 +38,10 @@ const actionCreateClip: ActionTypeGenerator = (params: ActionCreateTwitchClipPar
 };
 
 const TwitchClipInput = (props: any) => {
-    const { value, onChange } = props;
+    const { snippet, value, onChange } = props;
+    if (snippet) {
+        return (<span>clip it</span>);
+    }
     const onDelayChange = (delay?: boolean) => {
         const newValue = produce(value, (draft: ActionCreateTwitchClipParams) => {
             draft.delay = delay;

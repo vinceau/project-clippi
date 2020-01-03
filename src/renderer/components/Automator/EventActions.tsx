@@ -87,9 +87,11 @@ export const EventActions = (props: any) => {
     });
     onChange(newValue);
   };
+  const [collapsed, setCollapsed] = React.useState(false);
 
   return (
     <Container>
+      <button onClick={() => setCollapsed(!collapsed)}>Toggle</button>
       <EventHeader>
         <InlineDropdown
           prefix="When"
@@ -102,7 +104,7 @@ export const EventActions = (props: any) => {
         />
         <Labelled onClick={onRemove} title="Remove"><Icon name="remove" size="big" /></Labelled>
       </EventHeader>
-      <List divided>
+      <div>
         {value.actions.map((a: Action, i: number) => {
           const onInnerActionChange = (newVal: Action) => {
             onActionChange(i, newVal);
@@ -116,11 +118,12 @@ export const EventActions = (props: any) => {
               onChange={onInnerActionChange}
               disabledActions={disabledActions}
               onRemove={() => onActionRemove(i)}
+              snippet={collapsed}
             />
           );
         })}
-        <AddActionInput onChange={onActionAdd} disabledActions={disabledActions} />
-      </List>
+        {!collapsed && <AddActionInput onChange={onActionAdd} disabledActions={disabledActions} />}
+      </div>
       <CodeBlock values={value} />
     </Container>
   );

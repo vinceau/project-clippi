@@ -18,8 +18,11 @@ const ActionNotifyFunc: ActionTypeGenerator = (params: ActionNotifyParams) => {
 };
 
 const NotifyInput = (props: any) => {
-    const { value, onChange } = props;
+    const { snippet, value, onChange } = props;
     const defaultValue = value && value.message ? value.message : "";
+    if (snippet) {
+        return (<span>notify</span>);
+    }
     const [ msg, setMsg ] = React.useState(defaultValue);
     return (
         <div style={{maxWidth: "500px"}}>

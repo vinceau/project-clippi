@@ -76,7 +76,7 @@ const ActionComponentBlock = (props: any) => {
 };
 
 export const ActionInput = (props: any) => {
-    const { value, onChange, onRemove, selectPrefix, disabledActions } = props;
+    const { snippet, value, onChange, onRemove, selectPrefix, disabledActions } = props;
     const onActionChange = (action: string) => {
         const newValue = produce(value, (draft: ActionDefinition) => {
             draft.name = action;
@@ -91,6 +91,12 @@ export const ActionInput = (props: any) => {
         onChange(newValue);
     };
     const ActionArgsInput = actionComponents[value.name].Component;
+    const content = (
+        <ActionArgsInput value={value.args} onChange={onArgsChange} snippet={snippet} />
+    );
+    if (snippet) {
+        return content;
+    }
     return (
         <ActionComponentBlock
             icon={
@@ -102,7 +108,7 @@ export const ActionInput = (props: any) => {
                 <ActionSelector prefix={selectPrefix} value={value.name} onChange={onActionChange} disabledOptions={disabledActions} />
             }
         >
-            <ActionArgsInput value={value.args} onChange={onArgsChange} />
+            {content}
         </ActionComponentBlock>
     );
 };

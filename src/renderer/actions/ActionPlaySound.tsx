@@ -21,7 +21,10 @@ const ActionPlaySoundFunc: ActionTypeGenerator = (params: ActionPlaySoundParams)
 };
 
 const PlaySoundInput = (props: any) => {
-    const { value, onChange } = props;
+    const { snippet, value, onChange } = props;
+    if (snippet) {
+        return (<span>Play {value.sound}</span>);
+    }
     const soundFiles = useSelector((state: iRootState) => state.filesystem.soundFiles);
     const allSounds = Object.keys(soundFiles);
     if (allSounds.length === 0) {
