@@ -6,14 +6,14 @@ import { ActionEvent } from "@/lib/realtime";
 import { Action as ActionDefinition } from "@vinceau/event-actions";
 import { Action } from "@vinceau/event-actions";
 import { produce } from "immer";
-import { Container, Icon, List, Divider } from "semantic-ui-react";
+import { Container, Divider, Icon, List } from "semantic-ui-react";
 import { InlineDropdown } from "../Misc/InlineInputs";
-import { Labelled } from "../Misc/Misc";
 import { ActionInput, AddActionInput } from "./ActionInputs";
 
+import { eventActionManager } from "@/actions";
 import { generateRandomEvent } from "@/lib/events";
 import { isDevelopment } from "@/lib/utils";
-import { CodeBlock } from "../Misc/Misc";
+import { CodeBlock, Labelled } from "../Misc/Misc";
 
 const allEvents: ActionEvent[] = [
   ActionEvent.GAME_START,
@@ -87,6 +87,9 @@ export const EventActions = (props: any) => {
     });
     onChange(newValue);
   };
+  const testRunActions = () => {
+    eventActionManager.execute(value.actions).catch(console.error);
+  };
 
   return (
     <Container>
@@ -100,7 +103,10 @@ export const EventActions = (props: any) => {
           onChange={onEventChange}
           disabledOptions={disabledOptions}
         />
-        <Labelled onClick={onRemove} title="Remove"><Icon name="remove" size="big" /></Labelled>
+        <div>
+          <Labelled onClick={testRunActions} title="Test run"><Icon name="play" size="big" /></Labelled>
+          <Labelled onClick={onRemove} title="Remove"><Icon name="remove" size="big" /></Labelled>
+        </div>
       </EventHeader>
       <List divided>
         {value.actions.map((a: Action, i: number) => {
