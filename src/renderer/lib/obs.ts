@@ -14,9 +14,8 @@ obs.on("ConnectionClosed", () => {
     dispatcher.tempContainer.setOBSConnected(false);
 });
 
-const _connectToOBS = async (address: string, port: string, password: string): Promise<void> => {
-    console.log(`connecting to: ${address}:${port}`);
-    console.log(`with password: <${password}>`);
+const _connectToOBS = async (address: string, port: string, password?: string): Promise<void> => {
+    console.log(`connecting to obs on: ${address}:${port}`);
     await obs.connect({
         address: `${address}:${port}`,
         password: password ? password : undefined,
@@ -24,8 +23,8 @@ const _connectToOBS = async (address: string, port: string, password: string): P
 };
 
 export const connectToOBS = async (): Promise<void> => {
-    const { obsPort, obsPassword } = store.getState().slippi;
-    return _connectToOBS("192.168.1.118", obsPort, obsPassword);
+    const { obsAddress, obsPort, obsPassword } = store.getState().slippi;
+    return _connectToOBS(obsAddress, obsPort, obsPassword);
 };
 
 export const updateScenes = async (): Promise<void> => {

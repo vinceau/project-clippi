@@ -27,7 +27,7 @@ const initialState: SlippiState = {
         [DEFAULT_PROFILE]: defaultSettings,
     },
     events: [],
-    obsAddress: "192.168.1.118",
+    obsAddress: "localhost",
     obsPort: "4444",
     obsPassword: "",
 };
@@ -43,6 +43,11 @@ export const slippi = createModel({
         setOBSPort: (state: SlippiState, payload: string): SlippiState => {
             return produce(state, draft => {
                 draft.obsPort = payload;
+            });
+        },
+        setOBSPassword: (state: SlippiState, payload: string): SlippiState => {
+            return produce(state, draft => {
+                draft.obsPassword = payload;
             });
         },
         setPort: (state: SlippiState, payload: string): SlippiState => {
