@@ -61,7 +61,7 @@ export const setScene = async (scene: string): Promise<void> => {
     });
 };
 
-export const setSourceItemVisibility = async (sourceName: string, visible: boolean): Promise<void> => {
+export const setSourceItemVisibility = async (sourceName: string, visible?: boolean): Promise<void> => {
     const scenes = store.getState().tempContainer.obsScenes;
     for (const scene of scenes) {
         const items = scene.sources.map(source => source.name);
@@ -69,7 +69,7 @@ export const setSourceItemVisibility = async (sourceName: string, visible: boole
             await obs.send("SetSceneItemProperties", {
                 "scene-name": scene.name,
                 "item": sourceName,
-                "visible": visible,
+                "visible": Boolean(visible),
             } as any);
         }
     }

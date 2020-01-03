@@ -34,6 +34,7 @@ export const InlineDropdown = (props: any) => {
     <Outer>
       {props.prefix ? `${props.prefix} ` : ""}
       <Dropdown
+        scrolling={true}
         inline={true}
         {...rest}
         options={newOptions}

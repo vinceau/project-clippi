@@ -15,7 +15,7 @@ import obsIcon from "../styles/images/obs.svg";
 
 interface ActionToggleSourceParams {
     source: string;
-    visible: boolean;
+    visible?: boolean;
 }
 
 const actionToggleSource: ActionTypeGenerator = (params: ActionToggleSourceParams) => {
@@ -59,7 +59,7 @@ const SourceNameInput = (props: { value: ActionToggleSourceParams, onChange: any
     return (
         <span>
         <InlineDropdown
-            value={value.visible || false}
+            value={Boolean(value.visible)}
             onChange={onVisibilityChange}
             options={[
             {
@@ -76,7 +76,7 @@ const SourceNameInput = (props: { value: ActionToggleSourceParams, onChange: any
         />
         <InlineDropdown
             value={value.source}
-            prefix="the source: "
+            prefix=" the source "
             onChange={onSourceChange}
             customOptions={allSources}
         />
