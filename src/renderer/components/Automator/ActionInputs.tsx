@@ -1,12 +1,12 @@
 import * as React from "react";
 
-import { Icon, List } from "semantic-ui-react";
+import { Icon } from "semantic-ui-react";
 
 import { Action, actionComponents } from "@/actions";
 
 import { Action as ActionDefinition } from "@vinceau/event-actions";
 import { produce } from "immer";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { InlineDropdown } from "../InlineInputs";
 import { Labelled } from "../Misc";
 
@@ -53,6 +53,28 @@ const ActionIcon = (props: any) => {
     }
 };
 
+const ActionComponentBlock = (props: any) => {
+    const { icon, header, children, ...rest } = props;
+    const Outer = styled.div`
+        display: flex;
+        margin-left: 20px;
+        margin-bottom: 10px;
+    `;
+    const Content = styled.div`
+    margin-left: 10px;
+    width: 100%;
+    `;
+    return (
+        <Outer {...rest}>
+            <div style={{padding: "5px"}}>{icon}</div>
+            <Content>
+                <div style={{ marginBottom: "10px"}}>{header}</div>
+                {children && <div>{children}</div>}
+            </Content>
+        </Outer>
+    );
+};
+
 export const ActionInput = (props: any) => {
     const { value, onChange, onRemove, selectPrefix, disabledActions } = props;
     const onActionChange = (action: string) => {
@@ -68,34 +90,20 @@ export const ActionInput = (props: any) => {
         });
         onChange(newValue);
     };
-    const Container = styled(List.Item)`
-    &&& {
-        padding: 10px 0;
-    }
-    `;
-    const ListHeader = styled(List.Header)`
-    &&& {
-        padding-bottom: 10px;
-    }
-    `;
-
     const ActionArgsInput = actionComponents[value.name].Component;
     return (
-        <Container>
-            <i className="icon">
+        <ActionComponentBlock
+            icon={
                 <Labelled title="Click to remove" onClick={onRemove}>
                     <ActionIcon actionType={value.name} size="large" />
                 </Labelled>
-            </i>
-            <List.Content>
-                <ListHeader>
-                    <ActionSelector prefix={selectPrefix} value={value.name} onChange={onActionChange} disabledOptions={disabledActions} />
-                </ListHeader>
-                <List.Description>
-                    <ActionArgsInput value={value.args} onChange={onArgsChange} />
-                </List.Description>
-            </List.Content>
-        </Container>
+            }
+            header={
+                <ActionSelector prefix={selectPrefix} value={value.name} onChange={onActionChange} disabledOptions={disabledActions} />
+            }
+        >
+            <ActionArgsInput value={value.args} onChange={onArgsChange} />
+        </ActionComponentBlock>
     );
 };
 
@@ -104,28 +112,15 @@ export const AddActionInput = (props: any) => {
     const unusedOptions = allActions.filter(a => !disabledActions.includes(a));
     const noOtherActions = unusedOptions.length === allActions.length;
     const addText = noOtherActions ? "Then..." : "And also...";
-    const shouldShow = css`
-        ${unusedOptions.length === 0 && "display: none;"}
-    `;
-    const Container = styled(List.Item)`
-    &&& {
-        ${shouldShow}
-        padding: 10px 0;
-    }
-    `;
-    const ListHeader = styled(List.Header)`
-    &&& {
-        padding-bottom: 10px;
-    }
-    `;
     return (
-        <Container>
-            <List.Icon name="add" verticalAlign="top" size="large" />
-            <List.Content>
-                <ListHeader>
-                    <ActionSelector text={addText} selectOnBlur={false} onChange={onChange} options={unusedOptions} />
-                </ListHeader>
-            </List.Content>
-        </Container>
+        <ActionComponentBlock
+            style={unusedOptions.length === 0 ? { display: "none" } : undefined}
+            icon={
+                <Icon name="add" size="large" />
+            }
+            header={
+                <ActionSelector text={addText} selectOnBlur={false} onChange={onChange} options={unusedOptions} />
+            }
+        />
     );
 };
