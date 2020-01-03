@@ -90,5 +90,7 @@ export const getAllSceneItems = (): string [] => {
 
 export const getAllScenes = (): string[] => {
     const scenes = store.getState().tempContainer.obsScenes;
-    return scenes.map(s => s.name);
+    const sceneNames = scenes.map(s => s.name);
+    sceneNames.sort();
+    return sceneNames;
 };
