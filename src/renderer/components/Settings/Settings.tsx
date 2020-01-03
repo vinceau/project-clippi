@@ -16,6 +16,7 @@ import { comboFilter } from "@/lib/realtime";
 import { Dispatch, iRootState } from "@/store";
 import { device } from "@/styles/device";
 import SlippiLogo from "@/styles/images/slippi-logo.svg";
+import OBSLogo from "@/styles/images/obs.svg";
 import { CustomIcon, Labelled } from "../Misc";
 import { SlippiPage } from "../Slippi";
 import { ComboFinder } from "./ComboFinder";
@@ -120,12 +121,6 @@ export const SettingsPage: React.FC<{
             <Wrapper>
                 <MenuColumn>
                     <StyledMenu secondary={true} vertical={true}>
-                        <Menu.Item header>Slippi Settings</Menu.Item>
-                        <Menu.Item
-                            name="slippi-settings"
-                            active={activeItem === "slippi-settings"}
-                            onClick={handleItemClick}
-                        ><CustomIcon image={SlippiLogo} color="#353636" />Relay Connection</Menu.Item>
                         <Menu.Item header>Combo Settings</Menu.Item>
                         <Menu.Item
                             name="combo-finder"
@@ -137,7 +132,17 @@ export const SettingsPage: React.FC<{
                             active={activeItem === "combo-settings"}
                             onClick={handleItemClick}
                         ><Icon name="filter" />Filter Options</Menu.Item>
-                        <Menu.Item header>Action Settings</Menu.Item>
+                        <Menu.Item header>Automation Settings</Menu.Item>
+                        <Menu.Item
+                            name="slippi-settings"
+                            active={activeItem === "slippi-settings"}
+                            onClick={handleItemClick}
+                        ><CustomIcon image={SlippiLogo} color="#353636" />Slippi Relay</Menu.Item>
+                        <Menu.Item
+                            name="obs-settings"
+                            active={activeItem === "obs-settings"}
+                            onClick={handleItemClick}
+                        ><CustomIcon image={OBSLogo} color="#353636" />OBS Configuration</Menu.Item>
                         <Menu.Item
                             name="account-settings"
                             active={activeItem === "account-settings"}
@@ -153,6 +158,7 @@ export const SettingsPage: React.FC<{
                 <ContentColumn>
                     <div>
                         <Switch>
+                            <Route path={`${path}/obs-settings`} component={OBSSettings} />
                             <Route path={`${path}/slippi-settings`} component={SlippiPage} />
                             <Route path={`${path}/combo-finder`} component={ComboFinder} />
                             <Route path={`${path}/combo-settings`} component={FilterOptions} />
@@ -165,6 +171,12 @@ export const SettingsPage: React.FC<{
         </SettingsContainer>
     );
 };
+
+const OBSSettings = () => {
+    return (<div>
+        <h2>OBS Configuration</h2>
+    </div>);
+}
 
 const FilterOptions = () => {
     const {currentProfile, comboProfiles} = useSelector((state: iRootState) => state.slippi);
