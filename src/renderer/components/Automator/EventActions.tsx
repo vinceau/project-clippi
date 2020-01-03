@@ -13,7 +13,7 @@ import { ActionInput, AddActionInput } from "./ActionInputs";
 
 import { generateRandomEvent } from "@/lib/events";
 import { isDevelopment } from "@/lib/utils";
-import { CodeBlock } from "../Settings/CodeBlock";
+import { CodeBlock } from "../Misc";
 
 const allEvents: ActionEvent[] = [
   ActionEvent.GAME_START,

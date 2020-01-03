@@ -4,6 +4,7 @@ import styled, { css } from "styled-components";
 
 import { Tooltip } from "react-tippy";
 
+import { isDevelopment } from "@/lib/utils";
 import { eventActionManager } from "@/actions";
 import { ActionEvent } from "@/lib/realtime";
 import { notify } from "../lib/utils";
@@ -69,4 +70,13 @@ export const CustomIcon: React.FC<{
     return (
         <Outer aria-hidden="true" className="icon" />
     );
+};
+
+export const CodeBlock: React.FC<{
+    values: any
+}> = (props) => {
+    if (isDevelopment) {
+        return (<pre>{(JSON as any).stringify(props.values, 0, 2)}</pre>);
+    }
+    return null;
 };
