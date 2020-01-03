@@ -5,11 +5,13 @@ import { ActionNotify } from "./ActionNotify";
 import { ActionPlaySound } from "./ActionPlaySound";
 import { ActionTwitchClip } from "./ActionTwitchClip";
 import { ActionComponent } from "./types";
+import { ActionChangeScene } from "./ActionChangeScene";
 
 export enum Action {
     CREATE_TWITCH_CLIP = "twitch-clip",
     PLAY_SOUND = "play-sound",
     NOTIFY = "notify",
+    CHANGE_SCENE = "change-scene",
 }
 
 export interface EventActionConfig {
@@ -31,6 +33,7 @@ export const actionComponents: { [name: string]: ActionComponent} = {
     [Action.CREATE_TWITCH_CLIP]: ActionTwitchClip,
     [Action.NOTIFY]: ActionNotify,
     [Action.PLAY_SOUND]: ActionPlaySound,
+    [Action.CHANGE_SCENE]: ActionChangeScene,
 };
 
 for (const [key, value] of Object.entries(actionComponents)) {
