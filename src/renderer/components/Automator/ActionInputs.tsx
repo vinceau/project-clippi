@@ -68,8 +68,8 @@ const ActionComponentBlock = (props: any) => {
         <Outer {...rest}>
             <div style={{padding: "5px"}}>{icon}</div>
             <Content>
-                <div style={{ marginBottom: "10px"}}>{header}</div>
-                {children && <div>{children}</div>}
+                <div>{header}</div>
+                {children && <div style={{ marginTop: "10px" }}>{children}</div>}
             </Content>
         </Outer>
     );
