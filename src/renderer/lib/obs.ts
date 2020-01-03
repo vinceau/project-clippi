@@ -1,4 +1,4 @@
-import OBSWebSocket, { Scene } from "obs-websocket-js";
+import OBSWebSocket from "obs-websocket-js";
 
 import { dispatcher, store } from "@/store";
 import { notify } from "./utils";
@@ -12,6 +12,14 @@ obs.on("ConnectionOpened", () => {
 });
 
 obs.on("ScenesChanged", () => {
+    updateScenes().catch(console.error);
+});
+
+obs.on("SceneItemAdded", () => {
+    updateScenes().catch(console.error);
+});
+
+obs.on("SceneItemRemoved", () => {
     updateScenes().catch(console.error);
 });
 
