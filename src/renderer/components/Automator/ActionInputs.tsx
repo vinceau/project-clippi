@@ -1,12 +1,12 @@
 import * as React from "react";
 
-import { Icon } from "semantic-ui-react";
-
-import { Action, actionComponents } from "@/actions";
+import styled from "styled-components";
 
 import { Action as ActionDefinition } from "@vinceau/event-actions";
 import { produce } from "immer";
-import styled from "styled-components";
+import { Icon } from "semantic-ui-react";
+
+import { actionComponents } from "@/actions";
 import { InlineDropdown } from "../InlineInputs";
 import { Labelled } from "../Misc";
 
@@ -30,28 +30,6 @@ const ActionSelector = (props: any) => {
         args?: any;
       }
 */
-
-const ActionIcon = (props: any) => {
-    const { actionType, ...rest } = props;
-    switch (actionType) {
-        case Action.NOTIFY:
-            return (
-                <Icon name="exclamation circle" {...rest} />
-            );
-        case Action.PLAY_SOUND:
-            return (
-                <Icon name="music" {...rest} />
-            );
-        case Action.CREATE_TWITCH_CLIP:
-            return (
-                <Icon name="twitch" {...rest} />
-            );
-        default:
-            return (
-                <Icon name="question" {...rest} />
-            );
-    }
-};
 
 const ActionComponentBlock = (props: any) => {
     const { icon, header, children, ...rest } = props;
@@ -90,12 +68,13 @@ export const ActionInput = (props: any) => {
         });
         onChange(newValue);
     };
+    const ActionIcon = actionComponents[value.name].Icon;
     const ActionArgsInput = actionComponents[value.name].Component;
     return (
         <ActionComponentBlock
             icon={
                 <Labelled title="Click to remove" onClick={onRemove}>
-                    <ActionIcon actionType={value.name} size="large" />
+                    <ActionIcon />
                 </Labelled>
             }
             header={

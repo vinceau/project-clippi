@@ -3,6 +3,7 @@ import * as React from "react";
 import { ActionTypeGenerator } from "@vinceau/event-actions";
 import {produce} from "immer";
 import { useSelector } from "react-redux";
+import { Icon } from "semantic-ui-react";
 
 import { InlineDropdown } from "@/components/InlineInputs";
 import { AddSoundButton } from "@/components/Settings/SoundSettings";
@@ -18,6 +19,12 @@ const ActionPlaySoundFunc: ActionTypeGenerator = (params: ActionPlaySoundParams)
     return async (): Promise<void> => {
         await sp.playSound(params.sound);
     };
+};
+
+const ActionIcon = () => {
+    return (
+        <Icon name="music" size="large" />
+    );
 };
 
 const PlaySoundInput = (props: any) => {
@@ -49,5 +56,6 @@ const PlaySoundInput = (props: any) => {
 export const ActionPlaySound: ActionComponent = {
     label: "play a sound",
     action: ActionPlaySoundFunc,
+    Icon: ActionIcon,
     Component: PlaySoundInput,
 };

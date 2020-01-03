@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { ActionTypeGenerator } from "@vinceau/event-actions";
 import { produce } from "immer";
-import { Checkbox } from "semantic-ui-react";
+import { Checkbox, Icon } from "semantic-ui-react";
 
 import { notify } from "@/lib/utils";
 import { createTwitchClip } from "common/twitch";
@@ -37,6 +37,12 @@ const actionCreateClip: ActionTypeGenerator = (params: ActionCreateTwitchClipPar
     };
 };
 
+const ActionIcon = () => {
+    return (
+        <Icon name="twitch" size="large" />
+    );
+};
+
 const TwitchClipInput = (props: any) => {
     const { value, onChange } = props;
     const onDelayChange = (delay?: boolean) => {
@@ -61,5 +67,6 @@ const TwitchClipInput = (props: any) => {
 export const ActionTwitchClip: ActionComponent = {
     label: "create a Twitch clip",
     action: actionCreateClip,
+    Icon: ActionIcon,
     Component: TwitchClipInput,
 };
