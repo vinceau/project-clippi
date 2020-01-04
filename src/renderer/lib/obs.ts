@@ -14,7 +14,6 @@ obs.on("ConnectionOpened", () => {
 
 obs.on("ConnectionClosed", () => {
     dispatcher.tempContainer.setOBSConnected(false);
-    notify(`Disconnected from OBS`);
 });
 
 obs.on("ScenesChanged", () => {
