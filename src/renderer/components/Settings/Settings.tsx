@@ -11,15 +11,15 @@ import { Icon, Menu } from "semantic-ui-react";
 import styled, { css } from "styled-components";
 
 import { device } from "@/styles/device";
-import SlippiLogo from "@/styles/images/slippi-logo.svg";
 import OBSLogo from "@/styles/images/obs.svg";
+import SlippiLogo from "@/styles/images/slippi-logo.svg";
 import { CustomIcon, Labelled } from "../Misc/Misc";
-import { SlippiPage } from "./SlippiPage";
 import { ComboFinder } from "./ComboFinder";
+import { FilterOptions } from "./FilterOptions";
+import { OBSSettings } from "./OBSSettings";
+import { SlippiPage } from "./SlippiPage";
 import { SoundSettings } from "./SoundSettings";
 import { TwitchIntegration } from "./TwitchIntegration";
-import { OBSSettings } from "./OBSSettings";
-import { FilterOptions } from "./FilterOptions";
 
 export const SettingsPage: React.FC<{
     showSettings: boolean;

@@ -133,7 +133,7 @@ export const SlippiConnectionStatusCard: React.FC<{
             onDisconnect={props.onDisconnect}
         />
     );
-}
+};
 
 export const ConnectionStatusCard: React.FC<{
     userImage: any;

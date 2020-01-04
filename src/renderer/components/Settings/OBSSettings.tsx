@@ -36,7 +36,7 @@ export const OBSSettings = () => {
                         <input
                             placeholder="localhost"
                             value={obsAddress}
-                            onChange={(e) => { dispatch.slippi.setOBSAddress(e.target.value) }}
+                            onChange={(e) => { dispatch.slippi.setOBSAddress(e.target.value); }}
                         />
                     </Form.Field>
                     <Form.Field>
@@ -44,7 +44,7 @@ export const OBSSettings = () => {
                         <input
                             placeholder="4444"
                             value={obsPort}
-                            onChange={(e) => { dispatch.slippi.setOBSPort(e.target.value) }}
+                            onChange={(e) => { dispatch.slippi.setOBSPort(e.target.value); }}
                         />
                     </Form.Field>
                     <Form.Field>
@@ -52,7 +52,7 @@ export const OBSSettings = () => {
                         <input
                             placeholder="Password"
                             value={obsPassword}
-                            onChange={(e) => { dispatch.slippi.setOBSPassword(e.target.value) }}
+                            onChange={(e) => { dispatch.slippi.setOBSPassword(e.target.value); }}
                         />
                     </Form.Field>
                     <Button primary type="submit">Connect</Button>

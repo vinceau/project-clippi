@@ -7,7 +7,7 @@ import { Button } from "semantic-ui-react";
 
 import { InlineDropdown } from "@/components/Misc/InlineInputs";
 import { CustomIcon } from "@/components/Misc/Misc";
-import { connectToOBSAndNotify, setScene, getAllScenes } from "@/lib/obs";
+import { connectToOBSAndNotify, getAllScenes, setScene } from "@/lib/obs";
 import { iRootState } from "@/store";
 import { ActionComponent } from "./types";
 
