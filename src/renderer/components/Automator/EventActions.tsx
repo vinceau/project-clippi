@@ -119,7 +119,7 @@ export const EventActions = (props: any) => {
           <Labelled onClick={() => setCollapsed(!collapsed)} title={collapsed ? "Expand" : "Collapse"}>{collapsed ? expandIcon : collapseIcon}</Labelled>
         </EventHeaderButtons>
       </EventHeader>
-      <div>
+      <ActionContainer collapsed={collapsed}>
         {value.actions.map((a: Action, i: number) => {
           const onInnerActionChange = (newVal: Action) => {
             onActionChange(i, newVal);
@@ -138,10 +138,44 @@ export const EventActions = (props: any) => {
           );
         })}
         {!collapsed && <AddActionInput onChange={onActionAdd} disabledActions={disabledActions} />}
-      </div>
+      </ActionContainer>
       <CodeBlock values={value} />
       <Divider />
     </Container>
+  );
+};
+
+const ActionContainer: React.FC<{
+  collapsed: boolean;
+}> = (props) => {
+  const { collapsed } = props;
+  const snippetCSS = css`
+  & > div {
+    position: relative;
+    padding-bottom: 10px;
+    margin-left: 20px;
+
+    &::before {
+      content: '';
+      position: absolute;
+      border-right:2px solid black;
+      border-bottom:2px solid black;
+      width: 7px;
+      height: 7px;
+      top: calc(50% - 4px);
+      left: -20px;
+      transform: translateY(-50%) rotate(-45deg);
+    }
+  }
+  `;
+  const Outer = styled.div`
+  margin-left: 40px;
+  ${collapsed && snippetCSS}
+  `;
+  return (
+    <Outer>
+      {props.children}
+    </Outer>
   );
 };
 

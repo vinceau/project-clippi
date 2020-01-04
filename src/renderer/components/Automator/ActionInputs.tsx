@@ -35,7 +35,6 @@ const ActionComponentBlock = (props: any) => {
     const { icon, header, children, ...rest } = props;
     const Outer = styled.div`
         display: flex;
-        margin-left: 20px;
         margin-bottom: 10px;
     `;
     const Content = styled.div`
