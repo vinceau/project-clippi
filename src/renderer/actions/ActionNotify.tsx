@@ -13,7 +13,10 @@ interface ActionNotifyParams {
 
 const ActionNotifyFunc: ActionTypeGenerator = (params: ActionNotifyParams) => {
     return async (): Promise<void> => {
-        notify(params.message, params.title);
+        // Make sure we actually have something to notify
+        if (params.message) {
+            notify(params.message, params.title);
+        }
     };
 };
 
