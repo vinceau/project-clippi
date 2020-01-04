@@ -1,7 +1,7 @@
 import fs from "fs";
 import { Writable } from "stream";
 
-import { ComboFilter, ComboType, DolphinComboQueue, SlippiLivestream, SlippiRealtime, SlpStream } from "@vinceau/slp-realtime";
+import { ComboFilter, ComboType, DolphinComboQueue, SlippiLivestream, SlippiRealtime, SlpStream, ConnectionStatus } from "@vinceau/slp-realtime";
 
 import { notify } from "./utils";
 
@@ -33,6 +33,11 @@ console.log(slippiLivestream.connection);
 
 slippiLivestream.connection.on("statusChange", (status) => {
     dispatcher.tempContainer.setSlippiConnectionStatus(status);
+    if (status === ConnectionStatus.CONNECTED) {
+        notify("Connected to Slippi relay");
+    } else if (status === ConnectionStatus.DISCONNECTED) {
+        notify("Disconnected from Slippi relay");
+    }
 });
 
 export const connectToSlippi = async (port?: number): Promise<boolean> => {
