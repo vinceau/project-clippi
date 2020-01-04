@@ -30,7 +30,7 @@ const CustomInput = styled(Input)`
     `;
 
 export const DelayInput: React.FC<{
-    value: string;
+    value?: string;
     onChange: (delay: string) => void;
 }> = props => {
     const [delayAmount, setDelayAmount] = React.useState(props.value || "0");
