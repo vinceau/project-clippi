@@ -37,6 +37,10 @@ const actionCreateClip: ActionTypeGenerator = (params: ActionCreateTwitchClipPar
     };
 };
 
+const snippet = () => {
+    return "clip it";
+}
+
 const ActionIcon = () => {
     return (
         <Icon name="twitch" size="large" />
@@ -44,10 +48,7 @@ const ActionIcon = () => {
 };
 
 const TwitchClipInput = (props: any) => {
-    const { snippet, value, onChange } = props;
-    if (snippet) {
-        return (<span>clip it</span>);
-    }
+    const { value, onChange } = props;
     const onDelayChange = (delay?: boolean) => {
         const newValue = produce(value, (draft: ActionCreateTwitchClipParams) => {
             draft.delay = delay;
@@ -70,6 +71,7 @@ const TwitchClipInput = (props: any) => {
 export const ActionTwitchClip: ActionComponent = {
     label: "create a Twitch clip",
     action: actionCreateClip,
+    snippet,
     Icon: ActionIcon,
     Component: TwitchClipInput,
 };

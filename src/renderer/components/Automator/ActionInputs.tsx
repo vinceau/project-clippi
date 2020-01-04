@@ -73,11 +73,8 @@ export const ActionInput = (props: any) => {
     }
     const ActionIcon = actionComponents[value.name].Icon;
     const ActionArgsInput = actionComponents[value.name].Component;
-    const content = (
-        <ActionArgsInput value={value.args} onChange={onArgsChange} snippet={snippet} />
-    );
     if (snippet) {
-        return content;
+        return actionComponents[value.name].snippet(value.args);
     }
     return (
         <ActionComponentBlock
@@ -90,7 +87,7 @@ export const ActionInput = (props: any) => {
                 <ActionSelector prefix={selectPrefix} value={value.name} onChange={onActionChange} disabledOptions={disabledActions} />
             }
         >
-            {content}
+            <ActionArgsInput value={value.args} onChange={onArgsChange} />
         </ActionComponentBlock>
     );
 };

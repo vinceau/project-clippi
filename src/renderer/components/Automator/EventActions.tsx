@@ -94,6 +94,8 @@ export const EventActions = (props: any) => {
     onChange(newValue);
   };
   const [collapsed, setCollapsed] = React.useState(false);
+  const expandIcon = (<Icon name="angle down" size="big" />);
+  const collapseIcon = (<Icon name="angle up" size="big" />);
   const testRunActions = () => {
     eventActionManager.execute(value.actions).catch(console.error);
   };
@@ -112,8 +114,9 @@ export const EventActions = (props: any) => {
           disabledOptions={disabledOptions}
         />
         <EventHeaderButtons>
-          <Labelled onClick={testRunActions} title="Test run"><Icon name="play" size="big" /></Labelled>
+          <Labelled onClick={testRunActions} title="Test run"><Icon name="play" size="large" /></Labelled>
           <Labelled onClick={onRemove} title="Remove"><Icon name="remove" size="big" /></Labelled>
+          <Labelled onClick={() => setCollapsed(!collapsed)} title={collapsed ? "Expand" : "Collapse"}>{collapsed ? expandIcon : collapseIcon}</Labelled>
         </EventHeaderButtons>
       </EventHeader>
       <div>

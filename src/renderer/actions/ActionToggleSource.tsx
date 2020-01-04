@@ -36,6 +36,10 @@ const ActionIcon = () => {
     );
 };
 
+const snippet = (params: ActionToggleSourceParams) => {
+    return `${params.visible ? "show" : "hide" } ${params.source}`;
+};
+
 const SourceNameInput = (props: { value: ActionToggleSourceParams, onChange: any}) => {
     const { value, onChange } = props;
     const { obsConnected } = useSelector((state: iRootState) => state.tempContainer);
@@ -93,6 +97,7 @@ const SourceNameInput = (props: { value: ActionToggleSourceParams, onChange: any
 export const ActionToggleSource: ActionComponent = {
     label: "toggle OBS source",
     action: actionToggleSource,
+    snippet,
     Icon: ActionIcon,
     Component: SourceNameInput,
 };

@@ -35,6 +35,10 @@ const ActionIcon = () => {
     );
 };
 
+const snippet = (params: ActionChangeSceneParams): string => {
+    return `change scene to ${params.scene}`;
+};
+
 const SceneNameInput = (props: any) => {
     const { value, onChange } = props;
     const { obsConnected } = useSelector((state: iRootState) => state.tempContainer);
@@ -68,6 +72,7 @@ const SceneNameInput = (props: any) => {
 export const ActionChangeScene: ActionComponent = {
     label: "change OBS scene",
     action: actionChangeScene,
+    snippet,
     Icon: ActionIcon,
     Component: SceneNameInput,
 };

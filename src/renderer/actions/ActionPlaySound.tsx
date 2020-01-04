@@ -27,11 +27,12 @@ const ActionIcon = () => {
     );
 };
 
+const snippet = (params: ActionPlaySoundParams) => {
+    return `play ${params.sound}`;
+}
+
 const PlaySoundInput = (props: any) => {
-    const { snippet, value, onChange } = props;
-    if (snippet) {
-        return (<span>Play {value.sound}</span>);
-    }
+    const { value, onChange } = props;
     const soundFiles = useSelector((state: iRootState) => state.filesystem.soundFiles);
     const allSounds = Object.keys(soundFiles);
     if (allSounds.length === 0) {
@@ -59,6 +60,7 @@ const PlaySoundInput = (props: any) => {
 export const ActionPlaySound: ActionComponent = {
     label: "play a sound",
     action: ActionPlaySoundFunc,
+    snippet,
     Icon: ActionIcon,
     Component: PlaySoundInput,
 };

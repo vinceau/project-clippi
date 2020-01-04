@@ -17,6 +17,10 @@ const ActionNotifyFunc: ActionTypeGenerator = (params: ActionNotifyParams) => {
     };
 };
 
+const snippet = (params: ActionNotifyParams): string => {
+    return `notify "${params.message.substr(0, 50)}..."`;
+};
+
 const ActionIcon = () => {
     return (
         <Icon name="exclamation circle" size="large" />
@@ -24,11 +28,8 @@ const ActionIcon = () => {
 };
 
 const NotifyInput = (props: any) => {
-    const { snippet, value, onChange } = props;
+    const { value, onChange } = props;
     const defaultValue = value && value.message ? value.message : "";
-    if (snippet) {
-        return (<span>notify</span>);
-    }
     const [ msg, setMsg ] = React.useState(defaultValue);
     return (
         <div style={{maxWidth: "500px"}}>
@@ -47,6 +48,7 @@ const NotifyInput = (props: any) => {
 export const ActionNotify: ActionComponent = {
     label: "show a notification",
     action: ActionNotifyFunc,
+    snippet,
     Icon: ActionIcon,
     Component: NotifyInput,
 };
