@@ -8,9 +8,9 @@ import { isDevelopment } from "@/lib/utils";
 import { Dispatch, iRootState } from "@/store";
 import { useDispatch, useSelector } from "react-redux";
 import { Automator } from "../Automator/Automator";
+import { SettingsPage } from "../Settings/Settings";
 import { ConnectionStatusDisplay } from "./ConnectionStatus";
 import { DevTools, Labelled } from "./Misc";
-import { SettingsPage } from "../Settings/Settings";
 
 const Header: React.FC<{
     showSettings?: boolean;
