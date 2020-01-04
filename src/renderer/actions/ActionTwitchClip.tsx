@@ -17,9 +17,6 @@ interface ActionCreateTwitchClipParams {
 const actionCreateClip: ActionTypeGenerator = (params: ActionCreateTwitchClipParams) => {
     return async (): Promise<string | null> => {
         const token = store.getState().twitch.authToken;
-        console.log(`params:`);
-        console.log(params);
-        console.log(`creating clip with token: ${token}`);
         try {
             const clipID = await createTwitchClip(token, params.delay);
             // Get timestamp in seconds
