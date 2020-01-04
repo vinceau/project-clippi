@@ -28,7 +28,10 @@ const ActionIcon = () => {
 };
 
 const Snippet: React.FC<{value: ActionPlaySoundParams}> = props => {
-    return <div>play <b>{props.value.sound}</b></div>;
+    if (!props.value || !props.value.sound) {
+        return (<div>play a sound</div>);
+    }
+    return (<div>play <b>{props.value.sound}</b></div>);
 };
 
 const PlaySoundInput = (props: any) => {
