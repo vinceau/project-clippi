@@ -50,6 +50,10 @@ export const connectToOBSAndNotify = (): void => {
     });
 };
 
+export const disconnectFromOBS = (): void => {
+    obs.disconnect();
+};
+
 export const updateScenes = async (): Promise<void> => {
     const data = await obs.send("GetSceneList");
     dispatcher.tempContainer.setOBSSceneItems(data.scenes);
