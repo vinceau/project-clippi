@@ -1,11 +1,12 @@
 import * as path from "path";
 
-import { app, BrowserWindow } from "electron";
+import { app, BrowserWindow, Menu } from "electron";
 import { format as formatUrl } from "url";
 import { setupListeners } from "./listeners";
 import { setupIPC } from "./mainIpc";
 
 import contextMenu from "electron-context-menu";
+import { getMenuTemplate } from "./menu";
 
 contextMenu();
 
@@ -63,5 +64,9 @@ app.on("activate", () => {
 
 // create main BrowserWindow when electron is ready
 app.on("ready", () => {
+  // Create the Application's main menu
+  const template = getMenuTemplate(app);
+  Menu.setApplicationMenu(Menu.buildFromTemplate(template));
+
   mainWindow = createMainWindow();
 });
