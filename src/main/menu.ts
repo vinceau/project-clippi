@@ -1,9 +1,10 @@
 import { App } from "electron";
 
-export const getMenuTemplate = (app: App): Electron.MenuItemConstructorOptions[] => {
+export const getMenuTemplate = (app: App, platform: string): Electron.MenuItemConstructorOptions[] => {
+    const menuItems: Electron.MenuItemConstructorOptions[] = [];
 
     const application: Electron.MenuItemConstructorOptions = {
-        label: "Application",
+        label: (platform === "win32") ? "File" : "Application",
         submenu: [{
             label: "About",
             role: "orderFrontStandardAboutPanel"
@@ -13,13 +14,14 @@ export const getMenuTemplate = (app: App): Electron.MenuItemConstructorOptions[]
         },
         {
             label: "Quit",
-            accelerator: "Command+Q",
+            accelerator: (platform === "darwin") ? "Command+Q" : undefined,
             click: () => {
                 app.quit();
             }
         }
         ]
     };
+    menuItems.push(application);
 
     const edit: Electron.MenuItemConstructorOptions = {
         label: "Edit",
@@ -58,18 +60,22 @@ export const getMenuTemplate = (app: App): Electron.MenuItemConstructorOptions[]
         }
         ]
     };
+    menuItems.push(edit);
 
-    return [
-        application,
-        edit,
-        {
-            type: "separator"
-        },
-        {
-            label: "Quit",
-            click: () => {
-                app.quit();
+    if (platform === "darwin") {
+        menuItems.push(
+            application,
+            edit,
+            {
+                type: "separator"
+            },
+            {
+                label: "Quit",
+                click: () => {
+                    app.quit();
+                }
             }
-        }
-    ];
+        );
+    }
+    return menuItems;
 };

@@ -65,7 +65,7 @@ app.on("activate", () => {
 // create main BrowserWindow when electron is ready
 app.on("ready", () => {
   // Create the Application's main menu
-  const template = getMenuTemplate(app);
+  const template = getMenuTemplate(app, process.platform);
   Menu.setApplicationMenu(Menu.buildFromTemplate(template));
 
   // Set any anchor links to open in default web browser
