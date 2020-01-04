@@ -6,7 +6,7 @@ import { ActionEvent } from "@/lib/realtime";
 import { Action as ActionDefinition } from "@vinceau/event-actions";
 import { Action } from "@vinceau/event-actions";
 import { produce } from "immer";
-import { Container, Divider, Icon, List } from "semantic-ui-react";
+import { Container, Divider, Icon } from "semantic-ui-react";
 import { InlineDropdown } from "../Misc/InlineInputs";
 import { ActionInput, AddActionInput } from "./ActionInputs";
 
