@@ -1,6 +1,6 @@
 import * as path from "path";
 
-import { app, BrowserWindow, Menu } from "electron";
+import { app, BrowserWindow, Menu, shell } from "electron";
 import { format as formatUrl } from "url";
 import { setupListeners } from "./listeners";
 import { setupIPC } from "./mainIpc";
@@ -68,5 +68,10 @@ app.on("ready", () => {
   const template = getMenuTemplate(app);
   Menu.setApplicationMenu(Menu.buildFromTemplate(template));
 
+  // Set any anchor links to open in default web browser
   mainWindow = createMainWindow();
+  mainWindow.webContents.on("new-window", (event: any, url: string) => {
+      event.preventDefault();
+      shell.openExternal(url);
+  });
 });

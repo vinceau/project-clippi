@@ -19,10 +19,6 @@ export const TwitchUserStatus: React.SFC<{
     padding: 3px;
     `;
     const url = `twitch.tv/${props.channel}`;
-    const linkClick = (e: any) => {
-        e.preventDefault();
-        shell.openExternal(`https://${url}`);
-    };
     return (
         <StatusContainer>
             <Card>
@@ -33,7 +29,7 @@ export const TwitchUserStatus: React.SFC<{
                         src={userImage}
                     />
                     <Card.Header>{props.displayName}</Card.Header>
-                    <Card.Meta><a href="#" onClick={linkClick}>{url}</a></Card.Meta>
+                    <Card.Meta><a href={`https://${url}`} target="_blank">{url}</a></Card.Meta>
                 </Card.Content>
                 <Card.Content extra>
                     <Button basic fluid color="red" onClick={props.onSignOut}>
