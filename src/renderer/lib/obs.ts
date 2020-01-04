@@ -5,47 +5,41 @@ import { notify } from "./utils";
 
 const obs = new OBSWebSocket();
 
-obs.on("ConnectionOpened", () => {
-    dispatcher.tempContainer.setOBSConnected(true);
-    // Set the scenes on first connect
-    updateScenes().catch(console.error);
-    notify(`Successfully connected to OBS`);
-});
+const setupListeners = () => {
+    obs.on("ConnectionClosed", () => {
+        dispatcher.tempContainer.setOBSConnected(false);
+    });
 
-obs.on("ConnectionClosed", () => {
-    dispatcher.tempContainer.setOBSConnected(false);
-});
+    obs.on("ScenesChanged", () => {
+        updateScenes().catch(console.error);
+    });
 
-obs.on("ScenesChanged", () => {
-    updateScenes().catch(console.error);
-});
+    obs.on("SceneItemAdded", () => {
+        updateScenes().catch(console.error);
+    });
 
-obs.on("SceneItemAdded", () => {
-    updateScenes().catch(console.error);
-});
-
-obs.on("SceneItemRemoved", () => {
-    updateScenes().catch(console.error);
-});
-
-const _connectToOBS = async (address: string, port: string, password?: string): Promise<void> => {
-    console.log(`connecting to obs on: ${address}:${port}`);
-    await obs.connect({
-        address: `${address}:${port}`,
-        password: password || "",
+    obs.on("SceneItemRemoved", () => {
+        updateScenes().catch(console.error);
     });
 };
 
 export const connectToOBS = async (): Promise<void> => {
     const { obsAddress, obsPort, obsPassword } = store.getState().slippi;
-    return _connectToOBS(obsAddress, obsPort, obsPassword);
+    await obs.connect({
+        address: `${obsAddress}:${obsPort}`,
+        password: obsPassword,
+    });
+    setupListeners();
+    await updateScenes();
+    dispatcher.tempContainer.setOBSConnected(true);
 };
 
 export const connectToOBSAndNotify = (): void => {
-    const { obsAddress, obsPort, obsPassword } = store.getState().slippi;
-    _connectToOBS(obsAddress, obsPort, obsPassword).catch(err => {
+    connectToOBS().then(() => {
+        notify("Successfully connected to OBS");
+    }).catch(err => {
         console.error(err);
-        notify(`Could not connect to ${obsAddress}:${obsPort}`);
+        notify(`OBS connection failed`);
     });
 };
 
@@ -78,7 +72,7 @@ export const setSourceItemVisibility = async (sourceName: string, visible?: bool
     }
 };
 
-export const getAllSceneItems = (): string [] => {
+export const getAllSceneItems = (): string[] => {
     const scenes = store.getState().tempContainer.obsScenes;
     const allItems: string[] = [];
     scenes.forEach(scene => {
