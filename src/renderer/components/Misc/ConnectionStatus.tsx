@@ -10,6 +10,7 @@ import slippiLogoSVG from "@/styles/images/slippi-logo.svg";
 import slippiLogo from "@/styles/images/slippi.png";
 import { InlineInput } from "./InlineInputs";
 import { CustomIcon, Labelled } from "./Misc";
+import { dispatcher } from "@/store";
 
 const statusToLabel = (status: ConnectionStatus): string => {
     switch (status) {
@@ -202,6 +203,7 @@ export const SlippiConnectionPlaceholder: React.FC<{
                 placeholder="Port"
                 value={p}
                 onChange={(_: any, { value }: any) => setP(value)}
+                onBlur={() => dispatcher.slippi.setPort(p)}
             />
         </Segment>
     );
