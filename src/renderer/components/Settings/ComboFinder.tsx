@@ -9,7 +9,7 @@ import { Progress } from "semantic-ui-react";
 import { Dispatch, iRootState } from "@/store";
 
 import { fastFindAndWriteCombos } from "@/lib/realtime";
-import { notify } from "@/lib/utils";
+import { notify, openComboInDolphin } from "@/lib/utils";
 import { timeDifferenceString } from "common/utils";
 import styled from "styled-components";
 
@@ -55,7 +55,12 @@ export const ComboFinder: React.FC<{}> = () => {
         dispatch.tempContainer.setPercent(0);
         dispatch.tempContainer.setComboFinderProcessing(true);
         console.log(`finding combos from the slp files in ${filesPath} ${includeSubFolders && "and all subfolders"} and saving to ${combosFilePath}`);
-        findAndWriteCombos().catch(console.error);
+        findAndWriteCombos().then(() => {
+            if (process.platform === "win32") {
+                // check if we want to open the combo file after generation
+                openComboInDolphin(combosFilePath);
+            }
+        }).catch(console.error);
     };
     const maybeOpenFile = (fileName: string) => {
         if (!shell.showItemInFolder(fileName)) {
