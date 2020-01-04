@@ -30,7 +30,7 @@ const showElectronNotification = (message: string, title: string): void => {
 
     // Don't set the icon on MacOS or it will show up twice
     if (process.platform !== "darwin") {
-        options.icon = path.join(app.getAppPath(), "resources/icon.png");
+        options.icon = path.join(app.getAppPath(), "build/icon.png");
     }
 
     const n = new Notification(options);
