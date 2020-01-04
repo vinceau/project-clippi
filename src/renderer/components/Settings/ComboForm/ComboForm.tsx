@@ -6,16 +6,16 @@ import arrayMutators from "final-form-arrays";
 import { Field, Form } from "react-final-form";
 import { Accordion, Button, Form as SemanticForm, Icon } from "semantic-ui-react";
 
-import { CharacterSelectAdapter } from "./ComboForm/CharacterSelect";
-import { SemanticCheckboxInput } from "./ComboForm/FormAdapters";
-import { NameTagForm } from "./ComboForm/NameTagForm";
-import { PercentageSlider } from "./ComboForm/PercentageSlider";
-import { mapCharacterPercentArrayToObject, mapObjectToCharacterPercentArray, PerCharPercent } from "./ComboForm/PerCharPercent";
+import { CharacterSelectAdapter } from "./CharacterSelect";
+import { SemanticCheckboxInput } from "./FormAdapters";
+import { NameTagForm } from "./NameTagForm";
+import { PercentageSlider } from "./PercentageSlider";
+import { mapCharacterPercentArrayToObject, mapObjectToCharacterPercentArray, PerCharPercent } from "./PerCharPercent";
 
 // import "./ComboForm/NameTagForm.scss";
 // import Styles from "./Styles";
 import styled from "styled-components";
-import { CodeBlock } from "./CodeBlock";
+import { CodeBlock } from "../../Misc/Misc";
 import { PortSelectAdapter } from "./PortSelection";
 
 /*

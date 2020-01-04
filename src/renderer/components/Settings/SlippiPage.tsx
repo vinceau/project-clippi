@@ -4,7 +4,7 @@ import { slippiLivestream } from "@/lib/realtime";
 import { Dispatch, iRootState } from "@/store";
 import { ConnectionStatus } from "@vinceau/slp-realtime";
 import { useDispatch, useSelector } from "react-redux";
-import { SlippiConnectionPlaceholder, SlippiConnectionStatusCard } from "./ConnectionStatus";
+import { SlippiConnectionPlaceholder, SlippiConnectionStatusCard } from "../Misc/ConnectionStatus";
 
 export const SlippiPage: React.FC = () => {
     const { port } = useSelector((state: iRootState) => state.slippi);
@@ -13,7 +13,7 @@ export const SlippiPage: React.FC = () => {
 
     return (
         <div>
-            <h2>Relay Connection</h2>
+            <h2>Slippi Relay</h2>
             {slippiConnectionStatus === ConnectionStatus.CONNECTED ?
                 <SlippiConnectionStatusCard
                     status={slippiConnectionStatus}

@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { ActionTypeGenerator } from "@vinceau/event-actions";
-import { Form, TextArea } from "semantic-ui-react";
+import { Form, Icon, TextArea } from "semantic-ui-react";
 
 import { notify } from "@/lib/utils";
 import { ActionComponent } from "./types";
@@ -15,6 +15,12 @@ const ActionNotifyFunc: ActionTypeGenerator = (params: ActionNotifyParams) => {
     return async (): Promise<void> => {
         notify(params.message, params.title);
     };
+};
+
+const ActionIcon = () => {
+    return (
+        <Icon name="exclamation circle" size="large" />
+    );
 };
 
 const NotifyInput = (props: any) => {
@@ -41,5 +47,6 @@ const NotifyInput = (props: any) => {
 export const ActionNotify: ActionComponent = {
     label: "show a notification",
     action: ActionNotifyFunc,
+    Icon: ActionIcon,
     Component: NotifyInput,
 };

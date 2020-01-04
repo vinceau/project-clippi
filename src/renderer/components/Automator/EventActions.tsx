@@ -6,14 +6,14 @@ import { ActionEvent } from "@/lib/realtime";
 import { Action as ActionDefinition } from "@vinceau/event-actions";
 import { Action } from "@vinceau/event-actions";
 import { produce } from "immer";
-import { Container, Icon, List } from "semantic-ui-react";
-import { InlineDropdown } from "../InlineInputs";
-import { Labelled } from "../Misc";
+import { Container, Divider, Icon, List } from "semantic-ui-react";
+import { InlineDropdown } from "../Misc/InlineInputs";
 import { ActionInput, AddActionInput } from "./ActionInputs";
 
+import { eventActionManager } from "@/actions";
 import { generateRandomEvent } from "@/lib/events";
 import { isDevelopment } from "@/lib/utils";
-import { CodeBlock } from "../Settings/CodeBlock";
+import { CodeBlock, Labelled } from "../Misc/Misc";
 
 const allEvents: ActionEvent[] = [
   ActionEvent.GAME_START,
@@ -56,6 +56,12 @@ const EventHeader = styled.div`
   justify-content: space-between;
 `;
 
+const EventHeaderButtons = styled.div`
+  & > span {
+    padding: 5px;
+  }
+`;
+
 export const EventActions = (props: any) => {
   const { value, onChange, onRemove, disabledOptions } = props;
   // const [notifyValue, setValue] = React.useState({});
@@ -88,6 +94,9 @@ export const EventActions = (props: any) => {
     onChange(newValue);
   };
   const [collapsed, setCollapsed] = React.useState(false);
+  const testRunActions = () => {
+    eventActionManager.execute(value.actions).catch(console.error);
+  };
 
   return (
     <Container>
@@ -95,14 +104,17 @@ export const EventActions = (props: any) => {
       <EventHeader>
         <InlineDropdown
           prefix="When"
-          options={allEvents}
+          customOptions={allEvents}
           mapOptionToLabel={(opt: string) => mapEventToName[opt]}
           fontSize={30}
           value={value.event}
           onChange={onEventChange}
           disabledOptions={disabledOptions}
         />
-        <Labelled onClick={onRemove} title="Remove"><Icon name="remove" size="big" /></Labelled>
+        <EventHeaderButtons>
+          <Labelled onClick={testRunActions} title="Test run"><Icon name="play" size="big" /></Labelled>
+          <Labelled onClick={onRemove} title="Remove"><Icon name="remove" size="big" /></Labelled>
+        </EventHeaderButtons>
       </EventHeader>
       <div>
         {value.actions.map((a: Action, i: number) => {
@@ -125,6 +137,7 @@ export const EventActions = (props: any) => {
         {!collapsed && <AddActionInput onChange={onActionAdd} disabledActions={disabledActions} />}
       </div>
       <CodeBlock values={value} />
+      <Divider />
     </Container>
   );
 };
@@ -149,7 +162,7 @@ export const AddEventDropdown = (props: any) => {
           text={addText}
           selectOnBlur={false}
           onChange={onChange}
-          options={unusedOptions}
+          customOptions={unusedOptions}
           mapOptionToLabel={(opt: string) => mapEventToName[opt]}
           fontSize={30}
         />

@@ -1,14 +1,14 @@
 import * as React from "react";
 
-import { Icon } from "semantic-ui-react";
-
-import { Action, actionComponents } from "@/actions";
+import styled from "styled-components";
 
 import { Action as ActionDefinition } from "@vinceau/event-actions";
 import { produce } from "immer";
-import styled from "styled-components";
-import { InlineDropdown } from "../InlineInputs";
-import { Labelled } from "../Misc";
+import { Icon } from "semantic-ui-react";
+
+import { actionComponents } from "@/actions";
+import { InlineDropdown } from "../Misc/InlineInputs";
+import { Labelled } from "../Misc/Misc";
 
 const allActions = Object.keys(actionComponents);
 
@@ -17,7 +17,7 @@ const ActionSelector = (props: any) => {
     return (
         <InlineDropdown
             {...rest}
-            options={options || allActions}
+            customOptions={options || allActions}
             mapOptionToLabel={(opt: string) => actionComponents[opt].label}
             fontSize={18}
         />
@@ -30,28 +30,6 @@ const ActionSelector = (props: any) => {
         args?: any;
       }
 */
-
-const ActionIcon = (props: any) => {
-    const { actionType, ...rest } = props;
-    switch (actionType) {
-        case Action.NOTIFY:
-            return (
-                <Icon name="exclamation circle" {...rest} />
-            );
-        case Action.PLAY_SOUND:
-            return (
-                <Icon name="music" {...rest} />
-            );
-        case Action.CREATE_TWITCH_CLIP:
-            return (
-                <Icon name="twitch" {...rest} />
-            );
-        default:
-            return (
-                <Icon name="question" {...rest} />
-            );
-    }
-};
 
 const ActionComponentBlock = (props: any) => {
     const { icon, header, children, ...rest } = props;
@@ -68,8 +46,8 @@ const ActionComponentBlock = (props: any) => {
         <Outer {...rest}>
             <div style={{padding: "5px"}}>{icon}</div>
             <Content>
-                <div style={{ marginBottom: "10px"}}>{header}</div>
-                {children && <div>{children}</div>}
+                <div>{header}</div>
+                {children && <div style={{ marginTop: "10px" }}>{children}</div>}
             </Content>
         </Outer>
     );
@@ -90,6 +68,10 @@ export const ActionInput = (props: any) => {
         });
         onChange(newValue);
     };
+    if (!actionComponents[value.name]) {
+        return null;
+    }
+    const ActionIcon = actionComponents[value.name].Icon;
     const ActionArgsInput = actionComponents[value.name].Component;
     const content = (
         <ActionArgsInput value={value.args} onChange={onArgsChange} snippet={snippet} />
@@ -101,7 +83,7 @@ export const ActionInput = (props: any) => {
         <ActionComponentBlock
             icon={
                 <Labelled title="Click to remove" onClick={onRemove}>
-                    <ActionIcon actionType={value.name} size="large" />
+                    <ActionIcon />
                 </Labelled>
             }
             header={
