@@ -4,7 +4,7 @@ import { Dispatch, iRootState } from "@/store";
 import { useDispatch, useSelector } from "react-redux";
 
 import { connectToOBSAndNotify, disconnectFromOBS } from "@/lib/obs";
-import { Icon, Button, Form } from "semantic-ui-react";
+import { Button, Form, Icon } from "semantic-ui-react";
 import { ConnectionStatusCard } from "../Misc/ConnectionStatus";
 
 import OBSLogo from "@/styles/images/obs.png";
