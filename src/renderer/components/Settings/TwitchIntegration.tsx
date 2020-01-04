@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Dispatch, iRootState } from "@/store";
 
 import { TwitchClip } from "@/store/models/twitch";
-import { shell } from "electron";
 import { Header, Icon, Loader, Segment, Table } from "semantic-ui-react";
 import styled from "styled-components";
 import { format } from "timeago.js";

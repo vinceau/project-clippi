@@ -3,7 +3,6 @@ import * as React from "react";
 import { Button, Card, Icon, Image } from "semantic-ui-react";
 import styled from "styled-components";
 
-import { shell } from "electron";
 import { createTwitchClip } from "../../../common/twitch";
 import { notify } from "../../lib/utils";
 import defaultUserImage from "../../styles/images/user.svg";
