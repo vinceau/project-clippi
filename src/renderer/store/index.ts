@@ -3,9 +3,9 @@ import createRematchPersist, { getPersistor } from "@rematch/persist";
 
 import * as models from "./models";
 
-import { updateEventActionManager } from "@/lib/actions";
+import { updateEventActionManager } from "@/actions";
 import { comboFilter } from "@/lib/realtime";
-import { sp } from "@/lib/sounds";
+import { soundPlayer } from "@/lib/sounds";
 
 const persistPlugin = createRematchPersist({
     version: 1,
@@ -35,7 +35,7 @@ const storeSync = () => {
 
     // Restore sound files
     const soundFiles = state.filesystem.soundFiles;
-    sp.sounds = soundFiles;
+    soundPlayer.sounds = soundFiles;
 
     // Restore combo settings
     const slippiSettings = state.slippi.comboProfiles[state.slippi.currentProfile];

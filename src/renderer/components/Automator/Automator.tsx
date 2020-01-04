@@ -1,16 +1,11 @@
 import * as React from "react";
 
 import { ActionEvent } from "@/lib/realtime";
-import { Action as ActionDefinition } from "@vinceau/event-actions";
 import { AddEventDropdown, EventActions } from "./EventActions";
 
+import { EventActionConfig } from "@/actions";
 import { Dispatch, iRootState } from "@/store";
 import { useDispatch, useSelector } from "react-redux";
-
-export interface EventActionConfig {
-    event: ActionEvent;
-    actions: ActionDefinition[];
-}
 
 export const Automator: React.FC = () => {
     const val = useSelector((state: iRootState) => state.slippi.events);

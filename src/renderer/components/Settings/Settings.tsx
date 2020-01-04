@@ -7,20 +7,17 @@ import {
     useRouteMatch,
 } from "react-router-dom";
 
-import { ComboFilterSettings } from "@vinceau/slp-realtime";
-import { useDispatch, useSelector } from "react-redux";
 import { Icon, Menu } from "semantic-ui-react";
 import styled, { css } from "styled-components";
 
-import { comboFilter } from "@/lib/realtime";
-import { Dispatch, iRootState } from "@/store";
 import { device } from "@/styles/device";
+import OBSLogo from "@/styles/images/obs.svg";
 import SlippiLogo from "@/styles/images/slippi-logo.svg";
-import { CustomIcon, LabelledButton } from "../Misc";
-import { SlippiPage } from "../Slippi";
+import { CustomIcon, Labelled } from "../Misc/Misc";
 import { ComboFinder } from "./ComboFinder";
-import { ComboForm } from "./ComboForm";
-import { ProfileSelector } from "./ProfileSelection";
+import { FilterOptions } from "./FilterOptions";
+import { OBSSettings } from "./OBSSettings";
+import { SlippiPage } from "./SlippiPage";
 import { SoundSettings } from "./SoundSettings";
 import { TwitchIntegration } from "./TwitchIntegration";
 
@@ -113,19 +110,13 @@ export const SettingsPage: React.FC<{
     return (
         <SettingsContainer>
             <CloseButton>
-                <LabelledButton onClick={props.onClose} title="Close">
+                <Labelled onClick={props.onClose} title="Close">
                     <Icon name="close" />
-                </LabelledButton>
+                </Labelled>
             </CloseButton>
             <Wrapper>
                 <MenuColumn>
                     <StyledMenu secondary={true} vertical={true}>
-                        <Menu.Item header>Slippi Settings</Menu.Item>
-                        <Menu.Item
-                            name="slippi-settings"
-                            active={activeItem === "slippi-settings"}
-                            onClick={handleItemClick}
-                        ><CustomIcon image={SlippiLogo} color="#353636" />Relay Connection</Menu.Item>
                         <Menu.Item header>Combo Settings</Menu.Item>
                         <Menu.Item
                             name="combo-finder"
@@ -137,7 +128,17 @@ export const SettingsPage: React.FC<{
                             active={activeItem === "combo-settings"}
                             onClick={handleItemClick}
                         ><Icon name="filter" />Filter Options</Menu.Item>
-                        <Menu.Item header>Action Settings</Menu.Item>
+                        <Menu.Item header>Automation Settings</Menu.Item>
+                        <Menu.Item
+                            name="slippi-settings"
+                            active={activeItem === "slippi-settings"}
+                            onClick={handleItemClick}
+                        ><CustomIcon image={SlippiLogo} color="#353636" />Slippi Relay</Menu.Item>
+                        <Menu.Item
+                            name="obs-settings"
+                            active={activeItem === "obs-settings"}
+                            onClick={handleItemClick}
+                        ><CustomIcon image={OBSLogo} color="#353636" />OBS Configuration</Menu.Item>
                         <Menu.Item
                             name="account-settings"
                             active={activeItem === "account-settings"}
@@ -153,6 +154,7 @@ export const SettingsPage: React.FC<{
                 <ContentColumn>
                     <div>
                         <Switch>
+                            <Route path={`${path}/obs-settings`} component={OBSSettings} />
                             <Route path={`${path}/slippi-settings`} component={SlippiPage} />
                             <Route path={`${path}/combo-finder`} component={ComboFinder} />
                             <Route path={`${path}/combo-settings`} component={FilterOptions} />
@@ -163,39 +165,5 @@ export const SettingsPage: React.FC<{
                 </ContentColumn>
             </Wrapper>
         </SettingsContainer>
-    );
-};
-
-const FilterOptions = () => {
-    const {currentProfile, comboProfiles} = useSelector((state: iRootState) => state.slippi);
-    // const [profile, setProfile] = React.useState<string>(currentProfile);
-    const profileOptions = Object.keys(comboProfiles);
-
-    let initial = comboFilter.getSettings();
-    const slippiSettings = comboProfiles[currentProfile];
-    if (slippiSettings) {
-        initial = comboFilter.updateSettings(JSON.parse(slippiSettings));
-    }
-    const dispatch = useDispatch<Dispatch>();
-    const onSubmit = (values: Partial<ComboFilterSettings>) => {
-        // console.log(values);
-        const valueString = JSON.stringify(values);
-        dispatch.slippi.saveProfile({
-            name: currentProfile,
-            settings: valueString,
-        });
-    };
-    const setProfile = (profile: string) => {
-        dispatch.slippi.setCurrentProfile(profile);
-    };
-    const onDelete = () => {
-        dispatch.slippi.deleteProfile(currentProfile);
-    };
-    return (
-        <div>
-            <h2>Filter Options</h2>
-            <ProfileSelector initialOptions={profileOptions} value={currentProfile} onChange={setProfile} />
-            <ComboForm initialValues={initial} onSubmit={onSubmit} onDelete={onDelete} />
-        </div>
     );
 };

@@ -95,4 +95,4 @@ export class SoundPlayer {
     }
 }
 
-export const sp: SoundPlayer = new SoundPlayer();
+export const soundPlayer: SoundPlayer = new SoundPlayer();

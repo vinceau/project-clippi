@@ -3,7 +3,7 @@ import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Header, Icon, Segment, Table } from "semantic-ui-react";
 
-import { sp } from "@/lib/sounds";
+import { soundPlayer } from "@/lib/sounds";
 
 import { Dispatch, dispatcher, iRootState } from "@/store";
 import { shell } from "electron";
@@ -23,7 +23,7 @@ export const SoundSettings: React.FC = () => {
     const soundsExist = Object.keys(soundFiles).length > 0;
     const dispatch = useDispatch<Dispatch>();
     const onPlay = (name: string) => {
-        const filePath = sp.getSoundPath(name);
+        const filePath = soundPlayer.getSoundPath(name);
         if (filePath) {
             shell.openItem(filePath);
         }
@@ -41,7 +41,7 @@ export const SoundSettings: React.FC = () => {
                 <>
                     <Buttons>
                         <AddSoundButton />
-                        <Button onClick={() => sp.stop()}>
+                        <Button onClick={() => soundPlayer.stop()}>
                             <Icon name="stop" />
                             Stop current sound
                 </Button>
