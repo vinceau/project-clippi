@@ -11,7 +11,8 @@ import { connectToOBSAndNotify, getAllSceneItems, setSourceItemVisibility } from
 import { iRootState } from "@/store";
 import { ActionComponent } from "./types";
 
-import obsIcon from "../styles/images/obs.svg";
+import obsIcon from "@/styles/images/obs.svg";
+import { notify } from "@/lib/utils";
 
 interface ActionToggleSourceParams {
     source: string;
@@ -20,7 +21,12 @@ interface ActionToggleSourceParams {
 
 const actionToggleSource: ActionTypeGenerator = (params: ActionToggleSourceParams) => {
     return async (): Promise<void> => {
-        await setSourceItemVisibility(params.source, params.visible);
+        try {
+            await setSourceItemVisibility(params.source, params.visible);
+        } catch (err) {
+            console.error(err);
+            notify("Could not set source visibility. Are you connected to OBS?");
+        }
     };
 };
 

@@ -11,7 +11,8 @@ import { connectToOBSAndNotify, getAllScenes, setScene } from "@/lib/obs";
 import { iRootState } from "@/store";
 import { ActionComponent } from "./types";
 
-import obsIcon from "../styles/images/obs.svg";
+import obsIcon from "@/styles/images/obs.svg";
+import { notify } from "@/lib/utils";
 
 interface ActionChangeSceneParams {
     scene: string;
@@ -19,7 +20,12 @@ interface ActionChangeSceneParams {
 
 const actionChangeScene: ActionTypeGenerator = (params: ActionChangeSceneParams) => {
     return async (): Promise<void> => {
-        await setScene(params.scene);
+        try {
+            await setScene(params.scene);
+        } catch (err) {
+            console.error(err);
+            notify("Could not change scene. Are you connected to OBS?");
+        }
     };
 };
 
