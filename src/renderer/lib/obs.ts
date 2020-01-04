@@ -9,6 +9,12 @@ obs.on("ConnectionOpened", () => {
     dispatcher.tempContainer.setOBSConnected(true);
     // Set the scenes on first connect
     updateScenes().catch(console.error);
+    notify(`Successfully connected to OBS`);
+});
+
+obs.on("ConnectionClosed", () => {
+    dispatcher.tempContainer.setOBSConnected(false);
+    notify(`Disconnected from OBS`);
 });
 
 obs.on("ScenesChanged", () => {
@@ -21,10 +27,6 @@ obs.on("SceneItemAdded", () => {
 
 obs.on("SceneItemRemoved", () => {
     updateScenes().catch(console.error);
-});
-
-obs.on("ConnectionClosed", () => {
-    dispatcher.tempContainer.setOBSConnected(false);
 });
 
 const _connectToOBS = async (address: string, port: string, password?: string): Promise<void> => {
@@ -42,9 +44,7 @@ export const connectToOBS = async (): Promise<void> => {
 
 export const connectToOBSAndNotify = (): void => {
     const { obsAddress, obsPort, obsPassword } = store.getState().slippi;
-    _connectToOBS(obsAddress, obsPort, obsPassword).then(() => {
-        notify(`Successfully connected to OBS`);
-    }).catch(err => {
+    _connectToOBS(obsAddress, obsPort, obsPassword).catch(err => {
         console.error(err);
         notify(`Could not connect to ${obsAddress}:${obsPort}`);
     });
