@@ -4,7 +4,7 @@ import { Dispatch, iRootState } from "@/store";
 import { useDispatch, useSelector } from "react-redux";
 
 import { connectToOBSAndNotify, disconnectFromOBS } from "@/lib/obs";
-import { Button, Form } from "semantic-ui-react";
+import { Icon, Button, Form } from "semantic-ui-react";
 import { ConnectionStatusCard } from "../Misc/ConnectionStatus";
 
 import OBSLogo from "@/styles/images/obs.png";
@@ -16,6 +16,10 @@ export const OBSSettings = () => {
     const header = obsConnected ? "Connected" : "Disconnected";
     const color = obsConnected ? "#00E461" : "#F30807";
     const subHeader = `${obsAddress}:${obsPort}`;
+    const [showPass, setShowPass] = React.useState(false);
+    const togglePass = () => {
+        setShowPass(!showPass);
+    };
 
     return (<div>
         <h2>OBS Configuration</h2>
@@ -33,7 +37,7 @@ export const OBSSettings = () => {
                 <Form onSubmit={connectToOBSAndNotify}>
                     <Form.Field>
                         <label>IP Address</label>
-                        <input
+                        <Form.Input
                             placeholder="localhost"
                             value={obsAddress}
                             onChange={(e) => { dispatch.slippi.setOBSAddress(e.target.value); }}
@@ -41,7 +45,7 @@ export const OBSSettings = () => {
                     </Form.Field>
                     <Form.Field>
                         <label>Port</label>
-                        <input
+                        <Form.Input
                             placeholder="4444"
                             value={obsPort}
                             onChange={(e) => { dispatch.slippi.setOBSPort(e.target.value); }}
@@ -49,7 +53,9 @@ export const OBSSettings = () => {
                     </Form.Field>
                     <Form.Field>
                         <label>Websocket Password</label>
-                        <input
+                        <Form.Input
+                            icon={<Icon name="eye" link={true} onClick={togglePass} />}
+                            type={showPass ? "text" : "password"}
                             placeholder="Password"
                             value={obsPassword}
                             onChange={(e) => { dispatch.slippi.setOBSPassword(e.target.value); }}
