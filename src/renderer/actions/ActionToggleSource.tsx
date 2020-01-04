@@ -8,10 +8,10 @@ import { Button } from "semantic-ui-react";
 import { InlineDropdown } from "@/components/Misc/InlineInputs";
 import { CustomIcon } from "@/components/Misc/Misc";
 import { connectToOBSAndNotify, getAllSceneItems, setSourceItemVisibility } from "@/lib/obs";
+import { delay as waitMillis, notify } from "@/lib/utils";
 import { iRootState } from "@/store";
-import { ActionComponent } from "./types";
-import { notify, delay as waitMillis } from "@/lib/utils";
 import { DelayInput } from "./ActionChangeScene";
+import { ActionComponent } from "./types";
 
 import obsIcon from "@/styles/images/obs.svg";
 

@@ -6,11 +6,11 @@ import { Button, Card, Header, Image, Input, Segment } from "semantic-ui-react";
 import { pulseAnimation } from "@/styles/animations";
 import styled, { css } from "styled-components";
 
+import { dispatcher } from "@/store";
 import slippiLogoSVG from "@/styles/images/slippi-logo.svg";
 import slippiLogo from "@/styles/images/slippi.png";
 import { InlineInput } from "./InlineInputs";
 import { CustomIcon, Labelled } from "./Misc";
-import { dispatcher } from "@/store";
 
 const statusToLabel = (status: ConnectionStatus): string => {
     switch (status) {

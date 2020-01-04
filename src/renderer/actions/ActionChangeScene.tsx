@@ -3,14 +3,14 @@ import * as React from "react";
 import { ActionTypeGenerator } from "@vinceau/event-actions";
 import { produce } from "immer";
 import { useSelector } from "react-redux";
-import { Form, Input, Button } from "semantic-ui-react";
+import { Button, Form, Input } from "semantic-ui-react";
 
 import { InlineDropdown } from "@/components/Misc/InlineInputs";
 import { CustomIcon } from "@/components/Misc/Misc";
 import { connectToOBSAndNotify, getAllScenes, setScene } from "@/lib/obs";
+import { delay as waitMillis, notify } from "@/lib/utils";
 import { iRootState } from "@/store";
 import { ActionComponent } from "./types";
-import { notify, delay as waitMillis } from "@/lib/utils";
 
 import obsIcon from "@/styles/images/obs.svg";
 import styled from "styled-components";
