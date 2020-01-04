@@ -32,7 +32,7 @@ const _connectToOBS = async (address: string, port: string, password?: string): 
     console.log(`connecting to obs on: ${address}:${port}`);
     await obs.connect({
         address: `${address}:${port}`,
-        password: password ? password : undefined,
+        password,
     });
 };
 
