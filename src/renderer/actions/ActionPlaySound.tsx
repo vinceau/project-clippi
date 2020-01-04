@@ -7,7 +7,7 @@ import { Icon } from "semantic-ui-react";
 
 import { InlineDropdown } from "@/components/Misc/InlineInputs";
 import { AddSoundButton } from "@/components/Settings/SoundSettings";
-import { sp } from "@/lib/sounds";
+import { soundPlayer } from "@/lib/sounds";
 import { iRootState } from "@/store";
 import { ActionComponent } from "./types";
 
@@ -17,7 +17,7 @@ interface ActionPlaySoundParams {
 
 const ActionPlaySoundFunc: ActionTypeGenerator = (params: ActionPlaySoundParams) => {
     return async (): Promise<void> => {
-        await sp.playSound(params.sound);
+        await soundPlayer.playSound(params.sound);
     };
 };
 
