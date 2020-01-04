@@ -21,7 +21,7 @@ const actionCreateClip: ActionTypeGenerator = (params: ActionCreateTwitchClipPar
         console.log(params);
         console.log(`creating clip with token: ${token}`);
         try {
-            const clipID = await createTwitchClip(token, params.delay, "n3zmodgod");
+            const clipID = await createTwitchClip(token, params.delay);
             // Get timestamp in seconds
             const timestamp = (new Date()).getTime() / 1000;
             dispatcher.twitch.addTwitchClip({
