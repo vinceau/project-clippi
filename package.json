@@ -1,7 +1,7 @@
 {
   "productName": "Project Clippi",
   "name": "project-clippi",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Slippi automation framework",
   "license": "MIT",
   "build": {
