@@ -10,18 +10,24 @@ import { CustomIcon } from "@/components/Misc/Misc";
 import { connectToOBSAndNotify, getAllSceneItems, setSourceItemVisibility } from "@/lib/obs";
 import { iRootState } from "@/store";
 import { ActionComponent } from "./types";
+import { notify, delay as waitMillis } from "@/lib/utils";
+import { DelayInput } from "./ActionChangeScene";
 
 import obsIcon from "@/styles/images/obs.svg";
-import { notify } from "@/lib/utils";
 
 interface ActionToggleSourceParams {
     source: string;
     visible?: boolean;
+    delay?: string;
 }
 
 const actionToggleSource: ActionTypeGenerator = (params: ActionToggleSourceParams) => {
     return async (): Promise<void> => {
         try {
+            const millis = parseInt(params.delay || "0", 10);
+            if (millis > 0) {
+                await waitMillis(millis);
+            }
             await setSourceItemVisibility(params.source, params.visible);
         } catch (err) {
             console.error(err);
@@ -36,7 +42,7 @@ const ActionIcon = () => {
     );
 };
 
-const SourceNameInput = (props: { value: ActionToggleSourceParams, onChange: any}) => {
+const SourceNameInput = (props: { value: ActionToggleSourceParams, onChange: any }) => {
     const { value, onChange } = props;
     const { obsConnected } = useSelector((state: iRootState) => state.tempContainer);
     if (!obsConnected) {
@@ -62,31 +68,41 @@ const SourceNameInput = (props: { value: ActionToggleSourceParams, onChange: any
         });
         onChange(newValue);
     };
+
+    const onDelayChange = (delay: string) => {
+        const newValue = produce(value, (draft: ActionToggleSourceParams) => {
+            draft.delay = delay;
+        });
+        onChange(newValue);
+    };
     return (
-        <span>
-        <InlineDropdown
-            value={Boolean(value.visible)}
-            onChange={onVisibilityChange}
-            options={[
-            {
-                key: "hide",
-                value: false,
-                text: "Hide ",
-            },
-            {
-                key: "show",
-                value: true,
-                text: "Show ",
-            },
-        ]}
-        />
-        <InlineDropdown
-            value={value.source}
-            prefix=" the source "
-            onChange={onSourceChange}
-            customOptions={allSources}
-        />
-        </span>
+        <div>
+            <div>
+                <InlineDropdown
+                    value={Boolean(value.visible)}
+                    onChange={onVisibilityChange}
+                    options={[
+                        {
+                            key: "hide",
+                            value: false,
+                            text: "Hide ",
+                        },
+                        {
+                            key: "show",
+                            value: true,
+                            text: "Show ",
+                        },
+                    ]}
+                />
+                <InlineDropdown
+                    value={value.source}
+                    prefix=" the source "
+                    onChange={onSourceChange}
+                    customOptions={allSources}
+                />
+            </div>
+            <DelayInput value={value.delay} onChange={onDelayChange} />
+        </div>
     );
 };
 
