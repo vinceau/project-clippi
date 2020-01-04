@@ -6,6 +6,8 @@ import { Form, Icon, TextArea } from "semantic-ui-react";
 import { notify } from "@/lib/utils";
 import { ActionComponent } from "./types";
 
+const MAX_SNIPPET_LENGTH = 30;
+
 interface ActionNotifyParams {
     message: string;
     title?: string;
@@ -17,8 +19,9 @@ const ActionNotifyFunc: ActionTypeGenerator = (params: ActionNotifyParams) => {
     };
 };
 
-const snippet = (params: ActionNotifyParams): string => {
-    return `notify "${params.message.substr(0, 50)}..."`;
+const Snippet: React.FC<{value: ActionNotifyParams}> = props => {
+    const message = props.value.message ? props.value.message : "";
+    return <div>notify <b>{message.substr(0, MAX_SNIPPET_LENGTH)}...</b></div>;
 };
 
 const ActionIcon = () => {
@@ -48,7 +51,7 @@ const NotifyInput = (props: any) => {
 export const ActionNotify: ActionComponent = {
     label: "show a notification",
     action: ActionNotifyFunc,
-    snippet,
+    Snippet,
     Icon: ActionIcon,
     Component: NotifyInput,
 };

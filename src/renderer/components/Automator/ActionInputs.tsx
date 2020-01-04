@@ -73,8 +73,9 @@ export const ActionInput = (props: any) => {
     }
     const ActionIcon = actionComponents[value.name].Icon;
     const ActionArgsInput = actionComponents[value.name].Component;
+    const ActionSnippet = actionComponents[value.name].Snippet;
     if (snippet) {
-        return actionComponents[value.name].snippet(value.args);
+        return <ActionSnippet value={value.args} />
     }
     return (
         <ActionComponentBlock

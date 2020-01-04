@@ -37,9 +37,9 @@ const actionCreateClip: ActionTypeGenerator = (params: ActionCreateTwitchClipPar
     };
 };
 
-const snippet = () => {
-    return "clip it";
-}
+const Snippet = () => {
+    return <div>clip it</div>;
+};
 
 const ActionIcon = () => {
     return (
@@ -71,7 +71,7 @@ const TwitchClipInput = (props: any) => {
 export const ActionTwitchClip: ActionComponent = {
     label: "create a Twitch clip",
     action: actionCreateClip,
-    snippet,
+    Snippet,
     Icon: ActionIcon,
     Component: TwitchClipInput,
 };

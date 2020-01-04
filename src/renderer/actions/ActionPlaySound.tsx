@@ -27,9 +27,9 @@ const ActionIcon = () => {
     );
 };
 
-const snippet = (params: ActionPlaySoundParams) => {
-    return `play ${params.sound}`;
-}
+const Snippet: React.FC<{value: ActionPlaySoundParams}> = props => {
+    return <div>play <b>{props.value.sound}</b></div>;
+};
 
 const PlaySoundInput = (props: any) => {
     const { value, onChange } = props;
@@ -60,7 +60,7 @@ const PlaySoundInput = (props: any) => {
 export const ActionPlaySound: ActionComponent = {
     label: "play a sound",
     action: ActionPlaySoundFunc,
-    snippet,
+    Snippet,
     Icon: ActionIcon,
     Component: PlaySoundInput,
 };

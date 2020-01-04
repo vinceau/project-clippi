@@ -35,8 +35,12 @@ const ActionIcon = () => {
     );
 };
 
-const snippet = (params: ActionChangeSceneParams): string => {
-    return `change scene to ${params.scene}`;
+const Snippet: React.FC<{value: ActionChangeSceneParams}> = props => {
+    const { scene } = props.value;
+    if (!scene) {
+        return <div>change OBS scene</div>;
+    }
+    return <div>change scene to <b>{scene}</b></div>;
 };
 
 const SceneNameInput = (props: any) => {
@@ -72,7 +76,7 @@ const SceneNameInput = (props: any) => {
 export const ActionChangeScene: ActionComponent = {
     label: "change OBS scene",
     action: actionChangeScene,
-    snippet,
+    Snippet,
     Icon: ActionIcon,
     Component: SceneNameInput,
 };

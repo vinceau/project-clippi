@@ -36,8 +36,11 @@ const ActionIcon = () => {
     );
 };
 
-const snippet = (params: ActionToggleSourceParams) => {
-    return `${params.visible ? "show" : "hide" } ${params.source}`;
+const Snippet: React.FC<{value: ActionToggleSourceParams}> = props => {
+    if (!props.value || !props.value.source) {
+        return <div>toggle OBS source</div>
+    }
+    return <div>{props.value.visible ? "show" : "hide"} <b>{props.value.source}</b></div>;
 };
 
 const SourceNameInput = (props: { value: ActionToggleSourceParams, onChange: any}) => {
@@ -97,7 +100,7 @@ const SourceNameInput = (props: { value: ActionToggleSourceParams, onChange: any
 export const ActionToggleSource: ActionComponent = {
     label: "toggle OBS source",
     action: actionToggleSource,
-    snippet,
+    Snippet,
     Icon: ActionIcon,
     Component: SourceNameInput,
 };

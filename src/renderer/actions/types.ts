@@ -4,7 +4,7 @@ import { FC } from "react";
 export interface ActionComponent {
     label: string;
     action: ActionTypeGenerator;
-    snippet: (params: any) => string;
+    Snippet: FC<any>;
     Icon: FC<any>;
     Component: FC<any>;
 }
