@@ -7,7 +7,6 @@ import { soundPlayer } from "@/lib/sounds";
 
 import { Dispatch, dispatcher, iRootState } from "@/store";
 import { shell } from "electron";
-import styled from "styled-components";
 
 export const AddSoundButton = (props: any) => {
     return (
@@ -31,21 +30,18 @@ export const SoundSettings: React.FC = () => {
     const removeSound = (name: string) => {
         dispatch.filesystem.removeSound(name);
     };
-    const Buttons = styled.div`
-    margin-bottom: 10px;
-    `;
     return (
-        <div>
+        <div style={{paddingBottom: "100px"}}>
             <h2>Sounds</h2>
             {soundsExist ?
                 <>
-                    <Buttons>
+                    <div style={{marginBottom: "10px"}}>
                         <AddSoundButton />
                         <Button onClick={() => soundPlayer.stop()}>
                             <Icon name="stop" />
                             Stop current sound
-                </Button>
-                    </Buttons>
+                    </Button>
+                    </div>
                     <SoundTable onPlay={onPlay} onRemove={removeSound} sounds={soundFiles} />
                 </>
                 :
@@ -67,9 +63,6 @@ const SoundRow: React.FC<{
     onPlay: () => void;
     onRemove: () => void;
 }> = props => {
-    const Clickable = styled.span`
-    cursor: pointer;
-    `;
     return (
         <Table.Row key={props.path}>
             <Table.Cell>
@@ -79,10 +72,10 @@ const SoundRow: React.FC<{
                 {props.path}
             </Table.Cell>
             <Table.Cell>
-                <Clickable onClick={props.onPlay}><Icon name="play" /></Clickable>
+                <Icon name="play" link onClick={props.onPlay}/>
             </Table.Cell>
             <Table.Cell>
-                <Clickable onClick={props.onRemove}><Icon name="trash" /></Clickable>
+                <Icon name="trash" link onClick={props.onRemove}/>
             </Table.Cell>
         </Table.Row>
     );

@@ -144,9 +144,6 @@ export const ConnectionStatusCard: React.FC<{
     shouldPulse?: boolean;
     onDisconnect?: () => void;
 }> = props => {
-    const StatusContainer = styled.div`
-    padding: 3px;
-    `;
     const handleButtonClick = () => {
         if (props.onDisconnect) {
             props.onDisconnect();
@@ -158,7 +155,7 @@ export const ConnectionStatusCard: React.FC<{
     margin-right: 10px;
     `;
     return (
-        <StatusContainer>
+        <div style={{padding: "3px"}}>
             <Card>
                 <Card.Content>
                     <Image
@@ -182,7 +179,7 @@ export const ConnectionStatusCard: React.FC<{
                     </Button>
                 </Card.Content>
             </Card>
-        </StatusContainer>
+        </div>
     );
 };
 

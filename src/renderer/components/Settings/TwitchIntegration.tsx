@@ -1,13 +1,11 @@
 import * as React from "react";
 
 import { useDispatch, useSelector } from "react-redux";
+import { Header, Icon, Loader, Segment, Table } from "semantic-ui-react";
+import { format } from "timeago.js";
 
 import { Dispatch, iRootState } from "@/store";
-
 import { TwitchClip } from "@/store/models/twitch";
-import { Header, Icon, Loader, Segment, Table } from "semantic-ui-react";
-import styled from "styled-components";
-import { format } from "timeago.js";
 import { TwitchConnectButton, TwitchUserStatus } from "../Misc/TwitchConnect";
 
 export const ClipsTable: React.FC = props => {
@@ -31,9 +29,6 @@ const ClipRow: React.FC<{
     clip: TwitchClip;
     onRemove: () => void;
 }> = props => {
-    const Clickable = styled.span`
-    cursor: pointer;
-    `;
     return (
         <Table.Row key={props.clip.clipID}>
             <Table.Cell>
@@ -43,7 +38,7 @@ const ClipRow: React.FC<{
                 {format(props.clip.timestamp * 1000)}
             </Table.Cell>
             <Table.Cell>
-                <Clickable onClick={props.onRemove}><Icon name="trash" /></Clickable>
+                <Icon name="trash" link onClick={props.onRemove}/>
             </Table.Cell>
         </Table.Row>
     );

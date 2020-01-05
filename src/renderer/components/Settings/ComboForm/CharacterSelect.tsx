@@ -37,13 +37,10 @@ const CharacterLabel: React.FC<{ characterId: Character, name: string, disabled?
       cursor: not-allowed;
     `}
   `;
-  const Label = styled.span`
-    margin-left: 10px;
-  `;
   return (
     <LabelContainer>
       <CharacterIcon character={props.characterId} grayscale={isDisabled} />
-      <Label>{props.name}</Label>
+      <span style={{marginLeft: "10px"}}>{props.name}</span>
     </LabelContainer>
   );
 };
@@ -51,7 +48,7 @@ const CharacterLabel: React.FC<{ characterId: Character, name: string, disabled?
 const Option: React.ComponentType<OptionProps<OptionTypeBase>> = (props) => {
   const { innerProps, innerRef } = props;
   const Outer = styled.div`
-    padding-left: 10px;
+    padding: 5px 10px;
     &:hover {
       background-color: #F8F8F8;
     }
@@ -76,12 +73,10 @@ export const CharacterSelect = (props: any) => {
   const formatValue = (val: any) => (val === undefined || val === "" ? undefined : val.map ? val.map(valueToOption) : valueToOption(val));
   const newValue = formatValue(value);
   const newOnChange = (v: any) => onChange(parseValue(v));
-  const SelectContainer = styled(Select)`
-    width: 100%;
-  `;
   const selectOptions = options ? options : sortedCharacterIDs;
-  return (<SelectContainer
+  return (<Select
     {...rest}
+    width="100%"
     value={newValue}
     onChange={newOnChange}
     options={selectOptions.map(valueToOption)}
