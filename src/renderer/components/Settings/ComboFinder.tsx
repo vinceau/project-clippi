@@ -13,6 +13,8 @@ import { notify, openComboInDolphin } from "@/lib/utils";
 import { timeDifferenceString } from "common/utils";
 import styled from "styled-components";
 
+const isWindows = process.platform === "win32";
+
 export const ComboFinder: React.FC<{}> = () => {
     const { comboFinderPercent, comboFinderLog, comboFinderProcessing } = useSelector((state: iRootState) => state.tempContainer);
     const { openCombosWhenDone, filesPath, combosFilePath, includeSubFolders, deleteFilesWithNoCombos } = useSelector((state: iRootState) => state.filesystem);
@@ -59,7 +61,7 @@ export const ComboFinder: React.FC<{}> = () => {
         dispatch.tempContainer.setComboFinderProcessing(true);
         console.log(`finding combos from the slp files in ${filesPath} ${includeSubFolders && "and all subfolders"} and saving to ${combosFilePath}`);
         findAndWriteCombos().then(() => {
-            if (process.platform === "win32" && openCombosWhenDone) {
+            if (isWindows && openCombosWhenDone) {
                 // check if we want to open the combo file after generation
                 openComboInDolphin(combosFilePath);
             }
@@ -98,9 +100,9 @@ export const ComboFinder: React.FC<{}> = () => {
                     <label>Output File</label>
                     <Input label={<Button onClick={() => maybeOpenFile(combosFilePath)}><NoMarginIcon name="folder open outline" /></Button>} value={combosFilePath} action={<Button onClick={selectComboPath}>Save as</Button>} />
                 </Form.Field>
-                <Form.Field>
+                {isWindows && <Form.Field>
                     <Checkbox label="Load output file into Dolphin when complete" checked={openCombosWhenDone} onChange={onSetOpenCombosWhenDone} />
-                </Form.Field>
+                </Form.Field>}
                 <Button primary={true} type="button" onClick={findCombos} disabled={!combosFilePath || comboFinderProcessing}>
                     <Icon name="fast forward" />
                     Process replays
