@@ -5,7 +5,7 @@
   "description": "Slippi automation framework",
   "license": "MIT",
   "build": {
-    "appId": "au.id.vince.projectclippi",
+    "appId": "au.id.vince.clippi",
     "files": [
       "build/icon.*"
     ],
