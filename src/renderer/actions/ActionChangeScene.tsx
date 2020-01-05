@@ -1,5 +1,7 @@
 import * as React from "react";
 
+import styled from "styled-components";
+
 import { ActionTypeGenerator } from "@vinceau/event-actions";
 import { produce } from "immer";
 import { useSelector } from "react-redux";
@@ -13,7 +15,6 @@ import { iRootState } from "@/store";
 import { ActionComponent } from "./types";
 
 import obsIcon from "@/styles/images/obs.svg";
-import styled from "styled-components";
 
 interface ActionChangeSceneParams {
     scene: string;

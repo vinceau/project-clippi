@@ -1,17 +1,17 @@
+import * as path from "path";
 import * as React from "react";
 
+import styled from "styled-components";
+
 import { shell } from "electron";
-import * as path from "path";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Checkbox, CheckboxProps, Form, Icon, Input } from "semantic-ui-react";
 import { Progress } from "semantic-ui-react";
 
-import { Dispatch, iRootState } from "@/store";
-
 import { fastFindAndWriteCombos } from "@/lib/realtime";
 import { notify, openComboInDolphin } from "@/lib/utils";
+import { Dispatch, iRootState } from "@/store";
 import { timeDifferenceString } from "common/utils";
-import styled from "styled-components";
 
 const isWindows = process.platform === "win32";
 
@@ -79,9 +79,6 @@ export const ComboFinder: React.FC<{}> = () => {
         margin: 0 !important;
     }
     `;
-    const ProgressContainer = styled.div`
-    padding: 10px 0;
-    `;
     return (
         <div>
             <h2>Combo Finder</h2>
@@ -108,11 +105,11 @@ export const ComboFinder: React.FC<{}> = () => {
                     Process replays
                 </Button>
             </Form>
-            <ProgressContainer>
+            <div style={{padding: "10px 0"}}>
                 {(comboFinderProcessing || complete) &&
                     <Progress progress={true} percent={comboFinderPercent} success={complete}>{comboFinderLog}</Progress>
                 }
-            </ProgressContainer>
+            </div>
         </div>
     );
 };

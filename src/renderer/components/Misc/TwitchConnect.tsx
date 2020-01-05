@@ -14,12 +14,9 @@ export const TwitchUserStatus: React.SFC<{
     onSignOut: () => void;
 }> = props => {
     const userImage = props.image ? props.image : defaultUserImage;
-    const StatusContainer = styled.div`
-    padding: 3px;
-    `;
     const url = `twitch.tv/${props.channel}`;
     return (
-        <StatusContainer>
+        <div style={{padding: "3px"}}>
             <Card>
                 <Card.Content>
                     <Image
@@ -36,7 +33,7 @@ export const TwitchUserStatus: React.SFC<{
                 </Button>
                 </Card.Content>
             </Card>
-        </StatusContainer>
+        </div>
     );
 };
 

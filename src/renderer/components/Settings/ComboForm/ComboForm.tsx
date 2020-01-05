@@ -1,21 +1,18 @@
-/* eslint-disable jsx-a11y/accessible-emoji */
 import * as React from "react";
+
+import styled from "styled-components";
 
 import { ComboFilterSettings } from "@vinceau/slp-realtime";
 import arrayMutators from "final-form-arrays";
 import { Field, Form } from "react-final-form";
 import { Accordion, Button, Form as SemanticForm, Icon } from "semantic-ui-react";
 
+import { CodeBlock } from "../../Misc/Misc";
 import { CharacterSelectAdapter } from "./CharacterSelect";
 import { SemanticCheckboxInput } from "./FormAdapters";
 import { NameTagForm } from "./NameTagForm";
 import { PercentageSlider } from "./PercentageSlider";
 import { mapCharacterPercentArrayToObject, mapObjectToCharacterPercentArray, PerCharPercent } from "./PerCharPercent";
-
-// import "./ComboForm/NameTagForm.scss";
-// import Styles from "./Styles";
-import styled from "styled-components";
-import { CodeBlock } from "../../Misc/Misc";
 import { PortSelectAdapter } from "./PortSelection";
 
 /*

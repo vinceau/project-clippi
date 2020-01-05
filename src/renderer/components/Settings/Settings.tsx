@@ -49,9 +49,6 @@ export const SettingsPage: React.FC<{
         z-index: 1;
         ${!props.showSettings && hiddenSettings}
     `;
-    const Wrapper = styled.div`
-    display: flex;
-    `;
     const MenuColumn = styled.div`
     flex-basis: 100%;
     overflow: hidden;
@@ -114,7 +111,7 @@ export const SettingsPage: React.FC<{
                     <Icon name="close" />
                 </Labelled>
             </CloseButton>
-            <Wrapper>
+            <div style={{display: "flex"}}>
                 <MenuColumn>
                     <StyledMenu secondary={true} vertical={true}>
                         <Menu.Item header>Combo Settings</Menu.Item>
@@ -163,7 +160,7 @@ export const SettingsPage: React.FC<{
                         </Switch>
                     </div>
                 </ContentColumn>
-            </Wrapper>
+            </div>
         </SettingsContainer>
     );
 };
