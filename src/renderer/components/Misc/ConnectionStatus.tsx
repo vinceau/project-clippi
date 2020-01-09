@@ -14,6 +14,7 @@ import dolphinLogoSVG from "@/styles/images/dolphin.svg";
 import slippiLogo from "@/styles/images/slippi.png";
 import { InlineInput } from "./InlineInputs";
 import { CustomIcon, Labelled } from "./Misc";
+import { streamManager } from "@/lib/realtime";
 
 const statusToLabel = (status: ConnectionStatus): string => {
     switch (status) {
@@ -241,7 +242,13 @@ export const SlippiConnectionPlaceholder: React.FC<{
                         />
 
                         <div style={{ padding: "10px 0" }}>
-                            <Button primary onClick={() => { }}>Start monitoring</Button>
+                            <Button
+                                primary={true}
+                                disabled={!liveSlpFilesPath}
+                                onClick={() => streamManager.monitorSlpFolder(liveSlpFilesPath)}
+                            >
+                                Start monitoring
+                            </Button>
                         </div>
                     </Grid.Column>
                 </Grid.Row>
