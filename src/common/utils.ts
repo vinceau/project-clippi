@@ -1,5 +1,7 @@
 import fs from "fs";
 
+import { Writable } from "stream";
+
 export const delay = async (ms: number): Promise<void> => {
     await new Promise(resolve => setTimeout(resolve, ms));
 };
@@ -42,4 +44,28 @@ export const millisToString = (millis: number): string => {
 export const timeDifferenceString = (before: Date, after: Date): string => {
     const diff = Math.abs(after.getTime() - before.getTime());
     return millisToString(diff);
+};
+
+export const deleteFile = async (filepath: string): Promise<void> => {
+    return new Promise((resolve, reject) => {
+        fs.unlink(filepath, (err) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve();
+            }
+        });
+    });
+};
+
+export const pipeFileContents = async (filename: string, destination: Writable): Promise<void> => {
+    return new Promise((resolve): void => {
+        const readStream = fs.createReadStream(filename);
+        readStream.on("open", () => {
+            readStream.pipe(destination);
+        });
+        readStream.on("close", () => {
+            resolve();
+        });
+    });
 };
