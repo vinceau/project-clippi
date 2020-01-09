@@ -1,6 +1,7 @@
 import * as path from "path";
 import * as url from "url";
 
+import cp from "child_process";
 import { Message } from "common/types";
 import { remote } from "electron";
 import { ipc } from "./rendererIpc";
@@ -60,4 +61,11 @@ export const getStatic = (val: string): string => {
     const appPath = remote.app.getAppPath();
     const imagePath = path.join(appPath, "../static");
     return path.resolve(path.join(imagePath, val));
+};
+
+export const openComboInDolphin = (comboFilePath: string): void => {
+    const appData = remote.app.getPath("appData");
+    const dolphinPath = path.join(appData, "Slippi Desktop App", "dolphin", "Dolphin.exe");
+    console.log(dolphinPath);
+    cp.execFile(dolphinPath, ["-i", comboFilePath]);
 };

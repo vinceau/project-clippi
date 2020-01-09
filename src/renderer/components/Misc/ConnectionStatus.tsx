@@ -6,11 +6,11 @@ import { Button, Card, Header, Image, Input, Segment } from "semantic-ui-react";
 import { pulseAnimation } from "@/styles/animations";
 import styled, { css } from "styled-components";
 
+import { dispatcher } from "@/store";
 import slippiLogoSVG from "@/styles/images/slippi-logo.svg";
 import slippiLogo from "@/styles/images/slippi.png";
 import { InlineInput } from "./InlineInputs";
 import { CustomIcon, Labelled } from "./Misc";
-import { dispatcher } from "@/store";
 
 const statusToLabel = (status: ConnectionStatus): string => {
     switch (status) {
@@ -144,9 +144,6 @@ export const ConnectionStatusCard: React.FC<{
     shouldPulse?: boolean;
     onDisconnect?: () => void;
 }> = props => {
-    const StatusContainer = styled.div`
-    padding: 3px;
-    `;
     const handleButtonClick = () => {
         if (props.onDisconnect) {
             props.onDisconnect();
@@ -158,7 +155,7 @@ export const ConnectionStatusCard: React.FC<{
     margin-right: 10px;
     `;
     return (
-        <StatusContainer>
+        <div style={{padding: "3px"}}>
             <Card>
                 <Card.Content>
                     <Image
@@ -182,7 +179,7 @@ export const ConnectionStatusCard: React.FC<{
                     </Button>
                 </Card.Content>
             </Card>
-        </StatusContainer>
+        </div>
     );
 };
 

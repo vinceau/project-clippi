@@ -2,7 +2,6 @@ import * as React from "react";
 
 import { FieldArray } from "react-final-form-arrays";
 import { Icon, Label } from "semantic-ui-react";
-import styled from "styled-components";
 
 const NameTagLabel: React.FC<{
     name: string;
@@ -11,14 +10,10 @@ const NameTagLabel: React.FC<{
     return (
         <Label>
             {props.name}
-            <Icon name="delete" onClick={props.onClick} />
+            <Icon name="delete" link onClick={props.onClick} />
         </Label>
     );
 };
-
-const TagsList = styled.div`
-    padding-top: 10px;
-`;
 
 export const NameTagForm: React.FC<{ name: string; values: any; push: any; pop: any }> = props => {
     const [tag, setTag] = React.useState("");
@@ -42,7 +37,7 @@ export const NameTagForm: React.FC<{ name: string; values: any; push: any; pop: 
             <div>
                 <input placeholder="Type your tags here..." autoCapitalize="none" autoComplete="off" autoCorrect="off" spellCheck="false" tabIndex={0} type="text" aria-autocomplete="list" onKeyDown={onKeyDown} value={tag} onChange={e => setTag(e.target.value)} />
             </div>
-            <TagsList>
+            <div style={{ paddingTop: "10px" }}>
                 <FieldArray name={name}>
                     {({ fields }) =>
                         fields.map((n, index) => (
@@ -54,7 +49,7 @@ export const NameTagForm: React.FC<{ name: string; values: any; push: any; pop: 
                         ))
                     }
                 </FieldArray>
-            </TagsList>
+            </div>
         </div>
     );
 };

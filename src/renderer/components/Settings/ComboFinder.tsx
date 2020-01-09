@@ -1,21 +1,23 @@
+import * as path from "path";
 import * as React from "react";
 
+import styled from "styled-components";
+
 import { shell } from "electron";
-import * as path from "path";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Checkbox, CheckboxProps, Form, Icon, Input } from "semantic-ui-react";
 import { Progress } from "semantic-ui-react";
 
-import { Dispatch, iRootState } from "@/store";
-
 import { fastFindAndWriteCombos } from "@/lib/realtime";
-import { notify } from "@/lib/utils";
+import { notify, openComboInDolphin } from "@/lib/utils";
+import { Dispatch, iRootState } from "@/store";
 import { timeDifferenceString } from "common/utils";
-import styled from "styled-components";
+
+const isWindows = process.platform === "win32";
 
 export const ComboFinder: React.FC<{}> = () => {
     const { comboFinderPercent, comboFinderLog, comboFinderProcessing } = useSelector((state: iRootState) => state.tempContainer);
-    const { filesPath, combosFilePath, includeSubFolders, deleteFilesWithNoCombos } = useSelector((state: iRootState) => state.filesystem);
+    const { openCombosWhenDone, filesPath, combosFilePath, includeSubFolders, deleteFilesWithNoCombos } = useSelector((state: iRootState) => state.filesystem);
     const dispatch = useDispatch<Dispatch>();
     const selectComboPath = () => {
         dispatch.filesystem.getCombosFilePath();
@@ -28,6 +30,9 @@ export const ComboFinder: React.FC<{}> = () => {
     };
     const onSetDeleteFiles = (_: React.FormEvent<HTMLInputElement>, data: CheckboxProps) => {
         dispatch.filesystem.setFileDeletion(Boolean(data.checked));
+    };
+    const onSetOpenCombosWhenDone = (_: React.FormEvent<HTMLInputElement>, data: CheckboxProps) => {
+        dispatch.filesystem.setOpenCombosWhenDone(Boolean(data.checked));
     };
     const findAndWriteCombos = async () => {
         const before = new Date();
@@ -55,7 +60,12 @@ export const ComboFinder: React.FC<{}> = () => {
         dispatch.tempContainer.setPercent(0);
         dispatch.tempContainer.setComboFinderProcessing(true);
         console.log(`finding combos from the slp files in ${filesPath} ${includeSubFolders && "and all subfolders"} and saving to ${combosFilePath}`);
-        findAndWriteCombos().catch(console.error);
+        findAndWriteCombos().then(() => {
+            if (isWindows && openCombosWhenDone) {
+                // check if we want to open the combo file after generation
+                openComboInDolphin(combosFilePath);
+            }
+        }).catch(console.error);
     };
     const maybeOpenFile = (fileName: string) => {
         if (!shell.showItemInFolder(fileName)) {
@@ -68,9 +78,6 @@ export const ComboFinder: React.FC<{}> = () => {
     &&& {
         margin: 0 !important;
     }
-    `;
-    const ProgressContainer = styled.div`
-    padding: 10px 0;
     `;
     return (
         <div>
@@ -90,16 +97,19 @@ export const ComboFinder: React.FC<{}> = () => {
                     <label>Output File</label>
                     <Input label={<Button onClick={() => maybeOpenFile(combosFilePath)}><NoMarginIcon name="folder open outline" /></Button>} value={combosFilePath} action={<Button onClick={selectComboPath}>Save as</Button>} />
                 </Form.Field>
+                {isWindows && <Form.Field>
+                    <Checkbox label="Load output file into Dolphin when complete" checked={openCombosWhenDone} onChange={onSetOpenCombosWhenDone} />
+                </Form.Field>}
                 <Button primary={true} type="button" onClick={findCombos} disabled={!combosFilePath || comboFinderProcessing}>
                     <Icon name="fast forward" />
                     Process replays
                 </Button>
             </Form>
-            <ProgressContainer>
+            <div style={{padding: "10px 0"}}>
                 {(comboFinderProcessing || complete) &&
                     <Progress progress={true} percent={comboFinderPercent} success={complete}>{comboFinderLog}</Progress>
                 }
-            </ProgressContainer>
+            </div>
         </div>
     );
 };

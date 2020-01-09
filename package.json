@@ -5,6 +5,10 @@
   "description": "Slippi automation framework",
   "license": "MIT",
   "build": {
+    "appId": "au.id.vince.clippi",
+    "files": [
+      "build/icon.*"
+    ],
     "mac": {
       "category": "public.app-category.lifestyle"
     },
@@ -12,9 +16,6 @@
       "target": [
         "portable"
       ]
-    },
-    "dmg": {
-      "icon": false
     },
     "linux": {
       "target": [

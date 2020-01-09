@@ -1,4 +1,5 @@
 import * as React from "react";
+import styled from "styled-components";
 
 import { Character, getCharacterName } from "@vinceau/slp-realtime";
 import { produce } from "immer";
@@ -6,10 +7,9 @@ import { Field } from "react-final-form";
 import { FieldArray } from "react-final-form-arrays";
 import { Button, Icon } from "semantic-ui-react";
 
+import { device } from "@/styles/device";
 import { CharacterSelectAdapter } from "./CharacterSelect";
 import { SemanticInput } from "./FormAdapters";
-
-import styled from "styled-components";
 
 interface CharPercentOption {
     character: Character;
@@ -43,17 +43,22 @@ export const mapObjectToCharacterPercentArray = (name: string, values: any): any
     draft[name] = percentArray;
 });
 
-const Buttons = styled.div`
-padding: 10px 0;
-`;
-
 const CharacterSelectContainer = styled.div`
 display: flex;
-flex-direction: row;
+flex-direction: column;
 align-items: center;
 padding: 5px 0;
 & > div {
-    padding: 0 2px;
+    padding: 2px;
+    flex-basis: 100%;
+    width: 100%;
+}
+@media ${device.tablet} {
+    flex-direction: row;
+    & > div {
+        flex-basis: 50%;
+        width: 50%;
+    }
 }
 `;
 
@@ -71,14 +76,13 @@ export const PerCharPercent: React.FC<{ name: string; values: any; push: any; po
                                 <CharacterSelectAdapter
                                     name={`${n}.character`}
                                     disabledOptions={selectedCharIDs}
+                                    width="100%"
                                 />
                                 <Field
                                     name={`${n}.percent`}
                                     component={SemanticInput}
                                     type="number"
                                     parse={(v: string) => parseInt(v, 10)}
-                                    // label={{ basic: true, content: "%" }}
-                                    // labelPosition="right"
                                     action={<Button onClick={() => fields.remove(index)} content="Remove" />}
                                 />
                             </CharacterSelectContainer>
@@ -87,9 +91,9 @@ export const PerCharPercent: React.FC<{ name: string; values: any; push: any; po
                 }
                 }
             </FieldArray>
-            <Buttons>
+            <div style={{padding: "10px 0"}}>
                 <Button onClick={() => push(name, undefined)}><Icon name="add user" /> Add character</Button>
-            </Buttons>
+            </div>
         </div>
     );
 };

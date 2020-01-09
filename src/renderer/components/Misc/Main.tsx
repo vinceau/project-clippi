@@ -60,7 +60,7 @@ export const Main: React.FC<{}> = () => {
     const toggleSettings = () => {
         setShowSettings(!showSettings);
     };
-    const Container = styled.div`
+    const Outer = styled.div`
         display: flex;
         flex-flow: column;
         height: 100%;
@@ -73,7 +73,7 @@ export const Main: React.FC<{}> = () => {
         padding-bottom: 50px;
     `;
     return (
-        <Container>
+        <Outer>
             <SettingsPage onClose={() => setShowSettings(false)} showSettings={showSettings} />
             <Header showSettings={showSettings} onSettingsButtonClick={() => {
                 toggleSettings();
@@ -82,6 +82,6 @@ export const Main: React.FC<{}> = () => {
                 {isDevelopment && <DevTools />}
                 <Automator />
             </MainSection>
-        </Container>
+        </Outer>
     );
 };

@@ -1,14 +1,11 @@
 import * as React from "react";
 
 import { useDispatch, useSelector } from "react-redux";
+import { Header, Icon, Loader, Segment, Table } from "semantic-ui-react";
+import { format } from "timeago.js";
 
 import { Dispatch, iRootState } from "@/store";
-
 import { TwitchClip } from "@/store/models/twitch";
-import { shell } from "electron";
-import { Header, Icon, Loader, Segment, Table } from "semantic-ui-react";
-import styled from "styled-components";
-import { format } from "timeago.js";
 import { TwitchConnectButton, TwitchUserStatus } from "../Misc/TwitchConnect";
 
 export const ClipsTable: React.FC = props => {
@@ -30,26 +27,18 @@ export const ClipsTable: React.FC = props => {
 
 const ClipRow: React.FC<{
     clip: TwitchClip;
-    onClick: () => void;
     onRemove: () => void;
 }> = props => {
-    const Clickable = styled.span`
-    cursor: pointer;
-    `;
-    const onClick = (e: any) => {
-        e.preventDefault();
-        props.onClick();
-    };
     return (
         <Table.Row key={props.clip.clipID}>
             <Table.Cell>
-                <a href="#" onClick={onClick}>{props.clip.clipID}</a>
+                <a href={`https://clips.twitch.tv/${props.clip.clipID}`} target="_blank">{props.clip.clipID}</a>
             </Table.Cell>
             <Table.Cell>
                 {format(props.clip.timestamp * 1000)}
             </Table.Cell>
             <Table.Cell>
-                <Clickable onClick={props.onRemove}><Icon name="trash" /></Clickable>
+                <Icon name="trash" link onClick={props.onRemove}/>
             </Table.Cell>
         </Table.Row>
     );
@@ -60,9 +49,6 @@ export const TwitchIntegration = () => {
     const dispatch = useDispatch<Dispatch>();
     const { authToken, clips } = useSelector((state: iRootState) => state.twitch);
     const rows: JSX.Element[] = [];
-    const onClick = (clipID: string) => {
-        shell.openExternal(`https://clips.twitch.tv/${clipID}`);
-    };
     const allClips = Object.values(clips);
     allClips.sort((x, y) => {
         if (x.timestamp > y.timestamp) {
@@ -79,7 +65,6 @@ export const TwitchIntegration = () => {
             <ClipRow
                 key={`${key}--${value}`}
                 clip={value}
-                onClick={() => onClick(key)}
                 onRemove={() => {
                     dispatch.twitch.removeTwitchClip(key);
                 }}

@@ -3,7 +3,6 @@ import * as React from "react";
 import { Button, Card, Icon, Image } from "semantic-ui-react";
 import styled from "styled-components";
 
-import { shell } from "electron";
 import { createTwitchClip } from "../../../common/twitch";
 import { notify } from "../../lib/utils";
 import defaultUserImage from "../../styles/images/user.svg";
@@ -15,16 +14,9 @@ export const TwitchUserStatus: React.SFC<{
     onSignOut: () => void;
 }> = props => {
     const userImage = props.image ? props.image : defaultUserImage;
-    const StatusContainer = styled.div`
-    padding: 3px;
-    `;
     const url = `twitch.tv/${props.channel}`;
-    const linkClick = (e: any) => {
-        e.preventDefault();
-        shell.openExternal(`https://${url}`);
-    };
     return (
-        <StatusContainer>
+        <div style={{padding: "3px"}}>
             <Card>
                 <Card.Content>
                     <Image
@@ -33,7 +25,7 @@ export const TwitchUserStatus: React.SFC<{
                         src={userImage}
                     />
                     <Card.Header>{props.displayName}</Card.Header>
-                    <Card.Meta><a href="#" onClick={linkClick}>{url}</a></Card.Meta>
+                    <Card.Meta><a href={`https://${url}`} target="_blank">{url}</a></Card.Meta>
                 </Card.Content>
                 <Card.Content extra>
                     <Button basic fluid color="red" onClick={props.onSignOut}>
@@ -41,7 +33,7 @@ export const TwitchUserStatus: React.SFC<{
                 </Button>
                 </Card.Content>
             </Card>
-        </StatusContainer>
+        </div>
     );
 };
 

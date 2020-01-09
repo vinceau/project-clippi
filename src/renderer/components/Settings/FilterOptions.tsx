@@ -10,7 +10,7 @@ import { ComboForm } from "./ComboForm/ComboForm";
 import { ProfileSelector } from "./ComboForm/ProfileSelection";
 
 export const FilterOptions = () => {
-    const {currentProfile, comboProfiles} = useSelector((state: iRootState) => state.slippi);
+    const { currentProfile, comboProfiles } = useSelector((state: iRootState) => state.slippi);
     // const [profile, setProfile] = React.useState<string>(currentProfile);
     const profileOptions = Object.keys(comboProfiles);
 
@@ -37,6 +37,7 @@ export const FilterOptions = () => {
     return (
         <div>
             <h2>Filter Options</h2>
+            <p>These options determine when the <b>combo occurs</b> event will trigger as well as the combos that are found by the <b>Combo Finder</b>.</p>
             <ProfileSelector initialOptions={profileOptions} value={currentProfile} onChange={setProfile} />
             <ComboForm initialValues={initial} onSubmit={onSubmit} onDelete={onDelete} />
         </div>
