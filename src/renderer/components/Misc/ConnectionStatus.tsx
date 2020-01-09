@@ -5,6 +5,8 @@ import { Button, Divider, Grid, Card, Header, Image, Input, Segment } from "sema
 
 import { pulseAnimation } from "@/styles/animations";
 import styled, { css } from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
+import { Dispatch, iRootState } from "@/store";
 
 import { dispatcher } from "@/store";
 import slippiLogoSVG from "@/styles/images/slippi-logo.svg";
@@ -188,6 +190,11 @@ export const SlippiConnectionPlaceholder: React.FC<{
     port: string;
     onClick: (port: string) => void;
 }> = props => {
+    const { liveSlpFilesPath } = useSelector((state: iRootState) => state.filesystem);
+    const dispatch = useDispatch<Dispatch>();
+    const selectPath = () => {
+        dispatch.filesystem.getLiveSlpFilesPath();
+    };
     const [p, setP] = React.useState(props.port);
     const VerticalHeader = styled(Header)`
     &&& {
@@ -228,11 +235,9 @@ export const SlippiConnectionPlaceholder: React.FC<{
 
                         <Input
                             style={{ maxWidth: "initial" }}
-                            action={<Button onClick={() => { }}>Choose</Button>}
+                            action={<Button onClick={selectPath}>Choose</Button>}
                             placeholder="Choose a folder..."
-                            // value={p}
-                            onChange={(_: any, { value }: any) => console.log(value)}
-                            // onBlur={() => dispatcher.slippi.setPort(p)}
+                            value={liveSlpFilesPath}
                         />
 
                         <div style={{ padding: "10px 0" }}>
