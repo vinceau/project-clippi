@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { slippiLivestream } from "@/lib/realtime";
+import { disconnectFromSlippi } from "@/lib/realtime";
 import { Dispatch, iRootState } from "@/store";
 import { ConnectionStatus } from "@vinceau/slp-realtime";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,7 +18,7 @@ export const SlippiPage: React.FC = () => {
                 <SlippiConnectionStatusCard
                     status={slippiConnectionStatus}
                     port={port}
-                    onDisconnect={() => slippiLivestream.connection.disconnect()}
+                    onDisconnect={disconnectFromSlippi}
                 />
                 :
                 <SlippiConnectionPlaceholder

@@ -1,7 +1,7 @@
 import fs from "fs";
 import { Writable } from "stream";
 
-import { ComboFilter, ComboType, ConnectionStatus, DolphinComboQueue, SlippiLivestream, SlippiRealtime, SlpStream } from "@vinceau/slp-realtime";
+import { ComboFilter, ComboType, ConnectionStatus, DolphinComboQueue, SlpLiveStream, SlpRealTime, SlpStream } from "@vinceau/slp-realtime";
 
 import { notify } from "./utils";
 
@@ -27,9 +27,11 @@ const errorHandler = (err: any) => {
 export const comboFilter = new ComboFilter();
 comboFilter.updateSettings({ excludeCPUs: false, comboMustKill: false, minComboPercent: 40 });
 
-export const slippiLivestream = new SlippiLivestream();
+const slippiLivestream = new SlpLiveStream();
 console.log(slippiLivestream);
 console.log(slippiLivestream.connection);
+
+const slippiRealtime = new SlpRealTime(slippiLivestream);
 
 slippiLivestream.connection.on("statusChange", (status) => {
     dispatcher.tempContainer.setSlippiConnectionStatus(status);
@@ -40,7 +42,7 @@ slippiLivestream.connection.on("statusChange", (status) => {
     }
 });
 
-export const connectToSlippi = async (port?: number): Promise<boolean> => {
+export const connectToSlippi = async (port?: number): Promise<void> => {
     console.log(`attempt to connect to slippi on port: ${port}`);
     const address = "0.0.0.0";
     const slpPort = port ? port : 1667;
@@ -48,21 +50,25 @@ export const connectToSlippi = async (port?: number): Promise<boolean> => {
     return slippiLivestream.start(address, slpPort);
 };
 
-slippiLivestream.events.on("gameStart", (gameStart) => {
+export const disconnectFromSlippi = (): void => {
+    slippiLivestream.connection.disconnect();
+};
+
+slippiRealtime.on("gameStart", (gameStart) => {
     eventActionManager.emitEvent(ActionEvent.GAME_START, gameStart).catch(errorHandler);
 });
-slippiLivestream.events.on("gameEnd", (gameEnd) => {
+slippiRealtime.on("gameEnd", (gameEnd) => {
     eventActionManager.emitEvent(ActionEvent.GAME_END, gameEnd).catch(errorHandler);
 });
 
-slippiLivestream.events.on("spawn", (playerIndex, stock, settings) => {
+slippiRealtime.on("spawn", (playerIndex, stock, settings) => {
     eventActionManager.emitEvent(ActionEvent.PLAYER_SPAWN, playerIndex, stock, settings).catch(errorHandler);
 });
-slippiLivestream.events.on("death", (playerIndex, stock, settings) => {
+slippiRealtime.on("death", (playerIndex, stock, settings) => {
     eventActionManager.emitEvent(ActionEvent.PLAYER_DIED, playerIndex, stock, settings).catch(errorHandler);
 });
 
-slippiLivestream.events.on("comboEnd", (combo, settings) => {
+slippiRealtime.on("comboEnd", (combo, settings) => {
     if (!comboFilter.isCombo(combo, settings)) {
         return;
     }
@@ -122,7 +128,7 @@ export const findCombos = async (filename: string): Promise<ComboType[]> => {
     console.log(`finding combos in: ${filename}`);
     const combosList = new Array<ComboType>();
     const slpStream = new SlpStream({ singleGameMode: true });
-    const realtime = new SlippiRealtime(slpStream);
+    const realtime = new SlpRealTime(slpStream);
 
     realtime.on("comboEnd", (c, s) => {
         if (comboFilter.isCombo(c, s)) {
