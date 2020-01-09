@@ -1,13 +1,14 @@
 import * as React from "react";
 
 import { ConnectionStatus } from "@vinceau/slp-realtime";
-import { Button, Card, Header, Image, Input, Segment } from "semantic-ui-react";
+import { Button, Divider, Grid, Card, Header, Image, Input, Segment } from "semantic-ui-react";
 
 import { pulseAnimation } from "@/styles/animations";
 import styled, { css } from "styled-components";
 
 import { dispatcher } from "@/store";
 import slippiLogoSVG from "@/styles/images/slippi-logo.svg";
+import dolphinLogoSVG from "@/styles/images/dolphin.svg";
 import slippiLogo from "@/styles/images/slippi.png";
 import { InlineInput } from "./InlineInputs";
 import { CustomIcon, Labelled } from "./Misc";
@@ -155,7 +156,7 @@ export const ConnectionStatusCard: React.FC<{
     margin-right: 10px;
     `;
     return (
-        <div style={{padding: "3px"}}>
+        <div style={{ padding: "3px" }}>
             <Card>
                 <Card.Content>
                     <Image
@@ -187,21 +188,59 @@ export const SlippiConnectionPlaceholder: React.FC<{
     port: string;
     onClick: (port: string) => void;
 }> = props => {
-    const [ p, setP] = React.useState(props.port);
+    const [p, setP] = React.useState(props.port);
+    const VerticalHeader = styled(Header)`
+    &&& {
+    display: flex;
+    flex-direction: column;
+    }
+    `;
     return (
         <Segment placeholder>
-            <Header icon>
-                <CustomIcon image={slippiLogoSVG} size={54} color="#353636" />
-                You are not connected to a Slippi Relay
-            </Header>
-            <Input
-                style={{ maxWidth: "initial"}}
-                action={<Button primary onClick={() => props.onClick(p)}>Connect</Button>}
-                placeholder="Port"
-                value={p}
-                onChange={(_: any, { value }: any) => setP(value)}
-                onBlur={() => dispatcher.slippi.setPort(p)}
-            />
+
+            <Grid columns={2} stackable textAlign='center'>
+                <Divider vertical>Or</Divider>
+
+                <Grid.Row verticalAlign='middle'>
+
+                    <Grid.Column>
+
+                        <VerticalHeader icon>
+                            <CustomIcon image={slippiLogoSVG} size={54} color="#353636" />
+                            Connect to a Slippi Relay
+                        </VerticalHeader>
+                        <Input
+                            style={{ maxWidth: "initial" }}
+                            action={<Button primary onClick={() => props.onClick(p)}>Connect</Button>}
+                            placeholder="Port"
+                            value={p}
+                            onChange={(_: any, { value }: any) => setP(value)}
+                            onBlur={() => dispatcher.slippi.setPort(p)}
+                        />
+
+
+                    </Grid.Column>
+                    <Grid.Column>
+                        <VerticalHeader icon>
+                            <CustomIcon image={dolphinLogoSVG} size={54} color="#353636" />
+                            Monitor for SLP file changes
+                        </VerticalHeader>
+
+                        <Input
+                            style={{ maxWidth: "initial" }}
+                            action={<Button onClick={() => { }}>Choose</Button>}
+                            placeholder="Choose a folder..."
+                            // value={p}
+                            onChange={(_: any, { value }: any) => console.log(value)}
+                            // onBlur={() => dispatcher.slippi.setPort(p)}
+                        />
+
+                        <div style={{ padding: "10px 0" }}>
+                            <Button primary onClick={() => { }}>Start monitoring</Button>
+                        </div>
+                    </Grid.Column>
+                </Grid.Row>
+            </Grid>
         </Segment>
     );
 };
