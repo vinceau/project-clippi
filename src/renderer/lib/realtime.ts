@@ -1,6 +1,6 @@
 import fg from "fast-glob";
 
-import { ComboFilter, ComboType, ConnectionStatus, DolphinComboQueue, SlpLiveStream, SlpRealTime, SlpStream } from "@vinceau/slp-realtime";
+import { ComboFilter, ComboType, ConnectionStatus, DolphinComboQueue, SlpLiveStream, SlpRealTime, SlpStream, SlpFolderStream } from "@vinceau/slp-realtime";
 
 import { dispatcher } from "@/store";
 import { deleteFile, pipeFileContents } from "common/utils";
@@ -23,8 +23,6 @@ const errorHandler = (err: any) => {
 
 export const comboFilter = new ComboFilter();
 comboFilter.updateSettings({ excludeCPUs: false, comboMustKill: false, minComboPercent: 40 });
-
-let slippiLivestream: SlpLiveStream | null = null;
 
 const slippiRealtime = new SlpRealTime();
 
@@ -138,26 +136,48 @@ export const fastFindAndWriteCombos = async (
     return numCombos;
 };
 
-export const connectToSlippi = async (port?: number): Promise<void> => {
-    console.log(`attempt to connect to slippi on port: ${port}`);
-    const address = "0.0.0.0";
-    const slpPort = port ? port : 1667;
-    slippiLivestream = new SlpLiveStream();
-    slippiRealtime.setStream(slippiLivestream);
-    slippiLivestream.connection.on("statusChange", (status) => {
-        dispatcher.tempContainer.setSlippiConnectionStatus(status);
-        if (status === ConnectionStatus.CONNECTED) {
-            notify("Connected to Slippi relay");
-        } else if (status === ConnectionStatus.DISCONNECTED) {
-            notify("Disconnected from Slippi relay");
-        }
-    });
-    console.log(slippiLivestream.connection);
-    return slippiLivestream.start(address, slpPort);
-};
+class SlpStreamManager {
+    private stream: SlpLiveStream | SlpFolderStream | null = null;
 
-export const disconnectFromSlippi = (): void => {
-    if (slippiLivestream) {
-        slippiLivestream.connection.disconnect();
+    public async connectToSlippi(port?: number): Promise<void> {
+        console.log(`attempt to connect to slippi on port: ${port}`);
+        const address = "0.0.0.0";
+        const slpPort = port ? port : 1667;
+        const stream = new SlpLiveStream();
+        stream.connection.on("statusChange", (status) => {
+            dispatcher.tempContainer.setSlippiConnectionStatus(status);
+            if (status === ConnectionStatus.CONNECTED) {
+                notify("Connected to Slippi relay");
+            } else if (status === ConnectionStatus.DISCONNECTED) {
+                notify("Disconnected from Slippi relay");
+            }
+        });
+        console.log(stream.connection);
+        await stream.start(address, slpPort);
+        slippiRealtime.setStream(stream);
+        this.stream = stream;
     }
-};
+
+    public disconnectFromSlippi(): void {
+        if (this.stream && "connection" in this.stream) {
+            this.stream.connection.disconnect();
+        }
+        this.stream = null;
+    }
+
+    public async monitorSlpFolder(filepath: string): Promise<void> {
+        const stream = new SlpFolderStream();
+        await stream.start(filepath);
+        slippiRealtime.setStream(stream);
+        this.stream = stream;
+    }
+
+    public stopMonitoringSlpFolder(): void {
+        if (this.stream && "stop" in this.stream) {
+            this.stream.stop();
+        }
+        this.stream = null;
+    }
+}
+
+export const streamManager = new SlpStreamManager();

@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { Container, Icon } from "semantic-ui-react";
 
-import { disconnectFromSlippi } from "@/lib/realtime";
+import { streamManager } from "@/lib/realtime";
 import { isDevelopment } from "@/lib/utils";
 import { Dispatch, iRootState } from "@/store";
 import { useDispatch, useSelector } from "react-redux";
@@ -39,7 +39,7 @@ const Header: React.FC<{
                             status={slippiConnectionStatus}
                             port={port}
                             onConnectClick={() => dispatch.slippi.connectToSlippi(port)}
-                            onDisconnectClick={disconnectFromSlippi}
+                            onDisconnectClick={() => streamManager.disconnectFromSlippi()}
                             onPortChange={dispatch.slippi.setPort}
                         />
                     </div>
