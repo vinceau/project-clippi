@@ -27,31 +27,32 @@ const errorHandler = (err: any) => {
 export const comboFilter = new ComboFilter();
 comboFilter.updateSettings({ excludeCPUs: false, comboMustKill: false, minComboPercent: 40 });
 
-const slippiLivestream = new SlpLiveStream();
-console.log(slippiLivestream);
-console.log(slippiLivestream.connection);
+let slippiLivestream: SlpLiveStream | null = null;
 
-const slippiRealtime = new SlpRealTime(slippiLivestream);
-
-slippiLivestream.connection.on("statusChange", (status) => {
-    dispatcher.tempContainer.setSlippiConnectionStatus(status);
-    if (status === ConnectionStatus.CONNECTED) {
-        notify("Connected to Slippi relay");
-    } else if (status === ConnectionStatus.DISCONNECTED) {
-        notify("Disconnected from Slippi relay");
-    }
-});
+const slippiRealtime = new SlpRealTime();
 
 export const connectToSlippi = async (port?: number): Promise<void> => {
     console.log(`attempt to connect to slippi on port: ${port}`);
     const address = "0.0.0.0";
     const slpPort = port ? port : 1667;
+    slippiLivestream = new SlpLiveStream();
+    slippiRealtime.setStream(slippiLivestream);
+    slippiLivestream.connection.on("statusChange", (status) => {
+        dispatcher.tempContainer.setSlippiConnectionStatus(status);
+        if (status === ConnectionStatus.CONNECTED) {
+            notify("Connected to Slippi relay");
+        } else if (status === ConnectionStatus.DISCONNECTED) {
+            notify("Disconnected from Slippi relay");
+        }
+    });
     console.log(slippiLivestream.connection);
     return slippiLivestream.start(address, slpPort);
 };
 
 export const disconnectFromSlippi = (): void => {
-    slippiLivestream.connection.disconnect();
+    if (slippiLivestream) {
+        slippiLivestream.connection.disconnect();
+    }
 };
 
 slippiRealtime.on("gameStart", (gameStart) => {
@@ -128,7 +129,8 @@ export const findCombos = async (filename: string): Promise<ComboType[]> => {
     console.log(`finding combos in: ${filename}`);
     const combosList = new Array<ComboType>();
     const slpStream = new SlpStream({ singleGameMode: true });
-    const realtime = new SlpRealTime(slpStream);
+    const realtime = new SlpRealTime();
+    realtime.setStream(slpStream);
 
     realtime.on("comboEnd", (c, s) => {
         if (comboFilter.isCombo(c, s)) {
