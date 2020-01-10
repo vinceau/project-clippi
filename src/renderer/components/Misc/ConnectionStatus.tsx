@@ -180,10 +180,27 @@ export const SlippiConnectionPlaceholder: React.FC<{
         }
     }
     `;
+    const VerticalDivider = styled(Divider)`
+    &&& {
+        display: none !important;
+        @media ${device.laptop} {
+            display: block !important;
+        }
+    }
+    `;
+    const HorizontalDivider = styled(Divider)`
+    &&& {
+        width: 100%;
+        display: block !important;
+        @media ${device.laptop} {
+            display: none !important;
+        }
+    }
+    `;
     return (
         <Segment placeholder>
             <Grid columns={2} stackable textAlign="center">
-                <Divider vertical>Or</Divider>
+                <VerticalDivider vertical>Or</VerticalDivider>
                 <Grid.Row verticalAlign="middle">
                     <Grid.Column>
                         <VerticalHeader icon>
@@ -201,6 +218,7 @@ export const SlippiConnectionPlaceholder: React.FC<{
                             <Button primary onClick={() => props.onClick(p)}>Connect</Button>
                         </div>
                     </Grid.Column>
+                    <HorizontalDivider horizontal>Or</HorizontalDivider>
                     <Grid.Column>
                         <VerticalHeader icon>
                             <CustomIcon image={dolphinLogoSVG} size={54} color="#353636" />
