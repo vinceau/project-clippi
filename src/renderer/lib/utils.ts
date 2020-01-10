@@ -73,7 +73,7 @@ export const openComboInDolphin = (comboFilePath: string): void => {
 export const loadFileInDolphin = async (): Promise<void> => {
     const p = await getFilePath({
         filters: [{ name: "JSON files", extensions: ["json"] }],
-    }, true);
+    });
     if (p) {
         openComboInDolphin(p);
     }
