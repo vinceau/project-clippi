@@ -1026,10 +1026,10 @@
   resolved "https://registry.yarnpkg.com/@vinceau/event-actions/-/event-actions-0.0.3.tgz#40c8cd7935fcc21c7dcf603edeb66f440493a185"
   integrity sha512-6/hIAEBXNUvBcItbh6kEYW4UP5cJG5FaFVSp4sx4yym03pxKHNwGxuNzGyIYJuEDqP1xdULqM95FnkXsell3ug==
 
-"@vinceau/slp-realtime@^0.1.1":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@vinceau/slp-realtime/-/slp-realtime-0.1.1.tgz#2dfbf597d9145fbe38bcbcbbedd954143fd9b096"
-  integrity sha512-7w40pKgm0nEteeLQh+wQpBtSVYkkzTaRmSO1nskFOPMnTkRys5lgG9uepOfpCNkemHnDcbCVXXL8J8ous6m26g==
+"@vinceau/slp-realtime@^0.1.2":
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/@vinceau/slp-realtime/-/slp-realtime-0.1.2.tgz#810aab589302a20ea7854c8ffa5408870df2c4d4"
+  integrity sha512-AqBLVxUde0IowJ7/hb8PKPij945mFQcphZAEhVXy+1JrDqSPH4CSwcYfFFSxucai4/Z6LdBMYhdWTHgcGOgbNw==
   dependencies:
     "@vinceau/slp-wii-connect" "^1.0.1"
     chokidar "^3.3.1"
@@ -3236,7 +3236,7 @@ electron-webpack-js@~2.3.2:
     babel-loader "^8.0.6"
     babel-plugin-component "^1.1.1"
 
-electron-webpack-ts@^3.1.1:
+electron-webpack-ts@^3.2.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/electron-webpack-ts/-/electron-webpack-ts-3.2.0.tgz#c426355bc29a6a7feb8806d10920886154b0edbf"
   integrity sha512-m6+F9lv7EDHso/w4wk4M1o7soTnO1tOCGjq5VpYLNMJkcGFdi6tkGjwB03fyiLhHVtHhVadDSR0VcGIRvDok2Q==
@@ -3244,7 +3244,7 @@ electron-webpack-ts@^3.1.1:
     fork-ts-checker-webpack-plugin "^1.3.1"
     ts-loader "^6.0.0"
 
-electron-webpack@^2.6.2:
+electron-webpack@^2.7.4:
   version "2.7.4"
   resolved "https://registry.yarnpkg.com/electron-webpack/-/electron-webpack-2.7.4.tgz#f1deed156375fbd846ee718bfc9ccf93a2e27207"
   integrity sha512-0278nUbG4bANuvrWpLq/CYKJhGwR1gzhAI5IInasbAV8FVA3PyAvu/KMZCZLuVbTxGmWStPg2pdLf1a9alfLCQ==
