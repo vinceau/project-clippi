@@ -1,18 +1,22 @@
 import * as React from "react";
 
-import { ConnectionStatus } from "@vinceau/slp-realtime";
-import { Button, Card, Header, Image, Input, Segment } from "semantic-ui-react";
-
-import { pulseAnimation } from "@/styles/animations";
 import styled, { css } from "styled-components";
 
-import { dispatcher } from "@/store";
+import { ConnectionStatus } from "@vinceau/slp-realtime";
+import { useDispatch, useSelector } from "react-redux";
+import { Button, Card, Divider, Grid, Header, Image, Input, Segment } from "semantic-ui-react";
+
+import { streamManager } from "@/lib/realtime";
+import { Dispatch, dispatcher, iRootState } from "@/store";
+import { pulseAnimation } from "@/styles/animations";
+import { CustomIcon, Labelled } from "./Misc";
+import { device } from "@/styles/device";
+
+import dolphinLogoSVG from "@/styles/images/dolphin.svg";
 import slippiLogoSVG from "@/styles/images/slippi-logo.svg";
 import slippiLogo from "@/styles/images/slippi.png";
-import { InlineInput } from "./InlineInputs";
-import { CustomIcon, Labelled } from "./Misc";
 
-const statusToLabel = (status: ConnectionStatus): string => {
+export const statusToLabel = (status: ConnectionStatus): string => {
     switch (status) {
         case ConnectionStatus.DISCONNECTED:
             return "disconnected";
@@ -27,26 +31,15 @@ const statusToLabel = (status: ConnectionStatus): string => {
     }
 };
 
-const statusToClickLabel = (status: ConnectionStatus): string => {
+export const statusToColor = (status: ConnectionStatus): string => {
     switch (status) {
         case ConnectionStatus.DISCONNECTED:
-            return "Click to connect";
-        case ConnectionStatus.CONNECTED:
-            return "Click to disconnect";
-        default:
-            return "";
-    }
-};
-
-const statusToColor = (status: ConnectionStatus): string => {
-    switch (status) {
-        case ConnectionStatus.CONNECTED:
-            return "#00E461";
+            return "#F30807";
         case ConnectionStatus.CONNECTING:
         case ConnectionStatus.RECONNECTING:
             return "#FFB424";
         default:
-            return "#F30807";
+            return "#00E461";
     }
 };
 
@@ -71,14 +64,12 @@ export const ScanningDot: React.FC<{
 };
 
 export const ConnectionStatusDisplay: React.FC<{
-    port: string;
-    onPortChange: (port: string) => void;
-    onConnectClick: () => void;
-    onDisconnectClick: () => void;
-    status: ConnectionStatus;
+    headerText: string;
+    headerHoverTitle: string;
+    onHeaderClick?: () => void;
+    color?: string;
+    shouldPulse?: boolean;
 }> = props => {
-    const color = statusToColor(props.status);
-    const shouldPulse = props.status !== ConnectionStatus.DISCONNECTED;
     const Outer = styled.div`
     padding: 10px 0;
     display: flex;
@@ -89,50 +80,18 @@ export const ConnectionStatusDisplay: React.FC<{
     flex-direction: column;
     justify-content: center;
     `;
-    const handleClick = () => {
-        switch (props.status) {
-            case ConnectionStatus.DISCONNECTED:
-                props.onConnectClick();
-                return;
-            case ConnectionStatus.CONNECTED:
-                props.onDisconnectClick();
-                return;
-        }
-    };
-
     return (
         <Outer>
             <img src={slippiLogo} style={{ height: "35px", width: "35px" }} />
             <ConnectInfo>
-                <Labelled title={statusToClickLabel(props.status)} onClick={handleClick} position="right">
+                <Labelled title={props.headerHoverTitle} onClick={props.onHeaderClick} position="right">
                     <Header sub>
-                        <ScanningDot shouldPulse={shouldPulse} color={color} /> {statusToLabel(props.status)}
+                        <ScanningDot shouldPulse={props.shouldPulse} color={props.color || "red"} /> {props.headerText}
                     </Header>
                 </Labelled>
-                <span>Relay Port: <InlineInput value={props.port} onChange={props.onPortChange} /></span>
+                {props.children && <span>{props.children}</span>}
             </ConnectInfo>
         </Outer>
-    );
-};
-
-export const SlippiConnectionStatusCard: React.FC<{
-    port: string;
-    status: ConnectionStatus;
-    onDisconnect: () => void;
-}> = props => {
-    const header = statusToLabel(props.status);
-    const subHeader = `Relay Port: ${props.port}`;
-    const connected = props.status === ConnectionStatus.CONNECTED;
-    const statusColor = statusToColor(props.status);
-    return (
-        <ConnectionStatusCard
-            header={header}
-            subHeader={subHeader}
-            userImage={slippiLogo}
-            statusColor={statusColor}
-            shouldPulse={connected}
-            onDisconnect={props.onDisconnect}
-        />
     );
 };
 
@@ -143,6 +102,7 @@ export const ConnectionStatusCard: React.FC<{
     statusColor?: string;
     shouldPulse?: boolean;
     onDisconnect?: () => void;
+    buttonText?: string;
 }> = props => {
     const handleButtonClick = () => {
         if (props.onDisconnect) {
@@ -155,7 +115,7 @@ export const ConnectionStatusCard: React.FC<{
     margin-right: 10px;
     `;
     return (
-        <div style={{padding: "3px"}}>
+        <div style={{ padding: "3px" }}>
             <Card>
                 <Card.Content>
                     <Image
@@ -175,7 +135,7 @@ export const ConnectionStatusCard: React.FC<{
                 </Card.Content>
                 <Card.Content extra>
                     <Button basic fluid color="red" onClick={handleButtonClick}>
-                        Disconnect
+                        {props.buttonText || "Disconnect"}
                     </Button>
                 </Card.Content>
             </Card>
@@ -187,21 +147,105 @@ export const SlippiConnectionPlaceholder: React.FC<{
     port: string;
     onClick: (port: string) => void;
 }> = props => {
-    const [ p, setP] = React.useState(props.port);
+    const { liveSlpFilesPath } = useSelector((state: iRootState) => state.filesystem);
+    const dispatch = useDispatch<Dispatch>();
+    const selectPath = () => {
+        dispatch.filesystem.getLiveSlpFilesPath();
+    };
+    const [p, setP] = React.useState(props.port);
+    const VerticalHeader = styled(Header)`
+    &&& {
+    display: flex;
+    flex-direction: column;
+    }
+    `;
+    const FolderInput = styled.div`
+    &&& {
+        display: flex;
+        flex-direction: column;
+        padding: 0 10px;
+        @media ${device.laptop} {
+            flex-direction: row;
+            padding: 0 30px;
+        }
+    }
+    `;
+    const ButtonContainer = styled.div`
+    &&& {
+        margin-top: 5px;
+        margin-left: 0px;
+        @media ${device.laptop} {
+            margin-top: 0px;
+            margin-left: 5px;
+        }
+    }
+    `;
+    const VerticalDivider = styled(Divider)`
+    &&& {
+        display: none !important;
+        @media ${device.laptop} {
+            display: block !important;
+        }
+    }
+    `;
+    const HorizontalDivider = styled(Divider)`
+    &&& {
+        width: 100%;
+        display: block !important;
+        @media ${device.laptop} {
+            display: none !important;
+        }
+    }
+    `;
     return (
         <Segment placeholder>
-            <Header icon>
-                <CustomIcon image={slippiLogoSVG} size={54} color="#353636" />
-                You are not connected to a Slippi Relay
-            </Header>
-            <Input
-                style={{ maxWidth: "initial"}}
-                action={<Button primary onClick={() => props.onClick(p)}>Connect</Button>}
-                placeholder="Port"
-                value={p}
-                onChange={(_: any, { value }: any) => setP(value)}
-                onBlur={() => dispatcher.slippi.setPort(p)}
-            />
+            <Grid columns={2} stackable textAlign="center">
+                <VerticalDivider vertical>Or</VerticalDivider>
+                <Grid.Row verticalAlign="middle">
+                    <Grid.Column>
+                        <VerticalHeader icon>
+                            <CustomIcon image={slippiLogoSVG} size={54} color="#353636" />
+                            Connect to a Slippi Relay
+                        </VerticalHeader>
+                        <Input
+                            style={{ maxWidth: "150px", width: "100%" }}
+                            placeholder="Port"
+                            value={p}
+                            onChange={(_: any, { value }: any) => setP(value)}
+                            onBlur={() => dispatcher.slippi.setPort(p)}
+                        />
+                        <div style={{ padding: "10px 0" }}>
+                            <Button primary onClick={() => props.onClick(p)}>Connect</Button>
+                        </div>
+                    </Grid.Column>
+                    <HorizontalDivider horizontal>Or</HorizontalDivider>
+                    <Grid.Column>
+                        <VerticalHeader icon>
+                            <CustomIcon image={dolphinLogoSVG} size={54} color="#353636" />
+                            Monitor for SLP file changes
+                        </VerticalHeader>
+                        <FolderInput>
+                            <Input
+                                style={{ width: "100%" }}
+                                placeholder="Choose a folder..."
+                                value={liveSlpFilesPath}
+                            />
+                            <ButtonContainer>
+                                <Button onClick={selectPath}>Choose</Button>
+                            </ButtonContainer>
+                        </FolderInput>
+                        <div style={{ padding: "10px 0" }}>
+                            <Button
+                                primary={true}
+                                disabled={!liveSlpFilesPath}
+                                onClick={() => streamManager.monitorSlpFolder(liveSlpFilesPath)}
+                            >
+                                Start monitoring
+                            </Button>
+                        </div>
+                    </Grid.Column>
+                </Grid.Row>
+            </Grid>
         </Segment>
     );
 };

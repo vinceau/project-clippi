@@ -10,6 +10,7 @@ export interface TempContainerState {
     slippiConnectionStatus: ConnectionStatus;
     twitchUser: HelixUser | null;
     showSettings: boolean;
+    currentSlpFolderStream: string;
     comboFinderPercent: number;
     comboFinderLog: string;
     comboFinderProcessing: boolean;
@@ -21,6 +22,7 @@ const initialState: TempContainerState = {
     slippiConnectionStatus: ConnectionStatus.DISCONNECTED,
     twitchUser: null,
     showSettings: false,
+    currentSlpFolderStream: "",
     comboFinderPercent: 0,
     comboFinderLog: "",
     comboFinderProcessing: false,
@@ -56,6 +58,12 @@ export const tempContainer = createModel({
         }),
         setComboFinderProcessing: (state: TempContainerState, payload: boolean): TempContainerState => produce(state, draft => {
             draft.comboFinderProcessing = payload;
+        }),
+        setSlpFolderStream: (state: TempContainerState, payload: string): TempContainerState => produce(state, draft => {
+            draft.currentSlpFolderStream = payload;
+        }),
+        clearSlpFolderStream: (state: TempContainerState): TempContainerState => produce(state, draft => {
+            draft.currentSlpFolderStream = "";
         }),
     },
     effects: dispatch => ({

@@ -11,6 +11,7 @@ const homeDirectory = remote.app.getPath("home");
 
 export interface FileSystemState {
     filesPath: string;
+    liveSlpFilesPath: string;
     combosFilePath: string;
     includeSubFolders: boolean;
     deleteFilesWithNoCombos: boolean;
@@ -20,6 +21,7 @@ export interface FileSystemState {
 
 const initialState: FileSystemState = {
     filesPath: homeDirectory,
+    liveSlpFilesPath: "",
     combosFilePath: path.join(homeDirectory, "combos.json"),
     includeSubFolders: false,
     deleteFilesWithNoCombos: false,
@@ -46,6 +48,9 @@ export const filesystem = createModel({
                 draft.soundFiles = newState;
             });
         },
+        setLiveSlpFilesPath: (state: FileSystemState, payload: string): FileSystemState => produce(state, draft => {
+            draft.liveSlpFilesPath = payload;
+        }),
         setFilesPath: (state: FileSystemState, payload: string): FileSystemState => produce(state, draft => {
             draft.filesPath = payload;
         }),
@@ -73,6 +78,12 @@ export const filesystem = createModel({
                     name,
                     filePath: p,
                 });
+            }
+        },
+        async getLiveSlpFilesPath() {
+            const p = await getFolderPath();
+            if (p) {
+                dispatch.filesystem.setLiveSlpFilesPath(p);
             }
         },
         async getFilesPath() {

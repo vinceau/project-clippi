@@ -2,7 +2,7 @@ import { createModel } from "@rematch/core";
 
 import { EventActionConfig } from "@/actions";
 
-import { ActionEvent, comboFilter, connectToSlippi as startSlippiConnection } from "@/lib/realtime";
+import { ActionEvent, comboFilter, streamManager } from "@/lib/realtime";
 import { notify } from "@/lib/utils";
 import produce from "immer";
 
@@ -106,7 +106,7 @@ export const slippi = createModel({
         async connectToSlippi(port: string) {
             try {
                 console.log(`connecting on port: ${port}`);
-                await startSlippiConnection(parseInt(port, 10));
+                await streamManager.connectToSlippi(parseInt(port, 10));
             } catch (err) {
                 console.error(err);
                 notify(`Failed to connect to port ${port}! Is the relay running?`);

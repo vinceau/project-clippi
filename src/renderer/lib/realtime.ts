@@ -1,14 +1,11 @@
-import fs from "fs";
-import { Writable } from "stream";
+import fg from "fast-glob";
 
-import { ComboFilter, ComboType, ConnectionStatus, DolphinComboQueue, SlippiLivestream, SlippiRealtime, SlpStream } from "@vinceau/slp-realtime";
-
-import { notify } from "./utils";
-
-import { eventActionManager } from "../actions";
+import { ComboFilter, ComboType, ConnectionStatus, DolphinComboQueue, SlpFolderStream, SlpLiveStream, SlpRealTime, SlpStream } from "@vinceau/slp-realtime";
 
 import { dispatcher } from "@/store";
-import fg from "fast-glob";
+import { deleteFile, pipeFileContents } from "common/utils";
+import { eventActionManager } from "../actions";
+import { notify } from "./utils";
 
 export enum ActionEvent {
     GAME_START = "game-start",
@@ -27,68 +24,28 @@ const errorHandler = (err: any) => {
 export const comboFilter = new ComboFilter();
 comboFilter.updateSettings({ excludeCPUs: false, comboMustKill: false, minComboPercent: 40 });
 
-export const slippiLivestream = new SlippiLivestream();
-console.log(slippiLivestream);
-console.log(slippiLivestream.connection);
+const slippiRealtime = new SlpRealTime();
 
-slippiLivestream.connection.on("statusChange", (status) => {
-    dispatcher.tempContainer.setSlippiConnectionStatus(status);
-    if (status === ConnectionStatus.CONNECTED) {
-        notify("Connected to Slippi relay");
-    } else if (status === ConnectionStatus.DISCONNECTED) {
-        notify("Disconnected from Slippi relay");
-    }
-});
-
-export const connectToSlippi = async (port?: number): Promise<boolean> => {
-    console.log(`attempt to connect to slippi on port: ${port}`);
-    const address = "0.0.0.0";
-    const slpPort = port ? port : 1667;
-    console.log(slippiLivestream.connection);
-    return slippiLivestream.start(address, slpPort);
-};
-
-slippiLivestream.events.on("gameStart", (gameStart) => {
+slippiRealtime.on("gameStart", (gameStart) => {
     eventActionManager.emitEvent(ActionEvent.GAME_START, gameStart).catch(errorHandler);
 });
-slippiLivestream.events.on("gameEnd", (gameEnd) => {
+slippiRealtime.on("gameEnd", (gameEnd) => {
     eventActionManager.emitEvent(ActionEvent.GAME_END, gameEnd).catch(errorHandler);
 });
 
-slippiLivestream.events.on("spawn", (playerIndex, stock, settings) => {
+slippiRealtime.on("spawn", (playerIndex, stock, settings) => {
     eventActionManager.emitEvent(ActionEvent.PLAYER_SPAWN, playerIndex, stock, settings).catch(errorHandler);
 });
-slippiLivestream.events.on("death", (playerIndex, stock, settings) => {
+slippiRealtime.on("death", (playerIndex, stock, settings) => {
     eventActionManager.emitEvent(ActionEvent.PLAYER_DIED, playerIndex, stock, settings).catch(errorHandler);
 });
 
-slippiLivestream.events.on("comboEnd", (combo, settings) => {
+slippiRealtime.on("comboEnd", (combo, settings) => {
     if (!comboFilter.isCombo(combo, settings)) {
         return;
     }
     eventActionManager.emitEvent(ActionEvent.COMBO_OCCURRED, combo, settings).catch(errorHandler);
 });
-
-/*
-const getSlippiConnectionStatus = async (): Promise<ConnectionStatus> => {
-    console.log(`inside status getting function`);
-    const status = r.connection.getStatus();
-    console.log(`status is: ${status}`);
-    return Promise.resolve(status);
-};
-*/
-
-const deleteFile = async (filepath: string): Promise<void> => {
-    return new Promise((resolve, reject) => {
-        fs.unlink(filepath, (err) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve();
-            }
-        });
-    });
-};
 
 export const generateCombos = async (
     filenames: string[],
@@ -122,7 +79,8 @@ export const findCombos = async (filename: string): Promise<ComboType[]> => {
     console.log(`finding combos in: ${filename}`);
     const combosList = new Array<ComboType>();
     const slpStream = new SlpStream({ singleGameMode: true });
-    const realtime = new SlippiRealtime(slpStream);
+    const realtime = new SlpRealTime();
+    realtime.setStream(slpStream);
 
     realtime.on("comboEnd", (c, s) => {
         if (comboFilter.isCombo(c, s)) {
@@ -134,18 +92,6 @@ export const findCombos = async (filename: string): Promise<ComboType[]> => {
 
     console.log(`found ${combosList.length} combos in ${filename}`);
     return combosList;
-};
-
-const pipeFileContents = async (filename: string, destination: Writable): Promise<void> => {
-    return new Promise((resolve): void => {
-        const readStream = fs.createReadStream(filename);
-        readStream.on("open", () => {
-            readStream.pipe(destination);
-        });
-        readStream.on("close", () => {
-            resolve();
-        });
-    });
 };
 
 export const fastFindAndWriteCombos = async (
@@ -189,3 +135,51 @@ export const fastFindAndWriteCombos = async (
     console.log(`wrote ${numCombos} out to ${outputFile}`);
     return numCombos;
 };
+
+class SlpStreamManager {
+    private stream: SlpLiveStream | SlpFolderStream | null = null;
+
+    public async connectToSlippi(port?: number): Promise<void> {
+        console.log(`attempt to connect to slippi on port: ${port}`);
+        const address = "0.0.0.0";
+        const slpPort = port ? port : 1667;
+        const stream = new SlpLiveStream();
+        stream.connection.on("statusChange", (status) => {
+            dispatcher.tempContainer.setSlippiConnectionStatus(status);
+            if (status === ConnectionStatus.CONNECTED) {
+                notify("Connected to Slippi relay");
+            } else if (status === ConnectionStatus.DISCONNECTED) {
+                notify("Disconnected from Slippi relay");
+            }
+        });
+        console.log(stream.connection);
+        await stream.start(address, slpPort);
+        slippiRealtime.setStream(stream);
+        this.stream = stream;
+    }
+
+    public disconnectFromSlippi(): void {
+        if (this.stream && "connection" in this.stream) {
+            this.stream.connection.disconnect();
+        }
+        this.stream = null;
+    }
+
+    public async monitorSlpFolder(filepath: string): Promise<void> {
+        const stream = new SlpFolderStream();
+        await stream.start(filepath);
+        slippiRealtime.setStream(stream);
+        this.stream = stream;
+        dispatcher.tempContainer.setSlpFolderStream(filepath);
+    }
+
+    public stopMonitoringSlpFolder(): void {
+        if (this.stream && "stop" in this.stream) {
+            this.stream.stop();
+        }
+        this.stream = null;
+        dispatcher.tempContainer.clearSlpFolderStream();
+    }
+}
+
+export const streamManager = new SlpStreamManager();

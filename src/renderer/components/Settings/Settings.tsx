@@ -130,7 +130,7 @@ export const SettingsPage: React.FC<{
                             name="slippi-settings"
                             active={activeItem === "slippi-settings"}
                             onClick={handleItemClick}
-                        ><CustomIcon image={SlippiLogo} color="#353636" />Slippi Relay</Menu.Item>
+                        ><CustomIcon image={SlippiLogo} color="#353636" />Slippi Connection</Menu.Item>
                         <Menu.Item
                             name="obs-settings"
                             active={activeItem === "obs-settings"}
