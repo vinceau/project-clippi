@@ -94,27 +94,6 @@ export const ConnectionStatusDisplay: React.FC<{
     );
 };
 
-export const SlippiConnectionStatusCard: React.FC<{
-    port: string;
-    status: ConnectionStatus;
-    onDisconnect: () => void;
-}> = props => {
-    const header = statusToLabel(props.status);
-    const subHeader = `Relay Port: ${props.port}`;
-    const connected = props.status === ConnectionStatus.CONNECTED;
-    const statusColor = statusToColor(props.status);
-    return (
-        <ConnectionStatusCard
-            header={header}
-            subHeader={subHeader}
-            userImage={slippiLogo}
-            statusColor={statusColor}
-            shouldPulse={connected}
-            onDisconnect={props.onDisconnect}
-        />
-    );
-};
-
 export const ConnectionStatusCard: React.FC<{
     userImage: any;
     header: string;
@@ -122,6 +101,7 @@ export const ConnectionStatusCard: React.FC<{
     statusColor?: string;
     shouldPulse?: boolean;
     onDisconnect?: () => void;
+    buttonText?: string;
 }> = props => {
     const handleButtonClick = () => {
         if (props.onDisconnect) {
@@ -154,7 +134,7 @@ export const ConnectionStatusCard: React.FC<{
                 </Card.Content>
                 <Card.Content extra>
                     <Button basic fluid color="red" onClick={handleButtonClick}>
-                        Disconnect
+                        {props.buttonText || "Disconnect"}
                     </Button>
                 </Card.Content>
             </Card>
