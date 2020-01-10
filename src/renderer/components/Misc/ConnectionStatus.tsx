@@ -205,42 +205,36 @@ export const SlippiConnectionPlaceholder: React.FC<{
     `;
     return (
         <Segment placeholder>
-
             <Grid columns={2} stackable textAlign='center'>
                 <Divider vertical>Or</Divider>
-
                 <Grid.Row verticalAlign='middle'>
-
                     <Grid.Column>
-
                         <VerticalHeader icon>
                             <CustomIcon image={slippiLogoSVG} size={54} color="#353636" />
                             Connect to a Slippi Relay
                         </VerticalHeader>
                         <Input
                             style={{ maxWidth: "initial" }}
-                            action={<Button primary onClick={() => props.onClick(p)}>Connect</Button>}
                             placeholder="Port"
                             value={p}
                             onChange={(_: any, { value }: any) => setP(value)}
                             onBlur={() => dispatcher.slippi.setPort(p)}
                         />
-
-
+                        <div style={{ padding: "10px 0" }}>
+                            <Button primary onClick={() => props.onClick(p)}>Connect</Button>
+                        </div>
                     </Grid.Column>
                     <Grid.Column>
                         <VerticalHeader icon>
                             <CustomIcon image={dolphinLogoSVG} size={54} color="#353636" />
                             Monitor for SLP file changes
                         </VerticalHeader>
-
                         <Input
                             style={{ maxWidth: "initial" }}
                             action={<Button onClick={selectPath}>Choose</Button>}
                             placeholder="Choose a folder..."
                             value={liveSlpFilesPath}
                         />
-
                         <div style={{ padding: "10px 0" }}>
                             <Button
                                 primary={true}
