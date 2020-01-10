@@ -13,7 +13,7 @@ export const SlippiPage: React.FC = () => {
 
     return (
         <div>
-            <h2>Slippi Relay</h2>
+            <h2>Slippi Connection</h2>
             {slippiConnectionStatus === ConnectionStatus.CONNECTED ?
                 <SlippiConnectionStatusCard
                     status={slippiConnectionStatus}
