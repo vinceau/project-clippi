@@ -10,6 +10,7 @@ import { streamManager } from "@/lib/realtime";
 import { Dispatch, dispatcher, iRootState } from "@/store";
 import { pulseAnimation } from "@/styles/animations";
 import { CustomIcon, Labelled } from "./Misc";
+import { device } from "@/styles/device";
 
 import dolphinLogoSVG from "@/styles/images/dolphin.svg";
 import slippiLogoSVG from "@/styles/images/slippi-logo.svg";
@@ -67,7 +68,7 @@ export const ConnectionStatusDisplay: React.FC<{
     headerHoverTitle: string;
     onHeaderClick?: () => void;
     color?: string;
-    shouldPulse ?: boolean;
+    shouldPulse?: boolean;
 }> = props => {
     const Outer = styled.div`
     padding: 10px 0;
@@ -158,6 +159,27 @@ export const SlippiConnectionPlaceholder: React.FC<{
     flex-direction: column;
     }
     `;
+    const FolderInput = styled.div`
+    &&& {
+        display: flex;
+        flex-direction: column;
+        padding: 0 10px;
+        @media ${device.laptop} {
+            flex-direction: row;
+            padding: 0 30px;
+        }
+    }
+    `;
+    const ButtonContainer = styled.div`
+    &&& {
+        margin-top: 5px;
+        margin-left: 0px;
+        @media ${device.laptop} {
+            margin-top: 0px;
+            margin-left: 5px;
+        }
+    }
+    `;
     return (
         <Segment placeholder>
             <Grid columns={2} stackable textAlign="center">
@@ -169,7 +191,7 @@ export const SlippiConnectionPlaceholder: React.FC<{
                             Connect to a Slippi Relay
                         </VerticalHeader>
                         <Input
-                            style={{ maxWidth: "initial" }}
+                            style={{ maxWidth: "150px", width: "100%" }}
                             placeholder="Port"
                             value={p}
                             onChange={(_: any, { value }: any) => setP(value)}
@@ -184,12 +206,16 @@ export const SlippiConnectionPlaceholder: React.FC<{
                             <CustomIcon image={dolphinLogoSVG} size={54} color="#353636" />
                             Monitor for SLP file changes
                         </VerticalHeader>
-                        <Input
-                            style={{ maxWidth: "initial" }}
-                            action={<Button onClick={selectPath}>Choose</Button>}
-                            placeholder="Choose a folder..."
-                            value={liveSlpFilesPath}
-                        />
+                        <FolderInput>
+                            <Input
+                                style={{ width: "100%" }}
+                                placeholder="Choose a folder..."
+                                value={liveSlpFilesPath}
+                            />
+                            <ButtonContainer>
+                                <Button onClick={selectPath}>Choose</Button>
+                            </ButtonContainer>
+                        </FolderInput>
                         <div style={{ padding: "10px 0" }}>
                             <Button
                                 primary={true}
