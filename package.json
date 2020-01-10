@@ -21,7 +21,6 @@
       "icon": "build/icon.ico",
       "target": [
         "portable"
-
       ]
     },
     "linux": {
