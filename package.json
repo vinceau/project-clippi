@@ -18,8 +18,10 @@
       "category": "public.app-category.lifestyle"
     },
     "win": {
+      "icon": "build/icon.ico",
       "target": [
         "portable"
+
       ]
     },
     "linux": {
