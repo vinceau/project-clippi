@@ -170,6 +170,7 @@ class SlpStreamManager {
         await stream.start(filepath);
         slippiRealtime.setStream(stream);
         this.stream = stream;
+        dispatcher.tempContainer.setSlpFolderStream(filepath);
     }
 
     public stopMonitoringSlpFolder(): void {
@@ -177,6 +178,7 @@ class SlpStreamManager {
             this.stream.stop();
         }
         this.stream = null;
+        dispatcher.tempContainer.clearSlpFolderStream();
     }
 }
 

@@ -1,22 +1,21 @@
 import * as React from "react";
 
-import { ConnectionStatus } from "@vinceau/slp-realtime";
-import { Button, Divider, Grid, Card, Header, Image, Input, Segment } from "semantic-ui-react";
-
-import { pulseAnimation } from "@/styles/animations";
 import styled, { css } from "styled-components";
+
+import { ConnectionStatus } from "@vinceau/slp-realtime";
 import { useDispatch, useSelector } from "react-redux";
-import { Dispatch, iRootState } from "@/store";
+import { Button, Card, Divider, Grid, Header, Image, Input, Segment } from "semantic-ui-react";
 
-import { dispatcher } from "@/store";
-import slippiLogoSVG from "@/styles/images/slippi-logo.svg";
-import dolphinLogoSVG from "@/styles/images/dolphin.svg";
-import slippiLogo from "@/styles/images/slippi.png";
-import { InlineInput } from "./InlineInputs";
-import { CustomIcon, Labelled } from "./Misc";
 import { streamManager } from "@/lib/realtime";
+import { Dispatch, dispatcher, iRootState } from "@/store";
+import { pulseAnimation } from "@/styles/animations";
+import { CustomIcon, Labelled } from "./Misc";
 
-const statusToLabel = (status: ConnectionStatus): string => {
+import dolphinLogoSVG from "@/styles/images/dolphin.svg";
+import slippiLogoSVG from "@/styles/images/slippi-logo.svg";
+import slippiLogo from "@/styles/images/slippi.png";
+
+export const statusToLabel = (status: ConnectionStatus): string => {
     switch (status) {
         case ConnectionStatus.DISCONNECTED:
             return "disconnected";
@@ -31,26 +30,15 @@ const statusToLabel = (status: ConnectionStatus): string => {
     }
 };
 
-const statusToClickLabel = (status: ConnectionStatus): string => {
+export const statusToColor = (status: ConnectionStatus): string => {
     switch (status) {
         case ConnectionStatus.DISCONNECTED:
-            return "Click to connect";
-        case ConnectionStatus.CONNECTED:
-            return "Click to disconnect";
-        default:
-            return "";
-    }
-};
-
-const statusToColor = (status: ConnectionStatus): string => {
-    switch (status) {
-        case ConnectionStatus.CONNECTED:
-            return "#00E461";
+            return "#F30807";
         case ConnectionStatus.CONNECTING:
         case ConnectionStatus.RECONNECTING:
             return "#FFB424";
         default:
-            return "#F30807";
+            return "#00E461";
     }
 };
 
@@ -75,14 +63,12 @@ export const ScanningDot: React.FC<{
 };
 
 export const ConnectionStatusDisplay: React.FC<{
-    port: string;
-    onPortChange: (port: string) => void;
-    onConnectClick: () => void;
-    onDisconnectClick: () => void;
-    status: ConnectionStatus;
+    headerText: string;
+    headerHoverTitle: string;
+    onHeaderClick?: () => void;
+    color?: string;
+    shouldPulse ?: boolean;
 }> = props => {
-    const color = statusToColor(props.status);
-    const shouldPulse = props.status !== ConnectionStatus.DISCONNECTED;
     const Outer = styled.div`
     padding: 10px 0;
     display: flex;
@@ -93,27 +79,16 @@ export const ConnectionStatusDisplay: React.FC<{
     flex-direction: column;
     justify-content: center;
     `;
-    const handleClick = () => {
-        switch (props.status) {
-            case ConnectionStatus.DISCONNECTED:
-                props.onConnectClick();
-                return;
-            case ConnectionStatus.CONNECTED:
-                props.onDisconnectClick();
-                return;
-        }
-    };
-
     return (
         <Outer>
             <img src={slippiLogo} style={{ height: "35px", width: "35px" }} />
             <ConnectInfo>
-                <Labelled title={statusToClickLabel(props.status)} onClick={handleClick} position="right">
+                <Labelled title={props.headerHoverTitle} onClick={props.onHeaderClick} position="right">
                     <Header sub>
-                        <ScanningDot shouldPulse={shouldPulse} color={color} /> {statusToLabel(props.status)}
+                        <ScanningDot shouldPulse={props.shouldPulse} color={props.color || "red"} /> {props.headerText}
                     </Header>
                 </Labelled>
-                <span>Relay Port: <InlineInput value={props.port} onChange={props.onPortChange} /></span>
+                {props.children && <span>{props.children}</span>}
             </ConnectInfo>
         </Outer>
     );
@@ -205,9 +180,9 @@ export const SlippiConnectionPlaceholder: React.FC<{
     `;
     return (
         <Segment placeholder>
-            <Grid columns={2} stackable textAlign='center'>
+            <Grid columns={2} stackable textAlign="center">
                 <Divider vertical>Or</Divider>
-                <Grid.Row verticalAlign='middle'>
+                <Grid.Row verticalAlign="middle">
                     <Grid.Column>
                         <VerticalHeader icon>
                             <CustomIcon image={slippiLogoSVG} size={54} color="#353636" />

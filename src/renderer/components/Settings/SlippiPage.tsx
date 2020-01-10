@@ -8,18 +8,25 @@ import { SlippiConnectionPlaceholder, SlippiConnectionStatusCard } from "../Misc
 
 export const SlippiPage: React.FC = () => {
     const { port } = useSelector((state: iRootState) => state.slippi);
-    const { slippiConnectionStatus } = useSelector((state: iRootState) => state.tempContainer);
+    const { slippiConnectionStatus, currentSlpFolderStream } = useSelector((state: iRootState) => state.tempContainer);
     const dispatch = useDispatch<Dispatch>();
-
+    const relayConnected = slippiConnectionStatus === ConnectionStatus.CONNECTED;
+    const isFolderStream = currentSlpFolderStream !== "";
+    const connected = relayConnected || isFolderStream;
     return (
         <div>
             <h2>Slippi Connection</h2>
-            {slippiConnectionStatus === ConnectionStatus.CONNECTED ?
-                <SlippiConnectionStatusCard
-                    status={slippiConnectionStatus}
-                    port={port}
-                    onDisconnect={() => streamManager.disconnectFromSlippi()}
-                />
+            {connected ?
+                (
+                    relayConnected ?
+                        <SlippiConnectionStatusCard
+                            status={slippiConnectionStatus}
+                            port={port}
+                            onDisconnect={() => streamManager.disconnectFromSlippi()}
+                        />
+                        :
+                        <p>hello</p>
+                )
                 :
                 <SlippiConnectionPlaceholder
                     port={port}
