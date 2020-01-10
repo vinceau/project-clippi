@@ -4,6 +4,11 @@
   "version": "0.0.3",
   "description": "Slippi automation framework",
   "license": "MIT",
+  "author": {
+    "name": "Vince Au",
+    "email": "vinceau09@gmail.com",
+    "url": "https://github.com/vinceau"
+  },
   "build": {
     "appId": "au.id.vince.clippi",
     "files": [
