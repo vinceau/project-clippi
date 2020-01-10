@@ -95,7 +95,7 @@ export const filesystem = createModel({
         async getCombosFilePath() {
             const p = await getFilePath({
                 filters: [{ name: "JSON files", extensions: ["json"] }],
-            }, true);
+            });
             if (p) {
                 dispatch.filesystem.setCombosFilePath(p);
             }
