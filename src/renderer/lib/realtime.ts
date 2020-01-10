@@ -1,6 +1,6 @@
 import fg from "fast-glob";
 
-import { ComboFilter, ComboType, ConnectionStatus, DolphinComboQueue, SlpLiveStream, SlpRealTime, SlpStream, SlpFolderStream } from "@vinceau/slp-realtime";
+import { ComboFilter, ComboType, ConnectionStatus, DolphinComboQueue, SlpFolderStream, SlpLiveStream, SlpRealTime, SlpStream } from "@vinceau/slp-realtime";
 
 import { dispatcher } from "@/store";
 import { deleteFile, pipeFileContents } from "common/utils";

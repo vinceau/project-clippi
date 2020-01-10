@@ -6,13 +6,13 @@ import { Container, Icon } from "semantic-ui-react";
 import { streamManager } from "@/lib/realtime";
 import { isDevelopment } from "@/lib/utils";
 import { Dispatch, iRootState } from "@/store";
+import { ConnectionStatus } from "@vinceau/slp-realtime";
 import { useDispatch, useSelector } from "react-redux";
 import { Automator } from "../Automator/Automator";
 import { SettingsPage } from "../Settings/Settings";
-import { ConnectionStatusDisplay, statusToLabel, statusToColor } from "./ConnectionStatus";
-import { DevTools, Labelled } from "./Misc";
+import { ConnectionStatusDisplay, statusToColor, statusToLabel } from "./ConnectionStatus";
 import { InlineInput } from "./InlineInputs";
-import { ConnectionStatus } from "@vinceau/slp-realtime";
+import { DevTools, Labelled } from "./Misc";
 
 const Header: React.FC<{
     showSettings?: boolean;

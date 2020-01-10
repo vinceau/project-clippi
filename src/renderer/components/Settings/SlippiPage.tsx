@@ -4,7 +4,7 @@ import { streamManager } from "@/lib/realtime";
 import { Dispatch, iRootState } from "@/store";
 import { ConnectionStatus } from "@vinceau/slp-realtime";
 import { useDispatch, useSelector } from "react-redux";
-import { SlippiConnectionPlaceholder, statusToLabel, statusToColor, ConnectionStatusCard } from "../Misc/ConnectionStatus";
+import { ConnectionStatusCard, SlippiConnectionPlaceholder, statusToColor, statusToLabel } from "../Misc/ConnectionStatus";
 
 import slippiLogo from "@/styles/images/slippi.png";
 
