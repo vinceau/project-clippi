@@ -1,7 +1,11 @@
-# Project Clippi
+<img src="build/icon.png" alt="Project Clippi Logo" width="86" height="86"> Project Clippi
+======================================
 
-> An automation framework for Project Slippi
+[![Build Status](https://github.com/vinceau/project-clippi/workflows/build/badge.svg)](https://github.com/vinceau/project-clippi/actions?workflow=build)
 
+> A Melee Automation Framework
+
+Project Clippi is an automation framework for Super Smash Bros. Melee. Detect an event → execute an action. Someone did a sick combo? Twitch clip it. A new game is starting? Change OBS scenes. A player died? Play a sound. Everything is open source and fully-customisable. The possibilities are endless.
 
 ## Development
 
