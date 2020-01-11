@@ -2,7 +2,7 @@
 
 If you found Project Clippi useful and would like to give back here's how you can:
 
-* If you have ideas for new features, or would like to report a bug, please fill out this form, or tweet at [@ProjectClippi](https://twitter.com/ProjectClippi).
+* If you have ideas for new features, or would like to report a bug, please fill out [this form](https://docs.google.com/forms/d/e/1FAIpQLSeWs4AVx64Nr-B7PU86CAYYl7fe68AWmXLOtuWVefr2IFCZ3A/viewform), or tweet at [@ProjectClippi](https://twitter.com/ProjectClippi).
 * If you are gifted in the way of code, you can help by adding more detectable events and more executable actions. Check out the docs for the library and the source code for the front-end.
 
 ## Donations
@@ -17,4 +17,4 @@ If you are financially able, please donate to any of the following bushfire reli
 * [Foodbank](https://www.foodbank.org.au/support-us/make-a-donation/donate-funds/?state=au) - send food and supplies to affected communities
 * [Community Enterprise Foundation's Victoria Bushfire Disaster Appeal](https://www.communityenterprisefoundation.com.au/make-a-donation/bushfire-disaster-appeal/) - for affected communities in East Gippsland, north-east VIC, south-east NSW, and Adelaide Hills
 
-After donating, leave your feedback using the feedback form, or tweet at [@ProjectClippi](https://twitter.com/ProjectClippi) with a proof of donation. If you donated because of Project Clippi, but don't want anything in return (bless your soul), tweet at [@ProjectClippi](https://twitter.com/ProjectClippi) anyway so I can thank you for your support.
+After donating, leave your feedback using [the feedback form](https://docs.google.com/forms/d/e/1FAIpQLSeWs4AVx64Nr-B7PU86CAYYl7fe68AWmXLOtuWVefr2IFCZ3A/viewform), or tweet at [@ProjectClippi](https://twitter.com/ProjectClippi) with a proof of donation. If you donated because of Project Clippi, but don't want anything in return (bless your soul), tweet at [@ProjectClippi](https://twitter.com/ProjectClippi) anyway so I can thank you for your support.
