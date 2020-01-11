@@ -14,7 +14,7 @@ Next click, "Edit".
 
 ![Console before](images/1-2-console-before.png)
 
-Switch to the "Advanced" tab, then enable "Wii Relay".
+Switch to the "Advanced" tab, then enable "Wii Relay", and then click "Submit" at the bottom to save changes.
 
 ![Enable Wii Relay setting](images/1-3-wii-relay.png)
 
