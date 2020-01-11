@@ -20,6 +20,8 @@ Switch to the "Advanced" tab, then enable "Wii Relay".
 
 You should now see "Relay Port" section next to your Wii connection. Remember this number since it will be important for later.
 
+> **Note**: If you use Mac or Linux, the relay port number *must* be strictly greater than 1024 or you will need root. To the best of my knowledge the latest public version of the Slippi Desktop app for Mac and Linux still use ports which are <= 1024. If the relay port is greater than 1024, try running the app as root, or manually build the latest version of [the Slippi Desktop app](https://github.com/project-slippi/slippi-desktop-app/) for your own platform.
+
 ![Console after](images/1-4-console-after.png)
 
 ## 2. Setup Project Clippi
