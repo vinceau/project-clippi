@@ -5,6 +5,8 @@
 
 > Project Clippi is an automation framework for Super Smash Bros. Melee. Detect an event → execute an action. Someone did a sick combo? Twitch clip it. A new game is starting? Change OBS scenes. A player died? Play a sound. Everything is open source and fully-customisable. The possibilities are endless.
 
+![Project Clippi screenshot](/docs/images/screenshot.png)
+
 ## Download
 
 You can find the latest download links for Windows, Mac, and Linux on [the releases page](https://github.com/vinceau/project-clippi/releases).
