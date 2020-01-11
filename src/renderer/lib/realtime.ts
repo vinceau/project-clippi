@@ -5,7 +5,7 @@ import { ComboFilter, ComboType, ConnectionStatus, DolphinComboQueue, SlpFolderS
 import { dispatcher } from "@/store";
 import { deleteFile, pipeFileContents } from "common/utils";
 import { eventActionManager } from "../actions";
-import { notify } from "./utils";
+import { isDevelopment, notify } from "./utils";
 
 export enum ActionEvent {
     GAME_START = "game-start",
@@ -22,7 +22,9 @@ const errorHandler = (err: any) => {
 };
 
 export const comboFilter = new ComboFilter();
-comboFilter.updateSettings({ excludeCPUs: false, comboMustKill: false, minComboPercent: 40 });
+if (isDevelopment) {
+    comboFilter.updateSettings({ excludeCPUs: false, comboMustKill: false, minComboPercent: 40 });
+}
 
 const slippiRealtime = new SlpRealTime();
 

@@ -69,3 +69,12 @@ export const openComboInDolphin = (comboFilePath: string): void => {
     console.log(dolphinPath);
     cp.execFile(dolphinPath, ["-i", comboFilePath]);
 };
+
+export const loadFileInDolphin = async (): Promise<void> => {
+    const p = await getFilePath({
+        filters: [{ name: "JSON files", extensions: ["json"] }],
+    });
+    if (p) {
+        openComboInDolphin(p);
+    }
+};

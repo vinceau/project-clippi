@@ -19,6 +19,10 @@ const randomEvents: string[] = [
 
 export const generateRandomEvent = () => {
     const d = new Date();
-    const index = (d.getDate() + d.getMonth()) % randomEvents.length;
+    // Start at current day + month
+    const offset = d.getDate() + d.getMonth();
+    // If the current hour is odd, add one, else minus one
+    const switcher = d.getHours() % 2 ? 1 : -1;
+    const index = (offset + switcher) % randomEvents.length;
     return randomEvents[index] + "...";
 };
