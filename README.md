@@ -13,8 +13,8 @@ You can find the latest download links for Windows, Mac, and Linux on [the relea
 
 You have two options when connecting Project Clippi to a Slippi source. You can connect to a console source using the [Slippi Desktop App](https://github.com/project-slippi/slippi-desktop-app/) as a relay, or connect to a folder that has live SLP files being written to it. e.g. Slippi Dolphin. Follow the links below based on what source you are connecting to.
 
-* [Connecting to a Slippi Relay]()
-* [Connecting to a folder (Dolphin)]()
+* [Connecting to a Slippi Relay](docs/connect_to_relay.md)
+* [Connecting to a folder (Dolphin)](docs/connect_to_folder.md)
 
 ## Development
 
