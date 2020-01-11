@@ -22,7 +22,7 @@ You have two options when connecting Project Clippi to a Slippi source. You can 
 
 ## Development
 
-After cloning the repo, run the following commands.
+To build the project from source, after cloning the repo, run the following commands.
 
 ```bash
 yarn install     # Install all the dependencies
@@ -32,3 +32,17 @@ yarn run start   # Start the development server
 This will automatically start the development server. It includes HMR and
 auto-reloading so changes to both the main and renderer processes should
 auto-update.
+
+
+## Acknowledgements
+
+Many thanks to:
+
+* [Jas Laferriere](https://github.com/JLaferri) and the rest of the [Project Slippi](https://github.com/project-slippi) team. Project Clippi is built on top of Slippi, so without Slippi this project would not be possible.
+* Randy F. Smash for beta testing and providing initial feedback.
+* Daniel Jong for the Project Clippi logo.
+
+
+## License
+
+This software is released under the terms of [MIT license](LICENSE).
