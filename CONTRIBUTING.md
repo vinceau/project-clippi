@@ -2,8 +2,9 @@
 
 If you found Project Clippi useful and would like to give back here's how you can:
 
+* [Spread the word!](https://twitter.com/intent/retweet?tweet_id=1215995909915336705) The more people that use it, the more Project Clippi can improve!
 * If you have ideas for new features, or would like to report a bug, please fill out [this form](https://docs.google.com/forms/d/e/1FAIpQLSeWs4AVx64Nr-B7PU86CAYYl7fe68AWmXLOtuWVefr2IFCZ3A/viewform), or tweet at [@ProjectClippi](https://twitter.com/ProjectClippi).
-* If you are gifted in the way of code, you can help by adding more detectable events and more executable actions. Dive into the docs for the [`slp-realtime` library](https://github.com/vinceau/slp-realtime) and [the source code](https://github.com/vinceau/project-clippi) for the front-end.
+* If you are gifted in the way of code, you can help by adding more detectable events and more executable actions. Dive into the docs for the [`slp-realtime` library](https://github.com/vinceau/slp-realtime) which underpins this project and [the source code](https://github.com/vinceau/project-clippi) for the Project Clippi front-end.
 
 ## Donations
 
