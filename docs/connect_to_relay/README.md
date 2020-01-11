@@ -1,6 +1,6 @@
 # Connecting to a Slippi Relay
 
-This tutorial assumes that you have Slippi mirroring already set up. If you have not set up Slippi mirroring, [follow this guide](https://docs.google.com/document/d/1ezavBjqVGbVO8aqSa5EHfq7ZflrTCvezRYjOf51MOWg/edit) first before following the below steps.
+This tutorial assumes that you have Slippi mirroring already set up. If you have not set up Slippi mirroring, follow [the Slippi mirroring guide](https://docs.google.com/document/d/1ezavBjqVGbVO8aqSa5EHfq7ZflrTCvezRYjOf51MOWg/edit) first before following the steps below.
 
 ## 1. Setup Slippi Desktop App
 
