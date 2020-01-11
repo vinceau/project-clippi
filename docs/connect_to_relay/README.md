@@ -24,7 +24,9 @@ You should now see "Relay Port" section next to your Wii connection. Remember th
 
 ## 2. Setup Project Clippi
 
-Open up the settings page of Project Clippi, and click "Slippi Connection".
+Make sure you have the latest version of Project Clippi from [the releases page](https://github.com/vinceau/project-clippi/releases).
+
+Open up the settings page and click "Slippi Connection".
 
 ![Clippi settings](images/2-1-clippi-settings.png)
 
