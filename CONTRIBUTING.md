@@ -8,7 +8,7 @@ If you found Project Clippi useful and would like to give back here's how you ca
 
 ## Donations
 
-Currently, Australia is battling the worst bushfires it has ever seen. Almost 15 million acres have been burned, and almost half a billion animals have died or lost their habitat. The air quality has been reaching more than 11 times hazardous levels, at least 25 people have died, hundreds of thousands of people have been displaced, and that's not the worst of it. **The fire is still burning uncontrollably. Right. Now.**
+While I've spent the past several months working on this project, firefighters have spent the past several months defending my country. Currently, Australia is battling the worst bushfires it has ever seen. Almost 15 million acres have been burned, and almost half a billion animals have died or lost their habitat. The air quality has been reaching more than 11 times hazardous levels, at least 25 people have died, hundreds of thousands of people have been displaced, and that's not the worst of it. **The fire is still burning uncontrollably. Right. Now.**
 
 If you are financially able, please donate to any of the following bushfire relief organisations. **For all donations of $5 or more, I will highly prioritise your feedback and requested features. For all donations of $10 or more, I will also include your name (and/or gamer tag) in a list of Project Clippi supporters to be included in the main page as well as in the app itself.**
 
