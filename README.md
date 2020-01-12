@@ -49,17 +49,59 @@ After donating, leave your feedback using [the feedback form](https://docs.googl
 
 ## Development
 
-To build the project from source, after cloning the repo, run the following commands.
+### Prerequisites
+
+You'll need the following tools installed:
+
+* [Git](https://git-scm.com/)
+* [Node.JS](https://nodejs.org/en/) (version `10.x`)
+* [Yarn](https://yarnpkg.com/en/docs/install)
+
+### Setup
+
+Clone the repo and install dependencies:
 
 ```bash
-yarn install     # Install all the dependencies
-yarn run start   # Start the development server
+git clone https://github.com/vinceau/project-clippi
+cd project-clippi
+yarn install
 ```
 
-This will automatically start the development server. It includes HMR and
-auto-reloading so changes to both the main and renderer processes should
-auto-update.
+### Build
 
+Start the development server using:
+
+```bash
+yarn run start
+```
+
+The development server includes HMR and auto-reloading so changes to both the main and renderer processes should auto-update.
+
+To create a binary package:
+
+```bash
+yarn run dist
+```
+
+### Twitch Authentication
+
+To get Twitch authentication working you'll need to supply your own [Twitch Client ID](https://dev.twitch.tv/docs/authentication). If you don't, you'll get a `{"status":400,"message":"missing client id"}` error when you try to connect to Twitch.
+
+Set the following environmental variables:
+
+#### Windows
+
+```cmd
+set ELECTRON_WEBPACK_APP_TWITCH_CLIENT_ID=YourTwitchClientID
+set ELECTRON_WEBPACK_APP_TWITCH_REDIRECT_URI=http://localhost:3000/auth/twitch/callback
+```
+
+#### Mac and Linux
+
+```bash
+export ELECTRON_WEBPACK_APP_TWITCH_CLIENT_ID="YourTwitchClientID";
+export ELECTRON_WEBPACK_APP_TWITCH_REDIRECT_URI="http://localhost:3000/auth/twitch/callback";
+```
 
 ## Acknowledgements
 
