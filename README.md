@@ -105,12 +105,7 @@ export ELECTRON_WEBPACK_APP_TWITCH_REDIRECT_URI="http://localhost:3000/auth/twit
 
 ## Acknowledgements
 
-Many thanks to:
-
-* [Jas Laferriere](https://github.com/JLaferri) and the rest of the [Project Slippi](https://github.com/project-slippi) team. Project Clippi is built on top of Slippi, so without Slippi this project would not be possible.
-* Randy F. Smash for beta testing and providing initial feedback.
-* Daniel Jong for the Project Clippi logo.
-
+Project Clippi wouldn't be here without the work of [Jas Laferriere](https://github.com/JLaferri) and the rest of the [Project Slippi](https://github.com/project-slippi) team, and all the [Project Clippi supporters](SUPPORTERS.md).
 
 ## License
 
