@@ -70,3 +70,11 @@ export const InlineInput = (props: any) => {
         />
     );
 };
+
+export const SimpleInput = styled.input`
+  padding: 3px;
+  text-align: center;
+  border-radius: 3px;
+  border: 1px solid #d4d4d5;
+  font-weight: bold;
+`;

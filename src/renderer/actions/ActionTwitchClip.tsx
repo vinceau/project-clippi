@@ -4,6 +4,7 @@ import { ActionTypeGenerator } from "@vinceau/event-actions";
 import { produce } from "immer";
 import { Checkbox, Icon } from "semantic-ui-react";
 
+import { InlineDropdown, SimpleInput } from "@/components/Misc/InlineInputs";
 import { notify as sendNotification } from "@/lib/utils";
 import { createTwitchClip } from "common/twitch";
 import { dispatcher, store } from "../store";
@@ -12,13 +13,24 @@ import { ActionComponent } from "./types";
 interface ActionCreateTwitchClipParams {
     delay?: boolean;
     notify?: boolean;
+    channel?: string;
 }
+
+const defaultParams = (): ActionCreateTwitchClipParams => {
+    const user = store.getState().tempContainer.twitchUser;
+    const channel = user ? user.name : "";
+    return {
+        delay: false,
+        notify: true,
+        channel,
+    };
+};
 
 const actionCreateClip: ActionTypeGenerator = (params: ActionCreateTwitchClipParams) => {
     return async (): Promise<string | null> => {
         const token = store.getState().twitch.authToken;
         try {
-            const clipID = await createTwitchClip(token, params.delay);
+            const clipID = await createTwitchClip(token, params.delay, params.channel);
             // Get timestamp in seconds
             const timestamp = (new Date()).getTime() / 1000;
             dispatcher.twitch.addTwitchClip({
@@ -31,7 +43,7 @@ const actionCreateClip: ActionTypeGenerator = (params: ActionCreateTwitchClipPar
             return clipID;
         } catch (err) {
             console.error(err);
-            sendNotification("Failed to create Twitch clip. Are you sure you are live?");
+            sendNotification(`Failed to clip. ${params.channel ? "Is " + params.channel : "Are you"} live?`);
             return null;
         }
     };
@@ -45,6 +57,7 @@ const ActionIcon = () => {
 
 const TwitchClipInput = (props: any) => {
     const { value, onChange } = props;
+    const [channel, setChannel] = React.useState<string>(value.channel || "");
     const onDelayChange = (delay?: boolean) => {
         const newValue = produce(value, (draft: ActionCreateTwitchClipParams) => {
             draft.delay = delay;
@@ -58,22 +71,43 @@ const TwitchClipInput = (props: any) => {
         });
         onChange(newValue);
     };
-    const toggleNotify = () => onNotifyChange(!value.notify);
-
+    const onChannelChange = () => {
+        const newValue = produce(value, (draft: ActionCreateTwitchClipParams) => {
+            draft.channel = channel;
+        });
+        onChange(newValue);
+    };
     return (
         <div>
             <div style={{ marginBottom: "10px" }}>
-                <Checkbox
-                    label="Delay before clipping"
-                    onChange={toggleDelay}
-                    checked={value.delay}
+                Clip <SimpleInput
+                    style={{ width: "100px" }}
+                    value={channel}
+                    onChange={(e) => setChannel(e.target.value)}
+                    onBlur={onChannelChange}
+                />'s channel {" "}
+                <InlineDropdown
+                    value={Boolean(value.notify)}
+                    onChange={onNotifyChange}
+                    options={[
+                        {
+                            key: "notify-me",
+                            value: true,
+                            text: "and notify me",
+                        },
+                        {
+                            key: "dont-notify-me",
+                            value: false,
+                            text: "but don't notify me",
+                        },
+                    ]}
                 />
             </div>
             <div>
                 <Checkbox
-                    label="Notify after clipping"
-                    onChange={toggleNotify}
-                    checked={value.notify}
+                    label="Delay before clipping"
+                    onChange={toggleDelay}
+                    checked={value.delay}
                 />
             </div>
         </div>
@@ -85,4 +119,5 @@ export const ActionTwitchClip: ActionComponent = {
     action: actionCreateClip,
     Icon: ActionIcon,
     Component: TwitchClipInput,
+    defaultParams,
 };

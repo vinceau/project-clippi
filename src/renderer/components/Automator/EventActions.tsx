@@ -1,19 +1,18 @@
 import * as React from "react";
 
-import styled, { css } from "styled-components";
-
-import { ActionEvent } from "@/lib/realtime";
 import { Action as ActionDefinition } from "@vinceau/event-actions";
 import { Action } from "@vinceau/event-actions";
 import { produce } from "immer";
 import { Container, Divider, Icon, List } from "semantic-ui-react";
-import { InlineDropdown } from "../Misc/InlineInputs";
-import { ActionInput, AddActionInput } from "./ActionInputs";
+import styled, { css } from "styled-components";
 
-import { eventActionManager } from "@/actions";
+import { actionComponents, eventActionManager } from "@/actions";
 import { generateRandomEvent } from "@/lib/events";
+import { ActionEvent } from "@/lib/realtime";
 import { isDevelopment } from "@/lib/utils";
+import { InlineDropdown } from "../Misc/InlineInputs";
 import { CodeBlock, Labelled } from "../Misc/Misc";
+import { ActionInput, AddActionInput } from "./ActionInputs";
 
 const allEvents: ActionEvent[] = [
   ActionEvent.GAME_START,
@@ -85,10 +84,11 @@ export const EventActions = (props: any) => {
   };
   const disabledActions = value.actions.map((a: ActionDefinition) => a.name);
   const onActionAdd = (action: string) => {
+    const params = actionComponents[action].defaultParams;
     const newValue = produce(value, (draft: any) => {
       draft.actions.push({
         name: action,
-        args: {},
+        args: params ? params() : {},
       });
     });
     onChange(newValue);
