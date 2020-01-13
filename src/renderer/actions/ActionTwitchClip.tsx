@@ -57,6 +57,7 @@ const ActionIcon = () => {
 
 const TwitchClipInput = (props: any) => {
     const { value, onChange } = props;
+    const [channel, setChannel] = React.useState<string>(value.channel || "");
     const onDelayChange = (delay?: boolean) => {
         const newValue = produce(value, (draft: ActionCreateTwitchClipParams) => {
             draft.delay = delay;
@@ -70,25 +71,43 @@ const TwitchClipInput = (props: any) => {
         });
         onChange(newValue);
     };
-    const toggleNotify = () => onNotifyChange(!value.notify);
-
+    const onChannelChange = () => {
+        const newValue = produce(value, (draft: ActionCreateTwitchClipParams) => {
+            draft.channel = channel;
+        });
+        onChange(newValue);
+    };
     return (
         <div>
-            <div>
-                Clip <SimpleInput value={"something"} />'s channel
-            </div>
             <div style={{ marginBottom: "10px" }}>
-                <Checkbox
-                    label="Delay before clipping"
-                    onChange={toggleDelay}
-                    checked={value.delay}
+                Clip <SimpleInput
+                    style={{ width: "100px" }}
+                    value={channel}
+                    onChange={(e) => setChannel(e.target.value)}
+                    onBlur={onChannelChange}
+                />'s channel {" "}
+                <InlineDropdown
+                    value={Boolean(value.notify)}
+                    onChange={onNotifyChange}
+                    options={[
+                        {
+                            key: "notify-me",
+                            value: true,
+                            text: "and notify me",
+                        },
+                        {
+                            key: "dont-notify-me",
+                            value: false,
+                            text: "but don't notify me",
+                        },
+                    ]}
                 />
             </div>
             <div>
                 <Checkbox
-                    label="Notify after clipping"
-                    onChange={toggleNotify}
-                    checked={value.notify}
+                    label="Delay before clipping"
+                    onChange={toggleDelay}
+                    checked={value.delay}
                 />
             </div>
         </div>
