@@ -25,17 +25,13 @@ export const DelayInput: React.FC<{
 }> = props => {
     const [delayAmount, setDelayAmount] = React.useState(props.value || "0");
     return (
-        <div style={{padding: "5px 0"}}>
-            <span>After waiting </span>
-            <SimpleInput
-                style={{width: "100px"}}
-                value={delayAmount}
-                onBlur={() => props.onChange(delayAmount)}
-                onChange={(e) => setDelayAmount(e.target.value)}
-                placeholder="2500"
-            />
-            <span> milliseconds</span>
-        </div>
+        <SimpleInput
+            style={{width: "100px"}}
+            value={delayAmount}
+            onBlur={() => props.onChange(delayAmount)}
+            onChange={(e) => setDelayAmount(e.target.value)}
+            placeholder="2500"
+        />
     );
 };
 
@@ -92,11 +88,13 @@ const SceneNameInput = (props: any) => {
         <div>
             <InlineDropdown
                 value={value.scene}
-                prefix="Scene: "
+                prefix="Change scene to "
                 onChange={onSceneChange}
                 customOptions={allScenes}
             />
+            {" after waiting "}
             <DelayInput value={value.delay} onChange={onDelayChange} />
+            {" milliseconds"}
         </div>
     );
 };
