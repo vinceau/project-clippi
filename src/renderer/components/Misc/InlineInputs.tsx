@@ -70,3 +70,17 @@ export const InlineInput = (props: any) => {
         />
     );
 };
+
+export const SimpleInput = (props: any) => {
+  const { width, ...rest } = props;
+  const CustomInput = styled.input`
+    padding: 3px;
+    text-align: center;
+    border-radius: 3px;
+    border: 1px solid #d4d4d5;
+    width: ${width ? width : "100"}px;
+  `;
+  return (
+    <CustomInput {...rest} />
+  );
+};

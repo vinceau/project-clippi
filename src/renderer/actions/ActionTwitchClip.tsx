@@ -8,17 +8,19 @@ import { notify as sendNotification } from "@/lib/utils";
 import { createTwitchClip } from "common/twitch";
 import { dispatcher, store } from "../store";
 import { ActionComponent } from "./types";
+import { SimpleInput } from "@/components/Misc/InlineInputs";
 
 interface ActionCreateTwitchClipParams {
     delay?: boolean;
     notify?: boolean;
+    channel?: string;
 }
 
 const actionCreateClip: ActionTypeGenerator = (params: ActionCreateTwitchClipParams) => {
     return async (): Promise<string | null> => {
         const token = store.getState().twitch.authToken;
         try {
-            const clipID = await createTwitchClip(token, params.delay);
+            const clipID = await createTwitchClip(token, params.delay, params.channel);
             // Get timestamp in seconds
             const timestamp = (new Date()).getTime() / 1000;
             dispatcher.twitch.addTwitchClip({
@@ -31,7 +33,7 @@ const actionCreateClip: ActionTypeGenerator = (params: ActionCreateTwitchClipPar
             return clipID;
         } catch (err) {
             console.error(err);
-            sendNotification("Failed to create Twitch clip. Are you sure you are live?");
+            sendNotification(`Failed to clip. ${params.channel ? "Is " + params.channel : "Are you"} live?`);
             return null;
         }
     };
@@ -62,6 +64,9 @@ const TwitchClipInput = (props: any) => {
 
     return (
         <div>
+            <div>
+                Clip <SimpleInput value={"something"} />'s channel
+            </div>
             <div style={{ marginBottom: "10px" }}>
                 <Checkbox
                     label="Delay before clipping"
