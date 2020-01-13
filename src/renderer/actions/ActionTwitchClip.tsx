@@ -4,17 +4,27 @@ import { ActionTypeGenerator } from "@vinceau/event-actions";
 import { produce } from "immer";
 import { Checkbox, Icon } from "semantic-ui-react";
 
+import { InlineDropdown, SimpleInput } from "@/components/Misc/InlineInputs";
 import { notify as sendNotification } from "@/lib/utils";
 import { createTwitchClip } from "common/twitch";
 import { dispatcher, store } from "../store";
 import { ActionComponent } from "./types";
-import { SimpleInput } from "@/components/Misc/InlineInputs";
 
 interface ActionCreateTwitchClipParams {
     delay?: boolean;
     notify?: boolean;
     channel?: string;
 }
+
+const defaultParams = (): ActionCreateTwitchClipParams => {
+    const user = store.getState().tempContainer.twitchUser;
+    const channel = user ? user.name : "";
+    return {
+        delay: false,
+        notify: true,
+        channel,
+    };
+};
 
 const actionCreateClip: ActionTypeGenerator = (params: ActionCreateTwitchClipParams) => {
     return async (): Promise<string | null> => {
@@ -90,4 +100,5 @@ export const ActionTwitchClip: ActionComponent = {
     action: actionCreateClip,
     Icon: ActionIcon,
     Component: TwitchClipInput,
+    defaultParams,
 };

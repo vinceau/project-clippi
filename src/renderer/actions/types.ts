@@ -6,4 +6,5 @@ export interface ActionComponent {
     action: ActionTypeGenerator;
     Icon: FC<any>;
     Component: FC<any>;
+    defaultParams?: () => any;
 }
