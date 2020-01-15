@@ -27,23 +27,18 @@ export const deleteCookie = async (cookie: Cookie): Promise<void> => {
 };
 
 export const fetchCookies = async (filter?: Filter): Promise<Cookie[]> => {
-    console.log("fetching cookies");
     return new Promise((resolve, reject) => {
         const sesh = session.defaultSession;
         if (sesh) {
-            console.log("we have a session");
             const cookieFilter = filter ? filter : {};
             sesh.cookies.get(cookieFilter, (err, cookies) => {
                 if (err) {
                     reject(err);
                 } else {
-                    console.log("we found these cookies:");
-                    console.log(cookies);
                     resolve(cookies);
                 }
             });
         } else {
-            console.log("no session found, resolving empty");
             resolve([]);
         }
   });
