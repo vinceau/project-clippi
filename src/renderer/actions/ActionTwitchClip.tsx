@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { ActionTypeGenerator } from "@vinceau/event-actions";
 import { produce } from "immer";
-import { Checkbox, Icon } from "semantic-ui-react";
+import { Icon } from "semantic-ui-react";
 
 import { InlineDropdown, SimpleInput } from "@/components/Misc/InlineInputs";
 import { notify as sendNotification } from "@/lib/utils";
