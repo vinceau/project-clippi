@@ -9,3 +9,10 @@ export const fetchTwitchAuthToken = async (scopes: string | string[]): Promise<s
     );
     return token;
 };
+
+export const signOutTwitch = async (): Promise<void> => {
+    await ipc.sendSyncWithTimeout(
+        Message.SignOutTwitch,
+        0, // timeout
+    );
+};

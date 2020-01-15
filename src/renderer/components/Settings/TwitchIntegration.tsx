@@ -80,7 +80,7 @@ export const TwitchIntegration = () => {
     });
 
     const onSignOut = () => {
-        dispatch.twitch.clearAuthToken();
+        dispatch.twitch.logOutTwitch();
     };
     return (
         <div>
