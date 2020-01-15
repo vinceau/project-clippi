@@ -18,5 +18,4 @@ export const clearAllTwitchCookies = async (): Promise<void> => {
             await deleteCookie(cookie);
         }
     }
-    const newCookies = await fetchCookies();
 };
