@@ -1,12 +1,13 @@
 import fg from "fast-glob";
 
-import { ComboFilter, ComboType, ConnectionStatus, DolphinComboQueue, SlpFolderStream, SlpLiveStream, SlpRealTime, SlpStream } from "@vinceau/slp-realtime";
+import { ComboFilter, ComboType, ConnectionStatus, DolphinComboQueue, SlpFolderStream, SlpLiveStream, SlpRealTime, SlpStream, GameStartType } from "@vinceau/slp-realtime";
 import { Context, Action } from "@vinceau/event-actions";
 
 import { dispatcher } from "@/store";
 import { deleteFile, pipeFileContents } from "common/utils";
 import { eventActionManager } from "../actions";
 import { isDevelopment, notify } from "./utils";
+import { generateGameStartContext, exampleGameStart } from "./context";
 
 export enum ActionEvent {
     GAME_START = "game-start",
@@ -29,8 +30,9 @@ if (isDevelopment) {
 
 const slippiRealtime = new SlpRealTime();
 
-slippiRealtime.on("gameStart", (gameStart) => {
-    eventActionManager.emitEvent(ActionEvent.GAME_START, generateContext()).catch(errorHandler);
+slippiRealtime.on("gameStart", (gameStart: GameStartType) => {
+    const ctx = generateGameStartContext(gameStart);
+    eventActionManager.emitEvent(ActionEvent.GAME_START, generateContext(ctx)).catch(errorHandler);
 });
 slippiRealtime.on("gameEnd", (gameEnd) => {
     eventActionManager.emitEvent(ActionEvent.GAME_END, generateContext()).catch(errorHandler);
@@ -52,15 +54,22 @@ slippiRealtime.on("comboEnd", (combo, settings) => {
 
 export const testRunActions = (event: string, actions: Action[]): void => {
     console.log(`testing ${event} event`);
-    eventActionManager.execute(actions, generateContext()).catch(console.error);
+    let ctx: Context = {};
+    switch (event) {
+        case ActionEvent.GAME_START:
+            ctx = generateGameStartContext(exampleGameStart);
+            break;
+    }
+    eventActionManager.execute(actions, generateContext(ctx)).catch(console.error);
 };
 
-const generateContext = (): Context => {
+const generateContext = (context?: Context): Context => {
     const d = new Date();
-    return {
+    const newContext = {
         date: d.toLocaleDateString(),
         time: d.toLocaleTimeString(),
     };
+    return Object.assign(newContext, context);
 };
 
 export const generateCombos = async (
