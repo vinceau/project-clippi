@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { ActionTypeGenerator } from "@vinceau/event-actions";
+import { ActionTypeGenerator, Context } from "@vinceau/event-actions";
 import {produce} from "immer";
 import { useSelector } from "react-redux";
 import { Icon } from "semantic-ui-react";
@@ -16,8 +16,9 @@ interface ActionPlaySoundParams {
 }
 
 const ActionPlaySoundFunc: ActionTypeGenerator = (params: ActionPlaySoundParams) => {
-    return async (): Promise<void> => {
+    return async (ctx: Context): Promise<Context> => {
         await soundPlayer.playSound(params.sound);
+        return ctx;
     };
 };
 

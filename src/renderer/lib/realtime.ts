@@ -1,6 +1,7 @@
 import fg from "fast-glob";
 
 import { ComboFilter, ComboType, ConnectionStatus, DolphinComboQueue, SlpFolderStream, SlpLiveStream, SlpRealTime, SlpStream } from "@vinceau/slp-realtime";
+import { Context, Action } from "@vinceau/event-actions";
 
 import { dispatcher } from "@/store";
 import { deleteFile, pipeFileContents } from "common/utils";
@@ -29,25 +30,38 @@ if (isDevelopment) {
 const slippiRealtime = new SlpRealTime();
 
 slippiRealtime.on("gameStart", (gameStart) => {
-    eventActionManager.emitEvent(ActionEvent.GAME_START, gameStart).catch(errorHandler);
+    eventActionManager.emitEvent(ActionEvent.GAME_START, generateContext()).catch(errorHandler);
 });
 slippiRealtime.on("gameEnd", (gameEnd) => {
-    eventActionManager.emitEvent(ActionEvent.GAME_END, gameEnd).catch(errorHandler);
+    eventActionManager.emitEvent(ActionEvent.GAME_END, generateContext()).catch(errorHandler);
 });
 
 slippiRealtime.on("spawn", (playerIndex, stock, settings) => {
-    eventActionManager.emitEvent(ActionEvent.PLAYER_SPAWN, playerIndex, stock, settings).catch(errorHandler);
+    eventActionManager.emitEvent(ActionEvent.PLAYER_SPAWN, generateContext()).catch(errorHandler);
 });
 slippiRealtime.on("death", (playerIndex, stock, settings) => {
-    eventActionManager.emitEvent(ActionEvent.PLAYER_DIED, playerIndex, stock, settings).catch(errorHandler);
+    eventActionManager.emitEvent(ActionEvent.PLAYER_DIED, generateContext()).catch(errorHandler);
 });
 
 slippiRealtime.on("comboEnd", (combo, settings) => {
     if (!comboFilter.isCombo(combo, settings)) {
         return;
     }
-    eventActionManager.emitEvent(ActionEvent.COMBO_OCCURRED, combo, settings).catch(errorHandler);
+    eventActionManager.emitEvent(ActionEvent.COMBO_OCCURRED, generateContext()).catch(errorHandler);
 });
+
+export const testRunActions = (event: string, actions: Action[]): void => {
+    console.log(`testing ${event} event`);
+    eventActionManager.execute(actions, generateContext()).catch(console.error);
+};
+
+const generateContext = (): Context => {
+    const d = new Date();
+    return {
+        date: d.toLocaleDateString(),
+        time: d.toLocaleTimeString(),
+    };
+};
 
 export const generateCombos = async (
     filenames: string[],

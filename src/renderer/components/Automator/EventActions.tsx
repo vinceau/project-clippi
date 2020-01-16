@@ -8,7 +8,7 @@ import styled, { css } from "styled-components";
 
 import { actionComponents, eventActionManager } from "@/actions";
 import { generateRandomEvent } from "@/lib/events";
-import { ActionEvent } from "@/lib/realtime";
+import { ActionEvent, testRunActions } from "@/lib/realtime";
 import { isDevelopment } from "@/lib/utils";
 import { InlineDropdown } from "../Misc/InlineInputs";
 import { CodeBlock, Labelled } from "../Misc/Misc";
@@ -93,9 +93,6 @@ export const EventActions = (props: any) => {
     });
     onChange(newValue);
   };
-  const testRunActions = () => {
-    eventActionManager.execute(value.actions).catch(console.error);
-  };
 
   return (
     <Container>
@@ -110,7 +107,7 @@ export const EventActions = (props: any) => {
           disabledOptions={disabledOptions}
         />
         <EventHeaderButtons>
-          <Labelled onClick={testRunActions} title="Test run"><Icon name="play" size="big" /></Labelled>
+          <Labelled onClick={() => testRunActions(value.event, value.actions)} title="Test run"><Icon name="play" size="big" /></Labelled>
           <Labelled onClick={onRemove} title="Remove"><Icon name="remove" size="big" /></Labelled>
         </EventHeaderButtons>
       </EventHeader>

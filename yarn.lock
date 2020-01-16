@@ -1021,10 +1021,10 @@
   resolved "https://registry.yarnpkg.com/@types/webpack-env/-/webpack-env-1.14.1.tgz#0d8a53f308f017c53a5ddc3d07f4d6fa76b790d7"
   integrity sha512-0Ki9jAAhKDSuLDXOIMADg54Hu60SuBTEsWaJGGy5cV+SSUQ63J2a+RrYYGrErzz39fXzTibhKrAQJAb8M7PNcA==
 
-"@vinceau/event-actions@^0.0.3":
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/@vinceau/event-actions/-/event-actions-0.0.3.tgz#40c8cd7935fcc21c7dcf603edeb66f440493a185"
-  integrity sha512-6/hIAEBXNUvBcItbh6kEYW4UP5cJG5FaFVSp4sx4yym03pxKHNwGxuNzGyIYJuEDqP1xdULqM95FnkXsell3ug==
+"@vinceau/event-actions@^0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@vinceau/event-actions/-/event-actions-0.0.4.tgz#b773d36293bdfd1468f36815fb0a5ad77b7a087f"
+  integrity sha512-Hhayt7S4GZg5ebmR52WKZ3xuUMwZHJYKunNVQTFoNzEKOieEnzokWttRGep5sD9EUUQ0Iw+1B69SrZYJO7JS/A==
 
 "@vinceau/slp-realtime@^1.0.0":
   version "1.0.0"
@@ -3852,6 +3852,11 @@ form-data@~2.3.2:
     asynckit "^0.4.0"
     combined-stream "^1.0.6"
     mime-types "^2.1.12"
+
+formatter@^0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/formatter/-/formatter-0.4.1.tgz#f43afedf8f2e7454ceae02ce45567a9fa3277fb8"
+  integrity sha1-9Dr+348udFTOrgLORVZ6n6Mnf7g=
 
 forwarded@~0.1.2:
   version "0.1.2"
