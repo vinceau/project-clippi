@@ -21,5 +21,5 @@ export const CharacterIcon: React.FC<{
 };
 
 const characterToFilename = (character: Character): string => {
-    return `${getCharacterShortName(character)}_default.png`;
+    return `${getCharacterShortName(character).toLowerCase()}_default.png`;
 };
