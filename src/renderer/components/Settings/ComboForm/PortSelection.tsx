@@ -20,12 +20,12 @@ export const PortSelection = (props: any) => {
     tablet: 4,
     computer: 4,
   };
-  const allPorts = [0, 1, 2, 3];
+  const allPorts = [1, 2, 3, 4];
   return (
     <Grid>
       {allPorts.map(p => (
         <Grid.Column key={`port-selection-${p}`} {...columnProps}>
-          <Checkbox label={`Port ${p + 1}`} checked={value.includes(p)} onChange={() => newOnChange(p)} />
+          <Checkbox label={`Port ${p}`} checked={value.includes(p)} onChange={() => newOnChange(p)} />
         </Grid.Column>
       ))}
     </Grid>
