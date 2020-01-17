@@ -1,11 +1,10 @@
 import { Context } from "@vinceau/event-actions";
-import { GameStartType, getCharacterColorName, getCharacterName, getStageName, getCharacterShortName, getStageShortName } from "@vinceau/slp-realtime";
+import { GameStartType, getCharacterColorName, getCharacterName, getCharacterShortName, getStageName, getStageShortName } from "@vinceau/slp-realtime";
 
 const gameStartString = `{"slpVersion":"2.0.1","isTeams":false,"isPAL":false,"stageId":31,"players":[{"playerIndex":0,"port":1,"characterId":20,"characterColor":0,"startStocks":4,"type":0,"teamId":0,"controllerFix":"UCF","nametag":""},{"playerIndex":1,"port":2,"characterId":2,"characterColor":0,"startStocks":4,"type":1,"teamId":0,"controllerFix":"None","nametag":""}]}`;
 export const exampleGameStart: GameStartType = JSON.parse(gameStartString);
 
 export const generateGameStartContext = (gameStart: GameStartType): Context => {
-    console.log(gameStart);
     const numPlayers = gameStart.players.length;
     const ctx: Context = {
         numPlayers,
@@ -22,10 +21,6 @@ export const generateGameStartContext = (gameStart: GameStartType): Context => {
         const playerCharColor = player.characterColor;
         const opponentCharId = opponent.characterId;
         const opponentCharColor = opponent.characterColor;
-        console.log(playerCharId);
-        console.log(playerCharColor);
-        console.log(opponentCharId);
-        console.log(opponentCharColor);
         if (playerCharId !== null && playerCharColor !== null) {
             ctx.playerTag = player.nametag;
             ctx.playerPort = player.port;
@@ -41,7 +36,5 @@ export const generateGameStartContext = (gameStart: GameStartType): Context => {
             ctx.opponentColor = getCharacterColorName(opponentCharId, opponentCharColor);
         }
     }
-    console.log(`Returning context:`);
-    console.log(ctx);
     return ctx;
 };
