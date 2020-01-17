@@ -1,11 +1,9 @@
-import * as path from "path";
 import * as React from "react";
 
 import styled from "styled-components";
 
-import { shell } from "electron";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Checkbox, CheckboxProps, Form, Icon, Input } from "semantic-ui-react";
+import { Button, Checkbox, CheckboxProps, Form, Icon } from "semantic-ui-react";
 import { Progress } from "semantic-ui-react";
 
 import { fastFindAndWriteCombos } from "@/lib/realtime";
@@ -20,12 +18,6 @@ export const ComboFinder: React.FC<{}> = () => {
     const { comboFinderPercent, comboFinderLog, comboFinderProcessing } = useSelector((state: iRootState) => state.tempContainer);
     const { openCombosWhenDone, filesPath, combosFilePath, includeSubFolders, deleteFilesWithNoCombos } = useSelector((state: iRootState) => state.filesystem);
     const dispatch = useDispatch<Dispatch>();
-    const selectComboPath = () => {
-        dispatch.filesystem.getCombosFilePath();
-    };
-    const selectPath = () => {
-        dispatch.filesystem.getFilesPath();
-    };
     const onSubfolder = (_: React.FormEvent<HTMLInputElement>, data: CheckboxProps) => {
         dispatch.filesystem.setIncludeSubFolders(Boolean(data.checked));
     };
@@ -68,18 +60,7 @@ export const ComboFinder: React.FC<{}> = () => {
             }
         }).catch(console.error);
     };
-    const maybeOpenFile = (fileName: string) => {
-        if (!shell.showItemInFolder(fileName)) {
-            const parentFolder = path.dirname(fileName);
-            shell.openItem(parentFolder);
-        }
-    };
     const complete = comboFinderPercent === 100;
-    const NoMarginIcon = styled(Icon)`
-    &&& {
-        margin: 0 !important;
-    }
-    `;
     const Buttons = styled.div`
     display: flex;
     justify-content: space-between;
