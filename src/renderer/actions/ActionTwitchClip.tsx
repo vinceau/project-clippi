@@ -4,14 +4,16 @@ import { ActionTypeGenerator, Context } from "@vinceau/event-actions";
 import { produce } from "immer";
 import { Icon } from "semantic-ui-react";
 
-import { InlineDropdown, SimpleInput } from "@/components/Misc/InlineInputs";
-import { notify as sendNotification } from "@/lib/utils";
+import { InlineDropdown, SimpleInput, DelayInput } from "@/components/Misc/InlineInputs";
+import { delay as waitMillis, notify as sendNotification } from "@/lib/utils";
 import { createTwitchClip } from "common/twitch";
 import { dispatcher, store } from "../store";
 import { ActionComponent } from "./types";
 
+const DEFAULT_DELAY_SECONDS = 20;
+
 interface ActionCreateTwitchClipParams {
-    delay?: boolean;
+    delay?: string;
     notify?: boolean;
     channel?: string;
 }
@@ -20,17 +22,29 @@ const defaultParams = (): ActionCreateTwitchClipParams => {
     const user = store.getState().tempContainer.twitchUser;
     const channel = user ? user.name : "";
     return {
-        delay: false,
+        delay: DEFAULT_DELAY_SECONDS.toString(),
         notify: true,
         channel,
     };
+};
+
+const parseDelayValue = (delay?: string): number => {
+    let seconds = parseInt(delay || DEFAULT_DELAY_SECONDS.toString(), 10);
+    if (isNaN(seconds)) {
+        seconds = DEFAULT_DELAY_SECONDS;
+    }
+    return seconds;
 };
 
 const actionCreateClip: ActionTypeGenerator = (params: ActionCreateTwitchClipParams) => {
     return async (ctx: Context): Promise<Context> => {
         const token = store.getState().twitch.authToken;
         try {
-            const clipID = await createTwitchClip(token, params.delay, params.channel);
+            const seconds = parseDelayValue(params.delay);
+            if (seconds > 0) {
+                await waitMillis(seconds * 1000);
+            }
+            const clipID = await createTwitchClip(token, false, params.channel);
             // Get timestamp in seconds
             const timestamp = (new Date()).getTime() / 1000;
             dispatcher.twitch.addTwitchClip({
@@ -61,7 +75,7 @@ const ActionIcon = () => {
 const TwitchClipInput = (props: any) => {
     const { value, onChange } = props;
     const [channel, setChannel] = React.useState<string>(value.channel || "");
-    const onDelayChange = (delay?: boolean) => {
+    const onDelayChange = (delay?: string) => {
         const newValue = produce(value, (draft: ActionCreateTwitchClipParams) => {
             draft.delay = delay;
         });
@@ -88,24 +102,9 @@ const TwitchClipInput = (props: any) => {
                     onChange={(e) => setChannel(e.target.value)}
                     onBlur={onChannelChange}
                 />
-                {"'s channel "}
-                <InlineDropdown
-                    value={Boolean(value.delay)}
-                    onChange={onDelayChange}
-                    options={[
-                        {
-                            key: "immediate-clip",
-                            value: false,
-                            text: "immediately",
-                        },
-                        {
-                            key: "delayed-clip",
-                            value: true,
-                            text: "after a delay",
-                        },
-                    ]}
-                />
-                {" and "}
+                {"'s channel after "}
+                <DelayInput value={value.delay} onChange={onDelayChange} placeholder="20" />
+                {" seconds and "}
                 <InlineDropdown
                     value={Boolean(value.notify)}
                     onChange={onNotifyChange}

@@ -19,22 +19,6 @@ interface ActionChangeSceneParams {
     delay?: string;  // delay in milliseconds string
 }
 
-export const DelayInput: React.FC<{
-    value?: string;
-    onChange: (delay: string) => void;
-}> = props => {
-    const [delayAmount, setDelayAmount] = React.useState(props.value || "0");
-    return (
-        <SimpleInput
-            style={{width: "100px"}}
-            value={delayAmount}
-            onBlur={() => props.onChange(delayAmount)}
-            onChange={(e) => setDelayAmount(e.target.value)}
-            placeholder="2500"
-        />
-    );
-};
-
 const actionChangeScene: ActionTypeGenerator = (params: ActionChangeSceneParams) => {
     return async (ctx: Context): Promise<Context> => {
         try {
