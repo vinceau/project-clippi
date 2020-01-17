@@ -10,6 +10,7 @@ import { InlineDropdown } from "@/components/Misc/InlineInputs";
 import { notify as sendNotification } from "@/lib/utils";
 import { writeFile } from "common/utils";
 import { ActionComponent } from "./types";
+import { FileInput } from "@/components/Misc/Misc";
 
 interface ActionWriteFileParams {
     content: string;
@@ -63,9 +64,15 @@ const WriteFileInput = (props: WriteFileProps) => {
         });
         onChange(newValue);
     };
-    const onAppendChange = (append?: boolean) => {
+    const onAppendChange = (append: boolean) => {
         const newValue = produce(value, (draft) => {
             draft.append = append;
+        });
+        onChange(newValue);
+    };
+    const onOutputFileChange = (name: string) => {
+        const newValue = produce(value, (draft) => {
+            draft.outputFileName = name;
         });
         onChange(newValue);
     };
@@ -97,6 +104,10 @@ const WriteFileInput = (props: WriteFileProps) => {
                             placeholder="Hmmm.. What should I write?"
                         />
                     </Form>
+                </div>
+                <div>
+                    <p>To the file:</p>
+                    <FileInput value={value.outputFileName || ""} onChange={onOutputFileChange} />
                 </div>
             </div>
     );
