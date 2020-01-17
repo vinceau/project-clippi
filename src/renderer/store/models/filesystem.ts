@@ -86,11 +86,5 @@ export const filesystem = createModel({
                 dispatch.filesystem.setLiveSlpFilesPath(p);
             }
         },
-        async getFilesPath() {
-            const p = await getFolderPath();
-            if (p) {
-                dispatch.filesystem.setFilesPath(p);
-            }
-        },
     }),
 });

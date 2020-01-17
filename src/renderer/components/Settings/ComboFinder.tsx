@@ -87,13 +87,20 @@ export const ComboFinder: React.FC<{}> = () => {
     const setCombosFilePath = (p: string) => {
         dispatch.filesystem.setCombosFilePath(p);
     };
+    const setFilesPath = (p: string) => {
+        dispatch.filesystem.setFilesPath(p);
+    };
     return (
         <div>
             <h2>Combo Finder</h2>
             <Form>
                 <Form.Field>
                     <label>SLP Replay Directory</label>
-                    <Input label={<Button onClick={() => shell.openItem(filesPath)}><NoMarginIcon name="folder open outline" /></Button>} value={filesPath} action={<Button onClick={selectPath}>Choose</Button>} />
+                    <FileInput
+                        value={filesPath}
+                        onChange={setFilesPath}
+                        directory={true}
+                    />
                 </Form.Field>
                 <Form.Field>
                     <Checkbox label="Include subfolders" checked={includeSubFolders} onChange={onSubfolder} />
