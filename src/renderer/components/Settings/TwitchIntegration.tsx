@@ -15,6 +15,7 @@ export const ClipsTable: React.FC = props => {
                 <Table.Row>
                     <Table.HeaderCell singleLine>Clip ID</Table.HeaderCell>
                     <Table.HeaderCell>Timestamp</Table.HeaderCell>
+                    <Table.HeaderCell>Edit</Table.HeaderCell>
                     <Table.HeaderCell>Remove</Table.HeaderCell>
                 </Table.Row>
             </Table.Header>
@@ -29,13 +30,17 @@ const ClipRow: React.FC<{
     clip: TwitchClip;
     onRemove: () => void;
 }> = props => {
+    const url = `https://clips.twitch.tv/${props.clip.clipID}`;
     return (
         <Table.Row key={props.clip.clipID}>
             <Table.Cell>
-                <a href={`https://clips.twitch.tv/${props.clip.clipID}`} target="_blank">{props.clip.clipID}</a>
+                <a href={url} target="_blank">{props.clip.clipID}</a>
             </Table.Cell>
             <Table.Cell>
                 {format(props.clip.timestamp * 1000)}
+            </Table.Cell>
+            <Table.Cell>
+                <a style={{color: "#4D4D4D"}} href={url + "/edit"} target="_blank"><Icon name="pencil" /></a>
             </Table.Cell>
             <Table.Cell>
                 <Icon name="trash" link onClick={props.onRemove}/>
