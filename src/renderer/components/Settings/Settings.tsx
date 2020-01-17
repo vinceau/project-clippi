@@ -76,6 +76,7 @@ export const SettingsPage: React.FC<{
         flex-basis: 75%;
     }
     & > div {
+        padding-bottom: 50px;
         padding-top: 50px;
         padding-right: 100px;
     }
