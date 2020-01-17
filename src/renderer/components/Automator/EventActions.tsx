@@ -20,6 +20,7 @@ const allEvents: ActionEvent[] = [
   ActionEvent.PLAYER_DIED,
   ActionEvent.PLAYER_SPAWN,
   ActionEvent.COMBO_OCCURRED,
+  ActionEvent.CONVERSION_OCCURRED,
 ];
 
 if (isDevelopment) {
@@ -32,6 +33,7 @@ const mapEventToName: { [eventName: string]: string } = {
   [ActionEvent.PLAYER_DIED]: "a player dies",
   [ActionEvent.PLAYER_SPAWN]: "a player spawns",
   [ActionEvent.COMBO_OCCURRED]: "a combo occurs",
+  [ActionEvent.CONVERSION_OCCURRED]: "a conversion occurs",
   [ActionEvent.TEST_EVENT]: "a test event occurs",
 };
 

@@ -16,6 +16,7 @@ export enum ActionEvent {
     PLAYER_SPAWN = "player-spawn",
     PLAYER_DIED = "player-died",
     COMBO_OCCURRED = "combo-occurred",
+    CONVERSION_OCCURRED = "conversion-occurred",
     TEST_EVENT = "test-event",
 }
 
@@ -61,6 +62,14 @@ slippiRealtime.on("comboEnd", (combo, settings) => {
     eventActionManager.emitEvent(ActionEvent.COMBO_OCCURRED, generateContext(ctx)).catch(errorHandler);
 });
 
+slippiRealtime.on("conversion", (combo, settings) => {
+    if (!comboFilter.isCombo(combo, settings)) {
+        return;
+    }
+    const ctx = generateComboContext(combo, settings);
+    eventActionManager.emitEvent(ActionEvent.CONVERSION_OCCURRED, generateContext(ctx)).catch(errorHandler);
+});
+
 export const testRunActions = (event: string, actions: Action[]): void => {
     console.log(`testing ${event} event`);
     let ctx: Context = {};
@@ -78,6 +87,7 @@ export const testRunActions = (event: string, actions: Action[]): void => {
             ctx = generateStockContext(exampleDeathStockType, exampleGameStart);
             break;
         case ActionEvent.COMBO_OCCURRED:
+        case ActionEvent.CONVERSION_OCCURRED:
             ctx = generateComboContext(exampleComboType, exampleGameStart);
             break;
     }
