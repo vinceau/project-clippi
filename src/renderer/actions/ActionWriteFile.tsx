@@ -22,7 +22,7 @@ const defaultParams = (): ActionWriteFileParams => {
     return {
         content: "",
         outputFileName: "",
-        append: true,
+        append: false,
     };
 };
 
@@ -83,14 +83,14 @@ const WriteFileInput = (props: WriteFileProps) => {
                     onChange={onAppendChange}
                     options={[
                         {
-                            key: "append",
-                            value: true,
-                            text: "Append",
-                        },
-                        {
                             key: "write",
                             value: false,
                             text: "Write",
+                        },
+                        {
+                            key: "append",
+                            value: true,
+                            text: "Append",
                         },
                     ]}
                 />
