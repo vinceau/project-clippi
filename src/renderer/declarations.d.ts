@@ -7,3 +7,11 @@ declare module "*.bmp";
 declare module "*.tiff";
 
 declare module "node-notifier";
+
+declare module "formatter" {
+    export type Formatter = (ctx: Record<string, any>) => string;
+
+    const defaultFormatterExport: (str: string) => Formatter;
+
+    export default defaultFormatterExport;
+}

@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { ActionTypeGenerator } from "@vinceau/event-actions";
+import { ActionTypeGenerator, Context } from "@vinceau/event-actions";
 import { produce } from "immer";
 import { useSelector } from "react-redux";
 import { Button } from "semantic-ui-react";
@@ -36,7 +36,7 @@ export const DelayInput: React.FC<{
 };
 
 const actionChangeScene: ActionTypeGenerator = (params: ActionChangeSceneParams) => {
-    return async (): Promise<void> => {
+    return async (ctx: Context): Promise<Context> => {
         try {
             const millis = parseInt(params.delay || "0", 10);
             if (millis > 0) {
@@ -47,6 +47,7 @@ const actionChangeScene: ActionTypeGenerator = (params: ActionChangeSceneParams)
             console.error(err);
             notify("Could not change scene. Are you connected to OBS?");
         }
+        return ctx;
     };
 };
 

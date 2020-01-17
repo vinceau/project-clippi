@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { ActionTypeGenerator } from "@vinceau/event-actions";
+import { ActionTypeGenerator, Context } from "@vinceau/event-actions";
 import { produce } from "immer";
 import { Icon } from "semantic-ui-react";
 
@@ -27,7 +27,7 @@ const defaultParams = (): ActionCreateTwitchClipParams => {
 };
 
 const actionCreateClip: ActionTypeGenerator = (params: ActionCreateTwitchClipParams) => {
-    return async (): Promise<string | null> => {
+    return async (ctx: Context): Promise<Context> => {
         const token = store.getState().twitch.authToken;
         try {
             const clipID = await createTwitchClip(token, params.delay, params.channel);
@@ -40,11 +40,14 @@ const actionCreateClip: ActionTypeGenerator = (params: ActionCreateTwitchClipPar
             if (params.notify) {
                 sendNotification(`Clipped ${clipID}`, "Twitch clip created");
             }
-            return clipID;
+            return {
+                ...ctx,
+                clipID,
+            };
         } catch (err) {
             console.error(err);
             sendNotification(`Failed to clip. ${params.channel ? "Is " + params.channel : "Are you"} live?`);
-            return null;
+            return ctx;
         }
     };
 };

@@ -1,11 +1,14 @@
 import fg from "fast-glob";
 
-import { ComboFilter, ComboType, ConnectionStatus, DolphinComboQueue, SlpFolderStream, SlpLiveStream, SlpRealTime, SlpStream } from "@vinceau/slp-realtime";
+import { ComboFilter, ComboType, ConnectionStatus, DolphinComboQueue, SlpFolderStream, SlpLiveStream, SlpRealTime, SlpStream, GameStartType } from "@vinceau/slp-realtime";
+import { Context, Action } from "@vinceau/event-actions";
 
 import { dispatcher } from "@/store";
 import { deleteFile, pipeFileContents } from "common/utils";
 import { eventActionManager } from "../actions";
 import { isDevelopment, notify } from "./utils";
+import { generateGameStartContext, exampleDeathStockType, exampleSpawnStockType, exampleGameEnd, exampleGameStart,
+        generateGameEndContext, generateComboContext, exampleComboType, generateStockContext } from "./context";
 
 export enum ActionEvent {
     GAME_START = "game-start",
@@ -13,6 +16,7 @@ export enum ActionEvent {
     PLAYER_SPAWN = "player-spawn",
     PLAYER_DIED = "player-died",
     COMBO_OCCURRED = "combo-occurred",
+    CONVERSION_OCCURRED = "conversion-occurred",
     TEST_EVENT = "test-event",
 }
 
@@ -28,26 +32,76 @@ if (isDevelopment) {
 
 const slippiRealtime = new SlpRealTime();
 
-slippiRealtime.on("gameStart", (gameStart) => {
-    eventActionManager.emitEvent(ActionEvent.GAME_START, gameStart).catch(errorHandler);
+slippiRealtime.on("gameStart", (gameStart: GameStartType) => {
+    const ctx = generateGameStartContext(gameStart);
+    eventActionManager.emitEvent(ActionEvent.GAME_START, generateContext(ctx)).catch(errorHandler);
 });
 slippiRealtime.on("gameEnd", (gameEnd) => {
-    eventActionManager.emitEvent(ActionEvent.GAME_END, gameEnd).catch(errorHandler);
+    const ctx = generateGameEndContext(gameEnd);
+    eventActionManager.emitEvent(ActionEvent.GAME_END, generateContext(ctx)).catch(errorHandler);
 });
 
-slippiRealtime.on("spawn", (playerIndex, stock, settings) => {
-    eventActionManager.emitEvent(ActionEvent.PLAYER_SPAWN, playerIndex, stock, settings).catch(errorHandler);
+slippiRealtime.on("spawn", (_, stock, settings) => {
+    console.log("spawn event");
+    console.log(stock);
+    const ctx = generateStockContext(stock, settings);
+    eventActionManager.emitEvent(ActionEvent.PLAYER_SPAWN, generateContext(ctx)).catch(errorHandler);
 });
-slippiRealtime.on("death", (playerIndex, stock, settings) => {
-    eventActionManager.emitEvent(ActionEvent.PLAYER_DIED, playerIndex, stock, settings).catch(errorHandler);
+slippiRealtime.on("death", (_, stock, settings) => {
+    console.log("death event");
+    console.log(stock);
+    const ctx = generateStockContext(stock, settings);
+    eventActionManager.emitEvent(ActionEvent.PLAYER_DIED, generateContext(ctx)).catch(errorHandler);
 });
 
 slippiRealtime.on("comboEnd", (combo, settings) => {
     if (!comboFilter.isCombo(combo, settings)) {
         return;
     }
-    eventActionManager.emitEvent(ActionEvent.COMBO_OCCURRED, combo, settings).catch(errorHandler);
+    const ctx = generateComboContext(combo, settings);
+    eventActionManager.emitEvent(ActionEvent.COMBO_OCCURRED, generateContext(ctx)).catch(errorHandler);
 });
+
+slippiRealtime.on("conversion", (combo, settings) => {
+    if (!comboFilter.isCombo(combo, settings)) {
+        return;
+    }
+    const ctx = generateComboContext(combo, settings);
+    eventActionManager.emitEvent(ActionEvent.CONVERSION_OCCURRED, generateContext(ctx)).catch(errorHandler);
+});
+
+export const testRunActions = (event: string, actions: Action[]): void => {
+    console.log(`testing ${event} event`);
+    let ctx: Context = {};
+    switch (event) {
+        case ActionEvent.GAME_START:
+            ctx = generateGameStartContext(exampleGameStart);
+            break;
+        case ActionEvent.GAME_END:
+            ctx = generateGameEndContext(exampleGameEnd);
+            break;
+        case ActionEvent.PLAYER_SPAWN:
+            ctx = generateStockContext(exampleSpawnStockType, exampleGameStart);
+            break;
+        case ActionEvent.PLAYER_DIED:
+            ctx = generateStockContext(exampleDeathStockType, exampleGameStart);
+            break;
+        case ActionEvent.COMBO_OCCURRED:
+        case ActionEvent.CONVERSION_OCCURRED:
+            ctx = generateComboContext(exampleComboType, exampleGameStart);
+            break;
+    }
+    eventActionManager.execute(actions, generateContext(ctx)).catch(console.error);
+};
+
+const generateContext = (context?: Context): Context => {
+    const d = new Date();
+    const newContext = {
+        date: d.toLocaleDateString(),
+        time: d.toLocaleTimeString(),
+    };
+    return Object.assign(newContext, context);
+};
 
 export const generateCombos = async (
     filenames: string[],
