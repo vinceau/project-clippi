@@ -5,7 +5,7 @@ import { produce } from "immer";
 import { useSelector } from "react-redux";
 import { Button } from "semantic-ui-react";
 
-import { InlineDropdown, SimpleInput } from "@/components/Misc/InlineInputs";
+import { InlineDropdown, DelayInput } from "@/components/Misc/InlineInputs";
 import { CustomIcon } from "@/components/Misc/Misc";
 import { connectToOBSAndNotify, getAllScenes, setScene } from "@/lib/obs";
 import { delay as waitMillis, notify } from "@/lib/utils";
