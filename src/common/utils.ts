@@ -22,20 +22,20 @@ export const millisToString = (millis: number): string => {
     const date = new Date(millis);
     const days = date.getUTCDate() - 1;
     const hours = date.getUTCHours();
-    const minutes =  date.getUTCMinutes();
-    const seconds =  date.getUTCSeconds();
+    const minutes = date.getUTCMinutes();
+    const seconds = date.getUTCSeconds();
     // const millis =  date.getUTCMilliseconds();
     let str = "";
-    if (days > 0 ) {
+    if (days > 0) {
         str += `${days} days, `;
     }
-    if (hours > 0 ) {
+    if (hours > 0) {
         str += `${hours} hours, `;
     }
-    if (minutes > 0 ) {
+    if (minutes > 0) {
         str += `${minutes} minutes, `;
     }
-    if (seconds > 0 ) {
+    if (seconds > 0) {
         str += `${seconds} seconds, `;
     }
     return str;
@@ -66,6 +66,18 @@ export const pipeFileContents = async (filename: string, destination: Writable):
         });
         readStream.on("close", () => {
             resolve();
+        });
+    });
+};
+
+export const writeFile = async (contents: string, filename: string, append?: boolean): Promise<void> => {
+    return new Promise((resolve, reject) => {
+        fs.writeFile(filename, contents, { flag: append ? "a" : "w" }, (err) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve();
+            }
         });
     });
 };
