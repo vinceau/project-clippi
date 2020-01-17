@@ -7,7 +7,8 @@ import { dispatcher } from "@/store";
 import { deleteFile, pipeFileContents } from "common/utils";
 import { eventActionManager } from "../actions";
 import { isDevelopment, notify } from "./utils";
-import { generateGameStartContext, exampleDeathStockType, exampleSpawnStockType, exampleGameEnd, exampleGameStart, generateGameEndContext, generateStockContext } from "./context";
+import { generateGameStartContext, exampleDeathStockType, exampleSpawnStockType, exampleGameEnd, exampleGameStart,
+        generateGameEndContext, generateComboContext, exampleComboType, generateStockContext } from "./context";
 
 export enum ActionEvent {
     GAME_START = "game-start",
@@ -56,7 +57,8 @@ slippiRealtime.on("comboEnd", (combo, settings) => {
     if (!comboFilter.isCombo(combo, settings)) {
         return;
     }
-    eventActionManager.emitEvent(ActionEvent.COMBO_OCCURRED, generateContext()).catch(errorHandler);
+    const ctx = generateComboContext(combo, settings);
+    eventActionManager.emitEvent(ActionEvent.COMBO_OCCURRED, generateContext(ctx)).catch(errorHandler);
 });
 
 export const testRunActions = (event: string, actions: Action[]): void => {
@@ -74,6 +76,9 @@ export const testRunActions = (event: string, actions: Action[]): void => {
             break;
         case ActionEvent.PLAYER_DIED:
             ctx = generateStockContext(exampleDeathStockType, exampleGameStart);
+            break;
+        case ActionEvent.COMBO_OCCURRED:
+            ctx = generateComboContext(exampleComboType, exampleGameStart);
             break;
     }
     eventActionManager.execute(actions, generateContext(ctx)).catch(console.error);

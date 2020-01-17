@@ -1,6 +1,6 @@
 import { Context } from "@vinceau/event-actions";
 import { GameStartType, getCharacterColorName, getCharacterName, getCharacterShortName,
-    getStageName, getStageShortName, GameEndMethod, GameEndType, StockType } from "@vinceau/slp-realtime";
+    getStageName, getStageShortName, GameEndMethod, GameEndType, StockType, ComboType } from "@vinceau/slp-realtime";
 
 const gameStartString = `{"slpVersion":"2.0.1","isTeams":false,"isPAL":false,"stageId":31,"players":[{"playerIndex":0,"port":1,"characterId":20,"characterColor":0,"startStocks":4,"type":0,"teamId":0,"controllerFix":"UCF","nametag":""},{"playerIndex":1,"port":2,"characterId":2,"characterColor":0,"startStocks":4,"type":1,"teamId":0,"controllerFix":"None","nametag":""}]}`;
 export const exampleGameStart: GameStartType = JSON.parse(gameStartString);
@@ -12,6 +12,8 @@ const spawnString = `{"playerIndex":0,"opponentIndex":1,"startFrame":2688,"endFr
 export const exampleSpawnStockType: StockType = JSON.parse(spawnString);
 const deathString = `{"playerIndex":1,"opponentIndex":0,"startFrame":-123,"endFrame":2378,"startPercent":0,"endPercent":149.62828063964844,"currentPercent":149.62828063964844,"count":4,"deathAnimation":4}`;
 export const exampleDeathStockType: StockType = JSON.parse(deathString);
+const comboString = `{"playerIndex":0,"opponentIndex":1,"startFrame":7146,"endFrame":7739,"startPercent":0,"currentPercent":95.0999984741211,"endPercent":95.0999984741211,"moves":[{"frame":7146,"moveId":13,"hitCount":1,"damage":12},{"frame":7169,"moveId":21,"hitCount":1,"damage":8},{"frame":7222,"moveId":21,"hitCount":1,"damage":7.279998779296875},{"frame":7326,"moveId":13,"hitCount":1,"damage":11.15999984741211},{"frame":7380,"moveId":17,"hitCount":1,"damage":11.520000457763672},{"frame":7407,"moveId":8,"hitCount":1,"damage":9},{"frame":7451,"moveId":21,"hitCount":1,"damage":7.120002746582031},{"frame":7554,"moveId":16,"hitCount":1,"damage":10},{"frame":7625,"moveId":17,"hitCount":1,"damage":11.279998779296875},{"frame":7714,"moveId":17,"hitCount":1,"damage":7.739997863769531}],"didKill":true}`;
+export const exampleComboType: ComboType = JSON.parse(comboString);
 
 export const generateGameStartContext = (gameStart: GameStartType, context?: Context, index?: number): Context => {
     const numPlayers = gameStart.players.length;
@@ -63,6 +65,22 @@ export const generateStockContext = (stock: StockType, settings: GameStartType, 
     console.log(stock);
     const ctx: Context = generateGameStartContext(settings, {}, stock.playerIndex);
     ctx.count = stock.count;
+    return Object.assign(ctx, context);
+};
+
+export const generateComboContext = (combo: ComboType, settings: GameStartType, context?: Context): Context => {
+    console.log(combo);
+    const ctx: Context = generateGameStartContext(settings, {}, combo.playerIndex);
+    ctx.comboMovesTotal = combo.moves.length;
+    ctx.comboDidKill = combo.didKill ? "killed" : "did not kill";
+    console.log(combo.endPercent);
+    console.log(combo.startPercent);
+    if (combo.endPercent !== null && combo.endPercent !== undefined) {
+        ctx.comboPercent = Math.round(combo.endPercent - combo.startPercent);
+        console.log(ctx.comboPercent);
+    } else {
+        console.log("could not calculate combo percent");
+    }
     return Object.assign(ctx, context);
 };
 
