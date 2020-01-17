@@ -57,7 +57,7 @@ interface WriteFileProps extends Record<string, any> {
 const WriteFileInput = (props: WriteFileProps) => {
     const { value, onChange } = props;
     const defaultValue = value && value.content ? value.content : "";
-    const [ msg, setMsg ] = React.useState(defaultValue);
+    const [msg, setMsg] = React.useState(defaultValue);
     const onContentChange = () => {
         const newValue = produce(value, (draft) => {
             draft.content = msg;
@@ -77,7 +77,8 @@ const WriteFileInput = (props: WriteFileProps) => {
         onChange(newValue);
     };
     return (
-            <div>
+        <div style={{ maxWidth: "500px" }}>
+            <div style={{ paddingBottom: "5px" }}>
                 <InlineDropdown
                     value={Boolean(value.append)}
                     onChange={onAppendChange}
@@ -95,21 +96,18 @@ const WriteFileInput = (props: WriteFileProps) => {
                     ]}
                 />
                 {" the following:"}
-                <div style={{maxWidth: "500px"}}>
-                    <Form>
-                        <TextArea
-                            onBlur={onContentChange}
-                            value={msg}
-                            onChange={(_: any, {value}: any) => setMsg(value)}
-                            placeholder="Hmmm.. What should I write?"
-                        />
-                    </Form>
-                </div>
-                <div>
-                    <p>To the file:</p>
-                    <FileInput value={value.outputFileName || ""} onChange={onOutputFileChange} />
-                </div>
             </div>
+            <Form>
+                <TextArea
+                    onBlur={onContentChange}
+                    value={msg}
+                    onChange={(_: any, { value }: any) => setMsg(value)}
+                    placeholder="Hmmm.. What should I write?"
+                />
+            </Form>
+            <div style={{ padding: "5px 0" }}>To the file:</div>
+            <FileInput value={value.outputFileName || ""} onChange={onOutputFileChange} />
+        </div>
     );
 };
 
