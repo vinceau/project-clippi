@@ -8,15 +8,8 @@ export const delay = async (ms: number): Promise<void> => {
 };
 
 export const readFile = async (filePath: string): Promise<Buffer> => {
-    return new Promise((resolve, reject) => {
-        fs.readFile(filePath, (err, data) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve(data);
-            }
-        });
-    });
+    const buffer = await fs.readFile(filePath);
+    return buffer;
 };
 
 export const millisToString = (millis: number): string => {
@@ -48,15 +41,7 @@ export const timeDifferenceString = (before: Date, after: Date): string => {
 };
 
 export const deleteFile = async (filepath: string): Promise<void> => {
-    return new Promise((resolve, reject) => {
-        fs.unlink(filepath, (err) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve();
-            }
-        });
-    });
+    await fs.unlink(filepath);
 };
 
 export const pipeFileContents = async (filename: string, destination: Writable): Promise<void> => {
