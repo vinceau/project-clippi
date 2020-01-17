@@ -1,5 +1,6 @@
-import fs from "fs";
+import fs from "fs-extra";
 
+import { EOL } from "os";
 import { Writable } from "stream";
 
 export const delay = async (ms: number): Promise<void> => {
@@ -71,13 +72,5 @@ export const pipeFileContents = async (filename: string, destination: Writable):
 };
 
 export const writeFile = async (contents: string, filename: string, append?: boolean): Promise<void> => {
-    return new Promise((resolve, reject) => {
-        fs.writeFile(filename, contents, { flag: append ? "a" : "w" }, (err) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve();
-            }
-        });
-    });
+    await fs.outputFile(filename, contents + EOL, { flag: append ? "a" : "w" });
 };
