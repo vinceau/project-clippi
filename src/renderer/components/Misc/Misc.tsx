@@ -127,6 +127,7 @@ export const FileInput: React.FC<FileInputProps> = props => {
             shell.openItem(parentFolder);
         }
     };
+    const actionLabel = saveFile ? "Save as" : "Choose";
     return (
         <Input
             style={{ width: "100%" }}
@@ -138,6 +139,7 @@ export const FileInput: React.FC<FileInputProps> = props => {
             value={filesPath}
             onChange={(_: any, { value }: any) => setFilesPath(value)}
             onBlur={() => onChange(filesPath)}
-            action={<Button onClick={() => selectFromFileSystem().catch(console.error)}>Choose</Button>} />
+            action={<Button onClick={() => selectFromFileSystem().catch(console.error)}>{actionLabel}</Button>}
+        />
     );
 };
