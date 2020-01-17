@@ -19,20 +19,20 @@ export const millisToString = (millis: number): string => {
     const minutes = date.getUTCMinutes();
     const seconds = date.getUTCSeconds();
     // const millis =  date.getUTCMilliseconds();
-    let str = "";
+    const strParts = new Array<string>();
     if (days > 0) {
-        str += `${days} days, `;
+        strParts.push(`${days} days`);
     }
     if (hours > 0) {
-        str += `${hours} hours, `;
+        strParts.push(`${hours} hours`);
     }
     if (minutes > 0) {
-        str += `${minutes} minutes, `;
+        strParts.push(`${minutes} minutes`);
     }
     if (seconds > 0) {
-        str += `${seconds} seconds, `;
+        strParts.push(`${seconds} seconds`);
     }
-    return str;
+    return strParts.join(", ");
 };
 
 export const timeDifferenceString = (before: Date, after: Date): string => {
