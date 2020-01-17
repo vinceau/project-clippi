@@ -7,7 +7,7 @@ import { dispatcher } from "@/store";
 import { deleteFile, pipeFileContents } from "common/utils";
 import { eventActionManager } from "../actions";
 import { isDevelopment, notify } from "./utils";
-import { generateGameStartContext, exampleGameEnd, exampleGameStart, generateGameEndContext } from "./context";
+import { generateGameStartContext, exampleDeathStockType, exampleSpawnStockType, exampleGameEnd, exampleGameStart, generateGameEndContext, generateStockContext } from "./context";
 
 export enum ActionEvent {
     GAME_START = "game-start",
@@ -39,11 +39,17 @@ slippiRealtime.on("gameEnd", (gameEnd) => {
     eventActionManager.emitEvent(ActionEvent.GAME_END, generateContext(ctx)).catch(errorHandler);
 });
 
-slippiRealtime.on("spawn", (playerIndex, stock, settings) => {
-    eventActionManager.emitEvent(ActionEvent.PLAYER_SPAWN, generateContext()).catch(errorHandler);
+slippiRealtime.on("spawn", (_, stock, settings) => {
+    console.log("spawn event");
+    console.log(stock);
+    const ctx = generateStockContext(stock, settings);
+    eventActionManager.emitEvent(ActionEvent.PLAYER_SPAWN, generateContext(ctx)).catch(errorHandler);
 });
-slippiRealtime.on("death", (playerIndex, stock, settings) => {
-    eventActionManager.emitEvent(ActionEvent.PLAYER_DIED, generateContext()).catch(errorHandler);
+slippiRealtime.on("death", (_, stock, settings) => {
+    console.log("death event");
+    console.log(stock);
+    const ctx = generateStockContext(stock, settings);
+    eventActionManager.emitEvent(ActionEvent.PLAYER_DIED, generateContext(ctx)).catch(errorHandler);
 });
 
 slippiRealtime.on("comboEnd", (combo, settings) => {
@@ -62,6 +68,12 @@ export const testRunActions = (event: string, actions: Action[]): void => {
             break;
         case ActionEvent.GAME_END:
             ctx = generateGameEndContext(exampleGameEnd);
+            break;
+        case ActionEvent.PLAYER_SPAWN:
+            ctx = generateStockContext(exampleSpawnStockType, exampleGameStart);
+            break;
+        case ActionEvent.PLAYER_DIED:
+            ctx = generateStockContext(exampleDeathStockType, exampleGameStart);
             break;
     }
     eventActionManager.execute(actions, generateContext(ctx)).catch(console.error);
