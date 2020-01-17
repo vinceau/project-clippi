@@ -12,6 +12,7 @@ import { fastFindAndWriteCombos } from "@/lib/realtime";
 import { notify, openComboInDolphin, loadFileInDolphin } from "@/lib/utils";
 import { Dispatch, iRootState } from "@/store";
 import { timeDifferenceString } from "common/utils";
+import { FileInput } from "../Misc/Misc";
 
 const isWindows = process.platform === "win32";
 
@@ -83,6 +84,9 @@ export const ComboFinder: React.FC<{}> = () => {
     display: flex;
     justify-content: space-between;
     `;
+    const setCombosFilePath = (p: string) => {
+        dispatch.filesystem.setCombosFilePath(p);
+    };
     return (
         <div>
             <h2>Combo Finder</h2>
@@ -99,7 +103,14 @@ export const ComboFinder: React.FC<{}> = () => {
                 </Form.Field>
                 <Form.Field>
                     <label>Output File</label>
-                    <Input label={<Button onClick={() => maybeOpenFile(combosFilePath)}><NoMarginIcon name="folder open outline" /></Button>} value={combosFilePath} action={<Button onClick={selectComboPath}>Save as</Button>} />
+                    <FileInput
+                        value={combosFilePath}
+                        onChange={setCombosFilePath}
+                        saveFile={true}
+                        fileTypeFilters={[
+                            { name: "JSON files", extensions: ["json"] }
+                        ]}
+                    />
                 </Form.Field>
                 {isWindows && <Form.Field>
                     <Checkbox label="Load output file into Dolphin when complete" checked={openCombosWhenDone} onChange={onSetOpenCombosWhenDone} />

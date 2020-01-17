@@ -118,6 +118,7 @@ export const FileInput: React.FC<FileInputProps> = props => {
         }
 
         if (p) {
+            setFilesPath(p);
             onChange(p);
         }
     };
