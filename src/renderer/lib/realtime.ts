@@ -7,7 +7,7 @@ import { dispatcher } from "@/store";
 import { deleteFile, pipeFileContents } from "common/utils";
 import { eventActionManager } from "../actions";
 import { isDevelopment, notify } from "./utils";
-import { generateGameStartContext, exampleGameStart, generateGameEndContext } from "./context";
+import { generateGameStartContext, exampleGameEnd, exampleGameStart, generateGameEndContext } from "./context";
 
 export enum ActionEvent {
     GAME_START = "game-start",
@@ -59,6 +59,9 @@ export const testRunActions = (event: string, actions: Action[]): void => {
     switch (event) {
         case ActionEvent.GAME_START:
             ctx = generateGameStartContext(exampleGameStart);
+            break;
+        case ActionEvent.GAME_END:
+            ctx = generateGameEndContext(exampleGameEnd);
             break;
     }
     eventActionManager.execute(actions, generateContext(ctx)).catch(console.error);

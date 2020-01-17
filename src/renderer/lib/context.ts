@@ -4,6 +4,9 @@ import { GameStartType, getCharacterColorName, getCharacterName, getCharacterSho
 const gameStartString = `{"slpVersion":"2.0.1","isTeams":false,"isPAL":false,"stageId":31,"players":[{"playerIndex":0,"port":1,"characterId":20,"characterColor":0,"startStocks":4,"type":0,"teamId":0,"controllerFix":"UCF","nametag":""},{"playerIndex":1,"port":2,"characterId":2,"characterColor":0,"startStocks":4,"type":1,"teamId":0,"controllerFix":"None","nametag":""}]}`;
 export const exampleGameStart: GameStartType = JSON.parse(gameStartString);
 
+const gameEndString = `"{"gameEndMethod":2,"lrasInitiatorIndex":-1}"`;
+export const exampleGameEnd: GameEndType = JSON.parse(gameEndString);
+
 export const generateGameStartContext = (gameStart: GameStartType, context?: Context): Context => {
     const numPlayers = gameStart.players.length;
     const ctx: Context = {
