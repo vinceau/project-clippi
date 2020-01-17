@@ -7,7 +7,7 @@ import { dispatcher } from "@/store";
 import { deleteFile, pipeFileContents } from "common/utils";
 import { eventActionManager } from "../actions";
 import { isDevelopment, notify } from "./utils";
-import { generateGameStartContext, exampleGameStart } from "./context";
+import { generateGameStartContext, exampleGameStart, generateGameEndContext } from "./context";
 
 export enum ActionEvent {
     GAME_START = "game-start",
@@ -35,7 +35,8 @@ slippiRealtime.on("gameStart", (gameStart: GameStartType) => {
     eventActionManager.emitEvent(ActionEvent.GAME_START, generateContext(ctx)).catch(errorHandler);
 });
 slippiRealtime.on("gameEnd", (gameEnd) => {
-    eventActionManager.emitEvent(ActionEvent.GAME_END, generateContext()).catch(errorHandler);
+    const ctx = generateGameEndContext(gameEnd);
+    eventActionManager.emitEvent(ActionEvent.GAME_END, generateContext(ctx)).catch(errorHandler);
 });
 
 slippiRealtime.on("spawn", (playerIndex, stock, settings) => {

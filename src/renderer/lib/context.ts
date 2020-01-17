@@ -1,10 +1,10 @@
 import { Context } from "@vinceau/event-actions";
-import { GameStartType, getCharacterColorName, getCharacterName, getCharacterShortName, getStageName, getStageShortName } from "@vinceau/slp-realtime";
+import { GameStartType, getCharacterColorName, getCharacterName, getCharacterShortName, getStageName, getStageShortName, GameEndMethod, GameEndType } from "@vinceau/slp-realtime";
 
 const gameStartString = `{"slpVersion":"2.0.1","isTeams":false,"isPAL":false,"stageId":31,"players":[{"playerIndex":0,"port":1,"characterId":20,"characterColor":0,"startStocks":4,"type":0,"teamId":0,"controllerFix":"UCF","nametag":""},{"playerIndex":1,"port":2,"characterId":2,"characterColor":0,"startStocks":4,"type":1,"teamId":0,"controllerFix":"None","nametag":""}]}`;
 export const exampleGameStart: GameStartType = JSON.parse(gameStartString);
 
-export const generateGameStartContext = (gameStart: GameStartType): Context => {
+export const generateGameStartContext = (gameStart: GameStartType, context?: Context): Context => {
     const numPlayers = gameStart.players.length;
     const ctx: Context = {
         numPlayers,
@@ -36,5 +36,37 @@ export const generateGameStartContext = (gameStart: GameStartType): Context => {
             ctx.opponentColor = getCharacterColorName(opponentCharId, opponentCharColor);
         }
     }
-    return ctx;
+    return Object.assign(ctx, context);
 };
+
+export const generateGameEndContext = (gameEnd: GameEndType, context?: Context): Context => {
+    console.log(gameEnd);
+    const ctx: Context = {};
+    if (gameEnd.lrasInitiatorIndex !== null) {
+        ctx.quitterPort = getQuitterPort(gameEnd.lrasInitiatorIndex);
+    }
+    if (gameEnd.gameEndMethod !== null) {
+        ctx.endMethod = getGameEndMethod(gameEnd.gameEndMethod);
+    }
+    return Object.assign(ctx, context);
+};
+
+const getQuitterPort = (index: number): number => {
+    if (index === -1) {
+        return -1;
+    }
+    return index + 1;
+};
+
+const getGameEndMethod = (method: GameEndMethod): string => {
+    switch (method) {
+        case GameEndMethod.GAME:
+            return "Game";
+        case GameEndMethod.TIME:
+            return "Time";
+        case GameEndMethod.NO_CONTEST:
+            return "No contest";
+        default:
+            return "Unknown";
+    }
+}
