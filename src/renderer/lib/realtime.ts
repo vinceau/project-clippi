@@ -222,11 +222,16 @@ class SlpStreamManager {
     }
 
     public async monitorSlpFolder(filepath: string): Promise<void> {
-        const stream = new SlpFolderStream();
-        await stream.start(filepath);
-        slippiRealtime.setStream(stream);
-        this.stream = stream;
-        dispatcher.tempContainer.setSlpFolderStream(filepath);
+        try {
+            const stream = new SlpFolderStream();
+            await stream.start(filepath);
+            slippiRealtime.setStream(stream);
+            this.stream = stream;
+            dispatcher.tempContainer.setSlpFolderStream(filepath);
+        } catch (err) {
+            console.error(err);
+            notify("Could not monitor folder. Are you sure it exists?");
+        }
     }
 
     public stopMonitoringSlpFolder(): void {

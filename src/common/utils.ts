@@ -1,5 +1,6 @@
-import fs from "fs";
+import fs from "fs-extra";
 
+import { EOL } from "os";
 import { Writable } from "stream";
 
 export const delay = async (ms: number): Promise<void> => {
@@ -7,38 +8,31 @@ export const delay = async (ms: number): Promise<void> => {
 };
 
 export const readFile = async (filePath: string): Promise<Buffer> => {
-    return new Promise((resolve, reject) => {
-        fs.readFile(filePath, (err, data) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve(data);
-            }
-        });
-    });
+    const buffer = await fs.readFile(filePath);
+    return buffer;
 };
 
 export const millisToString = (millis: number): string => {
     const date = new Date(millis);
     const days = date.getUTCDate() - 1;
     const hours = date.getUTCHours();
-    const minutes =  date.getUTCMinutes();
-    const seconds =  date.getUTCSeconds();
+    const minutes = date.getUTCMinutes();
+    const seconds = date.getUTCSeconds();
     // const millis =  date.getUTCMilliseconds();
-    let str = "";
-    if (days > 0 ) {
-        str += `${days} days, `;
+    const strParts = new Array<string>();
+    if (days > 0) {
+        strParts.push(`${days} days`);
     }
-    if (hours > 0 ) {
-        str += `${hours} hours, `;
+    if (hours > 0) {
+        strParts.push(`${hours} hours`);
     }
-    if (minutes > 0 ) {
-        str += `${minutes} minutes, `;
+    if (minutes > 0) {
+        strParts.push(`${minutes} minutes`);
     }
-    if (seconds > 0 ) {
-        str += `${seconds} seconds, `;
+    if (seconds > 0) {
+        strParts.push(`${seconds} seconds`);
     }
-    return str;
+    return strParts.join(", ");
 };
 
 export const timeDifferenceString = (before: Date, after: Date): string => {
@@ -47,15 +41,7 @@ export const timeDifferenceString = (before: Date, after: Date): string => {
 };
 
 export const deleteFile = async (filepath: string): Promise<void> => {
-    return new Promise((resolve, reject) => {
-        fs.unlink(filepath, (err) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve();
-            }
-        });
-    });
+    await fs.unlink(filepath);
 };
 
 export const pipeFileContents = async (filename: string, destination: Writable): Promise<void> => {
@@ -68,4 +54,8 @@ export const pipeFileContents = async (filename: string, destination: Writable):
             resolve();
         });
     });
+};
+
+export const writeFile = async (contents: string, filename: string, append?: boolean): Promise<void> => {
+    await fs.outputFile(filename, contents + EOL, { flag: append ? "a" : "w" });
 };

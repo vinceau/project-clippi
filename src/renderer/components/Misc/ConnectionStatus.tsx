@@ -15,6 +15,8 @@ import { device } from "@/styles/device";
 import dolphinLogoSVG from "@/styles/images/dolphin.svg";
 import slippiLogoSVG from "@/styles/images/slippi-logo.svg";
 import slippiLogo from "@/styles/images/slippi.png";
+import { BufferedInput } from "./InlineInputs";
+import { getFolderPath } from "@/lib/utils";
 
 export const statusToLabel = (status: ConnectionStatus): string => {
     switch (status) {
@@ -149,10 +151,13 @@ export const SlippiConnectionPlaceholder: React.FC<{
 }> = props => {
     const { liveSlpFilesPath } = useSelector((state: iRootState) => state.filesystem);
     const dispatch = useDispatch<Dispatch>();
-    const selectPath = () => {
-        dispatch.filesystem.getLiveSlpFilesPath();
+    const selectPath = async () => {
+        const filepath = await getFolderPath();
+        if (filepath) {
+            dispatch.filesystem.setLiveSlpFilesPath(filepath);
+        }
     };
-    const [p, setP] = React.useState(props.port);
+    const [port, setPort] = React.useState(props.port);
     const VerticalHeader = styled(Header)`
     &&& {
     display: flex;
@@ -197,6 +202,7 @@ export const SlippiConnectionPlaceholder: React.FC<{
         }
     }
     `;
+    const setSlpFilePath = (filepath: string) => dispatch.filesystem.setLiveSlpFilesPath(filepath);
     return (
         <Segment placeholder>
             <Grid columns={2} stackable textAlign="center">
@@ -210,12 +216,12 @@ export const SlippiConnectionPlaceholder: React.FC<{
                         <Input
                             style={{ maxWidth: "150px", width: "100%" }}
                             placeholder="Port"
-                            value={p}
-                            onChange={(_: any, { value }: any) => setP(value)}
-                            onBlur={() => dispatcher.slippi.setPort(p)}
+                            value={port}
+                            onChange={(_: any, { value }: any) => setPort(value)}
+                            onBlur={() => dispatcher.slippi.setPort(port)}
                         />
                         <div style={{ padding: "10px 0" }}>
-                            <Button primary onClick={() => props.onClick(p)}>Connect</Button>
+                            <Button primary onClick={() => props.onClick(port)}>Connect</Button>
                         </div>
                     </Grid.Column>
                     <HorizontalDivider horizontal>Or</HorizontalDivider>
@@ -225,13 +231,14 @@ export const SlippiConnectionPlaceholder: React.FC<{
                             Monitor for SLP file changes
                         </VerticalHeader>
                         <FolderInput>
-                            <Input
+                            <BufferedInput
                                 style={{ width: "100%" }}
                                 placeholder="Choose a folder..."
                                 value={liveSlpFilesPath}
+                                onChange={setSlpFilePath}
                             />
                             <ButtonContainer>
-                                <Button onClick={selectPath}>Choose</Button>
+                                <Button onClick={() => selectPath().catch(console.error)}>Choose</Button>
                             </ButtonContainer>
                         </FolderInput>
                         <div style={{ padding: "10px 0" }}>

@@ -4,7 +4,7 @@ import { createModel } from "@rematch/core";
 import produce from "immer";
 
 import { SoundMap } from "@/lib/sounds";
-import { getFilePath, getFolderPath } from "@/lib/utils";
+import { getFilePath } from "@/lib/utils";
 import { remote } from "electron";
 
 const homeDirectory = remote.app.getPath("home");
@@ -78,26 +78,6 @@ export const filesystem = createModel({
                     name,
                     filePath: p,
                 });
-            }
-        },
-        async getLiveSlpFilesPath() {
-            const p = await getFolderPath();
-            if (p) {
-                dispatch.filesystem.setLiveSlpFilesPath(p);
-            }
-        },
-        async getFilesPath() {
-            const p = await getFolderPath();
-            if (p) {
-                dispatch.filesystem.setFilesPath(p);
-            }
-        },
-        async getCombosFilePath() {
-            const p = await getFilePath({
-                filters: [{ name: "JSON files", extensions: ["json"] }],
-            }, true);
-            if (p) {
-                dispatch.filesystem.setCombosFilePath(p);
             }
         },
     }),
