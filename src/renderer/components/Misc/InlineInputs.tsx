@@ -46,7 +46,7 @@ export const InlineDropdown = (props: any) => {
 };
 
 export const InlineInput = (props: any) => {
-  return <BufferedInput {...props} transparent={true} />
+  return <BufferedInput {...props} transparent={true} />;
 };
 
 export const BufferedInput = (props: any) => {

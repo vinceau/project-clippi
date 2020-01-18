@@ -9,14 +9,14 @@ import { Button, Card, Divider, Grid, Header, Image, Input, Segment } from "sema
 import { streamManager } from "@/lib/realtime";
 import { Dispatch, dispatcher, iRootState } from "@/store";
 import { pulseAnimation } from "@/styles/animations";
-import { CustomIcon, Labelled } from "./Misc";
 import { device } from "@/styles/device";
+import { CustomIcon, Labelled } from "./Misc";
 
+import { getFolderPath } from "@/lib/utils";
 import dolphinLogoSVG from "@/styles/images/dolphin.svg";
 import slippiLogoSVG from "@/styles/images/slippi-logo.svg";
 import slippiLogo from "@/styles/images/slippi.png";
 import { BufferedInput } from "./InlineInputs";
-import { getFolderPath } from "@/lib/utils";
 
 export const statusToLabel = (status: ConnectionStatus): string => {
     switch (status) {

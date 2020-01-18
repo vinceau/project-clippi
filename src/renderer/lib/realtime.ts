@@ -1,14 +1,14 @@
 import fg from "fast-glob";
 
-import { ComboFilter, ComboType, ConnectionStatus, DolphinComboQueue, SlpFolderStream, SlpLiveStream, SlpRealTime, SlpStream, GameStartType } from "@vinceau/slp-realtime";
-import { Context, Action } from "@vinceau/event-actions";
+import { Action, Context } from "@vinceau/event-actions";
+import { ComboFilter, ComboType, ConnectionStatus, DolphinComboQueue, GameStartType, SlpFolderStream, SlpLiveStream, SlpRealTime, SlpStream } from "@vinceau/slp-realtime";
 
 import { dispatcher } from "@/store";
 import { deleteFile, pipeFileContents } from "common/utils";
 import { eventActionManager } from "../actions";
+import { exampleComboType, exampleDeathStockType, exampleGameEnd, exampleGameStart, exampleSpawnStockType,
+        generateComboContext, generateGameEndContext, generateGameStartContext, generateStockContext } from "./context";
 import { isDevelopment, notify } from "./utils";
-import { generateGameStartContext, exampleDeathStockType, exampleSpawnStockType, exampleGameEnd, exampleGameStart,
-        generateGameEndContext, generateComboContext, exampleComboType, generateStockContext } from "./context";
 
 export enum ActionEvent {
     GAME_START = "game-start",

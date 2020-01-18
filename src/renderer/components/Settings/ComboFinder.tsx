@@ -7,7 +7,7 @@ import { Button, Checkbox, CheckboxProps, Form, Icon } from "semantic-ui-react";
 import { Progress } from "semantic-ui-react";
 
 import { fastFindAndWriteCombos } from "@/lib/realtime";
-import { notify, openComboInDolphin, loadFileInDolphin } from "@/lib/utils";
+import { loadFileInDolphin, notify, openComboInDolphin } from "@/lib/utils";
 import { Dispatch, iRootState } from "@/store";
 import { timeDifferenceString } from "common/utils";
 import { FileInput } from "../Misc/Misc";

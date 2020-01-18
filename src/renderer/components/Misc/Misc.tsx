@@ -1,5 +1,5 @@
-import * as React from "react";
 import * as path from "path";
+import * as React from "react";
 
 import styled, { css } from "styled-components";
 
@@ -8,10 +8,10 @@ import { Tooltip } from "react-tippy";
 import { eventActionManager } from "@/actions";
 import { connectToOBS, setScene } from "@/lib/obs";
 import { ActionEvent } from "@/lib/realtime";
-import { isDevelopment, getFilePath, getFolderPath } from "@/lib/utils";
-import { notify } from "../../lib/utils";
-import { Icon, Input, Button } from "semantic-ui-react";
+import { getFilePath, getFolderPath, isDevelopment } from "@/lib/utils";
 import { shell } from "electron";
+import { Button, Icon, Input } from "semantic-ui-react";
+import { notify } from "../../lib/utils";
 
 export const DevTools = () => {
     const handleClick = () => {

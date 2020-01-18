@@ -1,6 +1,6 @@
 import { Context } from "@vinceau/event-actions";
-import { GameStartType, getCharacterColorName, getCharacterName, getCharacterShortName,
-    getStageName, getStageShortName, GameEndMethod, GameEndType, StockType, ComboType } from "@vinceau/slp-realtime";
+import { ComboType, GameEndMethod, GameEndType, GameStartType,
+    getCharacterColorName, getCharacterName, getCharacterShortName, getStageName, getStageShortName, StockType } from "@vinceau/slp-realtime";
 
 const gameStartString = `{"slpVersion":"2.0.1","isTeams":false,"isPAL":false,"stageId":31,"players":[{"playerIndex":0,"port":1,"characterId":20,"characterColor":0,"startStocks":4,"type":0,"teamId":0,"controllerFix":"UCF","nametag":""},{"playerIndex":1,"port":2,"characterId":2,"characterColor":0,"startStocks":4,"type":1,"teamId":0,"controllerFix":"None","nametag":""}]}`;
 export const exampleGameStart: GameStartType = JSON.parse(gameStartString);
@@ -59,7 +59,7 @@ const getGameEndMethod = (method: GameEndMethod): string => {
         default:
             return "Unknown";
     }
-}
+};
 
 export const generateStockContext = (stock: StockType, settings: GameStartType, context?: Context): Context => {
     console.log(stock);
@@ -105,7 +105,6 @@ const genPlayerContext = (index: number, settings: GameStartType): {
     }
     return null;
 };
-
 
 const genPlayerOpponentContext = (gameStart: GameStartType, context?: Context, index?: number): Context => {
     const numPlayers = gameStart.players.length;
