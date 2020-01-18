@@ -157,7 +157,7 @@ export const SlippiConnectionPlaceholder: React.FC<{
             dispatch.filesystem.setLiveSlpFilesPath(filepath);
         }
     };
-    const [p, setP] = React.useState(props.port);
+    const [port, setPort] = React.useState(props.port);
     const VerticalHeader = styled(Header)`
     &&& {
     display: flex;
@@ -216,12 +216,12 @@ export const SlippiConnectionPlaceholder: React.FC<{
                         <Input
                             style={{ maxWidth: "150px", width: "100%" }}
                             placeholder="Port"
-                            value={p}
-                            onChange={(_: any, { value }: any) => setP(value)}
-                            onBlur={() => dispatcher.slippi.setPort(p)}
+                            value={port}
+                            onChange={(_: any, { value }: any) => setPort(value)}
+                            onBlur={() => dispatcher.slippi.setPort(port)}
                         />
                         <div style={{ padding: "10px 0" }}>
-                            <Button primary onClick={() => props.onClick(p)}>Connect</Button>
+                            <Button primary onClick={() => props.onClick(port)}>Connect</Button>
                         </div>
                     </Grid.Column>
                     <HorizontalDivider horizontal>Or</HorizontalDivider>
