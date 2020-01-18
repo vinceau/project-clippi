@@ -145,7 +145,8 @@ const genPlayerOpponentContext = (gameStart: GameStartType, context?: Context, i
 };
 
 const momentSnippets = [
-    "YYYY", // year (2020)
+    "YYYY", // full year (2020)
+    "YY",   // short year (20)
     "MM",   // month (01)
     "MMM",  // short month (Jan)
     "MMMM", // full month (January)
