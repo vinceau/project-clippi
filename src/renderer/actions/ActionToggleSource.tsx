@@ -100,9 +100,9 @@ const SourceNameInput = (props: { value: ActionToggleSourceParams, onChange: any
                     onChange={onSourceChange}
                     customOptions={allSources}
                 />
-                {" after waiting "}
+                {" after a "}
                 <DelayInput value={value.delay} onChange={onDelayChange} />
-                {" milliseconds"}
+                {" millisecond delay"}
             </div>
         </div>
     );

@@ -77,9 +77,9 @@ const SceneNameInput = (props: any) => {
                 onChange={onSceneChange}
                 customOptions={allScenes}
             />
-            {" after waiting "}
+            {" after a "}
             <DelayInput value={value.delay} onChange={onDelayChange} />
-            {" milliseconds"}
+            {" millisecond delay"}
         </div>
     );
 };

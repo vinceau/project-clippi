@@ -101,7 +101,8 @@ const TwitchClipInput = (props: TwitchClipInputProps) => {
     return (
         <div>
             <div>
-                Clip the <SimpleInput
+                {"Clip the "}
+                <SimpleInput
                     style={{ width: "100px" }}
                     value={channel}
                     onChange={(e) => setChannel(e.target.value)}
