@@ -7,7 +7,7 @@ import { dispatcher } from "@/store";
 import { deleteFile, pipeFileContents } from "common/utils";
 import { eventActionManager } from "../actions";
 import { exampleComboType, exampleDeathStockType, exampleGameEnd, exampleGameStart, exampleSpawnStockType,
-        generateComboContext, generateGameEndContext, generateGameStartContext, generateStockContext } from "./context";
+        generateComboContext, generateGameEndContext, generateGameStartContext, generateStockContext, generateGlobalContext } from "./context";
 import { isDevelopment, notify } from "./utils";
 
 export enum ActionEvent {
@@ -34,24 +34,24 @@ const slippiRealtime = new SlpRealTime();
 
 slippiRealtime.on("gameStart", (gameStart: GameStartType) => {
     const ctx = generateGameStartContext(gameStart);
-    eventActionManager.emitEvent(ActionEvent.GAME_START, generateContext(ctx)).catch(errorHandler);
+    eventActionManager.emitEvent(ActionEvent.GAME_START, generateGlobalContext(ctx)).catch(errorHandler);
 });
 slippiRealtime.on("gameEnd", (gameEnd) => {
     const ctx = generateGameEndContext(gameEnd);
-    eventActionManager.emitEvent(ActionEvent.GAME_END, generateContext(ctx)).catch(errorHandler);
+    eventActionManager.emitEvent(ActionEvent.GAME_END, generateGlobalContext(ctx)).catch(errorHandler);
 });
 
 slippiRealtime.on("spawn", (_, stock, settings) => {
     console.log("spawn event");
     console.log(stock);
     const ctx = generateStockContext(stock, settings);
-    eventActionManager.emitEvent(ActionEvent.PLAYER_SPAWN, generateContext(ctx)).catch(errorHandler);
+    eventActionManager.emitEvent(ActionEvent.PLAYER_SPAWN, generateGlobalContext(ctx)).catch(errorHandler);
 });
 slippiRealtime.on("death", (_, stock, settings) => {
     console.log("death event");
     console.log(stock);
     const ctx = generateStockContext(stock, settings);
-    eventActionManager.emitEvent(ActionEvent.PLAYER_DIED, generateContext(ctx)).catch(errorHandler);
+    eventActionManager.emitEvent(ActionEvent.PLAYER_DIED, generateGlobalContext(ctx)).catch(errorHandler);
 });
 
 slippiRealtime.on("comboEnd", (combo, settings) => {
@@ -59,7 +59,7 @@ slippiRealtime.on("comboEnd", (combo, settings) => {
         return;
     }
     const ctx = generateComboContext(combo, settings);
-    eventActionManager.emitEvent(ActionEvent.COMBO_OCCURRED, generateContext(ctx)).catch(errorHandler);
+    eventActionManager.emitEvent(ActionEvent.COMBO_OCCURRED, generateGlobalContext(ctx)).catch(errorHandler);
 });
 
 slippiRealtime.on("conversion", (combo, settings) => {
@@ -67,7 +67,7 @@ slippiRealtime.on("conversion", (combo, settings) => {
         return;
     }
     const ctx = generateComboContext(combo, settings);
-    eventActionManager.emitEvent(ActionEvent.CONVERSION_OCCURRED, generateContext(ctx)).catch(errorHandler);
+    eventActionManager.emitEvent(ActionEvent.CONVERSION_OCCURRED, generateGlobalContext(ctx)).catch(errorHandler);
 });
 
 export const testRunActions = (event: string, actions: Action[]): void => {
@@ -91,16 +91,7 @@ export const testRunActions = (event: string, actions: Action[]): void => {
             ctx = generateComboContext(exampleComboType, exampleGameStart);
             break;
     }
-    eventActionManager.execute(actions, generateContext(ctx)).catch(console.error);
-};
-
-const generateContext = (context?: Context): Context => {
-    const d = new Date();
-    const newContext = {
-        date: d.toLocaleDateString(),
-        time: d.toLocaleTimeString(),
-    };
-    return Object.assign(newContext, context);
+    eventActionManager.execute(actions, generateGlobalContext(ctx)).catch(console.error);
 };
 
 export const generateCombos = async (

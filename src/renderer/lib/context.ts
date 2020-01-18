@@ -1,4 +1,7 @@
+import moment, { Moment } from "moment";
+
 import { Context } from "@vinceau/event-actions";
+
 import { ComboType, GameEndMethod, GameEndType, GameStartType,
     getCharacterColorName, getCharacterName, getCharacterShortName, getStageName, getStageShortName, StockType } from "@vinceau/slp-realtime";
 
@@ -133,4 +136,33 @@ const genPlayerOpponentContext = (gameStart: GameStartType, context?: Context, i
         }
     }
     return Object.assign(ctx, context);
+};
+
+const momentSnippets = [
+    "YYYY", // year (2020)
+    "MM",   // month (01)
+    "MMM",  // short month (Jan)
+    "MMMM", // full month (January)
+    "DD",   // day (18)
+    "ddd",  // short day (Sat)
+    "dddd", // full day (Saturday)
+    "HH",   // 24-hour (18)
+    "hh",   // 12-hour (06)
+    "mm",   // minute (33)
+    "ss",   // seconds (54)
+    "a",    // lower case (am/pm)
+    "A",    // lower case (AM/PM)
+];
+
+export const generateGlobalContext = (context?: Context, date?: Moment): Context => {
+    const m = date ? date : moment();
+    const d = m.toDate();
+    const newContext = {
+        date: d.toLocaleDateString(),
+        time: d.toLocaleTimeString(),
+    };
+    for (const snip of momentSnippets) {
+        newContext[snip] = m.local().format(snip);
+    }
+    return Object.assign(newContext, context);
 };
