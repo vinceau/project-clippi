@@ -230,7 +230,7 @@ class SlpStreamManager {
             dispatcher.tempContainer.setSlpFolderStream(filepath);
         } catch (err) {
             console.error(err);
-            notify("Could monitor folder. Are you sure it exists?");
+            notify("Could not monitor folder. Are you sure it exists?");
         }
     }
 
