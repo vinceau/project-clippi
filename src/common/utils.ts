@@ -12,6 +12,10 @@ export const readFile = async (filePath: string): Promise<Buffer> => {
     return buffer;
 };
 
+export const secondsToString = (seconds: number): string => {
+    return millisToString(seconds * 1000);
+};
+
 export const millisToString = (millis: number): string => {
     const date = new Date(millis);
     const days = date.getUTCDate() - 1;

@@ -9,8 +9,9 @@ import { Progress } from "semantic-ui-react";
 import { fastFindAndWriteCombos } from "@/lib/realtime";
 import { loadFileInDolphin, notify, openComboInDolphin } from "@/lib/utils";
 import { Dispatch, iRootState } from "@/store";
-import { timeDifferenceString } from "common/utils";
+import { secondsToString } from "common/utils";
 import { FileInput } from "../Misc/Misc";
+import { FileProcessor } from "@/lib/fileProcessor";
 
 const isWindows = process.platform === "win32";
 
@@ -28,20 +29,18 @@ export const ComboFinder: React.FC<{}> = () => {
         dispatch.filesystem.setOpenCombosWhenDone(Boolean(data.checked));
     };
     const findAndWriteCombos = async () => {
-        const before = new Date();
         const callback = (i: number, total: number, filename: string, n: number): void => {
             dispatch.tempContainer.setPercent(Math.round((i + 1) / total * 100));
             dispatch.tempContainer.setComboLog(`Found ${n} combos in: ${filename}`);
         };
-        const numCombos = await fastFindAndWriteCombos(
-            filesPath,
-            includeSubFolders,
-            combosFilePath,
-            deleteFilesWithNoCombos,
-            callback,
-        );
-        const after = new Date();
-        const timeTakenStr = timeDifferenceString(before, after);
+        const fileProcessor = new FileProcessor(filesPath, includeSubFolders);
+        const result = await fileProcessor.process({
+            findCombos: true,
+            outputFile: combosFilePath,
+            deleteZeroComboFiles: deleteFilesWithNoCombos,
+        }, callback);
+        const timeTakenStr = secondsToString(result.timeTaken);
+        const numCombos = result.combosFound;
         console.log(`finished generating ${numCombos} combos in ${timeTakenStr}`);
         const message = `Wrote ${numCombos} combos to: ${combosFilePath} in ${timeTakenStr}`;
         dispatch.tempContainer.setComboFinderProcessing(false);
