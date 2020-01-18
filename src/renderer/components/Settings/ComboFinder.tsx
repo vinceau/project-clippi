@@ -12,6 +12,7 @@ import { secondsToString } from "common/utils";
 import { FileInput } from "../Misc/Misc";
 import { ProcessSection } from "../Misc/SlideReveal";
 import { FileProcessor } from "@/lib/fileProcessor";
+import { TemplatePreview } from "../Misc/TemplatePreview";
 
 const isWindows = process.platform === "win32";
 
@@ -20,6 +21,7 @@ export const ComboFinder: React.FC<{}> = () => {
     const { openCombosWhenDone, filesPath, combosFilePath, includeSubFolders, deleteFilesWithNoCombos } = useSelector((state: iRootState) => state.filesystem);
     const [renameFiles, setRenameFiles] = React.useState(false);
     const [findCombos, setFindCombos] = React.useState(true);
+    const [msg, setMsg] = React.useState("");
     const dispatch = useDispatch<Dispatch>();
     const onSubfolder = (_: React.FormEvent<HTMLInputElement>, data: CheckboxProps) => {
         dispatch.filesystem.setIncludeSubFolders(Boolean(data.checked));
@@ -113,9 +115,13 @@ export const ComboFinder: React.FC<{}> = () => {
                     onOpenChange={setRenameFiles}
                 >
                     <Form.Field>
-                        <label>Rename Format</label>
+                        <label>Format</label>
                         <div style={{ paddingBottom: "5px" }}>
-                            <TextArea />
+                            <TextArea
+                                value={msg}
+                                onChange={(_: any, {value}: any) => setMsg(value)}
+                            />
+                            <TemplatePreview template={msg} />
                         </div>
                     </Form.Field>
                 </ProcessSection>
