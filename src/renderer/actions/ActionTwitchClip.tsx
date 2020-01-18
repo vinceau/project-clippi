@@ -101,13 +101,13 @@ const TwitchClipInput = (props: TwitchClipInputProps) => {
     return (
         <div>
             <div>
-                Clip the channel <SimpleInput
+                Clip the <SimpleInput
                     style={{ width: "100px" }}
                     value={channel}
                     onChange={(e) => setChannel(e.target.value)}
                     onBlur={onChannelChange}
                 />
-                {" after a "}
+                {" channel after a "}
                 <DelayInput value={value.delaySeconds} onChange={onDelayChange} placeholder="20" />
                 {" second delay and "}
                 <InlineDropdown
