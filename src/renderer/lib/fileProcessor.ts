@@ -1,11 +1,9 @@
 import fg from "fast-glob";
-import formatter from "formatter";
-import moment from "moment";
 
 import { ComboType, DolphinComboQueue, SlippiGame, SlpRealTime, SlpStream } from "@vinceau/slp-realtime";
 
 import { deleteFile, pipeFileContents } from "common/utils";
-import { generateGameStartContext, generateGlobalContext } from "./context";
+import { parseFileRenameFormat } from "./context";
 import { comboFilter } from "./realtime";
 
 interface FileProcessorOptions {
@@ -22,18 +20,14 @@ interface ProcessOutput {
     timeTaken: number; // in seconds
 }
 
-export class FileProcessor {
-    public static renameFormat(filename: string, format: string): string {
-        const game = new SlippiGame(filename);
-        const settings = game.getSettings();
-        let ctx = generateGameStartContext(settings);
-        const metadata = game.getMetadata();
-        const gameStartTime = metadata.startAt ? metadata.startAt : undefined;
-        ctx = generateGlobalContext(ctx, moment(gameStartTime));
-        const msgFormatter = formatter(format);
-        return msgFormatter(ctx);
-    }
+export const renameFormat = (filename: string, format: string): string => {
+    const game = new SlippiGame(filename);
+    const settings = game.getSettings();
+    const metadata = game.getMetadata();
+    return parseFileRenameFormat(format, settings, metadata);
+};
 
+export class FileProcessor {
     private readonly filesPath: string;
     private readonly includeSubFolders: boolean;
     private readonly queue = new DolphinComboQueue();
@@ -86,7 +80,7 @@ export class FileProcessor {
 
     private async _processFile(filename: string, options: Partial<FileProcessorOptions>): Promise<number> {
         if (options.renameFiles && options.renameTemplate) {
-            const newFilename = FileProcessor.renameFormat(filename, options.renameTemplate);
+            const newFilename = renameFormat(filename, options.renameTemplate);
             console.log(newFilename);
         }
         const combos = await findCombos(filename);
