@@ -46,6 +46,10 @@ export const InlineDropdown = (props: any) => {
 };
 
 export const InlineInput = (props: any) => {
+  return <BufferedInput {...props} transparent={true} />
+};
+
+export const BufferedInput = (props: any) => {
     const { value, onChange, ...rest } = props;
     const [newValue, setNewValue] = React.useState<string>(value || "");
     const submitValue = () => {
@@ -61,12 +65,11 @@ export const InlineInput = (props: any) => {
     };
     return (
         <Input
-            {...rest}
-            transparent={true}
             value={newValue}
             onChange={newOnChange}
             onKeyDown={onKeyDown}
             onBlur={submitValue}
+            {...rest}
         />
     );
 };
