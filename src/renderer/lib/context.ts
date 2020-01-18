@@ -8,9 +8,6 @@ import {
     getCharacterColorName, getCharacterName, getCharacterShortName, getStageName, getStageShortName, StockType
 } from "@vinceau/slp-realtime";
 
-const metadataString = `{"startAt":"2019-03-23T11:03:48","lastFrame":10878,"consoleNick":"Station 11","players":{},"playedOn":"nintendont"}`;
-export const exampleMetadata = JSON.parse(metadataString);
-
 const gameStartString = `{"slpVersion":"2.0.1","isTeams":false,"isPAL":false,"stageId":31,"players":[{"playerIndex":0,"port":1,"characterId":20,"characterColor":0,"startStocks":4,"type":0,"teamId":0,"controllerFix":"UCF","nametag":""},{"playerIndex":1,"port":2,"characterId":2,"characterColor":0,"startStocks":4,"type":1,"teamId":0,"controllerFix":"None","nametag":""}]}`;
 export const exampleGameStart: GameStartType = JSON.parse(gameStartString);
 
@@ -177,8 +174,7 @@ export const generateGlobalContext = (context?: Context, date?: Moment): Context
 export const parseFileRenameFormat = (format: string, settings?: GameStartType, metadata?: any): string => {
     const gameStart = settings ? settings : exampleGameStart;
     let ctx = generateGameStartContext(gameStart);
-    const meta = metadata ? metadata : exampleMetadata;
-    const gameStartTime = meta.startAt ? meta.startAt : undefined;
+    const gameStartTime = metadata && metadata.startAt ? metadata.startAt : undefined;
     ctx = generateGlobalContext(ctx, moment(gameStartTime));
     const msgFormatter = formatter(format);
     return msgFormatter(ctx);
