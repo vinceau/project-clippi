@@ -5,7 +5,7 @@ import { produce } from "immer";
 import { useSelector } from "react-redux";
 import { Button } from "semantic-ui-react";
 
-import { InlineDropdown, SimpleInput } from "@/components/Misc/InlineInputs";
+import { InlineDropdown, DelayInput } from "@/components/Misc/InlineInputs";
 import { CustomIcon } from "@/components/Misc/Misc";
 import { connectToOBSAndNotify, getAllScenes, setScene } from "@/lib/obs";
 import { delay as waitMillis, notify } from "@/lib/utils";
@@ -18,22 +18,6 @@ interface ActionChangeSceneParams {
     scene: string;
     delay?: string;  // delay in milliseconds string
 }
-
-export const DelayInput: React.FC<{
-    value?: string;
-    onChange: (delay: string) => void;
-}> = props => {
-    const [delayAmount, setDelayAmount] = React.useState(props.value || "0");
-    return (
-        <SimpleInput
-            style={{width: "100px"}}
-            value={delayAmount}
-            onBlur={() => props.onChange(delayAmount)}
-            onChange={(e) => setDelayAmount(e.target.value)}
-            placeholder="2500"
-        />
-    );
-};
 
 const actionChangeScene: ActionTypeGenerator = (params: ActionChangeSceneParams) => {
     return async (ctx: Context): Promise<Context> => {
