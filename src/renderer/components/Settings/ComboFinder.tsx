@@ -77,12 +77,12 @@ export const ComboFinder: React.FC<{}> = () => {
                     />
                 </Form.Field>
                 <ProcessSection
-                    label="Combo Finder"
+                    label="Find Combos"
                     open={findCombos}
                     onOpenChange={setFindCombos}
                 >
                     <Form.Field>
-                        <label>Write combos to the following file:</label>
+                        <label>Output File</label>
                         <FileInput
                             value={combosFilePath}
                             onChange={setCombosFilePath}
@@ -120,8 +120,8 @@ export const ComboFinder: React.FC<{}> = () => {
                                 value={renameFormat}
                                 onChange={(_, { value }) => setRenameFormat(`${value || ""}`)}
                             />
-                            <TemplatePreview template={renameFormat} />
                         </div>
+                        <p><b>Preview: </b><TemplatePreview template={renameFormat} /></p>
                     </Form.Field>
                 </ProcessSection>
                 <div style={{ display: "flex", justifyContent: "space-between" }}>

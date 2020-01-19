@@ -7,6 +7,6 @@ export const TemplatePreview: React.FC<{
 }> = (props) => {
     const parsedTemplate = parseFileRenameFormat(props.template);
     return (
-    <p><b>Example preview:</b> {parsedTemplate}</p>
+    <span>{parsedTemplate}</span>
     );
 };
