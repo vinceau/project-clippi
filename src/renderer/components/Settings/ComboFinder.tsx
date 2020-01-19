@@ -51,7 +51,7 @@ export const ComboFinder: React.FC<{}> = () => {
         const timeTakenStr = secondsToString(result.timeTaken);
         const numCombos = result.combosFound;
         console.log(`finished generating ${numCombos} combos in ${timeTakenStr}`);
-        const message = `Wrote ${numCombos} combos to: ${combosFilePath} in ${timeTakenStr}`;
+        const message = `Processed ${result.filesProcessed} files in ${timeTakenStr} and wrote ${numCombos} combos to: ${combosFilePath}`;
         dispatch.tempContainer.setComboFinderProcessing(false);
         dispatch.tempContainer.setPercent(100);
         dispatch.tempContainer.setComboLog(message);
