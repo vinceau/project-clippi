@@ -17,6 +17,7 @@ export interface FileSystemState {
     deleteFilesWithNoCombos: boolean;
     findCombos: boolean;
     renameFiles: boolean;
+    renameFormat: string;
     openCombosWhenDone: boolean;
     soundFiles: SoundMap;
 }
@@ -29,6 +30,7 @@ const initialState: FileSystemState = {
     deleteFilesWithNoCombos: false,
     findCombos: true,
     renameFiles: false,
+    renameFormat: "{{YY}}{{MM}}{{DD}}-{{hh}}{{mm}}_{{playerShortChar}}_vs_{{opponentShortChar}}_{{shortStage}}.slp",
     openCombosWhenDone: false,
     soundFiles: {},
 };
@@ -72,6 +74,9 @@ export const filesystem = createModel({
         }),
         setRenameFiles: (state: FileSystemState, payload: boolean): FileSystemState => produce(state, draft => {
             draft.renameFiles = payload;
+        }),
+        setRenameFormat: (state: FileSystemState, payload: string): FileSystemState => produce(state, draft => {
+            draft.renameFormat = payload;
         }),
         setOpenCombosWhenDone: (state: FileSystemState, payload: boolean): FileSystemState => produce(state, draft => {
             draft.openCombosWhenDone = payload;

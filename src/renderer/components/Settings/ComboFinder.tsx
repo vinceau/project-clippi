@@ -19,8 +19,10 @@ const isWindows = process.platform === "win32";
 export const ComboFinder: React.FC<{}> = () => {
     const { comboFinderPercent, comboFinderLog, comboFinderProcessing } = useSelector((state: iRootState) => state.tempContainer);
     const { openCombosWhenDone, filesPath, combosFilePath, includeSubFolders, deleteFilesWithNoCombos,
-        renameFiles, findCombos } = useSelector((state: iRootState) => state.filesystem);
-    const [msg, setMsg] = React.useState("");
+        renameFiles, findCombos, renameFormat } = useSelector((state: iRootState) => state.filesystem);
+    const setRenameFormat = (format: string) => {
+        dispatch.filesystem.setRenameFormat(format);
+    }
     const dispatch = useDispatch<Dispatch>();
     const setRenameFiles = (checked: boolean) => {
         dispatch.filesystem.setRenameFiles(checked);
@@ -50,7 +52,7 @@ export const ComboFinder: React.FC<{}> = () => {
             findCombos,
             outputFile: combosFilePath,
             deleteZeroComboFiles: deleteFilesWithNoCombos,
-            renameTemplate: msg,
+            renameTemplate: renameFormat,
             renameFiles,
         }, callback);
         const timeTakenStr = secondsToString(result.timeTaken);
@@ -138,10 +140,10 @@ export const ComboFinder: React.FC<{}> = () => {
                         <label>Format</label>
                         <div style={{ paddingBottom: "5px" }}>
                             <TextArea
-                                value={msg}
-                                onChange={(_: any, {value}: any) => setMsg(value)}
+                                value={renameFormat}
+                                onChange={(_, { value }) => setRenameFormat(`${value || ""}`)}
                             />
-                            <TemplatePreview template={msg} />
+                            <TemplatePreview template={renameFormat} />
                         </div>
                     </Form.Field>
                 </ProcessSection>
