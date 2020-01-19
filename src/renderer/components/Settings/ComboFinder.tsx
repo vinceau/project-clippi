@@ -10,7 +10,7 @@ import { loadFileInDolphin, notify, openComboInDolphin } from "@/lib/utils";
 import { Dispatch, iRootState } from "@/store";
 import { secondsToString } from "common/utils";
 import { FileInput } from "../Misc/Misc";
-import { ProcessSection } from "../Misc/SlideReveal";
+import { ProcessSection } from "../Misc/ProcessSection";
 import { FileProcessor } from "@/lib/fileProcessor";
 import { TemplatePreview } from "../Misc/TemplatePreview";
 
