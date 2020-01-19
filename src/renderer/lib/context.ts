@@ -191,12 +191,17 @@ const addFilenameContext = (context?: Context, filename?: string): Context => {
     return Object.assign(newContext, context);
 };
 
-export const parseFileRenameFormat = (format: string, settings?: GameStartType, metadata?: any, filename?: string): string => {
+export const generateFileRenameContext = (settings?: GameStartType, metadata?: any, filename?: string): Context => {
     const gameStart = settings ? settings : exampleGameStart;
     let ctx = generateGameStartContext(gameStart);
     const gameStartTime = metadata && metadata.startAt ? metadata.startAt : undefined;
     ctx = generateGlobalContext(ctx, moment(gameStartTime));
     ctx = addFilenameContext(ctx, filename);
+    return ctx;
+};
+
+export const parseFileRenameFormat = (format: string, settings?: GameStartType, metadata?: any, filename?: string): string => {
+    const ctx = generateFileRenameContext(settings, metadata, filename);
     const msgFormatter = formatter(format);
     return msgFormatter(ctx);
 };
