@@ -89,7 +89,7 @@ export const generateComboContext = (combo: ComboType, settings: GameStartType, 
         ctx.comboPercent = Math.round(combo.endPercent - combo.startPercent);
         console.log(ctx.comboPercent);
     } else {
-        console.log("could not calculate combo percent");
+        console.error("Could not calculate combo percent");
     }
     return Object.assign(ctx, context);
 };
@@ -101,9 +101,6 @@ const genPlayerContext = (index: number, settings: GameStartType): {
     shortChar: string;
     color: string;
 } | null => {
-    console.log(`generating player context with id ${index}`);
-    console.log("settings:");
-    console.log(settings);
     const player = settings.players.find(p => p.playerIndex === index);
     if (!player) {
         throw new Error(`Could not find player with index: ${index}`);
@@ -195,8 +192,6 @@ const addFilenameContext = (context?: Context, filename?: string): Context => {
 };
 
 export const parseFileRenameFormat = (format: string, settings?: GameStartType, metadata?: any, filename?: string): string => {
-    console.log(`format: ${format}`);
-    console.log(`filename: ${filename}`);
     const gameStart = settings ? settings : exampleGameStart;
     let ctx = generateGameStartContext(gameStart);
     const gameStartTime = metadata && metadata.startAt ? metadata.startAt : undefined;

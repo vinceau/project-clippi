@@ -24,12 +24,10 @@ interface ProcessOutput {
 }
 
 export const renameFormat = (filename: string, format: string): string => {
-    console.log(`renaming file: ${filename}`);
     const game = new SlippiGame(filename);
     const settings = game.getSettings();
     const metadata = game.getMetadata();
     const fullFilename = path.basename(filename);
-    console.log(`name: ${fullFilename}`);
     return parseFileRenameFormat(format, settings, metadata, fullFilename);
 };
 
@@ -44,6 +42,7 @@ const renameFile = async (currentFilename: string, newFilename: string): Promise
     // Return if the new filename is the same as the current name
     const fullFilename = path.basename(currentFilename);
     if (fullFilename === newFilename) {
+        console.log("Filename is already named! Skipping rename...");
         return currentFilename;
     }
     // Make sure the new filename doesn't already exist
@@ -55,6 +54,7 @@ const renameFile = async (currentFilename: string, newFilename: string): Promise
         newFullFilename = path.join(directory, uniqueFilename(newFilename));
     }
     await fs.rename(currentFilename, newFullFilename);
+    console.log(`Renamed ${currentFilename} to ${newFullFilename}`);
     // Return the new filename so we know how to further process it
     return newFullFilename;
 };
@@ -99,7 +99,7 @@ export class FileProcessor {
         let totalCombos = 0;
         if (opts.outputFile) {
             totalCombos = await this.queue.writeFile(opts.outputFile);
-            console.log(`wrote ${totalCombos} out to ${opts.outputFile}`);
+            console.log(`Wrote ${totalCombos} out to ${opts.outputFile}`);
         }
         const after = new Date();
         const millisElapsed = Math.abs(after.getTime() - before.getTime());
@@ -111,14 +111,10 @@ export class FileProcessor {
     }
 
     private async _processFile(filename: string, options: Partial<FileProcessorOptions>): Promise<number> {
-        console.log(`processing the file: ${filename}`);
+        console.log(`Processing file: ${filename}`);
         if (options.renameFiles && options.renameTemplate) {
-            const oldFilename = filename;
-            console.log(`will rename file using template: ${options.renameTemplate}`);
             const newFilename = renameFormat(filename, options.renameTemplate);
-            console.log(`will rename ${filename} to ${newFilename}`);
             filename = await renameFile(filename, newFilename);
-            console.log(`Renamed ${oldFilename} to ${filename}`);
         }
         const combos = await findCombos(filename);
         combos.forEach(c => {
@@ -129,7 +125,6 @@ export class FileProcessor {
 }
 
 export const findCombos = async (filename: string): Promise<ComboType[]> => {
-    console.log(`finding combos in: ${filename}`);
     const combosList = new Array<ComboType>();
     const slpStream = new SlpStream({ singleGameMode: true });
     const realtime = new SlpRealTime();
@@ -143,48 +138,6 @@ export const findCombos = async (filename: string): Promise<ComboType[]> => {
 
     await pipeFileContents(filename, slpStream);
 
-    console.log(`found ${combosList.length} combos in ${filename}`);
+    console.log(`Found ${combosList.length} combos in ${filename}`);
     return combosList;
-};
-
-export const fastFindAndWriteCombos = async (
-    filesPath: string,
-    includeSubFolders: boolean,
-    outputFile: string,
-    deleteZeroComboFiles?: boolean,
-    callback?: (i: number, total: number, filename: string, numCombos: number) => void,
-): Promise<number> => {
-    console.log("inside find and write");
-    const patterns = ["**/*.slp"];
-    const options = {
-        absolute: true,
-        cwd: filesPath,
-        onlyFiles: true,
-        deep: includeSubFolders ? undefined : 1,
-    };
-
-    const queue = new DolphinComboQueue();
-
-    // const stream = fg.stream(patterns, options);
-    const entries = await fg(patterns, options);
-
-    for (const [i, filename] of (entries.entries())) {
-        const combos = await findCombos(filename);
-        combos.forEach(c => {
-            queue.addCombo(filename, c);
-        });
-        // Delete the file if no combos were found
-        if (deleteZeroComboFiles && combos.length === 0) {
-            console.log(`${combos.length} combos found. Deleting: ${filename}`);
-            await deleteFile(filename);
-        }
-        if (callback) {
-            callback(i, entries.length, filename, combos.length);
-        }
-    }
-
-    console.log(`writing stuff out`);
-    const numCombos = await queue.writeFile(outputFile);
-    console.log(`wrote ${numCombos} out to ${outputFile}`);
-    return numCombos;
 };
