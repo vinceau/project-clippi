@@ -15,6 +15,8 @@ export interface FileSystemState {
     combosFilePath: string;
     includeSubFolders: boolean;
     deleteFilesWithNoCombos: boolean;
+    findCombos: boolean;
+    renameFiles: boolean;
     openCombosWhenDone: boolean;
     soundFiles: SoundMap;
 }
@@ -25,6 +27,8 @@ const initialState: FileSystemState = {
     combosFilePath: path.join(homeDirectory, "combos.json"),
     includeSubFolders: false,
     deleteFilesWithNoCombos: false,
+    findCombos: true,
+    renameFiles: false,
     openCombosWhenDone: false,
     soundFiles: {},
 };
@@ -62,6 +66,12 @@ export const filesystem = createModel({
         }),
         setFileDeletion: (state: FileSystemState, payload: boolean): FileSystemState => produce(state, draft => {
             draft.deleteFilesWithNoCombos = payload;
+        }),
+        setFindCombos: (state: FileSystemState, payload: boolean): FileSystemState => produce(state, draft => {
+            draft.findCombos = payload;
+        }),
+        setRenameFiles: (state: FileSystemState, payload: boolean): FileSystemState => produce(state, draft => {
+            draft.renameFiles = payload;
         }),
         setOpenCombosWhenDone: (state: FileSystemState, payload: boolean): FileSystemState => produce(state, draft => {
             draft.openCombosWhenDone = payload;

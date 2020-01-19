@@ -18,19 +18,24 @@ const isWindows = process.platform === "win32";
 
 export const ComboFinder: React.FC<{}> = () => {
     const { comboFinderPercent, comboFinderLog, comboFinderProcessing } = useSelector((state: iRootState) => state.tempContainer);
-    const { openCombosWhenDone, filesPath, combosFilePath, includeSubFolders, deleteFilesWithNoCombos } = useSelector((state: iRootState) => state.filesystem);
-    const [renameFiles, setRenameFiles] = React.useState(false);
-    const [findCombos, setFindCombos] = React.useState(true);
+    const { openCombosWhenDone, filesPath, combosFilePath, includeSubFolders, deleteFilesWithNoCombos,
+        renameFiles, findCombos } = useSelector((state: iRootState) => state.filesystem);
     const [msg, setMsg] = React.useState("");
     const dispatch = useDispatch<Dispatch>();
-    const onSubfolder = (_: React.FormEvent<HTMLInputElement>, data: CheckboxProps) => {
-        dispatch.filesystem.setIncludeSubFolders(Boolean(data.checked));
+    const setRenameFiles = (checked: boolean) => {
+        dispatch.filesystem.setRenameFiles(checked);
     };
-    const onSetDeleteFiles = (_: React.FormEvent<HTMLInputElement>, data: CheckboxProps) => {
-        dispatch.filesystem.setFileDeletion(Boolean(data.checked));
+    const setFindCombos = (checked: boolean) => {
+        dispatch.filesystem.setFindCombos(checked);
     };
-    const onSetOpenCombosWhenDone = (_: React.FormEvent<HTMLInputElement>, data: CheckboxProps) => {
-        dispatch.filesystem.setOpenCombosWhenDone(Boolean(data.checked));
+    const onSubfolder = (checked: boolean) => {
+        dispatch.filesystem.setIncludeSubFolders(checked);
+    };
+    const onSetDeleteFiles = (checked: boolean) => {
+        dispatch.filesystem.setFileDeletion(checked);
+    };
+    const onSetOpenCombosWhenDone = (checked: boolean) => {
+        dispatch.filesystem.setOpenCombosWhenDone(checked);
     };
     const findAndWriteCombos = async () => {
         dispatch.tempContainer.setPercent(0);
@@ -72,6 +77,7 @@ export const ComboFinder: React.FC<{}> = () => {
     const setFilesPath = (p: string) => {
         dispatch.filesystem.setFilesPath(p);
     };
+    const processBtnDisabled = (!findCombos && !renameFiles) || !combosFilePath || comboFinderProcessing;
     return (
         <div>
             <Form>
@@ -85,7 +91,11 @@ export const ComboFinder: React.FC<{}> = () => {
                     />
                 </Form.Field>
                 <Form.Field>
-                    <Checkbox label="Include subfolders" checked={includeSubFolders} onChange={onSubfolder} />
+                    <Checkbox
+                        label="Include subfolders"
+                        checked={includeSubFolders}
+                        onChange={(_, data) => onSubfolder(Boolean(data.checked))}
+                    />
                 </Form.Field>
                 <ProcessSection
                    label="Combo Finder"
@@ -104,10 +114,18 @@ export const ComboFinder: React.FC<{}> = () => {
                     />
                 </Form.Field>
                 <Form.Field>
-                    <Checkbox label="Delete files with no combos" checked={deleteFilesWithNoCombos} onChange={onSetDeleteFiles} />
+                    <Checkbox
+                        label="Delete files with no combos"
+                        checked={deleteFilesWithNoCombos}
+                        onChange={(_, data) => onSetDeleteFiles(Boolean(data.checked))}
+                    />
                 </Form.Field>
                 {isWindows && <Form.Field>
-                    <Checkbox label="Load output file into Dolphin when complete" checked={openCombosWhenDone} onChange={onSetOpenCombosWhenDone} />
+                    <Checkbox
+                        label="Load output file into Dolphin when complete"
+                        checked={openCombosWhenDone}
+                        onChange={(_, data) => onSetOpenCombosWhenDone(Boolean(data.checked))}
+                    />
                 </Form.Field>}
                 </ProcessSection>
 
@@ -129,7 +147,7 @@ export const ComboFinder: React.FC<{}> = () => {
                 </ProcessSection>
 
                 <Buttons>
-                    <Button primary={true} type="button" onClick={() => findAndWriteCombos().catch(console.error)} disabled={!combosFilePath || comboFinderProcessing}>
+                    <Button primary={true} type="button" onClick={() => findAndWriteCombos().catch(console.error)} disabled={processBtnDisabled}>
                         <Icon name="fast forward" />
                         Process replays
                     </Button>
