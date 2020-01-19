@@ -1,3 +1,5 @@
+import * as path from "path";
+
 import formatter from "formatter";
 import moment, { Moment } from "moment";
 
@@ -7,6 +9,8 @@ import {
     ComboType, GameEndMethod, GameEndType, GameStartType,
     getCharacterColorName, getCharacterName, getCharacterShortName, getStageName, getStageShortName, StockType
 } from "@vinceau/slp-realtime";
+
+const exampleFilename = "Game_20190323T111317.slp";
 
 const gameStartString = `{"slpVersion":"2.0.1","isTeams":false,"isPAL":false,"stageId":31,"players":[{"playerIndex":0,"port":1,"characterId":20,"characterColor":0,"startStocks":4,"type":0,"teamId":0,"controllerFix":"UCF","nametag":""},{"playerIndex":1,"port":2,"characterId":2,"characterColor":0,"startStocks":4,"type":1,"teamId":0,"controllerFix":"None","nametag":""}]}`;
 export const exampleGameStart: GameStartType = JSON.parse(gameStartString);
@@ -171,11 +175,25 @@ export const generateGlobalContext = (context?: Context, date?: Moment): Context
     return Object.assign(newContext, context);
 };
 
-export const parseFileRenameFormat = (format: string, settings?: GameStartType, metadata?: any): string => {
+const addFilenameContext = (context?: Context, filename?: string): Context => {
+    const name = filename ? filename : exampleFilename;
+    const onlyExt = path.extname(name);
+    const fullFilename = path.basename(name);
+    const onlyFilename = path.basename(name, onlyExt);
+    const newContext = {
+        filename: onlyFilename,
+        fullFilename,
+        fileExt: onlyExt,
+    };
+    return Object.assign(newContext, context);
+};
+
+export const parseFileRenameFormat = (format: string, settings?: GameStartType, metadata?: any, filename?: string): string => {
     const gameStart = settings ? settings : exampleGameStart;
     let ctx = generateGameStartContext(gameStart);
     const gameStartTime = metadata && metadata.startAt ? metadata.startAt : undefined;
     ctx = generateGlobalContext(ctx, moment(gameStartTime));
+    ctx = addFilenameContext(ctx, filename);
     const msgFormatter = formatter(format);
     return msgFormatter(ctx);
 };
