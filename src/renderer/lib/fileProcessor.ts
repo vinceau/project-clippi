@@ -73,7 +73,7 @@ export class FileProcessor {
         opts: Partial<FileProcessorOptions>,
         callback?: (i: number, total: number, filename: string, numCombos: number) => void,
     ): Promise<ProcessOutput> {
-        const before = new Date();
+        const before = new Date();  // Use this to track elapsed time
         const patterns = ["**/*.slp"];
         const options = {
             absolute: true,
@@ -83,24 +83,21 @@ export class FileProcessor {
         };
 
         const entries = await fg(patterns, options);
-
         for (const [i, filename] of (entries.entries())) {
             const numCombos = await this._processFile(filename, opts);
-            // Delete the file if no combos were found
-            if (opts.deleteZeroComboFiles && numCombos === 0) {
-                console.log(`No combos found in ${filename}. Deleting...`);
-                await deleteFile(filename);
-            }
             if (callback) {
                 callback(i, entries.length, filename, numCombos);
             }
         }
 
+        // Write out files if we found combos
         let totalCombos = 0;
-        if (opts.outputFile) {
+        if (opts.findCombos && opts.outputFile) {
             totalCombos = await this.queue.writeFile(opts.outputFile);
             console.log(`Wrote ${totalCombos} out to ${opts.outputFile}`);
         }
+
+        // Return elapsed time and other stats
         const after = new Date();
         const millisElapsed = Math.abs(after.getTime() - before.getTime());
         return {
@@ -112,15 +109,28 @@ export class FileProcessor {
 
     private async _processFile(filename: string, options: Partial<FileProcessorOptions>): Promise<number> {
         console.log(`Processing file: ${filename}`);
+
+        // Handle file renaming
         if (options.renameFiles && options.renameTemplate) {
             const newFilename = renameFormat(filename, options.renameTemplate);
             filename = await renameFile(filename, newFilename);
         }
-        const combos = await findCombos(filename);
-        combos.forEach(c => {
-            this.queue.addCombo(filename, c);
-        });
-        return combos.length;
+
+        // Handle combo finding
+        if (options.findCombos) {
+            const combos = await findCombos(filename);
+            combos.forEach(c => {
+                this.queue.addCombo(filename, c);
+            });
+            // Delete the file if no combos were found
+            if (options.deleteZeroComboFiles && combos.length === 0) {
+                console.log(`No combos found in ${filename}. Deleting...`);
+                await deleteFile(filename);
+            }
+            return combos.length;
+        }
+
+        return 0;
     }
 }
 
