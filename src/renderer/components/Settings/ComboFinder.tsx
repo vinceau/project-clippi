@@ -1,10 +1,7 @@
 import * as React from "react";
 
-import styled from "styled-components";
-
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Checkbox, CheckboxProps, Form, Icon, TextArea } from "semantic-ui-react";
-import { Progress } from "semantic-ui-react";
+import { Button, Checkbox, Form, Icon, Progress, TextArea } from "semantic-ui-react";
 
 import { FileProcessor } from "@/lib/fileProcessor";
 import { loadFileInDolphin, notify, openComboInDolphin } from "@/lib/utils";
@@ -20,25 +17,15 @@ export const ComboFinder: React.FC<{}> = () => {
     const { comboFinderPercent, comboFinderLog, comboFinderProcessing } = useSelector((state: iRootState) => state.tempContainer);
     const { openCombosWhenDone, filesPath, combosFilePath, includeSubFolders, deleteFilesWithNoCombos,
         renameFiles, findCombos, renameFormat } = useSelector((state: iRootState) => state.filesystem);
-    const setRenameFormat = (format: string) => {
-        dispatch.filesystem.setRenameFormat(format);
-    }
     const dispatch = useDispatch<Dispatch>();
-    const setRenameFiles = (checked: boolean) => {
-        dispatch.filesystem.setRenameFiles(checked);
-    };
-    const setFindCombos = (checked: boolean) => {
-        dispatch.filesystem.setFindCombos(checked);
-    };
-    const onSubfolder = (checked: boolean) => {
-        dispatch.filesystem.setIncludeSubFolders(checked);
-    };
-    const onSetDeleteFiles = (checked: boolean) => {
-        dispatch.filesystem.setFileDeletion(checked);
-    };
-    const onSetOpenCombosWhenDone = (checked: boolean) => {
-        dispatch.filesystem.setOpenCombosWhenDone(checked);
-    };
+    const setRenameFormat = (format: string) => dispatch.filesystem.setRenameFormat(format);
+    const setRenameFiles = (checked: boolean) => dispatch.filesystem.setRenameFiles(checked);
+    const setFindCombos = (checked: boolean) => dispatch.filesystem.setFindCombos(checked);
+    const onSubfolder = (checked: boolean) => dispatch.filesystem.setIncludeSubFolders(checked);
+    const onSetDeleteFiles = (checked: boolean) => dispatch.filesystem.setFileDeletion(checked);
+    const onSetOpenCombosWhenDone = (checked: boolean) => dispatch.filesystem.setOpenCombosWhenDone(checked);
+    const setCombosFilePath = (p: string) => dispatch.filesystem.setCombosFilePath(p);
+    const setFilesPath = (p: string) => dispatch.filesystem.setFilesPath(p);
     const findAndWriteCombos = async () => {
         dispatch.tempContainer.setPercent(0);
         dispatch.tempContainer.setComboFinderProcessing(true);
@@ -69,16 +56,6 @@ export const ComboFinder: React.FC<{}> = () => {
         }
     };
     const complete = comboFinderPercent === 100;
-    const Buttons = styled.div`
-    display: flex;
-    justify-content: space-between;
-    `;
-    const setCombosFilePath = (p: string) => {
-        dispatch.filesystem.setCombosFilePath(p);
-    };
-    const setFilesPath = (p: string) => {
-        dispatch.filesystem.setFilesPath(p);
-    };
     const processBtnDisabled = (!findCombos && !renameFiles) || !combosFilePath || comboFinderProcessing;
     return (
         <div>
@@ -100,35 +77,35 @@ export const ComboFinder: React.FC<{}> = () => {
                     />
                 </Form.Field>
                 <ProcessSection
-                   label="Combo Finder"
-                   open={findCombos}
-                   onOpenChange={setFindCombos}
->
-                <Form.Field>
-                    <label>Write combos to the following file:</label>
-                    <FileInput
-                        value={combosFilePath}
-                        onChange={setCombosFilePath}
-                        saveFile={true}
-                        fileTypeFilters={[
-                            { name: "JSON files", extensions: ["json"] }
-                        ]}
-                    />
-                </Form.Field>
-                <Form.Field>
-                    <Checkbox
-                        label="Delete files with no combos"
-                        checked={deleteFilesWithNoCombos}
-                        onChange={(_, data) => onSetDeleteFiles(Boolean(data.checked))}
-                    />
-                </Form.Field>
-                {isWindows && <Form.Field>
-                    <Checkbox
-                        label="Load output file into Dolphin when complete"
-                        checked={openCombosWhenDone}
-                        onChange={(_, data) => onSetOpenCombosWhenDone(Boolean(data.checked))}
-                    />
-                </Form.Field>}
+                    label="Combo Finder"
+                    open={findCombos}
+                    onOpenChange={setFindCombos}
+                >
+                    <Form.Field>
+                        <label>Write combos to the following file:</label>
+                        <FileInput
+                            value={combosFilePath}
+                            onChange={setCombosFilePath}
+                            saveFile={true}
+                            fileTypeFilters={[
+                                { name: "JSON files", extensions: ["json"] }
+                            ]}
+                        />
+                    </Form.Field>
+                    <Form.Field>
+                        <Checkbox
+                            label="Delete files with no combos"
+                            checked={deleteFilesWithNoCombos}
+                            onChange={(_, data) => onSetDeleteFiles(Boolean(data.checked))}
+                        />
+                    </Form.Field>
+                    {isWindows && <Form.Field>
+                        <Checkbox
+                            label="Load output file into Dolphin when complete"
+                            checked={openCombosWhenDone}
+                            onChange={(_, data) => onSetOpenCombosWhenDone(Boolean(data.checked))}
+                        />
+                    </Form.Field>}
                 </ProcessSection>
 
                 <ProcessSection
@@ -147,8 +124,7 @@ export const ComboFinder: React.FC<{}> = () => {
                         </div>
                     </Form.Field>
                 </ProcessSection>
-
-                <Buttons>
+                <div style={{ display: "flex", justifyContent: "space-between" }}>
                     <Button primary={true} type="button" onClick={() => findAndWriteCombos().catch(console.error)} disabled={processBtnDisabled}>
                         <Icon name="fast forward" />
                         Process replays
@@ -156,13 +132,13 @@ export const ComboFinder: React.FC<{}> = () => {
                     {isWindows && <Button type="button" onClick={() => loadFileInDolphin().catch(console.error)}>
                         Load a file into Dolphin
                     </Button>}
-                </Buttons>
+                </div>
             </Form>
             <div style={{ padding: "10px 0" }}>
                 {(comboFinderProcessing || complete) &&
                     <Progress progress={true} percent={comboFinderPercent} success={complete}>{comboFinderLog}</Progress>
                 }
             </div>
-        </div >
+        </div>
     );
 };
