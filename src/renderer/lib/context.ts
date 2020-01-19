@@ -101,7 +101,13 @@ const genPlayerContext = (index: number, settings: GameStartType): {
     shortChar: string;
     color: string;
 } | null => {
-    const player = settings.players[index];
+    console.log(`generating player context with id ${index}`);
+    console.log("settings:");
+    console.log(settings);
+    const player = settings.players.find(p => p.playerIndex === index);
+    if (!player) {
+        throw new Error(`Could not find player with index: ${index}`);
+    }
     const playerCharId = player.characterId;
     const playerCharColor = player.characterColor;
     if (playerCharId !== null && playerCharColor !== null) {
@@ -120,10 +126,10 @@ const genPlayerOpponentContext = (gameStart: GameStartType, context?: Context, i
     const numPlayers = gameStart.players.length;
     const ctx: Context = {};
     if (numPlayers === 2) {
-        const playerIndex = index !== undefined ? index : 0;
+        const playerIndex = index !== undefined ? index : gameStart.players[0].playerIndex;
         let opponentIndex = gameStart.players.map(p => p.playerIndex).find((i) => i !== playerIndex);
         if (opponentIndex === undefined) {
-            opponentIndex = 1;
+            opponentIndex = gameStart.players[1].playerIndex;
         }
         const playerContext = genPlayerContext(playerIndex, gameStart);
         const opponentContext = genPlayerContext(opponentIndex, gameStart);
@@ -189,6 +195,8 @@ const addFilenameContext = (context?: Context, filename?: string): Context => {
 };
 
 export const parseFileRenameFormat = (format: string, settings?: GameStartType, metadata?: any, filename?: string): string => {
+    console.log(`format: ${format}`);
+    console.log(`filename: ${filename}`);
     const gameStart = settings ? settings : exampleGameStart;
     let ctx = generateGameStartContext(gameStart);
     const gameStartTime = metadata && metadata.startAt ? metadata.startAt : undefined;

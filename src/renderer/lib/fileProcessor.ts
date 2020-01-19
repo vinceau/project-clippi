@@ -1,4 +1,7 @@
+import * as path from "path";
+
 import fg from "fast-glob";
+import fs from "fs-extra";
 
 import { ComboType, DolphinComboQueue, SlippiGame, SlpRealTime, SlpStream } from "@vinceau/slp-realtime";
 
@@ -21,10 +24,31 @@ interface ProcessOutput {
 }
 
 export const renameFormat = (filename: string, format: string): string => {
+    console.log(`renaming file: ${filename}`);
     const game = new SlippiGame(filename);
     const settings = game.getSettings();
     const metadata = game.getMetadata();
-    return parseFileRenameFormat(format, settings, metadata);
+    const fullFilename = path.basename(filename);
+    console.log(`name: ${fullFilename}`);
+    return parseFileRenameFormat(format, settings, metadata, fullFilename);
+};
+
+const uniqueFilename = (name: string) => {
+    const randomSuffix = Math.random().toString(36).slice(2).substring(0, 5);
+    const onlyExt = path.extname(name);
+    const onlyFilename = path.basename(name, onlyExt);
+    return `${onlyFilename}_${randomSuffix}${onlyExt}`;
+};
+
+const renameFile = async (currentFilename: string, newFilename: string): Promise<string> => {
+    const directory = path.dirname(currentFilename);
+    let newFullFilename = path.join(directory, newFilename);
+    const exists = await fs.pathExists(newFullFilename);
+    if (exists) {
+        newFullFilename = path.join(directory, uniqueFilename(newFilename));
+    }
+    await fs.rename(currentFilename, newFullFilename);
+    return newFullFilename;
 };
 
 export class FileProcessor {
@@ -79,9 +103,14 @@ export class FileProcessor {
     }
 
     private async _processFile(filename: string, options: Partial<FileProcessorOptions>): Promise<number> {
+        console.log(`processing the file: ${filename}`);
         if (options.renameFiles && options.renameTemplate) {
+            const oldFilename = filename;
+            console.log(`will rename file using template: ${options.renameTemplate}`);
             const newFilename = renameFormat(filename, options.renameTemplate);
-            console.log(newFilename);
+            console.log(`will rename ${filename} to ${newFilename}`);
+            filename = await renameFile(filename, newFilename);
+            console.log(`Renamed ${oldFilename} to ${filename}`);
         }
         const combos = await findCombos(filename);
         combos.forEach(c => {

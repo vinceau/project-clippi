@@ -45,6 +45,8 @@ export const ComboFinder: React.FC<{}> = () => {
             findCombos,
             outputFile: combosFilePath,
             deleteZeroComboFiles: deleteFilesWithNoCombos,
+            renameTemplate: msg,
+            renameFiles,
         }, callback);
         const timeTakenStr = secondsToString(result.timeTaken);
         const numCombos = result.combosFound;
