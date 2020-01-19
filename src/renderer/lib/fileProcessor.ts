@@ -41,13 +41,21 @@ const uniqueFilename = (name: string) => {
 };
 
 const renameFile = async (currentFilename: string, newFilename: string): Promise<string> => {
+    // Return if the new filename is the same as the current name
+    const fullFilename = path.basename(currentFilename);
+    if (fullFilename === newFilename) {
+        return currentFilename;
+    }
+    // Make sure the new filename doesn't already exist
     const directory = path.dirname(currentFilename);
     let newFullFilename = path.join(directory, newFilename);
     const exists = await fs.pathExists(newFullFilename);
     if (exists) {
+        // Append a random suffix to the end to avoid conflicts
         newFullFilename = path.join(directory, uniqueFilename(newFilename));
     }
     await fs.rename(currentFilename, newFullFilename);
+    // Return the new filename so we know how to further process it
     return newFullFilename;
 };
 
