@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Checkbox, Form, Icon, Progress, TextArea } from "semantic-ui-react";
+import { Button, Checkbox, Form, Icon, Progress } from "semantic-ui-react";
 
 import { FileProcessor } from "@/lib/fileProcessor";
 import { loadFileInDolphin, notify, openComboInDolphin } from "@/lib/utils";
@@ -9,7 +9,6 @@ import { Dispatch, iRootState } from "@/store";
 import { secondsToString } from "common/utils";
 import { FileInput } from "../Misc/Misc";
 import { ProcessSection } from "../Misc/ProcessSection";
-import { TemplatePreview, ContextOptions } from "../Misc/TemplatePreview";
 import { RenameFiles } from "./RenameFiles";
 
 const isWindows = process.platform === "win32";
@@ -114,7 +113,7 @@ export const ComboFinder: React.FC<{}> = () => {
                     open={renameFiles}
                     onOpenChange={setRenameFiles}
                 >
-                    <RenameFiles value={renameFormat} onChange={console.log} />
+                    <RenameFiles value={renameFormat} onChange={setRenameFormat} />
                 </ProcessSection>
                 <div style={{ display: "flex", justifyContent: "space-between" }}>
                     <Button primary={true} type="button" onClick={() => findAndWriteCombos().catch(console.error)} disabled={processBtnDisabled}>

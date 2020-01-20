@@ -22,7 +22,6 @@ export const ContextOptions: React.FC<{
     const context = props.context ? props.context : generateFileRenameContext();
     const allDescriptions = contextDescriptions;
     const keys = Object.keys(context);
-    console.log(keys);
     const clickHandler = (name: string) => {
         if (props.onLabelClick) {
             props.onLabelClick(name);
