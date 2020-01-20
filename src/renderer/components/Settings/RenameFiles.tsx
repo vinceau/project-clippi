@@ -11,19 +11,27 @@ export const RenameFiles: React.FC<{
     onChange: (value: string) => void;
 }> = props => {
     const [showOptions, setShowOptions] = React.useState(false);
-    const [renameFormat, setRenameFormat] = React.useState(props.value);
+    const [renameFormat, setRenameFormat] = React.useState("");
     const textRef = React.useRef();
     const insertText = (text: string) => {
-        if (!textRef.current) {
+        const el = textRef.current; //.ref.current;
+        if (!el) {
             return;
         }
-        insertTextAtCursor(textRef.current, `{{${text}}}`);
+        const leftmostPos = Math.max(0, el.ref.current.selectionStart - 2);
+        const rightmostPos = Math.min(el.ref.current.selectionEnd + 2, renameFormat.length);
+        const leftChars = renameFormat.substring(leftmostPos, leftmostPos+2);
+        const rightChars = renameFormat.substring(rightmostPos-2, rightmostPos);
+        const alreadyHasBrackets = leftChars === "{{" && rightChars === "}}";
+        insertTextAtCursor(textRef.current, alreadyHasBrackets ? text : `{{${text}}}`);
     };
     return (
         <div>
             <button onClick={() => {
-                if (textRef.current !== undefined) {
-                    const el = textRef.current; //.ref.current;
+                const el = textRef.current; //.ref.current;
+                if (el !== undefined) {
+                    console.log(el.ref.current.selectionStart);
+                    console.log(el.ref.current.selectionEnd);
                     insertTextAtCursor(el, 'foobar');
                 }
             }}>Insert text</button>
@@ -38,8 +46,9 @@ export const RenameFiles: React.FC<{
             <div style={{ paddingBottom: "5px" }}>
                 <TextArea
                     ref={textRef}
-                    // value={renameFormat}
+                    value={renameFormat}
                     onChange={(e, data) => {
+                        setRenameFormat(data.value);
                         // console.log(data);
                         // console.log(e);
                         // console.log(e.nativeEvent.target.selectionStart)
