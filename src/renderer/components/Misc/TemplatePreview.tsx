@@ -24,7 +24,7 @@ export const ContextOptions: React.FC<{
     console.log(keys);
     const descriptions = allDescriptions.map(cat => (
         <div key={cat.category}>
-        <h5>{cat.category}</h5>
+        <b style={{marginRight: "5px"}}>{cat.category}</b>
         {cat.descriptions.filter(d => keys.includes(d.contextName)).map(d => (
             <Tooltip
                 key={`${cat.category}--${d.contextName}`}
@@ -34,7 +34,7 @@ export const ContextOptions: React.FC<{
                 position="top"
                 style={{ display: "inline-block" }}
             >
-                <Label>{d.contextName}</Label>
+                <Label style={{margin: "2px"}}>{d.contextName}</Label>
             </Tooltip>
         ))}
         </div>
