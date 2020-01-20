@@ -50,15 +50,15 @@ export const contextDescriptions: ContextDescriptions[] = [
         ],
     },
     {
-        category: "Game Info (2P)",
+        category: "Player Info (2P)",
         descriptions: [
             {contextName: "playerTag", description: "Nametag of player e.g. BORT"},
-            {contextName: "playerPort", description: "Port of player e.g. 3"},
+            {contextName: "playerPort", description: "Port of player e.g. 1"},
             {contextName: "playerChar", description: "Name of player character e.g. Captain Falcon"},
             {contextName: "playerShortChar", description: "Shortened name of player character e.g. Falcon"},
             {contextName: "playerColor", description: "Color of player character e.g. White"},
             {contextName: "opponentTag", description: "Nametag of opponent e.g. YORT"},
-            {contextName: "opponentPort", description: "Port of opponent e.g. 1"},
+            {contextName: "opponentPort", description: "Port of opponent e.g. 3"},
             {contextName: "opponentChar", description: "Name of opponent character e.g. Ganondorf"},
             {contextName: "opponentShortChar", description: "Shortened name of opponent character e.g. Ganon"},
             {contextName: "opponentColor", description: "Color of opponent character e.g. Default"},
