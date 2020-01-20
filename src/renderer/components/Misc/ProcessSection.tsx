@@ -5,7 +5,7 @@ import { Checkbox } from "semantic-ui-react";
 
 const SlideReveal = styled.div`
     overflow-y: hidden;
-    max-height: ${(props: { open: boolean }) => props.open ? "500px" : "0"};
+    max-height: ${(props: { open: boolean }) => props.open ? "1000px" : "0"};
     transition: all 0.3s ease-in-out;
 `;
 
