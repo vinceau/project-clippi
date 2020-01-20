@@ -9,7 +9,7 @@ import { Dispatch, iRootState } from "@/store";
 import { secondsToString } from "common/utils";
 import { FileInput } from "../Misc/Misc";
 import { ProcessSection } from "../Misc/ProcessSection";
-import { TemplatePreview } from "../Misc/TemplatePreview";
+import { TemplatePreview, ContextOptions } from "../Misc/TemplatePreview";
 
 const isWindows = process.platform === "win32";
 
@@ -113,6 +113,7 @@ export const ComboFinder: React.FC<{}> = () => {
                     open={renameFiles}
                     onOpenChange={setRenameFiles}
                 >
+                    <ContextOptions />
                     <Form.Field>
                         <label>Format</label>
                         <div style={{ paddingBottom: "5px" }}>
