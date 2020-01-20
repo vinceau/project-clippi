@@ -10,6 +10,7 @@ import { secondsToString } from "common/utils";
 import { FileInput } from "../Misc/Misc";
 import { ProcessSection } from "../Misc/ProcessSection";
 import { TemplatePreview, ContextOptions } from "../Misc/TemplatePreview";
+import { RenameFiles } from "./RenameFiles";
 
 const isWindows = process.platform === "win32";
 
@@ -113,17 +114,7 @@ export const ComboFinder: React.FC<{}> = () => {
                     open={renameFiles}
                     onOpenChange={setRenameFiles}
                 >
-                    <ContextOptions />
-                    <Form.Field>
-                        <label>Format</label>
-                        <div style={{ paddingBottom: "5px" }}>
-                            <TextArea
-                                value={renameFormat}
-                                onChange={(_, { value }) => setRenameFormat(`${value || ""}`)}
-                            />
-                        </div>
-                        <p><b>Preview: </b><TemplatePreview template={renameFormat} /></p>
-                    </Form.Field>
+                    <RenameFiles value={renameFormat} onChange={console.log} />
                 </ProcessSection>
                 <div style={{ display: "flex", justifyContent: "space-between" }}>
                     <Button primary={true} type="button" onClick={() => findAndWriteCombos().catch(console.error)} disabled={processBtnDisabled}>

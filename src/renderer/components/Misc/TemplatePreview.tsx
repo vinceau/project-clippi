@@ -16,12 +16,18 @@ export const TemplatePreview: React.FC<{
 };
 
 export const ContextOptions: React.FC<{
+    onLabelClick?: (name: string) => void;
     context?: Context
 }> = props => {
     const context = props.context ? props.context : generateFileRenameContext();
     const allDescriptions = contextDescriptions;
     const keys = Object.keys(context);
     console.log(keys);
+    const clickHandler = (name: string) => {
+        if (props.onLabelClick) {
+            props.onLabelClick(name);
+        }
+    };
     const descriptions = allDescriptions.map(cat => (
         <div key={cat.category}>
         <b style={{marginRight: "5px"}}>{cat.category}</b>
@@ -34,7 +40,7 @@ export const ContextOptions: React.FC<{
                 position="top"
                 style={{ display: "inline-block" }}
             >
-                <Label style={{margin: "2px"}}>{d.contextName}</Label>
+                <Label as="a" onClick={() => clickHandler(d.contextName)} style={{margin: "2px"}}>{d.contextName}</Label>
             </Tooltip>
         ))}
         </div>
