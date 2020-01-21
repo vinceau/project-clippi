@@ -1,6 +1,16 @@
+import * as path from "path";
+
+import formatter from "formatter";
+import moment, { Moment } from "moment";
+
 import { Context } from "@vinceau/event-actions";
-import { ComboType, GameEndMethod, GameEndType, GameStartType,
-    getCharacterColorName, getCharacterName, getCharacterShortName, getStageName, getStageShortName, StockType } from "@vinceau/slp-realtime";
+
+import {
+    ComboType, GameEndMethod, GameEndType, GameStartType,
+    getCharacterColorName, getCharacterName, getCharacterShortName, getStageName, getStageShortName, StockType
+} from "@vinceau/slp-realtime";
+
+const exampleFilename = "Game_20190323T111317.slp";
 
 const gameStartString = `{"slpVersion":"2.0.1","isTeams":false,"isPAL":false,"stageId":31,"players":[{"playerIndex":0,"port":1,"characterId":20,"characterColor":0,"startStocks":4,"type":0,"teamId":0,"controllerFix":"UCF","nametag":""},{"playerIndex":1,"port":2,"characterId":2,"characterColor":0,"startStocks":4,"type":1,"teamId":0,"controllerFix":"None","nametag":""}]}`;
 export const exampleGameStart: GameStartType = JSON.parse(gameStartString);
@@ -79,7 +89,7 @@ export const generateComboContext = (combo: ComboType, settings: GameStartType, 
         ctx.comboPercent = Math.round(combo.endPercent - combo.startPercent);
         console.log(ctx.comboPercent);
     } else {
-        console.log("could not calculate combo percent");
+        console.error("Could not calculate combo percent");
     }
     return Object.assign(ctx, context);
 };
@@ -91,7 +101,10 @@ const genPlayerContext = (index: number, settings: GameStartType): {
     shortChar: string;
     color: string;
 } | null => {
-    const player = settings.players[index];
+    const player = settings.players.find(p => p.playerIndex === index);
+    if (!player) {
+        throw new Error(`Could not find player with index: ${index}`);
+    }
     const playerCharId = player.characterId;
     const playerCharColor = player.characterColor;
     if (playerCharId !== null && playerCharColor !== null) {
@@ -110,14 +123,15 @@ const genPlayerOpponentContext = (gameStart: GameStartType, context?: Context, i
     const numPlayers = gameStart.players.length;
     const ctx: Context = {};
     if (numPlayers === 2) {
-        const playerIndex = index !== undefined ? index : 0;
+        const playerIndex = index !== undefined ? index : gameStart.players[0].playerIndex;
         let opponentIndex = gameStart.players.map(p => p.playerIndex).find((i) => i !== playerIndex);
         if (opponentIndex === undefined) {
-            opponentIndex = 1;
+            opponentIndex = gameStart.players[1].playerIndex;
         }
         const playerContext = genPlayerContext(playerIndex, gameStart);
         const opponentContext = genPlayerContext(opponentIndex, gameStart);
         if (playerContext !== null) {
+            ctx.player = `P${playerContext.port}`;
             ctx.playerTag = playerContext.tag;
             ctx.playerPort = playerContext.port;
             ctx.playerChar = playerContext.char;
@@ -125,6 +139,7 @@ const genPlayerOpponentContext = (gameStart: GameStartType, context?: Context, i
             ctx.playerColor = playerContext.color;
         }
         if (opponentContext !== null) {
+            ctx.opponent = `P${opponentContext.port}`;
             ctx.opponentTag = opponentContext.tag;
             ctx.opponentPort = opponentContext.port;
             ctx.opponentChar = opponentContext.char;
@@ -133,4 +148,62 @@ const genPlayerOpponentContext = (gameStart: GameStartType, context?: Context, i
         }
     }
     return Object.assign(ctx, context);
+};
+
+const momentSnippets = [
+    "YYYY", // full year (2020)
+    "YY",   // short year (20)
+    "MM",   // month (01)
+    "MMM",  // short month (Jan)
+    "MMMM", // full month (January)
+    "DD",   // day (18)
+    "ddd",  // short day (Sat)
+    "dddd", // full day (Saturday)
+    "HH",   // 24-hour (18)
+    "hh",   // 12-hour (06)
+    "mm",   // minute (33)
+    "ss",   // seconds (54)
+    "a",    // lower case (am/pm)
+    "A",    // lower case (AM/PM)
+];
+
+export const generateGlobalContext = (context?: Context, date?: Moment): Context => {
+    const m = date ? date : moment();
+    const d = m.toDate();
+    const newContext = {
+        date: d.toLocaleDateString(),
+        time: d.toLocaleTimeString(),
+    };
+    for (const snip of momentSnippets) {
+        newContext[snip] = m.local().format(snip);
+    }
+    return Object.assign(newContext, context);
+};
+
+const addFilenameContext = (context?: Context, filename?: string): Context => {
+    const name = filename ? filename : exampleFilename;
+    const onlyExt = path.extname(name);
+    const fullFilename = path.basename(name);
+    const onlyFilename = path.basename(name, onlyExt);
+    const newContext = {
+        filename: onlyFilename,
+        fullFilename,
+        fileExt: onlyExt,
+    };
+    return Object.assign(newContext, context);
+};
+
+export const generateFileRenameContext = (settings?: GameStartType, metadata?: any, filename?: string): Context => {
+    const gameStart = settings ? settings : exampleGameStart;
+    let ctx = generateGameStartContext(gameStart);
+    const gameStartTime = metadata && metadata.startAt ? metadata.startAt : undefined;
+    ctx = generateGlobalContext(ctx, moment(gameStartTime));
+    ctx = addFilenameContext(ctx, filename);
+    return ctx;
+};
+
+export const parseFileRenameFormat = (format: string, settings?: GameStartType, metadata?: any, filename?: string): string => {
+    const ctx = generateFileRenameContext(settings, metadata, filename);
+    const msgFormatter = formatter(format);
+    return msgFormatter(ctx);
 };
