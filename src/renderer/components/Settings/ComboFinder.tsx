@@ -3,7 +3,7 @@ import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Checkbox, Form, Icon, Progress } from "semantic-ui-react";
 
-import { FileProcessor } from "@/lib/fileProcessor";
+import { FileProcessor, ProcessResult } from "@/lib/fileProcessor";
 import { loadFileInDolphin, notify, openComboInDolphin } from "@/lib/utils";
 import { Dispatch, iRootState } from "@/store";
 import { secondsToString } from "common/utils";
@@ -30,9 +30,13 @@ export const ComboFinder: React.FC<{}> = () => {
         dispatch.tempContainer.setPercent(0);
         dispatch.tempContainer.setComboFinderProcessing(true);
         console.log(`finding combos from the slp files in ${filesPath} ${includeSubFolders && "and all subfolders"} and saving to ${combosFilePath}`);
-        const callback = (i: number, total: number, filename: string, n: number): void => {
+        const callback = (i: number, total: number, filename: string, r: ProcessResult): void => {
             dispatch.tempContainer.setPercent(Math.round((i + 1) / total * 100));
-            dispatch.tempContainer.setComboLog(`Found ${n} combos in: ${filename}`);
+            if (findCombos && r.numCombos) {
+                dispatch.tempContainer.setComboLog(`Found ${r.numCombos} combos in: ${filename}`);
+            } else if (renameFiles && r.newFilename) {
+                dispatch.tempContainer.setComboLog(`Renamed ${filename} to ${r.newFilename}`);
+            }
         };
         const fileProcessor = new FileProcessor(filesPath, includeSubFolders);
         const result = await fileProcessor.process({
@@ -45,7 +49,10 @@ export const ComboFinder: React.FC<{}> = () => {
         const timeTakenStr = secondsToString(result.timeTaken);
         const numCombos = result.combosFound;
         console.log(`finished generating ${numCombos} combos in ${timeTakenStr}`);
-        const message = `Processed ${result.filesProcessed} files in ${timeTakenStr} and wrote ${numCombos} combos to: ${combosFilePath}`;
+        let message = `Processed ${result.filesProcessed} files in ${timeTakenStr}`;
+        if (findCombos) {
+            message += ` and wrote ${numCombos} combos to: ${combosFilePath}`;
+        }
         dispatch.tempContainer.setComboFinderProcessing(false);
         dispatch.tempContainer.setPercent(100);
         dispatch.tempContainer.setComboLog(message);

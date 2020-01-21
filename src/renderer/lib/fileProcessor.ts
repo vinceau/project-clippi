@@ -62,6 +62,12 @@ const renameFile = async (currentFilename: string, newFilename: string): Promise
     return newFullFilename;
 };
 
+export interface ProcessResult {
+    numCombos?: number;
+    newFilename?: string;
+    fileDeleted?: boolean;
+}
+
 export class FileProcessor {
     private readonly filesPath: string;
     private readonly includeSubFolders: boolean;
@@ -74,7 +80,7 @@ export class FileProcessor {
 
     public async process(
         opts: Partial<FileProcessorOptions>,
-        callback?: (i: number, total: number, filename: string, numCombos: number) => void,
+        callback?: (i: number, total: number, filename: string, data: ProcessResult) => void,
     ): Promise<ProcessOutput> {
         const before = new Date();  // Use this to track elapsed time
         const patterns = ["**/*.slp"];
@@ -87,9 +93,9 @@ export class FileProcessor {
 
         const entries = await fg(patterns, options);
         for (const [i, filename] of (entries.entries())) {
-            const numCombos = await this._processFile(filename, opts);
+            const res = await this._processFile(filename, opts);
             if (callback) {
-                callback(i, entries.length, filename, numCombos);
+                callback(i, entries.length, filename, res);
             }
         }
 
@@ -110,13 +116,14 @@ export class FileProcessor {
         };
     }
 
-    private async _processFile(filename: string, options: Partial<FileProcessorOptions>): Promise<number> {
+    private async _processFile(filename: string, options: Partial<FileProcessorOptions>): Promise<ProcessResult> {
         console.log(`Processing file: ${filename}`);
+        const res: ProcessResult = {};
 
         // Handle file renaming
         if (options.renameFiles && options.renameTemplate) {
-            const newFilename = renameFormat(filename, options.renameTemplate);
-            filename = await renameFile(filename, newFilename);
+            res.newFilename = renameFormat(filename, options.renameTemplate);
+            filename = await renameFile(filename, res.newFilename);
         }
 
         // Handle combo finding
@@ -129,11 +136,12 @@ export class FileProcessor {
             if (options.deleteZeroComboFiles && combos.length === 0) {
                 console.log(`No combos found in ${filename}. Deleting...`);
                 await deleteFile(filename);
+                res.fileDeleted = true;
             }
-            return combos.length;
+            res.numCombos = combos.length;
         }
 
-        return 0;
+        return res;
     }
 }
 
