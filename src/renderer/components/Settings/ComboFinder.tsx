@@ -32,8 +32,12 @@ export const ComboFinder: React.FC<{}> = () => {
         console.log(`finding combos from the slp files in ${filesPath} ${includeSubFolders && "and all subfolders"} and saving to ${combosFilePath}`);
         const callback = (i: number, total: number, filename: string, r: ProcessResult): void => {
             dispatch.tempContainer.setPercent(Math.round((i + 1) / total * 100));
-            if (findCombos && r.numCombos) {
-                dispatch.tempContainer.setComboLog(`Found ${r.numCombos} combos in: ${filename}`);
+            if (findCombos) {
+                if (r.fileDeleted) {
+                    dispatch.tempContainer.setComboLog(`Deleted ${filename}`);
+                } else {
+                    dispatch.tempContainer.setComboLog(`Found ${r.numCombos} combos in: ${r.newFilename || filename}`);
+                }
             } else if (renameFiles && r.newFilename) {
                 dispatch.tempContainer.setComboLog(`Renamed ${filename} to ${r.newFilename}`);
             }
