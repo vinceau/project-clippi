@@ -52,19 +52,17 @@ slippiRealtime.on("death", (_, stock, settings) => {
 });
 
 slippiRealtime.on("comboEnd", (combo, settings) => {
-    if (!comboFilter.isCombo(combo, settings)) {
-        return;
+    if (comboFilter.isCombo(combo, settings)) {
+        const ctx = generateComboContext(combo, settings);
+        eventActionManager.emitEvent(ActionEvent.COMBO_OCCURRED, generateGlobalContext(ctx)).catch(errorHandler);
     }
-    const ctx = generateComboContext(combo, settings);
-    eventActionManager.emitEvent(ActionEvent.COMBO_OCCURRED, generateGlobalContext(ctx)).catch(errorHandler);
 });
 
 slippiRealtime.on("conversion", (combo, settings) => {
-    if (!comboFilter.isCombo(combo, settings)) {
-        return;
+    if (comboFilter.isCombo(combo, settings)) {
+        const ctx = generateComboContext(combo, settings);
+        eventActionManager.emitEvent(ActionEvent.CONVERSION_OCCURRED, generateGlobalContext(ctx)).catch(errorHandler);
     }
-    const ctx = generateComboContext(combo, settings);
-    eventActionManager.emitEvent(ActionEvent.CONVERSION_OCCURRED, generateGlobalContext(ctx)).catch(errorHandler);
 });
 
 export const testRunActions = (event: string, actions: Action[]): void => {
