@@ -115,18 +115,24 @@ export const SettingsPage: React.FC<{
             <div style={{display: "flex"}}>
                 <MenuColumn>
                     <StyledMenu secondary={true} vertical={true}>
-                        <Menu.Item header>Combo Settings</Menu.Item>
+                        <Menu.Item header>Tools</Menu.Item>
                         <Menu.Item
                             name="combo-finder"
                             active={activeItem === "combo-finder"}
                             onClick={handleItemClick}
-                        ><Icon name="search" /> Combo Finder</Menu.Item>
+                        ><Icon name="fast forward" />Replay Processor</Menu.Item>
+                        <Menu.Item header>Settings</Menu.Item>
                         <Menu.Item
                             name="combo-settings"
                             active={activeItem === "combo-settings"}
                             onClick={handleItemClick}
-                        ><Icon name="filter" />Filter Options</Menu.Item>
-                        <Menu.Item header>Automation Settings</Menu.Item>
+                        ><Icon name="filter" />Combo Filter</Menu.Item>
+                        <Menu.Item
+                            name="sound-settings"
+                            active={activeItem === "sound-settings"}
+                            onClick={handleItemClick}
+                        ><Icon name="volume down" />Sounds</Menu.Item>
+                        <Menu.Item header>Connections</Menu.Item>
                         <Menu.Item
                             name="slippi-settings"
                             active={activeItem === "slippi-settings"}
@@ -142,11 +148,6 @@ export const SettingsPage: React.FC<{
                             active={activeItem === "account-settings"}
                             onClick={handleItemClick}
                         ><Icon name="twitch" />Twitch Integration</Menu.Item>
-                        <Menu.Item
-                            name="sound-settings"
-                            active={activeItem === "sound-settings"}
-                            onClick={handleItemClick}
-                        ><Icon name="volume down" />Sounds</Menu.Item>
                     </StyledMenu>
                 </MenuColumn>
                 <ContentColumn>
