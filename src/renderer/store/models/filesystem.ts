@@ -22,7 +22,7 @@ export interface FileSystemState {
     soundFiles: SoundMap;
 }
 
-const initialState: FileSystemState = {
+export const fileSystemInitialState: FileSystemState = {
     filesPath: homeDirectory,
     liveSlpFilesPath: "",
     combosFilePath: path.join(homeDirectory, "combos.json"),
@@ -30,13 +30,13 @@ const initialState: FileSystemState = {
     deleteFilesWithNoCombos: false,
     findCombos: true,
     renameFiles: false,
-    renameFormat: "{{YY}}{{MM}}{{DD}}-{{hh}}{{mm}}_{{playerShortChar}}_vs_{{opponentShortChar}}_{{shortStage}}.slp",
+    renameFormat: "{{YY}}{{MM}}{{DD}}_{{HH}}{{mm}}_{{playerShortChar}}_v_{{opponentShortChar}}_({{shortStage}}).slp",
     openCombosWhenDone: false,
     soundFiles: {},
 };
 
 export const filesystem = createModel({
-    state: initialState,
+    state: fileSystemInitialState,
     reducers: {
         setSound: (state: FileSystemState, payload: { name: string, filePath: string}): FileSystemState => {
             const newState = produce(state.soundFiles, draft => {
