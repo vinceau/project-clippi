@@ -35,7 +35,8 @@ const uniqueFilename = (name: string) => {
     const randomSuffix = Math.random().toString(36).slice(2).substring(0, 5);
     const onlyExt = path.extname(name);
     const onlyFilename = path.basename(name, onlyExt);
-    return `${onlyFilename}_${randomSuffix}${onlyExt}`;
+    const dir = path.dirname(name);
+    return path.join(dir, `${onlyFilename}_${randomSuffix}${onlyExt}`);
 };
 
 const renameFile = async (currentFilename: string, newFilename: string): Promise<string> => {
@@ -48,10 +49,12 @@ const renameFile = async (currentFilename: string, newFilename: string): Promise
     // Make sure the new filename doesn't already exist
     const directory = path.dirname(currentFilename);
     let newFullFilename = path.join(directory, newFilename);
+    // Make sure the directory exists
+    await fs.ensureDir(path.dirname(newFullFilename));
     const exists = await fs.pathExists(newFullFilename);
     if (exists) {
         // Append a random suffix to the end to avoid conflicts
-        newFullFilename = path.join(directory, uniqueFilename(newFilename));
+        newFullFilename = uniqueFilename(newFullFilename);
     }
     await fs.rename(currentFilename, newFullFilename);
     console.log(`Renamed ${currentFilename} to ${newFullFilename}`);
