@@ -10,11 +10,13 @@ import { parseFileRenameFormat } from "./context";
 import { comboFilter } from "./realtime";
 
 interface FileProcessorOptions {
-    findCombos: boolean;
-    deleteZeroComboFiles: boolean;
-    outputFile: string;
+    filesPath: string;
     renameFiles: boolean;
-    renameTemplate: string;
+    findCombos: boolean;
+    includeSubFolders?: boolean;
+    deleteZeroComboFiles?: boolean;
+    outputFile?: string;
+    renameTemplate?: string;
 }
 
 interface ProcessOutput {
@@ -69,30 +71,35 @@ export interface ProcessResult {
 }
 
 export class FileProcessor {
-    private readonly filesPath: string;
-    private readonly includeSubFolders: boolean;
     private readonly queue = new DolphinComboQueue();
+    private stopRequested: boolean = false;
 
-    public constructor(filesPath: string, includeSubFolders: boolean) {
-        this.filesPath = filesPath;
-        this.includeSubFolders = includeSubFolders;
+    public stop(): void {
+        this.stopRequested = true;
     }
 
     public async process(
-        opts: Partial<FileProcessorOptions>,
+        opts: FileProcessorOptions,
         callback?: (i: number, total: number, filename: string, data: ProcessResult) => void,
     ): Promise<ProcessOutput> {
         const before = new Date();  // Use this to track elapsed time
+        this.stopRequested = false;
+        this.queue.clear();
+
         const patterns = ["**/*.slp"];
         const options = {
             absolute: true,
-            cwd: this.filesPath,
+            cwd: opts.filesPath,
             onlyFiles: true,
-            deep: this.includeSubFolders ? undefined : 1,
+            deep: opts.includeSubFolders ? undefined : 1,
         };
 
         const entries = await fg(patterns, options);
         for (const [i, filename] of (entries.entries())) {
+            if (this.stopRequested) {
+                break;
+            }
+
             const res = await this._processFile(filename, opts);
             if (callback) {
                 callback(i, entries.length, filename, res);
@@ -162,3 +169,5 @@ export const findCombos = async (filename: string): Promise<ComboType[]> => {
     console.log(`Found ${combosList.length} combos in ${filename}`);
     return combosList;
 };
+
+export const fileProcessor = new FileProcessor();

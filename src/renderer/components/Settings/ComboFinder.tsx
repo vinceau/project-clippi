@@ -3,7 +3,7 @@ import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Checkbox, Form, Icon, Progress } from "semantic-ui-react";
 
-import { FileProcessor, ProcessResult } from "@/lib/fileProcessor";
+import { fileProcessor, ProcessResult } from "@/lib/fileProcessor";
 import { loadFileInDolphin, notify, openComboInDolphin } from "@/lib/utils";
 import { Dispatch, iRootState } from "@/store";
 import { secondsToString } from "common/utils";
@@ -42,8 +42,9 @@ export const ComboFinder: React.FC<{}> = () => {
                 dispatch.tempContainer.setComboLog(`Renamed ${filename} to ${r.newFilename}`);
             }
         };
-        const fileProcessor = new FileProcessor(filesPath, includeSubFolders);
         const result = await fileProcessor.process({
+            filesPath,
+            includeSubFolders,
             findCombos,
             outputFile: combosFilePath,
             deleteZeroComboFiles: deleteFilesWithNoCombos,
@@ -67,7 +68,7 @@ export const ComboFinder: React.FC<{}> = () => {
         }
     };
     const complete = comboFinderPercent === 100;
-    const processBtnDisabled = (!findCombos && !renameFiles) || !combosFilePath || comboFinderProcessing;
+    const processBtnDisabled = (!findCombos && !renameFiles) || !combosFilePath;
     return (
         <div>
             <Form>
@@ -127,10 +128,17 @@ export const ComboFinder: React.FC<{}> = () => {
                     <RenameFiles value={renameFormat} onChange={setRenameFormat} />
                 </ProcessSection>
                 <div style={{ display: "flex", justifyContent: "space-between" }}>
+                    { comboFinderProcessing ?
+                    <Button negative={true} type="button" onClick={() => fileProcessor.stop()}>
+                        <Icon name="stop" />
+                        Stop processing
+                    </Button>
+                    :
                     <Button primary={true} type="button" onClick={() => findAndWriteCombos().catch(console.error)} disabled={processBtnDisabled}>
                         <Icon name="fast forward" />
                         Process replays
                     </Button>
+}
                     {isWindows && <Button type="button" onClick={() => loadFileInDolphin().catch(console.error)}>
                         Load a file into Dolphin
                     </Button>}
