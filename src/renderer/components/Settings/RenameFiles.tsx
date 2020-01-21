@@ -32,7 +32,7 @@ export const RenameFiles: React.FC<{
     `;
     return (
         <div>
-            <div style={{ textAlign: "right" }}>
+            <div style={{ textAlign: "right", marginBottom: "5px" }}>
                 <a style={{ color: "#999" }} href="#" onClick={e => {
                     e.preventDefault();
                     setShowOptions(!showOptions);
