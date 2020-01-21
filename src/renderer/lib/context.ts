@@ -131,6 +131,7 @@ const genPlayerOpponentContext = (gameStart: GameStartType, context?: Context, i
         const playerContext = genPlayerContext(playerIndex, gameStart);
         const opponentContext = genPlayerContext(opponentIndex, gameStart);
         if (playerContext !== null) {
+            ctx.player = `P${playerContext.port}`;
             ctx.playerTag = playerContext.tag;
             ctx.playerPort = playerContext.port;
             ctx.playerChar = playerContext.char;
@@ -138,6 +139,7 @@ const genPlayerOpponentContext = (gameStart: GameStartType, context?: Context, i
             ctx.playerColor = playerContext.color;
         }
         if (opponentContext !== null) {
+            ctx.opponent = `P${opponentContext.port}`;
             ctx.opponentTag = opponentContext.tag;
             ctx.opponentPort = opponentContext.port;
             ctx.opponentChar = opponentContext.char;
