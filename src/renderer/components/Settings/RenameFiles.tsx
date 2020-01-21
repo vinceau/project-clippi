@@ -4,9 +4,9 @@ import insertTextAtCursor from "insert-text-at-cursor";
 import { TextArea } from "semantic-ui-react";
 import styled from "styled-components";
 
+import { fileSystemInitialState } from "@/store/models/filesystem";
 import { SlideReveal } from "../Misc/ProcessSection";
 import { ContextOptions, TemplatePreview } from "../Misc/TemplatePreview";
-import { fileSystemInitialState } from "@/store/models/filesystem";
 
 const Section = styled.div`
 padding-bottom: 5px;
