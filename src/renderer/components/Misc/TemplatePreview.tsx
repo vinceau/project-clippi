@@ -3,8 +3,8 @@ import * as React from "react";
 import { generateFileRenameContext, parseFileRenameFormat } from "@/lib/context";
 import { contextDescriptions } from "@/lib/contextDescriptions";
 import { Context } from "@vinceau/event-actions";
-import { Label } from "semantic-ui-react";
 import { Tooltip } from "react-tippy";
+import { Label } from "semantic-ui-react";
 
 export const TemplatePreview: React.FC<{
     template: string;

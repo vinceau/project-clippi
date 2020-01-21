@@ -1,11 +1,11 @@
 import * as React from "react";
 
-import styled from "styled-components";
-import insertTextAtCursor from 'insert-text-at-cursor';
+import insertTextAtCursor from "insert-text-at-cursor";
 import { TextArea } from "semantic-ui-react";
+import styled from "styled-components";
 
-import { TemplatePreview, ContextOptions } from "../Misc/TemplatePreview";
 import { SlideReveal } from "../Misc/ProcessSection";
+import { ContextOptions, TemplatePreview } from "../Misc/TemplatePreview";
 
 const Section = styled.div`
 padding-bottom: 5px;
