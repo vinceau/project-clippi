@@ -94,6 +94,7 @@ export class FileProcessor {
             deep: opts.includeSubFolders ? undefined : 1,
         };
 
+        let filesProcessed = 0;
         const entries = await fg(patterns, options);
         for (const [i, filename] of (entries.entries())) {
             if (this.stopRequested) {
@@ -104,6 +105,7 @@ export class FileProcessor {
             if (callback) {
                 callback(i, entries.length, filename, res);
             }
+            filesProcessed += 1;
         }
 
         // Write out files if we found combos
@@ -118,7 +120,7 @@ export class FileProcessor {
         const millisElapsed = Math.abs(after.getTime() - before.getTime());
         return {
             timeTaken: millisElapsed / 1000,
-            filesProcessed: entries.length,
+            filesProcessed,
             combosFound: totalCombos,
         };
     }
