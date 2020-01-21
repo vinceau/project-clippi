@@ -7,6 +7,10 @@ import { TextArea } from "semantic-ui-react";
 import { TemplatePreview, ContextOptions } from "../Misc/TemplatePreview";
 import { SlideReveal } from "../Misc/ProcessSection";
 
+const Section = styled.div`
+padding-bottom: 5px;
+`;
+
 export const RenameFiles: React.FC<{
     value: string;
     onChange: (value: string) => void;
@@ -27,9 +31,6 @@ export const RenameFiles: React.FC<{
         const alreadyHasBrackets = leftChars === "{{" && rightChars === "}}";
         insertTextAtCursor(textRef.current, alreadyHasBrackets ? text : `{{${text}}}`);
     };
-    const Section = styled.div`
-    padding-bottom: 5px;
-    `;
     return (
         <div>
             <div style={{ textAlign: "right", marginBottom: "5px" }}>
