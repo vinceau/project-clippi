@@ -106,7 +106,7 @@ const WriteFileInput = (props: WriteFileProps) => {
                 />
             </Form>
             <div style={{ padding: "5px 0" }}>To the file:</div>
-            <FileInput value={value.outputFileName || ""} onChange={onOutputFileChange} />
+            <FileInput value={value.outputFileName || ""} onChange={onOutputFileChange} saveFile={true} />
         </div>
     );
 };
