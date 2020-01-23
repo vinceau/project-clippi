@@ -39,14 +39,10 @@ slippiRealtime.on("gameEnd", (gameEnd) => {
 });
 
 slippiRealtime.on("spawn", (_, stock, settings) => {
-    console.log("spawn event");
-    console.log(stock);
     const ctx = generateStockContext(stock, settings);
     eventActionManager.emitEvent(ActionEvent.PLAYER_SPAWN, generateGlobalContext(ctx)).catch(errorHandler);
 });
 slippiRealtime.on("death", (_, stock, settings) => {
-    console.log("death event");
-    console.log(stock);
     const ctx = generateStockContext(stock, settings);
     eventActionManager.emitEvent(ActionEvent.PLAYER_DIED, generateGlobalContext(ctx)).catch(errorHandler);
 });
