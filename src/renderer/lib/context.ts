@@ -18,11 +18,11 @@ export const exampleGameStart: GameStartType = JSON.parse(gameStartString);
 const gameEndString = `{"gameEndMethod":2,"lrasInitiatorIndex":-1}`;
 export const exampleGameEnd: GameEndType = JSON.parse(gameEndString);
 
-const spawnString = `{"playerIndex":0,"opponentIndex":1,"startFrame":2688,"endFrame":null,"startPercent":0,"endPercent":null,"currentPercent":0,"count":3,"deathAnimation":null}`;
+const spawnString = `{"playerIndex":0,"opponentIndex":2,"startFrame":2688,"endFrame":null,"startPercent":0,"endPercent":null,"currentPercent":0,"count":3,"deathAnimation":null}`;
 export const exampleSpawnStockType: StockType = JSON.parse(spawnString);
-const deathString = `{"playerIndex":1,"opponentIndex":0,"startFrame":-123,"endFrame":2378,"startPercent":0,"endPercent":149.62828063964844,"currentPercent":149.62828063964844,"count":4,"deathAnimation":4}`;
+const deathString = `{"playerIndex":2,"opponentIndex":0,"startFrame":-123,"endFrame":2378,"startPercent":0,"endPercent":149.62828063964844,"currentPercent":149.62828063964844,"count":4,"deathAnimation":4}`;
 export const exampleDeathStockType: StockType = JSON.parse(deathString);
-const comboString = `{"playerIndex":0,"opponentIndex":1,"startFrame":7146,"endFrame":7739,"startPercent":0,"currentPercent":95.0999984741211,"endPercent":95.0999984741211,"moves":[{"frame":7146,"moveId":13,"hitCount":1,"damage":12},{"frame":7169,"moveId":21,"hitCount":1,"damage":8},{"frame":7222,"moveId":21,"hitCount":1,"damage":7.279998779296875},{"frame":7326,"moveId":13,"hitCount":1,"damage":11.15999984741211},{"frame":7380,"moveId":17,"hitCount":1,"damage":11.520000457763672},{"frame":7407,"moveId":8,"hitCount":1,"damage":9},{"frame":7451,"moveId":21,"hitCount":1,"damage":7.120002746582031},{"frame":7554,"moveId":16,"hitCount":1,"damage":10},{"frame":7625,"moveId":17,"hitCount":1,"damage":11.279998779296875},{"frame":7714,"moveId":17,"hitCount":1,"damage":7.739997863769531}],"didKill":true}`;
+const comboString = `{"playerIndex":0,"opponentIndex":2,"startFrame":7146,"endFrame":7739,"startPercent":0,"currentPercent":95.0999984741211,"endPercent":95.0999984741211,"moves":[{"frame":7146,"moveId":13,"hitCount":1,"damage":12},{"frame":7169,"moveId":21,"hitCount":1,"damage":8},{"frame":7222,"moveId":21,"hitCount":1,"damage":7.279998779296875},{"frame":7326,"moveId":13,"hitCount":1,"damage":11.15999984741211},{"frame":7380,"moveId":17,"hitCount":1,"damage":11.520000457763672},{"frame":7407,"moveId":8,"hitCount":1,"damage":9},{"frame":7451,"moveId":21,"hitCount":1,"damage":7.120002746582031},{"frame":7554,"moveId":16,"hitCount":1,"damage":10},{"frame":7625,"moveId":17,"hitCount":1,"damage":11.279998779296875},{"frame":7714,"moveId":17,"hitCount":1,"damage":7.739997863769531}],"didKill":true}`;
 export const exampleComboType: ComboType = JSON.parse(comboString);
 
 export const generateGameStartContext = (gameStart: GameStartType, context?: Context, index?: number): Context => {
