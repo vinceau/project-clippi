@@ -123,6 +123,7 @@ export const EventActions = (props: any) => {
             <ActionInput
               key={`${value.name}--${a.name}`}
               selectPrefix={prefix}
+              event={value.event}
               value={a}
               onChange={onInnerActionChange}
               disabledActions={disabledActions}

@@ -9,6 +9,7 @@ import {
     ComboType, GameEndMethod, GameEndType, GameStartType,
     getCharacterColorName, getCharacterName, getCharacterShortName, getStageName, getStageShortName, StockType
 } from "@vinceau/slp-realtime";
+import { ActionEvent } from "./realtime";
 
 const exampleFilename = "Game_20190323T111317.slp";
 

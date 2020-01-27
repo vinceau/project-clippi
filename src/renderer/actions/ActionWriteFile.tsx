@@ -11,6 +11,8 @@ import { FileInput } from "@/components/Misc/Misc";
 import { notify as sendNotification } from "@/lib/utils";
 import { writeFile } from "common/utils";
 import { ActionComponent } from "./types";
+import { exampleContext } from "@/lib/realtime";
+import { FormatTextArea } from "@/components/Settings/RenameFiles";
 
 interface ActionWriteFileParams {
     content: string;
@@ -31,9 +33,9 @@ const actionWriteFile: ActionTypeGenerator = (params: ActionWriteFileParams) => 
         const { content, outputFileName, append } = params;
         if (content && outputFileName) {
             try {
-                const msgFormatter = formatter(content);
-                const formattedContent = msgFormatter(ctx);
-                await writeFile(formattedContent, outputFileName, append);
+                const formattedContent = formatter(content)(ctx);
+                const formattedFileName = formatter(outputFileName)(ctx);
+                await writeFile(formattedContent, formattedFileName, append);
             } catch (err) {
                 console.error(err);
                 sendNotification(`Failed to write to file`);
@@ -55,10 +57,8 @@ interface WriteFileProps extends Record<string, any> {
 }
 
 const WriteFileInput = (props: WriteFileProps) => {
-    const { value, onChange } = props;
-    const defaultValue = value && value.content ? value.content : "";
-    const [msg, setMsg] = React.useState(defaultValue);
-    const onContentChange = () => {
+    const { value, onChange, event } = props;
+    const onContentChange = (msg: string) => {
         const newValue = produce(value, (draft) => {
             draft.content = msg;
         });
@@ -76,34 +76,38 @@ const WriteFileInput = (props: WriteFileProps) => {
         });
         onChange(newValue);
     };
+    const ctx = exampleContext(event);
     return (
-        <div style={{ maxWidth: "500px" }}>
-            <div style={{ paddingBottom: "5px" }}>
-                <InlineDropdown
-                    value={Boolean(value.append)}
-                    onChange={onAppendChange}
-                    options={[
-                        {
-                            key: "write",
-                            value: false,
-                            text: "Write",
-                        },
-                        {
-                            key: "append",
-                            value: true,
-                            text: "Append",
-                        },
-                    ]}
-                />
-                {" the following:"}
-            </div>
+        <div style={{ maxWidth: "500px" }} key={`${props.event}-file-write`}>
+            <p>{props.event}</p>
+            <p>{JSON.stringify(ctx)}</p>
             <Form>
-                <TextArea
-                    onBlur={onContentChange}
-                    value={msg}
-                    onChange={(_: any, { value }: any) => setMsg(value)}
-                    placeholder="Hmmm.. What should I write?"
-                />
+            <FormatTextArea
+                onChange={onContentChange}
+                value={value.content || ""}
+                context={ctx}
+                placeholder="Hmmm.. What should I write?"
+            >
+                <div style={{ paddingBottom: "5px" }}>
+                    <InlineDropdown
+                        value={Boolean(value.append)}
+                        onChange={onAppendChange}
+                        options={[
+                            {
+                                key: "write",
+                                value: false,
+                                text: "Write",
+                            },
+                            {
+                                key: "append",
+                                value: true,
+                                text: "Append",
+                            },
+                        ]}
+                    />
+                    {" the following:"}
+                </div>
+            </FormatTextArea>
             </Form>
             <div style={{ padding: "5px 0" }}>To the file:</div>
             <FileInput value={value.outputFileName || ""} onChange={onOutputFileChange} saveFile={true} />

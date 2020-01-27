@@ -30,7 +30,8 @@ export const ContextOptions: React.FC<{
             props.onLabelClick(name);
         }
     };
-    const descriptions = allDescriptions.map(cat => (
+    const usedDescriptions = allDescriptions.filter(cat => cat.descriptions.map(d => d.contextName).some(x => keys.includes(x)));
+    const descriptions = usedDescriptions.map(cat => (
         <div key={cat.category}>
         <b style={{marginRight: "5px"}}>{cat.category}</b>
         {cat.descriptions.filter(d => keys.includes(d.contextName)).map(d => (
@@ -48,7 +49,7 @@ export const ContextOptions: React.FC<{
         </div>
     ));
     return (
-        <div>
+        <div style={{padding: "5px 0"}}>
         {descriptions}
         </div>
     );

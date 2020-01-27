@@ -39,12 +39,16 @@ slippiRealtime.on("gameEnd", (gameEnd) => {
 });
 
 slippiRealtime.on("spawn", (_, stock, settings) => {
+    // console.log("spawn event");
+    // console.log(stock);
     const ctx = generateStockContext(stock, settings);
     eventActionManager.emitEvent(ActionEvent.PLAYER_SPAWN, generateGlobalContext(ctx)).catch(errorHandler);
 });
 slippiRealtime.on("death", (_, stock, settings) => {
-    const ctx = generateStockContext(stock, settings);
-    eventActionManager.emitEvent(ActionEvent.PLAYER_DIED, generateGlobalContext(ctx)).catch(errorHandler);
+    console.log("death event");
+    console.log(stock);
+    // const ctx = generateStockContext(stock, settings);
+    // eventActionManager.emitEvent(ActionEvent.PLAYER_DIED, generateGlobalContext(ctx)).catch(errorHandler);
 });
 
 slippiRealtime.on("comboEnd", (combo, settings) => {
@@ -61,8 +65,7 @@ slippiRealtime.on("conversion", (combo, settings) => {
     }
 });
 
-export const testRunActions = (event: string, actions: Action[]): void => {
-    console.log(`testing ${event} event`);
+export const exampleContext = (event: ActionEvent): Context => {
     let ctx: Context = {};
     switch (event) {
         case ActionEvent.GAME_START:
@@ -82,6 +85,12 @@ export const testRunActions = (event: string, actions: Action[]): void => {
             ctx = generateComboContext(exampleComboType, exampleGameStart);
             break;
     }
+    return ctx;
+};
+
+export const testRunActions = (event: ActionEvent, actions: Action[]): void => {
+    console.log(`testing ${event} event`);
+    const ctx = exampleContext(event);
     eventActionManager.execute(actions, generateGlobalContext(ctx)).catch(console.error);
 };
 
