@@ -11,7 +11,7 @@ import { ActionEvent } from "@/lib/realtime";
 import { getFilePath, getFolderPath, isDevelopment } from "@/lib/utils";
 import { shell } from "electron";
 import { Button, Icon, Input } from "semantic-ui-react";
-import { notify } from "../../lib/utils";
+import { notify, openFileOrParentFolder } from "../../lib/utils";
 
 export const DevTools = () => {
     const handleClick = () => {
@@ -122,18 +122,12 @@ export const FileInput: React.FC<FileInputProps> = props => {
             onChange(p);
         }
     };
-    const maybeOpenFile = (fileName: string) => {
-        if (!shell.showItemInFolder(fileName)) {
-            const parentFolder = path.dirname(fileName);
-            shell.openItem(parentFolder);
-        }
-    };
     const actionLabel = saveFile ? "Save as" : "Choose";
     return (
         <Input
             style={{ width: "100%" }}
             label={
-                <Button onClick={() => maybeOpenFile(filesPath)}>
+                <Button onClick={() => openFileOrParentFolder(filesPath)}>
                     <NoMarginIcon name="folder open outline" />
                 </Button>
             }
