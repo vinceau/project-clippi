@@ -33,7 +33,8 @@ const actionWriteFile: ActionTypeGenerator = (params: ActionWriteFileParams) => 
             try {
                 const msgFormatter = formatter(content);
                 const formattedContent = msgFormatter(ctx);
-                await writeFile(formattedContent, outputFileName, append);
+                const formattedFilename = formatter(outputFileName)(ctx);
+                await writeFile(formattedContent, formattedFilename, append);
             } catch (err) {
                 console.error(err);
                 sendNotification(`Failed to write to file`);
