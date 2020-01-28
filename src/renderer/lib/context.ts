@@ -75,6 +75,10 @@ export const generateStockContext = (stock: StockType, settings: GameStartType, 
     console.log(stock);
     const ctx: Context = generateGameStartContext(settings, {}, stock.playerIndex);
     ctx.count = stock.count;
+    ctx.startFrame = stock.startFrame;
+    ctx.endFrame = stock.endFrame;
+    ctx.startPercent = stock.startPercent;
+    ctx.endPercent = stock.endPercent;
     return Object.assign(ctx, context);
 };
 
