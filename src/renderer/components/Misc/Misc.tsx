@@ -1,4 +1,3 @@
-import * as path from "path";
 import * as React from "react";
 
 import styled, { css } from "styled-components";
@@ -9,7 +8,6 @@ import { eventActionManager } from "@/actions";
 import { connectToOBS, setScene } from "@/lib/obs";
 import { ActionEvent } from "@/lib/realtime";
 import { getFilePath, getFolderPath, isDevelopment } from "@/lib/utils";
-import { shell } from "electron";
 import { Button, Icon, Input } from "semantic-ui-react";
 import { notify, openFileOrParentFolder } from "../../lib/utils";
 
