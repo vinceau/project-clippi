@@ -34,7 +34,7 @@ If you found Project Clippi useful and would like to give back here's how you ca
 
 ### Donations
 
-While I've spent the past several months working on this project from the comfort of my occasionally smokey room, firefighters have been risking their lives for the past several months defending my country. Australia is currently battling the worst bushfires it has ever seen. Almost 15 million acres have been burned, and almost half a billion animals have died or lost their habitat. The air quality has been reaching more than 11 times hazardous levels, at least 25 people have died, hundreds of thousands of people have been displaced, and that's not the worst of it. **The fire is still burning uncontrollably. Right. Now.**
+While spending the past several months working on this project from the comfort of my room, firefighters have been risking their lives for the past several months defending my country. Australia is currently battling the worst bushfires it has ever seen. Almost 15 million acres have been burned, and almost half a billion animals have died or lost their habitat. The air quality has been reaching more than 11 times hazardous levels, at least 25 people have died, hundreds of thousands of people have been displaced, and that's not the worst of it. **The fire is still burning uncontrollably. Right. Now.**
 
 If you are financially able, please donate to any of the following bushfire relief organisations. **For all donations of $5 or more, I will highly prioritise your feedback and requested features. For all donations of $10 or more, I will also include your name (and/or gamer tag) in a list of Project Clippi supporters to be included in the main page as well as in the app itself.**
 
@@ -48,26 +48,6 @@ After donating, leave your feedback using [the feedback form](https://docs.googl
 
 
 ## Development
-
-### Prerequisites
-
-You'll need the following tools installed:
-
-* [Git](https://git-scm.com/)
-* [Node.JS](https://nodejs.org/en/) (version `10.x`)
-* [Yarn](https://yarnpkg.com/en/docs/install)
-
-### Setup
-
-Clone the repo and install dependencies:
-
-```bash
-git clone https://github.com/vinceau/project-clippi
-cd project-clippi
-yarn install
-```
-
-### Build
 
 Start the development server using:
 
@@ -83,25 +63,7 @@ To create a binary package:
 yarn run dist
 ```
 
-### Twitch Authentication
-
-To get Twitch authentication working you'll need to supply your own [Twitch Client ID](https://dev.twitch.tv/docs/authentication). If you don't, you'll get a `{"status":400,"message":"missing client id"}` error when you try to connect to Twitch.
-
-Set the following environmental variables:
-
-#### Windows
-
-```cmd
-set ELECTRON_WEBPACK_APP_TWITCH_CLIENT_ID=YourTwitchClientID
-set ELECTRON_WEBPACK_APP_TWITCH_REDIRECT_URI=http://localhost:3000/auth/twitch/callback
-```
-
-#### Mac and Linux
-
-```bash
-export ELECTRON_WEBPACK_APP_TWITCH_CLIENT_ID="YourTwitchClientID";
-export ELECTRON_WEBPACK_APP_TWITCH_REDIRECT_URI="http://localhost:3000/auth/twitch/callback";
-```
+For more detailed instructions on development and building the project from source, check out the [Build Process](CONTRIBUTING.md#build-process) section.
 
 ## Acknowledgements
 
