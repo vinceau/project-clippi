@@ -13,9 +13,9 @@
 
 Download Project Slippi for your operating system using the links below or check out [the releases page](https://github.com/vinceau/project-clippi/releases) for more information.
 
-* [Project Clippi for Windows](https://github.com/vinceau/project-clippi/releases/download/v1.0.0/Project-Clippi-1.0.0.exe)
-* [Project Clippi for MacOS](https://github.com/vinceau/project-clippi/releases/download/v1.0.0/Project-Clippi-1.0.0-mac.zip)
-* [Project Clippi for Linux](https://github.com/vinceau/project-clippi/releases/download/v1.0.0/Project-Clippi-1.0.0.AppImage)
+* [Project Clippi for Windows](https://github.com/vinceau/project-clippi/releases/download/v1.1.0/Project-Clippi-1.1.0.exe)
+* [Project Clippi for MacOS](https://github.com/vinceau/project-clippi/releases/download/v1.1.0/Project-Clippi-1.1.0-mac.zip)
+* [Project Clippi for Linux](https://github.com/vinceau/project-clippi/releases/download/v1.1.0/Project-Clippi-1.1.0.AppImage)
 
 ## Getting Started
 
