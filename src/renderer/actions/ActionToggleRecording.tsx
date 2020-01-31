@@ -2,14 +2,11 @@ import * as React from "react";
 
 import { ActionTypeGenerator, Context } from "@vinceau/event-actions";
 import { produce } from "immer";
-import { useSelector } from "react-redux";
-import { Button } from "semantic-ui-react";
 
 import { DelayInput, InlineDropdown, NotifyInput } from "@/components/Misc/InlineInputs";
 import { CustomIcon } from "@/components/Misc/Misc";
-import { connectToOBSAndNotify, getAllSceneItems, OBSRecordingAction, setRecordingState } from "@/lib/obs";
+import { OBSRecordingAction, setRecordingState } from "@/lib/obs";
 import { capitalize, delay as waitMillis, notify, parseSecondsDelayValue } from "@/lib/utils";
-import { iRootState } from "@/store";
 import { ActionComponent } from "./types";
 
 import obsIcon from "@/styles/images/obs.svg";
