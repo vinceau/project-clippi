@@ -100,3 +100,7 @@ export const parseSecondsDelayValue = (defaultSeconds: number, delaySeconds?: st
     }
     return seconds;
 };
+
+export const capitalize = (s: string) => {
+    return s.charAt(0).toUpperCase() + s.slice(1);
+};

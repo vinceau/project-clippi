@@ -1,0 +1,129 @@
+import * as React from "react";
+
+import { ActionTypeGenerator, Context } from "@vinceau/event-actions";
+import { produce } from "immer";
+import { useSelector } from "react-redux";
+import { Button } from "semantic-ui-react";
+
+import { DelayInput, InlineDropdown } from "@/components/Misc/InlineInputs";
+import { CustomIcon } from "@/components/Misc/Misc";
+import { connectToOBSAndNotify, getAllSceneItems, setRecordingState, OBSRecordingAction } from "@/lib/obs";
+import { delay as waitMillis, notify, parseSecondsDelayValue, capitalize } from "@/lib/utils";
+import { iRootState } from "@/store";
+import { ActionComponent } from "./types";
+
+import obsIcon from "@/styles/images/obs.svg";
+
+const DEFAULT_DELAY_SECONDS = 10;
+
+const obsRecordingLabel = (action: OBSRecordingAction): string => {
+    switch (action) {
+        case OBSRecordingAction.TOGGLE:
+            return "toggle";
+        case OBSRecordingAction.START:
+            return "start";
+        case OBSRecordingAction.STOP:
+            return "stop";
+        case OBSRecordingAction.PAUSE:
+            return "pause";
+        case OBSRecordingAction.UNPAUSE:
+            return "unpause";
+        default:
+            console.error(`Unknown OBS action: ${action}`);
+            return "";
+    }
+};
+
+const recordActions = [
+    OBSRecordingAction.TOGGLE,
+    OBSRecordingAction.START,
+    OBSRecordingAction.STOP,
+    OBSRecordingAction.PAUSE,
+    OBSRecordingAction.UNPAUSE,
+].map(a => ({
+    key: obsRecordingLabel(a),
+    value: a,
+    text: capitalize(obsRecordingLabel(a)) + " ",
+}));
+
+interface ActionToggleRecordingParams {
+    recordAction: OBSRecordingAction;
+    notify?: boolean;
+    delaySeconds?: string;
+}
+
+const defaultParams = (): ActionToggleRecordingParams => {
+    return {
+        recordAction: OBSRecordingAction.TOGGLE,
+        delaySeconds: DEFAULT_DELAY_SECONDS.toString(),
+        notify: false,
+    };
+};
+
+const actionToggleRecording: ActionTypeGenerator = (params: ActionToggleRecordingParams) => {
+    return async (ctx: Context): Promise<Context> => {
+        try {
+            const seconds = parseSecondsDelayValue(DEFAULT_DELAY_SECONDS, params.delaySeconds);
+            if (seconds > 0) {
+                await waitMillis(seconds * 1000);
+            }
+            await setRecordingState(params.recordAction);
+        } catch (err) {
+            console.error(err);
+            notify(`Could not ${obsRecordingLabel(params.recordAction)} OBS recording.`);
+        }
+        return ctx;
+    };
+};
+
+const ActionIcon = () => {
+    return (
+        <CustomIcon size={20} image={obsIcon} color="black" />
+    );
+};
+
+const RecordingNameInput = (props: { value: ActionToggleRecordingParams, onChange: any }) => {
+    const { value, onChange } = props;
+
+    const onRecordingChange = (rec: OBSRecordingAction) => {
+        const newValue = produce(value, (draft) => {
+            draft.recordAction = rec;
+        });
+        onChange(newValue);
+    };
+    const onNotifyChange = (notify: boolean) => {
+        const newValue = produce(value, (draft) => {
+            draft.notify = notify;
+        });
+        onChange(newValue);
+    };
+
+    const onDelayChange = (delay: string) => {
+        const newValue = produce(value, (draft: ActionToggleRecordingParams) => {
+            draft.delaySeconds = delay;
+        });
+        onChange(newValue);
+    };
+    return (
+        <div>
+            <div>
+                <InlineDropdown
+                    value={value.recordAction}
+                    onChange={onRecordingChange}
+                    options={recordActions}
+                />
+                {" the OBS recording after a "}
+                <DelayInput value={value.delaySeconds} onChange={onDelayChange} placeholder={`${DEFAULT_DELAY_SECONDS}`} />
+                {" second delay"}
+            </div>
+        </div>
+    );
+};
+
+export const ActionToggleRecording: ActionComponent = {
+    label: "toggle OBS recording",
+    action: actionToggleRecording,
+    Icon: ActionIcon,
+    Component: RecordingNameInput,
+    defaultParams,
+};

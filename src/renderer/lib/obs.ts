@@ -3,6 +3,14 @@ import OBSWebSocket from "obs-websocket-js";
 import { dispatcher, store } from "@/store";
 import { notify } from "./utils";
 
+export enum OBSRecordingAction {
+    TOGGLE = "StartStopRecording",
+    START = "StartRecording",
+    STOP = "StopRecording",
+    PAUSE = "PauseRecording",
+    UNPAUSE = "ResumeRecording",
+}
+
 const obs = new OBSWebSocket();
 
 const setupListeners = () => {
@@ -60,6 +68,10 @@ export const setScene = async (scene: string): Promise<void> => {
 
 export const saveReplayBuffer = async (): Promise<void> => {
     await obs.send("SaveReplayBuffer");
+};
+
+export const setRecordingState = async (rec: OBSRecordingAction): Promise<void> => {
+    await obs.send(rec);
 };
 
 export const setSourceItemVisibility = async (sourceName: string, visible?: boolean): Promise<void> => {
