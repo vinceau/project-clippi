@@ -31,6 +31,24 @@ const obsRecordingLabel = (action: OBSRecordingAction): string => {
     }
 };
 
+const pastObsRecordingLabel = (action: OBSRecordingAction): string => {
+    switch (action) {
+        case OBSRecordingAction.TOGGLE:
+            return "toggled";
+        case OBSRecordingAction.START:
+            return "started";
+        case OBSRecordingAction.STOP:
+            return "stopped";
+        case OBSRecordingAction.PAUSE:
+            return "paused";
+        case OBSRecordingAction.UNPAUSE:
+            return "unpaused";
+        default:
+            console.error(`Unknown OBS action: ${action}`);
+            return "";
+    }
+};
+
 const recordActions = [
     OBSRecordingAction.TOGGLE,
     OBSRecordingAction.START,
@@ -65,9 +83,12 @@ const actionToggleRecording: ActionTypeGenerator = (params: ActionToggleRecordin
                 await waitMillis(seconds * 1000);
             }
             await setRecordingState(params.recordAction);
+            if (params.notify) {
+                notify(`${capitalize(pastObsRecordingLabel(params.recordAction))} OBS recording`);
+            }
         } catch (err) {
             console.error(err);
-            notify(`Could not ${obsRecordingLabel(params.recordAction)} OBS recording.`);
+            notify(`Could not ${obsRecordingLabel(params.recordAction)} OBS recording`);
         }
         return ctx;
     };
