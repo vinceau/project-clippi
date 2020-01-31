@@ -50,28 +50,28 @@ export const InlineInput = (props: any) => {
 };
 
 export const BufferedInput = (props: any) => {
-    const { value, onChange, ...rest } = props;
-    const [newValue, setNewValue] = React.useState<string>(value || "");
-    const submitValue = () => {
-        onChange(newValue);
-    };
-    const onKeyDown = (event: any) => {
-        if (event.keyCode === 13) {
-            submitValue();
-        }
-    };
-    const newOnChange = (_: any, data: any) => {
-        setNewValue(data.value);
-    };
-    return (
-        <Input
-            value={newValue}
-            onChange={newOnChange}
-            onKeyDown={onKeyDown}
-            onBlur={submitValue}
-            {...rest}
-        />
-    );
+  const { value, onChange, ...rest } = props;
+  const [newValue, setNewValue] = React.useState<string>(value || "");
+  const submitValue = () => {
+    onChange(newValue);
+  };
+  const onKeyDown = (event: any) => {
+    if (event.keyCode === 13) {
+      submitValue();
+    }
+  };
+  const newOnChange = (_: any, data: any) => {
+    setNewValue(data.value);
+  };
+  return (
+    <Input
+      value={newValue}
+      onChange={newOnChange}
+      onKeyDown={onKeyDown}
+      onBlur={submitValue}
+      {...rest}
+    />
+  );
 };
 
 export const SimpleInput = styled.input`
@@ -83,18 +83,44 @@ export const SimpleInput = styled.input`
 `;
 
 export const DelayInput: React.FC<{
-    value?: string;
-    placeholder?: string;
-    onChange: (delay: string) => void;
+  value?: string;
+  placeholder?: string;
+  onChange: (delay: string) => void;
 }> = props => {
-    const [delayAmount, setDelayAmount] = React.useState(props.value || "0");
-    return (
-        <SimpleInput
-            style={{width: "100px"}}
-            value={delayAmount}
-            onBlur={() => props.onChange(delayAmount)}
-            onChange={(e) => setDelayAmount(e.target.value)}
-            placeholder={props.placeholder || "2500"}
-        />
-    );
+  const [delayAmount, setDelayAmount] = React.useState(props.value || "0");
+  return (
+    <SimpleInput
+      style={{ width: "100px" }}
+      value={delayAmount}
+      onBlur={() => props.onChange(delayAmount)}
+      onChange={(e) => setDelayAmount(e.target.value)}
+      placeholder={props.placeholder || "2500"}
+    />
+  );
+};
+
+export const NotifyInput: React.FC<{
+  value?: boolean;
+  onChange: (notify: boolean) => void;
+  options?: any;
+}> = (props) => {
+  const options = props.options ? props.options : [
+    {
+      key: "notify-me",
+      value: true,
+      text: "notify",
+    },
+    {
+      key: "dont-notify-me",
+      value: false,
+      text: "don't notify",
+    },
+  ];
+  return (
+    <InlineDropdown
+      value={Boolean(props.value)}
+      onChange={props.onChange}
+      options={options}
+    />
+  );
 };

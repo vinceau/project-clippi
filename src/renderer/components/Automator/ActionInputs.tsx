@@ -56,9 +56,10 @@ const ActionComponentBlock = (props: any) => {
 export const ActionInput = (props: any) => {
     const { value, onChange, onRemove, selectPrefix, disabledActions } = props;
     const onActionChange = (action: string) => {
+        const params = actionComponents[action].defaultParams;
         const newValue = produce(value, (draft: ActionDefinition) => {
             draft.name = action;
-            draft.args = {};
+            draft.args = params ? params() : {};
         });
         onChange(newValue);
     };

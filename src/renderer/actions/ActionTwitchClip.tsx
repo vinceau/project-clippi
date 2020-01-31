@@ -4,13 +4,13 @@ import { ActionTypeGenerator, Context } from "@vinceau/event-actions";
 import { produce } from "immer";
 import { Icon } from "semantic-ui-react";
 
-import { DelayInput, InlineDropdown, SimpleInput } from "@/components/Misc/InlineInputs";
-import { delay as waitMillis, notify as sendNotification } from "@/lib/utils";
+import { DelayInput, NotifyInput, SimpleInput } from "@/components/Misc/InlineInputs";
+import { delay as waitMillis, notify as sendNotification, parseSecondsDelayValue } from "@/lib/utils";
 import { createTwitchClip } from "common/twitch";
 import { dispatcher, store } from "../store";
 import { ActionComponent } from "./types";
 
-const DEFAULT_DELAY_SECONDS = 20;
+const DEFAULT_DELAY_SECONDS = 10;
 
 interface ActionCreateTwitchClipParams {
     delaySeconds?: string;
@@ -23,24 +23,16 @@ const defaultParams = (): ActionCreateTwitchClipParams => {
     const channel = user ? user.name : "";
     return {
         delaySeconds: DEFAULT_DELAY_SECONDS.toString(),
-        notify: true,
+        notify: false,
         channel,
     };
-};
-
-const parseDelayValue = (delay?: string): number => {
-    let seconds = parseInt(delay || DEFAULT_DELAY_SECONDS.toString(), 10);
-    if (isNaN(seconds)) {
-        seconds = DEFAULT_DELAY_SECONDS;
-    }
-    return seconds;
 };
 
 const actionCreateClip: ActionTypeGenerator = (params: ActionCreateTwitchClipParams) => {
     return async (ctx: Context): Promise<Context> => {
         const token = store.getState().twitch.authToken;
         try {
-            const seconds = parseDelayValue(params.delaySeconds);
+            const seconds = parseSecondsDelayValue(DEFAULT_DELAY_SECONDS, params.delaySeconds);
             if (seconds > 0) {
                 await waitMillis(seconds * 1000);
             }
@@ -109,24 +101,9 @@ const TwitchClipInput = (props: TwitchClipInputProps) => {
                     onBlur={onChannelChange}
                 />
                 {" channel after a "}
-                <DelayInput value={value.delaySeconds} onChange={onDelayChange} placeholder="20" />
+                <DelayInput value={value.delaySeconds} onChange={onDelayChange} placeholder={`${DEFAULT_DELAY_SECONDS}`} />
                 {" second delay and "}
-                <InlineDropdown
-                    value={Boolean(value.notify)}
-                    onChange={onNotifyChange}
-                    options={[
-                        {
-                            key: "notify-me",
-                            value: true,
-                            text: "notify",
-                        },
-                        {
-                            key: "dont-notify-me",
-                            value: false,
-                            text: "don't notify",
-                        },
-                    ]}
-                />
+                <NotifyInput value={value.notify} onChange={onNotifyChange} />
                 {" me about it"}
             </div>
         </div>

@@ -3,8 +3,8 @@ import * as React from "react";
 import { ActionTypeGenerator, Context } from "@vinceau/event-actions";
 import { produce } from "immer";
 
-import { DelayInput, InlineDropdown } from "@/components/Misc/InlineInputs";
-import { delay as waitMillis, notify as sendNotification } from "@/lib/utils";
+import { DelayInput, NotifyInput } from "@/components/Misc/InlineInputs";
+import { delay as waitMillis, notify as sendNotification, parseSecondsDelayValue } from "@/lib/utils";
 import { ActionComponent } from "./types";
 
 import { CustomIcon } from "@/components/Misc/Misc";
@@ -22,22 +22,14 @@ interface ActionSaveReplayBufferParams {
 const defaultParams = (): ActionSaveReplayBufferParams => {
     return {
         delaySeconds: DEFAULT_DELAY_SECONDS.toString(),
-        notify: true,
+        notify: false,
     };
-};
-
-const parseDelayValue = (delay?: string): number => {
-    let seconds = parseInt(delay || DEFAULT_DELAY_SECONDS.toString(), 10);
-    if (isNaN(seconds)) {
-        seconds = DEFAULT_DELAY_SECONDS;
-    }
-    return seconds;
 };
 
 const actionSaveBuffer: ActionTypeGenerator = (params: ActionSaveReplayBufferParams) => {
     return async (ctx: Context): Promise<Context> => {
         try {
-            const seconds = parseDelayValue(params.delaySeconds);
+            const seconds = parseSecondsDelayValue(DEFAULT_DELAY_SECONDS, params.delaySeconds);
             if (seconds > 0) {
                 await waitMillis(seconds * 1000);
             }
@@ -47,7 +39,7 @@ const actionSaveBuffer: ActionTypeGenerator = (params: ActionSaveReplayBufferPar
             }
         } catch (err) {
             console.error(err);
-            sendNotification("Failed to save replay buffer. Is replay buffer on?");
+            sendNotification("Failed to save Replay Buffer. Is Replay Buffer on and a Save Replay Buffer hotkey assigned?");
         }
         return ctx;
     };
@@ -84,22 +76,7 @@ const ReplayBufferInput = (props: ReplayBufferInputProps) => {
                 {"Save the OBS replay buffer after a "}
                 <DelayInput value={value.delaySeconds} onChange={onDelayChange} placeholder={`${DEFAULT_DELAY_SECONDS}`} />
                 {" second delay and "}
-                <InlineDropdown
-                    value={Boolean(value.notify)}
-                    onChange={onNotifyChange}
-                    options={[
-                        {
-                            key: "notify-me",
-                            value: true,
-                            text: "notify",
-                        },
-                        {
-                            key: "dont-notify-me",
-                            value: false,
-                            text: "don't notify",
-                        },
-                    ]}
-                />
+                <NotifyInput value={value.notify} onChange={onNotifyChange} />
                 {" me about it"}
             </div>
         </div>
