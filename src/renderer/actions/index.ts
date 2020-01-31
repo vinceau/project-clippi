@@ -5,11 +5,11 @@ import { ActionChangeScene } from "./ActionChangeScene";
 import { ActionNotify } from "./ActionNotify";
 import { ActionPlaySound } from "./ActionPlaySound";
 import { ActionSaveReplayBuffer } from "./ActionSaveReplayBuffer";
+import { ActionToggleRecording } from "./ActionToggleRecording";
 import { ActionToggleSource } from "./ActionToggleSource";
 import { ActionTwitchClip } from "./ActionTwitchClip";
 import { ActionWriteFile } from "./ActionWriteFile";
 import { ActionComponent } from "./types";
-import { ActionToggleRecording } from "./ActionToggleRecording";
 
 export enum Action {
     CREATE_TWITCH_CLIP = "twitch-clip",

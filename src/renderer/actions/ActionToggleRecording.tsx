@@ -7,8 +7,8 @@ import { Button } from "semantic-ui-react";
 
 import { DelayInput, InlineDropdown, NotifyInput } from "@/components/Misc/InlineInputs";
 import { CustomIcon } from "@/components/Misc/Misc";
-import { connectToOBSAndNotify, getAllSceneItems, setRecordingState, OBSRecordingAction } from "@/lib/obs";
-import { delay as waitMillis, notify, parseSecondsDelayValue, capitalize } from "@/lib/utils";
+import { connectToOBSAndNotify, getAllSceneItems, OBSRecordingAction, setRecordingState } from "@/lib/obs";
+import { capitalize, delay as waitMillis, notify, parseSecondsDelayValue } from "@/lib/utils";
 import { iRootState } from "@/store";
 import { ActionComponent } from "./types";
 
