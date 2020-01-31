@@ -39,9 +39,9 @@ export const actionComponents: { [name: string]: ActionComponent} = {
     [Action.CREATE_TWITCH_CLIP]: ActionTwitchClip,
     [Action.NOTIFY]: ActionNotify,
     [Action.PLAY_SOUND]: ActionPlaySound,
+    [Action.WRITE_FILE]: ActionWriteFile,
     [Action.CHANGE_SCENE]: ActionChangeScene,
     [Action.TOGGLE_SOURCE]: ActionToggleSource,
-    [Action.WRITE_FILE]: ActionWriteFile,
     [Action.SAVE_REPLAY_BUFFER]: ActionSaveReplayBuffer,
 };
 

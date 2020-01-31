@@ -107,7 +107,7 @@ const ReplayBufferInput = (props: ReplayBufferInputProps) => {
 };
 
 export const ActionSaveReplayBuffer: ActionComponent = {
-    label: "save the OBS replay buffer",
+    label: "save OBS replay buffer",
     action: actionSaveBuffer,
     Icon: ActionIcon,
     Component: ReplayBufferInput,
