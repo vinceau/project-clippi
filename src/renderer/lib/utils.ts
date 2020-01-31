@@ -92,3 +92,11 @@ export const openFileOrParentFolder = (fileName: string) => {
         opened = shell.openItem(parentFolder);
     }
 };
+
+export const parseSecondsDelayValue = (defaultSeconds: number, delaySeconds?: string): number => {
+    let seconds = parseInt(delaySeconds || defaultSeconds.toString(), 10);
+    if (isNaN(seconds)) {
+        seconds = defaultSeconds;
+    }
+    return seconds;
+};

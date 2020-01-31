@@ -4,7 +4,7 @@ import { ActionTypeGenerator, Context } from "@vinceau/event-actions";
 import { produce } from "immer";
 
 import { DelayInput, InlineDropdown } from "@/components/Misc/InlineInputs";
-import { delay as waitMillis, notify as sendNotification } from "@/lib/utils";
+import { delay as waitMillis, notify as sendNotification, parseSecondsDelayValue } from "@/lib/utils";
 import { ActionComponent } from "./types";
 
 import { CustomIcon } from "@/components/Misc/Misc";
@@ -26,18 +26,10 @@ const defaultParams = (): ActionSaveReplayBufferParams => {
     };
 };
 
-const parseDelayValue = (delay?: string): number => {
-    let seconds = parseInt(delay || DEFAULT_DELAY_SECONDS.toString(), 10);
-    if (isNaN(seconds)) {
-        seconds = DEFAULT_DELAY_SECONDS;
-    }
-    return seconds;
-};
-
 const actionSaveBuffer: ActionTypeGenerator = (params: ActionSaveReplayBufferParams) => {
     return async (ctx: Context): Promise<Context> => {
         try {
-            const seconds = parseDelayValue(params.delaySeconds);
+            const seconds = parseSecondsDelayValue(DEFAULT_DELAY_SECONDS, params.delaySeconds);
             if (seconds > 0) {
                 await waitMillis(seconds * 1000);
             }
