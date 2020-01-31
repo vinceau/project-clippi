@@ -82,7 +82,7 @@ const ReplayBufferInput = (props: ReplayBufferInputProps) => {
         <div>
             <div>
                 {"Save the OBS replay buffer after a "}
-                <DelayInput value={value.delaySeconds} onChange={onDelayChange} placeholder="20" />
+                <DelayInput value={value.delaySeconds} onChange={onDelayChange} placeholder={`${DEFAULT_DELAY_SECONDS}`} />
                 {" second delay and "}
                 <InlineDropdown
                     value={Boolean(value.notify)}
