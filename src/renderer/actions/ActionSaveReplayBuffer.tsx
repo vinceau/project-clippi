@@ -22,7 +22,7 @@ interface ActionSaveReplayBufferParams {
 const defaultParams = (): ActionSaveReplayBufferParams => {
     return {
         delaySeconds: DEFAULT_DELAY_SECONDS.toString(),
-        notify: true,
+        notify: false,
     };
 };
 

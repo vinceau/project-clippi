@@ -23,7 +23,7 @@ const defaultParams = (): ActionCreateTwitchClipParams => {
     const channel = user ? user.name : "";
     return {
         delaySeconds: DEFAULT_DELAY_SECONDS.toString(),
-        notify: true,
+        notify: false,
         channel,
     };
 };
