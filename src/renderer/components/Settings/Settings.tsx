@@ -1,5 +1,7 @@
 import * as React from "react";
 
+import { version } from "../../../../package.json";
+
 import {
     Route,
     Switch,
@@ -105,8 +107,17 @@ export const SettingsPage: React.FC<{
         top: 20px;
         right: 40px;
     `;
+    const VersionSpan = styled.span`
+        opacity: 0.8;
+        padding: 10px;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        text-align: right;
+    `;
     return (
         <SettingsContainer>
+            <VersionSpan>Version {version}</VersionSpan>
             <CloseButton>
                 <Labelled onClick={props.onClose} title="Close">
                     <Icon name="close" />
