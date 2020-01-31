@@ -5,7 +5,7 @@ import { produce } from "immer";
 import { useSelector } from "react-redux";
 import { Button } from "semantic-ui-react";
 
-import { DelayInput, InlineDropdown } from "@/components/Misc/InlineInputs";
+import { DelayInput, InlineDropdown, NotifyInput } from "@/components/Misc/InlineInputs";
 import { CustomIcon } from "@/components/Misc/Misc";
 import { connectToOBSAndNotify, getAllSceneItems, setRecordingState, OBSRecordingAction } from "@/lib/obs";
 import { delay as waitMillis, notify, parseSecondsDelayValue, capitalize } from "@/lib/utils";
@@ -114,7 +114,9 @@ const RecordingNameInput = (props: { value: ActionToggleRecordingParams, onChang
                 />
                 {" the OBS recording after a "}
                 <DelayInput value={value.delaySeconds} onChange={onDelayChange} placeholder={`${DEFAULT_DELAY_SECONDS}`} />
-                {" second delay"}
+                {" second delay and "}
+                <NotifyInput value={value.notify} onChange={onNotifyChange} />
+                {" me about it"}
             </div>
         </div>
     );

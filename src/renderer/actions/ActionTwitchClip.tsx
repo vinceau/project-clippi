@@ -4,7 +4,7 @@ import { ActionTypeGenerator, Context } from "@vinceau/event-actions";
 import { produce } from "immer";
 import { Icon } from "semantic-ui-react";
 
-import { DelayInput, InlineDropdown, SimpleInput } from "@/components/Misc/InlineInputs";
+import { DelayInput, InlineDropdown, SimpleInput, NotifyInput } from "@/components/Misc/InlineInputs";
 import { delay as waitMillis, notify as sendNotification, parseSecondsDelayValue } from "@/lib/utils";
 import { createTwitchClip } from "common/twitch";
 import { dispatcher, store } from "../store";
@@ -103,22 +103,7 @@ const TwitchClipInput = (props: TwitchClipInputProps) => {
                 {" channel after a "}
                 <DelayInput value={value.delaySeconds} onChange={onDelayChange} placeholder={`${DEFAULT_DELAY_SECONDS}`} />
                 {" second delay and "}
-                <InlineDropdown
-                    value={Boolean(value.notify)}
-                    onChange={onNotifyChange}
-                    options={[
-                        {
-                            key: "notify-me",
-                            value: true,
-                            text: "notify",
-                        },
-                        {
-                            key: "dont-notify-me",
-                            value: false,
-                            text: "don't notify",
-                        },
-                    ]}
-                />
+                <NotifyInput value={value.notify} onChange={onNotifyChange} />
                 {" me about it"}
             </div>
         </div>
