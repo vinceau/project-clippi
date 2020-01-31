@@ -1,16 +1,15 @@
 import * as React from "react";
 
-import { ActionTypeGenerator } from "@vinceau/event-actions";
+import { ActionTypeGenerator, Context } from "@vinceau/event-actions";
 import { produce } from "immer";
 import { useSelector } from "react-redux";
 import { Button } from "semantic-ui-react";
 
-import { InlineDropdown } from "@/components/Misc/InlineInputs";
+import { DelayInput, InlineDropdown } from "@/components/Misc/InlineInputs";
 import { CustomIcon } from "@/components/Misc/Misc";
 import { connectToOBSAndNotify, getAllSceneItems, setSourceItemVisibility } from "@/lib/obs";
 import { delay as waitMillis, notify } from "@/lib/utils";
 import { iRootState } from "@/store";
-import { DelayInput } from "./ActionChangeScene";
 import { ActionComponent } from "./types";
 
 import obsIcon from "@/styles/images/obs.svg";
@@ -22,7 +21,7 @@ interface ActionToggleSourceParams {
 }
 
 const actionToggleSource: ActionTypeGenerator = (params: ActionToggleSourceParams) => {
-    return async (): Promise<void> => {
+    return async (ctx: Context): Promise<Context> => {
         try {
             const millis = parseInt(params.delay || "0", 10);
             if (millis > 0) {
@@ -33,6 +32,7 @@ const actionToggleSource: ActionTypeGenerator = (params: ActionToggleSourceParam
             console.error(err);
             notify("Could not set source visibility. Are you connected to OBS?");
         }
+        return ctx;
     };
 };
 
@@ -100,8 +100,10 @@ const SourceNameInput = (props: { value: ActionToggleSourceParams, onChange: any
                     onChange={onSourceChange}
                     customOptions={allSources}
                 />
+                {" after a "}
+                <DelayInput value={value.delay} onChange={onDelayChange} />
+                {" millisecond delay"}
             </div>
-            <DelayInput value={value.delay} onChange={onDelayChange} />
         </div>
     );
 };

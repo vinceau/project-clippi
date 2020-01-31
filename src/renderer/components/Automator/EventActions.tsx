@@ -1,19 +1,18 @@
 import * as React from "react";
 
-import styled, { css } from "styled-components";
-
-import { ActionEvent } from "@/lib/realtime";
 import { Action as ActionDefinition } from "@vinceau/event-actions";
 import { Action } from "@vinceau/event-actions";
 import { produce } from "immer";
 import { Container, Divider, Icon, List } from "semantic-ui-react";
-import { InlineDropdown } from "../Misc/InlineInputs";
-import { ActionInput, AddActionInput } from "./ActionInputs";
+import styled, { css } from "styled-components";
 
-import { eventActionManager } from "@/actions";
+import { actionComponents } from "@/actions";
 import { generateRandomEvent } from "@/lib/events";
+import { ActionEvent, testRunActions } from "@/lib/realtime";
 import { isDevelopment } from "@/lib/utils";
+import { InlineDropdown } from "../Misc/InlineInputs";
 import { CodeBlock, Labelled } from "../Misc/Misc";
+import { ActionInput, AddActionInput } from "./ActionInputs";
 
 const allEvents: ActionEvent[] = [
   ActionEvent.GAME_START,
@@ -21,6 +20,7 @@ const allEvents: ActionEvent[] = [
   ActionEvent.PLAYER_DIED,
   ActionEvent.PLAYER_SPAWN,
   ActionEvent.COMBO_OCCURRED,
+  ActionEvent.CONVERSION_OCCURRED,
 ];
 
 if (isDevelopment) {
@@ -33,6 +33,7 @@ const mapEventToName: { [eventName: string]: string } = {
   [ActionEvent.PLAYER_DIED]: "a player dies",
   [ActionEvent.PLAYER_SPAWN]: "a player spawns",
   [ActionEvent.COMBO_OCCURRED]: "a combo occurs",
+  [ActionEvent.CONVERSION_OCCURRED]: "a conversion occurs",
   [ActionEvent.TEST_EVENT]: "a test event occurs",
 };
 
@@ -85,16 +86,14 @@ export const EventActions = (props: any) => {
   };
   const disabledActions = value.actions.map((a: ActionDefinition) => a.name);
   const onActionAdd = (action: string) => {
+    const params = actionComponents[action].defaultParams;
     const newValue = produce(value, (draft: any) => {
       draft.actions.push({
         name: action,
-        args: {},
+        args: params ? params() : {},
       });
     });
     onChange(newValue);
-  };
-  const testRunActions = () => {
-    eventActionManager.execute(value.actions).catch(console.error);
   };
 
   return (
@@ -110,7 +109,7 @@ export const EventActions = (props: any) => {
           disabledOptions={disabledOptions}
         />
         <EventHeaderButtons>
-          <Labelled onClick={testRunActions} title="Test run"><Icon name="play" size="big" /></Labelled>
+          <Labelled onClick={() => testRunActions(value.event, value.actions)} title="Test run"><Icon name="play" size="big" /></Labelled>
           <Labelled onClick={onRemove} title="Remove"><Icon name="remove" size="big" /></Labelled>
         </EventHeaderButtons>
       </EventHeader>

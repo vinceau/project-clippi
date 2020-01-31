@@ -873,6 +873,13 @@
   resolved "https://registry.yarnpkg.com/@types/events/-/events-3.0.0.tgz#2862f3f58a9a7f7c3e78d79f130dd4d71c25c2a7"
   integrity sha512-EaObqwIvayI5a8dCzhFrjKzVwKLxjoG9T6Ppd5CEo07LRKfQ8Yokw54r5+Wq7FaBQ+yXRvQAYPrHwya1/UFt9g==
 
+"@types/fs-extra@^8.0.1":
+  version "8.0.1"
+  resolved "https://registry.yarnpkg.com/@types/fs-extra/-/fs-extra-8.0.1.tgz#a2378d6e7e8afea1564e44aafa2e207dadf77686"
+  integrity sha512-J00cVDALmi/hJOYsunyT52Hva5TnJeKP5yd1r+mH/ZU0mbYZflR0Z5kw5kITtKTRYMhm1JMClOFYdHnQszEvqw==
+  dependencies:
+    "@types/node" "*"
+
 "@types/glob@^7.1.1":
   version "7.1.1"
   resolved "https://registry.yarnpkg.com/@types/glob/-/glob-7.1.1.tgz#aa59a1c6e3fbc421e07ccd31a944c30eba521575"
@@ -1021,15 +1028,15 @@
   resolved "https://registry.yarnpkg.com/@types/webpack-env/-/webpack-env-1.14.1.tgz#0d8a53f308f017c53a5ddc3d07f4d6fa76b790d7"
   integrity sha512-0Ki9jAAhKDSuLDXOIMADg54Hu60SuBTEsWaJGGy5cV+SSUQ63J2a+RrYYGrErzz39fXzTibhKrAQJAb8M7PNcA==
 
-"@vinceau/event-actions@^0.0.3":
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/@vinceau/event-actions/-/event-actions-0.0.3.tgz#40c8cd7935fcc21c7dcf603edeb66f440493a185"
-  integrity sha512-6/hIAEBXNUvBcItbh6kEYW4UP5cJG5FaFVSp4sx4yym03pxKHNwGxuNzGyIYJuEDqP1xdULqM95FnkXsell3ug==
+"@vinceau/event-actions@^0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@vinceau/event-actions/-/event-actions-0.0.4.tgz#b773d36293bdfd1468f36815fb0a5ad77b7a087f"
+  integrity sha512-Hhayt7S4GZg5ebmR52WKZ3xuUMwZHJYKunNVQTFoNzEKOieEnzokWttRGep5sD9EUUQ0Iw+1B69SrZYJO7JS/A==
 
-"@vinceau/slp-realtime@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@vinceau/slp-realtime/-/slp-realtime-1.0.0.tgz#8509e7997a0e53cf24d2d02ca418035fdefdb337"
-  integrity sha512-qSREIydGq485H/H44V91TIeeMyWCo4DF0oZL940sP+0l36TypI3fX+iSITOJVShMXFBTpJHkaRlTK9+enmtY6g==
+"@vinceau/slp-realtime@^1.1.3":
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/@vinceau/slp-realtime/-/slp-realtime-1.1.3.tgz#e2f5b1af884f4710db1984da7ff82fb335ada11b"
+  integrity sha512-fqGeVGu+pT+5BqM6kSoNb70NAV8shCrzQFv4qXueHaFAbZm2tN+5MNnCqW9LUacnKzNIil6kXC41AzG+iW5XXQ==
   dependencies:
     "@vinceau/slp-wii-connect" "^1.0.1"
     chokidar "^3.3.1"
@@ -3853,6 +3860,11 @@ form-data@~2.3.2:
     combined-stream "^1.0.6"
     mime-types "^2.1.12"
 
+formatter@^0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/formatter/-/formatter-0.4.1.tgz#f43afedf8f2e7454ceae02ce45567a9fa3277fb8"
+  integrity sha1-9Dr+348udFTOrgLORVZ6n6Mnf7g=
+
 forwarded@~0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/forwarded/-/forwarded-0.1.2.tgz#98c23dab1175657b8c0573e8ceccd91b0ff18c84"
@@ -4584,6 +4596,11 @@ ini@^1.3.4, ini@^1.3.5, ini@~1.3.0:
   version "1.3.5"
   resolved "https://registry.yarnpkg.com/ini/-/ini-1.3.5.tgz#eee25f56db1c9ec6085e0c22778083f596abf927"
   integrity sha512-RZY5huIKCMRWDUqZlEi72f/lmXKMvuszcMBduliQ3nnWbx9X/ZBQO7DijMEYS9EhHBb2qacRUMtC7svLwe0lcw==
+
+insert-text-at-cursor@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/insert-text-at-cursor/-/insert-text-at-cursor-0.3.0.tgz#1819607680ec1570618347c4cd475e791faa25da"
+  integrity sha512-/nPtyeX9xPUvxZf+r0518B7uqNKlP+LqNJqSiXFEaa2T71rWIwTVXGH7hB9xO/EVdwa5/pWlFCPwShOW81XIxQ==
 
 internal-ip@^4.3.0:
   version "4.3.0"

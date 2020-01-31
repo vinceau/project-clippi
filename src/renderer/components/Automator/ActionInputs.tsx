@@ -47,7 +47,7 @@ const ActionComponentBlock = (props: any) => {
             <div style={{padding: "5px"}}>{icon}</div>
             <Content>
                 <div>{header}</div>
-                {children && <div style={{ marginTop: "10px" }}>{children}</div>}
+                {children && <div style={{ margin: "10px 0" }}>{children}</div>}
             </Content>
         </Outer>
     );
@@ -56,9 +56,10 @@ const ActionComponentBlock = (props: any) => {
 export const ActionInput = (props: any) => {
     const { value, onChange, onRemove, selectPrefix, disabledActions } = props;
     const onActionChange = (action: string) => {
+        const params = actionComponents[action].defaultParams;
         const newValue = produce(value, (draft: ActionDefinition) => {
             draft.name = action;
-            draft.args = {};
+            draft.args = params ? params() : {};
         });
         onChange(newValue);
     };

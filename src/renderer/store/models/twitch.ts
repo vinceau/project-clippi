@@ -1,6 +1,6 @@
 import { createModel } from "@rematch/core";
 import { produce } from "immer";
-import { fetchTwitchAuthToken } from "../../lib/twitch";
+import { fetchTwitchAuthToken, signOutTwitch } from "../../lib/twitch";
 
 export interface TwitchClip {
     clipID: string;
@@ -20,10 +20,6 @@ const initialState: TwitchState = {
 export const twitch = createModel({
     state: initialState,
     reducers: {
-        clearAuthToken: (state: TwitchState): TwitchState =>
-            produce(state, draft => {
-                draft.authToken = "";
-            }),
         setAuthToken: (state: TwitchState, payload: string): TwitchState =>
             produce(state, draft => {
                 draft.authToken = payload;
@@ -52,6 +48,10 @@ export const twitch = createModel({
             const token = await fetchTwitchAuthToken(scopes);
             console.log(`got back token: ${token}`);
             dispatch.twitch.setAuthToken(token);
+        },
+        async logOutTwitch() {
+            await signOutTwitch();
+            dispatch.twitch.setAuthToken("");
         },
     }),
 });

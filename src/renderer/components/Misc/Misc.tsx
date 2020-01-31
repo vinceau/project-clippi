@@ -7,8 +7,9 @@ import { Tooltip } from "react-tippy";
 import { eventActionManager } from "@/actions";
 import { connectToOBS, setScene } from "@/lib/obs";
 import { ActionEvent } from "@/lib/realtime";
-import { isDevelopment } from "@/lib/utils";
-import { notify } from "../../lib/utils";
+import { getFilePath, getFolderPath, isDevelopment } from "@/lib/utils";
+import { Button, Icon, Input } from "semantic-ui-react";
+import { notify, openFileOrParentFolder } from "../../lib/utils";
 
 export const DevTools = () => {
     const handleClick = () => {
@@ -76,7 +77,62 @@ export const CodeBlock: React.FC<{
     values: any
 }> = (props) => {
     if (isDevelopment) {
-        return (<pre>{(JSON as any).stringify(props.values, 0, 2)}</pre>);
+        return (<pre style={{overflowX: "auto"}}>{(JSON as any).stringify(props.values, 0, 2)}</pre>);
     }
     return null;
+};
+
+const NoMarginIcon = styled(Icon)`
+&&& {
+    margin: 0 !important;
+}
+`;
+
+interface FileInputProps extends Record<string, any> {
+    value: string;
+    onChange: (value: string) => void;
+    directory?: boolean;
+    fileTypeFilters?: Array<{name: string, extensions: string[]}>;
+    saveFile?: boolean;
+}
+
+export const FileInput: React.FC<FileInputProps> = props => {
+    const {value, directory, onChange, fileTypeFilters, saveFile} = props;
+    const [filesPath, setFilesPath] = React.useState<string>(value);
+    const selectFromFileSystem = async () => {
+        let p: string | null = null;
+        if (directory) {
+            // Handle directory selection
+            p = await getFolderPath();
+        } else {
+            // Handle file selection
+            let options: any;
+            if (fileTypeFilters) {
+                options = {
+                    filters: fileTypeFilters,
+                };
+            }
+            p = await getFilePath(options, saveFile);
+        }
+
+        if (p) {
+            setFilesPath(p);
+            onChange(p);
+        }
+    };
+    const actionLabel = saveFile ? "Save as" : "Choose";
+    return (
+        <Input
+            style={{ width: "100%" }}
+            label={
+                <Button onClick={() => openFileOrParentFolder(filesPath)}>
+                    <NoMarginIcon name="folder open outline" />
+                </Button>
+            }
+            value={filesPath}
+            onChange={(_: any, { value }: any) => setFilesPath(value)}
+            onBlur={() => onChange(filesPath)}
+            action={<Button onClick={() => selectFromFileSystem().catch(console.error)}>{actionLabel}</Button>}
+        />
+    );
 };

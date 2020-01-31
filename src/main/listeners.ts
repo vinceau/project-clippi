@@ -3,7 +3,7 @@ import { Message } from "common/types";
 
 import { openFileSystemDialog } from "./lib/fileSystem";
 import { showNotification } from "./lib/notifications";
-import { authenticateTwitch } from "./lib/twitch";
+import { authenticateTwitch, clearAllTwitchCookies } from "./lib/twitch";
 
 export const setupListeners = (ipc: IPC) => {
 
@@ -18,6 +18,14 @@ export const setupListeners = (ipc: IPC) => {
 
         const token = await authenticateTwitch(scopes);
         return token;
+    });
+
+    ipc.on(Message.SignOutTwitch, async (_, _error?: Error) => {
+        if (_error) {
+            throw new Error("Should not have received error");
+        }
+
+        await clearAllTwitchCookies();
     });
 
     ipc.on(Message.SelectDirectory, async (value, _error?: Error) => {

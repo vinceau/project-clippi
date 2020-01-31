@@ -1,6 +1,8 @@
 import * as React from "react";
 
-import { ActionTypeGenerator } from "@vinceau/event-actions";
+import formatter from "formatter";
+
+import { ActionTypeGenerator, Context } from "@vinceau/event-actions";
 import { Form, Icon, TextArea } from "semantic-ui-react";
 
 import { notify } from "@/lib/utils";
@@ -12,11 +14,13 @@ interface ActionNotifyParams {
 }
 
 const ActionNotifyFunc: ActionTypeGenerator = (params: ActionNotifyParams) => {
-    return async (): Promise<void> => {
+    return async (ctx: Context): Promise<Context> => {
         // Make sure we actually have something to notify
         if (params.message) {
-            notify(params.message, params.title);
+            const msgFormatter = formatter(params.message);
+            notify(msgFormatter(ctx), params.title);
         }
+        return ctx;
     };
 };
 

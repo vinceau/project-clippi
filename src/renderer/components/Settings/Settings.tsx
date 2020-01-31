@@ -1,5 +1,7 @@
 import * as React from "react";
 
+import { version } from "../../../../package.json";
+
 import {
     Route,
     Switch,
@@ -76,6 +78,7 @@ export const SettingsPage: React.FC<{
         flex-basis: 75%;
     }
     & > div {
+        padding-bottom: 50px;
         padding-top: 50px;
         padding-right: 100px;
     }
@@ -104,8 +107,17 @@ export const SettingsPage: React.FC<{
         top: 20px;
         right: 40px;
     `;
+    const VersionSpan = styled.span`
+        opacity: 0.8;
+        padding: 10px;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        text-align: right;
+    `;
     return (
         <SettingsContainer>
+            <VersionSpan>Version {version}</VersionSpan>
             <CloseButton>
                 <Labelled onClick={props.onClose} title="Close">
                     <Icon name="close" />
@@ -114,18 +126,24 @@ export const SettingsPage: React.FC<{
             <div style={{display: "flex"}}>
                 <MenuColumn>
                     <StyledMenu secondary={true} vertical={true}>
-                        <Menu.Item header>Combo Settings</Menu.Item>
+                        <Menu.Item header>Tools</Menu.Item>
                         <Menu.Item
                             name="combo-finder"
                             active={activeItem === "combo-finder"}
                             onClick={handleItemClick}
-                        ><Icon name="search" /> Combo Finder</Menu.Item>
+                        ><Icon name="fast forward" />Replay Processor</Menu.Item>
+                        <Menu.Item header>Settings</Menu.Item>
                         <Menu.Item
                             name="combo-settings"
                             active={activeItem === "combo-settings"}
                             onClick={handleItemClick}
-                        ><Icon name="filter" />Filter Options</Menu.Item>
-                        <Menu.Item header>Automation Settings</Menu.Item>
+                        ><Icon name="filter" />Combo Filter</Menu.Item>
+                        <Menu.Item
+                            name="sound-settings"
+                            active={activeItem === "sound-settings"}
+                            onClick={handleItemClick}
+                        ><Icon name="volume down" />Sounds</Menu.Item>
+                        <Menu.Item header>Connections</Menu.Item>
                         <Menu.Item
                             name="slippi-settings"
                             active={activeItem === "slippi-settings"}
@@ -141,11 +159,6 @@ export const SettingsPage: React.FC<{
                             active={activeItem === "account-settings"}
                             onClick={handleItemClick}
                         ><Icon name="twitch" />Twitch Integration</Menu.Item>
-                        <Menu.Item
-                            name="sound-settings"
-                            active={activeItem === "sound-settings"}
-                            onClick={handleItemClick}
-                        ><Icon name="volume down" />Sounds</Menu.Item>
                     </StyledMenu>
                 </MenuColumn>
                 <ContentColumn>

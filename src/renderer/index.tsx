@@ -19,9 +19,9 @@ ReactDOM.render(
 );
 
 // Hot reloading
-if (module.hot) {
+if ((module as any).hot) {
   // Reload rematch models
-    module.hot.accept("./store/models", () => {
+    (module as any).hot.accept("./store/models", () => {
     Object.keys(Models).forEach(modelKey => {
       console.log(`Reloading model ${modelKey}`);
       store.model({

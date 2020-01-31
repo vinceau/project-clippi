@@ -4,7 +4,7 @@ import { createModel } from "@rematch/core";
 import produce from "immer";
 
 import { SoundMap } from "@/lib/sounds";
-import { getFilePath, getFolderPath } from "@/lib/utils";
+import { getFilePath } from "@/lib/utils";
 import { remote } from "electron";
 
 const homeDirectory = remote.app.getPath("home");
@@ -15,22 +15,28 @@ export interface FileSystemState {
     combosFilePath: string;
     includeSubFolders: boolean;
     deleteFilesWithNoCombos: boolean;
+    findCombos: boolean;
+    renameFiles: boolean;
+    renameFormat: string;
     openCombosWhenDone: boolean;
     soundFiles: SoundMap;
 }
 
-const initialState: FileSystemState = {
+export const fileSystemInitialState: FileSystemState = {
     filesPath: homeDirectory,
     liveSlpFilesPath: "",
     combosFilePath: path.join(homeDirectory, "combos.json"),
     includeSubFolders: false,
     deleteFilesWithNoCombos: false,
+    findCombos: true,
+    renameFiles: false,
+    renameFormat: "{{YY}}{{MM}}{{DD}}_{{HH}}{{mm}}_{{playerShortChar}}_v_{{opponentShortChar}}_({{shortStage}}).slp",
     openCombosWhenDone: false,
     soundFiles: {},
 };
 
 export const filesystem = createModel({
-    state: initialState,
+    state: fileSystemInitialState,
     reducers: {
         setSound: (state: FileSystemState, payload: { name: string, filePath: string}): FileSystemState => {
             const newState = produce(state.soundFiles, draft => {
@@ -63,6 +69,15 @@ export const filesystem = createModel({
         setFileDeletion: (state: FileSystemState, payload: boolean): FileSystemState => produce(state, draft => {
             draft.deleteFilesWithNoCombos = payload;
         }),
+        setFindCombos: (state: FileSystemState, payload: boolean): FileSystemState => produce(state, draft => {
+            draft.findCombos = payload;
+        }),
+        setRenameFiles: (state: FileSystemState, payload: boolean): FileSystemState => produce(state, draft => {
+            draft.renameFiles = payload;
+        }),
+        setRenameFormat: (state: FileSystemState, payload: string): FileSystemState => produce(state, draft => {
+            draft.renameFormat = payload;
+        }),
         setOpenCombosWhenDone: (state: FileSystemState, payload: boolean): FileSystemState => produce(state, draft => {
             draft.openCombosWhenDone = payload;
         }),
@@ -78,26 +93,6 @@ export const filesystem = createModel({
                     name,
                     filePath: p,
                 });
-            }
-        },
-        async getLiveSlpFilesPath() {
-            const p = await getFolderPath();
-            if (p) {
-                dispatch.filesystem.setLiveSlpFilesPath(p);
-            }
-        },
-        async getFilesPath() {
-            const p = await getFolderPath();
-            if (p) {
-                dispatch.filesystem.setFilesPath(p);
-            }
-        },
-        async getCombosFilePath() {
-            const p = await getFilePath({
-                filters: [{ name: "JSON files", extensions: ["json"] }],
-            }, true);
-            if (p) {
-                dispatch.filesystem.setCombosFilePath(p);
             }
         },
     }),

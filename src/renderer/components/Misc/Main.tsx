@@ -100,14 +100,19 @@ export const Main: React.FC<{}> = () => {
     `;
     return (
         <Outer>
-            <SettingsPage onClose={() => setShowSettings(false)} showSettings={showSettings} />
-            <Header showSettings={showSettings} onSettingsButtonClick={() => {
-                toggleSettings();
-            }} />
-            <MainSection>
-                {isDevelopment && <DevTools />}
-                <Automator />
-            </MainSection>
+            {showSettings ?
+                <SettingsPage onClose={() => setShowSettings(false)} showSettings={true} />
+                :
+                <>
+                    <Header showSettings={showSettings} onSettingsButtonClick={() => {
+                        toggleSettings();
+                    }} />
+                    <MainSection>
+                        {isDevelopment && <DevTools />}
+                        <Automator />
+                    </MainSection>
+                </>
+            }
         </Outer>
     );
 };
