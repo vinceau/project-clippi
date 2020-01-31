@@ -10,7 +10,7 @@ import { createTwitchClip } from "common/twitch";
 import { dispatcher, store } from "../store";
 import { ActionComponent } from "./types";
 
-const DEFAULT_DELAY_SECONDS = 20;
+const DEFAULT_DELAY_SECONDS = 10;
 
 interface ActionCreateTwitchClipParams {
     delaySeconds?: string;
