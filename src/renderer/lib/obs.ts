@@ -47,7 +47,7 @@ export const connectToOBSAndNotify = (): void => {
         notify("Successfully connected to OBS");
     }).catch(err => {
         console.error(err);
-        notify(`OBS connection failed`);
+        notify(`OBS connection failed: ${err.error}`);
     });
 };
 
