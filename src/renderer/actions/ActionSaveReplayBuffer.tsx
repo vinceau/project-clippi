@@ -81,7 +81,7 @@ const ReplayBufferInput = (props: ReplayBufferInputProps) => {
     return (
         <div>
             <div>
-                {"Save OBS replay buffer after a "}
+                {"Save the OBS replay buffer after a "}
                 <DelayInput value={value.delaySeconds} onChange={onDelayChange} placeholder="20" />
                 {" second delay and "}
                 <InlineDropdown
@@ -107,7 +107,7 @@ const ReplayBufferInput = (props: ReplayBufferInputProps) => {
 };
 
 export const ActionSaveReplayBuffer: ActionComponent = {
-    label: "save OBS replay buffer",
+    label: "save the OBS replay buffer",
     action: actionSaveBuffer,
     Icon: ActionIcon,
     Component: ReplayBufferInput,
