@@ -39,7 +39,7 @@ const actionSaveBuffer: ActionTypeGenerator = (params: ActionSaveReplayBufferPar
             }
         } catch (err) {
             console.error(err);
-            sendNotification("Failed to save replay buffer. Is replay buffer on?");
+            sendNotification("Failed to save Replay Buffer. Is Replay Buffer on and a Save Replay Buffer hotkey assigned?");
         }
         return ctx;
     };
