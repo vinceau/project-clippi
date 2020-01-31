@@ -58,6 +58,10 @@ export const setScene = async (scene: string): Promise<void> => {
     });
 };
 
+export const saveReplayBuffer = async (): Promise<void> => {
+    await obs.send("SaveReplayBuffer");
+};
+
 export const setSourceItemVisibility = async (sourceName: string, visible?: boolean): Promise<void> => {
     const scenes = store.getState().tempContainer.obsScenes;
     for (const scene of scenes) {

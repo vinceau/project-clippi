@@ -4,6 +4,7 @@ import { ActionEvent } from "@/lib/realtime";
 import { ActionChangeScene } from "./ActionChangeScene";
 import { ActionNotify } from "./ActionNotify";
 import { ActionPlaySound } from "./ActionPlaySound";
+import { ActionSaveReplayBuffer } from "./ActionSaveReplayBuffer";
 import { ActionToggleSource } from "./ActionToggleSource";
 import { ActionTwitchClip } from "./ActionTwitchClip";
 import { ActionWriteFile } from "./ActionWriteFile";
@@ -16,6 +17,7 @@ export enum Action {
     CHANGE_SCENE = "change-scene",
     TOGGLE_SOURCE = "toggle-source",
     WRITE_FILE = "write-file",
+    SAVE_REPLAY_BUFFER = "save-replay-buffer",
 }
 
 export interface EventActionConfig {
@@ -40,6 +42,7 @@ export const actionComponents: { [name: string]: ActionComponent} = {
     [Action.CHANGE_SCENE]: ActionChangeScene,
     [Action.TOGGLE_SOURCE]: ActionToggleSource,
     [Action.WRITE_FILE]: ActionWriteFile,
+    [Action.SAVE_REPLAY_BUFFER]: ActionSaveReplayBuffer,
 };
 
 for (const [key, value] of Object.entries(actionComponents)) {
