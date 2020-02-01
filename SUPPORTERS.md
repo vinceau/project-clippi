@@ -6,3 +6,4 @@ Huge thanks to the following people for supporting Project Clippi:
 * Randy F. Smash
 * Zhu
 * John Fio
+* Andrew (codename_geek)
