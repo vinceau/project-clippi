@@ -160,9 +160,10 @@ export const findCombos = async (filename: string): Promise<ComboType[]> => {
     const realtime = new SlpRealTime();
     realtime.setStream(slpStream);
 
-    realtime.on("comboEnd", (c, s) => {
-        if (comboFilter.isCombo(c, s)) {
-            combosList.push(c);
+    realtime.combo.end$.subscribe(payload => {
+        const { combo, settings } = payload;
+        if (comboFilter.isCombo(combo, settings)) {
+            combosList.push(combo);
         }
     });
 
