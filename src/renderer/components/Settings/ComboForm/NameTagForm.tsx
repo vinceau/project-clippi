@@ -35,7 +35,7 @@ export const NameTagForm: React.FC<{ name: string; values: any; push: any; pop: 
     return (
         <div>
             <div>
-                <input placeholder="Type your tags here..." autoCapitalize="none" autoComplete="off" autoCorrect="off" spellCheck="false" tabIndex={0} type="text" aria-autocomplete="list" onKeyDown={onKeyDown} value={tag} onChange={e => setTag(e.target.value)} />
+                <input placeholder="Type tags here and press enter..." autoCapitalize="none" autoComplete="off" autoCorrect="off" spellCheck="false" tabIndex={0} type="text" aria-autocomplete="list" onKeyDown={onKeyDown} value={tag} onChange={e => setTag(e.target.value)} />
             </div>
             <div style={{ paddingTop: "10px" }}>
                 <FieldArray name={name}>
