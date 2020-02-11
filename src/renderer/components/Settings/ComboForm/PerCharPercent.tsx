@@ -19,7 +19,9 @@ interface CharPercentOption {
 export const mapCharacterPercentArrayToObject = (name: string, values: any): any => produce(values, (draft: any) => {
     const newValue = {};
     draft[name].forEach((c: CharPercentOption) => {
-        newValue[c.character] = c.percent;
+        if (c) {
+            newValue[c.character] = c.percent;
+        }
     });
     draft[name] = newValue;
 });
