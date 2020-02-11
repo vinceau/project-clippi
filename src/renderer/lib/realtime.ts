@@ -1,5 +1,6 @@
 import { Action, Context } from "@vinceau/event-actions";
-import { ComboFilter, ConnectionStatus, GameStartType, SlpFolderStream, SlpLiveStream, SlpRealTime } from "@vinceau/slp-realtime";
+import { ComboFilter, ConnectionStatus, SlpFolderStream, SlpLiveStream, SlpRealTime } from "@vinceau/slp-realtime";
+import { withLatestFrom } from "rxjs/operators";
 
 import { dispatcher } from "@/store";
 import { eventActionManager } from "../actions";
@@ -29,32 +30,39 @@ if (isDevelopment) {
 
 const slippiRealtime = new SlpRealTime();
 
-slippiRealtime.on("gameStart", (gameStart: GameStartType) => {
+slippiRealtime.game.start$.subscribe(gameStart => {
     const ctx = generateGameStartContext(gameStart);
     eventActionManager.emitEvent(ActionEvent.GAME_START, generateGlobalContext(ctx)).catch(errorHandler);
 });
-slippiRealtime.on("gameEnd", (gameEnd) => {
+slippiRealtime.game.end$.subscribe(gameEnd => {
     const ctx = generateGameEndContext(gameEnd);
     eventActionManager.emitEvent(ActionEvent.GAME_END, generateGlobalContext(ctx)).catch(errorHandler);
 });
 
-slippiRealtime.on("spawn", (_, stock, settings) => {
+slippiRealtime.stock.playerSpawn$.pipe(
+    withLatestFrom(slippiRealtime.game.start$),
+).subscribe(([stock, settings]) => {
     const ctx = generateStockContext(stock, settings);
     eventActionManager.emitEvent(ActionEvent.PLAYER_SPAWN, generateGlobalContext(ctx)).catch(errorHandler);
 });
-slippiRealtime.on("death", (_, stock, settings) => {
+
+slippiRealtime.stock.playerDied$.pipe(
+    withLatestFrom(slippiRealtime.game.start$),
+).subscribe(([stock, settings]) => {
     const ctx = generateStockContext(stock, settings);
     eventActionManager.emitEvent(ActionEvent.PLAYER_DIED, generateGlobalContext(ctx)).catch(errorHandler);
 });
 
-slippiRealtime.on("comboEnd", (combo, settings) => {
+slippiRealtime.combo.end$.subscribe((payload) => {
+    const { combo, settings } = payload;
     if (comboFilter.isCombo(combo, settings)) {
         const ctx = generateComboContext(combo, settings);
         eventActionManager.emitEvent(ActionEvent.COMBO_OCCURRED, generateGlobalContext(ctx)).catch(errorHandler);
     }
 });
 
-slippiRealtime.on("conversion", (combo, settings) => {
+slippiRealtime.combo.conversion$.subscribe(payload => {
+    const { combo, settings } = payload;
     if (comboFilter.isCombo(combo, settings)) {
         const ctx = generateComboContext(combo, settings);
         eventActionManager.emitEvent(ActionEvent.CONVERSION_OCCURRED, generateGlobalContext(ctx)).catch(errorHandler);
