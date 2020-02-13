@@ -1,7 +1,6 @@
 
 import * as React from "react";
 
-import { ComboFilterSettings } from "@vinceau/slp-realtime";
 import { useDispatch, useSelector } from "react-redux";
 
 import { comboFilter } from "@/lib/realtime";
@@ -12,7 +11,6 @@ import { mapConfigurationToFilterSettings, ComboConfiguration } from "@/lib/prof
 
 export const FilterOptions = () => {
     const { currentProfile, comboProfiles } = useSelector((state: iRootState) => state.slippi);
-    // const [profile, setProfile] = React.useState<string>(currentProfile);
     const profileOptions = Object.keys(comboProfiles);
 
     let initial = comboFilter.getSettings();
@@ -23,7 +21,7 @@ export const FilterOptions = () => {
     }
     const dispatch = useDispatch<Dispatch>();
     const onSubmit = (values: Partial<ComboConfiguration>) => {
-        console.log(values);
+        // console.log(values);
         const valueString = JSON.stringify(values);
         dispatch.slippi.saveProfile({
             name: currentProfile,
