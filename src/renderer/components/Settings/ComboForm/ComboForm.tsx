@@ -6,14 +6,14 @@ import arrayMutators from "final-form-arrays";
 import { Field, Form } from "react-final-form";
 import { Accordion, Button, Form as SemanticForm, Icon } from "semantic-ui-react";
 
+import { ComboConfiguration } from "@/lib/profile";
 import { CodeBlock } from "../../Misc/Misc";
 import { CharacterSelectAdapter } from "./CharacterSelect";
 import { SemanticCheckboxInput } from "./FormAdapters";
 import { NameTagForm } from "./NameTagForm";
 import { PercentageSlider } from "./PercentageSlider";
-import { PortSelectAdapter } from "./PortSelection";
-import { ComboConfiguration } from "@/lib/profile";
 import { PerCharPercent } from "./PerCharPercent";
+import { PortSelectAdapter } from "./PortSelection";
 
 type Values = Partial<ComboConfiguration>;
 
