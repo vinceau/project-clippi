@@ -6,6 +6,7 @@ import * as models from "./models";
 import { updateEventActionManager } from "@/actions";
 import { comboFilter } from "@/lib/realtime";
 import { soundPlayer } from "@/lib/sounds";
+import { mapConfigurationToFilterSettings } from "@/lib/profile";
 
 const persistPlugin = createRematchPersist({
     version: 1,
@@ -39,8 +40,9 @@ const storeSync = () => {
 
     // Restore combo settings
     const slippiSettings = state.slippi.comboProfiles[state.slippi.currentProfile];
+    const converted = mapConfigurationToFilterSettings(JSON.parse(slippiSettings));
     if (slippiSettings) {
-        comboFilter.updateSettings(JSON.parse(slippiSettings));
+        comboFilter.updateSettings(converted);
     }
 };
 
