@@ -1,16 +1,16 @@
 import * as React from "react";
 
 import { useDispatch, useSelector } from "react-redux";
-import { Radio, Grid, Button, Checkbox, Form, Icon, Progress } from "semantic-ui-react";
+import { Button, Checkbox, Form, Grid, Icon, Progress, Radio } from "semantic-ui-react";
 
-import { fileProcessor, ProcessResult, FindComboOption } from "@/lib/fileProcessor";
+import { fileProcessor, FindComboOption, ProcessResult } from "@/lib/fileProcessor";
 import { loadFileInDolphin, notify, openComboInDolphin } from "@/lib/utils";
 import { Dispatch, iRootState } from "@/store";
 import { secondsToString } from "common/utils";
+import { InlineDropdown } from "../Misc/InlineInputs";
 import { FileInput } from "../Misc/Misc";
 import { ProcessSection } from "../Misc/ProcessSection";
 import { RenameFiles } from "./RenameFiles";
-import { InlineDropdown } from "../Misc/InlineInputs";
 
 const isWindows = process.platform === "win32";
 

@@ -1,12 +1,12 @@
 import * as path from "path";
 
-import { remote } from "electron";
 import { createModel } from "@rematch/core";
+import { remote } from "electron";
 import produce from "immer";
 
+import { FindComboOption } from "@/lib/fileProcessor";
 import { SoundMap } from "@/lib/sounds";
 import { getFilePath } from "@/lib/utils";
-import { FindComboOption } from "@/lib/fileProcessor";
 
 const homeDirectory = remote.app.getPath("home");
 

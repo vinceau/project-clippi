@@ -3,12 +3,12 @@ import * as path from "path";
 import fg from "fast-glob";
 import fs from "fs-extra";
 
-import { ComboType, DolphinComboQueue, SlippiGame, SlpRealTime, SlpStream, ComboEventPayload } from "@vinceau/slp-realtime";
+import { ComboEventPayload, ComboType, DolphinComboQueue, SlippiGame, SlpRealTime, SlpStream } from "@vinceau/slp-realtime";
 
 import { deleteFile, pipeFileContents } from "common/utils";
+import { merge, Observable } from "rxjs";
 import { parseFileRenameFormat } from "./context";
 import { comboFilter } from "./realtime";
-import { Observable, merge } from "rxjs";
 
 export enum FindComboOption {
     OnlyCombos = 0,
