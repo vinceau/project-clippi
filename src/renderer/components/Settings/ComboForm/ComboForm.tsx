@@ -2,7 +2,6 @@ import * as React from "react";
 
 import styled from "styled-components";
 
-import { ComboFilterSettings } from "@vinceau/slp-realtime";
 import arrayMutators from "final-form-arrays";
 import { Field, Form } from "react-final-form";
 import { Accordion, Button, Form as SemanticForm, Icon } from "semantic-ui-react";
@@ -12,31 +11,11 @@ import { CharacterSelectAdapter } from "./CharacterSelect";
 import { SemanticCheckboxInput } from "./FormAdapters";
 import { NameTagForm } from "./NameTagForm";
 import { PercentageSlider } from "./PercentageSlider";
-import { mapCharacterPercentArrayToObject, mapObjectToCharacterPercentArray, PerCharPercent } from "./PerCharPercent";
 import { PortSelectAdapter } from "./PortSelection";
+import { ComboConfiguration } from "@/lib/profile";
+import { PerCharPercent } from "./PerCharPercent";
 
-/*
-export interface ComboFilterSettings {
-  chainGrabbers: Character[];
-  characterFilter: {
-    characters: [],
-    negate: false,
-  },
-  nameTags: string[];
-  minComboPercent: number;
-  comboMustKill: boolean;
-  excludeCPUs: boolean;
-  excludeChainGrabs: boolean;
-  excludeWobbles: boolean;
-  largeHitThreshold: number; // The proportion of damage that a hit has to do to be considered a large hit
-  wobbleThreshold: number; // The number of pummels before it's considered a wobble
-  chainGrabThreshold: number; // proportion of up throw / pummels to other moves to be considered a chain grab
-  perCharacterMinComboPercent: { [characterId: number]: number };
-}
-
-*/
-
-type Values = Partial<ComboFilterSettings>;
+type Values = Partial<ComboConfiguration>;
 
 export const ComboForm: React.FC<{
     initialValues: Values;
@@ -44,11 +23,6 @@ export const ComboForm: React.FC<{
     onSubmit: (values: Values) => void;
 }> = props => {
     const [showAdvanced, setShowAdvanced] = React.useState(false);
-    const initialValues = mapObjectToCharacterPercentArray("perCharacterMinComboPercent", props.initialValues);
-    const onSubmit = (v: any) => {
-        const convertBack = mapCharacterPercentArrayToObject("perCharacterMinComboPercent", v);
-        props.onSubmit(convertBack);
-    };
     const ButtonContainer: React.FC<{
         submitting: boolean;
         form: any;
@@ -87,11 +61,11 @@ export const ComboForm: React.FC<{
     return (
         <div>
             <Form
-                onSubmit={onSubmit}
+                onSubmit={props.onSubmit}
                 mutators={{
                     ...arrayMutators
                 }}
-                initialValues={initialValues}
+                initialValues={props.initialValues}
                 render={({
                     handleSubmit,
                     form: {
@@ -126,7 +100,7 @@ export const ComboForm: React.FC<{
                                 </SemanticForm.Field>
                                 <SemanticForm.Field>
                                     <label>Character-specific Minimum Combo Percent</label>
-                                    <PerCharPercent name="perCharacterMinComboPercent" pop={pop} push={push} values={values} />
+                                    <PerCharPercent name="perCharMinComboPercents" pop={pop} push={push} values={values} />
                                 </SemanticForm.Field>
                                 <SemanticForm.Field>
                                     <Field name="comboMustKill" label="Combo Must Kill" component={SemanticCheckboxInput} />

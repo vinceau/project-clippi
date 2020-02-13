@@ -1,10 +1,11 @@
+import produce from "immer";
+
 import { createModel } from "@rematch/core";
 
 import { EventActionConfig } from "@/actions";
-
 import { ActionEvent, comboFilter, streamManager } from "@/lib/realtime";
 import { notify } from "@/lib/utils";
-import produce from "immer";
+import { mapFilterSettingsToConfiguration } from "@/lib/profile";
 
 const DEFAULT_PROFILE = "default";
 
@@ -18,7 +19,7 @@ export interface SlippiState {
     obsPassword: string;
 }
 
-const defaultSettings = JSON.stringify(comboFilter.getSettings());
+const defaultSettings = JSON.stringify(mapFilterSettingsToConfiguration(comboFilter.getSettings()));
 
 const initialState: SlippiState = {
     port: "1667",

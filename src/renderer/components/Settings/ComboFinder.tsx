@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Checkbox, Form, Grid, Icon, Progress, Radio } from "semantic-ui-react";
+import { Button, Checkbox, Form, Icon, Progress } from "semantic-ui-react";
 
 import { fileProcessor, FindComboOption, ProcessResult } from "@/lib/fileProcessor";
 import { loadFileInDolphin, notify, openComboInDolphin } from "@/lib/utils";

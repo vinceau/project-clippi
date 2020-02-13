@@ -8,6 +8,7 @@ import { comboFilter } from "@/lib/realtime";
 import { Dispatch, iRootState } from "@/store";
 import { ComboForm } from "./ComboForm/ComboForm";
 import { ProfileSelector } from "./ComboForm/ProfileSelection";
+import { mapConfigurationToFilterSettings, ComboConfiguration } from "@/lib/profile";
 
 export const FilterOptions = () => {
     const { currentProfile, comboProfiles } = useSelector((state: iRootState) => state.slippi);
@@ -16,12 +17,13 @@ export const FilterOptions = () => {
 
     let initial = comboFilter.getSettings();
     const slippiSettings = comboProfiles[currentProfile];
+    const converted = mapConfigurationToFilterSettings(JSON.parse(slippiSettings));
     if (slippiSettings) {
-        initial = comboFilter.updateSettings(JSON.parse(slippiSettings));
+        initial = comboFilter.updateSettings(converted);
     }
     const dispatch = useDispatch<Dispatch>();
-    const onSubmit = (values: Partial<ComboFilterSettings>) => {
-        // console.log(values);
+    const onSubmit = (values: Partial<ComboConfiguration>) => {
+        console.log(values);
         const valueString = JSON.stringify(values);
         dispatch.slippi.saveProfile({
             name: currentProfile,
