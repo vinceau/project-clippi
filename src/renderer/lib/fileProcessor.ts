@@ -25,14 +25,6 @@ interface ProcessOutput {
     timeTaken: number; // in seconds
 }
 
-export const renameFormat = (filename: string, format: string): string => {
-    const game = new SlippiGame(filename);
-    const settings = game.getSettings();
-    const metadata = game.getMetadata();
-    const fullFilename = path.basename(filename);
-    return parseFileRenameFormat(format, settings, metadata, fullFilename);
-};
-
 const uniqueFilename = (name: string) => {
     const randomSuffix = Math.random().toString(36).slice(2).substring(0, 5);
     const onlyExt = path.extname(name);
@@ -129,15 +121,20 @@ export class FileProcessor {
         console.log(`Processing file: ${filename}`);
         const res: ProcessResult = {};
 
+        const game = new SlippiGame(filename);
+        const settings = game.getSettings();
+        const metadata = game.getMetadata();
+
         // Handle file renaming
         if (options.renameFiles && options.renameTemplate) {
-            res.newFilename = renameFormat(filename, options.renameTemplate);
+            const fullFilename = path.basename(filename);
+            res.newFilename = parseFileRenameFormat(options.renameTemplate, settings, metadata, fullFilename);
             filename = await renameFile(filename, res.newFilename);
         }
 
         // Handle combo finding
         if (options.findCombos) {
-            const combos = await findCombos(filename);
+            const combos = await findCombos(filename, metadata);
             combos.forEach(c => {
                 this.queue.addCombo(filename, c);
             });
@@ -154,15 +151,16 @@ export class FileProcessor {
     }
 }
 
-export const findCombos = async (filename: string): Promise<ComboType[]> => {
+export const findCombos = async (filename: string, metadata?: any): Promise<ComboType[]> => {
     const combosList = new Array<ComboType>();
     const slpStream = new SlpStream({ singleGameMode: true });
     const realtime = new SlpRealTime();
     realtime.setStream(slpStream);
 
-    realtime.on("comboEnd", (c, s) => {
-        if (comboFilter.isCombo(c, s)) {
-            combosList.push(c);
+    realtime.combo.end$.subscribe(payload => {
+        const { combo, settings } = payload;
+        if (comboFilter.isCombo(combo, settings, metadata)) {
+            combosList.push(combo);
         }
     });
 
