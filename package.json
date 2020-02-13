@@ -15,6 +15,7 @@
       "build/icon.*"
     ],
     "mac": {
+      "target": "dmg",
       "category": "public.app-category.lifestyle"
     },
     "win": {
