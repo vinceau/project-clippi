@@ -3,16 +3,24 @@ import * as path from "path";
 import fg from "fast-glob";
 import fs from "fs-extra";
 
-import { ComboType, DolphinComboQueue, SlippiGame, SlpRealTime, SlpStream } from "@vinceau/slp-realtime";
+import { ComboType, DolphinComboQueue, SlippiGame, SlpRealTime, SlpStream, ComboEventPayload } from "@vinceau/slp-realtime";
 
 import { deleteFile, pipeFileContents } from "common/utils";
 import { parseFileRenameFormat } from "./context";
 import { comboFilter } from "./realtime";
+import { Observable, merge } from "rxjs";
+
+export enum FindComboOption {
+    OnlyCombos = 0,
+    OnlyConversions = 1,
+    BothCombos = 2,
+}
 
 interface FileProcessorOptions {
     filesPath: string;
     renameFiles: boolean;
     findCombos: boolean;
+    findComboOption?: FindComboOption;
     includeSubFolders?: boolean;
     deleteZeroComboFiles?: boolean;
     outputFile?: string;
@@ -134,7 +142,7 @@ export class FileProcessor {
 
         // Handle combo finding
         if (options.findCombos) {
-            const combos = await findCombos(filename, metadata);
+            const combos = await findCombos(filename, options.findComboOption, metadata);
             combos.forEach(c => {
                 this.queue.addCombo(filename, c);
             });
@@ -151,13 +159,34 @@ export class FileProcessor {
     }
 }
 
-export const findCombos = async (filename: string, metadata?: any): Promise<ComboType[]> => {
+export const findCombos = async (filename: string, option?: FindComboOption, metadata?: any): Promise<ComboType[]> => {
     const combosList = new Array<ComboType>();
     const slpStream = new SlpStream({ singleGameMode: true });
     const realtime = new SlpRealTime();
     realtime.setStream(slpStream);
 
-    realtime.combo.end$.subscribe(payload => {
+    let combos$: Observable<ComboEventPayload>;
+
+    // Default to only combos
+    if (!option) {
+        option = FindComboOption.OnlyCombos;
+    }
+
+    switch (option) {
+        case FindComboOption.BothCombos:
+            combos$ = merge(realtime.combo.end$, realtime.combo.conversion$);
+            break;
+        case FindComboOption.OnlyCombos:
+            combos$ = realtime.combo.end$;
+            break;
+        case FindComboOption.OnlyConversions:
+            combos$ = realtime.combo.conversion$;
+            break;
+        default:
+            return [];
+    }
+
+    combos$.subscribe(payload => {
         const { combo, settings } = payload;
         if (comboFilter.isCombo(combo, settings, metadata)) {
             combosList.push(combo);

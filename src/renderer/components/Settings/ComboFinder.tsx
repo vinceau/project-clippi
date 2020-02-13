@@ -1,26 +1,28 @@
 import * as React from "react";
 
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Checkbox, Form, Icon, Progress } from "semantic-ui-react";
+import { Radio, Grid, Button, Checkbox, Form, Icon, Progress } from "semantic-ui-react";
 
-import { fileProcessor, ProcessResult } from "@/lib/fileProcessor";
+import { fileProcessor, ProcessResult, FindComboOption } from "@/lib/fileProcessor";
 import { loadFileInDolphin, notify, openComboInDolphin } from "@/lib/utils";
 import { Dispatch, iRootState } from "@/store";
 import { secondsToString } from "common/utils";
 import { FileInput } from "../Misc/Misc";
 import { ProcessSection } from "../Misc/ProcessSection";
 import { RenameFiles } from "./RenameFiles";
+import { InlineDropdown } from "../Misc/InlineInputs";
 
 const isWindows = process.platform === "win32";
 
 export const ComboFinder: React.FC<{}> = () => {
     const { comboFinderPercent, comboFinderLog, comboFinderProcessing } = useSelector((state: iRootState) => state.tempContainer);
     const { openCombosWhenDone, filesPath, combosFilePath, includeSubFolders, deleteFilesWithNoCombos,
-        renameFiles, findCombos, renameFormat } = useSelector((state: iRootState) => state.filesystem);
+        renameFiles, findCombos, findComboOption, renameFormat } = useSelector((state: iRootState) => state.filesystem);
     const dispatch = useDispatch<Dispatch>();
     const setRenameFormat = (format: string) => dispatch.filesystem.setRenameFormat(format);
     const setRenameFiles = (checked: boolean) => dispatch.filesystem.setRenameFiles(checked);
     const setFindCombos = (checked: boolean) => dispatch.filesystem.setFindCombos(checked);
+    const setFindComboOption = (val: FindComboOption) => dispatch.filesystem.setFindComboOption(val);
     const onSubfolder = (checked: boolean) => dispatch.filesystem.setIncludeSubFolders(checked);
     const onSetDeleteFiles = (checked: boolean) => dispatch.filesystem.setFileDeletion(checked);
     const onSetOpenCombosWhenDone = (checked: boolean) => dispatch.filesystem.setOpenCombosWhenDone(checked);
@@ -69,6 +71,25 @@ export const ComboFinder: React.FC<{}> = () => {
     };
     const complete = comboFinderPercent === 100;
     const processBtnDisabled = (!findCombos && !renameFiles) || !combosFilePath;
+
+    const options = [
+        {
+            key: "onlyCombos",
+            value: FindComboOption.OnlyCombos,
+            text: "combos only",
+        },
+        {
+            key: "onlyConversions",
+            value: FindComboOption.OnlyConversions,
+            text: "conversions only",
+        },
+        {
+            key: "both",
+            value: FindComboOption.BothCombos,
+            text: "both combos and conversions",
+        },
+    ];
+
     return (
         <div>
             <Form>
@@ -93,6 +114,14 @@ export const ComboFinder: React.FC<{}> = () => {
                     open={findCombos}
                     onOpenChange={setFindCombos}
                 >
+                    <div style={{paddingBottom: "10px"}}>
+                        <span>Search replay directory for </span>
+                        <InlineDropdown
+                            value={findComboOption}
+                            onChange={setFindComboOption}
+                            options={options}
+                        />
+                    </div>
                     <Form.Field>
                         <label>Output File</label>
                         <FileInput
@@ -128,17 +157,17 @@ export const ComboFinder: React.FC<{}> = () => {
                     <RenameFiles value={renameFormat} onChange={setRenameFormat} />
                 </ProcessSection>
                 <div style={{ display: "flex", justifyContent: "space-between" }}>
-                    { comboFinderProcessing ?
-                    <Button negative={true} type="button" onClick={() => fileProcessor.stop()}>
-                        <Icon name="stop" />
-                        Stop processing
+                    {comboFinderProcessing ?
+                        <Button negative={true} type="button" onClick={() => fileProcessor.stop()}>
+                            <Icon name="stop" />
+                            Stop processing
                     </Button>
-                    :
-                    <Button primary={true} type="button" onClick={() => findAndWriteCombos().catch(console.error)} disabled={processBtnDisabled}>
-                        <Icon name="fast forward" />
-                        Process replays
+                        :
+                        <Button primary={true} type="button" onClick={() => findAndWriteCombos().catch(console.error)} disabled={processBtnDisabled}>
+                            <Icon name="fast forward" />
+                            Process replays
                     </Button>
-}
+                    }
                     {isWindows && <Button type="button" onClick={() => loadFileInDolphin().catch(console.error)}>
                         Load a file into Dolphin
                     </Button>}
