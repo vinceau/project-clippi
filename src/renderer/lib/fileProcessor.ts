@@ -3,7 +3,7 @@ import * as path from "path";
 import fg from "fast-glob";
 import fs from "fs-extra";
 
-import { ComboEventPayload, ComboType, DolphinComboQueue, SlippiGame, SlpRealTime, SlpStream } from "@vinceau/slp-realtime";
+import { ComboEventPayload, DolphinComboQueue, SlippiGame, SlpRealTime, SlpStream } from "@vinceau/slp-realtime";
 
 import { deleteFile, pipeFileContents } from "common/utils";
 import { merge, Observable } from "rxjs";
@@ -73,6 +73,8 @@ export interface ProcessResult {
 export class FileProcessor {
     private readonly queue = new DolphinComboQueue();
     private stopRequested: boolean = false;
+    private readonly realtime = new SlpRealTime();
+    private combos$: Observable<ComboEventPayload> | null = null;
 
     public stop(): void {
         this.stopRequested = true;
@@ -93,6 +95,21 @@ export class FileProcessor {
             onlyFiles: true,
             deep: opts.includeSubFolders ? undefined : 1,
         };
+
+        // Set up the combos observable in advance
+        switch (opts.findComboOption) {
+            case FindComboOption.BothCombos:
+                this.combos$ = merge(this.realtime.combo.end$, this.realtime.combo.conversion$);
+                break;
+            case FindComboOption.OnlyCombos:
+                this.combos$ = this.realtime.combo.end$;
+                break;
+            case FindComboOption.OnlyConversions:
+                this.combos$ = this.realtime.combo.conversion$;
+                break;
+            default:
+                this.combos$ = null;
+        }
 
         let filesProcessed = 0;
         const entries = await fg(patterns, options);
@@ -142,63 +159,45 @@ export class FileProcessor {
 
         // Handle combo finding
         if (options.findCombos) {
-            const combos = await findCombos(filename, options.findComboOption, metadata);
-            combos.forEach(c => {
-                this.queue.addCombo(filename, c);
-            });
+            res.numCombos = await this._findCombos(filename, metadata);
             // Delete the file if no combos were found
-            if (options.deleteZeroComboFiles && combos.length === 0) {
+            if (options.deleteZeroComboFiles && res.numCombos === 0) {
                 console.log(`No combos found in ${filename}. Deleting...`);
                 await deleteFile(filename);
                 res.fileDeleted = true;
             }
-            res.numCombos = combos.length;
         }
 
         return res;
     }
-}
 
-export const findCombos = async (filename: string, option?: FindComboOption, metadata?: any): Promise<ComboType[]> => {
-    const combosList = new Array<ComboType>();
-    const slpStream = new SlpStream({ singleGameMode: true });
-    const realtime = new SlpRealTime();
-    realtime.setStream(slpStream);
-
-    let combos$: Observable<ComboEventPayload>;
-
-    // Default to only combos
-    if (option === undefined) {
-        option = FindComboOption.OnlyCombos;
-    }
-
-    switch (option) {
-        case FindComboOption.BothCombos:
-            combos$ = merge(realtime.combo.end$, realtime.combo.conversion$);
-            break;
-        case FindComboOption.OnlyCombos:
-            combos$ = realtime.combo.end$;
-            break;
-        case FindComboOption.OnlyConversions:
-            combos$ = realtime.combo.conversion$;
-            break;
-        default:
-            return [];
-    }
-
-    const sub = combos$.subscribe(payload => {
-        const { combo, settings } = payload;
-        if (comboFilter.isCombo(combo, settings, metadata)) {
-            combosList.push(combo);
+    /*
+     * Finds combos and adds them to the dolphin queue. Returns the number of combos found.
+     */
+    private async _findCombos(filename: string, metadata?: any): Promise<number> {
+        if (!this.combos$) {
+            return 0;
         }
-    });
 
-    await pipeFileContents(filename, slpStream);
+        const slpStream = new SlpStream({ singleGameMode: true });
+        this.realtime.setStream(slpStream);
 
-    sub.unsubscribe();
+        let count = 0;
+        const sub = this.combos$.subscribe(payload => {
+            const { combo, settings } = payload;
+            if (comboFilter.isCombo(combo, settings, metadata)) {
+                this.queue.addCombo(filename, combo);
+                count += 1;
+            }
+        });
 
-    console.log(`Found ${combosList.length} combos in ${filename}`);
-    return combosList;
-};
+        await pipeFileContents(filename, slpStream);
+        console.log(`Found ${count} combos in ${filename}`);
+
+        sub.unsubscribe();
+        return count;
+    }
+
+}
 
 export const fileProcessor = new FileProcessor();
