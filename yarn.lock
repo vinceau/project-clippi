@@ -1033,10 +1033,10 @@
   resolved "https://registry.yarnpkg.com/@vinceau/event-actions/-/event-actions-0.0.4.tgz#b773d36293bdfd1468f36815fb0a5ad77b7a087f"
   integrity sha512-Hhayt7S4GZg5ebmR52WKZ3xuUMwZHJYKunNVQTFoNzEKOieEnzokWttRGep5sD9EUUQ0Iw+1B69SrZYJO7JS/A==
 
-"@vinceau/slp-realtime@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@vinceau/slp-realtime/-/slp-realtime-2.0.0.tgz#a0ec5dfbd796be6524ee4242d34daefc92e2658d"
-  integrity sha512-WT9Hh6hBUjc/B7dKhxrG68pPBQn03Do0srYNLcTVq0FAW9bwt6G2AF4xeMzyVgYI+hVkBxV3tQNI2XWlGKBA9w==
+"@vinceau/slp-realtime@^2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@vinceau/slp-realtime/-/slp-realtime-2.0.1.tgz#c59e392904ba7ed59824cdaf6b5aebb2ecef3e7e"
+  integrity sha512-plhrprhmabox3hLo9Xq0/K4leIdFBGkno1A5cUqqk8oyZgpfpBMNRthnUadQDGrbRDxLTZ2AwDHByztODbBtgg==
   dependencies:
     "@vinceau/slp-wii-connect" "^1.0.1"
     chokidar "^3.3.1"
