@@ -13,16 +13,24 @@ export interface ComboConfiguration extends Omit<ComboFilterSettings, "perCharac
   perCharMinComboPercents: CharPercentOption[];
 }
 
-export const mapConfigurationToFilterSettings = (config: ComboConfiguration): ComboFilterSettings => {
+export const mapConfigurationToFilterSettings = (config: Partial<ComboConfiguration>): Partial<ComboFilterSettings> => {
     const { perCharMinComboPercents, ...rest } = config;
+    if (!perCharMinComboPercents) {
+        return config;
+    }
+
     return {
         ...rest,
         perCharacterMinComboPercent: mapCharacterPercentArrayToObject(perCharMinComboPercents),
     };
 };
 
-export const mapFilterSettingsToConfiguration = (settings: ComboFilterSettings): ComboConfiguration => {
+export const mapFilterSettingsToConfiguration = (settings: Partial<ComboFilterSettings>): Partial<ComboConfiguration> => {
     const { perCharacterMinComboPercent, ...rest } = settings;
+    if (!perCharacterMinComboPercent) {
+        return settings;
+    }
+
     return {
         ...rest,
         perCharMinComboPercents: mapObjectToCharacterPercentArray(perCharacterMinComboPercent),
