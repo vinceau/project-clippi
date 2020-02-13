@@ -50,6 +50,7 @@ export const ComboFinder: React.FC<{}> = () => {
             findCombos,
             outputFile: combosFilePath,
             deleteZeroComboFiles: deleteFilesWithNoCombos,
+            findComboOption,
             renameTemplate: renameFormat,
             renameFiles,
         }, callback);
