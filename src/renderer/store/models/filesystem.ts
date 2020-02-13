@@ -1,11 +1,12 @@
 import * as path from "path";
 
 import { createModel } from "@rematch/core";
+import { remote } from "electron";
 import produce from "immer";
 
+import { FindComboOption } from "@/lib/fileProcessor";
 import { SoundMap } from "@/lib/sounds";
 import { getFilePath } from "@/lib/utils";
-import { remote } from "electron";
 
 const homeDirectory = remote.app.getPath("home");
 
@@ -16,6 +17,7 @@ export interface FileSystemState {
     includeSubFolders: boolean;
     deleteFilesWithNoCombos: boolean;
     findCombos: boolean;
+    findComboOption: FindComboOption;
     renameFiles: boolean;
     renameFormat: string;
     openCombosWhenDone: boolean;
@@ -29,6 +31,7 @@ export const fileSystemInitialState: FileSystemState = {
     includeSubFolders: false,
     deleteFilesWithNoCombos: false,
     findCombos: true,
+    findComboOption: FindComboOption.OnlyCombos,
     renameFiles: false,
     renameFormat: "{{YY}}{{MM}}{{DD}}_{{HH}}{{mm}}_{{playerShortChar}}_v_{{opponentShortChar}}_({{shortStage}}).slp",
     openCombosWhenDone: false,
@@ -59,6 +62,9 @@ export const filesystem = createModel({
         }),
         setFilesPath: (state: FileSystemState, payload: string): FileSystemState => produce(state, draft => {
             draft.filesPath = payload;
+        }),
+        setFindComboOption: (state: FileSystemState, payload: FindComboOption): FileSystemState => produce(state, draft => {
+            draft.findComboOption = payload;
         }),
         setCombosFilePath: (state: FileSystemState, payload: string): FileSystemState => produce(state, draft => {
             draft.combosFilePath = payload;

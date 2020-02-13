@@ -1,47 +1,14 @@
 import * as React from "react";
 import styled from "styled-components";
 
-import { Character, getCharacterName } from "@vinceau/slp-realtime";
-import { produce } from "immer";
 import { Field } from "react-final-form";
 import { FieldArray } from "react-final-form-arrays";
 import { Button, Icon } from "semantic-ui-react";
 
+import { CharPercentOption } from "@/lib/profile";
 import { device } from "@/styles/device";
 import { CharacterSelectAdapter } from "./CharacterSelect";
 import { SemanticInput } from "./FormAdapters";
-
-interface CharPercentOption {
-    character: Character;
-    percent: number;
-}
-
-export const mapCharacterPercentArrayToObject = (name: string, values: any): any => produce(values, (draft: any) => {
-    const newValue = {};
-    draft[name].forEach((c: CharPercentOption) => {
-        newValue[c.character] = c.percent;
-    });
-    draft[name] = newValue;
-});
-
-export const mapObjectToCharacterPercentArray = (name: string, values: any): any => produce(values, (draft: any) => {
-    const charPercents = draft[name];
-    const percentArray: CharPercentOption[] = [];
-    for (const [key, value] of Object.entries(charPercents)) {
-        percentArray.push({
-            character: parseInt(key, 10),
-            percent: value as number,
-        });
-    }
-    percentArray.sort((a, b) => {
-        const aName = getCharacterName(a.character);
-        const bName = getCharacterName(b.character);
-        if (aName < bName) { return -1; }
-        if (aName > bName) { return 1; }
-        return 0;
-    });
-    draft[name] = percentArray;
-});
 
 const CharacterSelectContainer = styled.div`
 display: flex;

@@ -3,16 +3,24 @@ import * as path from "path";
 import fg from "fast-glob";
 import fs from "fs-extra";
 
-import { ComboType, DolphinComboQueue, SlippiGame, SlpRealTime, SlpStream } from "@vinceau/slp-realtime";
+import { ComboEventPayload, DolphinComboQueue, SlippiGame, SlpRealTime, SlpStream } from "@vinceau/slp-realtime";
 
 import { deleteFile, pipeFileContents } from "common/utils";
+import { merge, Observable } from "rxjs";
 import { parseFileRenameFormat } from "./context";
 import { comboFilter } from "./realtime";
+
+export enum FindComboOption {
+    OnlyCombos = 0,
+    OnlyConversions = 1,
+    BothCombos = 2,
+}
 
 interface FileProcessorOptions {
     filesPath: string;
     renameFiles: boolean;
     findCombos: boolean;
+    findComboOption?: FindComboOption;
     includeSubFolders?: boolean;
     deleteZeroComboFiles?: boolean;
     outputFile?: string;
@@ -24,14 +32,6 @@ interface ProcessOutput {
     filesProcessed: number;
     timeTaken: number; // in seconds
 }
-
-export const renameFormat = (filename: string, format: string): string => {
-    const game = new SlippiGame(filename);
-    const settings = game.getSettings();
-    const metadata = game.getMetadata();
-    const fullFilename = path.basename(filename);
-    return parseFileRenameFormat(format, settings, metadata, fullFilename);
-};
 
 const uniqueFilename = (name: string) => {
     const randomSuffix = Math.random().toString(36).slice(2).substring(0, 5);
@@ -73,6 +73,8 @@ export interface ProcessResult {
 export class FileProcessor {
     private readonly queue = new DolphinComboQueue();
     private stopRequested: boolean = false;
+    private readonly realtime = new SlpRealTime();
+    private combos$: Observable<ComboEventPayload> | null = null;
 
     public stop(): void {
         this.stopRequested = true;
@@ -93,6 +95,21 @@ export class FileProcessor {
             onlyFiles: true,
             deep: opts.includeSubFolders ? undefined : 1,
         };
+
+        // Set up the combos observable in advance
+        switch (opts.findComboOption) {
+            case FindComboOption.BothCombos:
+                this.combos$ = merge(this.realtime.combo.end$, this.realtime.combo.conversion$);
+                break;
+            case FindComboOption.OnlyCombos:
+                this.combos$ = this.realtime.combo.end$;
+                break;
+            case FindComboOption.OnlyConversions:
+                this.combos$ = this.realtime.combo.conversion$;
+                break;
+            default:
+                this.combos$ = null;
+        }
 
         let filesProcessed = 0;
         const entries = await fg(patterns, options);
@@ -129,47 +146,58 @@ export class FileProcessor {
         console.log(`Processing file: ${filename}`);
         const res: ProcessResult = {};
 
+        const game = new SlippiGame(filename);
+        const settings = game.getSettings();
+        const metadata = game.getMetadata();
+
         // Handle file renaming
         if (options.renameFiles && options.renameTemplate) {
-            res.newFilename = renameFormat(filename, options.renameTemplate);
+            const fullFilename = path.basename(filename);
+            res.newFilename = parseFileRenameFormat(options.renameTemplate, settings, metadata, fullFilename);
             filename = await renameFile(filename, res.newFilename);
         }
 
         // Handle combo finding
         if (options.findCombos) {
-            const combos = await findCombos(filename);
-            combos.forEach(c => {
-                this.queue.addCombo(filename, c);
-            });
+            res.numCombos = await this._findCombos(filename, metadata);
             // Delete the file if no combos were found
-            if (options.deleteZeroComboFiles && combos.length === 0) {
+            if (options.deleteZeroComboFiles && res.numCombos === 0) {
                 console.log(`No combos found in ${filename}. Deleting...`);
                 await deleteFile(filename);
                 res.fileDeleted = true;
             }
-            res.numCombos = combos.length;
         }
 
         return res;
     }
-}
 
-export const findCombos = async (filename: string): Promise<ComboType[]> => {
-    const combosList = new Array<ComboType>();
-    const slpStream = new SlpStream({ singleGameMode: true });
-    const realtime = new SlpRealTime();
-    realtime.setStream(slpStream);
-
-    realtime.on("comboEnd", (c, s) => {
-        if (comboFilter.isCombo(c, s)) {
-            combosList.push(c);
+    /*
+     * Finds combos and adds them to the dolphin queue. Returns the number of combos found.
+     */
+    private async _findCombos(filename: string, metadata?: any): Promise<number> {
+        if (!this.combos$) {
+            return 0;
         }
-    });
 
-    await pipeFileContents(filename, slpStream);
+        const slpStream = new SlpStream({ singleGameMode: true });
+        this.realtime.setStream(slpStream);
 
-    console.log(`Found ${combosList.length} combos in ${filename}`);
-    return combosList;
-};
+        let count = 0;
+        const sub = this.combos$.subscribe(payload => {
+            const { combo, settings } = payload;
+            if (comboFilter.isCombo(combo, settings, metadata)) {
+                this.queue.addCombo(filename, combo);
+                count += 1;
+            }
+        });
+
+        await pipeFileContents(filename, slpStream);
+        console.log(`Found ${count} combos in ${filename}`);
+
+        sub.unsubscribe();
+        return count;
+    }
+
+}
 
 export const fileProcessor = new FileProcessor();

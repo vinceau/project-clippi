@@ -1,27 +1,20 @@
 
 import * as React from "react";
 
-import { ComboFilterSettings } from "@vinceau/slp-realtime";
 import { useDispatch, useSelector } from "react-redux";
 
-import { comboFilter } from "@/lib/realtime";
+import { ComboConfiguration } from "@/lib/profile";
 import { Dispatch, iRootState } from "@/store";
 import { ComboForm } from "./ComboForm/ComboForm";
 import { ProfileSelector } from "./ComboForm/ProfileSelection";
 
 export const FilterOptions = () => {
     const { currentProfile, comboProfiles } = useSelector((state: iRootState) => state.slippi);
-    // const [profile, setProfile] = React.useState<string>(currentProfile);
     const profileOptions = Object.keys(comboProfiles);
+    const initial: ComboConfiguration = JSON.parse(comboProfiles[currentProfile]);
 
-    let initial = comboFilter.getSettings();
-    const slippiSettings = comboProfiles[currentProfile];
-    if (slippiSettings) {
-        initial = comboFilter.updateSettings(JSON.parse(slippiSettings));
-    }
     const dispatch = useDispatch<Dispatch>();
-    const onSubmit = (values: Partial<ComboFilterSettings>) => {
-        // console.log(values);
+    const onSubmit = (values: Partial<ComboConfiguration>) => {
         const valueString = JSON.stringify(values);
         dispatch.slippi.saveProfile({
             name: currentProfile,
