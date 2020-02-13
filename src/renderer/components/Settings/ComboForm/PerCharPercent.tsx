@@ -31,7 +31,6 @@ padding: 5px 0;
 
 export const PerCharPercent: React.FC<{ name: string; values: any; push: any; pop: any }> = props => {
     const { name, values, push } = props;
-    console.log(values);
     const selectedChars: CharPercentOption[] = values[name] || [];
     const selectedCharIDs = selectedChars.filter(c => Boolean(c)).map(c => c.character);
     return (
