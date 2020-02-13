@@ -168,7 +168,7 @@ export const findCombos = async (filename: string, option?: FindComboOption, met
     let combos$: Observable<ComboEventPayload>;
 
     // Default to only combos
-    if (!option) {
+    if (option === undefined) {
         option = FindComboOption.OnlyCombos;
     }
 
@@ -186,7 +186,7 @@ export const findCombos = async (filename: string, option?: FindComboOption, met
             return [];
     }
 
-    combos$.subscribe(payload => {
+    const sub = combos$.subscribe(payload => {
         const { combo, settings } = payload;
         if (comboFilter.isCombo(combo, settings, metadata)) {
             combosList.push(combo);
@@ -194,6 +194,8 @@ export const findCombos = async (filename: string, option?: FindComboOption, met
     });
 
     await pipeFileContents(filename, slpStream);
+
+    sub.unsubscribe();
 
     console.log(`Found ${combosList.length} combos in ${filename}`);
     return combosList;
