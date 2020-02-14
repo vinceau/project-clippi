@@ -2,7 +2,7 @@ import * as React from "react";
 
 import styled, { css } from "styled-components";
 
-import { Tooltip } from "react-tippy";
+import { Tooltip, withTooltip } from "react-tippy";
 
 import { eventActionManager } from "@/actions";
 import { connectToOBS, setScene } from "@/lib/obs";
@@ -121,12 +121,15 @@ export const FileInput: React.FC<FileInputProps> = props => {
         }
     };
     const actionLabel = saveFile ? "Save as" : "Choose";
+    // const IconWithTooltip = withTooltip(NoMarginIcon, { title: "Open location" });
     return (
         <Input
             style={{ width: "100%" }}
             label={
                 <Button onClick={() => openFileOrParentFolder(filesPath)}>
-                    <NoMarginIcon name="folder open outline" />
+                    <Labelled title="Open location">
+                        <NoMarginIcon name="folder open outline" />
+                    </Labelled>
                 </Button>
             }
             value={filesPath}
