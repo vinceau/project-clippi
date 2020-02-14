@@ -6,8 +6,8 @@ import { Button, Header, Icon, Segment, Table } from "semantic-ui-react";
 import { soundPlayer } from "@/lib/sounds";
 
 import { Dispatch, dispatcher, iRootState } from "@/store";
-import { openFileOrParentFolder } from "../../lib/utils";
 import { shell } from "electron";
+import { openFileOrParentFolder } from "../../lib/utils";
 
 export const AddSoundButton = (props: any) => {
     return (

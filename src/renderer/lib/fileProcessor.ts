@@ -6,7 +6,7 @@ import fs from "fs-extra";
 import { ComboEventPayload, DolphinComboQueue, SlippiGame, SlpRealTime, SlpStream } from "@vinceau/slp-realtime";
 
 import { deleteFile, pipeFileContents } from "common/utils";
-import { merge, Observable } from "rxjs";
+import { Observable } from "rxjs";
 import { parseFileRenameFormat } from "./context";
 import { comboFilter } from "./realtime";
 

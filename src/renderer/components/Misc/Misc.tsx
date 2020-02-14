@@ -2,7 +2,7 @@ import * as React from "react";
 
 import styled, { css } from "styled-components";
 
-import { Tooltip, withTooltip } from "react-tippy";
+import { Tooltip } from "react-tippy";
 
 import { eventActionManager } from "@/actions";
 import { connectToOBS, setScene } from "@/lib/obs";
