@@ -14,11 +14,11 @@ Project Clippi is your portal into real-time game data. Detect an event → exec
 
 ![Project Clippi main screenshot](/docs/images/screenshot.png)
 
-<small>Detect events and execute actions!</small>
+*Detect events and execute actions!**=
 
 ![slp file processor screenshot](/docs/images/processor.png)
 
-<small>Built in replay processor helps you find combos and organise your SLP replays!</small>
+*Built in replay processor helps you find combos and organise your SLP replays!*
 
 </div>
 
