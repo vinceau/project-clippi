@@ -77,17 +77,12 @@ export const ComboFinder: React.FC<{}> = () => {
         {
             key: "onlyCombos",
             value: FindComboOption.OnlyCombos,
-            text: "combos only",
+            text: "combos",
         },
         {
             key: "onlyConversions",
             value: FindComboOption.OnlyConversions,
-            text: "conversions only",
-        },
-        {
-            key: "both",
-            value: FindComboOption.BothCombos,
-            text: "both combos and conversions",
+            text: "conversions",
         },
     ];
 
