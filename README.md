@@ -1,13 +1,29 @@
-<img src="build/icon.png" alt="Project Clippi Logo" width="86" height="86"> Project Clippi: A Melee Automation Framework
-======================================
+<p align="center">
+  <img src="build/icon.png" alt="Project Clippi Logo" width="100" height="100" />
+</p>
+<h1 align="center">Project Clippi</h1>
+
+<div align="center">
+
+A Melee Automation Framework
 
 [![Build Status](https://github.com/vinceau/project-clippi/workflows/build/badge.svg)](https://github.com/vinceau/project-clippi/actions?workflow=build)
 [![License](https://img.shields.io/badge/license-MIT-brightgreen)](https://github.com/vinceau/project-clippi/blob/master/LICENSE)
 
+![Project Clippi main screenshot](/docs/images/screenshot.png)
+![slp file processor screenshot](/docs/images/processor.png)
+
+</div>
 
 > Project Clippi is an automation framework for Super Smash Bros. Melee. Detect an event → execute an action. Someone did a sick combo? Twitch clip it. A new game is starting? Change OBS scenes. A player died? Play a sound. Everything is open source and fully-customisable. The possibilities are endless.
 
-![Project Clippi screenshot](/docs/images/screenshot.png)
+
+## Highlights
+
+- Detect in game events and execute arbitrary actions
+- Twitch and OBS integration
+- Customisable profiles for easy combo curation and combo video generation
+- SLP file renamer and organiser
 
 ## Download
 
