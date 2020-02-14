@@ -14,7 +14,7 @@ Project Clippi is your portal into real-time game data. Detect an event → exec
 
 ![Project Clippi main screenshot](/docs/images/screenshot.png)
 
-*Detect events and execute actions!**=
+*Detect events and execute actions!*
 
 ![slp file processor screenshot](/docs/images/processor.png)
 
