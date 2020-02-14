@@ -19,6 +19,8 @@ const showWindowsNotification = (message: string, title: string): void => {
     notifier.notify({
         title,
         message,
+        icon: path.join(app.getAppPath(), "build/icon.png"),  // Don't use SnoreToast icon
+        id: 1,  // Setting this ID lets us dismiss existing notifications immediately
     });
 };
 
