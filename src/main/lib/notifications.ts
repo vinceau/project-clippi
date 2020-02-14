@@ -16,10 +16,11 @@ export const showNotification = (message: string, title?: string): void => {
 };
 
 const showWindowsNotification = (message: string, title: string): void => {
+    const fileIcon = getStatic(`/images/icon.png`);
     notifier.notify({
         title,
         message,
-        icon: path.join(app.getAppPath(), "build/icon.png"),  // Don't use SnoreToast icon
+        icon: path.resolve(fileIcon),  // Don't use SnoreToast icon
         id: 1,  // Setting this ID lets us dismiss existing notifications immediately
     });
 };
@@ -32,7 +33,7 @@ const showElectronNotification = (message: string, title: string): void => {
 
     // Don't set the icon on MacOS or it will show up twice
     if (process.platform !== "darwin") {
-        options.icon = path.join(app.getAppPath(), "build/icon.png");
+        options.icon = getStatic(`/images/icon.png`);
     }
 
     const n = new Notification(options);
@@ -45,4 +46,15 @@ const showElectronNotification = (message: string, title: string): void => {
     };
     n.on("click", clickHandler);
     n.show();
+};
+
+const isDevelopment = process.env.NODE_ENV !== "production";
+
+const getStatic = (val: string): string => {
+    if (isDevelopment) {
+        return path.join(__dirname, "../../../static", val);
+    }
+    const appPath = app.getAppPath();
+    const imagePath = path.join(appPath, "../static");
+    return path.resolve(path.join(imagePath, val));
 };
