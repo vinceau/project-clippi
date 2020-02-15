@@ -2,34 +2,12 @@
   "productName": "Project Clippi",
   "name": "project-clippi",
   "version": "1.1.1",
-  "description": "Slippi automation framework",
+  "description": "A Melee Automation Framework",
   "license": "MIT",
   "author": {
     "name": "Vince Au",
     "email": "vinceau09@gmail.com",
     "url": "https://github.com/vinceau"
-  },
-  "build": {
-    "appId": "au.id.vince.clippi",
-    "files": [
-      "build/icon.*"
-    ],
-    "mac": {
-      "target": "dmg",
-      "category": "public.app-category.lifestyle"
-    },
-    "win": {
-      "icon": "build/icon.ico",
-      "target": [
-        "portable"
-      ]
-    },
-    "linux": {
-      "target": [
-        "AppImage"
-      ],
-      "category": "Office"
-    }
   },
   "scripts": {
     "start": "electron-webpack dev",
@@ -106,6 +84,28 @@
   "electronWebpack": {
     "renderer": {
       "webpackConfig": "webpack.renderer.additions.js"
+    }
+  },
+  "build": {
+    "appId": "au.id.vince.clippi",
+    "files": [
+      "build/icon.*"
+    ],
+    "mac": {
+      "target": "dmg",
+      "category": "public.app-category.lifestyle"
+    },
+    "win": {
+      "icon": "build/icon.ico",
+      "target": [
+        "portable"
+      ]
+    },
+    "linux": {
+      "target": [
+        "AppImage"
+      ],
+      "category": "Office"
     }
   }
 }
