@@ -7,10 +7,12 @@ import { updateEventActionManager } from "@/actions";
 import { mapConfigurationToFilterSettings } from "@/lib/profile";
 import { comboFilter } from "@/lib/realtime";
 import { soundPlayer } from "@/lib/sounds";
+import { transformer } from "./transformer";
 
 const persistPlugin = createRematchPersist({
     version: 1,
     blacklist: ["tempContainer"],
+    transforms: [transformer],
 });
 
 export const store = init({

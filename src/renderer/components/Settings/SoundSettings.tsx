@@ -7,6 +7,7 @@ import { soundPlayer } from "@/lib/sounds";
 
 import { Dispatch, dispatcher, iRootState } from "@/store";
 import { shell } from "electron";
+import { openFileOrParentFolder } from "../../lib/utils";
 
 export const AddSoundButton = (props: any) => {
     return (
@@ -27,6 +28,12 @@ export const SoundSettings: React.FC = () => {
             shell.openItem(filePath);
         }
     };
+    const onOpenFile = (name: string) => {
+        const filePath = soundPlayer.getSoundPath(name);
+        if (filePath) {
+            openFileOrParentFolder(filePath);
+        }
+    };
     const removeSound = (name: string) => {
         dispatch.filesystem.removeSound(name);
     };
@@ -42,7 +49,7 @@ export const SoundSettings: React.FC = () => {
                             Stop current sound
                     </Button>
                     </div>
-                    <SoundTable onPlay={onPlay} onRemove={removeSound} sounds={soundFiles} />
+                    <SoundTable onPathClick={onOpenFile} onPlay={onPlay} onRemove={removeSound} sounds={soundFiles} />
                 </>
                 :
                 <Segment placeholder>
@@ -60,16 +67,21 @@ export const SoundSettings: React.FC = () => {
 const SoundRow: React.FC<{
     name: string;
     path: string;
+    onPathClick: () => void;
     onPlay: () => void;
     onRemove: () => void;
 }> = props => {
+    const pathClick = (e: any) => {
+        e.preventDefault();
+        props.onPathClick();
+    };
     return (
         <Table.Row key={props.path}>
             <Table.Cell>
                 {props.name}
             </Table.Cell>
             <Table.Cell>
-                {props.path}
+                <a href="#" onClick={pathClick}>{props.path}</a>
             </Table.Cell>
             <Table.Cell>
                 <Icon name="play" link onClick={props.onPlay}/>
@@ -84,6 +96,7 @@ const SoundRow: React.FC<{
 const SoundTable: React.FC<{
     sounds: { [name: string]: string };
     onPlay: (name: string) => void;
+    onPathClick: (name: string) => void;
     onRemove: (name: string) => void;
 }> = props => {
     const rows: JSX.Element[] = [];
@@ -97,6 +110,7 @@ const SoundTable: React.FC<{
                 name={key}
                 path={value}
                 onPlay={() => props.onPlay(key)}
+                onPathClick={() => props.onPathClick(key)}
                 onRemove={() => props.onRemove(key)}
             />
         ));

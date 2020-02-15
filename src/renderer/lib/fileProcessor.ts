@@ -6,14 +6,13 @@ import fs from "fs-extra";
 import { ComboEventPayload, DolphinComboQueue, SlippiGame, SlpRealTime, SlpStream } from "@vinceau/slp-realtime";
 
 import { deleteFile, pipeFileContents } from "common/utils";
-import { merge, Observable } from "rxjs";
+import { Observable } from "rxjs";
 import { parseFileRenameFormat } from "./context";
 import { comboFilter } from "./realtime";
 
 export enum FindComboOption {
     OnlyCombos = 0,
     OnlyConversions = 1,
-    BothCombos = 2,
 }
 
 interface FileProcessorOptions {
@@ -98,9 +97,6 @@ export class FileProcessor {
 
         // Set up the combos observable in advance
         switch (opts.findComboOption) {
-            case FindComboOption.BothCombos:
-                this.combos$ = merge(this.realtime.combo.end$, this.realtime.combo.conversion$);
-                break;
             case FindComboOption.OnlyCombos:
                 this.combos$ = this.realtime.combo.end$;
                 break;
