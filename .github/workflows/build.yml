@@ -45,7 +45,7 @@ jobs:
       if: matrix.os != 'windows-latest'
       run: |
         mkdir artifacts
-        mv "dist/(*.exe,*.deb,*.AppImage,*.dmg)" artifacts || true
+        mv dist/{*.exe,*.deb,*.AppImage,*.dmg} artifacts || true
     - name: Prepare Windows artifacts
       if: matrix.os == 'windows-latest'
       run: |
