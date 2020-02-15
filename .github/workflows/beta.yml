@@ -1,0 +1,58 @@
+name: beta
+
+on:
+  push:
+    branches:
+    - 'beta'
+
+jobs:
+  release:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [macOS-latest, ubuntu-latest, windows-latest]
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v1
+
+      - name: Install Node.js, NPM and Yarn
+        uses: actions/setup-node@v1
+        with:
+          node-version: 10
+
+      - name: Cache node modules
+        uses: actions/cache@v1
+        id: cache
+        with:
+          path: node_modules
+          key: ${{ runner.OS }}-build-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.OS }}-build-${{ env.cache-name }}-
+            ${{ runner.OS }}-build-
+            ${{ runner.OS }}-
+    - name: Install dependencies
+      if: steps.cache.outputs.cache-hit != 'true'
+      run: |
+        yarn install
+    - name: Build App
+      run: |
+        yarn run dist --publish never
+      env:
+        ELECTRON_WEBPACK_APP_TWITCH_CLIENT_ID: ${{ secrets.TWITCH_CLIENT_ID }}
+    - name: Prepare artifacts
+      if: matrix.os != 'windows-latest'
+      run: |
+        mkdir artifacts
+        mv "dist/(*.exe,*.deb,*.AppImage,*.dmg)" artifacts || true
+    - name: Prepare Windows artifacts
+      if: matrix.os == 'windows-latest'
+      run: |
+        mkdir artifacts
+        mv dist/*.exe artifacts
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v1
+      with:
+        name: ${{matrix.os}}
+        path: artifacts
