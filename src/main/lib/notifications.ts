@@ -1,9 +1,7 @@
 import * as path from "path";
 
 import { app, BrowserWindow, Notification, NotificationConstructorOptions } from "electron";
-import WindowsToaster from "node-notifier/notifiers/toaster";
-
-const notifier = new WindowsToaster();
+import notifier from "node-notifier";
 
 export const showNotification = (message: string, title?: string): void => {
     const notificationTitle = title ? title : "Project Clippi";
