@@ -40,3 +40,19 @@ jobs:
         yarn run dist --publish never
       env:
         CI: true
+        ELECTRON_WEBPACK_APP_TWITCH_CLIENT_ID: ${{ secrets.TWITCH_CLIENT_ID }}
+    - name: Prepare artifacts
+      if: matrix.os != 'windows-latest'
+      run: |
+        mkdir artifacts
+        mv dist/{*.exe,*.deb,*.AppImage,*.dmg} artifacts || true
+    - name: Prepare Windows artifacts
+      if: matrix.os == 'windows-latest'
+      run: |
+        mkdir artifacts
+        mv dist/*.exe artifacts
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v1
+      with:
+        name: ${{matrix.os}}
+        path: artifacts
