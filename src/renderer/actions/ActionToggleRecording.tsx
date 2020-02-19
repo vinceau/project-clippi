@@ -3,8 +3,8 @@ import * as React from "react";
 import { ActionTypeGenerator, Context } from "@vinceau/event-actions";
 import { produce } from "immer";
 
-import { DelayInput, InlineDropdown, NotifyInput } from "@/components/Misc/InlineInputs";
-import { CustomIcon } from "@/components/Misc/Misc";
+import { DelayInput, InlineDropdown, NotifyInput } from "@/containers/Misc/InlineInputs";
+import { CustomIcon } from "@/containers/Misc/Misc";
 import { OBSRecordingAction, setRecordingState } from "@/lib/obs";
 import { capitalize, delay as waitMillis, notify, parseSecondsDelayValue } from "@/lib/utils";
 import { ActionComponent } from "./types";

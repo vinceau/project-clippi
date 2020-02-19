@@ -4,7 +4,7 @@ import { ActionTypeGenerator, Context } from "@vinceau/event-actions";
 import { produce } from "immer";
 import { Icon } from "semantic-ui-react";
 
-import { DelayInput, NotifyInput, SimpleInput } from "@/components/Misc/InlineInputs";
+import { DelayInput, NotifyInput, SimpleInput } from "@/containers/Misc/InlineInputs";
 import { delay as waitMillis, notify as sendNotification, parseSecondsDelayValue } from "@/lib/utils";
 import { createTwitchClip } from "common/twitch";
 import { dispatcher, store } from "../store";

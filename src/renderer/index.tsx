@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 
 import { Models, persistor, store } from "@/store";
-import { App } from "./components/App";
+import { App } from "./containers/App";
 
 // tslint:disable-next-line: no-import-side-effect
 import "./styles";
