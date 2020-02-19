@@ -10,7 +10,7 @@ import { actionComponents } from "@/actions";
 import { generateRandomEvent } from "@/lib/events";
 import { ActionEvent, testRunActions } from "@/lib/realtime";
 import { isDevelopment } from "@/lib/utils";
-import { InlineDropdown } from "../Misc/InlineInputs";
+import { InlineDropdown } from "../../components/InlineInputs";
 import { CodeBlock, Labelled } from "../Misc/Misc";
 import { ActionInput, AddActionInput } from "./ActionInputs";
 

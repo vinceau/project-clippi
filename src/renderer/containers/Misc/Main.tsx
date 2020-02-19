@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Automator } from "../Automator/Automator";
 import { SettingsPage } from "../Settings/Settings";
 import { ConnectionStatusDisplay, statusToColor, statusToLabel } from "./ConnectionStatus";
-import { InlineInput } from "./InlineInputs";
+import { InlineInput } from "../../components/InlineInputs";
 import { DevTools, Labelled } from "./Misc";
 
 const Header: React.FC<{

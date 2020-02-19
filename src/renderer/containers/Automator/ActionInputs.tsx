@@ -7,7 +7,7 @@ import { produce } from "immer";
 import { Icon } from "semantic-ui-react";
 
 import { actionComponents } from "@/actions";
-import { InlineDropdown } from "../Misc/InlineInputs";
+import { InlineDropdown } from "../../components/InlineInputs";
 import { Labelled } from "../Misc/Misc";
 
 const allActions = Object.keys(actionComponents);

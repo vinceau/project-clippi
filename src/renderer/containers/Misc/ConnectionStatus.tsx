@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 import { ConnectionStatus } from "@vinceau/slp-realtime";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,15 +8,17 @@ import { Button, Card, Divider, Grid, Header, Image, Input, Segment } from "sema
 
 import { streamManager } from "@/lib/realtime";
 import { Dispatch, dispatcher, iRootState } from "@/store";
-import { pulseAnimation } from "@/styles/animations";
-import { device } from "@/styles/device";
-import { CustomIcon, Labelled } from "./Misc";
 
+import { device } from "@/styles/device";
+import { Labelled } from "./Misc";
+import { CustomIcon } from "@/components/CustomIcon";
+
+import { ScanningDot } from "@/components/ScanningDot";
 import { getFolderPath } from "@/lib/utils";
 import dolphinLogoSVG from "@/styles/images/dolphin.svg";
 import slippiLogoSVG from "@/styles/images/slippi-logo.svg";
 import slippiLogo from "@/styles/images/slippi.png";
-import { BufferedInput } from "./InlineInputs";
+import { BufferedInput } from "../../components/InlineInputs";
 
 export const statusToLabel = (status: ConnectionStatus): string => {
     switch (status) {
@@ -43,26 +45,6 @@ export const statusToColor = (status: ConnectionStatus): string => {
         default:
             return "#00E461";
     }
-};
-
-export const ScanningDot: React.FC<{
-    color: string;
-    shouldPulse?: boolean;
-}> = props => {
-    const animated = css`
-    animation: ${pulseAnimation("6px", props.color)}
-    `;
-    const InnerScanningDot = styled.span`
-        height: 10px;
-        width: 10px;
-        background-color: ${props.color};
-        border-radius: 50%;
-        display: inline-block;
-        margin-right: 5px;
-        ${props.shouldPulse && animated}
-    `;
-    return (<InnerScanningDot />);
-
 };
 
 export const ConnectionStatusDisplay: React.FC<{

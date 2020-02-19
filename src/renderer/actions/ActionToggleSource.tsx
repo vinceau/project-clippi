@@ -5,8 +5,8 @@ import { produce } from "immer";
 import { useSelector } from "react-redux";
 import { Button } from "semantic-ui-react";
 
-import { DelayInput, InlineDropdown } from "@/containers/Misc/InlineInputs";
-import { CustomIcon } from "@/containers/Misc/Misc";
+import { DelayInput, InlineDropdown } from "@/components/InlineInputs";
+import { CustomIcon } from "@/components/CustomIcon";
 import { connectToOBSAndNotify, getAllSceneItems, setSourceItemVisibility } from "@/lib/obs";
 import { delay as waitMillis, notify } from "@/lib/utils";
 import { iRootState } from "@/store";
