@@ -12,7 +12,8 @@ import { Automator } from "../Automator/Automator";
 import { SettingsPage } from "../Settings/Settings";
 import { ConnectionStatusDisplay, statusToColor, statusToLabel } from "./ConnectionStatus";
 import { InlineInput } from "../../components/InlineInputs";
-import { DevTools, Labelled } from "./Misc";
+import { DevTools } from "./Misc";
+import { Labelled } from "@/components/Labelled";
 
 const Header: React.FC<{
     showSettings?: boolean;

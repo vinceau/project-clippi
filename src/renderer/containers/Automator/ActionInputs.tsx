@@ -8,7 +8,7 @@ import { Icon } from "semantic-ui-react";
 
 import { actionComponents } from "@/actions";
 import { InlineDropdown } from "../../components/InlineInputs";
-import { Labelled } from "../Misc/Misc";
+import { Labelled } from "../../components/Labelled";
 
 const allActions = Object.keys(actionComponents);
 

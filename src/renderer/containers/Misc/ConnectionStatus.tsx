@@ -10,7 +10,7 @@ import { streamManager } from "@/lib/realtime";
 import { Dispatch, dispatcher, iRootState } from "@/store";
 
 import { device } from "@/styles/device";
-import { Labelled } from "./Misc";
+import { Labelled } from "@/components/Labelled";
 import { CustomIcon } from "@/components/CustomIcon";
 
 import { ScanningDot } from "@/components/ScanningDot";

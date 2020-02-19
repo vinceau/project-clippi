@@ -16,7 +16,7 @@ import { device } from "@/styles/device";
 import OBSLogo from "@/styles/images/obs.svg";
 import SlippiLogo from "@/styles/images/slippi-logo.svg";
 import { CustomIcon } from "@/components/CustomIcon";
-import { Labelled } from "../Misc/Misc";
+import { Labelled } from "@/components/Labelled";
 import { ComboFinder } from "./ComboFinder";
 import { FilterOptions } from "./FilterOptions";
 import { OBSSettings } from "./OBSSettings";

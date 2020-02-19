@@ -7,7 +7,7 @@ import { produce } from "immer";
 import { Form, Icon, TextArea } from "semantic-ui-react";
 
 import { InlineDropdown } from "@/components/InlineInputs";
-import { FileInput } from "@/containers/Misc/Misc";
+import { FileInput } from "@/components/FileInput";
 import { notify as sendNotification } from "@/lib/utils";
 import { writeFile } from "common/utils";
 import { ActionComponent } from "./types";
