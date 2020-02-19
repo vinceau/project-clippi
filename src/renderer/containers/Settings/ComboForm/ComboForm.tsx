@@ -8,12 +8,12 @@ import { Accordion, Button, Form as SemanticForm, Icon } from "semantic-ui-react
 
 import { ComboConfiguration } from "@/lib/profile";
 import { CodeBlock } from "../../Misc/Misc";
-import { CharacterSelectAdapter } from "./CharacterSelect";
+import { CharacterSelectAdapter } from "../../../components/combos/CharacterSelect";
 import { SemanticCheckboxInput } from "./FormAdapters";
-import { NameTagForm } from "./NameTagForm";
-import { PercentageSlider } from "./PercentageSlider";
-import { PerCharPercent } from "./PerCharPercent";
-import { PortSelectAdapter } from "./PortSelection";
+import { NameTagForm } from "../../../components/combos/NameTagForm";
+import { PercentageSlider } from "../../../components/combos/PercentageSlider";
+import { PerCharPercent } from "../../../components/combos/PerCharPercent";
+import { PortSelectAdapter } from "../../../components/combos/PortSelection";
 
 type Values = Partial<ComboConfiguration>;
 

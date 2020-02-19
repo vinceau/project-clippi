@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { ComboConfiguration } from "@/lib/profile";
 import { Dispatch, iRootState } from "@/store";
 import { ComboForm } from "./ComboForm/ComboForm";
-import { ProfileSelector } from "./ComboForm/ProfileSelection";
+import { ProfileSelector } from "../../components/combos/ProfileSelection";
 
 export const FilterOptions = () => {
     const { currentProfile, comboProfiles } = useSelector((state: iRootState) => state.slippi);
