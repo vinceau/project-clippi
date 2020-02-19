@@ -1,13 +1,12 @@
 import * as React from "react";
 
 import { HashRouter as Router } from "react-router-dom";
-
-import { Main } from "./Misc/Main";
+import { MainView } from "@/views/main/MainView";
 
 export const App: React.FC = () => {
     return (
         <Router>
-            <Main />
+            <MainView />
         </Router>
     );
 };
