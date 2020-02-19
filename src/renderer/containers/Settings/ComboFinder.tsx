@@ -9,7 +9,7 @@ import { Dispatch, iRootState } from "@/store";
 import { secondsToString } from "common/utils";
 import { InlineDropdown } from "../../components/InlineInputs";
 import { FileInput } from "@/components/FileInput";
-import { ProcessSection } from "../Misc/ProcessSection";
+import { ProcessSection } from "../../components/ProcessSection";
 import { RenameFiles } from "./RenameFiles";
 
 const isWindows = process.platform === "win32";

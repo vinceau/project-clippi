@@ -6,7 +6,7 @@ import { format } from "timeago.js";
 
 import { Dispatch, iRootState } from "@/store";
 import { TwitchClip } from "@/store/models/twitch";
-import { TwitchConnectButton, TwitchUserStatus } from "../Misc/TwitchConnect";
+import { TwitchConnectButton, TwitchUserStatus } from "@/components/twitch";
 
 export const ClipsTable: React.FC = props => {
     return (

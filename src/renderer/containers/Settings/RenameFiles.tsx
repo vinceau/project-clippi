@@ -5,7 +5,7 @@ import { TextArea } from "semantic-ui-react";
 import styled from "styled-components";
 
 import { fileSystemInitialState } from "@/store/models/filesystem";
-import { SlideReveal } from "../Misc/ProcessSection";
+import { SlideReveal } from "../../components/ProcessSection";
 import { ContextOptions, TemplatePreview } from "../Misc/TemplatePreview";
 
 const Section = styled.div`
