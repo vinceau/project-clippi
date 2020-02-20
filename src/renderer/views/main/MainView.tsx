@@ -34,14 +34,15 @@ export const MainView: React.FC = props => {
     overflow: hidden;
     overflow-y: auto;
     height: 100vh;
-    background-color: #F9FAFB;
-    border-right: solid 1px #d4d4d5;
+    background-color: ${({ theme }) => theme.background2};
+    border-right: solid 1px ${({ theme }) => theme.secondary};
     `;
     const ContentColumn = styled.div`
     width: 100%;
     overflow: hidden;
     overflow-y: auto;
     height: 100vh;
+    background: ${({ theme }) => theme.background};
     `;
     return (
         <SettingsContainer>
