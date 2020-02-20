@@ -21,9 +21,9 @@ export const lightTheme: Theme = {
 export const darkTheme: Theme = {
     body: "#363537",
     text: "#FAFAFA",
-    secondary: "#14131A",
+    secondary: "#111329",
     toggleBorder: "#6B8096",
     gradient: "linear-gradient(#091236, #1E215D)",
-    background: "#1A1A22",
-    background2: "#17161F",
+    background: "#22222C",
+    background2: "#1C1D30",
 };

@@ -9,7 +9,7 @@ export const MenuIcon: React.FC = (props) => {
         height: 70px;
         width: 70px;
         color: white;
-        background-color: rgba(255, 255, 255, 0.1);
+        background-color: rgba(255, 255, 255, 0.05);
         display: flex;
         justify-content: center;
         align-items: center;
