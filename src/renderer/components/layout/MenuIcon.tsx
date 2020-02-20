@@ -5,7 +5,7 @@ import { Icon } from "semantic-ui-react";
 
 export const MenuIcon: React.FC = (props) => {
     const Outer = styled.div`
-        border-right: solid 4px white;
+        border-left: solid 4px white;
         height: 70px;
         width: 70px;
         color: white;
