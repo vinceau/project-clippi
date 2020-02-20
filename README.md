@@ -34,9 +34,9 @@ Project Clippi is your portal into real-time game data. Detect an event → exec
 
 Download Project Slippi for your operating system using the links below or check out [the releases page](https://github.com/vinceau/project-clippi/releases) for more information.
 
-* [Project Clippi for Windows](https://github.com/vinceau/project-clippi/releases/download/v1.1.1/Project-Clippi-1.1.1.exe)
-* [Project Clippi for MacOS](https://github.com/vinceau/project-clippi/releases/download/v1.1.1/Project-Clippi-1.1.1.dmg)
-* [Project Clippi for Linux](https://github.com/vinceau/project-clippi/releases/download/v1.1.1/Project-Clippi-1.1.1.AppImage)
+* [Project Clippi for Windows](https://github.com/vinceau/project-clippi/releases/latest/download/Project-Clippi-1.1.2.exe)
+* [Project Clippi for MacOS](https://github.com/vinceau/project-clippi/releases/latest/download/Project-Clippi-1.1.2.dmg)
+* [Project Clippi for Linux](https://github.com/vinceau/project-clippi/releases/latest/download/Project-Clippi-1.1.2.AppImage)
 
 ## Getting Started
 
