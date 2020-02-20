@@ -1,5 +1,7 @@
 import * as React from "react";
 
+import { MenuIcon } from "./MenuIcon";
+
 import styled from "styled-components";
 
 export const Menu: React.FC = () => {
@@ -11,7 +13,11 @@ export const Menu: React.FC = () => {
     `; 
     return (
         <Outer>
-            <div>Automator</div>
+            <div>
+                <MenuIcon/>
+                <MenuIcon/>
+                <MenuIcon/>
+            </div>
             <div>Settings</div>
         </Outer>
     );
