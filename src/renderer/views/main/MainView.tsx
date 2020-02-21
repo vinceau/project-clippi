@@ -30,7 +30,7 @@ export const MainView: React.FC = props => {
         z-index: 1;
     `;
     const MenuColumn = styled.div`
-    width: 80px;
+    width: 70px;
     overflow: hidden;
     overflow-y: auto;
     height: 100vh;
@@ -38,7 +38,7 @@ export const MainView: React.FC = props => {
     border-right: solid 1px ${({ theme }) => theme.secondary};
     `;
     const ContentColumn = styled.div`
-    width: 100%;
+    width: calc(100% - 70px);
     overflow: hidden;
     overflow-y: auto;
     height: 100vh;
