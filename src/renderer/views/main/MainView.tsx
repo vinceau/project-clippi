@@ -4,15 +4,17 @@ import * as React from "react";
 import {
     useHistory,
     useRouteMatch,
+    Switch,
+    Route,
 } from "react-router-dom";
 
 import { device } from "@/styles/device";
-import { Menu } from "@/components/layout/Menu";
+import { Menu } from "@/views/main/Menu";
 import { Icon } from "semantic-ui-react";
 import styled, { css } from "styled-components";
 
 export const MainView: React.FC = props => {
-    const { path } = useRouteMatch();
+    const match = useRouteMatch();
     const history = useHistory();
     const hiddenSettings = css`
     visibility: hidden;
@@ -42,18 +44,27 @@ export const MainView: React.FC = props => {
     overflow: hidden;
     overflow-y: auto;
     height: 100vh;
+    color: ${({ theme }) => theme.text};
     background: ${({ theme }) => theme.background};
     `;
     return (
         <SettingsContainer>
-            <div style={{display: "flex"}}>
+            <div style={{ display: "flex" }}>
                 <MenuColumn>
                     <Menu />
                 </MenuColumn>
                 <ContentColumn>
-                    <div style={{ height: "1500px", display: "block"}}>
-                        second column
-                    </div>
+                    <Switch>
+                        <Route path={`${match.path}/automator`}>
+                            <div>Automator</div>
+                        </Route>
+                        <Route path={`${match.path}/processor`}>
+                            <div>Processor</div>
+                        </Route>
+                        <Route path={`${match.path}/streamer`}>
+                            <div>Streamer</div>
+                        </Route>
+                    </Switch>
                 </ContentColumn>
             </div>
         </SettingsContainer>

@@ -5,6 +5,12 @@ import styled from "styled-components";
 import { Tooltip } from "react-tippy";
 import { Icon } from "semantic-ui-react";
 
+import {
+    BrowserRouter as Router,
+    Link,
+    Route
+} from "react-router-dom";
+
 export const MenuIcon: React.FC<{
     active?: boolean;
     label?: string;
@@ -35,5 +41,23 @@ export const MenuIcon: React.FC<{
                 {props.children}
             </Outer>
         </Tooltip>
+    );
+};
+
+export const MenuIconLink: React.FC<{
+    label: string;
+    to: string;
+}> = (props) => {
+    return (
+        <Link to={props.to}>
+            <Route
+                path={props.to}
+                children={({ match }) => (
+                    <MenuIcon active={Boolean(match)} label={props.label}>
+                        {props.children}
+                    </MenuIcon>
+                )}
+            />
+        </Link>
     );
 };
