@@ -7,3 +7,5 @@ import "semantic-ui-css/semantic.min.css";
 import "./index.scss";
 
 export * from "./theme";
+
+export * from "./themeManager";
