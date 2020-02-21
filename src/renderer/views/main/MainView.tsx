@@ -6,6 +6,7 @@ import {
     useRouteMatch,
     Switch,
     Route,
+    Redirect,
 } from "react-router-dom";
 
 import { Automator } from "@/containers/Automator/Automator";

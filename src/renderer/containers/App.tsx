@@ -2,7 +2,7 @@ import React from "react";
 
 import { hot } from "react-hot-loader/root";
 
-import { HashRouter as Router, Switch, Route, useHistory } from "react-router-dom";
+import { HashRouter as Router, Switch, Route, useHistory, Redirect } from "react-router-dom";
 import { MainView } from "@/views/main/MainView";
 import { ThemeProvider } from "styled-components";
 import { lightTheme, darkTheme, useTheme, ThemeMode } from "@/styles";
