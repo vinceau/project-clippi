@@ -1,4 +1,6 @@
-import * as React from "react";
+import React from "react";
+
+import { hot } from "react-hot-loader/root";
 
 import { HashRouter as Router } from "react-router-dom";
 import { MainView } from "@/views/main/MainView";
@@ -26,4 +28,4 @@ const App: React.FC = () => {
     );
 };
 
-export default App;
+export default hot(App);

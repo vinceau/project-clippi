@@ -3,7 +3,7 @@ import * as ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 
-import { Models, persistor, store } from "@/store";
+import { persistor, store } from "@/store";
 import App from "./containers/App";
 
 import { ThemeManager } from "./styles";
@@ -26,8 +26,3 @@ const render = (Component: any) =>
   );
 
 render(App);
-
-// Hot reloading
-if ((module as any).hot) {
-  (module as any).hot.accept("./containers/App", () => render(require("./containers/App").default));
-}
