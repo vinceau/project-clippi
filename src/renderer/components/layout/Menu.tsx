@@ -14,11 +14,13 @@ export const Menu: React.FC = () => {
     return (
         <Outer>
             <div>
-                <MenuIcon/>
-                <MenuIcon/>
-                <MenuIcon/>
+                <MenuIcon label="Automator" />
+                <MenuIcon label="Replay Processor" active={true}/>
+                <MenuIcon label="Stream Assistant" />
             </div>
-            <div>Settings</div>
+            <div>
+                <MenuIcon label="Settings"/>
+            </div>
         </Outer>
     );
 };
