@@ -15,9 +15,9 @@ export const Menu: React.FC = () => {
     return (
         <Outer>
             <div>
-                <MenuIcon label="Automator"><Icon name="pencil" /></MenuIcon>
+                <MenuIcon label="Automator"><Icon name="bolt" /></MenuIcon>
                 <MenuIcon label="Replay Processor" active={true}><Icon name="fast forward" /></MenuIcon>
-                <MenuIcon label="Stream Assistant"><Icon name="podcast" /></MenuIcon>
+                <MenuIcon label="Stream Assistant"><Icon name="tv" /></MenuIcon>
             </div>
             <div>
                 <MenuIcon label="Settings"><Icon name="cog" /></MenuIcon>
