@@ -4,34 +4,30 @@ import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 
 import { Models, persistor, store } from "@/store";
-import { App } from "./containers/App";
+import App from "./containers/App";
 
 import { ThemeManager } from "./styles";
 
 // tslint:disable-next-line: no-import-side-effect
 import "./styles";
 
-ReactDOM.render(
+const rootEl = document.getElementById("app");
+
+const render = (Component: any) =>
+  ReactDOM.render(
     <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <ThemeManager>
-            <App />
+            <Component />
           </ThemeManager>
         </PersistGate>
     </Provider>,
-    document.getElementById("app")
-);
+    rootEl
+  );
+
+render(App);
 
 // Hot reloading
 if ((module as any).hot) {
-  // Reload rematch models
-    (module as any).hot.accept("./store/models", () => {
-    Object.keys(Models).forEach(modelKey => {
-      console.log(`Reloading model ${modelKey}`);
-      store.model({
-        name: modelKey,
-        ...Models[modelKey]
-      });
-    });
-  });
+  (module as any).hot.accept("./containers/App", () => render(require("./containers/App").default));
 }

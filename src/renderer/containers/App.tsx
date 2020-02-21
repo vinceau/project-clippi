@@ -5,7 +5,7 @@ import { MainView } from "@/views/main/MainView";
 import { ThemeProvider } from "styled-components";
 import { lightTheme, darkTheme, useTheme, ThemeMode } from "@/styles";
 
-export const App: React.FC = () => {
+const App: React.FC = () => {
     const theme = useTheme();
 
     return (
@@ -25,3 +25,5 @@ export const App: React.FC = () => {
         </ThemeProvider>
     );
 };
+
+export default App;
