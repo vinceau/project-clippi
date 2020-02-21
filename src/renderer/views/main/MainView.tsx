@@ -8,6 +8,8 @@ import {
     Route,
 } from "react-router-dom";
 
+import { Automator } from "@/containers/Automator/Automator";
+import { ComboFinder } from "@/containers/Settings/ComboFinder";
 import { device } from "@/styles/device";
 import { Menu } from "@/views/main/Menu";
 import { Icon } from "semantic-ui-react";
@@ -56,10 +58,10 @@ export const MainView: React.FC = props => {
                 <ContentColumn>
                     <Switch>
                         <Route path={`${match.path}/automator`}>
-                            <div>Automator</div>
+                            <Automator />
                         </Route>
                         <Route path={`${match.path}/processor`}>
-                            <div>Processor</div>
+                            <ComboFinder />
                         </Route>
                         <Route path={`${match.path}/streamer`}>
                             <div>Streamer</div>

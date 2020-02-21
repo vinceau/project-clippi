@@ -30,11 +30,10 @@ const App: React.FC = () => {
                 </button>
                 <Router>
                     <Switch>
-                        <Route path="/settings">
-                            <Settings />
-                        </Route>
-                        <Route path="/">
-                            <MainView />
+                        <Route path="/main" component={MainView} />
+                        <Route path="/settings" component={Settings} />
+                        <Route exact path="/">
+                            <Redirect to="/main" />
                         </Route>
                     </Switch>
                 </Router>
