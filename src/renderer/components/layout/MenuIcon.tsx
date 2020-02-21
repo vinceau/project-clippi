@@ -13,20 +13,26 @@ export const MenuIcon: React.FC<{
         position: relative;
         height: 70px;
         width: 100%;
-        color: white;
+        color: rgba(255, 255, 255, 0.5);
         display: flex;
         justify-content: center;
         align-items: center;
         font-size: 25px;
         ${props.active && `
+        color: white;
         border-left: solid 4px white;
-        background-color: rgba(255, 255, 255, 0.05);
+        background-color: rgba(255, 255, 255, 0.1);
         `}
+
+        &:hover {
+            color: rgba(255, 255, 255, 0.75);
+            background-color: rgba(255, 255, 255, 0.05);
+        }
     `;
     return (
         <Tooltip title={props.label} size="big" distance={-70} duration={200} position="right" style={{ display: "inline-block", width: "100%" }}>
             <Outer>
-                <Icon name="fast forward" />
+                {props.children}
             </Outer>
         </Tooltip>
     );
