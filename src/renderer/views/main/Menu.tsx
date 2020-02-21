@@ -29,7 +29,7 @@ export const Menu: React.FC = () => {
                 <MenuIconLink to={`${match.url}/streamer`} label="Stream Assistant"><Icon name="tv" /></MenuIconLink>
             </div>
             <div>
-                <MenuIcon label="Settings"><Icon name="cog" /></MenuIcon>
+                <Link to="/settings"><MenuIcon label="Settings"><Icon name="cog" /></MenuIcon></Link>
             </div>
         </Outer>
     );
