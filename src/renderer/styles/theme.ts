@@ -4,6 +4,7 @@ export interface Theme {
     secondary: string;
     toggleBorder: string;
     gradient: string;
+    foreground: string;
     background: string;
     background2: string;
 }
@@ -14,6 +15,7 @@ export const lightTheme: Theme = {
     toggleBorder: "#FFF",
     secondary: "#FFF",
     gradient: "linear-gradient(#39598A, #79D7ED)",
+    foreground: "#000",
     background: "#FFF",
     background2: "#FFF",
 };
@@ -24,6 +26,7 @@ export const darkTheme: Theme = {
     secondary: "#111329",
     toggleBorder: "#6B8096",
     gradient: "linear-gradient(#091236, #1E215D)",
+    foreground: "#FFF",
     background: "#22222C",
     background2: "#1C1D30",
 };
