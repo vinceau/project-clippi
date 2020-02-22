@@ -1,7 +1,7 @@
-import * as React from "react";
-
+import React from "react";
 import styled from "styled-components";
 
+import { transparentize } from "polished";
 import { Link, Route } from "react-router-dom";
 import { Tooltip } from "react-tippy";
 
@@ -11,20 +11,21 @@ const OuterMenuIcon = styled.div<{
     position: relative;
     height: 70px;
     width: 100%;
-    color: rgba(255, 255, 255, 0.5);
+    color: ${({ theme }) => transparentize(0.5, theme.foreground)};
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 25px;
+    border-left: solid 4px transparent;
     ${(props) => props.active && `
-    color: white;
-    border-left: solid 4px white;
-    background-color: rgba(255, 255, 255, 0.1);
+    color: ${props.theme.foreground};
+    border-left-color: ${props.theme.foreground};
+    background-color: ${transparentize(0.9, props.theme.foreground)};
     `}
 
     &:hover {
-        color: rgba(255, 255, 255, 0.75);
-        background-color: rgba(255, 255, 255, 0.05);
+        color: ${({theme}) => transparentize(0.25, theme.foreground)};
+        background-color: ${({theme}) => transparentize(0.95, theme.foreground)};
     }
 `;
 
