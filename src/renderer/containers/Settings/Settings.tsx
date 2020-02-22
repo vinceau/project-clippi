@@ -32,6 +32,18 @@ export const SettingsPage: React.FC<{
     const history = useHistory();
     const [activeItem, setActiveItem] = React.useState("bio");
 
+    // Close settings page on Escape
+    const escFunction = React.useCallback((event) => {
+        if (event.keyCode === 27) {
+            props.onClose();
+        }
+    }, []);
+
+    React.useEffect(() => {
+        document.addEventListener("keydown", escFunction, false);
+        return () => document.removeEventListener("keydown", escFunction, false);
+    }, []);
+
     const handleItemClick = (_: any, { name }: any) => {
         history.push(`${path}/${name}`);
         setActiveItem(name);
