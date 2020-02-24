@@ -40,14 +40,14 @@ export const MainView: React.FC = props => {
     overflow-y: auto;
     height: 100vh;
     background-color: ${({ theme }) => theme.background2};
-    border-right: solid 1px ${({ theme }) => theme.secondary};
+    border-right: solid 1px ${({ theme }) => theme.background3};
     `;
     const ContentColumn = styled.div`
     width: calc(100% - 70px);
     overflow: hidden;
     overflow-y: auto;
     height: 100vh;
-    color: ${({ theme }) => theme.text};
+    color: ${({ theme }) => theme.foreground};
     background: ${({ theme }) => theme.background};
     `;
     return (

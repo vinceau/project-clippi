@@ -1,32 +1,32 @@
 export interface Theme {
-    body: string;
-    text: string;
+    primary: string;
     secondary: string;
-    toggleBorder: string;
-    gradient: string;
     foreground: string;
+    foreground2: string;
+    foreground3: string;
     background: string;
     background2: string;
+    background3: string;
 }
 
 export const lightTheme: Theme = {
-    body: "#E2E2E2",
-    text: "#363537",
-    toggleBorder: "#FFF",
-    secondary: "#FFF",
-    gradient: "linear-gradient(#39598A, #79D7ED)",
+    primary: "#FFF",
+    secondary: "#000",
     foreground: "#000",
+    foreground2: "#111329",
+    foreground3: "#ddd",
     background: "#FFF",
-    background2: "#FFF",
+    background2: "#F9FAFB",
+    background3: "#d4d4d5",
 };
 
 export const darkTheme: Theme = {
-    body: "#363537",
-    text: "#FAFAFA",
-    secondary: "#111329",
-    toggleBorder: "#6B8096",
-    gradient: "linear-gradient(#091236, #1E215D)",
-    foreground: "#FFF",
+    primary: "#000",
+    secondary: "#FFF",
+    foreground: "#cbcbce",
+    foreground2: "#67697E",
+    foreground3: "#4A4C60",
     background: "#22222C",
     background2: "#1C1D30",
+    background3: "#111329",
 };

@@ -2,6 +2,7 @@ import * as React from "react";
 
 import { version } from "../../../../package.json";
 
+import { useTheme } from "@/styles";
 import {
     Route,
     Switch,
@@ -23,6 +24,16 @@ import { OBSSettings } from "./OBSSettings";
 import { SlippiPage } from "./SlippiPage";
 import { SoundSettings } from "./SoundSettings";
 import { TwitchIntegration } from "./TwitchIntegration";
+import { transparentize } from "polished";
+
+const StyledMenuItem = styled(Menu.Item)`
+&&& {
+    color: ${({theme}) => theme.foreground} !important;
+    &.active, &:not(.header):hover {
+        background: ${({theme}) => transparentize(0.3, theme.foreground3)} !important;
+    }
+}
+`;
 
 export const SettingsPage: React.FC<{
     showSettings: boolean;
@@ -69,8 +80,9 @@ export const SettingsPage: React.FC<{
     overflow: hidden;
     overflow-y: auto;
     height: 100vh;
-    background-color: #F9FAFB;
-    border-right: solid 1px #d4d4d5;
+    color: ${({theme}) => theme.foreground};
+    background-color: ${({theme}) => theme.background2};
+    border-right: solid 1px ${({theme}) => theme.background3};
     @media ${device.mobileL} {
         flex-basis: 30%;
     }
@@ -128,6 +140,7 @@ export const SettingsPage: React.FC<{
         left: 0;
         text-align: right;
     `;
+    const { theme } = useTheme();
     return (
         <SettingsContainer>
             <VersionSpan>Version {version}</VersionSpan>
@@ -136,42 +149,36 @@ export const SettingsPage: React.FC<{
                     <Icon name="close" />
                 </Labelled>
             </CloseButton>
-            <div style={{display: "flex"}}>
+            <div style={{ display: "flex" }}>
                 <MenuColumn>
                     <StyledMenu secondary={true} vertical={true}>
-                        <Menu.Item header>Tools</Menu.Item>
-                        <Menu.Item
-                            name="combo-finder"
-                            active={activeItem === "combo-finder"}
-                            onClick={handleItemClick}
-                        ><Icon name="fast forward" />Replay Processor</Menu.Item>
-                        <Menu.Item header>Settings</Menu.Item>
-                        <Menu.Item
+                        <StyledMenuItem header>Automator Settings</StyledMenuItem>
+                        <StyledMenuItem
                             name="combo-settings"
                             active={activeItem === "combo-settings"}
                             onClick={handleItemClick}
-                        ><Icon name="filter" />Combo Filter</Menu.Item>
-                        <Menu.Item
+                        ><Icon name="filter" />Combo Filter</StyledMenuItem>
+                        <StyledMenuItem
                             name="sound-settings"
                             active={activeItem === "sound-settings"}
                             onClick={handleItemClick}
-                        ><Icon name="volume down" />Sounds</Menu.Item>
-                        <Menu.Item header>Connections</Menu.Item>
-                        <Menu.Item
+                        ><Icon name="volume down" />Sounds</StyledMenuItem>
+                        <StyledMenuItem header>Connection Settings</StyledMenuItem>
+                        <StyledMenuItem
                             name="slippi-settings"
                             active={activeItem === "slippi-settings"}
                             onClick={handleItemClick}
-                        ><CustomIcon image={SlippiLogo} color="#353636" />Slippi Connection</Menu.Item>
-                        <Menu.Item
+                        ><CustomIcon image={SlippiLogo} color={theme.foreground} />Slippi Connection</StyledMenuItem>
+                        <StyledMenuItem
                             name="obs-settings"
                             active={activeItem === "obs-settings"}
                             onClick={handleItemClick}
-                        ><CustomIcon image={OBSLogo} color="#353636" />OBS Configuration</Menu.Item>
-                        <Menu.Item
+                        ><CustomIcon image={OBSLogo} color={theme.foreground} />OBS Configuration</StyledMenuItem>
+                        <StyledMenuItem
                             name="account-settings"
                             active={activeItem === "account-settings"}
                             onClick={handleItemClick}
-                        ><Icon name="twitch" />Twitch Integration</Menu.Item>
+                        ><Icon name="twitch" />Twitch Integration</StyledMenuItem>
                     </StyledMenu>
                 </MenuColumn>
                 <ContentColumn>
@@ -179,7 +186,6 @@ export const SettingsPage: React.FC<{
                         <Switch>
                             <Route path={`${path}/obs-settings`} component={OBSSettings} />
                             <Route path={`${path}/slippi-settings`} component={SlippiPage} />
-                            <Route path={`${path}/combo-finder`} component={ComboFinder} />
                             <Route path={`${path}/combo-settings`} component={FilterOptions} />
                             <Route path={`${path}/account-settings`} component={TwitchIntegration} />
                             <Route path={`${path}/sound-settings`} component={SoundSettings} />
