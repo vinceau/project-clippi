@@ -22,12 +22,6 @@ const App: React.FC = () => {
     return (
         <ThemeProvider theme={theme.themeName === ThemeMode.LIGHT ? lightTheme : darkTheme}>
             <div>
-                <button onClick={() => {
-                    console.log("buton clicked");
-                    theme.toggle();
-                }} style={{ position: "absolute", zIndex: 99, right: 0 }}>
-                    {theme.themeName === "dark" ? "Switch to Light Mode" : "Switch to Dark Mode"}
-                </button>
                 <Router>
                     <Switch>
                         <Route path="/main" component={MainView} />

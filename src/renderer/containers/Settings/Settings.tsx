@@ -24,6 +24,8 @@ import { OBSSettings } from "./OBSSettings";
 import { SlippiPage } from "./SlippiPage";
 import { SoundSettings } from "./SoundSettings";
 import { TwitchIntegration } from "./TwitchIntegration";
+import { Appearance } from "@/views/settings/Appearance";
+
 import { transparentize } from "polished";
 
 const StyledMenuItem = styled(Menu.Item)`
@@ -179,6 +181,12 @@ export const SettingsPage: React.FC<{
                             active={activeItem === "account-settings"}
                             onClick={handleItemClick}
                         ><Icon name="twitch" />Twitch Integration</StyledMenuItem>
+                        <StyledMenuItem header>App Settings</StyledMenuItem>
+                        <StyledMenuItem
+                            name="appearance-settings"
+                            active={activeItem === "appearance-settings"}
+                            onClick={handleItemClick}
+                        ><Icon name="paint brush" />Appearance</StyledMenuItem>
                     </StyledMenu>
                 </MenuColumn>
                 <ContentColumn>
@@ -186,6 +194,7 @@ export const SettingsPage: React.FC<{
                         <Switch>
                             <Route path={`${path}/obs-settings`} component={OBSSettings} />
                             <Route path={`${path}/slippi-settings`} component={SlippiPage} />
+                            <Route path={`${path}/appearance-settings`} component={Appearance} />
                             <Route path={`${path}/combo-settings`} component={FilterOptions} />
                             <Route path={`${path}/account-settings`} component={TwitchIntegration} />
                             <Route path={`${path}/sound-settings`} component={SoundSettings} />
