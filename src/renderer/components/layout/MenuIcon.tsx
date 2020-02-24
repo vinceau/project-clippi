@@ -20,12 +20,12 @@ const OuterMenuIcon = styled.div<{
     ${(props) => props.active && `
     color: ${props.theme.foreground};
     border-left-color: ${props.theme.foreground};
-    background-color: ${transparentize(0.9, props.theme.foreground)};
+    background-color: ${transparentize(0.7, props.theme.foreground)};
     `}
 
     &:hover {
         color: ${({theme}) => transparentize(0.25, theme.foreground)};
-        background-color: ${({theme}) => transparentize(0.95, theme.foreground)};
+        background-color: ${({theme}) => transparentize(0.85, theme.foreground)};
     }
 `;
 
