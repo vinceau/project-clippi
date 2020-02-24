@@ -14,7 +14,7 @@ export const Appearance: React.FC = () => {
             <Checkbox
                 checked={themeName === "dark"}
                 onChange={(_, data) => onOpenChange(Boolean(data.checked))}
-                label="Enable dark mode"
+                label="Use Dark Theme"
                 toggle={true}
             />
         </div>
