@@ -2,18 +2,11 @@ import React from "react";
 
 import { hot } from "react-hot-loader/root";
 
-import { HashRouter as Router, Switch, Route, useHistory, Redirect } from "react-router-dom";
+import { HashRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import { MainView } from "@/views/main/MainView";
+import { SettingsView } from "@/views/settings/SettingsView";
 import { ThemeProvider } from "styled-components";
 import { ThemeManager, lightTheme, darkTheme, useTheme, ThemeMode } from "@/styles";
-import { SettingsPage } from "@/containers/Settings/Settings";
-
-const Settings = () => {
-    const history = useHistory();
-    return (
-        <SettingsPage showSettings={true} onClose={() => history.push("/")} />
-    );
-};
 
 const App: React.FC = () => {
     const theme = useTheme();
@@ -22,7 +15,7 @@ const App: React.FC = () => {
             <Router>
                 <Switch>
                     <Route path="/main" component={MainView} />
-                    <Route path="/settings" component={Settings} />
+                    <Route path="/settings" component={SettingsView} />
                     <Route exact path="/">
                         <Redirect to="/main" />
                     </Route>
