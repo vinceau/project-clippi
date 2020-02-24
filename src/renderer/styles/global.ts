@@ -19,5 +19,27 @@ export const GlobalStyle = createGlobalStyle<{
     {
         color: ${({theme}) => theme.foreground} !important;
     }
+
+    .ui.form input,
+    .ui.selection.dropdown {
+        background: ${({theme}) => theme.background};
+        color: ${({theme}) => theme.foreground};
+    }
+
+    .ui.button {
+        background: ${({theme}) => theme.foreground2} none;
+        color: ${({theme}) => theme.background2};
+    }
+
+    .ui.checkbox input~.box:before,
+    .ui.checkbox input~label:before {
+        background: ${({theme}) => theme.foreground3};
+    }
+    .ui.checkbox .box:after,
+    .ui.checkbox label:after {
+        color: ${({theme}) => theme.foreground} !important;
+    }
+
+
   }
 `;

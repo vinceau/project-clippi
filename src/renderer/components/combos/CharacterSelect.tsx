@@ -6,6 +6,7 @@ import styled from "styled-components";
 
 import { CharacterIcon } from "../CharacterIcon";
 import { CharacterLabel } from "./CharacterLabel";
+import { useTheme } from "@/styles";
 
 export const sortedCharacterInfos: CharacterInfo[] = getAllCharacters()
   .sort((a, b) => {
@@ -57,6 +58,7 @@ export const CharacterSelect = (props: any) => {
   const newValue = formatValue(value);
   const newOnChange = (v: any) => onChange(parseValue(v));
   const selectOptions = options ? options : sortedCharacterIDs;
+  const mainTheme = useTheme();
   return (<Select
     {...rest}
     width="100%"
@@ -65,6 +67,7 @@ export const CharacterSelect = (props: any) => {
     options={selectOptions.map(valueToOption)}
     searchable={true}
     components={{ ...components, MultiValueRemove, Option, SingleValue }}
+    menuColor={mainTheme.theme.background}
     styles={{
       multiValue: (base: any) => ({
         ...base,
