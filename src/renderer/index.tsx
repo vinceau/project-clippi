@@ -6,10 +6,13 @@ import { PersistGate } from "redux-persist/integration/react";
 import { persistor, store } from "@/store";
 import App from "./containers/App";
 
-import { ThemeManager } from "./styles";
+// React-tippy styles
+import "react-tippy/dist/tippy.css";
 
-// tslint:disable-next-line: no-import-side-effect
-import "./styles";
+// Semantic UI styles
+import "semantic-ui-css/semantic.min.css";
+
+import "@/styles/index.scss";
 
 const rootEl = document.getElementById("app");
 
@@ -17,9 +20,7 @@ const render = (Component: any) =>
   ReactDOM.render(
     <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          <ThemeManager>
-            <Component />
-          </ThemeManager>
+          <Component />
         </PersistGate>
     </Provider>,
     rootEl
