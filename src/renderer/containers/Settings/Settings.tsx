@@ -73,7 +73,7 @@ export const SettingsPage: React.FC<{
         top: 0;
         visibility: visible;
         overflow: auto;
-        background-color: rgba(255, 255, 255, 1);
+        background-color: ${({theme}) => theme.background2};
         z-index: 1;
         ${!props.showSettings && hiddenSettings}
     `;
@@ -83,7 +83,7 @@ export const SettingsPage: React.FC<{
     overflow-y: auto;
     height: 100vh;
     color: ${({theme}) => theme.foreground};
-    background-color: ${({theme}) => theme.background2};
+    background-color: ${({theme}) => theme.background};
     border-right: solid 1px ${({theme}) => theme.background3};
     @media ${device.mobileL} {
         flex-basis: 30%;

@@ -6,12 +6,13 @@ import { HashRouter as Router, Switch, Route, Redirect } from "react-router-dom"
 import { MainView } from "@/views/main/MainView";
 import { SettingsView } from "@/views/settings/SettingsView";
 import { ThemeProvider } from "styled-components";
-import { ThemeManager, lightTheme, darkTheme, useTheme, ThemeMode } from "@/styles";
+import { GlobalStyle, ThemeManager, lightTheme, darkTheme, useTheme, ThemeMode } from "@/styles";
 
 const App: React.FC = () => {
     const theme = useTheme();
     return (
         <ThemeProvider theme={theme.themeName === ThemeMode.LIGHT ? lightTheme : darkTheme}>
+            <GlobalStyle />
             <Router>
                 <Switch>
                     <Route path="/main" component={MainView} />

@@ -18,21 +18,12 @@ import styled, { css } from "styled-components";
 
 export const MainView: React.FC = props => {
     const match = useRouteMatch();
-    const history = useHistory();
-    const hiddenSettings = css`
-    visibility: hidden;
-    overflow: hidden;
-    height: 0;
-    `;
     const SettingsContainer = styled.div`
         position: absolute;
         width: 100%;
         height: 100%;
         top: 0;
-        visibility: visible;
         overflow: auto;
-        background-color: rgba(255, 255, 255, 1);
-        z-index: 1;
     `;
     const MenuColumn = styled.div`
     width: 70px;
