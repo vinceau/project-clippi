@@ -11,18 +11,20 @@ import { GlobalStyle, ThemeManager, lightTheme, darkTheme, useTheme, ThemeMode }
 const App: React.FC = () => {
     const theme = useTheme();
     return (
-        <ThemeProvider theme={theme.themeName === ThemeMode.LIGHT ? lightTheme : darkTheme}>
-            <GlobalStyle />
-            <Router>
-                <Switch>
-                    <Route path="/main" component={MainView} />
-                    <Route path="/settings" component={SettingsView} />
-                    <Route exact path="/">
-                        <Redirect to="/main" />
-                    </Route>
-                </Switch>
-            </Router>
-        </ThemeProvider>
+        <div className={theme.themeName}>
+            <ThemeProvider theme={theme.themeName === ThemeMode.LIGHT ? lightTheme : darkTheme}>
+                <GlobalStyle />
+                <Router>
+                    <Switch>
+                        <Route path="/main" component={MainView} />
+                        <Route path="/settings" component={SettingsView} />
+                        <Route exact path="/">
+                            <Redirect to="/main" />
+                        </Route>
+                    </Switch>
+                </Router>
+            </ThemeProvider>
+        </div>
     );
 };
 

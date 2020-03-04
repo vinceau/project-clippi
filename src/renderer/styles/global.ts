@@ -1,6 +1,8 @@
 import { createGlobalStyle } from "styled-components";
 
-import { Theme } from "./theme";
+import { transparentize } from "polished";
+
+import { Theme, ThemeMode } from "./theme";
 
 export const GlobalStyle = createGlobalStyle<{
     theme: Theme,
@@ -9,7 +11,7 @@ export const GlobalStyle = createGlobalStyle<{
     color: ${({ theme }) => theme.foreground };
   }
 
-  #app {
+  #app .${ThemeMode.DARK} {
     .ui.accordion .title:not(.ui),
     .ui.form .field>label,
     .ui.checkbox input:focus~label,
@@ -27,7 +29,7 @@ export const GlobalStyle = createGlobalStyle<{
     }
 
     .ui.button {
-        background: ${({theme}) => theme.foreground2} none;
+        background: ${({theme}) => transparentize(0.2, theme.foreground2)} none;
         color: ${({theme}) => theme.background2};
     }
 
@@ -39,7 +41,6 @@ export const GlobalStyle = createGlobalStyle<{
     .ui.checkbox label:after {
         color: ${({theme}) => theme.foreground} !important;
     }
-
 
   }
 `;

@@ -1,11 +1,6 @@
 import React from "react";
 
-import { darkTheme, lightTheme, Theme } from "./theme";
-
-export enum ThemeMode {
-    DARK = "dark",
-    LIGHT = "light",
-}
+import { darkTheme, lightTheme, Theme, ThemeMode } from "./theme";
 
 const THEME_STORAGE_KEY = "theme";
 

@@ -1,3 +1,8 @@
+export enum ThemeMode {
+    DARK = "dark",
+    LIGHT = "light",
+}
+
 export interface Theme {
     primary: string;
     secondary: string;
