@@ -2,7 +2,6 @@
 import * as React from "react";
 
 import {
-    useHistory,
     useRouteMatch,
     Switch,
     Route,
@@ -10,11 +9,8 @@ import {
 } from "react-router-dom";
 
 import { AutomatorView } from "./AutomatorView";
-import { ComboFinder } from "@/containers/Settings/ComboFinder";
-import { device } from "@/styles/device";
-import { Menu } from "@/views/main/Menu";
-import { Icon } from "semantic-ui-react";
-import styled, { css } from "styled-components";
+import { Menu } from "@/containers/Menu";
+import styled from "styled-components";
 import { ReplayProcessorView } from "./ReplayProcessorView";
 
 export const MainView: React.FC = () => {
