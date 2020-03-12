@@ -17,6 +17,7 @@ export interface FileSystemState {
     includeSubFolders: boolean;
     deleteFilesWithNoCombos: boolean;
     findCombos: boolean;
+    findComboProfile: string;
     findComboOption: FindComboOption;
     renameFiles: boolean;
     renameFormat: string;
@@ -31,6 +32,7 @@ export const fileSystemInitialState: FileSystemState = {
     includeSubFolders: false,
     deleteFilesWithNoCombos: false,
     findCombos: true,
+    findComboProfile: "default",
     findComboOption: FindComboOption.OnlyCombos,
     renameFiles: false,
     renameFormat: "{{YY}}{{MM}}{{DD}}_{{HH}}{{mm}}_{{playerShortChar}}_v_{{opponentShortChar}}_({{shortStage}}).slp",
@@ -62,6 +64,9 @@ export const filesystem = createModel({
         }),
         setFilesPath: (state: FileSystemState, payload: string): FileSystemState => produce(state, draft => {
             draft.filesPath = payload;
+        }),
+        setFindComboProfile: (state: FileSystemState, payload: string): FileSystemState => produce(state, draft => {
+            draft.findComboProfile = payload;
         }),
         setFindComboOption: (state: FileSystemState, payload: FindComboOption): FileSystemState => produce(state, draft => {
             draft.findComboOption = payload;

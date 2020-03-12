@@ -15,14 +15,16 @@ import { RenameFiles } from "./RenameFiles";
 const isWindows = process.platform === "win32";
 
 export const ComboFinder: React.FC<{}> = () => {
+    const { comboProfiles } = useSelector((state: iRootState) => state.slippi);
     const { comboFinderPercent, comboFinderLog, comboFinderProcessing } = useSelector((state: iRootState) => state.tempContainer);
     const { openCombosWhenDone, filesPath, combosFilePath, includeSubFolders, deleteFilesWithNoCombos,
-        renameFiles, findCombos, findComboOption, renameFormat } = useSelector((state: iRootState) => state.filesystem);
+        renameFiles, findCombos, findComboOption, renameFormat, findComboProfile } = useSelector((state: iRootState) => state.filesystem);
     const dispatch = useDispatch<Dispatch>();
     const setRenameFormat = (format: string) => dispatch.filesystem.setRenameFormat(format);
     const setRenameFiles = (checked: boolean) => dispatch.filesystem.setRenameFiles(checked);
     const setFindCombos = (checked: boolean) => dispatch.filesystem.setFindCombos(checked);
     const setFindComboOption = (val: FindComboOption) => dispatch.filesystem.setFindComboOption(val);
+    const setFindComboProfile = (val: string) => dispatch.filesystem.setFindComboProfile(val);
     const onSubfolder = (checked: boolean) => dispatch.filesystem.setIncludeSubFolders(checked);
     const onSetDeleteFiles = (checked: boolean) => dispatch.filesystem.setFileDeletion(checked);
     const onSetOpenCombosWhenDone = (checked: boolean) => dispatch.filesystem.setOpenCombosWhenDone(checked);
@@ -86,6 +88,18 @@ export const ComboFinder: React.FC<{}> = () => {
         },
     ];
 
+    const allProfiles = Object.keys(comboProfiles);
+    const profileOptions = allProfiles.map(profileName => (
+        {
+            key: profileName,
+            value: profileName,
+            text: profileName,
+        }
+    ));
+    if (!allProfiles.includes(findComboProfile)) {
+        setFindComboProfile(allProfiles[0]);
+    }
+
     return (
         <div>
             <Form>
@@ -116,6 +130,13 @@ export const ComboFinder: React.FC<{}> = () => {
                             onChange={setFindComboOption}
                             options={options}
                         />
+                        <span> using the </span>
+                        <InlineDropdown
+                            value={findComboProfile}
+                            onChange={setFindComboProfile}
+                            options={profileOptions}
+                        />
+                        <span> combo profile</span>
                     </div>
                     <Form.Field>
                         <label>Output File</label>
