@@ -6,6 +6,7 @@ import {
     Switch,
     useHistory,
     useRouteMatch,
+    Redirect,
 } from "react-router-dom";
 import { Icon, Menu } from "semantic-ui-react";
 import styled, { css } from "styled-components";
@@ -198,6 +199,9 @@ export const SettingsPage: React.FC<{
                             <Route path={`${path}/combo-settings`} component={FilterOptions} />
                             <Route path={`${path}/account-settings`} component={TwitchIntegration} />
                             <Route path={`${path}/sound-settings`} component={SoundSettings} />
+                            <Route exact path={path}>
+                                <Redirect to={`${path}/combo-settings`} />
+                            </Route>
                         </Switch>
                     </div>
                 </ContentColumn>
