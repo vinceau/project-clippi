@@ -9,7 +9,7 @@ import {
     Redirect,
 } from "react-router-dom";
 
-import { Automator } from "@/containers/Automator/Automator";
+import { AutomatorView } from "./AutomatorView";
 import { ComboFinder } from "@/containers/Settings/ComboFinder";
 import { device } from "@/styles/device";
 import { Menu } from "@/views/main/Menu";
@@ -50,7 +50,7 @@ export const MainView: React.FC = props => {
                 <ContentColumn>
                     <Switch>
                         <Route path={`${match.path}/automator`}>
-                            <Automator />
+                            <AutomatorView />
                         </Route>
                         <Route path={`${match.path}/processor`}>
                             <ComboFinder />
