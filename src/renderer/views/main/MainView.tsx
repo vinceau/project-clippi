@@ -15,8 +15,9 @@ import { device } from "@/styles/device";
 import { Menu } from "@/views/main/Menu";
 import { Icon } from "semantic-ui-react";
 import styled, { css } from "styled-components";
+import { ReplayProcessorView } from "./ReplayProcessorView";
 
-export const MainView: React.FC = props => {
+export const MainView: React.FC = () => {
     const match = useRouteMatch();
     const SettingsContainer = styled.div`
         position: absolute;
@@ -53,7 +54,7 @@ export const MainView: React.FC = props => {
                             <AutomatorView />
                         </Route>
                         <Route path={`${match.path}/processor`}>
-                            <ComboFinder />
+                            <ReplayProcessorView />
                         </Route>
                         <Route path={`${match.path}/streamer`}>
                             <div>Streamer</div>

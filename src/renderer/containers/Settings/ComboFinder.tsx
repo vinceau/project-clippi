@@ -89,7 +89,6 @@ export const ComboFinder: React.FC<{}> = () => {
     return (
         <div>
             <Form>
-                <h2>Replay Processor</h2>
                 <Form.Field>
                     <label>SLP Replay Directory</label>
                     <FileInput
