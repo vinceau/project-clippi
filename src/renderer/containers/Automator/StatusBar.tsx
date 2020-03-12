@@ -1,12 +1,13 @@
 import * as React from "react";
-import styled from "styled-components";
 
-import { streamManager } from "@/lib/realtime";
-import { Dispatch, iRootState } from "@/store";
 import { ConnectionStatus } from "@vinceau/slp-realtime";
 import { useDispatch, useSelector } from "react-redux";
-import { ConnectionStatusDisplay, statusToColor, statusToLabel } from "../Misc/ConnectionStatus";
-import { InlineInput } from "../../components/InlineInputs";
+
+import { ConnectionStatusDisplay } from "@/components/ConnectionStatusDisplay";
+import { InlineInput } from "@/components/InlineInputs";
+import { streamManager } from "@/lib/realtime";
+import { statusToColor, statusToLabel } from "@/lib/status";
+import { Dispatch, iRootState } from "@/store";
 
 export const StatusBar: React.FC = () => {
     const { port } = useSelector((state: iRootState) => state.slippi);

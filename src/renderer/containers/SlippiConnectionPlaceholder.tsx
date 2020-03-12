@@ -2,130 +2,19 @@ import * as React from "react";
 
 import styled from "styled-components";
 
-import { ConnectionStatus } from "@vinceau/slp-realtime";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Card, Divider, Grid, Header, Image, Input, Segment } from "semantic-ui-react";
+import { Button, Divider, Grid, Header, Input, Segment } from "semantic-ui-react";
 
 import { streamManager } from "@/lib/realtime";
 import { Dispatch, dispatcher, iRootState } from "@/store";
 
 import { device } from "@/styles/device";
-import { Labelled } from "@/components/Labelled";
 import { CustomIcon } from "@/components/CustomIcon";
 
-import { ScanningDot } from "@/components/ScanningDot";
 import { getFolderPath } from "@/lib/utils";
 import dolphinLogoSVG from "@/styles/images/dolphin.svg";
 import slippiLogoSVG from "@/styles/images/slippi-logo.svg";
-import slippiLogo from "@/styles/images/slippi.png";
-import { BufferedInput } from "../../components/InlineInputs";
-
-export const statusToLabel = (status: ConnectionStatus): string => {
-    switch (status) {
-        case ConnectionStatus.DISCONNECTED:
-            return "disconnected";
-        case ConnectionStatus.CONNECTING:
-            return "connecting";
-        case ConnectionStatus.CONNECTED:
-            return "connected";
-        case ConnectionStatus.RECONNECTING:
-            return "reconnecting";
-        default:
-            return "unknown";
-    }
-};
-
-export const statusToColor = (status: ConnectionStatus): string => {
-    switch (status) {
-        case ConnectionStatus.DISCONNECTED:
-            return "#F30807";
-        case ConnectionStatus.CONNECTING:
-        case ConnectionStatus.RECONNECTING:
-            return "#FFB424";
-        default:
-            return "#00E461";
-    }
-};
-
-export const ConnectionStatusDisplay: React.FC<{
-    headerText: string;
-    headerHoverTitle: string;
-    onHeaderClick?: () => void;
-    color?: string;
-    shouldPulse?: boolean;
-}> = props => {
-    const Outer = styled.div`
-    padding: 10px 0;
-    display: flex;
-    `;
-    const ConnectInfo = styled.div`
-    margin-left: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    `;
-    return (
-        <Outer>
-            <img src={slippiLogo} style={{ height: "35px", width: "35px" }} />
-            <ConnectInfo>
-                <Labelled title={props.headerHoverTitle} onClick={props.onHeaderClick} position="right">
-                    <Header sub>
-                        <ScanningDot shouldPulse={props.shouldPulse} color={props.color || "red"} /> {props.headerText}
-                    </Header>
-                </Labelled>
-                {props.children && <span>{props.children}</span>}
-            </ConnectInfo>
-        </Outer>
-    );
-};
-
-export const ConnectionStatusCard: React.FC<{
-    userImage: any;
-    header: string;
-    subHeader: string;
-    statusColor?: string;
-    shouldPulse?: boolean;
-    onDisconnect?: () => void;
-    buttonText?: string;
-}> = props => {
-    const handleButtonClick = () => {
-        if (props.onDisconnect) {
-            props.onDisconnect();
-        }
-    };
-    const color = props.statusColor || "red";
-    const StatusSpan = styled.span`
-    text-transform: capitalize;
-    margin-right: 10px;
-    `;
-    return (
-        <div style={{ padding: "3px" }}>
-            <Card>
-                <Card.Content>
-                    <Image
-                        floated="right"
-                        size="mini"
-                        src={props.userImage}
-                    />
-                    <Card.Header>
-                        <StatusSpan>
-                            {props.header}
-                        </StatusSpan>
-                        <ScanningDot color={color} shouldPulse={props.shouldPulse} />
-                    </Card.Header>
-                    <Card.Meta>
-                        <span>{props.subHeader}</span>
-                    </Card.Meta>
-                </Card.Content>
-                <Card.Content extra>
-                    <Button basic fluid color="red" onClick={handleButtonClick}>
-                        {props.buttonText || "Disconnect"}
-                    </Button>
-                </Card.Content>
-            </Card>
-        </div>
-    );
-};
+import { BufferedInput } from "../components/InlineInputs";
 
 export const SlippiConnectionPlaceholder: React.FC<{
     port: string;
