@@ -7,7 +7,7 @@ import { Field, Form } from "react-final-form";
 import { Accordion, Button, Form as SemanticForm, Icon } from "semantic-ui-react";
 
 import { ComboConfiguration } from "@/lib/profile";
-import { CodeBlock } from "../../Misc/Misc";
+import { CodeBlock } from "../../Misc";
 import { CharacterSelectAdapter } from "../../../components/combos/CharacterSelect";
 import { SemanticCheckboxInput } from "./FormAdapters";
 import { NameTagForm } from "../../../components/combos/NameTagForm";

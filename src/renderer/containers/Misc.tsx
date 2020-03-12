@@ -3,8 +3,7 @@ import * as React from "react";
 import { eventActionManager } from "@/actions";
 import { connectToOBS, setScene } from "@/lib/obs";
 import { ActionEvent } from "@/lib/realtime";
-import { isDevelopment } from "@/lib/utils";
-import { notify } from "../../lib/utils";
+import { isDevelopment, notify } from "@/lib/utils";
 
 export const DevTools = () => {
     const handleClick = () => {

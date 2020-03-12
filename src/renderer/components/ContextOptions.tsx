@@ -1,22 +1,12 @@
+
 import * as React from "react";
 
-import { generateFileRenameContext, parseFileRenameFormat } from "@/lib/context";
-import { contextDescriptions } from "@/lib/contextDescriptions";
 import { Context } from "@vinceau/event-actions";
-import { GameStartType } from "@vinceau/slp-realtime";
 import { Tooltip } from "react-tippy";
 import { Label } from "semantic-ui-react";
 
-export const TemplatePreview: React.FC<{
-    template: string;
-    settings?: GameStartType,
-    metadata?: any,
-}> = (props) => {
-    const parsedTemplate = parseFileRenameFormat(props.template, props.settings, props.metadata);
-    return (
-    <span>{parsedTemplate}</span>
-    );
-};
+import { generateFileRenameContext } from "@/lib/context";
+import { contextDescriptions } from "@/lib/contextDescriptions";
 
 export const ContextOptions: React.FC<{
     onLabelClick?: (name: string) => void;

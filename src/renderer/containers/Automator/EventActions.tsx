@@ -11,7 +11,7 @@ import { generateRandomEvent } from "@/lib/events";
 import { ActionEvent, testRunActions } from "@/lib/realtime";
 import { isDevelopment } from "@/lib/utils";
 import { InlineDropdown } from "../../components/InlineInputs";
-import { CodeBlock } from "../Misc/Misc";
+import { CodeBlock } from "../Misc";
 import { Labelled } from "../../components/Labelled";
 import { ActionInput, AddActionInput } from "./ActionInputs";
 
