@@ -18,6 +18,7 @@ import { Labelled } from "@/components/Labelled";
 import { useTheme } from "@/styles";
 import { device } from "@/styles/device";
 import { Appearance } from "@/views/settings/Appearance";
+import { InfoView } from "@/views/settings/InfoView";
 import { FilterOptions } from "./FilterOptions";
 import { OBSSettings } from "./OBSSettings";
 import { SlippiPage } from "./SlippiPage";
@@ -188,6 +189,11 @@ export const SettingsPage: React.FC<{
                             active={isActive("appearance-settings")}
                             onClick={handleItemClick}
                         ><Icon name="paint brush" />Appearance</StyledMenuItem>
+                        <StyledMenuItem
+                            name="app-info"
+                            active={isActive("app-info")}
+                            onClick={handleItemClick}
+                        ><Icon name="info circle" />App Info</StyledMenuItem>
                     </StyledMenu>
                 </MenuColumn>
                 <ContentColumn>
@@ -199,6 +205,7 @@ export const SettingsPage: React.FC<{
                             <Route path={`${path}/combo-settings`} component={FilterOptions} />
                             <Route path={`${path}/account-settings`} component={TwitchIntegration} />
                             <Route path={`${path}/sound-settings`} component={SoundSettings} />
+                            <Route path={`${path}/app-info`} component={InfoView} />
                             <Route exact path={path}>
                                 <Redirect to={`${path}/combo-settings`} />
                             </Route>
