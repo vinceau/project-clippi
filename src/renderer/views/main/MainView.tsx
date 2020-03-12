@@ -1,16 +1,12 @@
 
 import * as React from "react";
 
-import {
-    useRouteMatch,
-    Switch,
-    Route,
-    Redirect,
-} from "react-router-dom";
-
-import { AutomatorView } from "./AutomatorView";
-import { Menu } from "@/containers/Menu";
 import styled from "styled-components";
+
+import { Route, Switch, useRouteMatch } from "react-router-dom";
+
+import { Menu } from "@/containers/Menu";
+import { AutomatorView } from "./AutomatorView";
 import { ReplayProcessorView } from "./ReplayProcessorView";
 
 export const MainView: React.FC = () => {

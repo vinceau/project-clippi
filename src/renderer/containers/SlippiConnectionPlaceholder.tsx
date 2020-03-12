@@ -5,16 +5,15 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Divider, Grid, Header, Input, Segment } from "semantic-ui-react";
 
-import { streamManager } from "@/lib/realtime";
-import { Dispatch, dispatcher, iRootState } from "@/store";
-
-import { device } from "@/styles/device";
 import { CustomIcon } from "@/components/CustomIcon";
-
+import { BufferedInput } from "@/components/InlineInputs";
+import { streamManager } from "@/lib/realtime";
 import { getFolderPath } from "@/lib/utils";
+import { Dispatch, dispatcher, iRootState } from "@/store";
+import { device } from "@/styles/device";
+
 import dolphinLogoSVG from "@/styles/images/dolphin.svg";
 import slippiLogoSVG from "@/styles/images/slippi-logo.svg";
-import { BufferedInput } from "../components/InlineInputs";
 
 export const SlippiConnectionPlaceholder: React.FC<{
     port: string;

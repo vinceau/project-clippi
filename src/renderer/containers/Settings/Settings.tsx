@@ -1,32 +1,30 @@
 import * as React from "react";
 
-import { version } from "../../../../package.json";
-
-import { useTheme } from "@/styles";
+import { transparentize } from "polished";
 import {
     Route,
     Switch,
     useHistory,
     useRouteMatch,
 } from "react-router-dom";
-
 import { Icon, Menu } from "semantic-ui-react";
 import styled, { css } from "styled-components";
 
-import { device } from "@/styles/device";
-import OBSLogo from "@/styles/images/obs.svg";
-import SlippiLogo from "@/styles/images/slippi-logo.svg";
+import { version } from "../../../../package.json";
+
 import { CustomIcon } from "@/components/CustomIcon";
 import { Labelled } from "@/components/Labelled";
-import { ComboFinder } from "./ComboFinder";
+import { useTheme } from "@/styles";
+import { device } from "@/styles/device";
+import { Appearance } from "@/views/settings/Appearance";
 import { FilterOptions } from "./FilterOptions";
 import { OBSSettings } from "./OBSSettings";
 import { SlippiPage } from "./SlippiPage";
 import { SoundSettings } from "./SoundSettings";
 import { TwitchIntegration } from "./TwitchIntegration";
-import { Appearance } from "@/views/settings/Appearance";
 
-import { transparentize } from "polished";
+import OBSLogo from "@/styles/images/obs.svg";
+import SlippiLogo from "@/styles/images/slippi-logo.svg";
 
 const StyledMenuItem = styled(Menu.Item)`
 &&& {

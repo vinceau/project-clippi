@@ -3,13 +3,13 @@ import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Checkbox, Form, Icon, Progress } from "semantic-ui-react";
 
+import { FileInput } from "@/components/FileInput";
+import { InlineDropdown } from "@/components/InlineInputs";
+import { ProcessSection } from "@/components/ProcessSection";
 import { fileProcessor, FindComboOption, ProcessResult } from "@/lib/fileProcessor";
 import { loadFileInDolphin, notify, openComboInDolphin } from "@/lib/utils";
 import { Dispatch, iRootState } from "@/store";
 import { secondsToString } from "common/utils";
-import { InlineDropdown } from "../../components/InlineInputs";
-import { FileInput } from "@/components/FileInput";
-import { ProcessSection } from "../../components/ProcessSection";
 import { RenameFiles } from "./RenameFiles";
 
 const isWindows = process.platform === "win32";

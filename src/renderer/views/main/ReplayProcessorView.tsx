@@ -3,6 +3,7 @@ import React from "react";
 import styled from "styled-components";
 
 import { Icon } from "semantic-ui-react";
+
 import { ComboFinder } from "@/containers/Settings/ComboFinder";
 
 const Content = styled.div`

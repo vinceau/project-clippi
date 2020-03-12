@@ -3,8 +3,9 @@ import React from "react";
 import styled from "styled-components";
 
 import { Icon } from "semantic-ui-react";
-import { StatusBar } from "@/containers/Automator/StatusBar";
+
 import { Automator } from "@/containers/Automator/Automator";
+import { StatusBar } from "@/containers/Automator/StatusBar";
 
 const Content = styled.div`
     padding: 20px;
@@ -17,7 +18,7 @@ const Footer = styled.div`
     left: 0;
     bottom: 0;
     width: 100%;
-    padding-left: 10px;
+    padding-left: 20px;
 `;
 
 export const AutomatorView: React.FC = () => {

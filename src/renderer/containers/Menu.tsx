@@ -1,17 +1,11 @@
 import * as React from "react";
 
-import { MenuIconLink, MenuIcon } from "@/components/layout/MenuIcon";
-
 import styled from "styled-components";
+
+import { Link, useRouteMatch } from "react-router-dom";
 import { Icon } from "semantic-ui-react";
 
-import {
-    useHistory,
-    useRouteMatch,
-    Switch,
-    Link,
-    Route,
-} from "react-router-dom";
+import { MenuIcon, MenuIconLink } from "@/components/layout/MenuIcon";
 
 export const Menu: React.FC = () => {
     const match = useRouteMatch();
