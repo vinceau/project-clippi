@@ -12,7 +12,7 @@ const Content = styled.div`
 `;
 
 const Footer = styled.div`
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
     background-color: ${props => props.theme.background};
     position: sticky;
     left: 0;
