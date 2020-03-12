@@ -139,7 +139,7 @@ export const ComboForm: React.FC<{
                                             </div>
                                         </SemanticForm.Field>
                                         <SemanticForm.Field>
-                                            <label>Min. Pummels per Wobble</label>
+                                            <label>Minimum Pummels per Wobble</label>
                                             <Field name="wobbleThreshold" component="input" type="number" parse={(v: any) => parseInt(v, 10)} />
                                         </SemanticForm.Field>
                                     </Accordion.Content>

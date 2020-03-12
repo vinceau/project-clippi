@@ -30,7 +30,8 @@ export const FilterOptions = () => {
     return (
         <div>
             <h2>Combo Filter</h2>
-            <p>These options determine when the <b>combo occurs</b> and <b>conversion occurs</b> events trigger as well as the combos that are found by the <b>Replay Processor</b>.</p>
+            <p>These options determine when the <b>combo occurs</b> and <b>conversion occurs</b> events trigger as well as combos found by the <b>Replay Processor</b>.
+            Create new profiles by typing a new profile name in the dropdown below.</p>
             <ProfileSelector initialOptions={profileOptions} value={currentProfile} onChange={setProfile} />
             <ComboForm initialValues={initial} onSubmit={onSubmit} onDelete={onDelete} />
         </div>
