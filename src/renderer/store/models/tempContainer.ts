@@ -16,6 +16,7 @@ export interface TempContainerState {
     comboFinderProcessing: boolean;
     obsConnected: boolean;
     obsScenes: Scene[];
+    latestPath: { [page: string]: string };
 }
 
 const initialState: TempContainerState = {
@@ -28,6 +29,10 @@ const initialState: TempContainerState = {
     comboFinderProcessing: false,
     obsConnected: false,
     obsScenes: [],
+    latestPath: {
+        main: "/main/automator",
+        settings: "/settings/combo-settings",
+    },
 };
 
 export const tempContainer = createModel({
@@ -53,6 +58,14 @@ export const tempContainer = createModel({
             const percent = payload < 0 ? 0 : payload > 100 ? 100 : payload;
             draft.comboFinderPercent = percent;
         }),
+        setLatestPath: (state: TempContainerState, payload: { page: string, pathname: string }): TempContainerState => {
+            const newState = produce(state.latestPath, draft => {
+                draft[payload.page] = payload.pathname;
+            });
+            return produce(state, draft => {
+                draft.latestPath = newState;
+            });
+        },
         setComboLog: (state: TempContainerState, payload: string): TempContainerState => produce(state, draft => {
             draft.comboFinderLog = payload;
         }),
