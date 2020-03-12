@@ -41,7 +41,10 @@ export const SettingsPage: React.FC<{
 }> = props => {
     const { path } = useRouteMatch();
     const history = useHistory();
-    const [activeItem, setActiveItem] = React.useState("bio");
+
+    const isActive = (name: string): boolean => {
+        return history.location.pathname.includes(name);
+    };
 
     // Close settings page on Escape
     const escFunction = React.useCallback((event) => {
@@ -57,7 +60,6 @@ export const SettingsPage: React.FC<{
 
     const handleItemClick = (_: any, { name }: any) => {
         history.push(`${path}/${name}`);
-        setActiveItem(name);
     };
     const hiddenSettings = css`
     visibility: hidden;
@@ -155,34 +157,34 @@ export const SettingsPage: React.FC<{
                         <StyledMenuItem header>Automator Settings</StyledMenuItem>
                         <StyledMenuItem
                             name="combo-settings"
-                            active={activeItem === "combo-settings"}
+                            active={isActive("combo-settings")}
                             onClick={handleItemClick}
                         ><Icon name="filter" />Combo Filter</StyledMenuItem>
                         <StyledMenuItem
                             name="sound-settings"
-                            active={activeItem === "sound-settings"}
+                            active={isActive("sound-settings")}
                             onClick={handleItemClick}
                         ><Icon name="volume down" />Sounds</StyledMenuItem>
                         <StyledMenuItem header>Connection Settings</StyledMenuItem>
                         <StyledMenuItem
                             name="slippi-settings"
-                            active={activeItem === "slippi-settings"}
+                            active={isActive("slippi-settings")}
                             onClick={handleItemClick}
                         ><CustomIcon image={SlippiLogo} color={theme.foreground} />Slippi Connection</StyledMenuItem>
                         <StyledMenuItem
                             name="obs-settings"
-                            active={activeItem === "obs-settings"}
+                            active={isActive("obs-settings")}
                             onClick={handleItemClick}
                         ><CustomIcon image={OBSLogo} color={theme.foreground} />OBS Configuration</StyledMenuItem>
                         <StyledMenuItem
                             name="account-settings"
-                            active={activeItem === "account-settings"}
+                            active={isActive("account-settings")}
                             onClick={handleItemClick}
                         ><Icon name="twitch" />Twitch Integration</StyledMenuItem>
                         <StyledMenuItem header>App Settings</StyledMenuItem>
                         <StyledMenuItem
                             name="appearance-settings"
-                            active={activeItem === "appearance-settings"}
+                            active={isActive("appearance-settings")}
                             onClick={handleItemClick}
                         ><Icon name="paint brush" />Appearance</StyledMenuItem>
                     </StyledMenu>
