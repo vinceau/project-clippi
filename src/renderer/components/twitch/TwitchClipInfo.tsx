@@ -1,6 +1,7 @@
 import React from "react";
 
 import styled from "styled-components";
+import { device } from "@/styles/device";
 import { transparentize } from "polished";
 import { Icon } from "semantic-ui-react";
 
@@ -13,13 +14,19 @@ interface TwitchClip {
 }
 
 const ClipContainer = styled.div`
-border: solid 1px ${({theme}) => theme.background3}
+border: solid 1px ${({ theme }) => theme.background3}
 border-radius: 3px;
 margin-bottom: 5px;
 padding: 10px;
-background-color: ${({theme}) => transparentize(0.3, theme.foreground3)};
+display: flex;
+justify-content: space-between;
+flex-direction: column;
+@media ${device.tablet} {
+    flex-direction: row;
+}
+background-color: ${({ theme }) => transparentize(0.3, theme.foreground3)};
 a {
-    color: ${({theme}) => theme.foreground}
+    color: ${({ theme }) => theme.foreground}
 
 }
 h2 {
@@ -27,6 +34,19 @@ h2 {
     font-size: 18px;
     margin: 0;
     margin-bottom: 5px;
+}
+`;
+
+const ButtonsContainer = styled.div`
+display: flex;
+align-self: flex-end;
+font-size: 20px;
+
+@media ${device.tablet} {
+    align-self: center;
+}
+& > span {
+    padding: 5px;
 }
 `;
 
@@ -43,14 +63,14 @@ export const TwitchClipInfo: React.FC<{
     };
     return (
         <ClipContainer>
-            <Labelled title="Open in Twitch"><a href={url} target="_blank"><h2>{props.clip.clipID}</h2></a></Labelled>
-            <div style={{display: "flex", justifyContent: "space-between"}}>
-                <div>
-                    <Labelled title="Edit"><a href={url + "/edit"} target="_blank"><Icon name="pencil" /></a></Labelled>
-                    <Labelled title="Remove"><Icon name="trash" link onClick={onRemove}/></Labelled>
-                </div>
+            <div>
+                <Labelled title="Open in Twitch"><a href={url} target="_blank"><h2>{props.clip.clipID}</h2></a></Labelled>
                 <div>{timestamp}</div>
             </div>
+            <ButtonsContainer>
+                <Labelled title="Edit"><a href={url + "/edit"} target="_blank"><Icon name="pencil" /></a></Labelled>
+                <Labelled title="Remove"><Icon name="trash" link onClick={onRemove} /></Labelled>
+            </ButtonsContainer>
         </ClipContainer>
     );
 };
