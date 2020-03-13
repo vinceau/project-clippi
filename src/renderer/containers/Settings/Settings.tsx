@@ -153,7 +153,7 @@ export const SettingsPage: React.FC<{
                             name="sound-settings"
                             active={isActive("sound-settings")}
                             onClick={handleItemClick}
-                        ><Icon name="volume down" />Sounds</StyledMenuItem>
+                        ><Icon name="music" />Sounds</StyledMenuItem>
                         <StyledMenuItem header>Connection Settings</StyledMenuItem>
                         <StyledMenuItem
                             name="slippi-settings"
