@@ -6,7 +6,7 @@ import styled from "styled-components";
 
 import { CharacterIcon } from "../CharacterIcon";
 import { CharacterLabel } from "./CharacterLabel";
-import { useTheme } from "@/styles";
+import { useTheme, ThemeMode } from "@/styles";
 
 export const sortedCharacterInfos: CharacterInfo[] = getAllCharacters()
   .sort((a, b) => {
@@ -30,12 +30,17 @@ const MultiValueRemove: React.ComponentType<MultiValueProps<OptionTypeBase>> = (
 };
 
 const Option: React.ComponentType<OptionProps<OptionTypeBase>> = (props) => {
+  const { themeName } = useTheme();
   const { innerProps, innerRef } = props;
   const Outer = styled.div`
     padding: 5px 10px;
+    ${({theme}) => (`
     &:hover {
-      background-color: #F8F8F8;
-    }
+      background-color: ${ themeName === ThemeMode.DARK ? theme.foreground2 : "#F8F8F8"};
+      ${ themeName === ThemeMode.DARK && `
+        color: ${theme.foreground};
+      `}
+    }`)}
   `;
   return (
     <Outer ref={innerRef} {...innerProps}>
@@ -59,6 +64,33 @@ export const CharacterSelect = (props: any) => {
   const newOnChange = (v: any) => onChange(parseValue(v));
   const selectOptions = options ? options : sortedCharacterIDs;
   const mainTheme = useTheme();
+  const customStyles: any = {
+      multiValue: (base: any) => ({
+        ...base,
+        backgroundColor: "transparent",
+      }),
+      multiValueLabel: (base: any) => ({
+        ...base,
+        display: "none",
+      }),
+  };
+  if (mainTheme.themeName === ThemeMode.DARK) {
+      customStyles.menuList = (base: any) => ({
+        ...base,
+        backgroundColor: mainTheme.theme.foreground,
+        color: mainTheme.theme.background,
+      });
+      customStyles.dropdownIndicator = (base: any) => ({
+        ...base,
+        color: mainTheme.theme.background,
+      });
+      customStyles.control = (base: any) => ({
+        ...base,
+        backgroundColor: mainTheme.theme.foreground,
+        color: mainTheme.theme.background,
+      });
+  }
+
   return (<Select
     {...rest}
     width="100%"
@@ -68,16 +100,7 @@ export const CharacterSelect = (props: any) => {
     searchable={true}
     components={{ ...components, MultiValueRemove, Option, SingleValue }}
     menuColor={mainTheme.theme.background}
-    styles={{
-      multiValue: (base: any) => ({
-        ...base,
-        backgroundColor: "transparent",
-      }),
-      multiValueLabel: (base: any) => ({
-        ...base,
-        display: "none",
-      }),
-    }}
+    styles={customStyles}
   />);
 };
 
