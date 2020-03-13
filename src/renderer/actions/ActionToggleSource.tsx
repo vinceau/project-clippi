@@ -5,8 +5,8 @@ import { produce } from "immer";
 import { useSelector } from "react-redux";
 import { Button } from "semantic-ui-react";
 
-import { DelayInput, InlineDropdown } from "@/components/Misc/InlineInputs";
-import { CustomIcon } from "@/components/Misc/Misc";
+import { DelayInput, InlineDropdown } from "@/components/InlineInputs";
+import { CustomIcon } from "@/components/CustomIcon";
 import { connectToOBSAndNotify, getAllSceneItems, setSourceItemVisibility } from "@/lib/obs";
 import { delay as waitMillis, notify } from "@/lib/utils";
 import { iRootState } from "@/store";
@@ -38,7 +38,7 @@ const actionToggleSource: ActionTypeGenerator = (params: ActionToggleSourceParam
 
 const ActionIcon = () => {
     return (
-        <CustomIcon size={20} image={obsIcon} color="black" />
+        <CustomIcon size={20} image={obsIcon} />
     );
 };
 

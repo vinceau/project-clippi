@@ -3,12 +3,13 @@ import * as path from "path";
 import fg from "fast-glob";
 import fs from "fs-extra";
 
-import { ComboEventPayload, DolphinComboQueue, SlippiGame, SlpRealTime, SlpStream } from "@vinceau/slp-realtime";
-
-import { deleteFile, pipeFileContents } from "common/utils";
+import { ComboEventPayload, ComboFilter, DolphinComboQueue, SlippiGame, SlpRealTime, SlpStream } from "@vinceau/slp-realtime";
 import { Observable } from "rxjs";
+
+import { store } from "@/store";
+import { deleteFile, pipeFileContents } from "common/utils";
 import { parseFileRenameFormat } from "./context";
-import { comboFilter } from "./realtime";
+import { mapConfigurationToFilterSettings } from "./profile";
 
 export enum FindComboOption {
     OnlyCombos = 0,
@@ -19,6 +20,7 @@ interface FileProcessorOptions {
     filesPath: string;
     renameFiles: boolean;
     findCombos: boolean;
+    findComboProfile?: string;
     findComboOption?: FindComboOption;
     includeSubFolders?: boolean;
     deleteZeroComboFiles?: boolean;
@@ -74,6 +76,7 @@ export class FileProcessor {
     private stopRequested: boolean = false;
     private readonly realtime = new SlpRealTime();
     private combos$: Observable<ComboEventPayload> | null = null;
+    private readonly comboFilter = new ComboFilter();
 
     public stop(): void {
         this.stopRequested = true;
@@ -105,6 +108,15 @@ export class FileProcessor {
                 break;
             default:
                 this.combos$ = null;
+        }
+
+        if (opts.findCombos && opts.findComboProfile) {
+            const { comboProfiles } = store.getState().slippi;
+            const slippiSettings = comboProfiles[opts.findComboProfile];
+            if (slippiSettings) {
+                const converted = mapConfigurationToFilterSettings(JSON.parse(slippiSettings));
+                this.comboFilter.updateSettings(converted);
+            }
         }
 
         let filesProcessed = 0;
@@ -181,7 +193,7 @@ export class FileProcessor {
         let count = 0;
         const sub = this.combos$.subscribe(payload => {
             const { combo, settings } = payload;
-            if (comboFilter.isCombo(combo, settings, metadata)) {
+            if (this.comboFilter.isCombo(combo, settings, metadata)) {
                 this.queue.addCombo(filename, combo);
                 count += 1;
             }

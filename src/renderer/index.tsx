@@ -1,33 +1,28 @@
+// Import all the styles first since they will be overwritten
+
+import "react-tippy/dist/tippy.css"; // React-tippy styles
+import "semantic-ui-css/semantic.min.css"; // Semantic UI styles
+
+import "@/styles/index.scss"; // Our custom styles
+
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 
-import { Models, persistor, store } from "@/store";
-import { App } from "./components/App";
+import { persistor, store } from "@/store";
+import App from "./containers/App";
 
-// tslint:disable-next-line: no-import-side-effect
-import "./styles";
+const rootEl = document.getElementById("app");
 
-ReactDOM.render(
+const render = (Component: any) =>
+  ReactDOM.render(
     <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-            <App />
+          <Component />
         </PersistGate>
     </Provider>,
-    document.getElementById("app")
-);
+    rootEl
+  );
 
-// Hot reloading
-if ((module as any).hot) {
-  // Reload rematch models
-    (module as any).hot.accept("./store/models", () => {
-    Object.keys(Models).forEach(modelKey => {
-      console.log(`Reloading model ${modelKey}`);
-      store.model({
-        name: modelKey,
-        ...Models[modelKey]
-      });
-    });
-  });
-}
+render(App);

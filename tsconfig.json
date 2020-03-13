@@ -7,7 +7,7 @@
             ],
             "common/*": [
                 "common/*"
-            ],
+            ]
         },
         "baseUrl": "src/",
         "jsx": "react",

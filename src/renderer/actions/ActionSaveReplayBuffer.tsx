@@ -3,11 +3,11 @@ import * as React from "react";
 import { ActionTypeGenerator, Context } from "@vinceau/event-actions";
 import { produce } from "immer";
 
-import { DelayInput, NotifyInput } from "@/components/Misc/InlineInputs";
+import { DelayInput, NotifyInput } from "@/components/InlineInputs";
 import { delay as waitMillis, notify as sendNotification, parseSecondsDelayValue } from "@/lib/utils";
 import { ActionComponent } from "./types";
 
-import { CustomIcon } from "@/components/Misc/Misc";
+import { CustomIcon } from "@/components/CustomIcon";
 import { saveReplayBuffer } from "@/lib/obs";
 
 import obsIcon from "@/styles/images/obs.svg";
@@ -47,7 +47,7 @@ const actionSaveBuffer: ActionTypeGenerator = (params: ActionSaveReplayBufferPar
 
 const ActionIcon = () => {
     return (
-        <CustomIcon size={20} image={obsIcon} color="black" />
+        <CustomIcon size={20} image={obsIcon} />
     );
 };
 
