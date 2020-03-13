@@ -11,8 +11,6 @@ import {
 import { Icon, Menu } from "semantic-ui-react";
 import styled, { css } from "styled-components";
 
-import { version } from "../../../../package.json";
-
 import { CustomIcon } from "@/components/CustomIcon";
 import { Labelled } from "@/components/Labelled";
 import { useTheme } from "@/styles";
@@ -136,18 +134,9 @@ export const SettingsPage: React.FC<{
         top: 20px;
         right: 40px;
     `;
-    const VersionSpan = styled.span`
-        opacity: 0.8;
-        padding: 10px;
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        text-align: right;
-    `;
     const { theme } = useTheme();
     return (
         <SettingsContainer>
-            <VersionSpan>Version {version}</VersionSpan>
             <CloseButton>
                 <Labelled onClick={props.onClose} title="Close">
                     <Icon name="close" />
