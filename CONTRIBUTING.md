@@ -17,7 +17,7 @@ Run `yarn run lint --fix` to automatically convert single-quoted strings to use 
 
 ### Components should fit into one of 3 categories
 
-1. Most components should only contain the logic necessary for rendering and hooking up actions like click events etc. Such "dumb" components which encourage reusability and are kept in `src/renderer/components`. Complicated logic should be moved to the lib folders as a plain `.ts` file, which exports reusable functions.
+1. Most components should only contain the logic necessary for rendering and hooking up actions like click events etc. Such "dumb" components which encourage reusability and are kept in `src/renderer/components`. Complicated logic should be moved to `src/renderer/lib` as a module exporting reusable functions.
 
 2. *Containers* are components which bridge the gap between the application logic and the reusable "dumb" components. These are kept in `src/renderer/containers`.
 
