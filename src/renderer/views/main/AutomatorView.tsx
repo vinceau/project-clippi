@@ -9,22 +9,28 @@ import { StatusBar } from "@/containers/Automator/StatusBar";
 
 const Content = styled.div`
     padding: 20px;
-    margin-bottom: 55px;
+    height: calc(100% - 56px);
+    overflow: hidden;
+    overflow-y: auto;
 `;
 
 const Footer = styled.div`
     border-top: solid 1px ${({theme}) => theme.background3};
     background-color: ${props => props.theme.background};
-    position: fixed;
-    bottom: 0;
     height: 55px;
-    width: 100%;
     padding-left: 20px;
+`;
+
+const Outer = styled.div`
+display: flex;
+height: 100%;
+overflow: hidden;
+flex-direction: column;
 `;
 
 export const AutomatorView: React.FC = () => {
     return (
-        <div>
+        <Outer>
             <Content>
                 <h1>Automator <Icon name="bolt" /></h1>
                 <Automator />
@@ -32,6 +38,6 @@ export const AutomatorView: React.FC = () => {
             <Footer>
                 <StatusBar />
             </Footer>
-        </div>
+        </Outer>
     );
 };
