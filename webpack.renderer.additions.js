@@ -10,7 +10,7 @@ module.exports = function(context) {
     context.plugins.push(
         new webpack.DefinePlugin({
             __VERSION__: JSON.stringify(pkg.version),
-            __DATE__: JSON.stringify(moment().format('LLLL')),
+            __DATE__: JSON.stringify(moment().format('LLL')),
             __BUILD__: JSON.stringify(commitHash),
         })
     );

@@ -22,7 +22,7 @@ export const InfoView: React.FC = () => {
             <p>Version {__VERSION__}</p>
             <p>
                 Commit {__BUILD__}<br />
-                Built on {__DATE__}
+                {__DATE__}
             </p>
             <ReactMarkdown
                 source={supporters}
