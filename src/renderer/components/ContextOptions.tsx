@@ -2,7 +2,6 @@
 import * as React from "react";
 
 import { Context } from "@vinceau/event-actions";
-import { Tooltip } from "react-tippy";
 import { Label } from "semantic-ui-react";
 
 import { generateFileRenameContext } from "@/lib/context";

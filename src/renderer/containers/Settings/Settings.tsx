@@ -13,7 +13,6 @@ import styled, { css } from "styled-components";
 
 import { CustomIcon } from "@/components/CustomIcon";
 import { Labelled } from "@/components/Labelled";
-import { useTheme } from "@/styles";
 import { device } from "@/styles/device";
 import { Appearance } from "@/views/settings/Appearance";
 import { InfoView } from "@/views/settings/InfoView";
@@ -134,7 +133,6 @@ export const SettingsPage: React.FC<{
         top: 20px;
         right: 40px;
     `;
-    const { theme } = useTheme();
     return (
         <SettingsContainer>
             <CloseButton>

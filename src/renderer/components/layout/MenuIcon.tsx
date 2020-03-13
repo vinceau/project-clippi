@@ -3,7 +3,6 @@ import styled from "styled-components";
 
 import { transparentize } from "polished";
 import { Link, Route } from "react-router-dom";
-import { Tooltip } from "react-tippy";
 import { TippyLabel } from "../Labelled";
 
 const OuterMenuIcon = styled.div<{
