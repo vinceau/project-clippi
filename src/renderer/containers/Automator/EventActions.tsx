@@ -3,7 +3,7 @@ import * as React from "react";
 import { Action as ActionDefinition } from "@vinceau/event-actions";
 import { Action } from "@vinceau/event-actions";
 import { produce } from "immer";
-import { Container, Divider, Icon, List } from "semantic-ui-react";
+import { Divider, Icon, List } from "semantic-ui-react";
 import styled, { css } from "styled-components";
 
 import { actionComponents } from "@/actions";
@@ -98,7 +98,7 @@ export const EventActions = (props: any) => {
   };
 
   return (
-    <Container>
+    <div>
       <EventHeader>
         <InlineDropdown
           prefix="When"
@@ -135,7 +135,7 @@ export const EventActions = (props: any) => {
       </List>
       <CodeBlock values={value} />
       <Divider />
-    </Container>
+    </div>
   );
 };
 
@@ -143,13 +143,8 @@ export const AddEventDropdown = (props: any) => {
   const { onChange, disabledOptions } = props;
   const unusedOptions = allEvents.filter(a => !disabledOptions.includes(a));
   const addText = generateRandomEvent();
-  const shouldShow = css`
-      ${unusedOptions.length === 0 && "display: none;"}
-  `;
-  const CustomContainer = styled(Container)`
-  &&& {
-      ${shouldShow}
-  }
+  const CustomContainer = styled.div`
+    ${unusedOptions.length === 0 && "display: none;"}
   `;
   return (
     <CustomContainer>
