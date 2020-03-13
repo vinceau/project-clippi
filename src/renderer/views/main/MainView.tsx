@@ -48,9 +48,9 @@ export const MainView: React.FC = () => {
                         <Route path={`${match.path}/processor`}>
                             <ReplayProcessorView />
                         </Route>
-                        <Route path={`${match.path}/streamer`}>
+                        {/* <Route path={`${match.path}/streamer`}>
                             <div>Streamer</div>
-                        </Route>
+                        </Route> */}
                         <Route exact path={match.path}>
                             <Redirect to={`${match.path}/automator`} />
                         </Route>
