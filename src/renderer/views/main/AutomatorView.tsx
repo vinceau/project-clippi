@@ -2,13 +2,13 @@ import React from "react";
 
 import styled from "styled-components";
 
-import { Container, Icon } from "semantic-ui-react";
+import { Icon } from "semantic-ui-react";
 
 import { Automator } from "@/containers/Automator/Automator";
 import { StatusBar } from "@/containers/Automator/StatusBar";
 
 const Content = styled.div`
-    padding: 20px 0;
+    padding: 20px;
 `;
 
 const Footer = styled.div`
@@ -18,21 +18,18 @@ const Footer = styled.div`
     left: 0;
     bottom: 0;
     width: 100%;
+    padding-left: 20px;
 `;
 
 export const AutomatorView: React.FC = () => {
     return (
         <div>
             <Content>
-                <Container>
-                    <h1>Automator <Icon name="bolt" /></h1>
-                    <Automator />
-                </Container>
+                <h1>Automator <Icon name="bolt" /></h1>
+                <Automator />
             </Content>
             <Footer>
-                <Container>
-                    <StatusBar />
-                </Container>
+                <StatusBar />
             </Footer>
         </div>
     );
