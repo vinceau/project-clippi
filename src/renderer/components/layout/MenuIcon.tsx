@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { transparentize } from "polished";
 import { Link, Route } from "react-router-dom";
 import { Tooltip } from "react-tippy";
+import { TippyLabel } from "../Labelled";
 
 const OuterMenuIcon = styled.div<{
     active?: boolean;
@@ -34,11 +35,11 @@ export const MenuIcon: React.FC<{
     label?: string;
 }> = (props) => {
     return (
-        <Tooltip title={props.label} size="big" distance={-70} duration={200} position="right" style={{ display: "inline-block", width: "100%" }}>
+        <TippyLabel title={props.label} size="big" distance={-70} duration={200} position="right" style={{width: "100%"}}>
             <OuterMenuIcon active={props.active}>
                 {props.children}
             </OuterMenuIcon>
-        </Tooltip>
+        </TippyLabel>
     );
 };
 
