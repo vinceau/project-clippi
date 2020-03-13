@@ -4,7 +4,7 @@ import { Action as ActionDefinition } from "@vinceau/event-actions";
 import { Action } from "@vinceau/event-actions";
 import { produce } from "immer";
 import { Divider, Icon, List } from "semantic-ui-react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 import { actionComponents } from "@/actions";
 import { InlineDropdown } from "@/components/InlineInputs";
