@@ -24,18 +24,22 @@ export const GlobalStyle = createGlobalStyle<{
 
     .ui.form input,
     .ui.selection.dropdown {
-        background: ${({theme}) => theme.background};
-        color: ${({theme}) => theme.foreground};
+        background: ${({theme}) => theme.foreground};
+        color: ${({theme}) => theme.background};
+        &::placeholder {
+          color: ${({theme}) => theme.foreground2};
+        }
     }
 
     .ui.button {
         background: ${({theme}) => transparentize(0.2, theme.foreground2)} none;
-        color: ${({theme}) => theme.background2};
+        color: ${({theme}) => theme.foreground};
     }
 
     .ui.checkbox input~.box:before,
     .ui.checkbox input~label:before {
-        background: ${({theme}) => theme.foreground3};
+      border-color: ${({theme}) => theme.background};
+      background: ${({theme}) => theme.foreground3};
     }
     .ui.checkbox .box:after,
     .ui.checkbox label:after {
