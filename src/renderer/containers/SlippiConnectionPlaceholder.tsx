@@ -80,7 +80,7 @@ export const SlippiConnectionPlaceholder: React.FC<{
                 <Grid.Row verticalAlign="middle">
                     <Grid.Column>
                         <VerticalHeader icon>
-                            <CustomIcon image={slippiLogoSVG} size={54} color="#353636" />
+                            <CustomIcon image={slippiLogoSVG} size={54} />
                             Connect to a Slippi Relay
                         </VerticalHeader>
                         <Input
@@ -97,7 +97,7 @@ export const SlippiConnectionPlaceholder: React.FC<{
                     <HorizontalDivider horizontal>Or</HorizontalDivider>
                     <Grid.Column>
                         <VerticalHeader icon>
-                            <CustomIcon image={dolphinLogoSVG} size={54} color="#353636" />
+                            <CustomIcon image={dolphinLogoSVG} size={54} />
                             Monitor for SLP file changes
                         </VerticalHeader>
                         <FolderInput>

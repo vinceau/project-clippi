@@ -11,13 +11,11 @@ import {
 import { Icon, Menu } from "semantic-ui-react";
 import styled, { css } from "styled-components";
 
-import { version } from "../../../../package.json";
-
 import { CustomIcon } from "@/components/CustomIcon";
 import { Labelled } from "@/components/Labelled";
-import { useTheme } from "@/styles";
 import { device } from "@/styles/device";
 import { Appearance } from "@/views/settings/Appearance";
+import { InfoView } from "@/views/settings/InfoView";
 import { FilterOptions } from "./FilterOptions";
 import { OBSSettings } from "./OBSSettings";
 import { SlippiPage } from "./SlippiPage";
@@ -135,18 +133,8 @@ export const SettingsPage: React.FC<{
         top: 20px;
         right: 40px;
     `;
-    const VersionSpan = styled.span`
-        opacity: 0.8;
-        padding: 10px;
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        text-align: right;
-    `;
-    const { theme } = useTheme();
     return (
         <SettingsContainer>
-            <VersionSpan>Version {version}</VersionSpan>
             <CloseButton>
                 <Labelled onClick={props.onClose} title="Close">
                     <Icon name="close" />
@@ -165,18 +153,18 @@ export const SettingsPage: React.FC<{
                             name="sound-settings"
                             active={isActive("sound-settings")}
                             onClick={handleItemClick}
-                        ><Icon name="volume down" />Sounds</StyledMenuItem>
+                        ><Icon name="music" />Sounds</StyledMenuItem>
                         <StyledMenuItem header>Connection Settings</StyledMenuItem>
                         <StyledMenuItem
                             name="slippi-settings"
                             active={isActive("slippi-settings")}
                             onClick={handleItemClick}
-                        ><CustomIcon image={SlippiLogo} color={theme.foreground} />Slippi Connection</StyledMenuItem>
+                        ><CustomIcon image={SlippiLogo} />Slippi Connection</StyledMenuItem>
                         <StyledMenuItem
                             name="obs-settings"
                             active={isActive("obs-settings")}
                             onClick={handleItemClick}
-                        ><CustomIcon image={OBSLogo} color={theme.foreground} />OBS Configuration</StyledMenuItem>
+                        ><CustomIcon image={OBSLogo} />OBS Configuration</StyledMenuItem>
                         <StyledMenuItem
                             name="account-settings"
                             active={isActive("account-settings")}
@@ -188,17 +176,23 @@ export const SettingsPage: React.FC<{
                             active={isActive("appearance-settings")}
                             onClick={handleItemClick}
                         ><Icon name="paint brush" />Appearance</StyledMenuItem>
+                        <StyledMenuItem
+                            name="app-info"
+                            active={isActive("app-info")}
+                            onClick={handleItemClick}
+                        ><Icon name="info circle" />Information</StyledMenuItem>
                     </StyledMenu>
                 </MenuColumn>
                 <ContentColumn>
                     <div>
                         <Switch>
-                            <Route path={`${path}/obs-settings`} component={OBSSettings} />
-                            <Route path={`${path}/slippi-settings`} component={SlippiPage} />
-                            <Route path={`${path}/appearance-settings`} component={Appearance} />
                             <Route path={`${path}/combo-settings`} component={FilterOptions} />
-                            <Route path={`${path}/account-settings`} component={TwitchIntegration} />
                             <Route path={`${path}/sound-settings`} component={SoundSettings} />
+                            <Route path={`${path}/slippi-settings`} component={SlippiPage} />
+                            <Route path={`${path}/obs-settings`} component={OBSSettings} />
+                            <Route path={`${path}/account-settings`} component={TwitchIntegration} />
+                            <Route path={`${path}/appearance-settings`} component={Appearance} />
+                            <Route path={`${path}/app-info`} component={InfoView} />
                             <Route exact path={path}>
                                 <Redirect to={`${path}/combo-settings`} />
                             </Route>

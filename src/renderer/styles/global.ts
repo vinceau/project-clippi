@@ -12,6 +12,13 @@ export const GlobalStyle = createGlobalStyle<{
   }
 
   #app .${ThemeMode.DARK} {
+
+    .ui.transparent.input input,
+    .ui.divider,
+    .ui.header {
+      color: ${({ theme }) => theme.foreground };
+    }
+
     .ui.accordion .title:not(.ui),
     .ui.form .field>label,
     .ui.checkbox input:focus~label,
@@ -22,20 +29,47 @@ export const GlobalStyle = createGlobalStyle<{
         color: ${({theme}) => theme.foreground} !important;
     }
 
-    .ui.form input,
-    .ui.selection.dropdown {
-        background: ${({theme}) => theme.background};
-        color: ${({theme}) => theme.foreground};
+    .ui.placeholder.segment,
+    .ui.table thead th,
+    .ui.table {
+      background: ${({theme}) => transparentize(0.8, theme.foreground)};
+      color: ${({theme}) => theme.foreground};
     }
 
+    input,
+    .ui.form input,
+    .ui.form textarea,
+    .ui.selection.dropdown {
+        background: ${({theme}) => theme.foreground};
+        color: ${({theme}) => theme.background};
+        &::placeholder {
+          color: ${({theme}) => theme.foreground2};
+        }
+    }
+
+    .ui.dropdown .menu {
+      background: ${({theme}) => theme.foreground};
+      .item {
+        color: ${({theme}) => theme.background};
+        border-top: none;
+        &:hover {
+          background-color: ${ p => p.theme.foreground2 };
+          color: ${ p => p.theme.foreground };
+        }
+      }
+    }
+
+    .ui.label,
     .ui.button {
         background: ${({theme}) => transparentize(0.2, theme.foreground2)} none;
-        color: ${({theme}) => theme.background2};
+        color: ${({theme}) => theme.foreground};
+        font-weight: 500;
     }
 
     .ui.checkbox input~.box:before,
     .ui.checkbox input~label:before {
-        background: ${({theme}) => theme.foreground3};
+      border-color: ${({theme}) => theme.background};
+      background: ${({theme}) => theme.foreground3};
     }
     .ui.checkbox .box:after,
     .ui.checkbox label:after {

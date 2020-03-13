@@ -86,7 +86,7 @@ const actionToggleRecording: ActionTypeGenerator = (params: ActionToggleRecordin
 
 const ActionIcon = () => {
     return (
-        <CustomIcon size={20} image={obsIcon} color="black" />
+        <CustomIcon size={20} image={obsIcon} />
     );
 };
 
