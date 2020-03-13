@@ -18,3 +18,7 @@ declare module "formatter" {
 
     export default defaultFormatterExport;
 }
+
+declare const __VERSION__: string;
+declare const __DATE__: string;
+declare const __BUILD__: string;
