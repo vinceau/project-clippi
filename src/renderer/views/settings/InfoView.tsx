@@ -34,17 +34,18 @@ export const InfoView: React.FC = () => {
         <Container>
             <h1>Project Clippi</h1>
             <Content>
-                <p>Version {__VERSION__}</p>
+                <h3>Version {__VERSION__}</h3>
                 <p>
                     Commit {__BUILD__}<br />
                     {__DATE__}
                 </p>
-                <p>Please report bugs by tweeting at <a href="https://twitter.com/ProjectClippi" target="_blank">@ProjectClippi</a></p>
+                <p>Source code available on <a href="https://github.com/vinceau/project-clippi" target="_blank">Github</a>.</p>
+                <p>Please report bugs by tweeting at <a href="https://twitter.com/ProjectClippi" target="_blank">@ProjectClippi</a>.</p>
             </Content>
             <h1>Acknowledgements</h1>
             <Content>
                 <p>Project Clippi was made possible by <a href="https://github.com/JLaferri" target="_blank">Jas Laferriere</a> and the rest of the <a href="https://github.com/project-slippi" target="_blank">Project Slippi</a> team.</p>
-                <p>Project Clippi contains icons by <a href="https://icons8.com/" target="_blank">Icons8</a></p>
+                <p>Project Clippi contains icons by <a href="https://icons8.com/" target="_blank">Icons8</a>.</p>
             </Content>
             <ReactMarkdown
                 source={supporters}
