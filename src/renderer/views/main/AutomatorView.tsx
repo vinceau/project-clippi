@@ -9,14 +9,15 @@ import { StatusBar } from "@/containers/Automator/StatusBar";
 
 const Content = styled.div`
     padding: 20px;
+    margin-bottom: 55px;
 `;
 
 const Footer = styled.div`
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+    border-top: solid 1px ${({theme}) => theme.background3};
     background-color: ${props => props.theme.background};
-    position: sticky;
-    left: 0;
+    position: fixed;
     bottom: 0;
+    height: 55px;
     width: 100%;
     padding-left: 20px;
 `;
