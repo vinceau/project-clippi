@@ -11,6 +11,7 @@ import { connectToOBSAndNotify, getAllScenes, setScene } from "@/lib/obs";
 import { delay as waitMillis, notify } from "@/lib/utils";
 import { iRootState } from "@/store";
 import { ActionComponent } from "./types";
+import { useTheme } from "@/styles";
 
 import obsIcon from "@/styles/images/obs.svg";
 
@@ -37,7 +38,7 @@ const actionChangeScene: ActionTypeGenerator = (params: ActionChangeSceneParams)
 
 const ActionIcon = () => {
     return (
-        <CustomIcon size={20} image={obsIcon} color="black" />
+        <CustomIcon size={20} image={obsIcon} />
     );
 };
 

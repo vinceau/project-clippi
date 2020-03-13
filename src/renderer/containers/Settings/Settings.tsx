@@ -161,12 +161,12 @@ export const SettingsPage: React.FC<{
                             name="slippi-settings"
                             active={isActive("slippi-settings")}
                             onClick={handleItemClick}
-                        ><CustomIcon image={SlippiLogo} color={theme.foreground} />Slippi Connection</StyledMenuItem>
+                        ><CustomIcon image={SlippiLogo} />Slippi Connection</StyledMenuItem>
                         <StyledMenuItem
                             name="obs-settings"
                             active={isActive("obs-settings")}
                             onClick={handleItemClick}
-                        ><CustomIcon image={OBSLogo} color={theme.foreground} />OBS Configuration</StyledMenuItem>
+                        ><CustomIcon image={OBSLogo} />OBS Configuration</StyledMenuItem>
                         <StyledMenuItem
                             name="account-settings"
                             active={isActive("account-settings")}

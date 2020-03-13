@@ -5,7 +5,7 @@ import styled, { css } from "styled-components";
 
 export const CustomIcon: React.FC<{
     image: string;
-    color: string;
+    color?: string;
     size?: number;
 }> = (props) => {
     const size = (s: number) => css`
@@ -19,7 +19,7 @@ export const CustomIcon: React.FC<{
             content: "";
             mask: url("${props.image}") no-repeat 100% 100%;
             mask-size: contain;
-            background-color: ${props.color} !important;
+            background-color: ${p => props.color ? props.color : p.theme.foreground} !important;
             height: 100%;
             width: 100%;
             display: block;
