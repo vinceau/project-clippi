@@ -15,18 +15,43 @@ ul {
 }
 `;
 
+const Content = styled.div`
+p {
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+`;
+
+const Footer = styled.div`
+font-style: italic;
+font-size: 16px;
+margin-top: 40px;
+`;
+
 export const InfoView: React.FC = () => {
     return (
         <Container>
             <h1>Project Clippi</h1>
-            <p>Version {__VERSION__}</p>
-            <p>
-                Commit {__BUILD__}<br />
-                {__DATE__}
-            </p>
+            <Content>
+                <p>Version {__VERSION__}</p>
+                <p>
+                    Commit {__BUILD__}<br />
+                    {__DATE__}
+                </p>
+                <p>Please report bugs by tweeting at <a href="https://twitter.com/ProjectClippi" target="_blank">@ProjectClippi</a></p>
+            </Content>
+            <h1>Acknowledgements</h1>
+            <Content>
+                <p>Project Clippi was made possible by <a href="https://github.com/JLaferri" target="_blank">Jas Laferriere</a> and the rest of the <a href="https://github.com/project-slippi" target="_blank">Project Slippi</a> team.</p>
+                <p>Project Clippi contains icons by <a href="https://icons8.com/" target="_blank">Icons8</a></p>
+            </Content>
             <ReactMarkdown
                 source={supporters}
             />
+            <Footer>
+                <p>To God be the glory</p>
+            </Footer>
         </Container>
     );
 };

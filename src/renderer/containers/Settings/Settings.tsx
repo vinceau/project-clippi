@@ -182,7 +182,7 @@ export const SettingsPage: React.FC<{
                             name="app-info"
                             active={isActive("app-info")}
                             onClick={handleItemClick}
-                        ><Icon name="info circle" />App Info</StyledMenuItem>
+                        ><Icon name="info circle" />Info</StyledMenuItem>
                     </StyledMenu>
                 </MenuColumn>
                 <ContentColumn>
