@@ -186,12 +186,12 @@ export const SettingsPage: React.FC<{
                 <ContentColumn>
                     <div>
                         <Switch>
-                            <Route path={`${path}/obs-settings`} component={OBSSettings} />
-                            <Route path={`${path}/slippi-settings`} component={SlippiPage} />
-                            <Route path={`${path}/appearance-settings`} component={Appearance} />
                             <Route path={`${path}/combo-settings`} component={FilterOptions} />
-                            <Route path={`${path}/account-settings`} component={TwitchIntegration} />
                             <Route path={`${path}/sound-settings`} component={SoundSettings} />
+                            <Route path={`${path}/slippi-settings`} component={SlippiPage} />
+                            <Route path={`${path}/obs-settings`} component={OBSSettings} />
+                            <Route path={`${path}/account-settings`} component={TwitchIntegration} />
+                            <Route path={`${path}/appearance-settings`} component={Appearance} />
                             <Route path={`${path}/app-info`} component={InfoView} />
                             <Route exact path={path}>
                                 <Redirect to={`${path}/combo-settings`} />
