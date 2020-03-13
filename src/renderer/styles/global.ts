@@ -22,7 +22,9 @@ export const GlobalStyle = createGlobalStyle<{
         color: ${({theme}) => theme.foreground} !important;
     }
 
+    input,
     .ui.form input,
+    .ui.form textarea,
     .ui.selection.dropdown {
         background: ${({theme}) => theme.foreground};
         color: ${({theme}) => theme.background};
@@ -31,6 +33,19 @@ export const GlobalStyle = createGlobalStyle<{
         }
     }
 
+    .ui.dropdown .menu {
+      background: ${({theme}) => theme.foreground};
+      .item {
+        color: ${({theme}) => theme.background};
+        border-top: none;
+        &:hover {
+          background-color: ${ p => p.theme.foreground2 };
+          color: ${ p => p.theme.foreground };
+        }
+      }
+    }
+
+    .ui.label,
     .ui.button {
         background: ${({theme}) => transparentize(0.2, theme.foreground2)} none;
         color: ${({theme}) => theme.foreground};
