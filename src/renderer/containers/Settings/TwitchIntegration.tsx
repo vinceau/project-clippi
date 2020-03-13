@@ -7,6 +7,7 @@ import { format } from "timeago.js";
 import { Dispatch, iRootState } from "@/store";
 import { TwitchClip } from "@/store/models/twitch";
 import { TwitchConnectButton, TwitchUserStatus } from "@/components/twitch";
+import { useTheme } from "@/styles";
 
 export const ClipsTable: React.FC = props => {
     return (
@@ -30,6 +31,7 @@ const ClipRow: React.FC<{
     clip: TwitchClip;
     onRemove: () => void;
 }> = props => {
+    const { theme } = useTheme();
     const url = `https://clips.twitch.tv/${props.clip.clipID}`;
     return (
         <Table.Row key={props.clip.clipID}>
@@ -40,7 +42,7 @@ const ClipRow: React.FC<{
                 {format(props.clip.timestamp * 1000)}
             </Table.Cell>
             <Table.Cell>
-                <a style={{color: "#4D4D4D"}} href={url + "/edit"} target="_blank"><Icon name="pencil" /></a>
+                <a style={{color: theme.foreground}} href={url + "/edit"} target="_blank"><Icon name="pencil" /></a>
             </Table.Cell>
             <Table.Cell>
                 <Icon name="trash" link onClick={props.onRemove}/>

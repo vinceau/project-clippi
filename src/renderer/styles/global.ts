@@ -12,6 +12,13 @@ export const GlobalStyle = createGlobalStyle<{
   }
 
   #app .${ThemeMode.DARK} {
+
+    .ui.transparent.input input,
+    .ui.divider,
+    .ui.header {
+      color: ${({ theme }) => theme.foreground };
+    }
+
     .ui.accordion .title:not(.ui),
     .ui.form .field>label,
     .ui.checkbox input:focus~label,
@@ -20,6 +27,13 @@ export const GlobalStyle = createGlobalStyle<{
     .ui.checkbox input:focus:checked~label
     {
         color: ${({theme}) => theme.foreground} !important;
+    }
+
+    .ui.placeholder.segment,
+    .ui.table thead th,
+    .ui.table {
+      background: ${({theme}) => transparentize(0.8, theme.foreground)};
+      color: ${({theme}) => theme.foreground};
     }
 
     input,
