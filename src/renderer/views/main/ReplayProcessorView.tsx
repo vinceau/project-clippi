@@ -12,11 +12,9 @@ const Content = styled.div`
 
 export const ReplayProcessorView: React.FC = () => {
     return (
-        <div>
-            <Content>
-                <h1>Replay Processor <Icon name="fast forward" /></h1>
-                <ComboFinder />
-            </Content>
-        </div>
+        <Content>
+            <h1>Replay Processor <Icon name="fast forward" /></h1>
+            <ComboFinder />
+        </Content>
     );
 };
