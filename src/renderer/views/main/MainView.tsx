@@ -3,7 +3,7 @@ import * as React from "react";
 
 import styled from "styled-components";
 
-import { Route, Switch, useRouteMatch } from "react-router-dom";
+import { Redirect, Route, Switch, useRouteMatch } from "react-router-dom";
 
 import { Menu } from "@/containers/Menu";
 import { AutomatorView } from "./AutomatorView";
@@ -50,6 +50,9 @@ export const MainView: React.FC = () => {
                         </Route>
                         <Route path={`${match.path}/streamer`}>
                             <div>Streamer</div>
+                        </Route>
+                        <Route exact path={match.path}>
+                            <Redirect to={`${match.path}/automator`} />
                         </Route>
                     </Switch>
                 </ContentColumn>
