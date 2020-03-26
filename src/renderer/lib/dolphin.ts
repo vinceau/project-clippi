@@ -2,6 +2,7 @@ import * as path from "path";
 import {execFile, ChildProcess} from "child_process";
 import { remote } from "electron";
 
+import { delay } from '@/lib/utils';
 import { dispatcher, store } from '@/store';
 import {setRecordingState, OBSRecordingAction} from '@/lib/obs'
 
@@ -11,6 +12,7 @@ export interface DolphinState {
     startRecordingFrame: number,
     endRecordingFrame: number,
     recordingStarted: boolean,
+    waitForGAME: boolean,
 };
 
 const dolphinState: DolphinState = {
@@ -19,6 +21,7 @@ const dolphinState: DolphinState = {
     startRecordingFrame: -124,
     endRecordingFrame: -124,
     recordingStarted: false,
+    waitForGAME: false,
 }
 
 const resetState = () => {
@@ -26,6 +29,7 @@ const resetState = () => {
     dolphinState.lastGameFrame = -124;
     dolphinState.startRecordingFrame = -124;
     dolphinState.endRecordingFrame = -124;
+    dolphinState.waitForGAME = false;
 }
 
 export const openComboInDolphin = (comboFilePath: string): void => {
@@ -43,7 +47,7 @@ export const openComboInDolphin = (comboFilePath: string): void => {
 
 const dolphinStdoutHandler = (line: string) => {
     const commands: string[] = line.split("\r\n").filter((value: string) => value); // this only runs on windows so CRLF is fine for now
-    commands.forEach((command: string) => {
+    commands.forEach(async (command: string) => {
         const commandPair: string[] = command.split(" ");
         switch(commandPair[0]) {
             case ("[CURRENT_FRAME]"):
@@ -59,6 +63,7 @@ const dolphinStdoutHandler = (line: string) => {
                     }
                     
                 } else if (dolphinState.currentFrame === dolphinState.endRecordingFrame) {
+                    if (dolphinState.waitForGAME) await delay(1000); // wait a second if we are the end of the game so we don't cut out too early
                     console.log("Pausing Recording");
                     setRecordingState(OBSRecordingAction.PAUSE);
                     resetState();
@@ -78,6 +83,7 @@ const dolphinStdoutHandler = (line: string) => {
                 if (dolphinState.endRecordingFrame + 120 < dolphinState.lastGameFrame) {
                     dolphinState.endRecordingFrame -= 60;
                 } else {
+                    dolphinState.waitForGAME = true;
                     dolphinState.endRecordingFrame = dolphinState.lastGameFrame;
                 }
                 console.log(`EndFrame: ${dolphinState.endRecordingFrame}`);
