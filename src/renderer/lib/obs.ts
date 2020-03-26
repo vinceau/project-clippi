@@ -7,8 +7,8 @@ export enum OBSRecordingAction {
     TOGGLE = "StartStopRecording",
     START = "StartRecording",
     STOP = "StopRecording",
-    // PAUSE = "PauseRecording",
-    // UNPAUSE = "ResumeRecording",
+    PAUSE = "PauseRecording",
+    UNPAUSE = "ResumeRecording",
 }
 
 const obs = new OBSWebSocket();

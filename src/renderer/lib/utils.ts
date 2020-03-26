@@ -1,10 +1,10 @@
 import * as path from "path";
 import * as url from "url";
 
-import cp from "child_process";
 import { Message } from "common/types";
 import { remote, shell } from "electron";
 import { ipc } from "./rendererIpc";
+import { openComboInDolphin } from '@/lib/dolphin';
 
 export const delay = async (ms: number): Promise<void> => {
     await new Promise(resolve => setTimeout(resolve, ms));
@@ -61,13 +61,6 @@ export const getStatic = (val: string): string => {
     const appPath = remote.app.getAppPath();
     const imagePath = path.join(appPath, "../static");
     return path.resolve(path.join(imagePath, val));
-};
-
-export const openComboInDolphin = (comboFilePath: string): void => {
-    const appData = remote.app.getPath("appData");
-    const dolphinPath = path.join(appData, "Slippi Desktop App", "dolphin", "Dolphin.exe");
-    console.log(dolphinPath);
-    cp.execFile(dolphinPath, ["-i", comboFilePath]);
 };
 
 export const loadFileInDolphin = async (): Promise<void> => {

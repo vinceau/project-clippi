@@ -13,8 +13,9 @@ export const ProcessSection: React.FC<{
     open: boolean;
     onOpenChange: (open: boolean) => void;
     label: string;
+    disabled: boolean;
 }> = (props) => {
-    const { open, onOpenChange, label } = props;
+    const { open, onOpenChange, label, disabled=false } = props;
     return (
         <div style={{ padding: "10px 0" }}>
             <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -23,6 +24,7 @@ export const ProcessSection: React.FC<{
                     toggle={true}
                     checked={open}
                     onChange={(_, data) => onOpenChange(Boolean(data.checked))}
+                    disabled={disabled}
                 />
             </div>
             <SlideReveal open={open}>
