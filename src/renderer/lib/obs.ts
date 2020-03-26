@@ -53,6 +53,7 @@ export const connectToOBSAndNotify = (): void => {
 
 export const disconnectFromOBS = (): void => {
     obs.disconnect();
+    dispatcher.tempContainer.setOBSConnected(false);
 };
 
 export const updateScenes = async (): Promise<void> => {
