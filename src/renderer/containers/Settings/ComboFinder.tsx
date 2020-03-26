@@ -180,7 +180,7 @@ export const ComboFinder: React.FC<{}> = () => {
                 </ProcessSection>
                 <ProcessSection
                     label="Record in OBS"
-                    open={recordReplays}
+                    open={recordReplays && obsConnected}
                     onOpenChange={setRecordReplays}
                     disabled={!obsConnected}
                 >
