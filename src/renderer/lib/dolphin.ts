@@ -1,5 +1,5 @@
 import * as path from "path";
-import cp from "child_process";
+import {execFile, ChildProcess} from "child_process";
 import { remote } from "electron";
 
 import { dispatcher, store } from '@/store';
@@ -32,11 +32,11 @@ export const openComboInDolphin = (comboFilePath: string): void => {
     const appData = remote.app.getPath("appData");
     const dolphinPath = path.join(appData, "Slippi Desktop App", "dolphin", "Dolphin.exe");
     console.log(dolphinPath);
-    const dolphin: cp.ChildProcess = cp.execFile(dolphinPath, ["-i", comboFilePath]);
-    dolphin.stderr.on('data', console.log);
+    store.getState().tempContainer.dolphin?.kill();
+    const dolphin: ChildProcess = execFile(dolphinPath, ["-i", comboFilePath], {maxBuffer: 2**20});
     dispatcher.tempContainer.setDolphin(dolphin);
-    if (store.getState().tempContainer.obsConnected && store.getState().tempContainer.recordReplays && dolphin !== null) {
-        dolphin.stdout.on('data', dolphinStdoutHandler);
+    if (store.getState().tempContainer.obsConnected && store.getState().tempContainer.recordReplays) {
+        dolphin.stdout?.on('data', dolphinStdoutHandler);
     }
 };
 
@@ -52,14 +52,14 @@ const dolphinStdoutHandler = (line: string) => {
                     setRecordingState(OBSRecordingAction.START)
                     dolphinState.recordingStarted = true;
                 } else {
-                    console.log("Resuming Recording")
-                    setRecordingState(OBSRecordingAction.UNPAUSE)
+                    console.log("Resuming Recording");
+                    setRecordingState(OBSRecordingAction.UNPAUSE);
                 }
                 
             } else if (dolphinState.currentFrame === dolphinState.endRecordingFrame) {
                 console.log("Pausing Recording");
-                setRecordingState(OBSRecordingAction.PAUSE)
-                resetState()
+                setRecordingState(OBSRecordingAction.PAUSE);
+                resetState();
             }
         } else if ("[PLAYBACK_START_FRAME]" === commandPair[0]) {
             dolphinState.startRecordingFrame = parseInt(commandPair[1]);
@@ -80,7 +80,7 @@ const dolphinStdoutHandler = (line: string) => {
             console.log("No games remaining in queue");
             console.log("Stopping Recording");
 
-            setRecordingState(OBSRecordingAction.STOP)
+            setRecordingState(OBSRecordingAction.STOP);
             dolphinState.recordingStarted = false;
         } else if ("" === commandPair[0]) {
             // whatever
