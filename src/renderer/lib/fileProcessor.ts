@@ -1,5 +1,7 @@
 import * as path from "path";
 
+import moment from 'moment';
+
 import fg from "fast-glob";
 import fs from "fs-extra";
 
@@ -194,7 +196,9 @@ export class FileProcessor {
         const sub = this.combos$.subscribe(payload => {
             const { combo, settings } = payload;
             if (this.comboFilter.isCombo(combo, settings, metadata)) {
-                this.queue.addCombo(filename, combo);
+                const formattedTime: string = moment(metadata.startAt).format("MM/DD/YY h:mm a");
+                const consoleNick: string = metadata.consoleNick || "unknown";
+                this.queue.addCombo(filename, combo, consoleNick, formattedTime);
                 count += 1;
             }
         });
