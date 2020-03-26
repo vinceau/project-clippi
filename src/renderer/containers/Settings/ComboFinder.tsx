@@ -7,7 +7,9 @@ import { FileInput } from "@/components/FileInput";
 import { InlineDropdown } from "@/components/InlineInputs";
 import { ProcessSection } from "@/components/ProcessSection";
 import { fileProcessor, FindComboOption, ProcessResult } from "@/lib/fileProcessor";
-import { loadFileInDolphin, notify, openComboInDolphin } from "@/lib/utils";
+import { loadFileInDolphin, notify } from "@/lib/utils";
+import { openComboInDolphin } from '@/lib/dolphin';
+
 import { Dispatch, iRootState } from "@/store";
 import { secondsToString } from "common/utils";
 import { RenameFiles } from "./RenameFiles";
@@ -16,12 +18,13 @@ const isWindows = process.platform === "win32";
 
 export const ComboFinder: React.FC<{}> = () => {
     const { comboProfiles } = useSelector((state: iRootState) => state.slippi);
-    const { comboFinderPercent, comboFinderLog, comboFinderProcessing } = useSelector((state: iRootState) => state.tempContainer);
+    const { comboFinderPercent, comboFinderLog, comboFinderProcessing, recordReplays, obsConnected } = useSelector((state: iRootState) => state.tempContainer);
     const { openCombosWhenDone, filesPath, combosFilePath, includeSubFolders, deleteFilesWithNoCombos,
         renameFiles, findCombos, findComboOption, renameFormat, findComboProfile } = useSelector((state: iRootState) => state.filesystem);
     const dispatch = useDispatch<Dispatch>();
     const setRenameFormat = (format: string) => dispatch.filesystem.setRenameFormat(format);
     const setRenameFiles = (checked: boolean) => dispatch.filesystem.setRenameFiles(checked);
+    const setRecordReplays = (checked: boolean) => dispatch.tempContainer.setRecordReplays(checked);
     const setFindCombos = (checked: boolean) => dispatch.filesystem.setFindCombos(checked);
     const setFindComboOption = (val: FindComboOption) => dispatch.filesystem.setFindComboOption(val);
     const setFindComboProfile = (val: string) => dispatch.filesystem.setFindComboProfile(val);
@@ -123,6 +126,7 @@ export const ComboFinder: React.FC<{}> = () => {
                     label="Find Combos"
                     open={findCombos}
                     onOpenChange={setFindCombos}
+                    disabled={false}
                 >
                     <div style={{paddingBottom: "10px"}}>
                         <span>Search replay directory for </span>
@@ -170,8 +174,16 @@ export const ComboFinder: React.FC<{}> = () => {
                     label="Rename Files"
                     open={renameFiles}
                     onOpenChange={setRenameFiles}
+                    disabled={false}
                 >
                     <RenameFiles value={renameFormat} onChange={setRenameFormat} />
+                </ProcessSection>
+                <ProcessSection
+                    label="Record in OBS"
+                    open={recordReplays && obsConnected}
+                    onOpenChange={setRecordReplays}
+                    disabled={!obsConnected}
+                >
                 </ProcessSection>
                 <div style={{ display: "flex", justifyContent: "space-between" }}>
                     {comboFinderProcessing ?

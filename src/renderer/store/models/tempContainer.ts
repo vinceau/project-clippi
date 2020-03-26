@@ -1,6 +1,8 @@
 import { createModel } from "@rematch/core";
 import produce from "immer";
 
+import { ChildProcess } from 'child_process';
+
 import { ConnectionStatus } from "@vinceau/slp-realtime";
 import { currentUser } from "common/twitch";
 import { Scene } from "obs-websocket-js";
@@ -17,6 +19,8 @@ export interface TempContainerState {
     obsConnected: boolean;
     obsScenes: Scene[];
     latestPath: { [page: string]: string };
+    recordReplays: boolean;
+    dolphin: ChildProcess | null;
 }
 
 const initialState: TempContainerState = {
@@ -33,6 +37,8 @@ const initialState: TempContainerState = {
         main: "/main/automator",
         settings: "/settings/combo-settings",
     },
+    recordReplays: false,
+    dolphin: null,
 };
 
 export const tempContainer = createModel({
@@ -77,6 +83,12 @@ export const tempContainer = createModel({
         }),
         clearSlpFolderStream: (state: TempContainerState): TempContainerState => produce(state, draft => {
             draft.currentSlpFolderStream = "";
+        }),
+        setDolphin: (state: TempContainerState, payload: ChildProcess): TempContainerState => produce(state, draft => {
+            draft.dolphin = payload;
+        }),
+        setRecordReplays: (state: TempContainerState, payload: boolean): TempContainerState => produce(state, draft => {
+            draft.recordReplays = payload;
         }),
     },
     effects: dispatch => ({

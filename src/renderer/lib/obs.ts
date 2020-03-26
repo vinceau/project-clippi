@@ -7,8 +7,8 @@ export enum OBSRecordingAction {
     TOGGLE = "StartStopRecording",
     START = "StartRecording",
     STOP = "StopRecording",
-    // PAUSE = "PauseRecording",
-    // UNPAUSE = "ResumeRecording",
+    PAUSE = "PauseRecording",
+    UNPAUSE = "ResumeRecording",
 }
 
 const obs = new OBSWebSocket();
@@ -53,6 +53,7 @@ export const connectToOBSAndNotify = (): void => {
 
 export const disconnectFromOBS = (): void => {
     obs.disconnect();
+    dispatcher.tempContainer.setOBSConnected(false);
 };
 
 export const updateScenes = async (): Promise<void> => {
