@@ -37,6 +37,7 @@ export const openComboInDolphin = (comboFilePath: string): void => {
     dispatcher.tempContainer.setDolphin(dolphin);
     if (store.getState().tempContainer.obsConnected && store.getState().tempContainer.recordReplays) {
         dolphin.stdout?.on('data', dolphinStdoutHandler);
+        dolphin.on('close', () => setRecordingState(OBSRecordingAction.STOP));
     }
 };
 
