@@ -55,6 +55,22 @@ export const openComboInDolphin = (comboFilePath: string): void => {
     }
 };
 
+interface DolphinPlayerOptions {
+    record: boolean;
+}
+
+const defaultDolphinPlayerOptions: DolphinPlayerOptions = {
+    record: false,
+};
+
+export class DolphinPlayer {
+    private dolphin: ChildProcess | null = null;
+
+    public loadJSON(filePath: string, options?: Partial<DolphinPlayerOptions>) {
+        const opts: DolphinPlayerOptions = Object.assign({}, defaultDolphinPlayerOptions, options);
+    }
+}
+
 const dolphinStdoutHandler = (line: string) => {
     const commands: string[] = line.split("\r\n").filter((value: string) => value); // this only runs on windows so CRLF is fine for now
     commands.forEach(async (command: string) => {
