@@ -2,23 +2,32 @@ import * as path from "path";
 import {execFile, ChildProcess} from "child_process";
 import { remote } from "electron";
 
+import { delay } from '@/lib/utils';
 import { dispatcher, store } from '@/store';
-import {setRecordingState, OBSRecordingAction} from '@/lib/obs'
+import { setRecordingState, OBSRecordingAction } from '@/lib/obs'
 
-export interface DolphinState {
+interface DolphinState {
     currentFrame: number,
     lastGameFrame: number,
     startRecordingFrame: number,
     endRecordingFrame: number,
-    recordingStarted: boolean,
 };
+
+interface RecordingState {
+    recordingStarted: boolean,
+    waitForGAME: boolean,
+};
+
+const recordingState: RecordingState = {
+    recordingStarted: false,
+    waitForGAME: false,
+}
 
 const dolphinState: DolphinState = {
     currentFrame: -124,
     lastGameFrame: -124,
     startRecordingFrame: -124,
     endRecordingFrame: -124,
-    recordingStarted: false,
 }
 
 const resetState = () => {
@@ -26,6 +35,11 @@ const resetState = () => {
     dolphinState.lastGameFrame = -124;
     dolphinState.startRecordingFrame = -124;
     dolphinState.endRecordingFrame = -124;
+    recordingState.waitForGAME = false;
+}
+
+export const setRecordingStarted = (value: boolean) => {
+    recordingState.recordingStarted = value;
 }
 
 export const openComboInDolphin = (comboFilePath: string): void => {
@@ -37,27 +51,28 @@ export const openComboInDolphin = (comboFilePath: string): void => {
     dispatcher.tempContainer.setDolphin(dolphin);
     if (store.getState().tempContainer.obsConnected && store.getState().tempContainer.recordReplays) {
         dolphin.stdout?.on('data', dolphinStdoutHandler);
+        dolphin.on('close', () => setRecordingState(OBSRecordingAction.STOP));
     }
 };
 
 const dolphinStdoutHandler = (line: string) => {
     const commands: string[] = line.split("\r\n").filter((value: string) => value); // this only runs on windows so CRLF is fine for now
-    commands.forEach((command: string) => {
+    commands.forEach(async (command: string) => {
         const commandPair: string[] = command.split(" ");
         switch(commandPair[0]) {
             case ("[CURRENT_FRAME]"):
                 dolphinState.currentFrame = parseInt(commandPair[1]);
                 if (dolphinState.currentFrame === dolphinState.startRecordingFrame) {
-                    if (!dolphinState.recordingStarted) {
+                    if (!recordingState.recordingStarted) {
                         console.log("Start Recording");
                         setRecordingState(OBSRecordingAction.START)
-                        dolphinState.recordingStarted = true;
                     } else {
                         console.log("Resuming Recording");
                         setRecordingState(OBSRecordingAction.UNPAUSE);
                     }
                     
                 } else if (dolphinState.currentFrame === dolphinState.endRecordingFrame) {
+                    if (recordingState.waitForGAME) await delay(1000); // wait a second if we are at the end of the game so we don't cut out too early
                     console.log("Pausing Recording");
                     setRecordingState(OBSRecordingAction.PAUSE);
                     resetState();
@@ -77,6 +92,7 @@ const dolphinStdoutHandler = (line: string) => {
                 if (dolphinState.endRecordingFrame + 120 < dolphinState.lastGameFrame) {
                     dolphinState.endRecordingFrame -= 60;
                 } else {
+                    recordingState.waitForGAME = true;
                     dolphinState.endRecordingFrame = dolphinState.lastGameFrame;
                 }
                 console.log(`EndFrame: ${dolphinState.endRecordingFrame}`);
@@ -85,7 +101,6 @@ const dolphinStdoutHandler = (line: string) => {
                 console.log("No games remaining in queue");
                 console.log("Stopping Recording");
                 setRecordingState(OBSRecordingAction.STOP);
-                dolphinState.recordingStarted = false;
                 break;
             case (""):
                 break
