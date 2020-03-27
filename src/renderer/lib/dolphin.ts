@@ -6,22 +6,28 @@ import { delay } from '@/lib/utils';
 import { dispatcher, store } from '@/store';
 import { setRecordingState, OBSRecordingAction } from '@/lib/obs'
 
-export interface DolphinState {
+interface DolphinState {
     currentFrame: number,
     lastGameFrame: number,
     startRecordingFrame: number,
     endRecordingFrame: number,
+};
+
+interface RecordingState {
     recordingStarted: boolean,
     waitForGAME: boolean,
 };
+
+const recordingState: RecordingState = {
+    recordingStarted: false,
+    waitForGAME: false,
+}
 
 const dolphinState: DolphinState = {
     currentFrame: -124,
     lastGameFrame: -124,
     startRecordingFrame: -124,
     endRecordingFrame: -124,
-    recordingStarted: false,
-    waitForGAME: false,
 }
 
 const resetState = () => {
@@ -29,11 +35,11 @@ const resetState = () => {
     dolphinState.lastGameFrame = -124;
     dolphinState.startRecordingFrame = -124;
     dolphinState.endRecordingFrame = -124;
-    dolphinState.waitForGAME = false;
+    recordingState.waitForGAME = false;
 }
 
 export const setRecordingStarted = (value: boolean) => {
-    dolphinState.recordingStarted = value;
+    recordingState.recordingStarted = value;
 }
 
 export const openComboInDolphin = (comboFilePath: string): void => {
@@ -57,7 +63,7 @@ const dolphinStdoutHandler = (line: string) => {
             case ("[CURRENT_FRAME]"):
                 dolphinState.currentFrame = parseInt(commandPair[1]);
                 if (dolphinState.currentFrame === dolphinState.startRecordingFrame) {
-                    if (!dolphinState.recordingStarted) {
+                    if (!recordingState.recordingStarted) {
                         console.log("Start Recording");
                         setRecordingState(OBSRecordingAction.START)
                     } else {
@@ -66,7 +72,7 @@ const dolphinStdoutHandler = (line: string) => {
                     }
                     
                 } else if (dolphinState.currentFrame === dolphinState.endRecordingFrame) {
-                    if (dolphinState.waitForGAME) await delay(1000); // wait a second if we are the end of the game so we don't cut out too early
+                    if (recordingState.waitForGAME) await delay(1000); // wait a second if we are at the end of the game so we don't cut out too early
                     console.log("Pausing Recording");
                     setRecordingState(OBSRecordingAction.PAUSE);
                     resetState();
@@ -86,7 +92,7 @@ const dolphinStdoutHandler = (line: string) => {
                 if (dolphinState.endRecordingFrame + 120 < dolphinState.lastGameFrame) {
                     dolphinState.endRecordingFrame -= 60;
                 } else {
-                    dolphinState.waitForGAME = true;
+                    recordingState.waitForGAME = true;
                     dolphinState.endRecordingFrame = dolphinState.lastGameFrame;
                 }
                 console.log(`EndFrame: ${dolphinState.endRecordingFrame}`);
