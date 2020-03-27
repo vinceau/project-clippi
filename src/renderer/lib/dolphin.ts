@@ -4,7 +4,7 @@ import { remote } from "electron";
 
 import { delay } from '@/lib/utils';
 import { dispatcher, store } from '@/store';
-import {setRecordingState, OBSRecordingAction} from '@/lib/obs'
+import { setRecordingState, OBSRecordingAction } from '@/lib/obs'
 
 export interface DolphinState {
     currentFrame: number,
@@ -32,6 +32,10 @@ const resetState = () => {
     dolphinState.waitForGAME = false;
 }
 
+export const setRecordingStarted = (value: boolean) => {
+    dolphinState.recordingStarted = value;
+}
+
 export const openComboInDolphin = (comboFilePath: string): void => {
     const appData = remote.app.getPath("appData");
     const dolphinPath = path.join(appData, "Slippi Desktop App", "dolphin", "Dolphin.exe");
@@ -56,7 +60,6 @@ const dolphinStdoutHandler = (line: string) => {
                     if (!dolphinState.recordingStarted) {
                         console.log("Start Recording");
                         setRecordingState(OBSRecordingAction.START)
-                        dolphinState.recordingStarted = true;
                     } else {
                         console.log("Resuming Recording");
                         setRecordingState(OBSRecordingAction.UNPAUSE);
@@ -92,7 +95,6 @@ const dolphinStdoutHandler = (line: string) => {
                 console.log("No games remaining in queue");
                 console.log("Stopping Recording");
                 setRecordingState(OBSRecordingAction.STOP);
-                dolphinState.recordingStarted = false;
                 break;
             case (""):
                 break

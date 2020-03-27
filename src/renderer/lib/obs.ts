@@ -2,6 +2,7 @@ import OBSWebSocket from "obs-websocket-js";
 
 import { dispatcher, store } from "@/store";
 import { notify } from "./utils";
+import { setRecordingStarted } from "./dolphin";
 
 export enum OBSRecordingAction {
     TOGGLE = "StartStopRecording",
@@ -28,6 +29,12 @@ const setupListeners = () => {
 
     obs.on("SceneItemRemoved", () => {
         updateScenes().catch(console.error);
+    });
+    obs.on("RecordingStarted", () => {
+        setRecordingStarted(true);
+    });
+    obs.on("RecordingStopped", () => {
+        setRecordingStarted(false);
     });
 };
 
