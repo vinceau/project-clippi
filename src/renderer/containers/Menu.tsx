@@ -24,6 +24,7 @@ export const Menu: React.FC = () => {
             <div>
                 <MenuIconLink to={`${match.url}/automator`} label="Automator"><Icon name="bolt" /></MenuIconLink>
                 <MenuIconLink to={`${match.url}/processor`} label="Replay Processor"><Icon name="fast forward" /></MenuIconLink>
+                <MenuIconLink to={`${match.url}/recorder`} label="Game Recorder"><Icon name="record" /></MenuIconLink>
                 {/* <MenuIconLink to={`${match.url}/streamer`} label="Stream Assistant"><Icon name="tv" /></MenuIconLink> */}
             </div>
             <div>
