@@ -69,7 +69,7 @@ export class DolphinPlayer {
         }
         if (dolphin.stdout) {
             dolphin.stdout.on("data", (data: string) => {
-                this._stdoutHandler(data);
+                this._handleStdoutData(data);
             });
         }
         dolphin.on("close", async () => {
@@ -77,7 +77,7 @@ export class DolphinPlayer {
         });
     }
 
-    private _stdoutHandler(data: string) {
+    private _handleStdoutData(data: string) {
         const lines = data.split(os.EOL).filter(line => Boolean(line));
         lines.forEach((command: string) => {
             const commandValuePair: string[] = command.split(" ");
