@@ -16,8 +16,6 @@ export interface TempContainerState {
     comboFinderLog: string;
     comboFinderProcessing: boolean;
     latestPath: { [page: string]: string };
-    recordReplays: boolean;
-    dolphin: ChildProcess | null;
 }
 
 const initialState: TempContainerState = {
@@ -32,8 +30,6 @@ const initialState: TempContainerState = {
         main: "/main/automator",
         settings: "/settings/combo-settings",
     },
-    recordReplays: false,
-    dolphin: null,
 };
 
 export const tempContainer = createModel({
@@ -72,12 +68,6 @@ export const tempContainer = createModel({
         }),
         clearSlpFolderStream: (state: TempContainerState): TempContainerState => produce(state, draft => {
             draft.currentSlpFolderStream = "";
-        }),
-        setDolphin: (state: TempContainerState, payload: ChildProcess): TempContainerState => produce(state, draft => {
-            draft.dolphin = payload;
-        }),
-        setRecordReplays: (state: TempContainerState, payload: boolean): TempContainerState => produce(state, draft => {
-            draft.recordReplays = payload;
         }),
     },
     effects: dispatch => ({
