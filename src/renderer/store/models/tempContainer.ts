@@ -4,9 +4,12 @@ import produce from "immer";
 import { ConnectionStatus } from "@vinceau/slp-realtime";
 import { currentUser } from "common/twitch";
 import { HelixUser } from "twitch";
+import { OBSConnectionStatus, OBSRecordingStatus } from "@/lib/obs";
 
 export interface TempContainerState {
     slippiConnectionStatus: ConnectionStatus;
+    obsConnectionStatus: OBSConnectionStatus;
+    obsRecordingStatus: OBSRecordingStatus;
     twitchUser: HelixUser | null;
     showSettings: boolean;
     currentSlpFolderStream: string;
@@ -18,6 +21,8 @@ export interface TempContainerState {
 
 const initialState: TempContainerState = {
     slippiConnectionStatus: ConnectionStatus.DISCONNECTED,
+    obsConnectionStatus: OBSConnectionStatus.DISCONNECTED,
+    obsRecordingStatus: OBSRecordingStatus.RECORDING,
     twitchUser: null,
     showSettings: false,
     currentSlpFolderStream: "",
@@ -35,6 +40,12 @@ export const tempContainer = createModel({
     reducers: {
         setSlippiConnectionStatus: (state: TempContainerState, payload: ConnectionStatus): TempContainerState => produce(state, draft => {
             draft.slippiConnectionStatus = payload;
+        }),
+        setOBSConnectionStatus: (state: TempContainerState, payload: OBSConnectionStatus): TempContainerState => produce(state, draft => {
+            draft.obsConnectionStatus = payload;
+        }),
+        setOBSRecordingStatus: (state: TempContainerState, payload: OBSRecordingStatus): TempContainerState => produce(state, draft => {
+            draft.obsRecordingStatus = payload;
         }),
         setTwitchUser: (state: TempContainerState, payload: HelixUser): TempContainerState => produce(state, draft => {
             draft.twitchUser = payload;

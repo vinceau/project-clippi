@@ -3,7 +3,9 @@ import * as React from "react";
 import { ActionTypeGenerator, Context } from "@vinceau/event-actions";
 import { produce } from "immer";
 import { Button } from "semantic-ui-react";
+import { useDispatch, useSelector } from "react-redux";
 
+import { Dispatch, iRootState } from "@/store";
 import { DelayInput, InlineDropdown } from "@/components/InlineInputs";
 import { CustomIcon } from "@/components/CustomIcon";
 import { connectToOBSAndNotify, obsConnection, OBSConnectionStatus } from "@/lib/obs";
@@ -42,14 +44,8 @@ const ActionIcon = () => {
 
 const SourceNameInput = (props: { value: ActionToggleSourceParams, onChange: any }) => {
     const { value, onChange } = props;
-    const [obsConnected, setOBSConnected] = React.useState(false);
-
-    React.useEffect(() => {
-        const sub = obsConnection.connectionStatus$.subscribe(status => {
-            setOBSConnected(status === OBSConnectionStatus.CONNECTED);
-        });
-        return () => sub.unsubscribe();
-    }, []);
+    const { obsConnectionStatus } = useSelector((state: iRootState) => state.tempContainer);
+    const obsConnected = obsConnectionStatus === OBSConnectionStatus.CONNECTED;
 
     if (!obsConnected) {
         return (

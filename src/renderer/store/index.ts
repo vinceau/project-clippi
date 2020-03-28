@@ -6,6 +6,7 @@ import * as models from "./models";
 import { updateEventActionManager } from "@/actions";
 import { mapConfigurationToFilterSettings } from "@/lib/profile";
 import { comboFilter } from "@/lib/realtime";
+import { obsConnection } from "@/lib/obs";
 import { soundPlayer } from "@/lib/sounds";
 import { transformer } from "./transformer";
 
@@ -50,4 +51,13 @@ const storeSync = () => {
 
 store.subscribe(() => {
     storeSync();
+});
+
+obsConnection.connectionStatus$.subscribe(status => {
+    console.log(status);
+    dispatcher.tempContainer.setOBSConnectionStatus(status);
+});
+obsConnection.recordingStatus$.subscribe(status => {
+    console.log(status);
+    dispatcher.tempContainer.setOBSRecordingStatus(status);
 });

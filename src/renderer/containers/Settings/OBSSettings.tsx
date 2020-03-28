@@ -11,7 +11,8 @@ import OBSLogo from "@/styles/images/obs.png";
 
 export const OBSSettings = () => {
     const { obsAddress, obsPort, obsPassword } = useSelector((state: iRootState) => state.slippi);
-    const [obsConnected, setOBSConnected] = React.useState(false);
+    const { obsConnectionStatus } = useSelector((state: iRootState) => state.tempContainer);
+    const obsConnected = obsConnectionStatus === OBSConnectionStatus.CONNECTED;
     const dispatch = useDispatch<Dispatch>();
     const header = obsConnected ? "Connected" : "Disconnected";
     const color = obsConnected ? "#00E461" : "#F30807";
@@ -20,13 +21,6 @@ export const OBSSettings = () => {
     const togglePass = () => {
         setShowPass(!showPass);
     };
-
-    React.useEffect(() => {
-        const sub = obsConnection.connectionStatus$.subscribe(status => {
-            setOBSConnected(status === OBSConnectionStatus.CONNECTED);
-        });
-        return () => sub.unsubscribe();
-    }, []);
 
     return (<div>
         <h2>OBS Configuration</h2>

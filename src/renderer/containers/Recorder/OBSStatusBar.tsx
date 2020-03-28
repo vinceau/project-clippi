@@ -14,18 +14,7 @@ import { OBSConnectionStatus, OBSRecordingStatus, obsConnection } from "@/lib/ob
 import obsLogo from "@/styles/images/obs.png";
 
 export const OBSStatusBar: React.FC = () => {
-    const [obsConnectionStatus, setOBSConnectionStatus] = React.useState(OBSConnectionStatus.DISCONNECTED);
-    const [obsRecordingStatus, setOBSRecordingStatus] = React.useState(OBSRecordingStatus.STOPPED);
-    React.useEffect(() => {
-        const sub = new Subscription();
-        sub.add(obsConnection.connectionStatus$.subscribe(status => {
-            setOBSConnectionStatus(status);
-        }));
-        sub.add(obsConnection.recordingStatus$.subscribe(status => {
-            setOBSRecordingStatus(status);
-        }));
-        return () => sub.unsubscribe();
-    }, []);
+    const { obsConnectionStatus, obsRecordingStatus } = useSelector((state: iRootState) => state.tempContainer);
 
     const handleClick = () => {
         /*
