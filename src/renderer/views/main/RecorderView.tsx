@@ -2,10 +2,11 @@ import React from "react";
 
 import styled from "styled-components";
 
-import { Button, Checkbox, Icon } from "semantic-ui-react";
+import { Header, Segment, Button, Checkbox, Icon } from "semantic-ui-react";
 import { loadFileInDolphin } from "@/lib/utils";
 
 import { OBSStatusBar } from "@/containers/Recorder/OBSStatusBar";
+import { DropPad } from "@/components/DropPad";
 
 const Content = styled.div`
     padding: 20px;
@@ -34,11 +35,15 @@ export const RecorderView: React.FC = () => {
         <Outer>
             <Content>
                 <h1>Game Recorder <Icon name="record" /></h1>
+                <DropPad onFiles={(files) => console.log(files)} />
                 <div>
                     <Checkbox
                         label="Record output in OBS"
                         checked={record}
-                        onChange={(_, data) => setRecord(Boolean(data.checked))}
+                        onChange={(_, data) => {
+                            console.log("clicked");
+                            setRecord(Boolean(data.checked));
+                        }}
                     />
                 </div>
                 <div>
