@@ -3,6 +3,8 @@ import OBSWebSocket, { Scene } from "obs-websocket-js";
 import { store } from "@/store";
 import { notify } from "./utils";
 
+import { BehaviorSubject } from "rxjs";
+
 export enum OBSRecordingAction {
     TOGGLE = "StartStopRecording",
     START = "StartRecording",
@@ -11,22 +13,36 @@ export enum OBSRecordingAction {
     UNPAUSE = "ResumeRecording",
 }
 
+export enum OBSRecordingStatus {
+    RECORDING = "RECORDING",
+    PAUSED = "PAUSED",
+    STOPPED = "STOPPED",
+}
+
+export enum OBSConnectionStatus {
+    CONNECTED = "CONNECTED",
+    DISCONNECTED = "DISCONNECTED",
+}
+
 class OBSConnection {
     private readonly socket: OBSWebSocket;
-    private _isConnected = false;
-    private _isRecording = false;
+    private readonly connectionSource$ = new BehaviorSubject<OBSConnectionStatus>(OBSConnectionStatus.DISCONNECTED);
+    private readonly recordingSource$ = new BehaviorSubject<OBSRecordingStatus>(OBSRecordingStatus.STOPPED);
     private scenes = new Array<Scene>();
+
+    public connectionStatus$ = this.connectionSource$.asObservable();
+    public recordingStatus$ = this.recordingSource$.asObservable();
 
     public constructor() {
         this.socket = new OBSWebSocket();
     }
 
     public isConnected(): boolean {
-        return this._isConnected;
+        return this.connectionSource$.value === OBSConnectionStatus.CONNECTED;
     }
 
     public isRecording(): boolean {
-        return this._isRecording;
+        return this.recordingSource$.value === OBSRecordingStatus.RECORDING;
     }
 
     public async connect(obsAddress: string, obsPort: string, obsPassword?: string) {
@@ -36,12 +52,12 @@ class OBSConnection {
         });
         this._setupListeners();
         await this._updateScenes();
-        this._isConnected = true;
+        this.connectionSource$.next(OBSConnectionStatus.CONNECTED);
     }
 
     public disconnect() {
         this.socket.disconnect();
-        this._isConnected = false;
+        this.connectionSource$.next(OBSConnectionStatus.DISCONNECTED);
     }
 
     public async setScene(scene: string) {
@@ -91,7 +107,7 @@ class OBSConnection {
 
     private _setupListeners() {
         this.socket.on("ConnectionClosed", () => {
-            this._isConnected = false;
+            this.connectionSource$.next(OBSConnectionStatus.DISCONNECTED);
         });
         this.socket.on("ScenesChanged", () => {
             this._updateScenes().catch(console.error);
@@ -103,10 +119,16 @@ class OBSConnection {
             this._updateScenes().catch(console.error);
         });
         this.socket.on("RecordingStarted", () => {
-            this._isRecording = true;
+            this.recordingSource$.next(OBSRecordingStatus.RECORDING);
+        });
+        this.socket.on("RecordingPaused", () => {
+            this.recordingSource$.next(OBSRecordingStatus.PAUSED);
+        });
+        this.socket.on("RecordingResumed", () => {
+            this.recordingSource$.next(OBSRecordingStatus.RECORDING);
         });
         this.socket.on("RecordingStopped", () => {
-            this._isRecording = false;
+            this.recordingSource$.next(OBSRecordingStatus.STOPPED);
         });
     }
 

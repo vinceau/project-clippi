@@ -4,14 +4,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { Button, Form, Icon } from "semantic-ui-react";
 
 import { ConnectionStatusCard } from "@/components/ConnectionStatusCard";
-import { connectToOBSAndNotify, obsConnection } from "@/lib/obs";
+import { connectToOBSAndNotify, obsConnection, OBSConnectionStatus } from "@/lib/obs";
 import { Dispatch, iRootState } from "@/store";
 
 import OBSLogo from "@/styles/images/obs.png";
 
 export const OBSSettings = () => {
     const { obsAddress, obsPort, obsPassword } = useSelector((state: iRootState) => state.slippi);
-    const obsConnected = obsConnection.isConnected();
+    const [obsConnected, setOBSConnected] = React.useState(false);
     const dispatch = useDispatch<Dispatch>();
     const header = obsConnected ? "Connected" : "Disconnected";
     const color = obsConnected ? "#00E461" : "#F30807";
@@ -20,6 +20,13 @@ export const OBSSettings = () => {
     const togglePass = () => {
         setShowPass(!showPass);
     };
+
+    React.useEffect(() => {
+        const sub = obsConnection.connectionStatus$.subscribe(status => {
+            setOBSConnected(status === OBSConnectionStatus.CONNECTED);
+        });
+        return () => sub.unsubscribe();
+    }, []);
 
     return (<div>
         <h2>OBS Configuration</h2>
