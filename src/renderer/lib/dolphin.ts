@@ -1,10 +1,11 @@
-import path from "path";
 import os from "os";
-import { execFile, ChildProcess } from "child_process";
+import path from "path";
+
+import { ChildProcess, execFile } from "child_process";
 import { remote } from "electron";
 
-import { delay } from "@/lib/utils";
 import { obsConnection, OBSRecordingAction } from "@/lib/obs";
+import { delay } from "@/lib/utils";
 
 const MAX_BUFFER = 2 ** 20;
 const DELAY_AMOUNT_MS = 1000;
