@@ -28,14 +28,20 @@ const getDolphinPath = (): string => {
 };
 
 export class DolphinPlayer {
-    private readonly dolphin: ChildProcess | null = null;
+    private dolphin: ChildProcess | null = null;
     private waitForGAME = false;
     private currentFrame = -124;
     private lastGameFrame = -124;
     private startRecordingFrame = -124;
     private endRecordingFrame = -124;
 
-    public constructor(comboFilePath: string, options?: Partial<DolphinPlayerOptions>) {
+    public loadJSON(comboFilePath: string, options?: Partial<DolphinPlayerOptions>) {
+        // Reset state and kill dolphin if running
+        this._resetState();
+        if (this.dolphin) {
+            this.dolphin.kill();
+        }
+
         const opts: DolphinPlayerOptions = Object.assign({}, defaultDolphinPlayerOptions, options);
         const dolphinPath = getDolphinPath();
         console.log(dolphinPath);
@@ -136,3 +142,9 @@ export class DolphinPlayer {
         this.waitForGAME = false;
     }
 }
+
+const dolphinPlayer = new DolphinPlayer();
+
+export const openComboInDolphin = (filePath: string, record?: boolean) => {
+    dolphinPlayer.loadJSON(filePath, { record });
+};
