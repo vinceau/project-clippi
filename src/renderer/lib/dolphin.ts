@@ -1,3 +1,15 @@
+/**
+ * We can tap into the Dolphin state by reading the log printed to stdout.
+ * This will let us automate the recording.
+ *
+ * Dolphin will emit the following messages in following order:
+ * [PLAYBACK_START_FRAME]: the frame playback will commence (defaults to -123 if omitted)
+ * [GAME_END_FRAME]: the last frame of the game
+ * [PLAYBACK_END_FRAME] this frame playback will end at (defaults to MAX_INT if omitted)
+ * [CURRENT_FRAME] the current frame being played back
+ * [NO_GAME] no more files in the queue
+ */
+
 import os from "os";
 import path from "path";
 
