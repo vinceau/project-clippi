@@ -32,7 +32,7 @@ export const OBSStatusBar: React.FC = () => {
     const innerText = "ghi"; // isFolderStream ? <>{currentSlpFolderStream}</> :
     // <>Relay Port: <InlineInput value={port} onChange={dispatch.slippi.setPort} /></>;
     // const connected = isFolderStream || relayIsConnected;
-    let color = "#CCCCCC"; // grey
+    let color = "#888888";
 
     if (obsConnectionStatus === OBSConnectionStatus.CONNECTED) {
         color = obsRecordingStatus === OBSRecordingStatus.STOPPED ? "#00E461" : "#F30807";
