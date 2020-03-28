@@ -6,7 +6,7 @@ import { Button } from "semantic-ui-react";
 
 import { DelayInput, InlineDropdown } from "@/components/InlineInputs";
 import { CustomIcon } from "@/components/CustomIcon";
-import { connectToOBSAndNotify, obsConnection } from "@/lib/obs";
+import { connectToOBSAndNotify, obsConnection, OBSConnectionStatus } from "@/lib/obs";
 import { delay as waitMillis, notify } from "@/lib/utils";
 import { ActionComponent } from "./types";
 
@@ -42,7 +42,15 @@ const ActionIcon = () => {
 
 const SourceNameInput = (props: { value: ActionToggleSourceParams, onChange: any }) => {
     const { value, onChange } = props;
-    const obsConnected = obsConnection.isConnected();
+    const [obsConnected, setOBSConnected] = React.useState(false);
+
+    React.useEffect(() => {
+        const sub = obsConnection.connectionStatus$.subscribe(status => {
+            setOBSConnected(status === OBSConnectionStatus.CONNECTED);
+        });
+        return () => sub.unsubscribe();
+    }, []);
+
     if (!obsConnected) {
         return (
             <Button content={`Connect to OBS`} type="button" onClick={connectToOBSAndNotify} />
