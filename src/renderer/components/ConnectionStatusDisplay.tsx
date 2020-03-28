@@ -7,9 +7,9 @@ import { Header } from "semantic-ui-react";
 import { Labelled } from "@/components/Labelled";
 
 import { ScanningDot } from "@/components/ScanningDot";
-import slippiLogo from "@/styles/images/slippi.png";
 
 export const ConnectionStatusDisplay: React.FC<{
+    icon?: any;
     headerText: string;
     headerHoverTitle: string;
     onHeaderClick?: () => void;
@@ -28,7 +28,7 @@ export const ConnectionStatusDisplay: React.FC<{
     `;
     return (
         <Outer>
-            <img src={slippiLogo} style={{ height: "35px", width: "35px" }} />
+            {props.icon && <img src={props.icon} style={{ height: "35px", width: "35px" }} />}
             <ConnectInfo>
                 <Labelled title={props.headerHoverTitle} onClick={props.onHeaderClick} position="right">
                     <Header sub>
