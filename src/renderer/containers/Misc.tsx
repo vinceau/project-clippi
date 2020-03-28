@@ -1,7 +1,6 @@
 import * as React from "react";
 
 import { eventActionManager } from "@/actions";
-import { connectToOBS, setScene } from "@/lib/obs";
 import { ActionEvent } from "@/lib/realtime";
 import { isDevelopment, notify } from "@/lib/utils";
 
@@ -17,8 +16,6 @@ export const DevTools = () => {
     return (
         <div>
             <input value={sceneName} onChange={(e) => setSceneName(e.target.value)} />
-            <button onClick={() => setScene(sceneName).catch(console.error)}>change obs scene</button>
-            <button onClick={() => connectToOBS().catch(console.error)}>connect to obs</button>
             <button onClick={handleClick}>notify</button>
             <button onClick={customEvent}>trigger test event</button>
         </div>

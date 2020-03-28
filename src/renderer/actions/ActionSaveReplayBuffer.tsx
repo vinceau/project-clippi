@@ -8,7 +8,7 @@ import { delay as waitMillis, notify as sendNotification, parseSecondsDelayValue
 import { ActionComponent } from "./types";
 
 import { CustomIcon } from "@/components/CustomIcon";
-import { saveReplayBuffer } from "@/lib/obs";
+import { obsConnection } from "@/lib/obs";
 
 import obsIcon from "@/styles/images/obs.svg";
 
@@ -33,7 +33,7 @@ const actionSaveBuffer: ActionTypeGenerator = (params: ActionSaveReplayBufferPar
             if (seconds > 0) {
                 await waitMillis(seconds * 1000);
             }
-            await saveReplayBuffer();
+            await obsConnection.saveReplayBuffer();
             if (params.notify) {
                 sendNotification("Saved replay buffer");
             }

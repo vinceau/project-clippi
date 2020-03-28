@@ -1,34 +1,34 @@
 import * as path from "path";
-import {execFile, ChildProcess} from "child_process";
+import { execFile, ChildProcess } from "child_process";
 import { remote } from "electron";
 
-import { delay } from '@/lib/utils';
-import { dispatcher, store } from '@/store';
-import { setRecordingState, OBSRecordingAction } from '@/lib/obs'
+import { delay } from "@/lib/utils";
+import { dispatcher, store } from "@/store";
+import { obsConnection, OBSRecordingAction } from "@/lib/obs";
 
 interface DolphinState {
-    currentFrame: number,
-    lastGameFrame: number,
-    startRecordingFrame: number,
-    endRecordingFrame: number,
-};
+    currentFrame: number;
+    lastGameFrame: number;
+    startRecordingFrame: number;
+    endRecordingFrame: number;
+}
 
 interface RecordingState {
-    recordingStarted: boolean,
-    waitForGAME: boolean,
-};
+    recordingStarted: boolean;
+    waitForGAME: boolean;
+}
 
 const recordingState: RecordingState = {
     recordingStarted: false,
     waitForGAME: false,
-}
+};
 
 const dolphinState: DolphinState = {
     currentFrame: -124,
     lastGameFrame: -124,
     startRecordingFrame: -124,
     endRecordingFrame: -124,
-}
+};
 
 const resetState = () => {
     dolphinState.currentFrame = -124;
@@ -49,9 +49,10 @@ export const openComboInDolphin = (comboFilePath: string): void => {
     store.getState().tempContainer.dolphin?.kill();
     const dolphin: ChildProcess = execFile(dolphinPath, ["-i", comboFilePath], {maxBuffer: 2**20});
     dispatcher.tempContainer.setDolphin(dolphin);
-    if (store.getState().tempContainer.obsConnected && store.getState().tempContainer.recordReplays) {
+    const obsConnected = obsConnection.isConnected();
+    if (obsConnected && store.getState().tempContainer.recordReplays) {
         dolphin.stdout?.on('data', dolphinStdoutHandler);
-        dolphin.on('close', () => setRecordingState(OBSRecordingAction.STOP));
+        dolphin.on('close', () => obsConnection.setRecordingState(OBSRecordingAction.STOP));
     }
 };
 
@@ -81,16 +82,16 @@ const dolphinStdoutHandler = (line: string) => {
                 if (dolphinState.currentFrame === dolphinState.startRecordingFrame) {
                     if (!recordingState.recordingStarted) {
                         console.log("Start Recording");
-                        setRecordingState(OBSRecordingAction.START)
+                        obsConnection.setRecordingState(OBSRecordingAction.START)
                     } else {
                         console.log("Resuming Recording");
-                        setRecordingState(OBSRecordingAction.UNPAUSE);
+                        obsConnection.setRecordingState(OBSRecordingAction.UNPAUSE);
                     }
                     
                 } else if (dolphinState.currentFrame === dolphinState.endRecordingFrame) {
                     if (recordingState.waitForGAME) await delay(1000); // wait a second if we are at the end of the game so we don't cut out too early
                     console.log("Pausing Recording");
-                    setRecordingState(OBSRecordingAction.PAUSE);
+                    obsConnection.setRecordingState(OBSRecordingAction.PAUSE);
                     resetState();
                 }
                 break;
@@ -116,7 +117,7 @@ const dolphinStdoutHandler = (line: string) => {
             case ("[NO_GAME]"):
                 console.log("No games remaining in queue");
                 console.log("Stopping Recording");
-                setRecordingState(OBSRecordingAction.STOP);
+                obsConnection.setRecordingState(OBSRecordingAction.STOP);
                 break;
             case (""):
                 break
