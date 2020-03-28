@@ -14,13 +14,11 @@ const START_RECORDING_BUFFER = 90;
 const END_RECORDING_BUFFER_LIMIT = 120;
 const END_RECORDING_BUFFER_AMOUNT = 60;
 
-interface DolphinPlayerOptions {
-    record: boolean;
-}
-
-const defaultDolphinPlayerOptions: DolphinPlayerOptions = {
+const defaultDolphinPlayerOptions = {
     record: false,
 };
+
+type DolphinPlayerOptions = typeof defaultDolphinPlayerOptions;
 
 const getDolphinPath = (): string => {
     const appData = remote.app.getPath("appData");
