@@ -63,12 +63,12 @@ export const getStatic = (val: string): string => {
     return path.resolve(path.join(imagePath, val));
 };
 
-export const loadFileInDolphin = async (): Promise<void> => {
+export const loadFileInDolphin = async (record?: boolean): Promise<void> => {
     const p = await getFilePath({
         filters: [{ name: "JSON files", extensions: ["json"] }],
     });
     if (p) {
-        openComboInDolphin(p);
+        openComboInDolphin(p, record);
     }
 };
 

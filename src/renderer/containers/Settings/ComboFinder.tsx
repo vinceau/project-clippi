@@ -7,10 +7,9 @@ import { FileInput } from "@/components/FileInput";
 import { InlineDropdown } from "@/components/InlineInputs";
 import { ProcessSection } from "@/components/ProcessSection";
 import { fileProcessor, FindComboOption, ProcessResult } from "@/lib/fileProcessor";
-import { loadFileInDolphin, notify } from "@/lib/utils";
+import { notify } from "@/lib/utils";
 import { openComboInDolphin } from '@/lib/dolphin';
 
-import { obsConnection } from "@/lib/obs";
 import { Dispatch, iRootState } from "@/store";
 import { secondsToString } from "common/utils";
 import { RenameFiles } from "./RenameFiles";
@@ -25,7 +24,6 @@ export const ComboFinder: React.FC<{}> = () => {
     const dispatch = useDispatch<Dispatch>();
     const setRenameFormat = (format: string) => dispatch.filesystem.setRenameFormat(format);
     const setRenameFiles = (checked: boolean) => dispatch.filesystem.setRenameFiles(checked);
-    const setRecordReplays = (checked: boolean) => dispatch.tempContainer.setRecordReplays(checked);
     const setFindCombos = (checked: boolean) => dispatch.filesystem.setFindCombos(checked);
     const setFindComboOption = (val: FindComboOption) => dispatch.filesystem.setFindComboOption(val);
     const setFindComboProfile = (val: string) => dispatch.filesystem.setFindComboProfile(val);
@@ -34,7 +32,6 @@ export const ComboFinder: React.FC<{}> = () => {
     const onSetOpenCombosWhenDone = (checked: boolean) => dispatch.filesystem.setOpenCombosWhenDone(checked);
     const setCombosFilePath = (p: string) => dispatch.filesystem.setCombosFilePath(p);
     const setFilesPath = (p: string) => dispatch.filesystem.setFilesPath(p);
-    const obsConnected = obsConnection.isConnected();
     const findAndWriteCombos = async () => {
         dispatch.tempContainer.setPercent(0);
         dispatch.tempContainer.setComboFinderProcessing(true);
@@ -190,9 +187,6 @@ export const ComboFinder: React.FC<{}> = () => {
                             Process replays
                     </Button>
                     }
-                    {isWindows && <Button type="button" onClick={() => loadFileInDolphin().catch(console.error)}>
-                        Load a file into Dolphin
-                    </Button>}
                 </div>
             </Form>
             <div style={{ padding: "10px 0" }}>
