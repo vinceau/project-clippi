@@ -10,10 +10,8 @@ import { delay } from "@/lib/utils";
 const MAX_BUFFER = 2 ** 20;
 const DELAY_AMOUNT_MS = 1000;
 
-// FIXME: not too sure if these names are accurate...
 const START_RECORDING_BUFFER = 90;
-const END_RECORDING_BUFFER_LIMIT = 120;
-const END_RECORDING_BUFFER_AMOUNT = 60;
+const END_RECORDING_BUFFER = 60;
 
 const defaultDolphinPlayerOptions = {
     record: false,
@@ -111,8 +109,8 @@ export class DolphinPlayer {
                 break;
             case "[PLAYBACK_END_FRAME]":
                 this.endRecordingFrame = commandValue;
-                if (this.endRecordingFrame + END_RECORDING_BUFFER_LIMIT < this.lastGameFrame) {
-                    this.endRecordingFrame -= END_RECORDING_BUFFER_AMOUNT;
+                if (this.endRecordingFrame < this.lastGameFrame) {
+                    this.endRecordingFrame -= END_RECORDING_BUFFER;
                 } else {
                     this.waitForGAME = true;
                     this.endRecordingFrame = this.lastGameFrame;
