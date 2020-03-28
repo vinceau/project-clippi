@@ -3,9 +3,9 @@ import * as React from "react";
 import { ActionTypeGenerator, Context } from "@vinceau/event-actions";
 import { produce } from "immer";
 import { Button } from "semantic-ui-react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
-import { Dispatch, iRootState } from "@/store";
+import { iRootState } from "@/store";
 import { DelayInput, InlineDropdown } from "@/components/InlineInputs";
 import { CustomIcon } from "@/components/CustomIcon";
 import { obsConnection, connectToOBSAndNotify, OBSConnectionStatus } from "@/lib/obs";

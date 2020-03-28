@@ -1,15 +1,10 @@
 import * as React from "react";
 
-import { Subscription } from "rxjs";
-import { ConnectionStatus } from "@vinceau/slp-realtime";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 import { ConnectionStatusDisplay } from "@/components/ConnectionStatusDisplay";
-import { InlineInput } from "@/components/InlineInputs";
-import { streamManager } from "@/lib/realtime";
-import { statusToColor, statusToLabel } from "@/lib/status";
-import { Dispatch, iRootState } from "@/store";
-import { OBSConnectionStatus, OBSRecordingStatus, obsConnection } from "@/lib/obs";
+import { iRootState } from "@/store";
+import { OBSConnectionStatus, OBSRecordingStatus } from "@/lib/obs";
 
 import obsLogo from "@/styles/images/obs.png";
 
