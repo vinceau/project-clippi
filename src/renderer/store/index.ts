@@ -54,10 +54,11 @@ store.subscribe(() => {
 });
 
 obsConnection.connectionStatus$.subscribe(status => {
-    console.log(status);
     dispatcher.tempContainer.setOBSConnectionStatus(status);
 });
 obsConnection.recordingStatus$.subscribe(status => {
-    console.log(status);
     dispatcher.tempContainer.setOBSRecordingStatus(status);
+});
+obsConnection.scenes$.subscribe(scenes => {
+    dispatcher.tempContainer.setOBSScenes(scenes);
 });

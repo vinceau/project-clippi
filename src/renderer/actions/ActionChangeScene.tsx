@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import { iRootState } from "@/store";
 import { DelayInput, InlineDropdown } from "@/components/InlineInputs";
 import { CustomIcon } from "@/components/CustomIcon";
-import { obsConnection, connectToOBSAndNotify, OBSConnectionStatus } from "@/lib/obs";
+import { obsConnection, connectToOBSAndNotify, OBSConnectionStatus, getAllScenes } from "@/lib/obs";
 import { delay as waitMillis, notify } from "@/lib/utils";
 import { ActionComponent } from "./types";
 
@@ -43,7 +43,7 @@ const ActionIcon = () => {
 
 const SceneNameInput = (props: any) => {
     const { value, onChange } = props;
-    const { obsConnectionStatus } = useSelector((state: iRootState) => state.tempContainer);
+    const { obsConnectionStatus, obsScenes } = useSelector((state: iRootState) => state.tempContainer);
     const obsConnected = obsConnectionStatus === OBSConnectionStatus.CONNECTED;
 
     if (!obsConnected) {
@@ -52,7 +52,7 @@ const SceneNameInput = (props: any) => {
         );
     }
 
-    const allScenes = obsConnection.getAllScenes();
+    const allScenes = getAllScenes(obsScenes);
     if (allScenes.length === 0) {
         return (<div>No scene items found.</div>);
     }

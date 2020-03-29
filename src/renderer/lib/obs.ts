@@ -3,7 +3,8 @@ import OBSWebSocket, { Scene } from "obs-websocket-js";
 import { store } from "@/store";
 import { notify } from "./utils";
 
-import { BehaviorSubject } from "rxjs";
+import { from, Subject, BehaviorSubject } from "rxjs";
+import { map, switchMap } from "rxjs/operators";
 
 export enum OBSRecordingAction {
     TOGGLE = "StartStopRecording",
@@ -26,15 +27,22 @@ export enum OBSConnectionStatus {
 
 class OBSConnection {
     private readonly socket: OBSWebSocket;
+    private readonly refreshScenesSource$ = new Subject<void>();
+    private readonly scenesSource$ = new BehaviorSubject<Scene[]>([]);
     private readonly connectionSource$ = new BehaviorSubject<OBSConnectionStatus>(OBSConnectionStatus.DISCONNECTED);
     private readonly recordingSource$ = new BehaviorSubject<OBSRecordingStatus>(OBSRecordingStatus.STOPPED);
-    private scenes = new Array<Scene>();
 
     public connectionStatus$ = this.connectionSource$.asObservable();
     public recordingStatus$ = this.recordingSource$.asObservable();
+    public scenes$ = this.scenesSource$.asObservable();
 
     public constructor() {
         this.socket = new OBSWebSocket();
+        // Pipe the result of the refresh scenes to the scenes source
+        this.refreshScenesSource$.pipe(
+            switchMap(() => from(this.socket.send("GetSceneList"))),
+            map(data => data.scenes),
+        ).subscribe(this.scenesSource$);
     }
 
     public isConnected(): boolean {
@@ -51,7 +59,7 @@ class OBSConnection {
             password: obsPassword,
         });
         this._setupListeners();
-        await this._updateScenes();
+        this.refreshScenesSource$.next();
         this.connectionSource$.next(OBSConnectionStatus.CONNECTED);
     }
 
@@ -75,7 +83,8 @@ class OBSConnection {
     }
 
     public async setSourceItemVisibility(sourceName: string, visible?: boolean) {
-        for (const scene of this.scenes) {
+        const scenes = this.scenesSource$.value;
+        for (const scene of scenes) {
             const items = scene.sources.map(source => source.name);
             if (items.includes(sourceName)) {
                 await this.socket.send("SetSceneItemProperties", {
@@ -87,36 +96,9 @@ class OBSConnection {
         }
     }
 
-    public getAllSceneItems(): string[] {
-        const allItems: string[] = [];
-        this.scenes.forEach(scene => {
-            const items = scene.sources.map(source => source.name);
-            allItems.push(...items);
-        });
-        const set = new Set(allItems);
-        const uniqueNames = Array.from(set);
-        uniqueNames.sort();
-        return uniqueNames;
-    }
-
-    public getAllScenes(): string[] {
-        const sceneNames = this.scenes.map(s => s.name);
-        sceneNames.sort();
-        return sceneNames;
-    }
-
     private _setupListeners() {
         this.socket.on("ConnectionClosed", () => {
             this.connectionSource$.next(OBSConnectionStatus.DISCONNECTED);
-        });
-        this.socket.on("ScenesChanged", () => {
-            this._updateScenes().catch(console.error);
-        });
-        this.socket.on("SceneItemAdded", () => {
-            this._updateScenes().catch(console.error);
-        });
-        this.socket.on("SceneItemRemoved", () => {
-            this._updateScenes().catch(console.error);
         });
         this.socket.on("RecordingStarted", () => {
             this.recordingSource$.next(OBSRecordingStatus.RECORDING);
@@ -130,11 +112,17 @@ class OBSConnection {
         this.socket.on("RecordingStopped", () => {
             this.recordingSource$.next(OBSRecordingStatus.STOPPED);
         });
-    }
 
-    private async _updateScenes() {
-        const data = await this.socket.send("GetSceneList");
-        this.scenes = data.scenes;
+        // Refresh the scenes on these events
+        this.socket.on("ScenesChanged", () => {
+            this.refreshScenesSource$.next();
+        });
+        this.socket.on("SceneItemAdded", () => {
+            this.refreshScenesSource$.next();
+        });
+        this.socket.on("SceneItemRemoved", () => {
+            this.refreshScenesSource$.next();
+        });
     }
 }
 
@@ -148,4 +136,22 @@ export const connectToOBSAndNotify = (): void => {
         console.error(err);
         notify(`OBS connection failed: ${err.error}`);
     });
+};
+
+export const getAllSceneItems = (scenes: Scene[]): string[] => {
+    const allItems: string[] = [];
+    scenes.forEach(scene => {
+        const items = scene.sources.map(source => source.name);
+        allItems.push(...items);
+    });
+    const set = new Set(allItems);
+    const uniqueNames = Array.from(set);
+    uniqueNames.sort();
+    return uniqueNames;
+};
+
+export const getAllScenes = (scenes: Scene[]): string[] => {
+    const sceneNames = scenes.map(s => s.name);
+    sceneNames.sort();
+    return sceneNames;
 };

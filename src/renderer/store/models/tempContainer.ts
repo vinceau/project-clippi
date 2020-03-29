@@ -1,6 +1,8 @@
 import { createModel } from "@rematch/core";
 import produce from "immer";
 
+import { Scene } from "obs-websocket-js";
+
 import { ConnectionStatus } from "@vinceau/slp-realtime";
 import { currentUser } from "common/twitch";
 import { HelixUser } from "twitch";
@@ -10,6 +12,7 @@ export interface TempContainerState {
     slippiConnectionStatus: ConnectionStatus;
     obsConnectionStatus: OBSConnectionStatus;
     obsRecordingStatus: OBSRecordingStatus;
+    obsScenes: Scene[];
     twitchUser: HelixUser | null;
     showSettings: boolean;
     currentSlpFolderStream: string;
@@ -23,6 +26,7 @@ const initialState: TempContainerState = {
     slippiConnectionStatus: ConnectionStatus.DISCONNECTED,
     obsConnectionStatus: OBSConnectionStatus.DISCONNECTED,
     obsRecordingStatus: OBSRecordingStatus.RECORDING,
+    obsScenes: [],
     twitchUser: null,
     showSettings: false,
     currentSlpFolderStream: "",
@@ -46,6 +50,9 @@ export const tempContainer = createModel({
         }),
         setOBSRecordingStatus: (state: TempContainerState, payload: OBSRecordingStatus): TempContainerState => produce(state, draft => {
             draft.obsRecordingStatus = payload;
+        }),
+        setOBSScenes: (state: TempContainerState, payload: Scene[]): TempContainerState => produce(state, draft => {
+            draft.obsScenes = payload;
         }),
         setTwitchUser: (state: TempContainerState, payload: HelixUser): TempContainerState => produce(state, draft => {
             draft.twitchUser = payload;
