@@ -38,19 +38,14 @@ const getDolphinPath = (): string => {
     return dolphinPath;
 };
 
-export class DolphinPlayer {
-    private dolphinLauncher: DolphinLauncher;
+export class DolphinRecorder extends DolphinLauncher {
     private recordingEnabled = false;
     private startAction = OBSRecordingAction.START;
     private endAction = OBSRecordingAction.STOP;
 
-    public constructor() {
-        const dolphinPath = getDolphinPath();
-        this.dolphinLauncher = new DolphinLauncher(dolphinPath, {
-            startBuffer: START_RECORDING_BUFFER,
-            endBuffer: END_RECORDING_BUFFER,
-        });
-        this.dolphinLauncher.playbackStatus$.pipe(
+    public constructor(dolphinPath: string, options?: any) {
+        super(dolphinPath, options);
+        this.playbackStatus$.pipe(
             // Only process if recording is enabled and OBS is connected
             filter(() => this.recordingEnabled && obsConnection.isConnected()),
             // Process the values synchronously one at time
@@ -65,7 +60,7 @@ export class DolphinPlayer {
             this.startAction = opts.pauseBetweenEntries ? OBSRecordingAction.UNPAUSE : OBSRecordingAction.START;
             this.endAction = opts.pauseBetweenEntries ? OBSRecordingAction.PAUSE : OBSRecordingAction.STOP;
         }
-        this.dolphinLauncher.loadJSON(comboFilePath);
+        super.loadJSON(comboFilePath);
     }
 
     private async _handleDolphinPlayback(payload: DolphinPlaybackPayload): Promise<void> {
@@ -91,7 +86,12 @@ export class DolphinPlayer {
 
 }
 
-const dolphinPlayer = new DolphinPlayer();
+const dolphinPath = getDolphinPath();
+const options = {
+    startBuffer: START_RECORDING_BUFFER,
+    endBuffer: END_RECORDING_BUFFER,
+};
+const dolphinPlayer = new DolphinRecorder(dolphinPath, options);
 
 export const openComboInDolphin = (filePath: string, options?: Partial<DolphinPlayerOptions>) => {
     dolphinPlayer.loadJSON(filePath, options);
