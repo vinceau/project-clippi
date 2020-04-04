@@ -4,7 +4,7 @@ import * as url from "url";
 import { Message } from "common/types";
 import { remote, shell } from "electron";
 import { ipc } from "./rendererIpc";
-import { openComboInDolphin } from '@/lib/dolphin';
+import { openComboInDolphin, DolphinPlayerOptions } from '@/lib/dolphin';
 
 export const delay = async (ms: number): Promise<void> => {
     await new Promise(resolve => setTimeout(resolve, ms));
@@ -63,12 +63,12 @@ export const getStatic = (val: string): string => {
     return path.resolve(path.join(imagePath, val));
 };
 
-export const loadFileInDolphin = async (record?: boolean): Promise<void> => {
+export const loadFileInDolphin = async (options?: Partial<DolphinPlayerOptions>): Promise<void> => {
     const p = await getFilePath({
         filters: [{ name: "JSON files", extensions: ["json"] }],
     });
     if (p) {
-        openComboInDolphin(p, record);
+        openComboInDolphin(p, options);
     }
 };
 

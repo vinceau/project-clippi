@@ -31,6 +31,15 @@ flex-direction: column;
 
 export const RecorderView: React.FC = () => {
     const [record, setRecord] = React.useState(false);
+    const [splitFiles, setSplitFiles] = React.useState(false);
+    const loadFileHandler = () => {
+        const options = {
+            record,
+            pauseBetweenEntries: !splitFiles,
+        }
+        console.log(options);
+        loadFileInDolphin(options).catch(console.error)
+    }
     return (
         <Outer>
             <Content>
@@ -47,7 +56,17 @@ export const RecorderView: React.FC = () => {
                     />
                 </div>
                 <div>
-                    <Button type="button" onClick={() => loadFileInDolphin(record).catch(console.error)}>
+                    <Checkbox
+                        label="Record as separate files"
+                        checked={splitFiles}
+                        onChange={(_, data) => {
+                            console.log("clicked");
+                            setSplitFiles(Boolean(data.checked));
+                        }}
+                    />
+                </div>
+                <div>
+                    <Button type="button" onClick={loadFileHandler}>
                         Load a file into Dolphin
                     </Button>
                 </div>
