@@ -77,10 +77,22 @@ export class DolphinRecorder extends DolphinLauncher {
                 await obsConnection.setRecordingState(this.endAction);
                 break;
             case DolphinPlaybackStatus.QUEUE_EMPTY:
-            case DolphinPlaybackStatus.DOLPHIN_QUIT:
-                console.log("telling obs to stop recording");
-                await obsConnection.setRecordingState(OBSRecordingAction.STOP);
+                // Stop recording and quit Dolphin
+                await this._stopRecording();
+                if (this.dolphin) {
+                    this.dolphin.kill();
+                }
                 break;
+            case DolphinPlaybackStatus.DOLPHIN_QUIT:
+                // Stop recording if Dolphin was terminated
+                await this._stopRecording();
+                break;
+        }
+    }
+
+    private async _stopRecording() {
+        if (obsConnection.isRecording()) {
+            await obsConnection.setRecordingState(OBSRecordingAction.STOP);
         }
     }
 
