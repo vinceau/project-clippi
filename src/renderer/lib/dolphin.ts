@@ -107,8 +107,8 @@ const randomTempJSONFile = () => {
 
 const dolphinPath = getDolphinPath();
 const options = {
-    startBuffer: START_RECORDING_BUFFER,
-    endBuffer: END_RECORDING_BUFFER,
+    // startBuffer: START_RECORDING_BUFFER,
+    // endBuffer: END_RECORDING_BUFFER,
 };
 const dolphinPlayer = new DolphinRecorder(dolphinPath, options);
 
