@@ -7,6 +7,7 @@ import { loadFileInDolphin } from "@/lib/utils";
 
 import { OBSStatusBar } from "@/containers/Recorder/OBSStatusBar";
 import { DropPad } from "@/components/DropPad";
+import { loadSlpFilesInDolphin } from "@/lib/dolphin";
 
 const Content = styled.div`
     padding: 20px;
@@ -38,20 +39,31 @@ export const RecorderView: React.FC = () => {
             pauseBetweenEntries: !splitFiles,
         }
         console.log(options);
-        loadFileInDolphin(options).catch(console.error)
+        loadFileInDolphin(options).catch(console.error);
+    }
+    const droppedFilesHandler = (files: any[]) => {
+        const filepaths = files.map(f => f.path);
+        const options = {
+            record: true,
+            pauseBetweenEntries: false,
+        }
+        console.log(options);
+        loadSlpFilesInDolphin(filepaths, options).catch(console.error);
     }
     return (
         <Outer>
             <Content>
                 <h1>Game Recorder <Icon name="record" /></h1>
-                <DropPad onFiles={(files) => console.log(files)} />
+                <DropPad onFiles={(files) => droppedFilesHandler(files)} />
                 <div>
                     <Checkbox
                         label="Record output in OBS"
                         checked={record}
                         onChange={(_, data) => {
-                            console.log("clicked");
+                            console.log(data.checked);
                             setRecord(Boolean(data.checked));
+                            console.log("clicked");
+                            console.log(record);
                         }}
                     />
                 </div>
@@ -60,13 +72,15 @@ export const RecorderView: React.FC = () => {
                         label="Record as separate files"
                         checked={splitFiles}
                         onChange={(_, data) => {
-                            console.log("clicked");
+                            console.log(data.checked);
                             setSplitFiles(Boolean(data.checked));
+                            console.log("clicked");
+                            console.log(splitFiles);
                         }}
                     />
                 </div>
                 <div>
-                    <Button type="button" onClick={loadFileHandler}>
+                    <Button type="button" onClick={() => loadFileHandler()}>
                         Load a file into Dolphin
                     </Button>
                 </div>

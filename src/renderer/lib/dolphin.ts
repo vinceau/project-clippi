@@ -10,11 +10,12 @@
  * [NO_GAME] no more files in the queue
  */
 
+import fs from "fs-extra";
 import path from "path";
 
 import { remote } from "electron";
 
-import { DolphinLauncher, DolphinPlaybackPayload, DolphinPlaybackStatus } from "@vinceau/slp-realtime";
+import { generateDolphinQueuePayload, DolphinLauncher, DolphinPlaybackPayload, DolphinPlaybackStatus } from "@vinceau/slp-realtime";
 import { obsConnection, OBSRecordingAction } from "@/lib/obs";
 import { delay } from "@/lib/utils";
 import { filter, concatMap } from "rxjs/operators";
@@ -98,6 +99,12 @@ export class DolphinRecorder extends DolphinLauncher {
 
 }
 
+const randomTempJSONFile = () => {
+    const folder = remote.app.getPath("temp");
+    const filename = `${Date.now()}_dolphin_queue.json`;
+    return path.join(folder, filename);
+}
+
 const dolphinPath = getDolphinPath();
 const options = {
     startBuffer: START_RECORDING_BUFFER,
@@ -108,3 +115,14 @@ const dolphinPlayer = new DolphinRecorder(dolphinPath, options);
 export const openComboInDolphin = (filePath: string, options?: Partial<DolphinPlayerOptions>) => {
     dolphinPlayer.loadJSON(filePath, options);
 };
+
+export const loadSlpFilesInDolphin = async (filenames: string[], options?: Partial<DolphinPlayerOptions>): Promise<void> => {
+    const queue = filenames
+        .filter(filename => path.extname(filename) === ".slp")
+        .map(filename => ({path: filename}));
+    console.log(queue);
+    const payload = generateDolphinQueuePayload(queue);
+    const outputFile = randomTempJSONFile();
+    await fs.writeFile(outputFile, payload);
+    openComboInDolphin(outputFile, options);
+}
