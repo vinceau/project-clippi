@@ -1,41 +1,14 @@
 import * as React from "react";
 
-import { useSelector } from "react-redux";
-
+import { useDispatch, useSelector } from "react-redux";
 import { ConnectionStatusDisplay } from "@/components/ConnectionStatusDisplay";
-import { iRootState } from "@/store";
+import { Dispatch, iRootState } from "@/store";
 import { OBSConnectionStatus, OBSRecordingStatus } from "@/lib/obs";
-import { Icon, Button, Dropdown } from "semantic-ui-react";
+import { Icon, Button } from "semantic-ui-react";
 
 import styled from "styled-components";
 import obsLogo from "@/styles/images/obs.png";
-
-const options = [
-    { key: 'together', icon: 'file video outline', text: 'Together as one video', value: 'together' },
-    { key: 'seperate', icon: 'film', text: 'Seperate clips', value: 'separate' },
-]
-
-const RecordButton: React.FC<{
-    disabled?: boolean;
-}> = (props) => {
-    const onChange = (value: any) => {
-        console.log(value);
-    }
-    return (
-        <Button.Group>
-            <Button disabled={props.disabled}><Icon name="circle" /> Record together</Button>
-            <Dropdown
-                disabled={props.disabled}
-                className="button icon"
-                floating
-                onChange={(_: any, { value }) => onChange(value)}
-                options={options}
-                trigger={<React.Fragment />}
-            />
-        </Button.Group>
-    );
-};
-
+import { RecordButton } from "@/components/recorder/RecordButton";
 
 const Outer = styled.div`
 display: flex;
@@ -45,7 +18,20 @@ align-items: center;
 `;
 
 export const OBSStatusBar: React.FC = () => {
+    const { recordSeparateClips } = useSelector((state: iRootState) => state.filesystem);
     const { obsConnectionStatus, obsRecordingStatus } = useSelector((state: iRootState) => state.tempContainer);
+    const dispatch = useDispatch<Dispatch>();
+
+    const options = [
+        { icon: 'file video outline', text: 'Together as one video', value: 'together' },
+        { icon: 'film', text: 'Seperate clips', value: 'separate' },
+    ];
+    const recordValue = recordSeparateClips ? "separate" : "together";
+    const recordButtonText = recordSeparateClips ? "Record separately" : "Record together";
+
+    const onRecordChange = (value: string) => {
+        dispatch.filesystem.setRecordSeparateClips(value === "separate");
+    }
 
     const handleClick = () => {
         /*
@@ -70,7 +56,8 @@ export const OBSStatusBar: React.FC = () => {
     // const connected = isFolderStream || relayIsConnected;
     let color = "#888888";
 
-    if (obsConnectionStatus === OBSConnectionStatus.CONNECTED) {
+    const obsIsConnected = obsConnectionStatus === OBSConnectionStatus.CONNECTED;
+    if (obsIsConnected) {
         color = obsRecordingStatus === OBSRecordingStatus.STOPPED ? "#00E461" : "#F30807";
     }
 
@@ -87,7 +74,7 @@ export const OBSStatusBar: React.FC = () => {
                 {innerText}
             </ConnectionStatusDisplay>
             <div>
-                <RecordButton />
+                <RecordButton disabled={!obsIsConnected} onChange={onRecordChange} value={recordValue} options={options}><Icon name="circle" />{recordButtonText}</RecordButton>
                 <Button><Icon name="play" />Play</Button>
             </div>
         </Outer>
