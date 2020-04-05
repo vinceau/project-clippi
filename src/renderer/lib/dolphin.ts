@@ -18,7 +18,7 @@ import { remote } from "electron";
 import { store } from "@/store";
 import { DolphinQueueOptions, generateDolphinQueuePayload, DolphinLauncher, DolphinPlaybackPayload, DolphinPlaybackStatus, DolphinEntry, DolphinQueueFormat } from "@vinceau/slp-realtime";
 import { obsConnection, OBSRecordingAction } from "@/lib/obs";
-import { delay } from "@/lib/utils";
+import { delay, getFilePath } from "@/lib/utils";
 import { filter, concatMap, map } from "rxjs/operators";
 import { from, Subject, BehaviorSubject } from "rxjs";
 
@@ -152,4 +152,25 @@ export const loadQueueIntoDolphin = (options?: Partial<DolphinPlayerOptions>): v
     };
     const payload = JSON.stringify(queue, undefined, 2);
     loadPayloadIntoDolphin(payload, options).catch(console.error);
+};
+
+export const saveQueueToFile = async (): Promise<void> => {
+    const fileTypeFilters = [
+        { name: "JSON files", extensions: ["json"] }
+    ];
+    const options = {
+        filters: fileTypeFilters,
+    };
+    const p = await getFilePath(options, true);
+    if (!p) {
+        console.error("Could not save queue because path is undefined");
+        return;
+    }
+    const { dolphinQueue, dolphinQueueOptions } = store.getState().tempContainer;
+    const queue: DolphinQueueFormat = {
+        ...dolphinQueueOptions,
+        queue: dolphinQueue,
+    };
+    const payload = JSON.stringify(queue, undefined, 2);
+    return fs.writeFile(p, payload);
 };

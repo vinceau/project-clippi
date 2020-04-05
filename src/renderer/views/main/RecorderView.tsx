@@ -9,7 +9,7 @@ import { loadFileInDolphin } from "@/lib/utils";
 
 import { OBSStatusBar } from "@/containers/Recorder/OBSStatusBar";
 import { DropPad } from "@/components/DropPad";
-import { loadSlpFilesInDolphin } from "@/lib/dolphin";
+import { loadSlpFilesInDolphin, saveQueueToFile } from "@/lib/dolphin";
 
 const Content = styled.div`
     padding: 20px;
@@ -68,6 +68,9 @@ export const RecorderView: React.FC = () => {
     const clearQueueHandler = () => {
         dispatch.tempContainer.resetDolphinQueue();
     }
+    const onSaveHandler = () => {
+        saveQueueToFile().catch(console.error);
+    }
     const validQueue = dolphinQueue.length > 0;
     return (
         <Outer>
@@ -75,10 +78,10 @@ export const RecorderView: React.FC = () => {
                 <h1>Game Recorder <Icon name="record" /></h1>
                 <Toolbar>
                     <div>
-                        <Button type="button" onClick={() => loadFileHandler()}>
+                        <Button type="button" onClick={loadFileHandler}>
                             <Icon name="folder" /> Load JSON
                         </Button>
-                        <Button type="button" disabled={!validQueue}>
+                        <Button type="button" disabled={!validQueue} onClick={onSaveHandler}>
                             <Icon name="save" /> Save JSON
                         </Button>
                     </div>
