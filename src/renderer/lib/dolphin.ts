@@ -53,6 +53,11 @@ export class DolphinRecorder extends DolphinLauncher {
             // Process the values synchronously one at time
             concatMap((payload) => from(this._handleDolphinPlayback(payload))),
         ).subscribe();
+        this.dolphinQuit$.pipe(
+            // Only process if recording is enabled and OBS is connected
+            filter(() => this.recordingEnabled && obsConnection.isConnected()),
+            concatMap(() => from(this._stopRecording())),
+        ).subscribe();
     }
 
     public loadJSON(comboFilePath: string, options?: Partial<DolphinPlayerOptions>) {
@@ -81,10 +86,6 @@ export class DolphinRecorder extends DolphinLauncher {
             case DolphinPlaybackStatus.QUEUE_EMPTY:
                 // Stop recording and quit Dolphin
                 await this._stopRecording(true);
-                break;
-            case DolphinPlaybackStatus.DOLPHIN_QUIT:
-                // Stop recording if Dolphin was terminated
-                await this._stopRecording();
                 break;
         }
     }
