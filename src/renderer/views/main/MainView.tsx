@@ -7,8 +7,8 @@ import { Redirect, Route, Switch, useRouteMatch } from "react-router-dom";
 
 import { Menu } from "@/containers/Menu";
 import { AutomatorView } from "./AutomatorView";
-import { ReplayProcessorView } from "./ReplayProcessorView";
 import { RecorderView } from "./RecorderView";
+import { ReplayProcessorView } from "./ReplayProcessorView";
 
 export const MainView: React.FC = () => {
     const match = useRouteMatch();

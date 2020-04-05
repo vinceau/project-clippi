@@ -50,7 +50,7 @@ class OBSConnection {
     }
 
     public isRecording(): boolean {
-        return this.recordingSource$.value === OBSRecordingStatus.RECORDING;
+        return this.recordingSource$.value !== OBSRecordingStatus.STOPPED;
     }
 
     public async connect(obsAddress: string, obsPort: string, obsPassword?: string) {
@@ -79,6 +79,7 @@ class OBSConnection {
     }
 
     public async setRecordingState(rec: OBSRecordingAction) {
+        console.log(`telling obs to ${rec} recording`);
         await this.socket.send(rec);
     }
 

@@ -6,8 +6,8 @@ import { useSelector } from "react-redux";
 import { Link, useRouteMatch } from "react-router-dom";
 import { Icon } from "semantic-ui-react";
 
-import { iRootState } from "@/store";
 import { MenuIcon, MenuIconLink } from "@/components/layout/MenuIcon";
+import { iRootState } from "@/store";
 
 export const Menu: React.FC = () => {
     const match = useRouteMatch();

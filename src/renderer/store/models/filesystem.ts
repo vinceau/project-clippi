@@ -23,6 +23,7 @@ export interface FileSystemState {
     renameFormat: string;
     openCombosWhenDone: boolean;
     soundFiles: SoundMap;
+    recordSeparateClips: boolean;
 }
 
 export const fileSystemInitialState: FileSystemState = {
@@ -38,6 +39,7 @@ export const fileSystemInitialState: FileSystemState = {
     renameFormat: "{{YY}}{{MM}}{{DD}}_{{HH}}{{mm}}_{{playerShortChar}}_v_{{opponentShortChar}}_({{shortStage}}).slp",
     openCombosWhenDone: false,
     soundFiles: {},
+    recordSeparateClips: false,
 };
 
 export const filesystem = createModel({
@@ -91,6 +93,9 @@ export const filesystem = createModel({
         }),
         setOpenCombosWhenDone: (state: FileSystemState, payload: boolean): FileSystemState => produce(state, draft => {
             draft.openCombosWhenDone = payload;
+        }),
+        setRecordSeparateClips: (state: FileSystemState, payload: boolean): FileSystemState => produce(state, draft => {
+            draft.recordSeparateClips = payload;
         }),
     },
     effects: dispatch => ({

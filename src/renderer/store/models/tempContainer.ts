@@ -3,10 +3,11 @@ import produce from "immer";
 
 import { Scene } from "obs-websocket-js";
 
-import { ConnectionStatus } from "@vinceau/slp-realtime";
+import { OBSConnectionStatus, OBSRecordingStatus } from "@/lib/obs";
+import { loadDolphinQueue } from "@/lib/utils";
+import { ConnectionStatus, DolphinEntry, DolphinQueueFormat, DolphinQueueOptions } from "@vinceau/slp-realtime";
 import { currentUser } from "common/twitch";
 import { HelixUser } from "twitch";
-import { OBSConnectionStatus, OBSRecordingStatus } from "@/lib/obs";
 
 export interface TempContainerState {
     slippiConnectionStatus: ConnectionStatus;
@@ -20,7 +21,17 @@ export interface TempContainerState {
     comboFinderLog: string;
     comboFinderProcessing: boolean;
     latestPath: { [page: string]: string };
+    dolphinQueue: DolphinEntry[];
+    dolphinQueueOptions: DolphinQueueOptions;
+    dolphinPlaybackFile: string;
 }
+
+const initialDolphinQueueOptions = {
+    mode: "queue",
+    replay: "",
+    isRealTimeMode: false,
+    outputOverlayFiles: true,
+};
 
 const initialState: TempContainerState = {
     slippiConnectionStatus: ConnectionStatus.DISCONNECTED,
@@ -37,6 +48,9 @@ const initialState: TempContainerState = {
         main: "/main/automator",
         settings: "/settings/combo-settings",
     },
+    dolphinQueue: [],
+    dolphinQueueOptions: Object.assign({}, initialDolphinQueueOptions),
+    dolphinPlaybackFile: "",
 };
 
 export const tempContainer = createModel({
@@ -85,6 +99,39 @@ export const tempContainer = createModel({
         clearSlpFolderStream: (state: TempContainerState): TempContainerState => produce(state, draft => {
             draft.currentSlpFolderStream = "";
         }),
+        setDolphinQueue: (state: TempContainerState, payload: DolphinEntry[]): TempContainerState => produce(state, draft => {
+            draft.dolphinQueue = payload;
+        }),
+        appendDolphinQueue: (state: TempContainerState, payload: DolphinEntry[]): TempContainerState => {
+            // Disallow duplicate paths
+            const existingPaths = state.dolphinQueue.map(f => f.path);
+            const newFiles = payload.filter(f => !existingPaths.includes(f.path));
+            return produce(state, draft => {
+                draft.dolphinQueue = [...state.dolphinQueue, ...newFiles];
+            });
+        },
+        setDolphinQueueOptions: (state: TempContainerState, payload: Partial<DolphinQueueOptions>): TempContainerState => {
+            const newState = produce(state.dolphinQueueOptions, draft => {
+                draft = Object.assign({}, draft, payload);
+            });
+            return produce(state, draft => {
+                draft.dolphinQueueOptions = newState;
+            });
+        },
+        setDolphinQueueFromJson: (state: TempContainerState, payload: DolphinQueueFormat): TempContainerState => {
+            const { queue, ...rest } = payload;
+            return produce(state, draft => {
+                draft.dolphinQueueOptions = rest;
+                draft.dolphinQueue = queue;
+            });
+        },
+        resetDolphinQueue: (state: TempContainerState): TempContainerState => produce(state, draft => {
+            draft.dolphinQueueOptions = Object.assign({}, initialDolphinQueueOptions);
+            draft.dolphinQueue = [];
+        }),
+        setDolphinPlaybackFile: (state: TempContainerState, payload: string): TempContainerState => produce(state, draft => {
+            draft.dolphinPlaybackFile = payload;
+        }),
     },
     effects: dispatch => ({
         async updateUser(token: string) {
@@ -94,6 +141,14 @@ export const tempContainer = createModel({
                 return;
             }
             dispatch.tempContainer.setTwitchUser(user);
+        },
+        async loadDolphinQueue() {
+            const dolphinQueue = await loadDolphinQueue();
+            if (!dolphinQueue) {
+                console.error("Couldn't load dolphin queue");
+                return;
+            }
+            dispatch.tempContainer.setDolphinQueueFromJson(dolphinQueue);
         },
     }),
 });

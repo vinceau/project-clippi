@@ -6,9 +6,9 @@ import { Button, Checkbox, Form, Icon, Progress } from "semantic-ui-react";
 import { FileInput } from "@/components/FileInput";
 import { InlineDropdown } from "@/components/InlineInputs";
 import { ProcessSection } from "@/components/ProcessSection";
+import { openComboInDolphin } from "@/lib/dolphin";
 import { fileProcessor, FindComboOption, ProcessResult } from "@/lib/fileProcessor";
 import { notify } from "@/lib/utils";
-import { openComboInDolphin } from '@/lib/dolphin';
 
 import { Dispatch, iRootState } from "@/store";
 import { secondsToString } from "common/utils";

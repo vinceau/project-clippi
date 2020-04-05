@@ -10,26 +10,29 @@
  * [NO_GAME] no more files in the queue
  */
 
-import os from "os";
+import fs from "fs-extra";
 import path from "path";
 
-import { ChildProcess, execFile } from "child_process";
 import { remote } from "electron";
 
 import { obsConnection, OBSRecordingAction } from "@/lib/obs";
-import { delay } from "@/lib/utils";
+import { delay, getFilePath } from "@/lib/utils";
+import { store } from "@/store";
+import { DolphinLauncher, DolphinPlaybackPayload, DolphinPlaybackStatus, DolphinQueueFormat, generateDolphinQueuePayload } from "@vinceau/slp-realtime";
+import { BehaviorSubject, from } from "rxjs";
+import { concatMap, filter, map } from "rxjs/operators";
 
-const MAX_BUFFER = 2 ** 20;
 const DELAY_AMOUNT_MS = 1000;
 
-const START_RECORDING_BUFFER = 90;
-const END_RECORDING_BUFFER = 60;
+// const START_RECORDING_BUFFER = 90;
+// const END_RECORDING_BUFFER = 60;
 
 const defaultDolphinPlayerOptions = {
     record: false,
+    pauseBetweenEntries: true,
 };
 
-type DolphinPlayerOptions = typeof defaultDolphinPlayerOptions;
+export type DolphinPlayerOptions = typeof defaultDolphinPlayerOptions;
 
 const getDolphinPath = (): string => {
     const appData = remote.app.getPath("appData");
@@ -37,124 +40,137 @@ const getDolphinPath = (): string => {
     return dolphinPath;
 };
 
-export class DolphinPlayer {
-    private dolphin: ChildProcess | null = null;
-    private waitForGAME = false;
-    private currentFrame = -124;
-    private lastGameFrame = -124;
-    private startRecordingFrame = -124;
-    private endRecordingFrame = -124;
+export class DolphinRecorder extends DolphinLauncher {
+    private recordingEnabled = false;
+    private startAction = OBSRecordingAction.START;
+    private endAction = OBSRecordingAction.STOP;
 
-    public loadJSON(comboFilePath: string, options?: Partial<DolphinPlayerOptions>) {
-        // Reset state and kill dolphin if running
-        this._resetState();
-        if (this.dolphin) {
+    private readonly currentBasenameSource = new BehaviorSubject<string>("");
+    public currentBasename$ = this.currentBasenameSource.asObservable();
+
+    public constructor(dolphinPath: string, options?: any) {
+        super(dolphinPath, options);
+        this.output.playbackStatus$.pipe(
+            // Only process if recording is enabled and OBS is connected
+            filter(() => this.recordingEnabled && obsConnection.isConnected()),
+            // Process the values synchronously one at time
+            concatMap((payload) => from(this._handleDolphinPlayback(payload))),
+        ).subscribe();
+        this.dolphinQuit$.pipe(
+            // Only process if recording is enabled and OBS is connected
+            filter(() => this.recordingEnabled && obsConnection.isConnected()),
+            concatMap(() => from(this._stopRecording())),
+        ).subscribe();
+        this.playbackFilename$.pipe(
+            map(fullpath => path.basename(fullpath)),
+        ).subscribe((name) => this.currentBasenameSource.next(name));
+    }
+
+    public recordJSON(comboFilePath: string, options?: Partial<DolphinPlayerOptions>) {
+        const opts: DolphinPlayerOptions = Object.assign({}, defaultDolphinPlayerOptions, options);
+        this.recordingEnabled = opts.record;
+        if (this.recordingEnabled) {
+            this.startAction = opts.pauseBetweenEntries ? OBSRecordingAction.UNPAUSE : OBSRecordingAction.START;
+            this.endAction = opts.pauseBetweenEntries ? OBSRecordingAction.PAUSE : OBSRecordingAction.STOP;
+        }
+        super.loadJSON(comboFilePath);
+    }
+
+    private async _handleDolphinPlayback(payload: DolphinPlaybackPayload): Promise<void> {
+        console.log(payload);
+        switch (payload.status) {
+            case DolphinPlaybackStatus.PLAYBACK_START:
+                const action = obsConnection.isRecording() ? this.startAction : OBSRecordingAction.START;
+                await obsConnection.setRecordingState(action);
+                break;
+            case DolphinPlaybackStatus.PLAYBACK_END:
+                if (payload.data && payload.data.gameEnded) {
+                    await delay(DELAY_AMOUNT_MS);
+                }
+                await obsConnection.setRecordingState(this.endAction);
+                break;
+            case DolphinPlaybackStatus.QUEUE_EMPTY:
+                // Stop recording and quit Dolphin
+                await this._stopRecording(true);
+                break;
+        }
+    }
+
+    private async _stopRecording(killDolphin?: boolean) {
+        this.currentBasenameSource.next("");
+        if (obsConnection.isRecording()) {
+            await obsConnection.setRecordingState(OBSRecordingAction.STOP);
+        }
+        if (killDolphin && this.dolphin) {
             this.dolphin.kill();
         }
-
-        const opts: DolphinPlayerOptions = Object.assign({}, defaultDolphinPlayerOptions, options);
-        const dolphinPath = getDolphinPath();
-        console.log(dolphinPath);
-        this.dolphin = execFile(dolphinPath, ["-i", comboFilePath], { maxBuffer: MAX_BUFFER });
-        if (opts.record) {
-            this._handleRecording(this.dolphin);
-        }
     }
 
-    private _handleRecording(dolphin: ChildProcess) {
-        const obsConnected = obsConnection.isConnected();
-        if (!obsConnected) {
-            console.error("OBS is not connected. Not recording Dolphin.");
-            return;
-        }
-        if (dolphin.stdout) {
-            dolphin.stdout.on("data", (data: string) => {
-                this._handleStdoutData(data);
-            });
-        }
-        dolphin.on("close", async () => {
-            await obsConnection.setRecordingState(OBSRecordingAction.STOP);
-        });
-    }
-
-    private _handleStdoutData(data: string) {
-        const lines = data.split(os.EOL).filter(line => Boolean(line));
-        lines.forEach((command: string) => {
-            const commandValuePair: string[] = command.split(" ");
-            if (commandValuePair.length < 2) {
-                return;
-            }
-            const commandName = commandValuePair[0];
-            const commandValue = parseInt(commandValuePair[1], 10);
-            this._handleSingleCommand(commandName, commandValue).catch(console.error);
-        });
-    }
-
-    private async _handleSingleCommand(commandName: string, commandValue: number) {
-        switch (commandName) {
-            case "[CURRENT_FRAME]":
-                this.currentFrame = commandValue;
-                const recordingStarted = obsConnection.isRecording();
-                if (this.currentFrame === this.startRecordingFrame) {
-                    if (!recordingStarted) {
-                        console.log("Start Recording");
-                        await obsConnection.setRecordingState(OBSRecordingAction.START);
-                    } else {
-                        console.log("Resuming Recording");
-                        await obsConnection.setRecordingState(OBSRecordingAction.UNPAUSE);
-                    }
-
-                } else if (this.currentFrame === this.endRecordingFrame) {
-                    // Wait a bit if we are at the end of the game so we don't cut out too early
-                    if (this.waitForGAME) {
-                        await delay(DELAY_AMOUNT_MS);
-                    }
-                    console.log("Pausing Recording");
-                    await obsConnection.setRecordingState(OBSRecordingAction.PAUSE);
-                    this._resetState();
-                }
-                break;
-            case "[PLAYBACK_START_FRAME]":
-                this.startRecordingFrame = commandValue;
-                this.startRecordingFrame += START_RECORDING_BUFFER;
-                console.log(`StartFrame: ${this.startRecordingFrame}`);
-                break;
-            case "[PLAYBACK_END_FRAME]":
-                this.endRecordingFrame = commandValue;
-                if (this.endRecordingFrame < this.lastGameFrame) {
-                    this.endRecordingFrame -= END_RECORDING_BUFFER;
-                } else {
-                    this.waitForGAME = true;
-                    this.endRecordingFrame = this.lastGameFrame;
-                }
-                console.log(`EndFrame: ${this.endRecordingFrame}`);
-                break;
-            case "[GAME_END_FRAME]":
-                this.lastGameFrame = commandValue;
-                console.log(`LastFrame: ${this.lastGameFrame}`);
-                break;
-            case "[NO_GAME]":
-                console.log("No games remaining in queue");
-                console.log("Stopping Recording");
-                await obsConnection.setRecordingState(OBSRecordingAction.STOP);
-                break;
-            default:
-                console.log(`Unknown command ${commandName} with value ${commandValue}`);
-                break;
-        }
-    }
-
-    private _resetState() {
-        this.currentFrame = -124;
-        this.lastGameFrame = -124;
-        this.startRecordingFrame = -124;
-        this.endRecordingFrame = -124;
-        this.waitForGAME = false;
-    }
 }
 
-const dolphinPlayer = new DolphinPlayer();
+const randomTempJSONFile = () => {
+    const folder = remote.app.getPath("temp");
+    const filename = `${Date.now()}_dolphin_queue.json`;
+    return path.join(folder, filename);
+};
 
-export const openComboInDolphin = (filePath: string, record?: boolean) => {
-    dolphinPlayer.loadJSON(filePath, { record });
+const dolphinPath = getDolphinPath();
+const opts = {
+    // startBuffer: START_RECORDING_BUFFER,
+    // endBuffer: END_RECORDING_BUFFER,
+};
+export const dolphinPlayer = new DolphinRecorder(dolphinPath, opts);
+
+export const openComboInDolphin = (filePath: string, options?: Partial<DolphinPlayerOptions>) => {
+    dolphinPlayer.recordJSON(filePath, options);
+};
+
+export const loadSlpFilesInDolphin = async (filenames: string[], options?: Partial<DolphinPlayerOptions>): Promise<void> => {
+    const queue = filenames
+        .filter(filename => path.extname(filename) === ".slp")
+        .map(filename => ({path: filename}));
+    console.log(queue);
+    if (queue.length === 0) {
+        return;
+    }
+
+    const payload = generateDolphinQueuePayload(queue);
+    await loadPayloadIntoDolphin(payload, options);
+};
+
+const loadPayloadIntoDolphin = async (payload: string, options?: Partial<DolphinPlayerOptions>): Promise<void> => {
+    const outputFile = randomTempJSONFile();
+    await fs.writeFile(outputFile, payload);
+    openComboInDolphin(outputFile, options);
+};
+
+export const loadQueueIntoDolphin = (options?: Partial<DolphinPlayerOptions>): void => {
+    const { dolphinQueue, dolphinQueueOptions } = store.getState().tempContainer;
+    const queue: DolphinQueueFormat = {
+        ...dolphinQueueOptions,
+        queue: dolphinQueue,
+    };
+    const payload = JSON.stringify(queue, undefined, 2);
+    loadPayloadIntoDolphin(payload, options).catch(console.error);
+};
+
+export const saveQueueToFile = async (): Promise<void> => {
+    const fileTypeFilters = [
+        { name: "JSON files", extensions: ["json"] }
+    ];
+    const options = {
+        filters: fileTypeFilters,
+    };
+    const p = await getFilePath(options, true);
+    if (!p) {
+        console.error("Could not save queue because path is undefined");
+        return;
+    }
+    const { dolphinQueue, dolphinQueueOptions } = store.getState().tempContainer;
+    const queue: DolphinQueueFormat = {
+        ...dolphinQueueOptions,
+        queue: dolphinQueue,
+    };
+    const payload = JSON.stringify(queue, undefined, 2);
+    return fs.writeFile(p, payload);
 };

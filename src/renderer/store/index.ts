@@ -4,9 +4,10 @@ import createRematchPersist, { getPersistor } from "@rematch/persist";
 import * as models from "./models";
 
 import { updateEventActionManager } from "@/actions";
+import { dolphinPlayer } from "@/lib/dolphin";
+import { obsConnection } from "@/lib/obs";
 import { mapConfigurationToFilterSettings } from "@/lib/profile";
 import { comboFilter } from "@/lib/realtime";
-import { obsConnection } from "@/lib/obs";
 import { soundPlayer } from "@/lib/sounds";
 import { transformer } from "./transformer";
 
@@ -61,4 +62,7 @@ obsConnection.recordingStatus$.subscribe(status => {
 });
 obsConnection.scenes$.subscribe(scenes => {
     dispatcher.tempContainer.setOBSScenes(scenes);
+});
+dolphinPlayer.currentBasename$.subscribe(name => {
+    dispatcher.tempContainer.setDolphinPlaybackFile(name);
 });

@@ -1,15 +1,52 @@
 import * as React from "react";
 
-import { useSelector } from "react-redux";
-
 import { ConnectionStatusDisplay } from "@/components/ConnectionStatusDisplay";
-import { iRootState } from "@/store";
+import { loadQueueIntoDolphin } from "@/lib/dolphin";
 import { OBSConnectionStatus, OBSRecordingStatus } from "@/lib/obs";
+import { Dispatch, iRootState } from "@/store";
+import { useDispatch, useSelector } from "react-redux";
+import { Button, Icon } from "semantic-ui-react";
 
+import { RecordButton } from "@/components/recorder/RecordButton";
 import obsLogo from "@/styles/images/obs.png";
+import styled from "styled-components";
+
+enum RecordingMethod {
+    TOGETHER = "together",
+    SEPARATE = "separate",
+}
+
+const recordingOptions = [
+    { icon: "file video outline", text: "Together as one video", value: RecordingMethod.TOGETHER },
+    { icon: "film", text: "Seperate clips", value: RecordingMethod.SEPARATE },
+];
+
+const Outer = styled.div`
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+align-items: center;
+`;
 
 export const OBSStatusBar: React.FC = () => {
-    const { obsConnectionStatus, obsRecordingStatus } = useSelector((state: iRootState) => state.tempContainer);
+    const { recordSeparateClips } = useSelector((state: iRootState) => state.filesystem);
+    const { obsConnectionStatus, obsRecordingStatus, dolphinQueue, dolphinPlaybackFile } = useSelector((state: iRootState) => state.tempContainer);
+    const dispatch = useDispatch<Dispatch>();
+
+    const recordValue = recordSeparateClips ? RecordingMethod.SEPARATE : RecordingMethod.TOGETHER;
+    const recordButtonText = recordSeparateClips ? "Record separately" : "Record together";
+
+    const onRecordChange = (value: string) => {
+        dispatch.filesystem.setRecordSeparateClips(value === RecordingMethod.SEPARATE);
+    };
+
+    const onPlay = () => {
+        loadQueueIntoDolphin({ record: false });
+    };
+
+    const onRecord = () => {
+        loadQueueIntoDolphin({ record: true, pauseBetweenEntries: !recordSeparateClips });
+    };
 
     const handleClick = () => {
         /*
@@ -29,17 +66,18 @@ export const OBSStatusBar: React.FC = () => {
     };
     const hoverText = "abc"; // isFolderStream ? "Stop monitoring" : relayIsConnected ? "Click to disconnect" : "Click to connect";
     const headerText = displayOBSStatus(obsConnectionStatus, obsRecordingStatus); // isFolderStream ? "Monitoring" : statusToLabel(slippiConnectionStatus);
-    const innerText = "ghi"; // isFolderStream ? <>{currentSlpFolderStream}</> :
+    const innerText = dolphinPlaybackFile ? dolphinPlaybackFile : "No file playing"; // isFolderStream ? <>{currentSlpFolderStream}</> :
     // <>Relay Port: <InlineInput value={port} onChange={dispatch.slippi.setPort} /></>;
     // const connected = isFolderStream || relayIsConnected;
     let color = "#888888";
 
-    if (obsConnectionStatus === OBSConnectionStatus.CONNECTED) {
+    const obsIsConnected = obsConnectionStatus === OBSConnectionStatus.CONNECTED;
+    if (obsIsConnected) {
         color = obsRecordingStatus === OBSRecordingStatus.STOPPED ? "#00E461" : "#F30807";
     }
 
     return (
-        <div>
+        <Outer>
             <ConnectionStatusDisplay
                 icon={obsLogo}
                 headerText={headerText}
@@ -50,7 +88,19 @@ export const OBSStatusBar: React.FC = () => {
             >
                 {innerText}
             </ConnectionStatusDisplay>
-        </div>
+            <div>
+                <RecordButton
+                    onClick={onRecord}
+                    disabled={!obsIsConnected}
+                    onChange={onRecordChange}
+                    value={recordValue}
+                    options={recordingOptions}
+                >
+                    <Icon name="circle" />{recordButtonText}
+                </RecordButton>
+                <Button onClick={onPlay} style={{marginLeft: "5px"}} disabled={dolphinQueue.length === 0}><Icon name="play" />Play</Button>
+            </div>
+        </Outer>
     );
 };
 

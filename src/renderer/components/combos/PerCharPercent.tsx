@@ -7,8 +7,8 @@ import { Button, Icon } from "semantic-ui-react";
 
 import { CharPercentOption } from "@/lib/profile";
 import { device } from "@/styles/device";
-import { CharacterSelectAdapter } from "./CharacterSelect";
 import { SemanticInput } from "../../containers/Settings/ComboForm/FormAdapters";
+import { CharacterSelectAdapter } from "./CharacterSelect";
 
 const CharacterSelectContainer = styled.div`
 display: flex;

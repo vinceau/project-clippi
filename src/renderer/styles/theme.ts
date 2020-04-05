@@ -17,10 +17,10 @@ export interface Theme {
 export const lightTheme: Theme = {
     primary: "#FFF",
     secondary: "#000",
-    foreground: "#000",
+    foreground: "#333",
     foreground2: "#111329",
     foreground3: "#ddd",
-    background: "#FFF",
+    background: "#FAFAFA",
     background2: "#F9FAFB",
     background3: "#d4d4d5",
 };

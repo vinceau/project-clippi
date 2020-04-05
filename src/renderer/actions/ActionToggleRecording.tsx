@@ -3,9 +3,9 @@ import * as React from "react";
 import { ActionTypeGenerator, Context } from "@vinceau/event-actions";
 import { produce } from "immer";
 
-import { DelayInput, InlineDropdown, NotifyInput } from "@/components/InlineInputs";
 import { CustomIcon } from "@/components/CustomIcon";
-import { OBSRecordingAction, obsConnection } from "@/lib/obs";
+import { DelayInput, InlineDropdown, NotifyInput } from "@/components/InlineInputs";
+import { obsConnection, OBSRecordingAction } from "@/lib/obs";
 import { capitalize, delay as waitMillis, notify, parseSecondsDelayValue } from "@/lib/utils";
 import { ActionComponent } from "./types";
 

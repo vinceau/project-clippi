@@ -64,6 +64,9 @@ export const GlobalStyle = createGlobalStyle<{
         background: ${({theme}) => transparentize(0.2, theme.foreground2)} none;
         color: ${({theme}) => theme.foreground};
         font-weight: 500;
+        &:hover {
+          background: ${({theme}) => transparentize(0.5, theme.foreground2)} none;
+        }
     }
 
     .ui.checkbox input~.box:before,

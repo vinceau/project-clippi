@@ -1,9 +1,9 @@
 import React from "react";
 
-import styled from "styled-components";
 import { device } from "@/styles/device";
 import { transparentize } from "polished";
 import { Icon } from "semantic-ui-react";
+import styled from "styled-components";
 
 import { format } from "timeago.js";
 import { Labelled } from "../Labelled";
