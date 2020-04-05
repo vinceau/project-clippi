@@ -66,11 +66,7 @@ export const DropPad: React.FC<{
             <input {...getInputProps()} />
             <Button type="button" onClick={open}>
                 <CustomIcon image={slippiLogoSVG} />
-                SLP files
-            </Button>
-            <Button type="button" onClick={() => loadFileHandler()}>
-                            <Icon name="js" />
-                JSON file
+                Select
             </Button>
             {
                 props.files.length > 0 ?
