@@ -37,6 +37,14 @@ display: flex;
 flex-direction: row;
 `;
 
+const Toolbar = styled.div`
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 10px;
+`;
+
 export const RecorderView: React.FC = () => {
     const { dolphinQueue } = useSelector((state: iRootState) => state.tempContainer);
     const dispatch = useDispatch<Dispatch>();
@@ -45,7 +53,7 @@ export const RecorderView: React.FC = () => {
     }
     console.log(dolphinQueue);
     const droppedFilesHandler = (files: string[]) => {
-        dispatch.tempContainer.appendDolphinQueue(files.map(p => ({path: p})));
+        dispatch.tempContainer.appendDolphinQueue(files.map(p => ({ path: p })));
         // const filepaths = files.map(f => f.path);
         // setFiles(filepaths)
         /*
@@ -57,18 +65,25 @@ export const RecorderView: React.FC = () => {
         loadSlpFilesInDolphin(filepaths, options).catch(console.error);
         */
     }
+    const clearQueueHandler = () => {
+        dispatch.tempContainer.resetDolphinQueue();
+    }
+    const validQueue = dolphinQueue.length > 0;
     return (
         <Outer>
             <Content>
                 <h1>Game Recorder <Icon name="record" /></h1>
-                <div>
-                    <Button type="button" onClick={() => loadFileHandler()}>
-                        Load JSON
-                    </Button>
-                    <Button type="button">
-                        Save JSON
-                    </Button>
-                </div>
+                <Toolbar>
+                    <div>
+                        <Button type="button" onClick={() => loadFileHandler()}>
+                            <Icon name="folder" /> Load JSON
+                        </Button>
+                        <Button type="button" disabled={!validQueue}>
+                            <Icon name="save" /> Save JSON
+                        </Button>
+                    </div>
+                    <Button onClick={clearQueueHandler}><Icon name="trash" disabled={!validQueue} /> Clear queue</Button>
+                </Toolbar>
                 <MainBody>
                     <DropPad onDrop={(files) => droppedFilesHandler(files)} files={dolphinQueue} />
                 </MainBody>

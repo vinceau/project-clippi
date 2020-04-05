@@ -22,6 +22,13 @@ export interface TempContainerState {
     dolphinQueueOptions: DolphinQueueOptions,
 }
 
+const initialDolphinQueueOptions = {
+    mode: "queue",
+    replay: "",
+    isRealTimeMode: false,
+    outputOverlayFiles: true,
+};
+
 const initialState: TempContainerState = {
     slippiConnectionStatus: ConnectionStatus.DISCONNECTED,
     obsConnectionStatus: OBSConnectionStatus.DISCONNECTED,
@@ -37,12 +44,7 @@ const initialState: TempContainerState = {
         settings: "/settings/combo-settings",
     },
     dolphinQueue: [],
-    dolphinQueueOptions: {
-        mode: "queue",
-        replay: "",
-        isRealTimeMode: false,
-        outputOverlayFiles: true,
-    },
+    dolphinQueueOptions: Object.assign({}, initialDolphinQueueOptions),
 };
 
 export const tempContainer = createModel({
@@ -99,9 +101,6 @@ export const tempContainer = createModel({
                 draft.dolphinQueue = [...state.dolphinQueue, ...newFiles];
             });
         },
-        clearDolphinQueue: (state: TempContainerState): TempContainerState => produce(state, draft => {
-            draft.dolphinQueue = [];
-        }),
         setDolphinQueueOptions: (state: TempContainerState, payload: Partial<DolphinQueueOptions>): TempContainerState => {
             const newState = produce(state.dolphinQueueOptions, draft => {
                 draft = Object.assign({}, draft, payload);
@@ -120,6 +119,10 @@ export const tempContainer = createModel({
                 draft.dolphinQueue = queue;
             });
         },
+        resetDolphinQueue: (state: TempContainerState): TempContainerState => produce(state, draft => {
+            draft.dolphinQueueOptions = Object.assign({}, initialDolphinQueueOptions);
+            draft.dolphinQueue = [];
+        }),
     },
     effects: dispatch => ({
         async updateUser(token: string) {
