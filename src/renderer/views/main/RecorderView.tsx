@@ -40,15 +40,8 @@ flex-direction: row;
 export const RecorderView: React.FC = () => {
     const { dolphinQueue } = useSelector((state: iRootState) => state.tempContainer);
     const dispatch = useDispatch<Dispatch>();
-    const [record, setRecord] = React.useState(false);
-    const [splitFiles, setSplitFiles] = React.useState(false);
     const loadFileHandler = () => {
-        const options = {
-            record: true,
-            pauseBetweenEntries: true,
-        }
-        console.log(options);
-        loadFileInDolphin(options).catch(console.error);
+        dispatch.tempContainer.loadDolphinQueue();
     }
     console.log(dolphinQueue);
     const droppedFilesHandler = (files: string[]) => {
@@ -68,39 +61,16 @@ export const RecorderView: React.FC = () => {
         <Outer>
             <Content>
                 <h1>Game Recorder <Icon name="record" /></h1>
+                <div>
+                    <Button type="button" onClick={() => loadFileHandler()}>
+                        Load JSON
+                    </Button>
+                    <Button type="button">
+                        Save JSON
+                    </Button>
+                </div>
                 <MainBody>
                     <DropPad onDrop={(files) => droppedFilesHandler(files)} files={dolphinQueue} />
-                    <div>
-                        <div>
-                            <Checkbox
-                                label="Record output in OBS"
-                                checked={record}
-                                onChange={(_, data) => {
-                                    console.log(data.checked);
-                                    setRecord(Boolean(data.checked));
-                                    console.log("clicked");
-                                    console.log(record);
-                                }}
-                            />
-                        </div>
-                        <div>
-                            <Checkbox
-                                label="Record as separate files"
-                                checked={splitFiles}
-                                onChange={(_, data) => {
-                                    console.log(data.checked);
-                                    setSplitFiles(Boolean(data.checked));
-                                    console.log("clicked");
-                                    console.log(splitFiles);
-                                }}
-                            />
-                        </div>
-                        <div>
-                            <Button type="button" onClick={() => loadFileHandler()}>
-                                Load a file into Dolphin
-                    </Button>
-                        </div>
-                    </div>
                 </MainBody>
             </Content>
             <Footer>

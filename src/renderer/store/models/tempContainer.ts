@@ -1,10 +1,11 @@
 import { createModel } from "@rematch/core";
 import produce from "immer";
 
-import { DolphinQueueOptions, DolphinEntry, ConnectionStatus } from "@vinceau/slp-realtime";
+import { DolphinQueueOptions, DolphinQueueFormat, DolphinEntry, ConnectionStatus } from "@vinceau/slp-realtime";
 import { currentUser } from "common/twitch";
 import { HelixUser } from "twitch";
 import { OBSConnectionStatus, OBSRecordingStatus } from "@/lib/obs";
+import { loadDolphinQueue } from "@/lib/utils";
 
 export interface TempContainerState {
     slippiConnectionStatus: ConnectionStatus;
@@ -109,6 +110,16 @@ export const tempContainer = createModel({
                 draft.dolphinQueueOptions = newState;
             });
         },
+        setDolphinQueueFromJson: (state: TempContainerState, payload: DolphinQueueFormat): TempContainerState => {
+            const { queue, ...rest } = payload;
+            const newOptions = produce(state.dolphinQueueOptions, draft => {
+                draft = rest;
+            });
+            return produce(state, draft => {
+                draft.dolphinQueueOptions = newOptions;
+                draft.dolphinQueue = queue;
+            });
+        },
     },
     effects: dispatch => ({
         async updateUser(token: string) {
@@ -118,6 +129,14 @@ export const tempContainer = createModel({
                 return;
             }
             dispatch.tempContainer.setTwitchUser(user);
+        },
+        async loadDolphinQueue() {
+            const dolphinQueue = await loadDolphinQueue();
+            if (!dolphinQueue) {
+                console.error("Couldn't load dolphin queue");
+                return;
+            }
+            dispatch.tempContainer.setDolphinQueueFromJson(dolphinQueue);
         },
     }),
 });

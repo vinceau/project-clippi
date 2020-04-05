@@ -1,10 +1,13 @@
 import * as path from "path";
 import * as url from "url";
 
+import fs from "fs-extra";
 import { Message } from "common/types";
 import { remote, shell } from "electron";
 import { ipc } from "./rendererIpc";
 import { openComboInDolphin, DolphinPlayerOptions } from '@/lib/dolphin';
+
+import { DolphinQueueFormat } from "@vinceau/slp-realtime";
 
 export const delay = async (ms: number): Promise<void> => {
     await new Promise(resolve => setTimeout(resolve, ms));
@@ -70,6 +73,16 @@ export const loadFileInDolphin = async (options?: Partial<DolphinPlayerOptions>)
     if (p) {
         openComboInDolphin(p, options);
     }
+};
+
+export const loadDolphinQueue = async (): Promise<DolphinQueueFormat | null> => {
+    const p = await getFilePath({
+        filters: [{ name: "JSON files", extensions: ["json"] }],
+    });
+    if (!p) {
+        return null;
+    }
+    return fs.readJson(p);
 };
 
 /**
