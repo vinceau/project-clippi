@@ -85,7 +85,7 @@ export const RecorderView: React.FC = () => {
                             <Icon name="save" /> Save JSON
                         </Button>
                     </div>
-                    <Button onClick={clearQueueHandler}><Icon name="trash" disabled={!validQueue} /> Clear queue</Button>
+                    <Button onClick={clearQueueHandler} disabled={!validQueue}><Icon name="trash" /> Clear queue</Button>
                 </Toolbar>
                 <MainBody>
                     <DropPad onDrop={(files) => droppedFilesHandler(files)} files={dolphinQueue} />
