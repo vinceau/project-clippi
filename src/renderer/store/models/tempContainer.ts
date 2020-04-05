@@ -90,6 +90,17 @@ export const tempContainer = createModel({
         setDolphinQueue: (state: TempContainerState, payload: DolphinEntry[]): TempContainerState => produce(state, draft => {
             draft.dolphinQueue = payload;
         }),
+        appendDolphinQueue: (state: TempContainerState, payload: DolphinEntry[]): TempContainerState => {
+            // Disallow duplicate paths
+            const existingPaths = state.dolphinQueue.map(f => f.path);
+            const newFiles = payload.filter(f => !existingPaths.includes(f.path));
+            return produce(state, draft => {
+                draft.dolphinQueue = [...state.dolphinQueue, ...newFiles];
+            });
+        },
+        clearDolphinQueue: (state: TempContainerState): TempContainerState => produce(state, draft => {
+            draft.dolphinQueue = [];
+        }),
         setDolphinQueueOptions: (state: TempContainerState, payload: Partial<DolphinQueueOptions>): TempContainerState => {
             const newState = produce(state.dolphinQueueOptions, draft => {
                 draft = Object.assign({}, draft, payload);

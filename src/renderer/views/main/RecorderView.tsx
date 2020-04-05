@@ -2,6 +2,8 @@ import React from "react";
 
 import styled from "styled-components";
 
+import { useDispatch, useSelector } from "react-redux";
+import { Dispatch, iRootState } from "@/store";
 import { Header, Segment, Button, Checkbox, Icon } from "semantic-ui-react";
 import { loadFileInDolphin } from "@/lib/utils";
 
@@ -36,7 +38,8 @@ flex-direction: row;
 `;
 
 export const RecorderView: React.FC = () => {
-    const [allFiles, setAllFiles] = React.useState<any[]>([]);
+    const { dolphinQueue } = useSelector((state: iRootState) => state.tempContainer);
+    const dispatch = useDispatch<Dispatch>();
     const [record, setRecord] = React.useState(false);
     const [splitFiles, setSplitFiles] = React.useState(false);
     const loadFileHandler = () => {
@@ -47,13 +50,9 @@ export const RecorderView: React.FC = () => {
         console.log(options);
         loadFileInDolphin(options).catch(console.error);
     }
-    const droppedFilesHandler = (files: any[]) => {
-        files.forEach((f: any) => {
-            setAllFiles((prevState) => {
-                const noDups = prevState.filter(z => z.path !== f.path);
-                return [...noDups, f];
-            });
-        })
+    console.log(dolphinQueue);
+    const droppedFilesHandler = (files: string[]) => {
+        dispatch.tempContainer.appendDolphinQueue(files.map(p => ({path: p})));
         // const filepaths = files.map(f => f.path);
         // setFiles(filepaths)
         /*
@@ -70,7 +69,7 @@ export const RecorderView: React.FC = () => {
             <Content>
                 <h1>Game Recorder <Icon name="record" /></h1>
                 <MainBody>
-                    <DropPad onDrop={(files) => droppedFilesHandler(files)} files={allFiles} />
+                    <DropPad onDrop={(files) => droppedFilesHandler(files)} files={dolphinQueue} />
                     <div>
                         <div>
                             <Checkbox

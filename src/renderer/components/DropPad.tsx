@@ -47,8 +47,8 @@ export const DropPad: React.FC<{
         console.log(options);
         loadFileInDolphin(options).catch(console.error);
     }
-    const onDrop = useCallback(acceptedFiles => {
-        props.onDrop(acceptedFiles);
+    const onDrop = useCallback((acceptedFiles: any) => {
+        props.onDrop(acceptedFiles.map(f => f.path));
         /*
         console.log(allFiles);
         setAllFiles(prevState => ([...prevState]));
