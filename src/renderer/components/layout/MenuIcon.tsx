@@ -45,7 +45,11 @@ export const MenuIcon: React.FC<{
 export const MenuIconLink: React.FC<{
     label: string;
     to: string;
+    hidden?: boolean;
 }> = (props) => {
+    if (props.hidden) {
+        return null;
+    }
     return (
         <Link to={props.to}>
             <Route
