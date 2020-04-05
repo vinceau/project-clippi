@@ -9,6 +9,7 @@ import { comboFilter } from "@/lib/realtime";
 import { obsConnection } from "@/lib/obs";
 import { soundPlayer } from "@/lib/sounds";
 import { transformer } from "./transformer";
+import { dolphinPlayer } from "@/lib/dolphin";
 
 const persistPlugin = createRematchPersist({
     version: 1,
@@ -60,4 +61,12 @@ obsConnection.connectionStatus$.subscribe(status => {
 obsConnection.recordingStatus$.subscribe(status => {
     console.log(status);
     dispatcher.tempContainer.setOBSRecordingStatus(status);
+});
+
+dolphinPlayer.playbackFilename$.subscribe(name => {
+    dispatcher.tempContainer.setDolphinPlaybackFile(name);
+});
+
+dolphinPlayer.dolphinQuit$.subscribe(() => {
+    dispatcher.tempContainer.setDolphinPlaybackFile("");
 });

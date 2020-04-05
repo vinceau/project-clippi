@@ -20,6 +20,7 @@ export interface TempContainerState {
     latestPath: { [page: string]: string };
     dolphinQueue: DolphinEntry[],
     dolphinQueueOptions: DolphinQueueOptions,
+    dolphinPlaybackFile: string;
 }
 
 const initialDolphinQueueOptions = {
@@ -45,6 +46,7 @@ const initialState: TempContainerState = {
     },
     dolphinQueue: [],
     dolphinQueueOptions: Object.assign({}, initialDolphinQueueOptions),
+    dolphinPlaybackFile: "",
 };
 
 export const tempContainer = createModel({
@@ -122,6 +124,9 @@ export const tempContainer = createModel({
         resetDolphinQueue: (state: TempContainerState): TempContainerState => produce(state, draft => {
             draft.dolphinQueueOptions = Object.assign({}, initialDolphinQueueOptions);
             draft.dolphinQueue = [];
+        }),
+        setDolphinPlaybackFile: (state: TempContainerState, payload: string): TempContainerState => produce(state, draft => {
+            draft.dolphinPlaybackFile = payload;
         }),
     },
     effects: dispatch => ({

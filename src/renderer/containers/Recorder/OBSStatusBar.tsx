@@ -30,7 +30,7 @@ align-items: center;
 
 export const OBSStatusBar: React.FC = () => {
     const { recordSeparateClips } = useSelector((state: iRootState) => state.filesystem);
-    const { obsConnectionStatus, obsRecordingStatus, dolphinQueue } = useSelector((state: iRootState) => state.tempContainer);
+    const { obsConnectionStatus, obsRecordingStatus, dolphinQueue, dolphinPlaybackFile } = useSelector((state: iRootState) => state.tempContainer);
     const dispatch = useDispatch<Dispatch>();
 
     const recordValue = recordSeparateClips ? RecordingMethod.SEPARATE : RecordingMethod.TOGETHER;
@@ -66,7 +66,7 @@ export const OBSStatusBar: React.FC = () => {
     };
     const hoverText = "abc"; // isFolderStream ? "Stop monitoring" : relayIsConnected ? "Click to disconnect" : "Click to connect";
     const headerText = displayOBSStatus(obsConnectionStatus, obsRecordingStatus); // isFolderStream ? "Monitoring" : statusToLabel(slippiConnectionStatus);
-    const innerText = "ghi"; // isFolderStream ? <>{currentSlpFolderStream}</> :
+    const innerText = dolphinPlaybackFile ? dolphinPlaybackFile : "No file playing"; // isFolderStream ? <>{currentSlpFolderStream}</> :
     // <>Relay Port: <InlineInput value={port} onChange={dispatch.slippi.setPort} /></>;
     // const connected = isFolderStream || relayIsConnected;
     let color = "#888888";

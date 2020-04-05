@@ -47,7 +47,7 @@ export class DolphinRecorder extends DolphinLauncher {
 
     public constructor(dolphinPath: string, options?: any) {
         super(dolphinPath, options);
-        this.playbackStatus$.pipe(
+        this.output.playbackStatus$.pipe(
             // Only process if recording is enabled and OBS is connected
             filter(() => this.recordingEnabled && obsConnection.isConnected()),
             // Process the values synchronously one at time
@@ -111,7 +111,7 @@ const opts = {
     // startBuffer: START_RECORDING_BUFFER,
     // endBuffer: END_RECORDING_BUFFER,
 };
-const dolphinPlayer = new DolphinRecorder(dolphinPath, opts);
+export const dolphinPlayer = new DolphinRecorder(dolphinPath, opts);
 
 export const openComboInDolphin = (filePath: string, options?: Partial<DolphinPlayerOptions>) => {
     dolphinPlayer.loadJSON(filePath, options);
