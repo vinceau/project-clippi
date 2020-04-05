@@ -1,11 +1,11 @@
 import * as path from "path";
 import * as url from "url";
 
-import fs from "fs-extra";
+import { DolphinPlayerOptions, openComboInDolphin } from "@/lib/dolphin";
 import { Message } from "common/types";
 import { remote, shell } from "electron";
+import fs from "fs-extra";
 import { ipc } from "./rendererIpc";
-import { openComboInDolphin, DolphinPlayerOptions } from '@/lib/dolphin';
 
 import { DolphinQueueFormat } from "@vinceau/slp-realtime";
 

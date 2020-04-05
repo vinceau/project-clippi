@@ -1,11 +1,11 @@
 import { createModel } from "@rematch/core";
 import produce from "immer";
 
-import { DolphinQueueOptions, DolphinQueueFormat, DolphinEntry, ConnectionStatus } from "@vinceau/slp-realtime";
-import { currentUser } from "common/twitch";
-import { HelixUser } from "twitch";
 import { OBSConnectionStatus, OBSRecordingStatus } from "@/lib/obs";
 import { loadDolphinQueue } from "@/lib/utils";
+import { ConnectionStatus, DolphinEntry, DolphinQueueFormat, DolphinQueueOptions } from "@vinceau/slp-realtime";
+import { currentUser } from "common/twitch";
+import { HelixUser } from "twitch";
 
 export interface TempContainerState {
     slippiConnectionStatus: ConnectionStatus;
@@ -18,8 +18,8 @@ export interface TempContainerState {
     comboFinderLog: string;
     comboFinderProcessing: boolean;
     latestPath: { [page: string]: string };
-    dolphinQueue: DolphinEntry[],
-    dolphinQueueOptions: DolphinQueueOptions,
+    dolphinQueue: DolphinEntry[];
+    dolphinQueueOptions: DolphinQueueOptions;
     dolphinPlaybackFile: string;
 }
 

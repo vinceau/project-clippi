@@ -1,15 +1,15 @@
 import * as React from "react";
 
-import { useDispatch, useSelector } from "react-redux";
 import { ConnectionStatusDisplay } from "@/components/ConnectionStatusDisplay";
-import { Dispatch, iRootState } from "@/store";
-import { OBSConnectionStatus, OBSRecordingStatus } from "@/lib/obs";
 import { loadQueueIntoDolphin } from "@/lib/dolphin";
-import { Icon, Button } from "semantic-ui-react";
+import { OBSConnectionStatus, OBSRecordingStatus } from "@/lib/obs";
+import { Dispatch, iRootState } from "@/store";
+import { useDispatch, useSelector } from "react-redux";
+import { Button, Icon } from "semantic-ui-react";
 
-import styled from "styled-components";
-import obsLogo from "@/styles/images/obs.png";
 import { RecordButton } from "@/components/recorder/RecordButton";
+import obsLogo from "@/styles/images/obs.png";
+import styled from "styled-components";
 
 enum RecordingMethod {
     TOGETHER = "together",
@@ -38,15 +38,15 @@ export const OBSStatusBar: React.FC = () => {
 
     const onRecordChange = (value: string) => {
         dispatch.filesystem.setRecordSeparateClips(value === RecordingMethod.SEPARATE);
-    }
+    };
 
     const onPlay = () => {
         loadQueueIntoDolphin({ record: false });
-    }
+    };
 
     const onRecord = () => {
         loadQueueIntoDolphin({ record: true, pauseBetweenEntries: !recordSeparateClips });
-    }
+    };
 
     const handleClick = () => {
         /*

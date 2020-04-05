@@ -15,12 +15,12 @@ import path from "path";
 
 import { remote } from "electron";
 
-import { store } from "@/store";
-import { generateDolphinQueuePayload, DolphinLauncher, DolphinPlaybackPayload, DolphinPlaybackStatus, DolphinQueueFormat } from "@vinceau/slp-realtime";
 import { obsConnection, OBSRecordingAction } from "@/lib/obs";
 import { delay, getFilePath } from "@/lib/utils";
-import { filter, concatMap, map } from "rxjs/operators";
-import { from, BehaviorSubject } from "rxjs";
+import { store } from "@/store";
+import { DolphinLauncher, DolphinPlaybackPayload, DolphinPlaybackStatus, DolphinQueueFormat, generateDolphinQueuePayload } from "@vinceau/slp-realtime";
+import { BehaviorSubject, from } from "rxjs";
+import { concatMap, filter, map } from "rxjs/operators";
 
 const DELAY_AMOUNT_MS = 1000;
 
@@ -45,7 +45,7 @@ export class DolphinRecorder extends DolphinLauncher {
     private startAction = OBSRecordingAction.START;
     private endAction = OBSRecordingAction.STOP;
 
-    private currentBasenameSource = new BehaviorSubject<string>("");
+    private readonly currentBasenameSource = new BehaviorSubject<string>("");
     public currentBasename$ = this.currentBasenameSource.asObservable();
 
     public constructor(dolphinPath: string, options?: any) {
@@ -112,7 +112,7 @@ const randomTempJSONFile = () => {
     const folder = remote.app.getPath("temp");
     const filename = `${Date.now()}_dolphin_queue.json`;
     return path.join(folder, filename);
-}
+};
 
 const dolphinPath = getDolphinPath();
 const opts = {
@@ -136,13 +136,13 @@ export const loadSlpFilesInDolphin = async (filenames: string[], options?: Parti
 
     const payload = generateDolphinQueuePayload(queue);
     await loadPayloadIntoDolphin(payload, options);
-}
+};
 
 const loadPayloadIntoDolphin = async (payload: string, options?: Partial<DolphinPlayerOptions>): Promise<void> => {
     const outputFile = randomTempJSONFile();
     await fs.writeFile(outputFile, payload);
     openComboInDolphin(outputFile, options);
-}
+};
 
 export const loadQueueIntoDolphin = (options?: Partial<DolphinPlayerOptions>): void => {
     const { dolphinQueue, dolphinQueueOptions } = store.getState().tempContainer;

@@ -1,8 +1,8 @@
 import React from "react";
 
+import { transparentize } from "polished";
 import { Icon } from "semantic-ui-react";
 import styled from "styled-components";
-import { transparentize } from "polished";
 import { Labelled } from "./Labelled";
 
 const Container = styled.div`
@@ -26,7 +26,6 @@ h2 {
     cursor: pointer;
 }
 `;
-
 
 export const SoundFileInfo: React.FC<{
     name: string;

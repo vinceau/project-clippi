@@ -17,12 +17,12 @@ export const RecordButton: React.FC<{
         if (props.onChange) {
             props.onChange(value);
         }
-    }
+    };
     const onClick = () => {
         if (props.onClick) {
             props.onClick();
         }
-    }
+    };
     const options = props.options ? props.options.map(v => ({...v, key: v.value})) : [];
     return (
         <Button.Group>

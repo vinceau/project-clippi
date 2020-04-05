@@ -2,12 +2,12 @@ import React from "react";
 
 import styled from "styled-components";
 
-import { useDispatch, useSelector } from "react-redux";
 import { Dispatch, iRootState } from "@/store";
+import { useDispatch, useSelector } from "react-redux";
 import { Button, Icon } from "semantic-ui-react";
 
-import { OBSStatusBar } from "@/containers/Recorder/OBSStatusBar";
 import { DropPad } from "@/components/DropPad";
+import { OBSStatusBar } from "@/containers/Recorder/OBSStatusBar";
 import { saveQueueToFile } from "@/lib/dolphin";
 
 const Content = styled.div`
@@ -49,7 +49,7 @@ export const RecorderView: React.FC = () => {
     const dispatch = useDispatch<Dispatch>();
     const loadFileHandler = () => {
         dispatch.tempContainer.loadDolphinQueue();
-    }
+    };
     console.log(dolphinQueue);
     const droppedFilesHandler = (files: string[]) => {
         dispatch.tempContainer.appendDolphinQueue(files.map(p => ({ path: p })));
@@ -63,13 +63,13 @@ export const RecorderView: React.FC = () => {
         console.log(options);
         loadSlpFilesInDolphin(filepaths, options).catch(console.error);
         */
-    }
+    };
     const clearQueueHandler = () => {
         dispatch.tempContainer.resetDolphinQueue();
-    }
+    };
     const onSaveHandler = () => {
         saveQueueToFile().catch(console.error);
-    }
+    };
     const validQueue = dolphinQueue.length > 0;
     return (
         <Outer>

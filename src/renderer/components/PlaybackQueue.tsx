@@ -25,4 +25,4 @@ export const PlaybackQueue: React.FC<{
         </div>
     );
 };
-
+

@@ -3,11 +3,11 @@ import { useDropzone } from "react-dropzone";
 
 import { Button } from "semantic-ui-react";
 
+import slippiLogoSVG from "@/styles/images/slippi-logo.svg";
 import styled from "styled-components";
 import { CustomIcon } from "./CustomIcon";
 import { PlaybackQueue } from "./PlaybackQueue";
 import { PlaybackQueueEmpty } from "./PlaybackQueueEmpty";
-import slippiLogoSVG from "@/styles/images/slippi-logo.svg";
 
 const Outer = styled.div`
 min-height: 200px;

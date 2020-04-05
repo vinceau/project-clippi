@@ -4,9 +4,9 @@ import { Field } from "react-final-form";
 import Select, { components, MultiValueProps, OptionProps, OptionTypeBase, SingleValueProps } from "react-select";
 import styled from "styled-components";
 
+import { ThemeMode, useTheme } from "@/styles";
 import { CharacterIcon } from "../CharacterIcon";
 import { CharacterLabel } from "./CharacterLabel";
-import { useTheme, ThemeMode } from "@/styles";
 
 export const sortedCharacterInfos: CharacterInfo[] = getAllCharacters()
   .sort((a, b) => {

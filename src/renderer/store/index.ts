@@ -4,12 +4,12 @@ import createRematchPersist, { getPersistor } from "@rematch/persist";
 import * as models from "./models";
 
 import { updateEventActionManager } from "@/actions";
+import { dolphinPlayer } from "@/lib/dolphin";
+import { obsConnection } from "@/lib/obs";
 import { mapConfigurationToFilterSettings } from "@/lib/profile";
 import { comboFilter } from "@/lib/realtime";
-import { obsConnection } from "@/lib/obs";
 import { soundPlayer } from "@/lib/sounds";
 import { transformer } from "./transformer";
-import { dolphinPlayer } from "@/lib/dolphin";
 
 const persistPlugin = createRematchPersist({
     version: 1,
