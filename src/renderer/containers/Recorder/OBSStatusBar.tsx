@@ -10,6 +10,16 @@ import styled from "styled-components";
 import obsLogo from "@/styles/images/obs.png";
 import { RecordButton } from "@/components/recorder/RecordButton";
 
+enum RecordingMethod {
+    TOGETHER = "together",
+    SEPARATE = "separate",
+}
+
+const recordingOptions = [
+    { icon: "file video outline", text: "Together as one video", value: RecordingMethod.TOGETHER },
+    { icon: "film", text: "Seperate clips", value: RecordingMethod.SEPARATE },
+];
+
 const Outer = styled.div`
 display: flex;
 flex-direction: row;
@@ -22,15 +32,11 @@ export const OBSStatusBar: React.FC = () => {
     const { obsConnectionStatus, obsRecordingStatus } = useSelector((state: iRootState) => state.tempContainer);
     const dispatch = useDispatch<Dispatch>();
 
-    const options = [
-        { icon: 'file video outline', text: 'Together as one video', value: 'together' },
-        { icon: 'film', text: 'Seperate clips', value: 'separate' },
-    ];
-    const recordValue = recordSeparateClips ? "separate" : "together";
+    const recordValue = recordSeparateClips ? RecordingMethod.SEPARATE : RecordingMethod.TOGETHER;
     const recordButtonText = recordSeparateClips ? "Record separately" : "Record together";
 
     const onRecordChange = (value: string) => {
-        dispatch.filesystem.setRecordSeparateClips(value === "separate");
+        dispatch.filesystem.setRecordSeparateClips(value === RecordingMethod.SEPARATE);
     }
 
     const handleClick = () => {
@@ -74,7 +80,14 @@ export const OBSStatusBar: React.FC = () => {
                 {innerText}
             </ConnectionStatusDisplay>
             <div>
-                <RecordButton disabled={!obsIsConnected} onChange={onRecordChange} value={recordValue} options={options}><Icon name="circle" />{recordButtonText}</RecordButton>
+                <RecordButton
+                    disabled={!obsIsConnected}
+                    onChange={onRecordChange}
+                    value={recordValue}
+                    options={recordingOptions}
+                >
+                    <Icon name="circle" />{recordButtonText}
+                </RecordButton>
                 <Button><Icon name="play" />Play</Button>
             </div>
         </Outer>
