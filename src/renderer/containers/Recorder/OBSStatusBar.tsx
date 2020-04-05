@@ -5,8 +5,44 @@ import { useSelector } from "react-redux";
 import { ConnectionStatusDisplay } from "@/components/ConnectionStatusDisplay";
 import { iRootState } from "@/store";
 import { OBSConnectionStatus, OBSRecordingStatus } from "@/lib/obs";
+import { Icon, Button, Dropdown } from "semantic-ui-react";
 
+import styled from "styled-components";
 import obsLogo from "@/styles/images/obs.png";
+
+const options = [
+    { key: 'together', icon: 'file video outline', text: 'Together as one video', value: 'together' },
+    { key: 'seperate', icon: 'film', text: 'Seperate clips', value: 'separate' },
+]
+
+const RecordButton: React.FC<{
+    disabled?: boolean;
+}> = (props) => {
+    const onChange = (value: any) => {
+        console.log(value);
+    }
+    return (
+        <Button.Group>
+            <Button disabled={props.disabled}><Icon name="circle" /> Record together</Button>
+            <Dropdown
+                disabled={props.disabled}
+                className="button icon"
+                floating
+                onChange={(_: any, { value }) => onChange(value)}
+                options={options}
+                trigger={<React.Fragment />}
+            />
+        </Button.Group>
+    );
+};
+
+
+const Outer = styled.div`
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+align-items: center;
+`;
 
 export const OBSStatusBar: React.FC = () => {
     const { obsConnectionStatus, obsRecordingStatus } = useSelector((state: iRootState) => state.tempContainer);
@@ -39,7 +75,7 @@ export const OBSStatusBar: React.FC = () => {
     }
 
     return (
-        <div>
+        <Outer>
             <ConnectionStatusDisplay
                 icon={obsLogo}
                 headerText={headerText}
@@ -50,7 +86,11 @@ export const OBSStatusBar: React.FC = () => {
             >
                 {innerText}
             </ConnectionStatusDisplay>
-        </div>
+            <div>
+                <RecordButton />
+                <Button><Icon name="play" />Play</Button>
+            </div>
+        </Outer>
     );
 };
 
