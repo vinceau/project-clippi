@@ -3,7 +3,7 @@ import OBSWebSocket, { Scene } from "obs-websocket-js";
 import { store } from "@/store";
 import { notify } from "./utils";
 
-import { from, Subject, BehaviorSubject } from "rxjs";
+import { BehaviorSubject, from, Subject } from "rxjs";
 import { map, switchMap } from "rxjs/operators";
 
 export enum OBSRecordingAction {
