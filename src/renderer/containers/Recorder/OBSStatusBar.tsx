@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { ConnectionStatusDisplay } from "@/components/ConnectionStatusDisplay";
 import { Dispatch, iRootState } from "@/store";
 import { OBSConnectionStatus, OBSRecordingStatus } from "@/lib/obs";
+import { loadQueueIntoDolphin } from "@/lib/dolphin";
 import { Icon, Button } from "semantic-ui-react";
 
 import styled from "styled-components";
@@ -37,6 +38,14 @@ export const OBSStatusBar: React.FC = () => {
 
     const onRecordChange = (value: string) => {
         dispatch.filesystem.setRecordSeparateClips(value === RecordingMethod.SEPARATE);
+    }
+
+    const onPlay = () => {
+        loadQueueIntoDolphin({ record: false });
+    }
+
+    const onRecord = () => {
+        loadQueueIntoDolphin({ record: true, pauseBetweenEntries: !recordSeparateClips });
     }
 
     const handleClick = () => {
@@ -81,6 +90,7 @@ export const OBSStatusBar: React.FC = () => {
             </ConnectionStatusDisplay>
             <div>
                 <RecordButton
+                    onClick={onRecord}
                     disabled={!obsIsConnected}
                     onChange={onRecordChange}
                     value={recordValue}
@@ -88,7 +98,7 @@ export const OBSStatusBar: React.FC = () => {
                 >
                     <Icon name="circle" />{recordButtonText}
                 </RecordButton>
-                <Button style={{marginLeft: "5px"}} disabled={dolphinQueue.length === 0}><Icon name="play" />Play</Button>
+                <Button onClick={onPlay} style={{marginLeft: "5px"}} disabled={dolphinQueue.length === 0}><Icon name="play" />Play</Button>
             </div>
         </Outer>
     );
