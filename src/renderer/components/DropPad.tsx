@@ -1,10 +1,9 @@
 import React, { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 
-import { Button, Icon } from "semantic-ui-react";
+import { Button } from "semantic-ui-react";
 
 import styled from "styled-components";
-import { loadFileInDolphin } from "@/lib/utils";
 import { CustomIcon } from "./CustomIcon";
 import { PlaybackQueue } from "./PlaybackQueue";
 import { PlaybackQueueEmpty } from "./PlaybackQueueEmpty";
@@ -39,28 +38,10 @@ export const DropPad: React.FC<{
     onDrop: (files: any) => void;
 }> = (props) => {
     const accept = ".slp";
-    const loadFileHandler = () => {
-        const options = {
-            record: true,
-            pauseBetweenEntries: true,
-        }
-        console.log(options);
-        loadFileInDolphin(options).catch(console.error);
-    }
-    const onDrop = useCallback((acceptedFiles: any) => {
+    const onDrop = useCallback((acceptedFiles: File[]) => {
         props.onDrop(acceptedFiles.map(f => f.path));
-        /*
-        console.log(allFiles);
-        setAllFiles(prevState => ([...prevState]));
-       acceptedFiles.forEach((f: any) => {
-           setAllFiles((prevState) => {
-               const noDups = prevState.filter(z => z.path !== f.path);
-               return [...noDups, f];
-           });
-       })
-        */
     }, []);
-    const { open, getRootProps, getInputProps, isDragActive } = useDropzone({ multiple: true, onDrop, accept, noClick: true, noKeyboard: true });
+    const { open, getRootProps, getInputProps /*, isDragActive */ } = useDropzone({ multiple: true, onDrop, accept, noClick: true, noKeyboard: true });
     return (
         <Outer {...getRootProps()}>
             <input {...getInputProps()} />

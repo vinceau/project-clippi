@@ -4,12 +4,11 @@ import styled from "styled-components";
 
 import { useDispatch, useSelector } from "react-redux";
 import { Dispatch, iRootState } from "@/store";
-import { Header, Segment, Button, Checkbox, Icon } from "semantic-ui-react";
-import { loadFileInDolphin } from "@/lib/utils";
+import { Button, Icon } from "semantic-ui-react";
 
 import { OBSStatusBar } from "@/containers/Recorder/OBSStatusBar";
 import { DropPad } from "@/components/DropPad";
-import { loadSlpFilesInDolphin, saveQueueToFile } from "@/lib/dolphin";
+import { saveQueueToFile } from "@/lib/dolphin";
 
 const Content = styled.div`
     padding: 20px;

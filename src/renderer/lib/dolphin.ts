@@ -16,16 +16,16 @@ import path from "path";
 import { remote } from "electron";
 
 import { store } from "@/store";
-import { DolphinQueueOptions, generateDolphinQueuePayload, DolphinLauncher, DolphinPlaybackPayload, DolphinPlaybackStatus, DolphinEntry, DolphinQueueFormat } from "@vinceau/slp-realtime";
+import { generateDolphinQueuePayload, DolphinLauncher, DolphinPlaybackPayload, DolphinPlaybackStatus, DolphinQueueFormat } from "@vinceau/slp-realtime";
 import { obsConnection, OBSRecordingAction } from "@/lib/obs";
 import { delay, getFilePath } from "@/lib/utils";
 import { filter, concatMap, map } from "rxjs/operators";
-import { from, Subject, BehaviorSubject } from "rxjs";
+import { from, BehaviorSubject } from "rxjs";
 
 const DELAY_AMOUNT_MS = 1000;
 
-const START_RECORDING_BUFFER = 90;
-const END_RECORDING_BUFFER = 60;
+// const START_RECORDING_BUFFER = 90;
+// const END_RECORDING_BUFFER = 60;
 
 const defaultDolphinPlayerOptions = {
     record: false,
@@ -66,7 +66,7 @@ export class DolphinRecorder extends DolphinLauncher {
         ).subscribe((name) => this.currentBasenameSource.next(name));
     }
 
-    public loadJSON(comboFilePath: string, options?: Partial<DolphinPlayerOptions>) {
+    public recordJSON(comboFilePath: string, options?: Partial<DolphinPlayerOptions>) {
         const opts: DolphinPlayerOptions = Object.assign({}, defaultDolphinPlayerOptions, options);
         this.recordingEnabled = opts.record;
         if (this.recordingEnabled) {
@@ -122,7 +122,7 @@ const opts = {
 export const dolphinPlayer = new DolphinRecorder(dolphinPath, opts);
 
 export const openComboInDolphin = (filePath: string, options?: Partial<DolphinPlayerOptions>) => {
-    dolphinPlayer.loadJSON(filePath, options);
+    dolphinPlayer.recordJSON(filePath, options);
 };
 
 export const loadSlpFilesInDolphin = async (filenames: string[], options?: Partial<DolphinPlayerOptions>): Promise<void> => {
