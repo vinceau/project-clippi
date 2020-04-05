@@ -19,8 +19,8 @@ import { store } from "@/store";
 import { DolphinQueueOptions, generateDolphinQueuePayload, DolphinLauncher, DolphinPlaybackPayload, DolphinPlaybackStatus, DolphinEntry, DolphinQueueFormat } from "@vinceau/slp-realtime";
 import { obsConnection, OBSRecordingAction } from "@/lib/obs";
 import { delay } from "@/lib/utils";
-import { filter, concatMap } from "rxjs/operators";
-import { from } from "rxjs";
+import { filter, concatMap, map } from "rxjs/operators";
+import { from, Subject, BehaviorSubject } from "rxjs";
 
 const DELAY_AMOUNT_MS = 1000;
 
@@ -45,6 +45,9 @@ export class DolphinRecorder extends DolphinLauncher {
     private startAction = OBSRecordingAction.START;
     private endAction = OBSRecordingAction.STOP;
 
+    private currentBasenameSource = new BehaviorSubject<string>("");
+    public currentBasename$ = this.currentBasenameSource.asObservable();
+
     public constructor(dolphinPath: string, options?: any) {
         super(dolphinPath, options);
         this.output.playbackStatus$.pipe(
@@ -58,6 +61,9 @@ export class DolphinRecorder extends DolphinLauncher {
             filter(() => this.recordingEnabled && obsConnection.isConnected()),
             concatMap(() => from(this._stopRecording())),
         ).subscribe();
+        this.playbackFilename$.pipe(
+            map(fullpath => path.basename(fullpath)),
+        ).subscribe((name) => this.currentBasenameSource.next(name));
     }
 
     public loadJSON(comboFilePath: string, options?: Partial<DolphinPlayerOptions>) {
@@ -91,6 +97,7 @@ export class DolphinRecorder extends DolphinLauncher {
     }
 
     private async _stopRecording(killDolphin?: boolean) {
+        this.currentBasenameSource.next("");
         if (obsConnection.isRecording()) {
             await obsConnection.setRecordingState(OBSRecordingAction.STOP);
         }

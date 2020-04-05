@@ -63,10 +63,6 @@ obsConnection.recordingStatus$.subscribe(status => {
     dispatcher.tempContainer.setOBSRecordingStatus(status);
 });
 
-dolphinPlayer.playbackFilename$.subscribe(name => {
+dolphinPlayer.currentBasename$.subscribe(name => {
     dispatcher.tempContainer.setDolphinPlaybackFile(name);
-});
-
-dolphinPlayer.dolphinQuit$.subscribe(() => {
-    dispatcher.tempContainer.setDolphinPlaybackFile("");
 });
