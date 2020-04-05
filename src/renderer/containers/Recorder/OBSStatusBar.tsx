@@ -29,7 +29,7 @@ align-items: center;
 
 export const OBSStatusBar: React.FC = () => {
     const { recordSeparateClips } = useSelector((state: iRootState) => state.filesystem);
-    const { obsConnectionStatus, obsRecordingStatus } = useSelector((state: iRootState) => state.tempContainer);
+    const { obsConnectionStatus, obsRecordingStatus, dolphinQueue } = useSelector((state: iRootState) => state.tempContainer);
     const dispatch = useDispatch<Dispatch>();
 
     const recordValue = recordSeparateClips ? RecordingMethod.SEPARATE : RecordingMethod.TOGETHER;
@@ -88,7 +88,7 @@ export const OBSStatusBar: React.FC = () => {
                 >
                     <Icon name="circle" />{recordButtonText}
                 </RecordButton>
-                <Button><Icon name="play" />Play</Button>
+                <Button style={{marginLeft: "5px"}} disabled={dolphinQueue.length === 0}><Icon name="play" />Play</Button>
             </div>
         </Outer>
     );

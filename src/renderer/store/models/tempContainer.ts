@@ -1,7 +1,7 @@
 import { createModel } from "@rematch/core";
 import produce from "immer";
 
-import { ConnectionStatus } from "@vinceau/slp-realtime";
+import { DolphinQueueOptions, DolphinEntry, ConnectionStatus } from "@vinceau/slp-realtime";
 import { currentUser } from "common/twitch";
 import { HelixUser } from "twitch";
 import { OBSConnectionStatus, OBSRecordingStatus } from "@/lib/obs";
@@ -17,6 +17,8 @@ export interface TempContainerState {
     comboFinderLog: string;
     comboFinderProcessing: boolean;
     latestPath: { [page: string]: string };
+    dolphinQueue: DolphinEntry[],
+    dolphinQueueOptions: DolphinQueueOptions,
 }
 
 const initialState: TempContainerState = {
@@ -32,6 +34,13 @@ const initialState: TempContainerState = {
     latestPath: {
         main: "/main/automator",
         settings: "/settings/combo-settings",
+    },
+    dolphinQueue: [],
+    dolphinQueueOptions: {
+        mode: "queue",
+        replay: "",
+        isRealTimeMode: false,
+        outputOverlayFiles: true,
     },
 };
 
@@ -78,6 +87,17 @@ export const tempContainer = createModel({
         clearSlpFolderStream: (state: TempContainerState): TempContainerState => produce(state, draft => {
             draft.currentSlpFolderStream = "";
         }),
+        setDolphinQueue: (state: TempContainerState, payload: DolphinEntry[]): TempContainerState => produce(state, draft => {
+            draft.dolphinQueue = payload;
+        }),
+        setDolphinQueueOptions: (state: TempContainerState, payload: Partial<DolphinQueueOptions>): TempContainerState => {
+            const newState = produce(state.dolphinQueueOptions, draft => {
+                draft = Object.assign({}, draft, payload);
+            });
+            return produce(state, draft => {
+                draft.dolphinQueueOptions = newState;
+            });
+        },
     },
     effects: dispatch => ({
         async updateUser(token: string) {
