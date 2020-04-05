@@ -121,6 +121,10 @@ export const loadSlpFilesInDolphin = async (filenames: string[], options?: Parti
         .filter(filename => path.extname(filename) === ".slp")
         .map(filename => ({path: filename}));
     console.log(queue);
+    if (queue.length === 0) {
+        return;
+    }
+
     const payload = generateDolphinQueuePayload(queue);
     const outputFile = randomTempJSONFile();
     await fs.writeFile(outputFile, payload);
