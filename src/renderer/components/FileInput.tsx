@@ -3,7 +3,7 @@ import * as React from "react";
 import styled from "styled-components";
 
 import { Button, Icon, Input } from "semantic-ui-react";
-import { openFileOrParentFolder, getFilePath, getFolderPath } from "../lib/utils";
+import { getFilePath, getFolderPath, openFileOrParentFolder } from "../lib/utils";
 import { Labelled } from "./Labelled";
 
 const NoMarginIcon = styled(Icon)`

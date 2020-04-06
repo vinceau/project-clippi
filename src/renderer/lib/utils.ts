@@ -1,10 +1,13 @@
 import * as path from "path";
 import * as url from "url";
 
-import cp from "child_process";
+import { DolphinPlayerOptions, openComboInDolphin } from "@/lib/dolphin";
 import { Message } from "common/types";
 import { remote, shell } from "electron";
+import fs from "fs-extra";
 import { ipc } from "./rendererIpc";
+
+import { DolphinQueueFormat } from "@vinceau/slp-realtime";
 
 export const delay = async (ms: number): Promise<void> => {
     await new Promise(resolve => setTimeout(resolve, ms));
@@ -63,20 +66,23 @@ export const getStatic = (val: string): string => {
     return path.resolve(path.join(imagePath, val));
 };
 
-export const openComboInDolphin = (comboFilePath: string): void => {
-    const appData = remote.app.getPath("appData");
-    const dolphinPath = path.join(appData, "Slippi Desktop App", "dolphin", "Dolphin.exe");
-    console.log(dolphinPath);
-    cp.execFile(dolphinPath, ["-i", comboFilePath]);
-};
-
-export const loadFileInDolphin = async (): Promise<void> => {
+export const loadFileInDolphin = async (options?: Partial<DolphinPlayerOptions>): Promise<void> => {
     const p = await getFilePath({
         filters: [{ name: "JSON files", extensions: ["json"] }],
     });
     if (p) {
-        openComboInDolphin(p);
+        openComboInDolphin(p, options);
     }
+};
+
+export const loadDolphinQueue = async (): Promise<DolphinQueueFormat | null> => {
+    const p = await getFilePath({
+        filters: [{ name: "JSON files", extensions: ["json"] }],
+    });
+    if (!p) {
+        return null;
+    }
+    return fs.readJson(p);
 };
 
 /**

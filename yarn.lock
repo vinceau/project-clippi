@@ -1033,10 +1033,10 @@
   resolved "https://registry.yarnpkg.com/@vinceau/event-actions/-/event-actions-0.0.4.tgz#b773d36293bdfd1468f36815fb0a5ad77b7a087f"
   integrity sha512-Hhayt7S4GZg5ebmR52WKZ3xuUMwZHJYKunNVQTFoNzEKOieEnzokWttRGep5sD9EUUQ0Iw+1B69SrZYJO7JS/A==
 
-"@vinceau/slp-realtime@^2.0.2":
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/@vinceau/slp-realtime/-/slp-realtime-2.1.0.tgz#e3977867bac54cc59c4749be0697b840246d8ef4"
-  integrity sha512-PqEG9XHc1XKeLeE/wiAZU1+SYg73GHX01kM0KdxTAWpQuy/ajYRkQ0OvP5rWaj3eG03gQxBR9UiSBgaEvtgzIA==
+"@vinceau/slp-realtime@^2.3.0":
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/@vinceau/slp-realtime/-/slp-realtime-2.3.0.tgz#27618b0eeb8b5ab47b5a2d791a76cf60d663d891"
+  integrity sha512-X6FNiYLMlnttOzPZRRshWvLkWiRI9PtHh/sEDrcWjP1eZGXBpKf6N+OJb/PG61aGhNX8s/OWfQw6K3FfRTeWCA==
   dependencies:
     "@vinceau/slp-wii-connect" "^1.0.2"
     chokidar "^3.3.1"
@@ -1539,6 +1539,11 @@ atob@^2.1.2:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
   integrity sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
+
+attr-accept@^2.0.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/attr-accept/-/attr-accept-2.1.0.tgz#a231a854385d36ff7a99647bb77b33c8a5175aee"
+  integrity sha512-sLzVM3zCCmmDtDNhI0i96k6PUztkotSOXqE4kDGQt/6iDi5M+H0srjeF+QC6jN581l4X/Zq3Zu/tgcErEssavg==
 
 autoprefixer@^6.3.1:
   version "6.7.7"
@@ -3752,6 +3757,13 @@ file-loader@^4.0.0:
   dependencies:
     loader-utils "^1.2.3"
     schema-utils "^2.5.0"
+
+file-selector@^0.1.12:
+  version "0.1.12"
+  resolved "https://registry.yarnpkg.com/file-selector/-/file-selector-0.1.12.tgz#fe726547be219a787a9dcc640575a04a032b1fd0"
+  integrity sha512-Kx7RTzxyQipHuiqyZGf+Nz4vY9R1XGxuQl/hLoJwq+J4avk/9wxxgZyHKtbyIPJmbD4A66DWGYfyykWNpcYutQ==
+  dependencies:
+    tslib "^1.9.0"
 
 file-uri-to-path@1.0.0:
   version "1.0.0"
@@ -7051,6 +7063,15 @@ react-dom@^16.8.3:
     object-assign "^4.1.1"
     prop-types "^15.6.2"
     scheduler "^0.18.0"
+
+react-dropzone@^10.2.2:
+  version "10.2.2"
+  resolved "https://registry.yarnpkg.com/react-dropzone/-/react-dropzone-10.2.2.tgz#67b4db7459589a42c3b891a82eaf9ade7650b815"
+  integrity sha512-U5EKckXVt6IrEyhMMsgmHQiWTGLudhajPPG77KFSvgsMqNEHSyGpqWvOMc5+DhEah/vH4E1n+J5weBNLd5VtyA==
+  dependencies:
+    attr-accept "^2.0.0"
+    file-selector "^0.1.12"
+    prop-types "^15.7.2"
 
 react-final-form-arrays@^3.1.1:
   version "3.1.1"

@@ -2,11 +2,11 @@ import * as React from "react";
 
 import { transparentize } from "polished";
 import {
+    Redirect,
     Route,
     Switch,
     useHistory,
     useRouteMatch,
-    Redirect,
 } from "react-router-dom";
 import { Icon, Menu } from "semantic-ui-react";
 import styled, { css } from "styled-components";

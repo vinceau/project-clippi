@@ -5,9 +5,9 @@ import { produce } from "immer";
 import { useSelector } from "react-redux";
 import { Button } from "semantic-ui-react";
 
-import { DelayInput, InlineDropdown } from "@/components/InlineInputs";
 import { CustomIcon } from "@/components/CustomIcon";
-import { connectToOBSAndNotify, getAllSceneItems, setSourceItemVisibility } from "@/lib/obs";
+import { DelayInput, InlineDropdown } from "@/components/InlineInputs";
+import { connectToOBSAndNotify, getAllSceneItems, obsConnection, OBSConnectionStatus } from "@/lib/obs";
 import { delay as waitMillis, notify } from "@/lib/utils";
 import { iRootState } from "@/store";
 import { ActionComponent } from "./types";
@@ -27,7 +27,7 @@ const actionToggleSource: ActionTypeGenerator = (params: ActionToggleSourceParam
             if (millis > 0) {
                 await waitMillis(millis);
             }
-            await setSourceItemVisibility(params.source, params.visible);
+            await obsConnection.setSourceItemVisibility(params.source, params.visible);
         } catch (err) {
             console.error(err);
             notify("Could not set source visibility. Are you connected to OBS?");
@@ -44,14 +44,16 @@ const ActionIcon = () => {
 
 const SourceNameInput = (props: { value: ActionToggleSourceParams, onChange: any }) => {
     const { value, onChange } = props;
-    const { obsConnected } = useSelector((state: iRootState) => state.tempContainer);
+    const { obsConnectionStatus, obsScenes } = useSelector((state: iRootState) => state.tempContainer);
+    const obsConnected = obsConnectionStatus === OBSConnectionStatus.CONNECTED;
+
     if (!obsConnected) {
         return (
             <Button content={`Connect to OBS`} type="button" onClick={connectToOBSAndNotify} />
         );
     }
 
-    const allSources = getAllSceneItems();
+    const allSources = getAllSceneItems(obsScenes);
     if (allSources.length === 0) {
         return (<div>No scene items found.</div>);
     }

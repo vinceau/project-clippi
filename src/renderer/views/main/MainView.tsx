@@ -7,6 +7,7 @@ import { Redirect, Route, Switch, useRouteMatch } from "react-router-dom";
 
 import { Menu } from "@/containers/Menu";
 import { AutomatorView } from "./AutomatorView";
+import { RecorderView } from "./RecorderView";
 import { ReplayProcessorView } from "./ReplayProcessorView";
 
 export const MainView: React.FC = () => {
@@ -47,6 +48,9 @@ export const MainView: React.FC = () => {
                         </Route>
                         <Route path={`${match.path}/processor`}>
                             <ReplayProcessorView />
+                        </Route>
+                        <Route path={`${match.path}/recorder`}>
+                            <RecorderView />
                         </Route>
                         {/* <Route path={`${match.path}/streamer`}>
                             <div>Streamer</div>

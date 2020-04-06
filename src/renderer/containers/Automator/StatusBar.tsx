@@ -9,6 +9,8 @@ import { streamManager } from "@/lib/realtime";
 import { statusToColor, statusToLabel } from "@/lib/status";
 import { Dispatch, iRootState } from "@/store";
 
+import slippiLogo from "@/styles/images/slippi.png";
+
 export const StatusBar: React.FC = () => {
     const { port } = useSelector((state: iRootState) => state.slippi);
     const { currentSlpFolderStream, slippiConnectionStatus } = useSelector((state: iRootState) => state.tempContainer);
@@ -39,6 +41,7 @@ export const StatusBar: React.FC = () => {
     return (
         <div>
             <ConnectionStatusDisplay
+                icon={slippiLogo}
                 headerText={headerText}
                 headerHoverTitle={hoverText}
                 onHeaderClick={handleClick}

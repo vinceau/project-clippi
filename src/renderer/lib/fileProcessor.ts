@@ -1,11 +1,11 @@
 import * as path from "path";
 
-import moment from 'moment';
+import moment from "moment";
 
 import fg from "fast-glob";
 import fs from "fs-extra";
 
-import { ComboEventPayload, ComboFilter, DolphinComboQueue, SlippiGame, SlpRealTime, SlpStream } from "@vinceau/slp-realtime";
+import { ComboEventPayload, ComboFilter, DolphinPlaybackItem, generateDolphinQueuePayload, SlippiGame, SlpRealTime, SlpStream } from "@vinceau/slp-realtime";
 import { Observable } from "rxjs";
 
 import { store } from "@/store";
@@ -74,7 +74,7 @@ export interface ProcessResult {
 }
 
 export class FileProcessor {
-    private readonly queue = new DolphinComboQueue();
+    private queue = new Array<DolphinPlaybackItem>();
     private stopRequested: boolean = false;
     private readonly realtime = new SlpRealTime();
     private combos$: Observable<ComboEventPayload> | null = null;
@@ -90,7 +90,7 @@ export class FileProcessor {
     ): Promise<ProcessOutput> {
         const before = new Date();  // Use this to track elapsed time
         this.stopRequested = false;
-        this.queue.clear();
+        this.queue = [];
 
         const patterns = ["**/*.slp"];
         const options = {
@@ -138,7 +138,9 @@ export class FileProcessor {
         // Write out files if we found combos
         let totalCombos = 0;
         if (opts.findCombos && opts.outputFile) {
-            totalCombos = await this.queue.writeFile(opts.outputFile);
+            totalCombos = this.queue.length;
+            const payload = generateDolphinQueuePayload(this.queue);
+            await fs.writeFile(opts.outputFile, payload);
             console.log(`Wrote ${totalCombos} out to ${opts.outputFile}`);
         }
 
@@ -198,7 +200,12 @@ export class FileProcessor {
             if (this.comboFilter.isCombo(combo, settings, metadata)) {
                 const formattedTime: string = moment(metadata.startAt).format("MM/DD/YY h:mm a");
                 const consoleNick: string = metadata.consoleNick || "unknown";
-                this.queue.addCombo(filename, combo, consoleNick, formattedTime);
+                this.queue.push({
+                    path: filename,
+                    combo,
+                    gameStation: consoleNick,
+                    gameStartAt: formattedTime,
+                });
                 count += 1;
             }
         });

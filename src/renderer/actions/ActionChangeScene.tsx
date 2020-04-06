@@ -5,9 +5,9 @@ import { produce } from "immer";
 import { useSelector } from "react-redux";
 import { Button } from "semantic-ui-react";
 
-import { DelayInput, InlineDropdown } from "@/components/InlineInputs";
 import { CustomIcon } from "@/components/CustomIcon";
-import { connectToOBSAndNotify, getAllScenes, setScene } from "@/lib/obs";
+import { DelayInput, InlineDropdown } from "@/components/InlineInputs";
+import { connectToOBSAndNotify, getAllScenes, obsConnection, OBSConnectionStatus } from "@/lib/obs";
 import { delay as waitMillis, notify } from "@/lib/utils";
 import { iRootState } from "@/store";
 import { ActionComponent } from "./types";
@@ -26,7 +26,7 @@ const actionChangeScene: ActionTypeGenerator = (params: ActionChangeSceneParams)
             if (millis > 0) {
                 await waitMillis(millis);
             }
-            await setScene(params.scene);
+            await obsConnection.setScene(params.scene);
         } catch (err) {
             console.error(err);
             notify("Could not change scene. Are you connected to OBS?");
@@ -43,14 +43,16 @@ const ActionIcon = () => {
 
 const SceneNameInput = (props: any) => {
     const { value, onChange } = props;
-    const { obsConnected } = useSelector((state: iRootState) => state.tempContainer);
+    const { obsConnectionStatus, obsScenes } = useSelector((state: iRootState) => state.tempContainer);
+    const obsConnected = obsConnectionStatus === OBSConnectionStatus.CONNECTED;
+
     if (!obsConnected) {
         return (
             <Button content={`Connect to OBS`} type="button" onClick={connectToOBSAndNotify} />
         );
     }
 
-    const allScenes = getAllScenes();
+    const allScenes = getAllScenes(obsScenes);
     if (allScenes.length === 0) {
         return (<div>No scene items found.</div>);
     }

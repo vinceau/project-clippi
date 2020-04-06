@@ -6,8 +6,10 @@ import { Button, Checkbox, Form, Icon, Progress } from "semantic-ui-react";
 import { FileInput } from "@/components/FileInput";
 import { InlineDropdown } from "@/components/InlineInputs";
 import { ProcessSection } from "@/components/ProcessSection";
+import { openComboInDolphin } from "@/lib/dolphin";
 import { fileProcessor, FindComboOption, ProcessResult } from "@/lib/fileProcessor";
-import { loadFileInDolphin, notify, openComboInDolphin } from "@/lib/utils";
+import { notify } from "@/lib/utils";
+
 import { Dispatch, iRootState } from "@/store";
 import { secondsToString } from "common/utils";
 import { RenameFiles } from "./RenameFiles";
@@ -185,9 +187,6 @@ export const ComboFinder: React.FC<{}> = () => {
                             Process replays
                     </Button>
                     }
-                    {isWindows && <Button type="button" onClick={() => loadFileInDolphin().catch(console.error)}>
-                        Load a file into Dolphin
-                    </Button>}
                 </div>
             </Form>
             <div style={{ padding: "10px 0" }}>
