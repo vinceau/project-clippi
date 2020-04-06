@@ -4,20 +4,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { Button, Checkbox, Form, Icon, Progress } from "semantic-ui-react";
 
 import { FileInput } from "@/components/FileInput";
-import { InlineDropdown } from "@/components/InlineInputs";
 import { ProcessSection } from "@/components/ProcessSection";
 import { openComboInDolphin } from "@/lib/dolphin";
-import { fileProcessor, FindComboOption, ProcessResult } from "@/lib/fileProcessor";
+import { fileProcessor, ProcessResult } from "@/lib/fileProcessor";
 import { notify } from "@/lib/utils";
 
 import { Dispatch, iRootState } from "@/store";
 import { secondsToString } from "common/utils";
 import { RenameFiles } from "./RenameFiles";
+import { HighlightOptions } from "../processor/HighlightOptions";
 
 const isWindows = process.platform === "win32";
 
 export const ComboFinder: React.FC<{}> = () => {
-    const { comboProfiles } = useSelector((state: iRootState) => state.slippi);
     const { comboFinderPercent, comboFinderLog, comboFinderProcessing } = useSelector((state: iRootState) => state.tempContainer);
     const { openCombosWhenDone, filesPath, combosFilePath, includeSubFolders, deleteFilesWithNoCombos,
         renameFiles, findCombos, findComboOption, renameFormat, findComboProfile } = useSelector((state: iRootState) => state.filesystem);
@@ -25,8 +24,6 @@ export const ComboFinder: React.FC<{}> = () => {
     const setRenameFormat = (format: string) => dispatch.filesystem.setRenameFormat(format);
     const setRenameFiles = (checked: boolean) => dispatch.filesystem.setRenameFiles(checked);
     const setFindCombos = (checked: boolean) => dispatch.filesystem.setFindCombos(checked);
-    const setFindComboOption = (val: FindComboOption) => dispatch.filesystem.setFindComboOption(val);
-    const setFindComboProfile = (val: string) => dispatch.filesystem.setFindComboProfile(val);
     const onSubfolder = (checked: boolean) => dispatch.filesystem.setIncludeSubFolders(checked);
     const onSetDeleteFiles = (checked: boolean) => dispatch.filesystem.setFileDeletion(checked);
     const onSetOpenCombosWhenDone = (checked: boolean) => dispatch.filesystem.setOpenCombosWhenDone(checked);
@@ -78,31 +75,6 @@ export const ComboFinder: React.FC<{}> = () => {
     const complete = comboFinderPercent === 100;
     const processBtnDisabled = (!findCombos && !renameFiles) || !combosFilePath;
 
-    const options = [
-        {
-            key: "onlyCombos",
-            value: FindComboOption.Combos,
-            text: "combos",
-        },
-        {
-            key: "onlyConversions",
-            value: FindComboOption.Conversions,
-            text: "conversions",
-        },
-    ];
-
-    const allProfiles = Object.keys(comboProfiles);
-    const profileOptions = allProfiles.map(profileName => (
-        {
-            key: profileName,
-            value: profileName,
-            text: profileName,
-        }
-    ));
-    if (!allProfiles.includes(findComboProfile)) {
-        setFindComboProfile(allProfiles[0]);
-    }
-
     return (
         <div>
             <Form>
@@ -126,21 +98,7 @@ export const ComboFinder: React.FC<{}> = () => {
                     open={findCombos}
                     onOpenChange={setFindCombos}
                 >
-                    <div style={{paddingBottom: "10px"}}>
-                        <span>Search replay directory for </span>
-                        <InlineDropdown
-                            value={findComboOption}
-                            onChange={setFindComboOption}
-                            options={options}
-                        />
-                        <span> using the </span>
-                        <InlineDropdown
-                            value={findComboProfile}
-                            onChange={setFindComboProfile}
-                            options={profileOptions}
-                        />
-                        <span> combo profile</span>
-                    </div>
+                    <HighlightOptions />
                     <Form.Field>
                         <label>Output File</label>
                         <FileInput
