@@ -81,12 +81,12 @@ export const ComboFinder: React.FC<{}> = () => {
     const options = [
         {
             key: "onlyCombos",
-            value: FindComboOption.OnlyCombos,
+            value: FindComboOption.Combos,
             text: "combos",
         },
         {
             key: "onlyConversions",
-            value: FindComboOption.OnlyConversions,
+            value: FindComboOption.Conversions,
             text: "conversions",
         },
     ];
