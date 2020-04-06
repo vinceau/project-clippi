@@ -176,7 +176,9 @@ export class FileProcessor {
 
         // Handle combo finding
         if (options.findCombos && options.findComboOption) {
-            const highlights$ = this._generateHighlightObservable(filename, options.findComboOption, metadata);
+            const highlights$ = this._generateHighlightObservable(filename, options.findComboOption, metadata).pipe(
+                map(highlight => populateHighlightMetadata(highlight, metadata)),
+            );
             res.numCombos = await this._findHighlights(filename, highlights$);
             // Delete the file if no combos were found
             if (options.deleteZeroComboFiles && res.numCombos === 0) {
@@ -200,7 +202,7 @@ export class FileProcessor {
             case FindComboOption.Conversions:
                 return this._findCombos(filename, this.realtime.combo.conversion$, metadata);
             case FindComboOption.ButtonInputs:
-                return this._findButtonInputs(filename, defaultButtonInputOptions, metadata);
+                return this._findButtonInputs(filename, defaultButtonInputOptions);
         }
     }
 
@@ -210,22 +212,17 @@ export class FileProcessor {
     private _findButtonInputs(
         filename: string,
         inputOptions: ButtonInputOptions,
-        metadata?: any,
     ): Observable<DolphinPlaybackItem> {
         const inputs$ = this.realtime.input.buttonCombo(inputOptions.buttonCombo, inputOptions.holdDurationFrames);
         return inputs$.pipe(
             throttleTime(inputOptions.captureLockoutMs),
-            map(payload => {
-                const formattedTime = moment(metadata.startAt).format("MM/DD/YY h:mm a");
-                const consoleNick = metadata.consoleNick || "unknown";
-                const startFrame = Math.max(Frames.FIRST, payload.frame - inputOptions.preInputFrames);
-                const endFrame = payload.frame + inputOptions.postInputFrames;
+            map(({ frame }) => {
+                const startFrame = Math.max(Frames.FIRST, frame - inputOptions.preInputFrames);
+                const endFrame = frame + inputOptions.postInputFrames;
                 return {
                     path: filename,
                     startFrame,
                     endFrame,
-                    gameStation: consoleNick,
-                    gameStartAt: formattedTime,
                 };
             }),
         );
@@ -241,16 +238,10 @@ export class FileProcessor {
     ): Observable<DolphinPlaybackItem> {
         return combos$.pipe(
             filter(({ combo, settings }) => this.comboFilter.isCombo(combo, settings, metadata)),
-            map(({ combo }) => {
-                const formattedTime = moment(metadata.startAt).format("MM/DD/YY h:mm a");
-                const consoleNick = metadata.consoleNick || "unknown";
-                return {
-                    path: filename,
-                    combo,
-                    gameStation: consoleNick,
-                    gameStartAt: formattedTime,
-                };
-            }),
+            map(({ combo }) => ({
+                path: filename,
+                combo,
+            })),
         );
     }
 
@@ -275,3 +266,16 @@ export class FileProcessor {
 }
 
 export const fileProcessor = new FileProcessor();
+
+const populateHighlightMetadata = (highlight: DolphinPlaybackItem, metadata?: any): DolphinPlaybackItem => {
+    if (!metadata) {
+        return highlight;
+    }
+    if (metadata.startAt) {
+        highlight.gameStartAt = moment(metadata.startAt).format("MM/DD/YY h:mm a");
+    }
+    if (metadata.consoleNick) {
+        highlight.gameStation = metadata.consoleNick;
+    }
+    return highlight;
+};
