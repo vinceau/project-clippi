@@ -6,6 +6,7 @@ import { XButton } from "./XButton";
 import { LTrigger } from "./LTrigger";
 import { RTrigger } from "./RTrigger";
 import { DLeft } from "./DLeft";
+import { DRight } from "./DRight";
 
 export const GCButtons: React.FC = () => {
     const [zPressed, setZPressed] = React.useState(false);
@@ -14,8 +15,10 @@ export const GCButtons: React.FC = () => {
     const [lPressed, setLPressed] = React.useState(false);
     const [rPressed, setRPressed] = React.useState(false);
     const [dlPressed, setDLPressed] = React.useState(false);
+    const [drPressed, setDRPressed] = React.useState(false);
     return (
         <div>
+            <DRight pressed={drPressed} onClick={setDRPressed}/>
             <DLeft pressed={dlPressed} onClick={setDLPressed}/>
             <LTrigger pressed={lPressed} onClick={setLPressed}/>
             <RTrigger pressed={rPressed} onClick={setRPressed}/>
