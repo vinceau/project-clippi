@@ -23,7 +23,7 @@ export const ZButton: React.FC<{
         display: flex;
         justify-content: center;
         align-items: center;
-        ${onClick && "cursor: pointer"}
+        ${props.onClick && "cursor: pointer"}
     `;
     const Text = styled.span`
         font-size: 4.8em;

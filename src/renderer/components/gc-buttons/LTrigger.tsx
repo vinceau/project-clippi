@@ -16,7 +16,7 @@ export const LTrigger: React.FC<{
     };
     const Outer = styled.div`
     width: 15em;
-    ${onClick && "cursor: pointer"}
+    ${props.onClick && "cursor: pointer"}
     text {
         fill: ${pressed ? "white" : buttonColor}
     }

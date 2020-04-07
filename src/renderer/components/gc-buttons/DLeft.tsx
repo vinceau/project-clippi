@@ -25,7 +25,7 @@ export const DLeft: React.FC<{
         justify-content: center;
         align-items: center;
         padding: 0.5em 1em;
-        ${onClick && "cursor: pointer"}
+        ${props.onClick && "cursor: pointer"}
         svg {
             overflow: visible;
         }
