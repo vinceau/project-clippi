@@ -5,9 +5,14 @@ import styled from "styled-components";
 export const YButton: React.FC<{
     pressed?: boolean;
     color?: string;
-    onClick?: () => void;
+    onClick?: (value: boolean) => void;
 }> = (props) => {
-    const { pressed, onClick } = props;
+    const { pressed } = props;
+    const onClick = () => {
+        if (props.onClick) {
+            props.onClick(!pressed);
+        }
+    };
     const yButtonColor = props.color ? props.color : "#8F8F8F";
     const Outer = styled.div`
     width: 13em;

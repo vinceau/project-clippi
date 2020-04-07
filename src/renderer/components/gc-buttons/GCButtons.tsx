@@ -14,11 +14,11 @@ export const GCButtons: React.FC = () => {
     const [rPressed, setRPressed] = React.useState(false);
     return (
         <div>
-            <LTrigger pressed={lPressed} onClick={() => setLPressed(!lPressed)}/>
-            <RTrigger pressed={rPressed} onClick={() => setRPressed(!rPressed)}/>
-            <XButton pressed={xPressed} onClick={() => setXPressed(!xPressed)}/>
-            <YButton pressed={yPressed} onClick={() => setYPressed(!yPressed)}/>
-            <ZButton pressed={zPressed} onClick={() => setZPressed(!zPressed)}/>
+            <LTrigger pressed={lPressed} onClick={setLPressed}/>
+            <RTrigger pressed={rPressed} onClick={setRPressed}/>
+            <XButton pressed={xPressed} onClick={setXPressed}/>
+            <YButton pressed={yPressed} onClick={setYPressed}/>
+            <ZButton pressed={zPressed} onClick={setZPressed}/>
         </div>
     );
 };

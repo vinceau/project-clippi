@@ -5,10 +5,15 @@ import styled from "styled-components";
 export const LTrigger: React.FC<{
     pressed?: boolean;
     color?: string;
-    onClick?: () => void;
+    onClick?: (value: boolean) => void;
 }> = (props) => {
-    const { pressed, onClick } = props;
+    const { pressed } = props;
     const buttonColor = props.color ? props.color : "#8F8F8F";
+    const onClick = () => {
+        if (props.onClick) {
+            props.onClick(!pressed);
+        }
+    };
     const Outer = styled.div`
     width: 15em;
     ${onClick && "cursor: pointer"}
