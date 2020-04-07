@@ -15,7 +15,7 @@ export const YButton: React.FC<{
     };
     const yButtonColor = props.color ? props.color : "#8F8F8F";
     const Outer = styled.div`
-    width: 13em;
+    width: 9.5em;
     ${props.onClick && "cursor: pointer"}
     text {
         fill: ${pressed ? "white" : yButtonColor}

@@ -11,6 +11,7 @@ import { DLeft } from "./DLeft";
 import { DRight } from "./DRight";
 import { DUp } from "./DUp";
 import { DDown } from "./DDown";
+import styled from "styled-components";
 
 export const GCButtons: React.FC = () => {
     const [zPressed, setZPressed] = React.useState(false);
@@ -24,19 +25,72 @@ export const GCButtons: React.FC = () => {
     const [ddPressed, setDDPressed] = React.useState(false);
     const [aPressed, setAPressed] = React.useState(false);
     const [bPressed, setBPressed] = React.useState(false);
+    const Outer = styled.div`
+    display: flex;
+    flex-direction: column;
+    `;
+    const Row = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    `;
+    const StyledDLeft = styled(DLeft)`
+    margin-right: 10px !important;
+    `;
+    const StyledDRight = styled(DRight)`
+    margin-left: 10px !important;
+    `;
+    const Dpad = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    ${StyledDLeft} {
+        margin-right: 10px !important;
+    }
+    ${StyledDRight} {
+        margin-left: 10px !important;
+    }
+    `;
+    const MainButtons = styled.div`
+    display: grid;
+    grid-gap: 1.2em;
+    grid-template-columns: repeat(3, 1fr);
+    `;
     return (
-        <div>
-            <BButton pressed={bPressed} onClick={setBPressed}/>
-            <AButton pressed={aPressed} onClick={setAPressed}/>
-            <DDown pressed={ddPressed} onClick={setDDPressed}/>
-            <DUp pressed={duPressed} onClick={setDUPressed}/>
-            <DRight pressed={drPressed} onClick={setDRPressed}/>
-            <DLeft pressed={dlPressed} onClick={setDLPressed}/>
-            <LTrigger pressed={lPressed} onClick={setLPressed}/>
-            <RTrigger pressed={rPressed} onClick={setRPressed}/>
-            <XButton pressed={xPressed} onClick={setXPressed}/>
-            <YButton pressed={yPressed} onClick={setYPressed}/>
-            <ZButton pressed={zPressed} onClick={setZPressed}/>
-        </div>
+        <Outer>
+            <Row>
+                <LTrigger pressed={lPressed} onClick={setLPressed} />
+                <RTrigger pressed={rPressed} onClick={setRPressed} />
+            </Row>
+            <div style={{ alignSelf: "flex-end" }}>
+                <ZButton pressed={zPressed} onClick={setZPressed} />
+            </div>
+
+            <Row>
+                <Dpad>
+                    <DUp pressed={duPressed} onClick={setDUPressed} />
+                    <div style={{ display: "flex" }}>
+                        <StyledDLeft pressed={dlPressed} onClick={setDLPressed} />
+                        <StyledDRight pressed={drPressed} onClick={setDRPressed} />
+                    </div>
+                    <DDown pressed={ddPressed} onClick={setDDPressed} />
+                </Dpad>
+                <MainButtons>
+                    <span style={{ gridColumn: "1 / 3", gridRow: "1 / 2", justifySelf: "end" }}>
+                        <YButton pressed={yPressed} onClick={setYPressed} />
+                    </span>
+                    <span style={{ gridColumn: "2 / 3", gridRow: "2 / 4" }}>
+                        <AButton pressed={aPressed} onClick={setAPressed} />
+                    </span>
+                    <span style={{ gridColumn: "3 / 4", gridRow: "1 / 4", alignSelf: "end" }}>
+                        <XButton pressed={xPressed} onClick={setXPressed} />
+                    </span>
+                    <span style={{ gridColumn: "1 / 2", gridRow: "1 / 4", alignSelf: "end", justifySelf: "end" }}>
+                        <BButton pressed={bPressed} onClick={setBPressed} />
+                    </span>
+                </MainButtons>
+            </Row>
+        </Outer>
     );
 };

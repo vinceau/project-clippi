@@ -15,7 +15,7 @@ export const XButton: React.FC<{
     };
     const buttonColor = props.color ? props.color : "#8F8F8F";
     const Outer = styled.div`
-    width: 8em;
+    width: 6em;
     ${props.onClick && "cursor: pointer"}
     text {
         fill: ${pressed ? "white" : buttonColor}
