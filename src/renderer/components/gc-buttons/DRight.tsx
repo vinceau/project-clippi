@@ -24,7 +24,8 @@ export const DRight: React.FC<{
         display: flex;
         justify-content: center;
         align-items: center;
-        padding: 0.5em 1em;
+        padding: 0.5em;
+        padding-left: 2em;
         ${props.onClick && "cursor: pointer"}
         svg {
             overflow: visible;
