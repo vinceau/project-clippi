@@ -4,6 +4,7 @@ import { Dispatch, iRootState } from "@/store";
 import { useDispatch, useSelector } from "react-redux";
 import { InlineDropdown } from "@/components/InlineInputs";
 import { FindComboOption } from "@/lib/fileProcessor";
+import { GCButtons } from "@/components/gc-buttons/GCButtons";
 
 export const HighlightOptions: React.FC = () => {
     const { comboProfiles } = useSelector((state: iRootState) => state.slippi);
@@ -41,20 +42,30 @@ export const HighlightOptions: React.FC = () => {
     }
 
     return (
-        <div style={{paddingBottom: "10px"}}>
-            <span>Search replay directory for </span>
-            <InlineDropdown
-                value={findComboOption}
-                onChange={setFindComboOption}
-                options={options}
-            />
-            <span> using the </span>
-            <InlineDropdown
-                value={findComboProfile}
-                onChange={setFindComboProfile}
-                options={profileOptions}
-            />
-            <span> combo profile</span>
+        <div style={{ paddingBottom: "10px" }}>
+            <div>
+                <span>Search replay directory for </span>
+                <InlineDropdown
+                    value={findComboOption}
+                    onChange={setFindComboOption}
+                    options={options}
+                />
+            </div>
+            {findComboOption === FindComboOption.ButtonInputs ?
+                <div>
+                    Choose a button combo
+                    <GCButtons />
+                </div> :
+                <div>
+                    <span> using the </span>
+                    <InlineDropdown
+                        value={findComboProfile}
+                        onChange={setFindComboProfile}
+                        options={profileOptions}
+                    />
+                    <span> combo profile</span>
+                </div>
+            }
         </div>
     );
 };
