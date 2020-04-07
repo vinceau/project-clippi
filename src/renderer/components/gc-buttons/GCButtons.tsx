@@ -4,15 +4,18 @@ import { ZButton } from "./ZButton";
 import { YButton } from "./YButton";
 import { XButton } from "./XButton";
 import { LTrigger } from "./LTrigger";
+import { RTrigger } from "./RTrigger";
 
 export const GCButtons: React.FC = () => {
     const [zPressed, setZPressed] = React.useState(false);
     const [xPressed, setXPressed] = React.useState(false);
     const [yPressed, setYPressed] = React.useState(false);
     const [lPressed, setLPressed] = React.useState(false);
+    const [rPressed, setRPressed] = React.useState(false);
     return (
         <div>
             <LTrigger pressed={lPressed} onClick={() => setLPressed(!lPressed)}/>
+            <RTrigger pressed={rPressed} onClick={() => setRPressed(!rPressed)}/>
             <XButton pressed={xPressed} onClick={() => setXPressed(!xPressed)}/>
             <YButton pressed={yPressed} onClick={() => setYPressed(!yPressed)}/>
             <ZButton pressed={zPressed} onClick={() => setZPressed(!zPressed)}/>
