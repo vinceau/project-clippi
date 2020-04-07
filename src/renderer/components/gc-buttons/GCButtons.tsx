@@ -8,6 +8,7 @@ import { RTrigger } from "./RTrigger";
 import { DLeft } from "./DLeft";
 import { DRight } from "./DRight";
 import { DUp } from "./DUp";
+import { DDown } from "./DDown";
 
 export const GCButtons: React.FC = () => {
     const [zPressed, setZPressed] = React.useState(false);
@@ -18,8 +19,10 @@ export const GCButtons: React.FC = () => {
     const [dlPressed, setDLPressed] = React.useState(false);
     const [drPressed, setDRPressed] = React.useState(false);
     const [duPressed, setDUPressed] = React.useState(false);
+    const [ddPressed, setDDPressed] = React.useState(false);
     return (
         <div>
+            <DDown pressed={ddPressed} onClick={setDDPressed}/>
             <DUp pressed={duPressed} onClick={setDUPressed}/>
             <DRight pressed={drPressed} onClick={setDRPressed}/>
             <DLeft pressed={dlPressed} onClick={setDLPressed}/>
