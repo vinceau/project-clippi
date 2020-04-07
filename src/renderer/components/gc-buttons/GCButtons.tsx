@@ -3,6 +3,8 @@ import React from "react";
 import { ZButton } from "./ZButton";
 import { YButton } from "./YButton";
 import { XButton } from "./XButton";
+import { AButton } from "./AButton";
+import { BButton } from "./BButton";
 import { LTrigger } from "./LTrigger";
 import { RTrigger } from "./RTrigger";
 import { DLeft } from "./DLeft";
@@ -20,8 +22,12 @@ export const GCButtons: React.FC = () => {
     const [drPressed, setDRPressed] = React.useState(false);
     const [duPressed, setDUPressed] = React.useState(false);
     const [ddPressed, setDDPressed] = React.useState(false);
+    const [aPressed, setAPressed] = React.useState(false);
+    const [bPressed, setBPressed] = React.useState(false);
     return (
         <div>
+            <BButton pressed={bPressed} onClick={setBPressed}/>
+            <AButton pressed={aPressed} onClick={setAPressed}/>
             <DDown pressed={ddPressed} onClick={setDDPressed}/>
             <DUp pressed={duPressed} onClick={setDUPressed}/>
             <DRight pressed={drPressed} onClick={setDRPressed}/>
