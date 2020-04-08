@@ -14,6 +14,7 @@ import { XButton } from "./XButton";
 import { YButton } from "./YButton";
 import { ZButton } from "./ZButton";
 import { Input } from "@vinceau/slp-realtime";
+import { StartButton } from "./StartButton";
 
 export const GCButtons: React.FC<{
     value?: Input[],
@@ -76,6 +77,9 @@ export const GCButtons: React.FC<{
                 <ZButton pressed={isPressed(Input.Z)} onClick={() => onClick(Input.Z)} />
             </div>
 
+<div>
+            <StartButton pressed={isPressed(Input.START)} onClick={() => onClick(Input.START)} />
+</div>
             <Row>
                 <Dpad>
                     <DpadUp pressed={isPressed(Input.D_UP)} onClick={() => onClick(Input.D_UP)} />
