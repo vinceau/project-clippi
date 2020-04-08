@@ -17,8 +17,8 @@ import { Input } from "@vinceau/slp-realtime";
 import { StartButton } from "./StartButton";
 
 export const GCButtons: React.FC<{
-    value?: Input[],
-    onChange?: (values: Input[]) => void;
+    value?: string[],
+    onChange?: (values: string[]) => void;
 }> = props => {
     const value = props.value ? props.value : [];
     const isPressed = (input: Input) => {
