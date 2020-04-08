@@ -61,8 +61,7 @@ export const HighlightOptions: React.FC = () => {
             {findComboOption === FindComboOption.ButtonInputs ?
                 <div>
                     Choose a button combo
-                    <ButtonPicker />
-                    <ControllerLayout value={buttons} onChange={onButtonChange}/>
+                    <ButtonPicker value={buttons} onChange={onButtonChange}/>
                 </div> :
                 <div>
                     <span> using the </span>

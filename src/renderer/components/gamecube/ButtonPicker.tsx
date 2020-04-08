@@ -1,67 +1,50 @@
 import React from "react";
 
 import styled from "styled-components";
+import { Button, Header, Icon, Modal } from 'semantic-ui-react'
 
-import { AButton, BButton, DpadDown, DpadLeft, DpadRight, DpadUp, LTrigger, RTrigger, XButton, YButton, ZButton, StartButton } from "./buttons";
-import { Input } from "@vinceau/slp-realtime";
+import { ButtonPreview } from "./ButtonPreview";
+import { ControllerLayout } from "./ControllerLayout";
 
 export const ButtonPicker: React.FC<{
     value?: string[];
-    onChange?: string[];
+    onChange?: (newButtons: string[]) => void;
 }> = (props) => {
-    const value = props.value ? props.value : [];
-    const shouldShow = (button: Input): boolean => {
-        return value.includes(button);
+    const [opened, setOpened] = React.useState<boolean>(false);
+    const [buttons, setButtons] = React.useState<string[]>(props.value || []);
+    const onButtonChange = (newButtons: string[]) => {
+        console.log(newButtons);
+        setButtons(newButtons);
     };
-    const pressed = false;
-    const Outer = styled.div`
-    font-size: 0.3em;
-    display: flex;
-    align-items: center;
-    `;
-    const ButtonContainer = styled.div<{
-        show: boolean;
-    }>`
-    display: ${p => p.show ? "block" : "none"}
-    `;
+    const onSave = () => {
+        console.log("saving...");
+        if (props.onChange) {
+            props.onChange(buttons);
+        }
+        setOpened(false);
+    }
     return (
-        <Outer>
-            <ButtonContainer show={shouldShow(Input.A)}>
-                <AButton pressed={pressed} />
-            </ButtonContainer>
-            <ButtonContainer show={shouldShow(Input.B)}>
-                <BButton pressed={pressed} />
-            </ButtonContainer>
-            <ButtonContainer show={shouldShow(Input.X)}>
-                <XButton pressed={pressed} />
-            </ButtonContainer>
-            <ButtonContainer show={shouldShow(Input.Y)}>
-                <YButton pressed={pressed} />
-            </ButtonContainer>
-            <ButtonContainer show={shouldShow(Input.L)}>
-                <LTrigger pressed={pressed} />
-            </ButtonContainer>
-            <ButtonContainer show={shouldShow(Input.Z)}>
-                <ZButton pressed={pressed} />
-            </ButtonContainer>
-            <ButtonContainer show={shouldShow(Input.R)}>
-                <RTrigger pressed={pressed} />
-            </ButtonContainer>
-            <ButtonContainer show={shouldShow(Input.D_UP)}>
-                <DpadUp pressed={pressed} />
-            </ButtonContainer>
-            <ButtonContainer show={shouldShow(Input.D_DOWN)}>
-                <DpadDown pressed={pressed} />
-            </ButtonContainer>
-            <ButtonContainer show={shouldShow(Input.D_LEFT)}>
-                <DpadLeft pressed={pressed} />
-            </ButtonContainer>
-            <ButtonContainer show={shouldShow(Input.D_RIGHT)}>
-                <DpadRight pressed={pressed} />
-            </ButtonContainer>
-            <ButtonContainer show={shouldShow(Input.START)}>
-                <StartButton pressed={pressed} />
-            </ButtonContainer>
-        </Outer>
+        <Modal
+        open={opened}
+        onClose={() => setOpened(false)}
+        closeIcon trigger={
+            <div onClick={() => setOpened(true)}>
+                {buttons.length > 0 ?
+                    <ButtonPreview value={buttons} />
+                    :
+                    <p>No buttons selected. Click to choose.</p>
+                }
+            </div>
+        }>
+            <Modal.Header>Choose a button combination</Modal.Header>
+            <Modal.Content>
+                <ControllerLayout value={buttons} onChange={onButtonChange} />
+            </Modal.Content>
+            <Modal.Actions>
+                <Button color="green" onClick={onSave}>
+                    <Icon name="checkmark" /> Save
+                </Button>
+            </Modal.Actions>
+        </Modal>
     );
 };
