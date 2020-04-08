@@ -4,7 +4,7 @@ import { Dispatch, iRootState } from "@/store";
 import { useDispatch, useSelector } from "react-redux";
 import { InlineDropdown } from "@/components/InlineInputs";
 import { FindComboOption } from "@/lib/fileProcessor";
-import { GCButtons } from "@/components/gamecube/GCButtons";
+import { ControllerLayout } from "@/components/gamecube/ControllerLayout";
 
 export const HighlightOptions: React.FC = () => {
     const [buttons, setButtons] = React.useState<string[]>([]);
@@ -60,7 +60,7 @@ export const HighlightOptions: React.FC = () => {
             {findComboOption === FindComboOption.ButtonInputs ?
                 <div>
                     Choose a button combo
-                    <GCButtons value={buttons} onChange={onButtonChange}/>
+                    <ControllerLayout value={buttons} onChange={onButtonChange}/>
                 </div> :
                 <div>
                     <span> using the </span>

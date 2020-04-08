@@ -2,21 +2,11 @@ import React from "react";
 
 import styled from "styled-components";
 
-import { AButton } from "./AButton";
-import { BButton } from "./BButton";
-import { DpadDown } from "./DpadDown";
-import { DpadLeft } from "./DpadLeft";
-import { DpadRight } from "./DpadRight";
-import { DpadUp } from "./DpadUp";
-import { LTrigger } from "./LTrigger";
-import { RTrigger } from "./RTrigger";
-import { XButton } from "./XButton";
-import { YButton } from "./YButton";
-import { ZButton } from "./ZButton";
-import { Input } from "@vinceau/slp-realtime";
-import { StartButton } from "./StartButton";
+import { AButton, BButton, DpadDown, DpadLeft, DpadRight, DpadUp, LTrigger, RTrigger, XButton, YButton, ZButton, StartButton } from "./buttons";
 
-export const GCButtons: React.FC<{
+import { Input } from "@vinceau/slp-realtime";
+
+export const ControllerLayout: React.FC<{
     value?: string[],
     onChange?: (values: string[]) => void;
 }> = props => {
