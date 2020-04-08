@@ -19,7 +19,17 @@ export const StartButton: React.FC<{
         display: flex;
         justify-content: center;
         align-items: center;
-        ${onClick && "cursor: pointer"}
+        ${onClick && `
+            cursor: pointer;
+            &:hover {
+                ${pressed ? "opacity: 0.85" : `
+                background-color: ${buttonColor};
+                span {
+                    color: ${textColor};
+                }
+                `}
+            }
+        `}
         span {
             text-transform: uppercase;
             font-size: 0.8em;
