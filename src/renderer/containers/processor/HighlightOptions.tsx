@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { InlineDropdown } from "@/components/InlineInputs";
 import { FindComboOption } from "@/lib/fileProcessor";
 import { ControllerLayout } from "@/components/gamecube/ControllerLayout";
+import { ButtonPicker } from "@/components/gamecube/ButtonPicker";
 
 export const HighlightOptions: React.FC = () => {
     const [buttons, setButtons] = React.useState<string[]>([]);
@@ -60,6 +61,7 @@ export const HighlightOptions: React.FC = () => {
             {findComboOption === FindComboOption.ButtonInputs ?
                 <div>
                     Choose a button combo
+                    <ButtonPicker />
                     <ControllerLayout value={buttons} onChange={onButtonChange}/>
                 </div> :
                 <div>
