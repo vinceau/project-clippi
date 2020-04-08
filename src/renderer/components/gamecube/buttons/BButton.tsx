@@ -8,7 +8,7 @@ export const BButton: React.FC<{
     onClick?: () => void;
 }> = (props) => {
     const { pressed, onClick } = props;
-    const buttonColor = props.color ? props.color : "red";
+    const buttonColor = props.color ? props.color : "#BF2323";
     const Outer = styled.div`
         width: 5em;
         height: 5em;
