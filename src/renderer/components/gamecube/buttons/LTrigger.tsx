@@ -14,6 +14,16 @@ export const LTrigger: React.FC<{
     width: 15em;
     ${onClick && `
         cursor: pointer;
+        &:hover {
+            ${pressed ? "opacity: 0.85;" : `
+            #path-1 {
+                fill: ${buttonColor};
+            }
+            text {
+                fill: ${textColor};
+            }
+            `}
+        }
     `}
     text {
         fill: ${pressed ? textColor : buttonColor}
