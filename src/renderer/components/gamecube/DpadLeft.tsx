@@ -2,7 +2,7 @@ import React from "react";
 
 import styled from "styled-components";
 
-export const DLeft: React.FC<{
+export const DpadLeft: React.FC<{
     pressed?: boolean;
     color?: string;
     onClick?: (value: boolean) => void;

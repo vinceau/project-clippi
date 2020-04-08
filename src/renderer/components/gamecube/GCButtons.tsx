@@ -1,17 +1,18 @@
 import React from "react";
 
-import { ZButton } from "./ZButton";
-import { YButton } from "./YButton";
-import { XButton } from "./XButton";
+import styled from "styled-components";
+
 import { AButton } from "./AButton";
 import { BButton } from "./BButton";
+import { DpadDown } from "./DpadDown";
+import { DpadLeft } from "./DpadLeft";
+import { DpadRight } from "./DpadRight";
+import { DpadUp } from "./DpadUp";
 import { LTrigger } from "./LTrigger";
 import { RTrigger } from "./RTrigger";
-import { DLeft } from "./DLeft";
-import { DRight } from "./DRight";
-import { DUp } from "./DUp";
-import { DDown } from "./DDown";
-import styled from "styled-components";
+import { XButton } from "./XButton";
+import { YButton } from "./YButton";
+import { ZButton } from "./ZButton";
 
 export const GCButtons: React.FC = () => {
     const [zPressed, setZPressed] = React.useState(false);
@@ -35,20 +36,20 @@ export const GCButtons: React.FC = () => {
     justify-content: space-between;
     align-items: center;
     `;
-    const StyledDLeft = styled(DLeft)`
+    const StyledDpadLeft = styled(DpadLeft)`
     margin-right: 10px !important;
     `;
-    const StyledDRight = styled(DRight)`
+    const StyledDpadRight = styled(DpadRight)`
     margin-left: 10px !important;
     `;
     const Dpad = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    ${StyledDLeft} {
+    ${StyledDpadLeft} {
         margin-right: 10px !important;
     }
-    ${StyledDRight} {
+    ${StyledDpadRight} {
         margin-left: 10px !important;
     }
     `;
@@ -69,12 +70,12 @@ export const GCButtons: React.FC = () => {
 
             <Row>
                 <Dpad>
-                    <DUp pressed={duPressed} onClick={setDUPressed} />
+                    <DpadUp pressed={duPressed} onClick={setDUPressed} />
                     <div style={{ display: "flex" }}>
-                        <StyledDLeft pressed={dlPressed} onClick={setDLPressed} />
-                        <StyledDRight pressed={drPressed} onClick={setDRPressed} />
+                        <StyledDpadLeft pressed={dlPressed} onClick={setDLPressed} />
+                        <StyledDpadRight pressed={drPressed} onClick={setDRPressed} />
                     </div>
-                    <DDown pressed={ddPressed} onClick={setDDPressed} />
+                    <DpadDown pressed={ddPressed} onClick={setDDPressed} />
                 </Dpad>
                 <MainButtons>
                     <span style={{ gridColumn: "1 / 3", gridRow: "1 / 2", justifySelf: "end" }}>

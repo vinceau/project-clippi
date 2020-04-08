@@ -2,7 +2,7 @@ import React from "react";
 
 import styled from "styled-components";
 
-export const DDown: React.FC<{
+export const DpadDown: React.FC<{
     pressed?: boolean;
     color?: string;
     onClick?: (value: boolean) => void;
