@@ -21,6 +21,16 @@ export const BButton: React.FC<{
         align-items: center;
         ${onClick && `
             cursor: pointer;
+            &:hover {
+                ${
+                    pressed ? "opacity: 0.85;" : `
+                    background-color: ${buttonColor};
+                    span {
+                        color: ${textColor};
+                    }
+                    `
+                }
+            }
         `}
         span {
             font-size: 3.2em;
