@@ -5,14 +5,9 @@ import styled from "styled-components";
 export const AButton: React.FC<{
     pressed?: boolean;
     color?: string;
-    onClick?: (value: boolean) => void;
+    onClick?: () => void;
 }> = (props) => {
-    const { pressed } = props;
-    const onClick = () => {
-        if (props.onClick) {
-            props.onClick(!pressed);
-        }
-    };
+    const { pressed, onClick } = props;
     const buttonColor = props.color ? props.color : "green";
     const Outer = styled.div`
         width: 9em;
@@ -23,7 +18,7 @@ export const AButton: React.FC<{
         display: flex;
         justify-content: center;
         align-items: center;
-        ${props.onClick && "cursor: pointer"}
+        ${onClick && "cursor: pointer"}
     `;
     const Text = styled.span`
         font-size: 4.8em;

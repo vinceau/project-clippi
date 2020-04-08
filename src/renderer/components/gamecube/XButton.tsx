@@ -5,18 +5,13 @@ import styled from "styled-components";
 export const XButton: React.FC<{
     pressed?: boolean;
     color?: string;
-    onClick?: (value: boolean) => void;
+    onClick?: () => void;
 }> = (props) => {
-    const { pressed } = props;
-    const onClick = () => {
-        if (props.onClick) {
-            props.onClick(!pressed);
-        }
-    };
+    const { onClick, pressed } = props;
     const buttonColor = props.color ? props.color : "#8F8F8F";
     const Outer = styled.div`
     width: 6em;
-    ${props.onClick && "cursor: pointer"}
+    ${onClick && "cursor: pointer"}
     text {
         fill: ${pressed ? "white" : buttonColor}
     }

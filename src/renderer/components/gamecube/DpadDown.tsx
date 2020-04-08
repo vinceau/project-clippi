@@ -5,14 +5,9 @@ import styled from "styled-components";
 export const DpadDown: React.FC<{
     pressed?: boolean;
     color?: string;
-    onClick?: (value: boolean) => void;
+    onClick?: () => void;
 }> = (props) => {
-    const { pressed } = props;
-    const onClick = () => {
-        if (props.onClick) {
-            props.onClick(!pressed);
-        }
-    };
+    const { pressed, onClick } = props;
     const buttonColor = props.color ? props.color : "#8F8F8F";
     const Outer = styled.div`
         width: 5em;
@@ -26,7 +21,7 @@ export const DpadDown: React.FC<{
         align-items: center;
         padding: 0.5em;
         padding-top: 2em;
-        ${props.onClick && "cursor: pointer"}
+        ${onClick && "cursor: pointer"}
         svg {
             overflow: visible;
         }
