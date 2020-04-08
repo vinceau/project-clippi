@@ -10,18 +10,18 @@ export const ZButton: React.FC<{
     const { pressed, onClick } = props;
     const buttonColor = props.color ? props.color : "#6F1FFF";
     const Outer = styled.div`
-        width: 20em;
-        height: 6em;
+        width: 18em;
+        height: 5em;
         border-radius: 3.5em;
         background-color: ${pressed ? buttonColor : "transparent"}
-        border: solid 0.5em ${buttonColor};
+        border: solid 0.4em ${buttonColor};
         display: flex;
         justify-content: center;
         align-items: center;
         ${onClick && "cursor: pointer"}
     `;
     const Text = styled.span`
-        font-size: 4.8em;
+        font-size: 3.5em;
         color: ${pressed ? "white" : buttonColor}
     `;
     return (
