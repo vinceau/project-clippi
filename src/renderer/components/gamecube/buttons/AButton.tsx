@@ -8,7 +8,8 @@ export const AButton: React.FC<{
     onClick?: () => void;
 }> = (props) => {
     const { pressed, onClick } = props;
-    const buttonColor = props.color ? props.color : "#00674F";
+    const buttonColor = props.color || "#00674F";
+    const textColor = "white";
     const Outer = styled.div`
         width: 9em;
         height: 9em;
@@ -18,15 +19,17 @@ export const AButton: React.FC<{
         display: flex;
         justify-content: center;
         align-items: center;
-        ${onClick && "cursor: pointer"}
-    `;
-    const Text = styled.span`
-        font-size: 4.8em;
-        color: ${pressed ? "white" : buttonColor}
+        ${onClick && `
+            cursor: pointer;
+        `}
+        span {
+            font-size: 4.8em;
+            color: ${pressed ? textColor : buttonColor}
+        }
     `;
     return (
         <Outer onClick={onClick}>
-            <Text>A</Text>
+            <span>A</span>
         </Outer>
     );
 };
