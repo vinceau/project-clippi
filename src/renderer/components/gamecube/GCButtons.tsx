@@ -88,18 +88,23 @@ const DPad: React.FC<{
 }> = props => {
     const { isPressed, onButtonClick } = props;
     const Outer = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    display: grid;
+    grid-template-columns: 6em 5em 6em;
     `;
     return (
         <Outer>
-            <DpadUp pressed={isPressed(Input.D_UP)} onClick={() => onButtonClick(Input.D_UP)} />
-            <div style={{ display: "flex" }}>
+            <span style={{ gridColumn: "2 / 3", gridRow: "1 / 2" }}>
+                <DpadUp pressed={isPressed(Input.D_UP)} onClick={() => onButtonClick(Input.D_UP)} />
+            </span>
+            <span style={{ gridColumn: "1 / 2", gridRow: "2 / 3" }}>
                 <DpadLeft pressed={isPressed(Input.D_LEFT)} onClick={() => onButtonClick(Input.D_LEFT)} />
+            </span>
+            <span style={{ gridColumn: "3 / 4", gridRow: "2 / 3" }}>
                 <DpadRight pressed={isPressed(Input.D_RIGHT)} onClick={() => onButtonClick(Input.D_RIGHT)} />
-            </div>
-            <DpadDown pressed={isPressed(Input.D_DOWN)} onClick={() => onButtonClick(Input.D_DOWN)} />
+            </span>
+            <span style={{ gridColumn: "2 / 3", gridRow: "3 / 4" }}>
+                <DpadDown pressed={isPressed(Input.D_DOWN)} onClick={() => onButtonClick(Input.D_DOWN)} />
+            </span>
         </Outer>
     );
 };

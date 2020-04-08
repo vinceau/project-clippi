@@ -16,6 +16,7 @@ export const DpadUp: React.FC<{
         border-top-right-radius: 1em;
         background-color: ${pressed ? buttonColor : "transparent"}
         border: solid 0.4em ${buttonColor};
+        border-bottom-color: transparent;
         display: flex;
         justify-content: center;
         align-items: center;

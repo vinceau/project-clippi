@@ -16,6 +16,7 @@ export const DpadRight: React.FC<{
         border-bottom-right-radius: 1em;
         background-color: ${pressed ? buttonColor : "transparent"}
         border: solid 0.4em ${buttonColor};
+        border-left-color: transparent;
         display: flex;
         justify-content: center;
         align-items: center;
