@@ -22,7 +22,7 @@ export const XButton: React.FC<{
     const pathFill = pressed ? buttonColor : "transparent";
     return (
         <Outer onClick={onClick}>
-            <svg width="100%" viewBox="0 0 114 184" version="1.1">
+            <svg width="100%" viewBox="0 0 114 184" version="1.1" overflow="visible">
                 <g>
                     <g id="Page-1" stroke={buttonColor} strokeWidth="8" fill="none" fillRule="evenodd">
                         <g id="ButtonIcon-GCN-X" fill={pathFill} fillRule="nonzero">
