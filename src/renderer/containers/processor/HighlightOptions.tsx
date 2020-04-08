@@ -4,9 +4,15 @@ import { Dispatch, iRootState } from "@/store";
 import { useDispatch, useSelector } from "react-redux";
 import { InlineDropdown } from "@/components/InlineInputs";
 import { FindComboOption } from "@/lib/fileProcessor";
-import { GCButtons } from "@/components/gc-buttons/GCButtons";
+import { GCButtons } from "@/components/gamecube/GCButtons";
 
 export const HighlightOptions: React.FC = () => {
+    const [buttons, setButtons] = React.useState<string[]>([]);
+    const onButtonChange = (newButtons: string[]) => {
+        console.log(newButtons);
+        setButtons(newButtons);
+    };
+
     const { comboProfiles } = useSelector((state: iRootState) => state.slippi);
     const dispatch = useDispatch<Dispatch>();
     const { findComboOption, findComboProfile } = useSelector((state: iRootState) => state.filesystem);
@@ -54,7 +60,7 @@ export const HighlightOptions: React.FC = () => {
             {findComboOption === FindComboOption.ButtonInputs ?
                 <div>
                     Choose a button combo
-                    <GCButtons />
+                    <GCButtons value={buttons} onChange={onButtonChange}/>
                 </div> :
                 <div>
                     <span> using the </span>

@@ -13,19 +13,27 @@ import { RTrigger } from "./RTrigger";
 import { XButton } from "./XButton";
 import { YButton } from "./YButton";
 import { ZButton } from "./ZButton";
+import { Input } from "@vinceau/slp-realtime";
 
-export const GCButtons: React.FC = () => {
-    const [zPressed, setZPressed] = React.useState(false);
-    const [xPressed, setXPressed] = React.useState(false);
-    const [yPressed, setYPressed] = React.useState(false);
-    const [lPressed, setLPressed] = React.useState(false);
-    const [rPressed, setRPressed] = React.useState(false);
-    const [dlPressed, setDLPressed] = React.useState(false);
-    const [drPressed, setDRPressed] = React.useState(false);
-    const [duPressed, setDUPressed] = React.useState(false);
-    const [ddPressed, setDDPressed] = React.useState(false);
-    const [aPressed, setAPressed] = React.useState(false);
-    const [bPressed, setBPressed] = React.useState(false);
+export const GCButtons: React.FC<{
+    value?: Input[],
+    onChange?: (values: Input[]) => void;
+}> = (props) => {
+    const value = props.value ? props.value : [];
+    const isPressed = (input: Input) => {
+        return value.includes(input);
+    };
+    const onClick = (input: Input) => {
+        console.log(`${input} was clicked`);
+        const filtered = value.filter(i => i !== input);
+        if (!isPressed(input)) {
+            // Add button to the list
+            filtered.push(input);
+        }
+        if (props.onChange) {
+            props.onChange(filtered);
+        }
+    };
     const Outer = styled.div`
     display: flex;
     flex-direction: column;
@@ -61,34 +69,34 @@ export const GCButtons: React.FC = () => {
     return (
         <Outer>
             <Row>
-                <LTrigger pressed={lPressed} onClick={setLPressed} />
-                <RTrigger pressed={rPressed} onClick={setRPressed} />
+                <LTrigger pressed={isPressed(Input.L)} onClick={() => onClick(Input.L)} />
+                <RTrigger pressed={isPressed(Input.R)} onClick={() => onClick(Input.R)} />
             </Row>
             <div style={{ alignSelf: "flex-end" }}>
-                <ZButton pressed={zPressed} onClick={setZPressed} />
+                <ZButton pressed={isPressed(Input.Z)} onClick={() => onClick(Input.Z)} />
             </div>
 
             <Row>
                 <Dpad>
-                    <DpadUp pressed={duPressed} onClick={setDUPressed} />
+                    <DpadUp pressed={isPressed(Input.D_UP)} onClick={() => onClick(Input.D_UP)} />
                     <div style={{ display: "flex" }}>
-                        <StyledDpadLeft pressed={dlPressed} onClick={setDLPressed} />
-                        <StyledDpadRight pressed={drPressed} onClick={setDRPressed} />
+                        <StyledDpadLeft pressed={isPressed(Input.D_LEFT)} onClick={() => onClick(Input.D_LEFT)} />
+                        <StyledDpadRight pressed={isPressed(Input.D_RIGHT)} onClick={() => onClick(Input.D_RIGHT)} />
                     </div>
-                    <DpadDown pressed={ddPressed} onClick={setDDPressed} />
+                    <DpadDown pressed={isPressed(Input.D_DOWN)} onClick={() => onClick(Input.D_DOWN)} />
                 </Dpad>
                 <MainButtons>
                     <span style={{ gridColumn: "1 / 3", gridRow: "1 / 2", justifySelf: "end" }}>
-                        <YButton pressed={yPressed} onClick={setYPressed} />
+                        <YButton pressed={isPressed(Input.Y)} onClick={() => onClick(Input.Y)} />
                     </span>
                     <span style={{ gridColumn: "2 / 3", gridRow: "2 / 4" }}>
-                        <AButton pressed={aPressed} onClick={setAPressed} />
+                        <AButton pressed={isPressed(Input.A)} onClick={() => onClick(Input.A)} />
                     </span>
                     <span style={{ gridColumn: "3 / 4", gridRow: "1 / 4", alignSelf: "end" }}>
-                        <XButton pressed={xPressed} onClick={setXPressed} />
+                        <XButton pressed={isPressed(Input.X)} onClick={() => onClick(Input.X)} />
                     </span>
                     <span style={{ gridColumn: "1 / 2", gridRow: "1 / 4", alignSelf: "end", justifySelf: "end" }}>
-                        <BButton pressed={bPressed} onClick={setBPressed} />
+                        <BButton pressed={isPressed(Input.B)} onClick={() => onClick(Input.B)} />
                     </span>
                 </MainButtons>
             </Row>
