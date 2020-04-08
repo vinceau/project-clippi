@@ -32,7 +32,7 @@ export const DpadDown: React.FC<{
     return (
         <Outer onClick={onClick}>
             <svg height="100%" viewBox="0 0 32 36" version="1.1">
-                <g id="Page-1" stroke={strokeColor} strokeWidth="0.3em" fill="none" fillRule="evenodd">
+                <g id="Page-1" stroke={strokeColor} strokeWidth="4" fill="none" fillRule="evenodd">
                     <g id="ButtonIcon-GCN-D-Pad" transform="translate(-80.000000, -142.000000)" fill={fillColor} fillRule="nonzero">
                         <path d="M94,176.26367 C94.54034,177.48261 97.45966,177.48261 98,176.26367 L111.225,146.42969 C111.76543,145.21055 110.55855,142.96484 109.225,142.96484 L82.775,142.96484 C81.44145,142.96484 80.23457,145.21055 80.775,146.42969 L94,176.26367 Z" id="path3391" />
                     </g>
