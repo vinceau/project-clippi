@@ -25,6 +25,14 @@ export const DpadUp: React.FC<{
         padding-bottom: 2em;
         ${onClick && `
             cursor: pointer;
+            &:hover {
+                ${pressed ? "opacity: 0.85;" : `
+                    background-color: ${buttonColor};
+                    #ButtonIcon-GCN-D-Pad {
+                        fill: ${textColor};
+                    }
+                `}
+            }
         `}
         svg {
             overflow: visible;
