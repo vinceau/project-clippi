@@ -8,12 +8,12 @@ import { AButton, BButton, DpadDown, DpadLeft, DpadRight, DpadUp, LTrigger, RTri
 
 export const ButtonPreview: React.FC<{
     value: string[];
+    pressed?: boolean;
 }> = (props) => {
-    const { value } = props;
+    const { value, pressed } = props;
     const shouldShow = (button: Input): boolean => {
         return value.includes(button);
     };
-    const pressed = false;
     const Outer = styled.div`
     font-size: 0.3em;
     display: flex;
