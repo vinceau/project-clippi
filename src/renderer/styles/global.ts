@@ -13,6 +13,7 @@ export const GlobalStyle = createGlobalStyle<{
 
   .ui.modal.${ThemeMode.DARK},
   #app .${ThemeMode.DARK} {
+    font-weight: 100;
 
     .ui.transparent.input input,
     .ui.divider,
@@ -27,7 +28,7 @@ export const GlobalStyle = createGlobalStyle<{
     .ui.checkbox input:focus:checked~.box,
     .ui.checkbox input:focus:checked~label
     {
-        color: ${({theme}) => theme.foreground} !important;
+      color: ${({theme}) => theme.foreground} !important;
     }
 
     .ui.placeholder.segment,
