@@ -25,7 +25,7 @@ export const ButtonPreview: React.FC<{
         show: boolean;
     }>`
     display: ${p => p.show ? "block" : "none"}
-    margin: 0 5px;
+    margin: 5px;
     `;
     return (
         <Outer>
@@ -66,5 +66,17 @@ export const ButtonPreview: React.FC<{
                 <DpadRight pressed={pressed} />
             </ButtonContainer>
         </Outer>
+    );
+};
+
+const orderedInputs = [Input.Z, Input.L, Input.R, Input.A, Input.B, Input.X, Input.Y, Input.START, Input.D_UP, Input.D_DOWN, Input.D_LEFT, Input.D_RIGHT];
+
+export const ButtonTextPreview: React.FC<{
+    value: string[];
+    separator?: string;
+}> = (props) => {
+    const separator = props.separator || " + ";
+    return (
+        <span>{orderedInputs.filter(i => props.value.includes(i)).join(separator)}</span>
     );
 };

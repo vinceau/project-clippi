@@ -5,6 +5,8 @@ import { Button, Icon, Modal } from "semantic-ui-react";
 import { ControllerLayout } from "./ControllerLayout";
 
 import { useTheme } from "@/styles";
+import { ButtonTextPreview } from "./ButtonPreview";
+import styled from "styled-components";
 
 export const ButtonPicker: React.FC<{
     value?: string[];
@@ -25,19 +27,27 @@ export const ButtonPicker: React.FC<{
         }
         setOpened(false);
     };
+    const ButtonTextContainer = styled.div`
+    font-size: 26px;
+    text-align: center;
+    margin-bottom: 20px;
+    `;
     return (
         <Modal
-        className={theme.themeName}
-        open={opened}
-        onClose={() => setOpened(false)}
-        closeIcon trigger={
-            <div onClick={onOpen}>
-                {props.children}
-            </div>
-        }>
+            className={theme.themeName}
+            open={opened}
+            onClose={() => setOpened(false)}
+            closeIcon trigger={
+                <div onClick={onOpen}>
+                    {props.children}
+                </div>
+            }>
             <Modal.Header>Choose a button combination</Modal.Header>
             <Modal.Content>
-                <ControllerLayout value={buttons} onChange={setButtons} />
+                <div>
+                    <ButtonTextContainer><ButtonTextPreview value={buttons} /></ButtonTextContainer>
+                    <ControllerLayout value={buttons} onChange={setButtons} />
+                </div>
             </Modal.Content>
             <Modal.Actions>
                 <Button color="green" onClick={onSave}>
