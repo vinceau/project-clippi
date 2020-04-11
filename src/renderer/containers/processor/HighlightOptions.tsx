@@ -48,7 +48,7 @@ export const HighlightOptions: React.FC = () => {
 
     return (
         <div style={{ paddingBottom: "10px" }}>
-            <div>
+            <div style={{ marginBottom: "10px" }}>
                 <span>Search replay directory for </span>
                 <InlineDropdown
                     value={findComboOption}

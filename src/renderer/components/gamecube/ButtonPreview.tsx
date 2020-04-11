@@ -19,6 +19,7 @@ export const ButtonPreview: React.FC<{
     display: flex;
     flex-wrap: wrap;
     align-items: center;
+    justify-content: center;
     `;
     const ButtonContainer = styled.div<{
         show: boolean;

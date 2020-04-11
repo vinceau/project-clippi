@@ -51,20 +51,19 @@ export const HighlightButtonInputs: React.FC = () => {
     `;
     return (
         <Outer>
-            <div>
-                {"Highlight the past "}
-                <DelayInput value={preInputSeconds.toString()} onChange={setPreInputSeconds} placeholder={`25`} />
-                {" seconds and the following "}
-                <DelayInput value={postInputSeconds.toString()} onChange={setPostInputSeconds} placeholder={`5`} />
-                {" seconds whenever someone "}
+            <div style={{marginBottom: "10px"}}>
+                {"Highlight whenever someone "}
                 <InlineDropdown
                     value={inputButtonHold}
                     onChange={setInputButtonHold}
                     options={options}
                 />
-                {" for "}
-                <DelayInput value={holdMs.toString()} onChange={setHoldMillis} placeholder={`250`} />
-                {" milliseconds the combination:"}
+                {inputButtonHold && <>
+                    {" for "}
+                    <DelayInput value={holdMs.toString()} onChange={setHoldMillis} placeholder={`250`} />
+                    {" milliseconds"}
+                </>}
+                {" the combination:"}
             </div>
             <ButtonInput value={inputButtonCombo} onChange={setInputButtonCombo} />
         </Outer>
