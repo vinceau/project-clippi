@@ -1,4 +1,16 @@
 // Import all the styles first since they will be overwritten
+import Worker from "worker-loader!./worker";
+
+const worker = new Worker();
+
+worker.postMessage({ a: 1 });
+worker.onmessage = (event) => {
+  console.log(`got message: ${event}`);
+};
+
+worker.addEventListener("message", (event) => {
+  console.log(`wooh got a message: ${event}`);
+});
 
 import "react-tippy/dist/tippy.css"; // React-tippy styles
 import "semantic-ui-css/semantic.min.css"; // Semantic UI styles

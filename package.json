@@ -58,7 +58,8 @@
     "styled-components": "^4.4.1",
     "timeago.js": "^4.0.2",
     "twitch": "^3.5.6",
-    "twitch-electron-auth-provider": "^3.5.6"
+    "twitch-electron-auth-provider": "^3.5.6",
+    "worker-loader": "^2.0.0"
   },
   "devDependencies": {
     "@types/fs-extra": "^8.0.1",

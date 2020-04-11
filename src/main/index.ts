@@ -16,7 +16,10 @@ const isDevelopment = process.env.NODE_ENV !== "production";
 let mainWindow: BrowserWindow | null;
 
 function createMainWindow() {
-  const window = new BrowserWindow({ webPreferences: { nodeIntegration: true } });
+  const window = new BrowserWindow({ webPreferences: {
+    nodeIntegration: true, // <--- flag
+    nodeIntegrationInWorker: true // <---  for web workers
+  } });
 
   window.webContents.on("did-frame-finish-load", () => {
     if (isDevelopment) {

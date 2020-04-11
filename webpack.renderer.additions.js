@@ -7,6 +7,10 @@ const commitHash = require('child_process')
   .toString();
 
 module.exports = function(context) {
+    context.module.rules.push({
+        test: /\.worker\.ts$/,
+        use: { loader: 'worker-loader' }
+    });
     context.plugins.push(
         new webpack.DefinePlugin({
             __VERSION__: JSON.stringify(pkg.version),
