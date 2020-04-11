@@ -13,8 +13,8 @@ top: 0;
 left: 0;
 height: 100%;
 width: ${p => p.percent}%;
-background-color: green;
-opacity: 0.3;
+background-color: ${({theme}) => theme.secondary};
+opacity: 0.1;
 `;
 
 export const ProgressBar: React.FC = () => {
