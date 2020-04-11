@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { AButton, BButton, DpadDown, DpadLeft, DpadRight, DpadUp, LTrigger, RTrigger, XButton, YButton, ZButton, StartButton } from "./buttons";
 
 import { Input } from "@vinceau/slp-realtime";
+import { device } from "@/styles/device";
 
 export const ControllerLayout: React.FC<{
     value?: string[],
@@ -27,9 +28,24 @@ export const ControllerLayout: React.FC<{
     };
     const Outer = styled.div`
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
     align-items: center;
     justify-items: center;
+    font-size: 8px;
+    grid-template-columns: 100%;
+    grid-gap: 10px;
+    @media ${device.mobileM} {
+        font-size: 5px;
+        grid-template-columns: repeat(3, 1fr);
+    }
+    @media ${device.mobileL} {
+        font-size: 6px;
+    }
+    @media ${device.tablet} {
+        font-size: 10px;
+    }
+    @media ${device.laptop} {
+        font-size: 12px;
+    }
     `;
     return (
         <Outer>
