@@ -11,6 +11,7 @@ export const GlobalStyle = createGlobalStyle<{
     color: ${({ theme }) => theme.foreground };
   }
 
+  .ui.modal.${ThemeMode.DARK},
   #app .${ThemeMode.DARK} {
 
     .ui.transparent.input input,
@@ -79,5 +80,30 @@ export const GlobalStyle = createGlobalStyle<{
         color: ${({theme}) => theme.foreground} !important;
     }
 
+  }
+
+  .ui.modal.${ThemeMode.DARK} {
+    background: ${({theme}) => theme.background};
+
+    & > .header {
+      background: ${({theme}) => theme.background};
+      border-bottom-color: ${({theme}) => theme.background3};
+      color: ${({theme}) => theme.foreground};
+    }
+
+    & > .close {
+      color: ${({theme}) => theme.foreground};
+    }
+
+    & > .content {
+      background: ${({theme}) => theme.background};
+      color: ${({theme}) => theme.foreground3};
+    }
+
+    & > .actions {
+      border-top-color: ${({theme}) => theme.background3};
+      background: ${({theme}) => theme.background2};
+      color: ${({theme}) => theme.foreground3};
+    }
   }
 `;

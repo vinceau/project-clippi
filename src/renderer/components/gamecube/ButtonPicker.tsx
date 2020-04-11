@@ -4,10 +4,13 @@ import { Button, Icon, Modal } from "semantic-ui-react";
 
 import { ControllerLayout } from "./ControllerLayout";
 
+import { useTheme } from "@/styles";
+
 export const ButtonPicker: React.FC<{
     value?: string[];
     onChange?: (newButtons: string[]) => void;
 }> = (props) => {
+    const theme = useTheme();
     const [opened, setOpened] = React.useState<boolean>(false);
     const [buttons, setButtons] = React.useState<string[]>(props.value || []);
     const onOpen = () => {
@@ -24,6 +27,7 @@ export const ButtonPicker: React.FC<{
     };
     return (
         <Modal
+        className={theme.themeName}
         open={opened}
         onClose={() => setOpened(false)}
         closeIcon trigger={
