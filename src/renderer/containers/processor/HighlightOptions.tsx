@@ -31,7 +31,7 @@ export const HighlightOptions: React.FC = () => {
         {
             key: "buttonInputs",
             value: FindComboOption.ButtonInputs,
-            text: "input combinations",
+            text: "button combinations",
         },
     ];
     const allProfiles = Object.keys(comboProfiles);
@@ -60,13 +60,13 @@ export const HighlightOptions: React.FC = () => {
                 <HighlightButtonInputs />
                 :
                 <div>
-                    <span> using the </span>
+                    {"Highlight combos matching the "}
                     <InlineDropdown
                         value={findComboProfile}
                         onChange={setFindComboProfile}
                         options={profileOptions}
                     />
-                    <span> combo profile</span>
+                    {" combo profile"}
                 </div>
             }
         </div>

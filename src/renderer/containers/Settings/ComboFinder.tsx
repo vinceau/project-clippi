@@ -94,7 +94,7 @@ export const ComboFinder: React.FC<{}> = () => {
                     />
                 </Form.Field>
                 <ProcessSection
-                    label="Find Combos"
+                    label="Find Highlights"
                     open={findCombos}
                     onOpenChange={setFindCombos}
                 >
