@@ -63,7 +63,7 @@ export const HighlightButtonInputs: React.FC = () => {
     `;
     return (
         <Outer>
-            <div style={{ marginBottom: "10px" }}>
+            <div style={{ marginBottom: "10px", lineHeight: "24px" }}>
                 {"Highlight the moment someone "}
                 <InlineDropdown
                     value={inputButtonHold}
