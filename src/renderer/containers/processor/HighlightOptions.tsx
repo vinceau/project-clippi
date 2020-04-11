@@ -20,17 +20,17 @@ export const HighlightOptions: React.FC = () => {
     const options = [
         {
             key: "onlyCombos",
-            value: FindComboOption.Combos,
+            value: FindComboOption.COMBOS,
             text: "combos",
         },
         {
             key: "onlyConversions",
-            value: FindComboOption.Conversions,
+            value: FindComboOption.CONVERSIONS,
             text: "conversions",
         },
         {
             key: "buttonInputs",
-            value: FindComboOption.ButtonInputs,
+            value: FindComboOption.BUTTON_INPUTS,
             text: "button combinations",
         },
     ];
@@ -56,7 +56,7 @@ export const HighlightOptions: React.FC = () => {
                     options={options}
                 />
             </div>
-            {findComboOption === FindComboOption.ButtonInputs ?
+            {findComboOption === FindComboOption.BUTTON_INPUTS ?
                 <HighlightButtonInputs />
                 :
                 <div>
