@@ -1,9 +1,7 @@
 import React from "react";
 
-import styled from "styled-components";
-import { Button, Header, Icon, Modal } from 'semantic-ui-react'
+import { Button, Icon, Modal } from "semantic-ui-react";
 
-import { ButtonPreview } from "./ButtonPreview";
 import { ControllerLayout } from "./ControllerLayout";
 
 export const ButtonPicker: React.FC<{
@@ -12,9 +10,10 @@ export const ButtonPicker: React.FC<{
 }> = (props) => {
     const [opened, setOpened] = React.useState<boolean>(false);
     const [buttons, setButtons] = React.useState<string[]>(props.value || []);
-    const onButtonChange = (newButtons: string[]) => {
-        console.log(newButtons);
-        setButtons(newButtons);
+    const onOpen = () => {
+        // props value is the true value so reset the state
+        setButtons(props.value || []);
+        setOpened(true);
     };
     const onSave = () => {
         console.log("saving...");
@@ -22,23 +21,19 @@ export const ButtonPicker: React.FC<{
             props.onChange(buttons);
         }
         setOpened(false);
-    }
+    };
     return (
         <Modal
         open={opened}
         onClose={() => setOpened(false)}
         closeIcon trigger={
-            <div onClick={() => setOpened(true)}>
-                {buttons.length > 0 ?
-                    <ButtonPreview value={buttons} />
-                    :
-                    <p>No buttons selected. Click to choose.</p>
-                }
+            <div onClick={onOpen}>
+                {props.children}
             </div>
         }>
             <Modal.Header>Choose a button combination</Modal.Header>
             <Modal.Content>
-                <ControllerLayout value={buttons} onChange={onButtonChange} />
+                <ControllerLayout value={buttons} onChange={setButtons} />
             </Modal.Content>
             <Modal.Actions>
                 <Button color="green" onClick={onSave}>

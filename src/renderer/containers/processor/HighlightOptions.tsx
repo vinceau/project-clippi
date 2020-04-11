@@ -6,13 +6,10 @@ import { InlineDropdown } from "@/components/InlineInputs";
 import { FindComboOption } from "@/lib/fileProcessor";
 import { ControllerLayout } from "@/components/gamecube/ControllerLayout";
 import { ButtonPicker } from "@/components/gamecube/ButtonPicker";
+import { ButtonInput } from "@/components/gamecube/ButtonInput";
 
 export const HighlightOptions: React.FC = () => {
     const [buttons, setButtons] = React.useState<string[]>([]);
-    const onButtonChange = (newButtons: string[]) => {
-        console.log(newButtons);
-        setButtons(newButtons);
-    };
 
     const { comboProfiles } = useSelector((state: iRootState) => state.slippi);
     const dispatch = useDispatch<Dispatch>();
@@ -59,10 +56,8 @@ export const HighlightOptions: React.FC = () => {
                 />
             </div>
             {findComboOption === FindComboOption.ButtonInputs ?
-                <div>
-                    Choose a button combo
-                    <ButtonPicker value={buttons} onChange={onButtonChange}/>
-                </div> :
+                <ButtonInput value={buttons} onChange={setButtons} />
+                :
                 <div>
                     <span> using the </span>
                     <InlineDropdown

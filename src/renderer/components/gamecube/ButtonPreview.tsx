@@ -2,8 +2,9 @@ import React from "react";
 
 import styled from "styled-components";
 
-import { AButton, BButton, DpadDown, DpadLeft, DpadRight, DpadUp, LTrigger, RTrigger, XButton, YButton, ZButton, StartButton } from "./buttons";
 import { Input } from "@vinceau/slp-realtime";
+
+import { AButton, BButton, DpadDown, DpadLeft, DpadRight, DpadUp, LTrigger, RTrigger, XButton, YButton, ZButton, StartButton } from "./buttons";
 
 export const ButtonPreview: React.FC<{
     value: string[];

@@ -10,7 +10,7 @@ export const ControllerLayout: React.FC<{
     value?: string[],
     onChange?: (values: string[]) => void;
 }> = props => {
-    const value = props.value ? props.value : [];
+    const value = props.value || [];
     const isPressed = (input: Input) => {
         return value.includes(input);
     };
@@ -42,7 +42,6 @@ export const ControllerLayout: React.FC<{
         </Outer>
     );
 };
-
 
 const MainButtons: React.FC<{
     isPressed: (input: Input) => boolean;
