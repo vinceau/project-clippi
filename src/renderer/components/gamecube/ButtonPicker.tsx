@@ -45,7 +45,12 @@ export const ButtonPicker: React.FC<{
             <Modal.Header>Choose a button combination</Modal.Header>
             <Modal.Content>
                 <div>
-                    <ButtonTextContainer><ButtonTextPreview value={buttons} /></ButtonTextContainer>
+                    <ButtonTextContainer>
+                        {buttons.length > 0 ?
+                            <ButtonTextPreview value={buttons} />
+                        : "No buttons selected"
+                        }
+                    </ButtonTextContainer>
                     <ControllerLayout value={buttons} onChange={setButtons} />
                 </div>
             </Modal.Content>
