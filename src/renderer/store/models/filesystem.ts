@@ -24,6 +24,12 @@ export interface FileSystemState {
     openCombosWhenDone: boolean;
     soundFiles: SoundMap;
     recordSeparateClips: boolean;
+    inputButtonCombo: string[];
+    inputButtonPreInputFrames: number;
+    inputButtonPostInputFrames: number;
+    inputButtonHoldFrames: number;
+    inputButtonLockoutMs: number;
+    inputButtonHold: boolean;
 }
 
 export const fileSystemInitialState: FileSystemState = {
@@ -40,6 +46,12 @@ export const fileSystemInitialState: FileSystemState = {
     openCombosWhenDone: false,
     soundFiles: {},
     recordSeparateClips: false,
+    inputButtonCombo: [],
+    inputButtonPreInputFrames: 1500,  // 25 seconds
+    inputButtonPostInputFrames: 300,  // 5 seconds
+    inputButtonHoldFrames: 1,
+    inputButtonLockoutMs: 5000,
+    inputButtonHold: false,
 };
 
 export const filesystem = createModel({
@@ -96,6 +108,27 @@ export const filesystem = createModel({
         }),
         setRecordSeparateClips: (state: FileSystemState, payload: boolean): FileSystemState => produce(state, draft => {
             draft.recordSeparateClips = payload;
+        }),
+        setInputButtonCombo: (state: FileSystemState, payload: string[]): FileSystemState => produce(state, draft => {
+            draft.inputButtonCombo = payload;
+        }),
+        setInputButtonPreInputFrames: (state: FileSystemState, payload: number): FileSystemState => produce(state, draft => {
+            // Make sure we take the integer value for frames
+            draft.inputButtonPreInputFrames = Math.floor(payload);
+        }),
+        setInputButtonPostInputFrames: (state: FileSystemState, payload: number): FileSystemState => produce(state, draft => {
+            // Make sure we take the integer value for frames
+            draft.inputButtonPostInputFrames = Math.floor(payload);
+        }),
+        setInputButtonHoldFrames: (state: FileSystemState, payload: number): FileSystemState => produce(state, draft => {
+            // Make sure we take the integer value for frames
+            draft.inputButtonHoldFrames = Math.floor(payload);
+        }),
+        setInputButtonLockoutMs: (state: FileSystemState, payload: number): FileSystemState => produce(state, draft => {
+            draft.inputButtonLockoutMs = payload;
+        }),
+        setInputButtonHold: (state: FileSystemState, payload: boolean): FileSystemState => produce(state, draft => {
+            draft.inputButtonHold = payload;
         }),
     },
     effects: dispatch => ({

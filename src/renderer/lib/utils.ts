@@ -110,3 +110,19 @@ export const parseSecondsDelayValue = (defaultSeconds: number, delaySeconds?: st
 export const capitalize = (s: string) => {
     return s.charAt(0).toUpperCase() + s.slice(1);
 };
+
+export const framesToMillis = (frames: number): number => {
+    return framesToSeconds(frames) * 1000;
+};
+
+export const framesToSeconds = (frames: number): number => {
+    return frames / 60.0;
+};
+
+export const secondsToFrames = (secs: number): number => {
+    return secs * 60.0;
+};
+
+export const millisToFrames = (ms: number): number => {
+    return secondsToFrames(ms / 1000);
+};

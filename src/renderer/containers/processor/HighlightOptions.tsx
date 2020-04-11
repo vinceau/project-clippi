@@ -7,6 +7,7 @@ import { FindComboOption } from "@/lib/fileProcessor";
 import { ControllerLayout } from "@/components/gamecube/ControllerLayout";
 import { ButtonPicker } from "@/components/gamecube/ButtonPicker";
 import { ButtonInput } from "@/components/gamecube/ButtonInput";
+import { HighlightButtonInputs } from "./HighlightButtonInputs";
 
 export const HighlightOptions: React.FC = () => {
     const [buttons, setButtons] = React.useState<string[]>([]);
@@ -56,7 +57,7 @@ export const HighlightOptions: React.FC = () => {
                 />
             </div>
             {findComboOption === FindComboOption.ButtonInputs ?
-                <ButtonInput value={buttons} onChange={setButtons} />
+                <HighlightButtonInputs />
                 :
                 <div>
                     <span> using the </span>
