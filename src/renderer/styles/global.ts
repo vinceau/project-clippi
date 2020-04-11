@@ -98,13 +98,13 @@ export const GlobalStyle = createGlobalStyle<{
 
     & > .content {
       background: ${({theme}) => theme.background};
-      color: ${({theme}) => theme.foreground3};
+      color: ${({theme}) => theme.foreground};
     }
 
     & > .actions {
       border-top-color: ${({theme}) => theme.background3};
       background: ${({theme}) => theme.background2};
-      color: ${({theme}) => theme.foreground3};
+      color: ${({theme}) => theme.foreground};
     }
   }
 `;
