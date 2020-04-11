@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 import { Input } from "@vinceau/slp-realtime";
 
-import { AButton, BButton, DpadDown, DpadLeft, DpadRight, DpadUp, LTrigger, RTrigger, XButton, YButton, ZButton, StartButton } from "./buttons";
+import { AButton, BButton, DpadDown, DpadLeft, DpadRight, DpadUp, LTrigger, RTrigger, StartButton, XButton, YButton, ZButton } from "./buttons";
 
 export const ButtonPreview: React.FC<{
     value: string[];
@@ -17,15 +17,26 @@ export const ButtonPreview: React.FC<{
     const Outer = styled.div`
     font-size: 0.3em;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     `;
     const ButtonContainer = styled.div<{
         show: boolean;
     }>`
     display: ${p => p.show ? "block" : "none"}
+    margin: 0 5px;
     `;
     return (
         <Outer>
+            <ButtonContainer show={shouldShow(Input.Z)}>
+                <ZButton pressed={pressed} />
+            </ButtonContainer>
+            <ButtonContainer show={shouldShow(Input.L)}>
+                <LTrigger pressed={pressed} />
+            </ButtonContainer>
+            <ButtonContainer show={shouldShow(Input.R)}>
+                <RTrigger pressed={pressed} />
+            </ButtonContainer>
             <ButtonContainer show={shouldShow(Input.A)}>
                 <AButton pressed={pressed} />
             </ButtonContainer>
@@ -38,14 +49,8 @@ export const ButtonPreview: React.FC<{
             <ButtonContainer show={shouldShow(Input.Y)}>
                 <YButton pressed={pressed} />
             </ButtonContainer>
-            <ButtonContainer show={shouldShow(Input.L)}>
-                <LTrigger pressed={pressed} />
-            </ButtonContainer>
-            <ButtonContainer show={shouldShow(Input.Z)}>
-                <ZButton pressed={pressed} />
-            </ButtonContainer>
-            <ButtonContainer show={shouldShow(Input.R)}>
-                <RTrigger pressed={pressed} />
+            <ButtonContainer show={shouldShow(Input.START)}>
+                <StartButton pressed={pressed} />
             </ButtonContainer>
             <ButtonContainer show={shouldShow(Input.D_UP)}>
                 <DpadUp pressed={pressed} />
@@ -58,9 +63,6 @@ export const ButtonPreview: React.FC<{
             </ButtonContainer>
             <ButtonContainer show={shouldShow(Input.D_RIGHT)}>
                 <DpadRight pressed={pressed} />
-            </ButtonContainer>
-            <ButtonContainer show={shouldShow(Input.START)}>
-                <StartButton pressed={pressed} />
             </ButtonContainer>
         </Outer>
     );
