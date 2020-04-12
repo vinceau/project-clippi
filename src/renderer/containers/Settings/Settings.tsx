@@ -25,12 +25,15 @@ import { TwitchIntegration } from "./TwitchIntegration";
 import OBSLogo from "@/styles/images/obs.svg";
 import SlippiLogo from "@/styles/images/slippi-logo.svg";
 
-const StyledMenuItem = styled(Menu.Item)`
+const StyledMenuItem = styled(Menu.Item)<{
+    header: boolean;
+}>`
 &&& {
     color: ${({theme}) => theme.foreground} !important;
     &.active, &:not(.header):hover {
         background: ${({theme}) => transparentize(0.3, theme.foreground3)} !important;
     }
+    ${p => p.header && "font-variant: all-small-caps !important;"}
 }
 `;
 
