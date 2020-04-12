@@ -7,11 +7,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { Button, Icon, Progress } from "semantic-ui-react";
 
 import styled from "styled-components";
-import { fileProcessor, ProcessResult, FileProcessorOptions } from "@/lib/fileProcessor";
+import { fileProcessor, ProcessResult, FileProcessorOptions, ButtonInputOptions, ComboOptions, FindComboOption } from "@/lib/fileProcessor";
 import { secondsToString } from "common/utils";
 import { notify } from "@/lib/utils";
 import { mapConfigurationToFilterSettings } from "@/lib/profile";
-import { ComboFilterSettings } from "@vinceau/slp-realtime";
+import { ComboFilterSettings, Input } from "@vinceau/slp-realtime";
 
 const isWindows = process.platform === "win32";
 
@@ -40,6 +40,7 @@ export const ProcessorStatusBar: React.FC = () => {
     const { comboFinderPercent, comboFinderLog, comboFinderProcessing } = useSelector((state: iRootState) => state.tempContainer);
     const { comboProfiles } = useSelector((state: iRootState) => state.slippi);
     const { openCombosWhenDone, filesPath, combosFilePath, includeSubFolders, deleteFilesWithNoCombos,
+        inputButtonCombo, inputButtonPreInputFrames, inputButtonPostInputFrames, inputButtonHoldFrames, inputButtonLockoutMs, inputButtonHold,
         renameFiles, findCombos, findComboOption, renameFormat, findComboProfile } = useSelector((state: iRootState) => state.filesystem);
     const dispatch = useDispatch<Dispatch>();
 
@@ -70,7 +71,15 @@ export const ProcessorStatusBar: React.FC = () => {
             converted = mapConfigurationToFilterSettings(JSON.parse(slippiSettings));
         }
     
-        const config = {
+        const buttonConfig: ButtonInputOptions = {
+            buttonCombo: inputButtonCombo as Input[],
+            holdDurationFrames: inputButtonHold ? inputButtonHoldFrames : 1,
+            preInputFrames: inputButtonPreInputFrames,
+            postInputFrames: inputButtonPostInputFrames,
+            captureLockoutMs: inputButtonLockoutMs,
+        };
+
+        const comboConfig: ComboOptions = {
             deleteZeroComboFiles: deleteFilesWithNoCombos,
             findComboCriteria: converted,
         };
@@ -81,7 +90,7 @@ export const ProcessorStatusBar: React.FC = () => {
             includeSubFolders,
             outputFile: combosFilePath,
             renameTemplate: renameFormat,
-            config,
+            config: findCombos && findComboOption === FindComboOption.BUTTON_INPUTS ? buttonConfig : comboConfig,
         };
         const result = await fileProcessor.process(options, callback);
         const timeTakenStr = secondsToString(result.timeTaken);

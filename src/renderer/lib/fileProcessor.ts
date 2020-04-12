@@ -28,7 +28,7 @@ const defaultButtonInputOptions: ButtonInputOptions = {
     holdDurationFrames: 1,
 };
 
-interface ButtonInputOptions {
+export interface ButtonInputOptions {
     buttonCombo: Input[];
     holdDurationFrames?: number;
     preInputFrames: number;
@@ -36,7 +36,7 @@ interface ButtonInputOptions {
     captureLockoutMs: number;  // Milliseconds between input capture
 }
 
-interface ComboOptions {
+export interface ComboOptions {
     findComboCriteria: Partial<ComboFilterSettings>;
     deleteZeroComboFiles?: boolean;
 }
