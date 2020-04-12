@@ -1,5 +1,5 @@
 // Import all the styles first since they will be overwritten
-import Worker from "worker-loader!./workers/fileProcessor.worker";
+import Worker from "worker-loader!common/workers/fileProcessor.worker";
 
 const worker = new Worker();
 
