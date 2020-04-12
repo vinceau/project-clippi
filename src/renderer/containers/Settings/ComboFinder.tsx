@@ -61,7 +61,7 @@ export const ComboFinder: React.FC = () => {
                     </Form.Field>
                     <Form.Field>
                         <Checkbox
-                            label="Delete files with no combos"
+                            label="Delete files with no highlights"
                             checked={deleteFilesWithNoCombos}
                             onChange={(_, data) => onSetDeleteFiles(Boolean(data.checked))}
                         />
