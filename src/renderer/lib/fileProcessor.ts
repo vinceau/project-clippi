@@ -66,12 +66,16 @@ const handleComplete = (payload: CompletePayload): void => {
     }
 };
 
-export const findAndWriteCombos = (options: FileProcessorOptions): void => {
-    // const result = await fileProcessor.process(options);
-    // return result;
+export const startProcessing = (options: FileProcessorOptions): void => {
     console.log(options);
     worker.postMessage({
         type: FileProcessorParentMessage.START,
         payload: { options },
+    });
+};
+
+export const stopProcessing = (): void => {
+    worker.postMessage({
+        type: FileProcessorParentMessage.STOP,
     });
 };

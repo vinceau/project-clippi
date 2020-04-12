@@ -6,7 +6,7 @@ import { Dispatch, iRootState } from "@/store";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Icon } from "semantic-ui-react";
 
-import { findAndWriteCombos } from "@/lib/fileProcessor";
+import { startProcessing, stopProcessing } from "@/lib/fileProcessor";
 import { mapConfigurationToFilterSettings } from "@/lib/profile";
 import { notify } from "@/lib/utils";
 import { ComboFilterSettings, Input } from "@vinceau/slp-realtime";
@@ -82,7 +82,7 @@ export const ProcessorStatusBar: React.FC = () => {
             renameTemplate: renameFormat,
             config: findCombos && findComboOption === FindComboOption.BUTTON_INPUTS ? buttonConfig : comboConfig,
         };
-        findAndWriteCombos(options);
+        startProcessing(options);
     };
 
     return (
@@ -97,7 +97,7 @@ export const ProcessorStatusBar: React.FC = () => {
             </ProcessStatus>
             <div>
                 {comboFinderProcessing ?
-                    <Button negative={true} type="button" onClick={() => console.log("stop pressed")}>
+                    <Button negative={true} type="button" onClick={() => stopProcessing()}>
                         <Icon name="stop" />
                             Stop processing
                     </Button>
