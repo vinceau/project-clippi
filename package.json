@@ -82,7 +82,8 @@
     "tslint-react": "^4.1.0",
     "typescript": "^3.3.3333",
     "webpack": "4.35.3",
-    "webpack-build-notifier": "^0.1.30"
+    "webpack-build-notifier": "^0.1.30",
+    "worker-loader": "^2.0.0"
   },
   "electronWebpack": {
     "renderer": {

@@ -3,9 +3,9 @@ import { ComboFilter, ConnectionStatus, SlpFolderStream, SlpLiveStream, SlpRealT
 import { withLatestFrom } from "rxjs/operators";
 
 import { dispatcher } from "@/store";
-import { eventActionManager } from "../actions";
 import { exampleComboType, exampleDeathStockType, exampleGameEnd, exampleGameStart, exampleSpawnStockType,
-        generateComboContext, generateGameEndContext, generateGameStartContext, generateGlobalContext, generateStockContext } from "./context";
+        generateComboContext, generateGameEndContext, generateGameStartContext, generateGlobalContext, generateStockContext } from "common/context";
+import { eventActionManager } from "../actions";
 import { isDevelopment, notify } from "./utils";
 
 export enum ActionEvent {
