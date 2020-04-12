@@ -9,7 +9,7 @@ const commitHash = require('child_process')
 module.exports = function(context) {
     // Add web worker support
     context.module.rules.push({
-        test: /\.worker\.ts$/,
+        test: /\*\.worker\.ts$/,
         use: { loader: 'worker-loader' }
     });
 

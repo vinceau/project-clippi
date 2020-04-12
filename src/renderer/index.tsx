@@ -1,15 +1,17 @@
 // Import all the styles first since they will be overwritten
-import Worker from "worker-loader!./worker";
+import Worker from "worker-loader!./workers/fileProcessor.worker";
 
 const worker = new Worker();
 
 worker.postMessage({ a: 1 });
 worker.onmessage = (event) => {
-  console.log(`got message: ${event}`);
+  console.log(`got message from worker! payload:`);
+  console.log(event);
 };
 
 worker.addEventListener("message", (event) => {
-  console.log(`wooh got a message: ${event}`);
+  console.log(`wooh got a message from worker. payload:`);
+  console.log(event);
 });
 
 import "react-tippy/dist/tippy.css"; // React-tippy styles
