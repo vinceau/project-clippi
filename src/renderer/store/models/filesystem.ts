@@ -18,7 +18,7 @@ export interface FileSystemState {
     deleteFilesWithNoCombos: boolean;
     findCombos: boolean;
     findComboProfile: string;
-    findComboOption: FindComboOption;
+    highlightMethod: FindComboOption;
     renameFiles: boolean;
     renameFormat: string;
     openCombosWhenDone: boolean;
@@ -40,7 +40,7 @@ export const fileSystemInitialState: FileSystemState = {
     deleteFilesWithNoCombos: false,
     findCombos: true,
     findComboProfile: "default",
-    findComboOption: FindComboOption.COMBOS,
+    highlightMethod: FindComboOption.COMBOS,
     renameFiles: false,
     renameFormat: "{{YY}}{{MM}}{{DD}}_{{HH}}{{mm}}_{{playerShortChar}}_v_{{opponentShortChar}}_({{shortStage}}).slp",
     openCombosWhenDone: false,
@@ -82,8 +82,8 @@ export const filesystem = createModel({
         setFindComboProfile: (state: FileSystemState, payload: string): FileSystemState => produce(state, draft => {
             draft.findComboProfile = payload;
         }),
-        setFindComboOption: (state: FileSystemState, payload: FindComboOption): FileSystemState => produce(state, draft => {
-            draft.findComboOption = payload;
+        setHighlightMethod: (state: FileSystemState, payload: FindComboOption): FileSystemState => produce(state, draft => {
+            draft.highlightMethod = payload;
         }),
         setCombosFilePath: (state: FileSystemState, payload: string): FileSystemState => produce(state, draft => {
             draft.combosFilePath = payload;

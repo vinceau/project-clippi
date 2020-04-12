@@ -9,8 +9,8 @@ import { HighlightButtonInputs } from "./HighlightButtonInputs";
 export const HighlightOptions: React.FC = () => {
     const { comboProfiles } = useSelector((state: iRootState) => state.slippi);
     const dispatch = useDispatch<Dispatch>();
-    const { findComboOption, findComboProfile } = useSelector((state: iRootState) => state.filesystem);
-    const setFindComboOption = (val: FindComboOption) => dispatch.filesystem.setFindComboOption(val);
+    const { highlightMethod, findComboProfile } = useSelector((state: iRootState) => state.filesystem);
+    const setHighlightMethod = (val: FindComboOption) => dispatch.filesystem.setHighlightMethod(val);
     const setFindComboProfile = (val: string) => dispatch.filesystem.setFindComboProfile(val);
     const options = [
         {
@@ -46,12 +46,12 @@ export const HighlightOptions: React.FC = () => {
             <div style={{ marginBottom: "10px" }}>
                 <span>Search replay directory for </span>
                 <InlineDropdown
-                    value={findComboOption}
-                    onChange={setFindComboOption}
+                    value={highlightMethod}
+                    onChange={setHighlightMethod}
                     options={options}
                 />
             </div>
-            {findComboOption === FindComboOption.BUTTON_INPUTS ?
+            {highlightMethod === FindComboOption.BUTTON_INPUTS ?
                 <HighlightButtonInputs />
                 :
                 <div>
