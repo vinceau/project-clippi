@@ -49,8 +49,6 @@ export const ProcessorStatusBar: React.FC = () => {
     const processBtnDisabled = (!findCombos && !renameFiles) || !combosFilePath;
 
     const handleProcessClick = () => {
-        dispatch.tempContainer.setPercent(0);
-        dispatch.tempContainer.setComboFinderProcessing(true);
         console.log(`finding highlights from the slp files in ${filesPath} ${includeSubFolders && "and all subfolders"} and saving to ${combosFilePath}`);
 
         let converted: Partial<ComboFilterSettings> = {};

@@ -68,6 +68,10 @@ const handleComplete = (payload: CompletePayload): void => {
 
 export const startProcessing = (options: FileProcessorOptions): void => {
     console.log(options);
+    // Reset processing state
+    dispatcher.tempContainer.setPercent(0);
+    dispatcher.tempContainer.setComboLog("");
+    dispatcher.tempContainer.setComboFinderProcessing(true);
     worker.postMessage({
         type: FileProcessorParentMessage.START,
         payload: { options },
