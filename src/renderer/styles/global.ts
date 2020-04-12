@@ -34,7 +34,7 @@ export const GlobalStyle = createGlobalStyle<{
     .ui.placeholder.segment,
     .ui.table thead th,
     .ui.table {
-      background: ${({theme}) => lighten(0.2, theme.foreground)};
+      background: ${({theme}) => lighten(0.05, theme.background)};
       color: ${({theme}) => theme.foreground};
     }
 
@@ -63,11 +63,11 @@ export const GlobalStyle = createGlobalStyle<{
 
     .ui.label,
     .ui.button {
-        background: ${({theme}) => lighten(0.1, theme.foreground2)} none;
+        background: ${({theme}) => lighten(0.05, theme.foreground2)} none;
         color: ${({theme}) => theme.foreground};
         font-weight: 500;
         &:hover {
-          background: ${({theme}) => lighten(0.2, theme.foreground2)} none;
+          background: ${({theme}) => lighten(0.1, theme.foreground2)} none;
         }
     }
 
