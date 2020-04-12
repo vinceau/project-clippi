@@ -1,15 +1,12 @@
 import React from "react";
 
+import { ButtonInput } from "@/components/gamecube/ButtonInput";
+import { DelayInput, InlineDropdown } from "@/components/InlineInputs";
+import { framesToMillis, framesToSeconds, millisToFrames, secondsToFrames } from "@/lib/utils";
 import { Dispatch, iRootState } from "@/store";
 import { useDispatch, useSelector } from "react-redux";
-import { InlineDropdown, DelayInput } from "@/components/InlineInputs";
-import { FindComboOption } from "@/lib/fileProcessor";
-import { ControllerLayout } from "@/components/gamecube/ControllerLayout";
-import { ButtonPicker } from "@/components/gamecube/ButtonPicker";
-import { ButtonInput } from "@/components/gamecube/ButtonInput";
-import { framesToSeconds, secondsToFrames, framesToMillis, millisToFrames } from "@/lib/utils";
-import styled from "styled-components";
 import { Accordion, Icon } from "semantic-ui-react";
+import styled from "styled-components";
 
 export const HighlightButtonInputs: React.FC = () => {
     const [showAdvanced, setShowAdvanced] = React.useState(false);

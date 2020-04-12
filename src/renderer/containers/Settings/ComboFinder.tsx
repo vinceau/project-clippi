@@ -7,8 +7,8 @@ import { FileInput } from "@/components/FileInput";
 import { ProcessSection } from "@/components/ProcessSection";
 
 import { Dispatch, iRootState } from "@/store";
-import { RenameFiles } from "./RenameFiles";
 import { HighlightOptions } from "../processor/HighlightOptions";
+import { RenameFiles } from "./RenameFiles";
 
 const isWindows = process.platform === "win32";
 

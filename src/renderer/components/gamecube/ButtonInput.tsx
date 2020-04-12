@@ -2,9 +2,9 @@ import React from "react";
 
 import styled from "styled-components";
 
+import { Labelled } from "../Labelled";
 import { ButtonPicker } from "./ButtonPicker";
 import { ButtonPreview } from "./ButtonPreview";
-import { Labelled } from "../Labelled";
 
 export const ButtonInput: React.FC<{
     value?: string[];

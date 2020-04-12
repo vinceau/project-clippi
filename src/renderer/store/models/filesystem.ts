@@ -40,7 +40,7 @@ export const fileSystemInitialState: FileSystemState = {
     deleteFilesWithNoCombos: false,
     findCombos: true,
     findComboProfile: "default",
-    findComboOption: FindComboOption.Combos,
+    findComboOption: FindComboOption.COMBOS,
     renameFiles: false,
     renameFormat: "{{YY}}{{MM}}{{DD}}_{{HH}}{{mm}}_{{playerShortChar}}_v_{{opponentShortChar}}_({{shortStage}}).slp",
     openCombosWhenDone: false,
@@ -122,7 +122,8 @@ export const filesystem = createModel({
         }),
         setInputButtonHoldFrames: (state: FileSystemState, payload: number): FileSystemState => produce(state, draft => {
             // Make sure we take the integer value for frames
-            draft.inputButtonHoldFrames = Math.floor(payload);
+            // We use ceil because they need to hold for at least that many frames
+            draft.inputButtonHoldFrames = Math.ceil(payload);
         }),
         setInputButtonLockoutMs: (state: FileSystemState, payload: number): FileSystemState => produce(state, draft => {
             draft.inputButtonLockoutMs = payload;
