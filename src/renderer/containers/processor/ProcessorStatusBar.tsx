@@ -21,13 +21,19 @@ flex-direction: row;
 justify-content: space-between;
 align-items: center;
 flex-grow: 1;
-* {
-    z-index: 2;
-}
+z-index: 2;
 `;
 
 const ProcessStatus = styled.div`
 flex-grow: 1;
+display: flex;
+flex-direction: row;
+align-items: center;
+`;
+
+const PercentDisplay = styled.div`
+font-size: 20px;
+margin-right: 10px;
 `;
 
 export const ProcessorStatusBar: React.FC = () => {
@@ -97,8 +103,12 @@ export const ProcessorStatusBar: React.FC = () => {
     return (
         <Outer>
             <ProcessStatus>
-                <span>{comboFinderPercent}%</span>
-                <span>{(comboFinderProcessing || complete) && comboFinderLog}</span>
+                { (comboFinderProcessing || complete) &&
+                <>
+                    {<PercentDisplay>{comboFinderPercent}%</PercentDisplay>}
+                    <div>{comboFinderLog}</div>
+                </>
+                }
             </ProcessStatus>
             <div>
                 {comboFinderProcessing ?
