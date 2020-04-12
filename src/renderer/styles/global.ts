@@ -1,6 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 
-import { transparentize } from "polished";
+import { lighten } from "polished";
 
 import { Theme, ThemeMode } from "./theme";
 
@@ -34,7 +34,7 @@ export const GlobalStyle = createGlobalStyle<{
     .ui.placeholder.segment,
     .ui.table thead th,
     .ui.table {
-      background: ${({theme}) => transparentize(0.8, theme.foreground)};
+      background: ${({theme}) => lighten(0.2, theme.foreground)};
       color: ${({theme}) => theme.foreground};
     }
 
@@ -63,11 +63,11 @@ export const GlobalStyle = createGlobalStyle<{
 
     .ui.label,
     .ui.button {
-        background: ${({theme}) => transparentize(0.2, theme.foreground2)} none;
+        background: ${({theme}) => lighten(0.1, theme.foreground2)} none;
         color: ${({theme}) => theme.foreground};
         font-weight: 500;
         &:hover {
-          background: ${({theme}) => transparentize(0.5, theme.foreground2)} none;
+          background: ${({theme}) => lighten(0.2, theme.foreground2)} none;
         }
     }
 
