@@ -1,6 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 
-import { transparentize } from "polished";
+import { lighten } from "polished";
 
 import { Theme, ThemeMode } from "./theme";
 
@@ -11,7 +11,9 @@ export const GlobalStyle = createGlobalStyle<{
     color: ${({ theme }) => theme.foreground };
   }
 
+  .ui.modal.${ThemeMode.DARK},
   #app .${ThemeMode.DARK} {
+    font-weight: 100;
 
     .ui.transparent.input input,
     .ui.divider,
@@ -26,13 +28,13 @@ export const GlobalStyle = createGlobalStyle<{
     .ui.checkbox input:focus:checked~.box,
     .ui.checkbox input:focus:checked~label
     {
-        color: ${({theme}) => theme.foreground} !important;
+      color: ${({theme}) => theme.foreground} !important;
     }
 
     .ui.placeholder.segment,
     .ui.table thead th,
     .ui.table {
-      background: ${({theme}) => transparentize(0.8, theme.foreground)};
+      background: ${({theme}) => lighten(0.2, theme.foreground)};
       color: ${({theme}) => theme.foreground};
     }
 
@@ -61,11 +63,11 @@ export const GlobalStyle = createGlobalStyle<{
 
     .ui.label,
     .ui.button {
-        background: ${({theme}) => transparentize(0.2, theme.foreground2)} none;
+        background: ${({theme}) => lighten(0.1, theme.foreground2)} none;
         color: ${({theme}) => theme.foreground};
         font-weight: 500;
         &:hover {
-          background: ${({theme}) => transparentize(0.5, theme.foreground2)} none;
+          background: ${({theme}) => lighten(0.2, theme.foreground2)} none;
         }
     }
 
@@ -79,5 +81,30 @@ export const GlobalStyle = createGlobalStyle<{
         color: ${({theme}) => theme.foreground} !important;
     }
 
+  }
+
+  .ui.modal.${ThemeMode.DARK} {
+    background: ${({theme}) => theme.background};
+
+    & > .header {
+      background: ${({theme}) => theme.background};
+      border-bottom-color: ${({theme}) => theme.background3};
+      color: ${({theme}) => theme.foreground};
+    }
+
+    & > .close {
+      color: ${({theme}) => theme.foreground};
+    }
+
+    & > .content {
+      background: ${({theme}) => theme.background};
+      color: ${({theme}) => theme.foreground};
+    }
+
+    & > .actions {
+      border-top-color: ${({theme}) => theme.background3};
+      background: ${({theme}) => theme.background2};
+      color: ${({theme}) => theme.foreground};
+    }
   }
 `;

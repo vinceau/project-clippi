@@ -5,29 +5,48 @@ import moment from "moment";
 import fg from "fast-glob";
 import fs from "fs-extra";
 
-import { ComboEventPayload, ComboFilter, DolphinPlaybackItem, generateDolphinQueuePayload, SlippiGame, SlpRealTime, SlpStream } from "@vinceau/slp-realtime";
+import { checkCombo, ComboEventPayload, ComboFilterSettings, defaultComboFilterSettings, DolphinPlaybackItem, Frames, generateDolphinQueuePayload, Input, SlippiGame, SlpRealTime, SlpStream } from "@vinceau/slp-realtime";
 import { Observable } from "rxjs";
 
-import { store } from "@/store";
 import { deleteFile, pipeFileContents } from "common/utils";
+import { filter, map, throttleTime } from "rxjs/operators";
 import { parseFileRenameFormat } from "./context";
-import { mapConfigurationToFilterSettings } from "./profile";
 
 export enum FindComboOption {
-    OnlyCombos = 0,
-    OnlyConversions = 1,
+    COMBOS = "COMBOS",
+    CONVERSIONS = "CONVERSIONS",
+    BUTTON_INPUTS = "BUTTON_INPUTS",
 }
 
-interface FileProcessorOptions {
+const defaultButtonInputOptions: ButtonInputOptions = {
+    buttonCombo: [Input.L, Input.R, Input.Z],  // Use the default schlippi command
+    preInputFrames: 1200,                      // 20 seconds
+    postInputFrames: 120,                      // 2 seconds
+    captureLockoutMs: 5000,                    // 5 seconds
+    holdDurationFrames: 1,
+};
+
+export interface ButtonInputOptions {
+    buttonCombo: Input[];
+    holdDurationFrames?: number;
+    preInputFrames: number;
+    postInputFrames: number;
+    captureLockoutMs: number;  // Milliseconds between input capture
+}
+
+export interface ComboOptions {
+    findComboCriteria: Partial<ComboFilterSettings>;
+    deleteZeroComboFiles?: boolean;
+}
+
+export interface FileProcessorOptions {
     filesPath: string;
     renameFiles: boolean;
-    findCombos: boolean;
-    findComboProfile?: string;
     findComboOption?: FindComboOption;
     includeSubFolders?: boolean;
-    deleteZeroComboFiles?: boolean;
     outputFile?: string;
     renameTemplate?: string;
+    config: Partial<ButtonInputOptions> | ComboOptions;
 }
 
 interface ProcessOutput {
@@ -77,8 +96,6 @@ export class FileProcessor {
     private queue = new Array<DolphinPlaybackItem>();
     private stopRequested: boolean = false;
     private readonly realtime = new SlpRealTime();
-    private combos$: Observable<ComboEventPayload> | null = null;
-    private readonly comboFilter = new ComboFilter();
 
     public stop(): void {
         this.stopRequested = true;
@@ -100,27 +117,6 @@ export class FileProcessor {
             deep: opts.includeSubFolders ? undefined : 1,
         };
 
-        // Set up the combos observable in advance
-        switch (opts.findComboOption) {
-            case FindComboOption.OnlyCombos:
-                this.combos$ = this.realtime.combo.end$;
-                break;
-            case FindComboOption.OnlyConversions:
-                this.combos$ = this.realtime.combo.conversion$;
-                break;
-            default:
-                this.combos$ = null;
-        }
-
-        if (opts.findCombos && opts.findComboProfile) {
-            const { comboProfiles } = store.getState().slippi;
-            const slippiSettings = comboProfiles[opts.findComboProfile];
-            if (slippiSettings) {
-                const converted = mapConfigurationToFilterSettings(JSON.parse(slippiSettings));
-                this.comboFilter.updateSettings(converted);
-            }
-        }
-
         let filesProcessed = 0;
         const entries = await fg(patterns, options);
         for (const [i, filename] of (entries.entries())) {
@@ -137,7 +133,7 @@ export class FileProcessor {
 
         // Write out files if we found combos
         let totalCombos = 0;
-        if (opts.findCombos && opts.outputFile) {
+        if (opts.findComboOption && opts.outputFile) {
             totalCombos = this.queue.length;
             const payload = generateDolphinQueuePayload(this.queue);
             await fs.writeFile(opts.outputFile, payload);
@@ -154,8 +150,9 @@ export class FileProcessor {
         };
     }
 
-    private async _processFile(filename: string, options: Partial<FileProcessorOptions>): Promise<ProcessResult> {
+    private async _processFile(filename: string, options: FileProcessorOptions): Promise<ProcessResult> {
         console.log(`Processing file: ${filename}`);
+        console.log(options);
         const res: ProcessResult = {};
 
         const game = new SlippiGame(filename);
@@ -170,10 +167,15 @@ export class FileProcessor {
         }
 
         // Handle combo finding
-        if (options.findCombos) {
-            res.numCombos = await this._findCombos(filename, metadata);
+        if (options.findComboOption) {
+            console.log("finding combos");
+            const highlights$ = this._generateHighlightObservable(filename, options.findComboOption, options.config, metadata).pipe(
+                map(highlight => populateHighlightMetadata(highlight, metadata)),
+            );
+            res.numCombos = await this._findHighlights(filename, highlights$);
+            const config = options.config as ComboOptions;
             // Delete the file if no combos were found
-            if (options.deleteZeroComboFiles && res.numCombos === 0) {
+            if (config.deleteZeroComboFiles && res.numCombos === 0) {
                 console.log(`No combos found in ${filename}. Deleting...`);
                 await deleteFile(filename);
                 res.fileDeleted = true;
@@ -183,40 +185,95 @@ export class FileProcessor {
         return res;
     }
 
+    private _generateHighlightObservable(
+        filename: string,
+        findComboOption: FindComboOption,
+        config: Partial<ButtonInputOptions> | ComboOptions,
+        metadata?: any,
+    ): Observable<DolphinPlaybackItem> {
+        switch (findComboOption) {
+            case FindComboOption.COMBOS:
+                return this._findCombos(filename, this.realtime.combo.end$, config as ComboOptions, metadata);
+            case FindComboOption.CONVERSIONS:
+                return this._findCombos(filename, this.realtime.combo.conversion$, config as ComboOptions, metadata);
+            case FindComboOption.BUTTON_INPUTS:
+                return this._findButtonInputs(filename, config as Partial<ButtonInputOptions>);
+        }
+    }
+
     /*
      * Finds combos and adds them to the dolphin queue. Returns the number of combos found.
      */
-    private async _findCombos(filename: string, metadata?: any): Promise<number> {
-        if (!this.combos$) {
-            return 0;
-        }
+    private _findButtonInputs(
+        filename: string,
+        options: Partial<ButtonInputOptions>,
+    ): Observable<DolphinPlaybackItem> {
+        const inputOptions = Object.assign({}, defaultButtonInputOptions, options);
+        const inputs$ = this.realtime.input.buttonCombo(inputOptions.buttonCombo, inputOptions.holdDurationFrames);
+        return inputs$.pipe(
+            throttleTime(inputOptions.captureLockoutMs),
+            map(({ frame }) => {
+                const startFrame = Math.max(Frames.FIRST, frame - inputOptions.preInputFrames);
+                const endFrame = frame + inputOptions.postInputFrames;
+                return {
+                    path: filename,
+                    startFrame,
+                    endFrame,
+                };
+            }),
+        );
+    }
 
+    /*
+     * Finds combos and adds them to the dolphin queue. Returns the number of combos found.
+     */
+    private _findCombos(
+        filename: string,
+        combos$: Observable<ComboEventPayload>,
+        comboOptions: ComboOptions,
+        metadata?: any,
+    ): Observable<DolphinPlaybackItem> {
+        const comboSettings = Object.assign({}, defaultComboFilterSettings, comboOptions.findComboCriteria);
+        return combos$.pipe(
+            filter(({ combo, settings }) => checkCombo(comboSettings, combo, settings, metadata)),
+            map(({ combo }) => ({
+                path: filename,
+                combo,
+            })),
+        );
+    }
+
+    /*
+     * Finds combos and adds them to the dolphin queue. Returns the number of combos found.
+     */
+    private async _findHighlights(filename: string, highlights$: Observable<DolphinPlaybackItem>): Promise<number> {
         const slpStream = new SlpStream({ singleGameMode: true });
         this.realtime.setStream(slpStream);
 
-        let count = 0;
-        const sub = this.combos$.subscribe(payload => {
-            const { combo, settings } = payload;
-            if (this.comboFilter.isCombo(combo, settings, metadata)) {
-                const formattedTime: string = moment(metadata.startAt).format("MM/DD/YY h:mm a");
-                const consoleNick: string = metadata.consoleNick || "unknown";
-                this.queue.push({
-                    path: filename,
-                    combo,
-                    gameStation: consoleNick,
-                    gameStartAt: formattedTime,
-                });
-                count += 1;
-            }
-        });
+        const beforeCount = this.queue.length;
+        const sub = highlights$.subscribe(payload =>  this.queue.push(payload));
 
         await pipeFileContents(filename, slpStream);
-        console.log(`Found ${count} combos in ${filename}`);
-
         sub.unsubscribe();
+
+        const count = this.queue.length - beforeCount;
+        console.log(`Found ${count} combos in ${filename}`);
         return count;
     }
 
 }
 
 export const fileProcessor = new FileProcessor();
+
+const populateHighlightMetadata = (highlight: DolphinPlaybackItem, metadata?: any): DolphinPlaybackItem => {
+    if (!metadata) {
+        return highlight;
+    }
+    if (metadata.startAt) {
+        highlight.gameStartAt = moment(metadata.startAt).format("MM/DD/YY h:mm a");
+    }
+    if (metadata.consoleNick) {
+        highlight.gameStation = metadata.consoleNick;
+    }
+    return highlight;
+};
