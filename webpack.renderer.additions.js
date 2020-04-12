@@ -7,11 +7,21 @@ const commitHash = require('child_process')
   .toString();
 
 module.exports = function(context) {
-    // Add web worker support
-    context.module.rules.push({
-        test: /\*\.worker\.ts$/,
-        use: { loader: 'worker-loader' }
-    });
+    context.module.rules.push(
+        // Add web worker support
+        {
+            test: /\*\.worker\.ts$/,
+            use: { loader: 'worker-loader' }
+        },
+        // Fix iconv-lite issue, webpack require issue
+        // https://github.com/ashtuchkin/iconv-lite/issues/204#issuecomment-432048618
+        {
+            test: /node_modules[\/\\](iconv-lite)[\/\\].+/,
+            resolve: {
+              aliasFields: ['main']
+            },
+        },
+    );
 
     // Fix web workers not working with HMR
     context.output.globalObject = "this";
