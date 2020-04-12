@@ -6,7 +6,7 @@ import { Dispatch, iRootState } from "@/store";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Icon } from "semantic-ui-react";
 
-import { ButtonInputOptions, ComboOptions, fileProcessor, FileProcessorOptions, FindComboOption, ProcessResult } from "@/lib/fileProcessor";
+import { findAndWriteCombos } from "@/lib/fileProcessor";
 import { mapConfigurationToFilterSettings } from "@/lib/profile";
 import { notify } from "@/lib/utils";
 import { ComboFilterSettings, Input } from "@vinceau/slp-realtime";
@@ -47,6 +47,7 @@ export const ProcessorStatusBar: React.FC = () => {
     const complete = comboFinderPercent === 100;
     const processBtnDisabled = (!findCombos && !renameFiles) || !combosFilePath;
 
+    /*
     const findAndWriteCombos = async () => {
         dispatch.tempContainer.setPercent(0);
         dispatch.tempContainer.setComboFinderProcessing(true);
@@ -109,6 +110,7 @@ export const ProcessorStatusBar: React.FC = () => {
             openComboInDolphin(combosFilePath);
         }
     };
+    */
     return (
         <Outer>
             <ProcessStatus>
@@ -121,12 +123,12 @@ export const ProcessorStatusBar: React.FC = () => {
             </ProcessStatus>
             <div>
                 {comboFinderProcessing ?
-                    <Button negative={true} type="button" onClick={() => fileProcessor.stop()}>
+                    <Button negative={true} type="button" onClick={() => console.log("stop pressed")}>
                         <Icon name="stop" />
                             Stop processing
                     </Button>
                     :
-                    <Button primary={true} type="button" onClick={() => findAndWriteCombos().catch(console.error)} disabled={processBtnDisabled}>
+                    <Button primary={true} type="button" onClick={() => findAndWriteCombos({} as any).catch(console.error)} disabled={processBtnDisabled}>
                         <Icon name="fast forward" />
                             Process replays
                     </Button>

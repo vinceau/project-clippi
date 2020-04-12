@@ -49,7 +49,7 @@ export interface FileProcessorOptions {
     config: Partial<ButtonInputOptions> | ComboOptions;
 }
 
-interface ProcessOutput {
+export interface ProcessOutput {
     combosFound: number;
     filesProcessed: number;
     timeTaken: number; // in seconds

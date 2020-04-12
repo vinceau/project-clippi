@@ -1,7 +1,7 @@
 import React from "react";
 
 import { InlineDropdown } from "@/components/InlineInputs";
-import { FindComboOption } from "@/lib/fileProcessor";
+import { FindComboOption } from "common/fileProcessor";
 import { Dispatch, iRootState } from "@/store";
 import { useDispatch, useSelector } from "react-redux";
 import { HighlightButtonInputs } from "./HighlightButtonInputs";
