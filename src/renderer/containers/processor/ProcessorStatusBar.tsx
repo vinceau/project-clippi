@@ -1,4 +1,5 @@
-import * as React from "react";
+import path from "path";
+import React from "react";
 
 import { openComboInDolphin } from "@/lib/dolphin";
 import { Dispatch, iRootState } from "@/store";
@@ -49,14 +50,15 @@ export const ProcessorStatusBar: React.FC = () => {
     const findAndWriteCombos = async () => {
         dispatch.tempContainer.setPercent(0);
         dispatch.tempContainer.setComboFinderProcessing(true);
-        console.log(`finding combos from the slp files in ${filesPath} ${includeSubFolders && "and all subfolders"} and saving to ${combosFilePath}`);
+        console.log(`finding highlights from the slp files in ${filesPath} ${includeSubFolders && "and all subfolders"} and saving to ${combosFilePath}`);
         const callback = (i: number, total: number, filename: string, r: ProcessResult): void => {
             dispatch.tempContainer.setPercent(Math.floor((i + 1) / total * 100));
             if (findCombos) {
                 if (r.fileDeleted) {
                     dispatch.tempContainer.setComboLog(`Deleted ${filename}`);
                 } else {
-                    dispatch.tempContainer.setComboLog(`Found ${r.numCombos} combos in: ${r.newFilename || filename}`);
+                    const base = path.basename(r.newFilename || filename);
+                    dispatch.tempContainer.setComboLog(`Found ${r.numCombos} highlights in: ${base}`);
                 }
             } else if (renameFiles && r.newFilename) {
                 dispatch.tempContainer.setComboLog(`Renamed ${filename} to ${r.newFilename}`);
@@ -93,15 +95,15 @@ export const ProcessorStatusBar: React.FC = () => {
         const result = await fileProcessor.process(options, callback);
         const timeTakenStr = secondsToString(result.timeTaken);
         const numCombos = result.combosFound;
-        console.log(`finished generating ${numCombos} combos in ${timeTakenStr}`);
+        console.log(`finished generating ${numCombos} highlights in ${timeTakenStr}`);
         let message = `Processed ${result.filesProcessed} files in ${timeTakenStr}`;
         if (findCombos) {
-            message += ` and found ${numCombos} combos`;
+            message += ` and found ${numCombos} highlights`;
         }
         dispatch.tempContainer.setComboFinderProcessing(false);
         dispatch.tempContainer.setPercent(100);
         dispatch.tempContainer.setComboLog(message);
-        notify(message, `Combo Processing Complete`);
+        notify(message, `Highlight processing complete`);
         if (isWindows && openCombosWhenDone) {
             // check if we want to open the combo file after generation
             openComboInDolphin(combosFilePath);
