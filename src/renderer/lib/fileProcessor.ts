@@ -8,11 +8,9 @@ import fs from "fs-extra";
 import { checkCombo, ComboEventPayload, ComboFilterSettings, defaultComboFilterSettings, DolphinPlaybackItem, Frames, generateDolphinQueuePayload, Input, SlippiGame, SlpRealTime, SlpStream } from "@vinceau/slp-realtime";
 import { Observable } from "rxjs";
 
-import { store } from "@/store";
 import { deleteFile, pipeFileContents } from "common/utils";
 import { filter, map, throttleTime } from "rxjs/operators";
 import { parseFileRenameFormat } from "./context";
-import { mapConfigurationToFilterSettings } from "./profile";
 
 export enum FindComboOption {
     COMBOS = "COMBOS",

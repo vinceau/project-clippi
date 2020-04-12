@@ -1,10 +1,9 @@
 import * as React from "react";
 
-import { loadQueueIntoDolphin, openComboInDolphin } from "@/lib/dolphin";
-import { OBSConnectionStatus, OBSRecordingStatus } from "@/lib/obs";
+import { openComboInDolphin } from "@/lib/dolphin";
 import { Dispatch, iRootState } from "@/store";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Icon, Progress } from "semantic-ui-react";
+import { Button, Icon } from "semantic-ui-react";
 
 import { ButtonInputOptions, ComboOptions, fileProcessor, FileProcessorOptions, FindComboOption, ProcessResult } from "@/lib/fileProcessor";
 import { mapConfigurationToFilterSettings } from "@/lib/profile";

@@ -40,7 +40,7 @@ export const fileSystemInitialState: FileSystemState = {
     deleteFilesWithNoCombos: false,
     findCombos: true,
     findComboProfile: "default",
-    findComboOption: FindComboOption.Combos,
+    findComboOption: FindComboOption.COMBOS,
     renameFiles: false,
     renameFormat: "{{YY}}{{MM}}{{DD}}_{{HH}}{{mm}}_{{playerShortChar}}_v_{{opponentShortChar}}_({{shortStage}}).slp",
     openCombosWhenDone: false,

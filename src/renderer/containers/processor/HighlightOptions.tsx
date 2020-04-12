@@ -1,8 +1,5 @@
 import React from "react";
 
-import { ButtonInput } from "@/components/gamecube/ButtonInput";
-import { ButtonPicker } from "@/components/gamecube/ButtonPicker";
-import { ControllerLayout } from "@/components/gamecube/ControllerLayout";
 import { InlineDropdown } from "@/components/InlineInputs";
 import { FindComboOption } from "@/lib/fileProcessor";
 import { Dispatch, iRootState } from "@/store";
@@ -10,8 +7,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { HighlightButtonInputs } from "./HighlightButtonInputs";
 
 export const HighlightOptions: React.FC = () => {
-    const [buttons, setButtons] = React.useState<string[]>([]);
-
     const { comboProfiles } = useSelector((state: iRootState) => state.slippi);
     const dispatch = useDispatch<Dispatch>();
     const { findComboOption, findComboProfile } = useSelector((state: iRootState) => state.filesystem);
