@@ -5,14 +5,14 @@ import moment from "moment";
 import fg from "fast-glob";
 import fs from "fs-extra";
 
-import { Frames, ComboEventPayload, defaultComboFilterSettings, checkCombo, ComboFilterSettings, DolphinPlaybackItem, generateDolphinQueuePayload, SlippiGame, SlpRealTime, SlpStream, Input } from "@vinceau/slp-realtime";
+import { checkCombo, ComboEventPayload, ComboFilterSettings, defaultComboFilterSettings, DolphinPlaybackItem, Frames, generateDolphinQueuePayload, Input, SlippiGame, SlpRealTime, SlpStream } from "@vinceau/slp-realtime";
 import { Observable } from "rxjs";
 
 import { store } from "@/store";
 import { deleteFile, pipeFileContents } from "common/utils";
+import { filter, map, throttleTime } from "rxjs/operators";
 import { parseFileRenameFormat } from "./context";
 import { mapConfigurationToFilterSettings } from "./profile";
-import { filter, map, throttleTime } from "rxjs/operators";
 
 export enum FindComboOption {
     COMBOS = "COMBOS",

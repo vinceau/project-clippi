@@ -5,8 +5,8 @@ import { Button, Icon, Modal } from "semantic-ui-react";
 import { ControllerLayout } from "./ControllerLayout";
 
 import { useTheme } from "@/styles";
-import { ButtonTextPreview } from "./ButtonPreview";
 import styled from "styled-components";
+import { ButtonTextPreview } from "./ButtonPreview";
 
 export const ButtonPicker: React.FC<{
     value?: string[];

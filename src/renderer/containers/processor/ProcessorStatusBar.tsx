@@ -6,12 +6,12 @@ import { Dispatch, iRootState } from "@/store";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Icon, Progress } from "semantic-ui-react";
 
-import styled from "styled-components";
-import { fileProcessor, ProcessResult, FileProcessorOptions, ButtonInputOptions, ComboOptions, FindComboOption } from "@/lib/fileProcessor";
-import { secondsToString } from "common/utils";
-import { notify } from "@/lib/utils";
+import { ButtonInputOptions, ComboOptions, fileProcessor, FileProcessorOptions, FindComboOption, ProcessResult } from "@/lib/fileProcessor";
 import { mapConfigurationToFilterSettings } from "@/lib/profile";
+import { notify } from "@/lib/utils";
 import { ComboFilterSettings, Input } from "@vinceau/slp-realtime";
+import { secondsToString } from "common/utils";
+import styled from "styled-components";
 
 const isWindows = process.platform === "win32";
 
@@ -64,13 +64,12 @@ export const ProcessorStatusBar: React.FC = () => {
             }
         };
 
-
         let converted: Partial<ComboFilterSettings> = {};
         const slippiSettings = comboProfiles[findComboProfile];
         if (slippiSettings) {
             converted = mapConfigurationToFilterSettings(JSON.parse(slippiSettings));
         }
-    
+
         const buttonConfig: ButtonInputOptions = {
             buttonCombo: inputButtonCombo as Input[],
             holdDurationFrames: inputButtonHold ? inputButtonHoldFrames : 1,
