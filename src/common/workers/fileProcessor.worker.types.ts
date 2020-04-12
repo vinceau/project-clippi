@@ -1,4 +1,4 @@
-import { FileProcessorOptions, ProcessResult, ProcessOutput } from "common/fileProcessor";
+import { FileProcessorOptions, ProcessOutput, ProcessResult } from "common/fileProcessor";
 
 export enum FileProcessorWorkerMessage {
     PROGRESS = "PROGRESS",

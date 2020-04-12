@@ -1,17 +1,16 @@
 import path from "path";
 
-import { dispatcher } from "@/store";
-import { FileProcessorOptions, ProcessOutput, ComboOptions } from "common/fileProcessor";
-
 import Worker from "worker-loader!common/workers/fileProcessor.worker";
-import { FileProcessorParentMessage, FileProcessorWorkerMessage, ProgressingPayload, CompletePayload } from "common/workers/fileProcessor.worker.types";
+
+import { dispatcher } from "@/store";
+import { ComboOptions, FileProcessorOptions } from "common/fileProcessor";
 import { secondsToString } from "common/utils";
-import { notify } from "./utils";
+import { CompletePayload, FileProcessorParentMessage, FileProcessorWorkerMessage, ProgressingPayload } from "common/workers/fileProcessor.worker.types";
 import { openComboInDolphin } from "./dolphin";
+import { notify } from "./utils";
 
 const worker = new Worker();
 
-worker.postMessage({ a: 1 });
 worker.onmessage = (event) => {
     console.log(`got message from worker! payload:`);
     console.log(event.data);

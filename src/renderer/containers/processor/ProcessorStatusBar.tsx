@@ -1,17 +1,13 @@
-import path from "path";
 import React from "react";
+import styled from "styled-components";
 
-import { openComboInDolphin } from "@/lib/dolphin";
-import { Dispatch, iRootState } from "@/store";
-import { useDispatch, useSelector } from "react-redux";
+import { iRootState } from "@/store";
+import { useSelector } from "react-redux";
 import { Button, Icon } from "semantic-ui-react";
 
 import { startProcessing, stopProcessing } from "@/lib/fileProcessor";
 import { mapConfigurationToFilterSettings } from "@/lib/profile";
-import { notify } from "@/lib/utils";
 import { ComboFilterSettings, Input } from "@vinceau/slp-realtime";
-import { secondsToString } from "common/utils";
-import styled from "styled-components";
 import { ButtonInputOptions, ComboOptions, FileProcessorOptions, FindComboOption } from "common/fileProcessor";
 
 const isWindows = process.platform === "win32";
@@ -43,7 +39,6 @@ export const ProcessorStatusBar: React.FC = () => {
     const { openCombosWhenDone, filesPath, combosFilePath, includeSubFolders, deleteFilesWithNoCombos,
         inputButtonCombo, inputButtonPreInputFrames, inputButtonPostInputFrames, inputButtonHoldFrames, inputButtonLockoutMs, inputButtonHold,
         renameFiles, findCombos, findComboOption, renameFormat, findComboProfile } = useSelector((state: iRootState) => state.filesystem);
-    const dispatch = useDispatch<Dispatch>();
 
     const complete = comboFinderPercent === 100;
     const processBtnDisabled = (!findCombos && !renameFiles) || !combosFilePath;

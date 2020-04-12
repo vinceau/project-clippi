@@ -1,8 +1,8 @@
 // Worker.ts
 // import fs from "fs-extra";
 
-import { FileProcessorOptions, FileProcessor, ProcessResult, ProcessOutput } from "../fileProcessor";
-import { FileProcessorParentMessage, StartProcessingPayload, FileProcessorWorkerMessage, ProgressingPayload } from "./fileProcessor.worker.types";
+import { FileProcessor, FileProcessorOptions, ProcessOutput, ProcessResult } from "../fileProcessor";
+import { FileProcessorParentMessage, FileProcessorWorkerMessage, ProgressingPayload, StartProcessingPayload } from "./fileProcessor.worker.types";
 
 const fileProcessor = new FileProcessor();
 

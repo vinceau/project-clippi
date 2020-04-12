@@ -4,9 +4,9 @@ import { createModel } from "@rematch/core";
 import { remote } from "electron";
 import produce from "immer";
 
-import { FindComboOption } from "common/fileProcessor";
 import { SoundMap } from "@/lib/sounds";
 import { getFilePath } from "@/lib/utils";
+import { FindComboOption } from "common/fileProcessor";
 
 const homeDirectory = remote.app.getPath("home");
 
