@@ -12,6 +12,7 @@ import { notify } from "@/lib/utils";
 import { ComboFilterSettings, Input } from "@vinceau/slp-realtime";
 import { secondsToString } from "common/utils";
 import styled from "styled-components";
+import { ButtonInputOptions, ComboOptions, FileProcessorOptions, FindComboOption } from "common/fileProcessor";
 
 const isWindows = process.platform === "win32";
 
@@ -47,24 +48,10 @@ export const ProcessorStatusBar: React.FC = () => {
     const complete = comboFinderPercent === 100;
     const processBtnDisabled = (!findCombos && !renameFiles) || !combosFilePath;
 
-    /*
-    const findAndWriteCombos = async () => {
+    const handleProcessClick = () => {
         dispatch.tempContainer.setPercent(0);
         dispatch.tempContainer.setComboFinderProcessing(true);
         console.log(`finding highlights from the slp files in ${filesPath} ${includeSubFolders && "and all subfolders"} and saving to ${combosFilePath}`);
-        const callback = (i: number, total: number, filename: string, r: ProcessResult): void => {
-            dispatch.tempContainer.setPercent(Math.floor((i + 1) / total * 100));
-            if (findCombos) {
-                if (r.fileDeleted) {
-                    dispatch.tempContainer.setComboLog(`Deleted ${filename}`);
-                } else {
-                    const base = path.basename(r.newFilename || filename);
-                    dispatch.tempContainer.setComboLog(`Found ${r.numCombos} highlights in: ${base}`);
-                }
-            } else if (renameFiles && r.newFilename) {
-                dispatch.tempContainer.setComboLog(`Renamed ${filename} to ${r.newFilename}`);
-            }
-        };
 
         let converted: Partial<ComboFilterSettings> = {};
         const slippiSettings = comboProfiles[findComboProfile];
@@ -83,7 +70,9 @@ export const ProcessorStatusBar: React.FC = () => {
         const comboConfig: ComboOptions = {
             deleteZeroComboFiles: deleteFilesWithNoCombos,
             findComboCriteria: converted,
+            openCombosWhenDone: isWindows && openCombosWhenDone,
         };
+
         const options: FileProcessorOptions = {
             filesPath,
             renameFiles,
@@ -93,24 +82,9 @@ export const ProcessorStatusBar: React.FC = () => {
             renameTemplate: renameFormat,
             config: findCombos && findComboOption === FindComboOption.BUTTON_INPUTS ? buttonConfig : comboConfig,
         };
-        const result = await fileProcessor.process(options, callback);
-        const timeTakenStr = secondsToString(result.timeTaken);
-        const numCombos = result.combosFound;
-        console.log(`finished generating ${numCombos} highlights in ${timeTakenStr}`);
-        let message = `Processed ${result.filesProcessed} files in ${timeTakenStr}`;
-        if (findCombos) {
-            message += ` and found ${numCombos} highlights`;
-        }
-        dispatch.tempContainer.setComboFinderProcessing(false);
-        dispatch.tempContainer.setPercent(100);
-        dispatch.tempContainer.setComboLog(message);
-        notify(message, `Highlight processing complete`);
-        if (isWindows && openCombosWhenDone) {
-            // check if we want to open the combo file after generation
-            openComboInDolphin(combosFilePath);
-        }
+        findAndWriteCombos(options);
     };
-    */
+
     return (
         <Outer>
             <ProcessStatus>
@@ -128,7 +102,7 @@ export const ProcessorStatusBar: React.FC = () => {
                             Stop processing
                     </Button>
                     :
-                    <Button primary={true} type="button" onClick={() => findAndWriteCombos({} as any).catch(console.error)} disabled={processBtnDisabled}>
+                    <Button primary={true} type="button" onClick={handleProcessClick} disabled={processBtnDisabled}>
                         <Icon name="fast forward" />
                             Process replays
                     </Button>

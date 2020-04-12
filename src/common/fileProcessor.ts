@@ -37,6 +37,7 @@ export interface ButtonInputOptions {
 export interface ComboOptions {
     findComboCriteria: Partial<ComboFilterSettings>;
     deleteZeroComboFiles?: boolean;
+    openCombosWhenDone?: boolean;
 }
 
 export interface FileProcessorOptions {
@@ -53,6 +54,7 @@ export interface ProcessOutput {
     combosFound: number;
     filesProcessed: number;
     timeTaken: number; // in seconds
+    stopRequested: boolean;
 }
 
 const uniqueFilename = (name: string) => {
@@ -96,6 +98,11 @@ export class FileProcessor {
     private queue = new Array<DolphinPlaybackItem>();
     private stopRequested: boolean = false;
     private readonly realtime = new SlpRealTime();
+    private processing: boolean = false;
+
+    public isProcessing(): boolean {
+        return this.processing;
+    }
 
     public stop(): void {
         this.stopRequested = true;
@@ -105,6 +112,7 @@ export class FileProcessor {
         opts: FileProcessorOptions,
         callback?: (i: number, total: number, filename: string, data: ProcessResult) => void,
     ): Promise<ProcessOutput> {
+        this.processing = true;
         const before = new Date();  // Use this to track elapsed time
         this.stopRequested = false;
         this.queue = [];
@@ -143,10 +151,12 @@ export class FileProcessor {
         // Return elapsed time and other stats
         const after = new Date();
         const millisElapsed = Math.abs(after.getTime() - before.getTime());
+        this.processing = false;
         return {
             timeTaken: millisElapsed / 1000,
             filesProcessed,
             combosFound: totalCombos,
+            stopRequested: this.stopRequested,
         };
     }
 
@@ -263,7 +273,7 @@ export class FileProcessor {
 
 }
 
-export const fileProcessor = new FileProcessor();
+// export const fileProcessor = new FileProcessor();
 
 const populateHighlightMetadata = (highlight: DolphinPlaybackItem, metadata?: any): DolphinPlaybackItem => {
     if (!metadata) {
