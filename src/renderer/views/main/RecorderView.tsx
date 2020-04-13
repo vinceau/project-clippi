@@ -81,6 +81,9 @@ export const RecorderView: React.FC = () => {
         loadSlpFilesInDolphin(filepaths, options).catch(console.error);
         */
     };
+    const addFileHandler = () => {
+        dispatch.tempContainer.addFileToDolphinQueue();
+    };
     const shuffleQueueHandler = () => {
         dispatch.tempContainer.shuffleDolphinQueue();
     };
@@ -105,7 +108,7 @@ export const RecorderView: React.FC = () => {
                         </Button>
                     </div>
                     <div>
-                        <Labelled title="Add file"><Button onClick={clearQueueHandler} icon="plus" /></Labelled>
+                        <Labelled title="Add file"><Button onClick={addFileHandler} icon="plus" /></Labelled>
                         <Labelled title="Shuffle queue"><Button onClick={shuffleQueueHandler} disabled={!validQueue} icon="shuffle" /></Labelled>
                         <Labelled title="Clear queue"><Button onClick={clearQueueHandler} disabled={!validQueue} icon="trash" /></Labelled>
                     </div>

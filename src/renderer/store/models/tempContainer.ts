@@ -9,6 +9,7 @@ import { ConnectionStatus, DolphinEntry, DolphinQueueFormat, DolphinQueueOptions
 import { currentUser } from "common/twitch";
 import { HelixUser } from "twitch";
 import { shuffle } from "common/utils";
+import { getFilePath } from "@/lib/utils";
 
 export interface TempContainerState {
     slippiConnectionStatus: ConnectionStatus;
@@ -164,6 +165,19 @@ export const tempContainer = createModel({
                 return;
             }
             dispatch.tempContainer.setDolphinQueueFromJson(dolphinQueue);
+        },
+        async addFileToDolphinQueue() {
+            const p = await getFilePath({
+                filters: [{ name: "SLP files", extensions: ["slp"] }],
+                properties: ["openFile", "openDirectory", "multiSelections"],
+            }, false);
+            if (p && p.length > 0) {
+                dispatch.tempContainer.appendDolphinQueue(
+                    p.map(filepath => ({
+                        path: filepath,
+                    }))
+                );
+            }
         },
     }),
 });
