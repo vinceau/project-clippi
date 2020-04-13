@@ -137,11 +137,11 @@ export const filesystem = createModel({
             const p = await getFilePath({
                 filters: [{ name: "Audio files", extensions: ["flac", "mp3", "m4a", "webm", "wav", "aac", "ogg", "opus"] }],
             }, false);
-            if (p) {
-                const name = path.basename(p);
+            if (p && p.length > 0) {
+                const name = path.basename(p[0]);
                 dispatch.filesystem.setSound({
                     name,
-                    filePath: p,
+                    filePath: p[0],
                 });
             }
         },

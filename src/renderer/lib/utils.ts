@@ -23,10 +23,14 @@ const fileOptions = {
 
 export const getFolderPath = async (options?: any): Promise<string | null> => {
     const dialogOptions = options ? options : folderOptions;
-    return getFilePath(dialogOptions);
+    const paths = await getFilePath(dialogOptions);
+    if (paths && paths.length > 0) {
+        return paths[0];
+    }
+    return null;
 };
 
-export const getFilePath = async (options?: any, save?: boolean): Promise<string | null> => {
+export const getFilePath = async (options?: any, save?: boolean): Promise<string[] | null> => {
     const dialogOptions = options ? options : fileOptions;
     try {
         const p = await ipc.sendSyncWithTimeout(
@@ -70,8 +74,8 @@ export const loadFileInDolphin = async (options?: Partial<DolphinPlayerOptions>)
     const p = await getFilePath({
         filters: [{ name: "JSON files", extensions: ["json"] }],
     });
-    if (p) {
-        openComboInDolphin(p, options);
+    if (p && p.length > 0) {
+        openComboInDolphin(p[0], options);
     }
 };
 
@@ -79,10 +83,10 @@ export const loadDolphinQueue = async (): Promise<DolphinQueueFormat | null> => 
     const p = await getFilePath({
         filters: [{ name: "JSON files", extensions: ["json"] }],
     });
-    if (!p) {
-        return null;
+    if (p && p.length > 0) {
+        return fs.readJson(p[0]);
     }
-    return fs.readJson(p);
+    return null;
 };
 
 /**

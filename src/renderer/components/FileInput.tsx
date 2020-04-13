@@ -36,7 +36,10 @@ export const FileInput: React.FC<FileInputProps> = props => {
                     filters: fileTypeFilters,
                 };
             }
-            p = await getFilePath(options, saveFile);
+            const filePaths = await getFilePath(options, saveFile);
+            if (filePaths && filePaths.length > 0) {
+                p = filePaths[0];
+            }
         }
 
         if (p) {

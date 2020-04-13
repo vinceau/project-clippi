@@ -162,7 +162,7 @@ export const saveQueueToFile = async (): Promise<void> => {
         filters: fileTypeFilters,
     };
     const p = await getFilePath(options, true);
-    if (!p) {
+    if (!p || p.length === 0) {
         console.error("Could not save queue because path is undefined");
         return;
     }
@@ -172,5 +172,5 @@ export const saveQueueToFile = async (): Promise<void> => {
         queue: dolphinQueue,
     };
     const payload = JSON.stringify(queue, undefined, 2);
-    return fs.writeFile(p, payload);
+    return fs.writeFile(p[0], payload);
 };
