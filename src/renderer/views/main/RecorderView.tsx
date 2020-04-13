@@ -36,7 +36,7 @@ flex-direction: column;
 `;
 
 const MainBody = styled.div<{
-    themeName: ThemeMode;
+    themeName: string;
 }>`
 flex-grow: 1;
 background-color: ${p => {
