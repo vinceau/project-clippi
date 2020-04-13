@@ -1,8 +1,9 @@
 import React from "react";
 
 import styled from "styled-components";
-import { lighten } from "polished";
+import { lighten, darken } from "polished";
 
+import { ThemeMode, useTheme } from "@/styles";
 import { Dispatch, iRootState } from "@/store";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Icon } from "semantic-ui-react";
@@ -34,9 +35,14 @@ overflow: hidden;
 flex-direction: column;
 `;
 
-const MainBody = styled.div`
+const MainBody = styled.div<{
+    themeName: ThemeMode;
+}>`
 flex-grow: 1;
-background-color: ${({theme}) => lighten(0.05, theme.background)};
+background-color: ${p => {
+    const adjust = p.themeName === ThemeMode.DARK ? lighten : darken;
+    return adjust(0.05, p.theme.background);
+}};
 border-radius: 5px;
 overflow: hidden;
 overflow-y: auto;
@@ -52,6 +58,7 @@ margin-bottom: 10px;
 `;
 
 export const RecorderView: React.FC = () => {
+    const theme = useTheme();
     const { dolphinQueue } = useSelector((state: iRootState) => state.tempContainer);
     const dispatch = useDispatch<Dispatch>();
     const loadFileHandler = () => {
@@ -92,7 +99,7 @@ export const RecorderView: React.FC = () => {
                     </div>
                     <Button onClick={clearQueueHandler} disabled={!validQueue}><Icon name="trash" /> Clear queue</Button>
                 </Toolbar>
-                <MainBody>
+                <MainBody themeName={theme.themeName}>
                     <DropPad onDrop={(files) => droppedFilesHandler(files)} files={dolphinQueue} />
                 </MainBody>
             </Content>
