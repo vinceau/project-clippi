@@ -69,7 +69,7 @@ export const TwitchClipInfo: React.FC<{
             </div>
             <ButtonsContainer>
                 <Labelled title="Edit"><a href={url + "/edit"} target="_blank"><Icon name="pencil" /></a></Labelled>
-                <Labelled title="Remove"><Icon name="trash" link onClick={onRemove} /></Labelled>
+                <Labelled title="Remove"><Icon name="trash" onClick={onRemove} /></Labelled>
             </ButtonsContainer>
         </ClipContainer>
     );

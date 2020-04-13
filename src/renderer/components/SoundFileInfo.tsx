@@ -46,7 +46,7 @@ export const SoundFileInfo: React.FC<{
                 </div>
             </div>
             <div style={{fontSize: "20px"}}>
-                <Labelled title="Remove"><Icon name="trash" link onClick={props.onRemove} /></Labelled>
+                <Labelled title="Remove"><Icon name="trash" onClick={props.onRemove} /></Labelled>
             </div>
         </Container>
     );
