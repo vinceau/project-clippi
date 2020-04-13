@@ -23,6 +23,7 @@ flex-direction: row;
 align-items: center;
 min-width: 0;
 padding-right: 20px;
+opacity: 0.8;
 `;
 
 const DetailsContent = styled.div`
@@ -39,7 +40,6 @@ h3 {
 span {
     font-size: 12px;
     font-weight: 100;
-    opacity: 0.8;
 }
 `;
 
