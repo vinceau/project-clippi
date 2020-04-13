@@ -11,14 +11,6 @@ flex-direction: row;
 justify-content: space-between;
 align-items: center;
 padding: 10px;
-h3 {
-    margin: 0;
-}
-span.path {
-    font-size: 12px;
-    font-weight: 100;
-    opacity: 0.8;
-}
 border-bottom: solid 1px ${p => transparentize(0.8, p.theme.foreground)};
 &:last-child {
     border-bottom: none;
@@ -30,12 +22,24 @@ display: flex;
 flex-direction: row;
 align-items: center;
 min-width: 0;
+padding-right: 20px;
+`;
 
-.content {
-    margin-left: 10px;
+const DetailsContent = styled.div`
+margin-left: 10px;
+overflow: hidden;
+text-overflow: ellipsis;
+white-space: nowrap;
+
+h3 {
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
+    margin: 0;
+}
+span {
+    font-size: 12px;
+    font-weight: 100;
+    opacity: 0.8;
 }
 `;
 
@@ -48,10 +52,10 @@ export const PlaybackQueueItem: React.FC<{
         <Outer>
             <Details>
                 <Icon size="big" name="file outline" />
-                <div className="content">
+                <DetailsContent>
                     <h3>{basename}</h3>
-                    <span className="path">{props.path}</span>
-                </div>
+                    <span>{props.path}</span>
+                </DetailsContent>
             </Details>
             <Labelled title="Remove"><Icon link size="large" name="close" onClick={props.onRemove} /></Labelled>
         </Outer>
