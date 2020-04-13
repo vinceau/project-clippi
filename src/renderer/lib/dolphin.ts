@@ -40,9 +40,14 @@ const getDolphinPath = (): string => {
 };
 
 export class DolphinRecorder extends DolphinLauncher {
+    private recordAsOneFile = false;
     private recordingEnabled = false;
     private startAction = OBSRecordingAction.START;
     private endAction = OBSRecordingAction.STOP;
+    private userFilenameFormat: string = "";
+
+    private readonly currentJSONFileSource = new BehaviorSubject<string>("");
+    public currentJSONFile$ = this.currentJSONFileSource.asObservable();
 
     private readonly currentBasenameSource = new BehaviorSubject<string>("");
     public currentBasename$ = this.currentBasenameSource.asObservable();
@@ -65,10 +70,12 @@ export class DolphinRecorder extends DolphinLauncher {
     public recordJSON(comboFilePath: string, options?: Partial<DolphinPlayerOptions>) {
         const opts: DolphinPlayerOptions = Object.assign({}, defaultDolphinPlayerOptions, options);
         this.recordingEnabled = opts.record;
+        this.recordAsOneFile = this.recordingEnabled && opts.pauseBetweenEntries;
         if (this.recordingEnabled) {
             this.startAction = opts.pauseBetweenEntries ? OBSRecordingAction.UNPAUSE : OBSRecordingAction.START;
             this.endAction = opts.pauseBetweenEntries ? OBSRecordingAction.PAUSE : OBSRecordingAction.STOP;
         }
+        this.currentJSONFileSource.next(comboFilePath);
         super.loadJSON(comboFilePath);
     }
 
@@ -77,6 +84,7 @@ export class DolphinRecorder extends DolphinLauncher {
         switch (payload.status) {
             case DolphinPlaybackStatus.FILE_LOADED:
                 const basename = path.basename(payload.data.path);
+                await this._handleSetOBSFilename(basename);
                 this.currentBasenameSource.next(basename);
                 break;
             case DolphinPlaybackStatus.PLAYBACK_START:
@@ -95,6 +103,22 @@ export class DolphinRecorder extends DolphinLauncher {
         }
     }
 
+    private async _handleSetOBSFilename(filename: string): Promise<void> {
+        // Return if recording is off, or if recording has already started
+        if (!this.recordingEnabled || obsConnection.isRecording()) {
+            return;
+        }
+
+        // First store the current filename format so we can restore it later
+        this.userFilenameFormat = await obsConnection.getFilenameFormat();
+
+        if (this.recordAsOneFile) {
+            // We're going to save the file as the JSON basename
+            return obsConnection.setFilenameFormat(this.currentJSONFileSource.value);
+        }
+        return obsConnection.setFilenameFormat(filename);
+    }
+
     private async _startRecording(): Promise<void> {
         const action = obsConnection.isRecording() ? this.startAction : OBSRecordingAction.START;
         await obsConnection.setRecordingState(action);
@@ -105,6 +129,9 @@ export class DolphinRecorder extends DolphinLauncher {
         if (obsConnection.isRecording()) {
             await obsConnection.setRecordingState(OBSRecordingAction.STOP);
         }
+        // Restore the original user filename format
+        await obsConnection.setFilenameFormat(this.userFilenameFormat);
+
         if (killDolphin && this.dolphin) {
             this.dolphin.kill();
         }
