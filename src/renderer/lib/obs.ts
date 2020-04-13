@@ -68,6 +68,17 @@ class OBSConnection {
         this.connectionSource$.next(OBSConnectionStatus.DISCONNECTED);
     }
 
+    public async setFilenameFormat(format: string): Promise<void> {
+        await this.socket.send("SetFilenameFormatting", {
+            "filename-formatting": format,
+        });
+    }
+
+    public async getFilenameFormat(): Promise<string> {
+        const response = await this.socket.send("GetFilenameFormatting");
+        return response["filename-formatting"];
+    }
+
     public async setScene(scene: string) {
         await this.socket.send("SetCurrentScene", {
             "scene-name": scene,
