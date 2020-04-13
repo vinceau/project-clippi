@@ -20,7 +20,7 @@ import { delay, getFilePath } from "@/lib/utils";
 import { store } from "@/store";
 import { DolphinLauncher, DolphinPlaybackPayload, DolphinPlaybackStatus, DolphinQueueFormat, generateDolphinQueuePayload } from "@vinceau/slp-realtime";
 import { BehaviorSubject, from } from "rxjs";
-import { concatMap, filter, map } from "rxjs/operators";
+import { concatMap, filter } from "rxjs/operators";
 
 const DELAY_AMOUNT_MS = 1000;
 
@@ -36,8 +36,7 @@ export type DolphinPlayerOptions = typeof defaultDolphinPlayerOptions;
 
 const getDolphinPath = (): string => {
     const appData = remote.app.getPath("appData");
-    const dolphinPath = path.join(appData, "Slippi Desktop App", "dolphin", "Dolphin.exe");
-    return dolphinPath;
+    return path.join(appData, "Slippi Desktop App", "dolphin", "Dolphin.exe");
 };
 
 export class DolphinRecorder extends DolphinLauncher {
@@ -61,12 +60,6 @@ export class DolphinRecorder extends DolphinLauncher {
             filter(() => this.recordingEnabled && obsConnection.isConnected()),
             concatMap(() => from(this._stopRecording())),
         ).subscribe();
-        this.output.playbackStatus$.pipe(
-            filter(playback => playback.status === DolphinPlaybackStatus.FILE_LOADED),
-            map(playback => path.basename(playback.data.path)),
-        ).subscribe(name => {
-            this.currentBasenameSource.next(name);
-        });
     }
 
     public recordJSON(comboFilePath: string, options?: Partial<DolphinPlayerOptions>) {
@@ -82,9 +75,12 @@ export class DolphinRecorder extends DolphinLauncher {
     private async _handleDolphinPlayback(payload: DolphinPlaybackPayload): Promise<void> {
         console.log(payload);
         switch (payload.status) {
+            case DolphinPlaybackStatus.FILE_LOADED:
+                const basename = path.basename(payload.data.path);
+                this.currentBasenameSource.next(basename);
+                break;
             case DolphinPlaybackStatus.PLAYBACK_START:
-                const action = obsConnection.isRecording() ? this.startAction : OBSRecordingAction.START;
-                await obsConnection.setRecordingState(action);
+                await this._startRecording();
                 break;
             case DolphinPlaybackStatus.PLAYBACK_END:
                 if (payload.data && payload.data.gameEnded) {
@@ -97,6 +93,11 @@ export class DolphinRecorder extends DolphinLauncher {
                 await this._stopRecording(true);
                 break;
         }
+    }
+
+    private async _startRecording(): Promise<void> {
+        const action = obsConnection.isRecording() ? this.startAction : OBSRecordingAction.START;
+        await obsConnection.setRecordingState(action);
     }
 
     private async _stopRecording(killDolphin?: boolean) {
@@ -117,12 +118,10 @@ const randomTempJSONFile = () => {
     return path.join(folder, filename);
 };
 
-const dolphinPath = getDolphinPath();
-const opts = {
+export const dolphinPlayer = new DolphinRecorder(getDolphinPath(), {
     // startBuffer: START_RECORDING_BUFFER,
     // endBuffer: END_RECORDING_BUFFER,
-};
-export const dolphinPlayer = new DolphinRecorder(dolphinPath, opts);
+});
 
 export const openComboInDolphin = (filePath: string, options?: Partial<DolphinPlayerOptions>) => {
     dolphinPlayer.recordJSON(filePath, options);
