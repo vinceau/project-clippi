@@ -1,4 +1,5 @@
 import fs from "fs-extra";
+import path from "path";
 
 import { EOL } from "os";
 import { Writable } from "stream";
@@ -81,3 +82,8 @@ export const shuffle = (a: any[]) => {
     }
     return a;
 };
+
+export const onlyFilename = (filepath: string): string => {
+    const onlyExt = path.extname(filepath);
+    return path.basename(filepath, onlyExt);
+}
