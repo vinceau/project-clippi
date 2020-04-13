@@ -61,9 +61,12 @@ export class DolphinRecorder extends DolphinLauncher {
             filter(() => this.recordingEnabled && obsConnection.isConnected()),
             concatMap(() => from(this._stopRecording())),
         ).subscribe();
-        this.playbackFilename$.pipe(
-            map(fullpath => path.basename(fullpath)),
-        ).subscribe((name) => this.currentBasenameSource.next(name));
+        this.output.playbackStatus$.pipe(
+            filter(playback => playback.status === DolphinPlaybackStatus.FILE_LOADED),
+            map(playback => path.basename(playback.data.path)),
+        ).subscribe(name => {
+            this.currentBasenameSource.next(name);
+        });
     }
 
     public recordJSON(comboFilePath: string, options?: Partial<DolphinPlayerOptions>) {
