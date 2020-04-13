@@ -1,6 +1,7 @@
 import React from "react";
 
 import styled from "styled-components";
+import { lighten } from "polished";
 
 import { Dispatch, iRootState } from "@/store";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,6 +12,8 @@ import { OBSStatusBar } from "@/containers/Recorder/OBSStatusBar";
 import { saveQueueToFile } from "@/lib/dolphin";
 
 const Content = styled.div`
+    display: flex;
+    flex-direction: column;
     padding: 20px;
     height: calc(100% - 56px);
     overflow: hidden;
@@ -32,8 +35,12 @@ flex-direction: column;
 `;
 
 const MainBody = styled.div`
-display: flex;
-flex-direction: row;
+flex-grow: 1;
+background-color: ${({theme}) => lighten(0.05, theme.background)};
+border-radius: 5px;
+overflow: hidden;
+overflow-y: auto;
+position: relative;
 `;
 
 const Toolbar = styled.div`
@@ -50,7 +57,6 @@ export const RecorderView: React.FC = () => {
     const loadFileHandler = () => {
         dispatch.tempContainer.loadDolphinQueue();
     };
-    console.log(dolphinQueue);
     const droppedFilesHandler = (files: string[]) => {
         dispatch.tempContainer.appendDolphinQueue(files.map(p => ({ path: p })));
         // const filepaths = files.map(f => f.path);

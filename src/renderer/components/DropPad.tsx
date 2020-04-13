@@ -10,16 +10,11 @@ import { PlaybackQueue } from "./PlaybackQueue";
 import { PlaybackQueueEmpty } from "./PlaybackQueueEmpty";
 
 const Outer = styled.div`
-min-height: 200px;
-max-height: 400px;
+height: 100%;
 width: 100%;
-border: solid 1px white;
-display: flex;
-flex-direction: column;
-align-items: center;
-justify-content: center;
-border-radius: 5px;
-position: relative;
+position: absolute;
+top: 0;
+left: 0;
 &&:after {
     content: "";
     background-color: white;
@@ -45,14 +40,10 @@ export const DropPad: React.FC<{
     return (
         <Outer {...getRootProps()}>
             <input {...getInputProps()} />
-            <Button type="button" onClick={open}>
-                <CustomIcon image={slippiLogoSVG} />
-                Select
-            </Button>
             {
                 props.files.length > 0 ?
-                <PlaybackQueue files={props.files}/> :
-                <PlaybackQueueEmpty />
+                    <PlaybackQueue files={props.files} /> :
+                    <PlaybackQueueEmpty onOpen={open}/>
             }
         </Outer>
     );
