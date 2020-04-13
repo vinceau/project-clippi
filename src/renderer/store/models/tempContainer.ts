@@ -8,6 +8,7 @@ import { loadDolphinQueue } from "@/lib/utils";
 import { ConnectionStatus, DolphinEntry, DolphinQueueFormat, DolphinQueueOptions } from "@vinceau/slp-realtime";
 import { currentUser } from "common/twitch";
 import { HelixUser } from "twitch";
+import { shuffle } from "common/utils";
 
 export interface TempContainerState {
     slippiConnectionStatus: ConnectionStatus;
@@ -101,6 +102,9 @@ export const tempContainer = createModel({
         }),
         setDolphinQueue: (state: TempContainerState, payload: DolphinEntry[]): TempContainerState => produce(state, draft => {
             draft.dolphinQueue = payload;
+        }),
+        shuffleDolphinQueue: (state: TempContainerState): TempContainerState => produce(state, draft => {
+            draft.dolphinQueue = shuffle(draft.dolphinQueue);
         }),
         removeDolphinQueueEntry: (state: TempContainerState, payload: number): TempContainerState => {
             const index = payload;

@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { lighten, darken } from "polished";
 
 import { ThemeMode, useTheme } from "@/styles";
+import { Labelled } from "@/components/Labelled";
 import { Dispatch, iRootState } from "@/store";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Icon } from "semantic-ui-react";
@@ -40,9 +41,9 @@ const MainBody = styled.div<{
 }>`
 flex-grow: 1;
 background-color: ${p => {
-    const adjust = p.themeName === ThemeMode.DARK ? lighten : darken;
-    return adjust(0.05, p.theme.background);
-}};
+        const adjust = p.themeName === ThemeMode.DARK ? lighten : darken;
+        return adjust(0.05, p.theme.background);
+    }};
 border-radius: 5px;
 overflow: hidden;
 overflow-y: auto;
@@ -80,6 +81,9 @@ export const RecorderView: React.FC = () => {
         loadSlpFilesInDolphin(filepaths, options).catch(console.error);
         */
     };
+    const shuffleQueueHandler = () => {
+        dispatch.tempContainer.shuffleDolphinQueue();
+    };
     const clearQueueHandler = () => {
         dispatch.tempContainer.resetDolphinQueue();
     };
@@ -100,7 +104,11 @@ export const RecorderView: React.FC = () => {
                             <Icon name="save" /> Save JSON
                         </Button>
                     </div>
-                    <Button onClick={clearQueueHandler} disabled={!validQueue}><Icon name="trash" /> Clear queue</Button>
+                    <div>
+                        <Labelled title="Add file"><Button onClick={clearQueueHandler} icon="plus" /></Labelled>
+                        <Labelled title="Shuffle queue"><Button onClick={shuffleQueueHandler} disabled={!validQueue} icon="shuffle" /></Labelled>
+                        <Labelled title="Clear queue"><Button onClick={clearQueueHandler} disabled={!validQueue} icon="trash" /></Labelled>
+                    </div>
                 </Toolbar>
                 <MainBody themeName={theme.themeName}>
                     <DropPad
