@@ -102,6 +102,17 @@ export const tempContainer = createModel({
         setDolphinQueue: (state: TempContainerState, payload: DolphinEntry[]): TempContainerState => produce(state, draft => {
             draft.dolphinQueue = payload;
         }),
+        removeDolphinQueueEntry: (state: TempContainerState, payload: number): TempContainerState => {
+            const index = payload;
+            const numItems = state.dolphinQueue.length;
+            // The number is invalid
+            if (index >= numItems || index < 0) {
+                return state;
+            }
+            return produce(state, draft => {
+                draft.dolphinQueue.splice(index, 1);
+            });
+        },
         appendDolphinQueue: (state: TempContainerState, payload: DolphinEntry[]): TempContainerState => {
             // Disallow duplicate paths
             const existingPaths = state.dolphinQueue.map(f => f.path);

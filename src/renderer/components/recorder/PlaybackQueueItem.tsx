@@ -3,6 +3,7 @@ import React from "react";
 import { Icon } from "semantic-ui-react";
 import styled from "styled-components";
 import { transparentize } from "polished";
+import { Labelled } from "../Labelled";
 
 const Outer = styled.div`
 display: flex;
@@ -52,7 +53,7 @@ export const PlaybackQueueItem: React.FC<{
                     <span className="path">{props.path}</span>
                 </div>
             </Details>
-            <div><Icon size="large" name="close" /></div>
+            <Labelled title="Remove"><Icon link size="large" name="close" onClick={props.onRemove} /></Labelled>
         </Outer>
     );
 };

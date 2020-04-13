@@ -61,6 +61,9 @@ export const RecorderView: React.FC = () => {
     const theme = useTheme();
     const { dolphinQueue } = useSelector((state: iRootState) => state.tempContainer);
     const dispatch = useDispatch<Dispatch>();
+    const onRemove = (index: number) => {
+        dispatch.tempContainer.removeDolphinQueueEntry(index);
+    };
     const loadFileHandler = () => {
         dispatch.tempContainer.loadDolphinQueue();
     };
@@ -100,7 +103,10 @@ export const RecorderView: React.FC = () => {
                     <Button onClick={clearQueueHandler} disabled={!validQueue}><Icon name="trash" /> Clear queue</Button>
                 </Toolbar>
                 <MainBody themeName={theme.themeName}>
-                    <DropPad onDrop={(files) => droppedFilesHandler(files)} files={dolphinQueue} />
+                    <DropPad
+                        onDrop={(files) => droppedFilesHandler(files)} files={dolphinQueue}
+                        onRemove={onRemove}
+                    />
                 </MainBody>
             </Content>
             <Footer>

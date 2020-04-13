@@ -31,6 +31,7 @@ left: 0;
 export const DropPad: React.FC<{
     files: any[];
     onDrop: (files: any) => void;
+    onRemove?: (index: number) => void;
 }> = (props) => {
     const accept = ".slp";
     const onDrop = useCallback((acceptedFiles: File[]) => {
@@ -42,7 +43,7 @@ export const DropPad: React.FC<{
             <input {...getInputProps()} />
             {
                 props.files.length > 0 ?
-                    <PlaybackQueue files={props.files} /> :
+                    <PlaybackQueue files={props.files} removeFile={props.onRemove} /> :
                     <PlaybackQueueEmpty onOpen={open}/>
             }
         </Outer>
