@@ -1,18 +1,9 @@
 import React from "react";
+import { PlaybackQueueItem } from "./recorder/PlaybackQueueItem";
 
 interface FileInfo {
     path: string;
 }
-
-const PlaybackQueueItem: React.FC<{
-    file: FileInfo
-}> = (props) => {
-    return (
-        <div>
-            {props.file.path}
-        </div>
-    );
-};
 
 export const PlaybackQueue: React.FC<{
     files: FileInfo[];
@@ -20,7 +11,7 @@ export const PlaybackQueue: React.FC<{
     return (
         <div>
             {props.files.map((file, i) => (
-                <PlaybackQueueItem key={`${i}--${file.path}`} file={file}/>
+                <PlaybackQueueItem key={`${i}--${file.path}`} path={file.path}/>
             ))}
         </div>
     );
