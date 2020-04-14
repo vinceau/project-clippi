@@ -28,12 +28,12 @@ const DELAY_AMOUNT_MS = 1000;
 // const START_RECORDING_BUFFER = 90;
 // const END_RECORDING_BUFFER = 60;
 
-const defaultDolphinPlayerOptions = {
+const defaultDolphinRecorderOptions = {
     record: false,
-    pauseBetweenEntries: true,
+    recordAsOneFile: true,
 };
 
-export type DolphinPlayerOptions = typeof defaultDolphinPlayerOptions;
+export type DolphinRecorderOptions = typeof defaultDolphinRecorderOptions;
 
 const getDolphinPath = (): string => {
     const appData = remote.app.getPath("appData");
@@ -41,10 +41,11 @@ const getDolphinPath = (): string => {
 };
 
 export class DolphinRecorder extends DolphinLauncher {
-    private recordAsOneFile = false;
-    private recordingEnabled = false;
+    private recordOptions: DolphinRecorderOptions;
     private startAction = OBSRecordingAction.START;
     private endAction = OBSRecordingAction.STOP;
+
+    // We use this to track the original OBS filename format so we can restore it later
     private userFilenameFormat: string = "";
 
     private readonly currentJSONFileSource = new BehaviorSubject<string>("");
@@ -55,26 +56,25 @@ export class DolphinRecorder extends DolphinLauncher {
 
     public constructor(dolphinPath: string, options?: any) {
         super(dolphinPath, options);
+        this.recordOptions = Object.assign({}, defaultDolphinRecorderOptions);
         this.output.playbackStatus$.pipe(
             // Only process if recording is enabled and OBS is connected
-            filter(() => this.recordingEnabled && obsConnection.isConnected()),
+            filter(() => this.recordOptions.record && obsConnection.isConnected()),
             // Process the values synchronously one at time
             concatMap((payload) => from(this._handleDolphinPlayback(payload))),
         ).subscribe();
         this.dolphinQuit$.pipe(
             // Only process if recording is enabled and OBS is connected
-            filter(() => this.recordingEnabled && obsConnection.isConnected()),
+            filter(() => this.recordOptions.record && obsConnection.isConnected()),
             concatMap(() => from(this._stopRecording())),
         ).subscribe();
     }
 
-    public recordJSON(comboFilePath: string, options?: Partial<DolphinPlayerOptions>) {
-        const opts: DolphinPlayerOptions = Object.assign({}, defaultDolphinPlayerOptions, options);
-        this.recordingEnabled = opts.record;
-        this.recordAsOneFile = this.recordingEnabled && opts.pauseBetweenEntries;
-        if (this.recordingEnabled) {
-            this.startAction = opts.pauseBetweenEntries ? OBSRecordingAction.UNPAUSE : OBSRecordingAction.START;
-            this.endAction = opts.pauseBetweenEntries ? OBSRecordingAction.PAUSE : OBSRecordingAction.STOP;
+    public recordJSON(comboFilePath: string, options?: Partial<DolphinRecorderOptions>) {
+        this.recordOptions = Object.assign({}, defaultDolphinRecorderOptions, options);
+        if (this.recordOptions.record) {
+            this.startAction = this.recordOptions.recordAsOneFile ? OBSRecordingAction.UNPAUSE : OBSRecordingAction.START;
+            this.endAction = this.recordOptions.recordAsOneFile ? OBSRecordingAction.PAUSE : OBSRecordingAction.STOP;
         }
         this.currentJSONFileSource.next(comboFilePath);
         super.loadJSON(comboFilePath);
@@ -106,14 +106,14 @@ export class DolphinRecorder extends DolphinLauncher {
 
     private async _handleSetOBSFilename(filename: string): Promise<void> {
         // Return if recording is off, or if recording has already started
-        if (!this.recordingEnabled || obsConnection.isRecording()) {
+        if (!this.recordOptions.record || obsConnection.isRecording()) {
             return;
         }
 
         // First store the current filename format so we can restore it later
         this.userFilenameFormat = await obsConnection.getFilenameFormat();
 
-        if (this.recordAsOneFile) {
+        if (this.recordOptions.recordAsOneFile) {
             // We're going to save the file as the JSON basename
             return obsConnection.setFilenameFormat(onlyFilename(this.currentJSONFileSource.value));
         }
@@ -151,11 +151,11 @@ export const dolphinPlayer = new DolphinRecorder(getDolphinPath(), {
     // endBuffer: END_RECORDING_BUFFER,
 });
 
-export const openComboInDolphin = (filePath: string, options?: Partial<DolphinPlayerOptions>) => {
+export const openComboInDolphin = (filePath: string, options?: Partial<DolphinRecorderOptions>) => {
     dolphinPlayer.recordJSON(filePath, options);
 };
 
-export const loadSlpFilesInDolphin = async (filenames: string[], options?: Partial<DolphinPlayerOptions>): Promise<void> => {
+export const loadSlpFilesInDolphin = async (filenames: string[], options?: Partial<DolphinRecorderOptions>): Promise<void> => {
     const queue = filenames
         .filter(filename => path.extname(filename) === ".slp")
         .map(filename => ({path: filename}));
@@ -168,13 +168,13 @@ export const loadSlpFilesInDolphin = async (filenames: string[], options?: Parti
     await loadPayloadIntoDolphin(payload, options);
 };
 
-const loadPayloadIntoDolphin = async (payload: string, options?: Partial<DolphinPlayerOptions>): Promise<void> => {
+const loadPayloadIntoDolphin = async (payload: string, options?: Partial<DolphinRecorderOptions>): Promise<void> => {
     const outputFile = randomTempJSONFile();
     await fs.writeFile(outputFile, payload);
     openComboInDolphin(outputFile, options);
 };
 
-export const loadQueueIntoDolphin = (options?: Partial<DolphinPlayerOptions>): void => {
+export const loadQueueIntoDolphin = (options?: Partial<DolphinRecorderOptions>): void => {
     const { dolphinQueue, dolphinQueueOptions } = store.getState().tempContainer;
     const queue: DolphinQueueFormat = {
         ...dolphinQueueOptions,
