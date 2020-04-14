@@ -21,6 +21,7 @@ import { store } from "@/store";
 import { DolphinLauncher, DolphinPlaybackPayload, DolphinPlaybackStatus, DolphinQueueFormat, generateDolphinQueuePayload } from "@vinceau/slp-realtime";
 import { BehaviorSubject, from } from "rxjs";
 import { concatMap, filter } from "rxjs/operators";
+import { onlyFilename } from "common/utils";
 
 const DELAY_AMOUNT_MS = 1000;
 
@@ -114,9 +115,9 @@ export class DolphinRecorder extends DolphinLauncher {
 
         if (this.recordAsOneFile) {
             // We're going to save the file as the JSON basename
-            return obsConnection.setFilenameFormat(this.currentJSONFileSource.value);
+            return obsConnection.setFilenameFormat(onlyFilename(this.currentJSONFileSource.value));
         }
-        return obsConnection.setFilenameFormat(filename);
+        return obsConnection.setFilenameFormat(onlyFilename(filename));
     }
 
     private async _startRecording(): Promise<void> {
