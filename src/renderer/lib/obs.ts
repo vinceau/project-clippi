@@ -4,7 +4,7 @@ import { store } from "@/store";
 import { notify } from "./utils";
 
 import { BehaviorSubject, from, Subject } from "rxjs";
-import { map, switchMap } from "rxjs/operators";
+import { map, switchMap, take, skip } from "rxjs/operators";
 
 export enum OBSRecordingAction {
     TOGGLE = "StartStopRecording",
@@ -23,6 +23,13 @@ export enum OBSRecordingStatus {
 export enum OBSConnectionStatus {
     CONNECTED = "CONNECTED",
     DISCONNECTED = "DISCONNECTED",
+}
+
+const ACTION_STATE_MAP = {
+    [OBSRecordingAction.START]: "RecordingStarted",
+    [OBSRecordingAction.PAUSE]: "RecordingPaused",
+    [OBSRecordingAction.UNPAUSE]: "RecordingResumed",
+    [OBSRecordingAction.STOP]: "RecordingStopped",
 }
 
 class OBSConnection {
@@ -89,9 +96,38 @@ class OBSConnection {
         await this.socket.send("SaveReplayBuffer");
     }
 
-    public async setRecordingState(rec: OBSRecordingAction) {
-        console.log(`telling obs to ${rec} recording`);
-        await this.socket.send(rec);
+    public async setRecordingState(rec: OBSRecordingAction): Promise<void> {
+        if (rec === OBSRecordingAction.TOGGLE) {
+            return this._safelyToggleRecording();
+        }
+
+        return this._safelySetRecordingState(rec);
+    }
+
+    private async _safelyToggleRecording(): Promise<void> {
+        return new Promise(resolve => {
+            // Resolve when the recording status changed
+            this.recordingStatus$.pipe(
+                // This is going to resolve instantly, so we want to skip the first value
+                skip(1),
+                // Complete the observable once we get the next value
+                take(1),
+            ).subscribe(() => {
+                resolve();
+            });
+            this.socket.send(OBSRecordingAction.TOGGLE);
+        });
+    }
+
+    private async _safelySetRecordingState(rec: OBSRecordingAction): Promise<void> {
+        return new Promise((resolve) => {
+            // Attach the handler first
+            this.socket.once(ACTION_STATE_MAP[rec], () => {
+                resolve();
+            });
+
+            this.socket.send(rec);
+        });
     }
 
     public async setSourceItemVisibility(sourceName: string, visible?: boolean) {
