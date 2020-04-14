@@ -169,7 +169,7 @@ export const tempContainer = createModel({
         async addFileToDolphinQueue() {
             const p = await getFilePath({
                 filters: [{ name: "SLP files", extensions: ["slp"] }],
-                properties: ["openFile", "openDirectory", "multiSelections"],
+                properties: ["openFile", "multiSelections"],
             }, false);
             if (p && p.length > 0) {
                 dispatch.tempContainer.appendDolphinQueue(
