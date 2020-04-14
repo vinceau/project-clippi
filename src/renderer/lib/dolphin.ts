@@ -70,9 +70,11 @@ export class DolphinRecorder extends DolphinLauncher {
         ).subscribe();
     }
 
-    public recordJSON(comboFilePath: string, options?: Partial<DolphinRecorderOptions>) {
+    public async recordJSON(comboFilePath: string, options?: Partial<DolphinRecorderOptions>): Promise<void> {
         this.recordOptions = Object.assign({}, defaultDolphinRecorderOptions, options);
         if (this.recordOptions.record) {
+            // First store the current filename format so we can restore it later
+            this.userFilenameFormat = await obsConnection.getFilenameFormat();
         }
         this.currentJSONFileSource.next(comboFilePath);
         super.loadJSON(comboFilePath);
@@ -109,9 +111,6 @@ export class DolphinRecorder extends DolphinLauncher {
             return;
         }
 
-        // First store the current filename format so we can restore it later
-        this.userFilenameFormat = await obsConnection.getFilenameFormat();
-
         // Store the new filename here, defaulting to the original filename format
         let newFilename = this.userFilenameFormat;
         if (!this.recordOptions.recordAsOneFile) {
@@ -127,7 +126,8 @@ export class DolphinRecorder extends DolphinLauncher {
         }
 
         // Actually set the filename
-        return obsConnection.setFilenameFormat(newFilename);
+        await obsConnection.setFilenameFormat(newFilename);
+        return;
     }
 
     private async _startRecording(): Promise<void> {
@@ -163,7 +163,7 @@ export const dolphinPlayer = new DolphinRecorder(getDolphinPath(), {
 });
 
 export const openComboInDolphin = (filePath: string, options?: Partial<DolphinRecorderOptions>) => {
-    dolphinPlayer.recordJSON(filePath, options);
+    dolphinPlayer.recordJSON(filePath, options).catch(console.error);
 };
 
 export const loadSlpFilesInDolphin = async (filenames: string[], options?: Partial<DolphinRecorderOptions>): Promise<void> => {
