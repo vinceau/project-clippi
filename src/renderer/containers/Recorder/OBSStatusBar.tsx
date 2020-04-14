@@ -75,6 +75,7 @@ export const OBSStatusBar: React.FC = () => {
     if (obsIsConnected) {
         color = obsRecordingStatus === OBSRecordingStatus.STOPPED ? "#00E461" : "#F30807";
     }
+    const obsIsRecording = obsRecordingStatus === OBSRecordingStatus.RECORDING;
 
     return (
         <Outer>
@@ -83,7 +84,7 @@ export const OBSStatusBar: React.FC = () => {
                 headerText={headerText}
                 headerHoverTitle={hoverText}
                 onHeaderClick={handleClick}
-                shouldPulse={obsRecordingStatus === OBSRecordingStatus.RECORDING}
+                shouldPulse={obsIsRecording}
                 color={color}
             >
                 {innerText}
@@ -91,7 +92,7 @@ export const OBSStatusBar: React.FC = () => {
             <div>
                 <RecordButton
                     onClick={onRecord}
-                    disabled={!obsIsConnected}
+                    disabled={!obsIsConnected || obsIsRecording}
                     onChange={onRecordChange}
                     value={recordValue}
                     options={recordingOptions}
