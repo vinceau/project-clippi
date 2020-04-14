@@ -75,10 +75,12 @@ class OBSConnection {
         this.connectionSource$.next(OBSConnectionStatus.DISCONNECTED);
     }
 
-    public async setFilenameFormat(format: string): Promise<void> {
+    public async setFilenameFormat(format: string): Promise<boolean> {
         await this.socket.send("SetFilenameFormatting", {
             "filename-formatting": format,
         });
+        const confirmFormat = await this.getFilenameFormat();
+        return confirmFormat === format;
     }
 
     public async getFilenameFormat(): Promise<string> {
