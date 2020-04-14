@@ -5,6 +5,9 @@ import styled from "styled-components";
 import { transparentize } from "polished";
 import { Labelled } from "../Labelled";
 
+import { DolphinEntry } from "@vinceau/slp-realtime";
+import { Draggable } from "react-beautiful-dnd";
+
 const Outer = styled.div`
 display: flex;
 flex-direction: row;
@@ -44,20 +47,30 @@ span {
 `;
 
 export const PlaybackQueueItem: React.FC<{
-    path: string;
+    index: number;
+    file: DolphinEntry;
     onRemove?: () => void;
 }> = props => {
-    const basename = path.basename(props.path);
+    const { index, file, onRemove } = props;
+    const basename = path.basename(file.path);
     return (
-        <Outer>
-            <Details>
-                <Icon size="big" name="file outline" />
-                <DetailsContent>
-                    <h3>{basename}</h3>
-                    <span>{props.path}</span>
-                </DetailsContent>
-            </Details>
-            <Labelled title="Remove"><Icon link size="large" name="close" onClick={props.onRemove} /></Labelled>
-        </Outer>
+        <Draggable draggableId={JSON.stringify(file)} index={index}>
+            {provided => (
+                <Outer
+                    {...provided.draggableProps}
+                    {...provided.dragHandleProps}
+                    ref={provided.innerRef}
+                >
+                    <Details>
+                        <Icon size="big" name="file outline" />
+                        <DetailsContent>
+                            <h3>{basename}</h3>
+                            <span>{file.path}</span>
+                        </DetailsContent>
+                    </Details>
+                    <Labelled title="Remove"><Icon link size="large" name="close" onClick={onRemove} /></Labelled>
+                </Outer>
+            )}
+        </Draggable>
     );
 };

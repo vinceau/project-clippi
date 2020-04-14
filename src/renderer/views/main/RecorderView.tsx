@@ -93,6 +93,22 @@ export const RecorderView: React.FC = () => {
     const onSaveHandler = () => {
         saveQueueToFile().catch(console.error);
     };
+    const onDragEnd = (result: any) => {
+        const { destination, source } = result;
+        if (!destination) {
+            return;
+        }
+        if (
+            destination.droppableId === source.droppableId &&
+            destination.index === source.index
+        ) {
+            return;
+        }
+        dispatch.tempContainer.moveDolphinQueueEntry({
+            startIndex: source.index,
+            endIndex: destination.index,
+        });
+    }
     const validQueue = dolphinQueue.length > 0;
     return (
         <Outer>
@@ -115,6 +131,8 @@ export const RecorderView: React.FC = () => {
                 </Toolbar>
                 <MainBody themeName={theme.themeName}>
                     <DropPad
+                        id="recorder-drop-pad"
+                        onDragEnd={onDragEnd}
                         onDrop={(files) => droppedFilesHandler(files)} files={dolphinQueue}
                         onRemove={onRemove}
                     />

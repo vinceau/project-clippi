@@ -118,6 +118,12 @@ export const tempContainer = createModel({
                 draft.dolphinQueue.splice(index, 1);
             });
         },
+        moveDolphinQueueEntry: (state: TempContainerState, payload: { startIndex: number, endIndex: number }): TempContainerState => {
+            const { startIndex, endIndex } = payload;
+            return produce(state, draft => {
+                draft.dolphinQueue.splice(endIndex, 0, draft.dolphinQueue.splice(startIndex, 1)[0]);
+            });
+        },
         appendDolphinQueue: (state: TempContainerState, payload: DolphinEntry[]): TempContainerState => {
             // Disallow duplicate paths
             const existingPaths = state.dolphinQueue.map(f => f.path);
