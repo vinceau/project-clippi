@@ -45,7 +45,10 @@ export const OBSStatusBar: React.FC = () => {
     };
 
     const onRecord = () => {
-        loadQueueIntoDolphin({ record: true, pauseBetweenEntries: !recordSeparateClips });
+        loadQueueIntoDolphin({
+            record: true,
+            recordAsOneFile: !recordSeparateClips,
+        });
     };
 
     const handleClick = () => {

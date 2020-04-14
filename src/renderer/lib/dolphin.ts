@@ -32,6 +32,7 @@ const defaultDolphinRecorderOptions = {
     record: false,
     recordAsOneFile: true,
     outputFilename: "",
+    outputFolder: "ProjectClippi",
 };
 
 export type DolphinRecorderOptions = typeof defaultDolphinRecorderOptions;
@@ -114,15 +115,22 @@ export class DolphinRecorder extends DolphinLauncher {
         // First store the current filename format so we can restore it later
         this.userFilenameFormat = await obsConnection.getFilenameFormat();
 
-        // If we're recording as separate files use the SLP filename
+        // Store the new filename here, defaulting to the original filename format
+        let newFilename = this.userFilenameFormat;
         if (!this.recordOptions.recordAsOneFile) {
-            return obsConnection.setFilenameFormat(onlyFilename(filename));
+            // If we're recording as separate files use the SLP filename
+            newFilename = onlyFilename(filename);
+        } else if (this.recordOptions.outputFilename) {
+            // If we're provided an output filename use that
+            newFilename = this.recordOptions.outputFilename;
         }
 
-        // If we're provided an output filename use that
-        if (this.recordOptions.outputFilename) {
-            return obsConnection.setFilenameFormat(this.recordOptions.outputFilename);
+        if (this.recordOptions.outputFolder) {
+            newFilename = path.join(this.recordOptions.outputFolder, newFilename);
         }
+
+        // Actually set the filename
+        return obsConnection.setFilenameFormat(newFilename);
     }
 
     private async _startRecording(): Promise<void> {
