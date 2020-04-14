@@ -44,8 +44,6 @@ const getDolphinPath = (): string => {
 
 export class DolphinRecorder extends DolphinLauncher {
     private recordOptions: DolphinRecorderOptions;
-    private startAction = OBSRecordingAction.START;
-    private endAction = OBSRecordingAction.STOP;
 
     // We use this to track the original OBS filename format so we can restore it later
     private userFilenameFormat: string = "";
@@ -75,8 +73,6 @@ export class DolphinRecorder extends DolphinLauncher {
     public recordJSON(comboFilePath: string, options?: Partial<DolphinRecorderOptions>) {
         this.recordOptions = Object.assign({}, defaultDolphinRecorderOptions, options);
         if (this.recordOptions.record) {
-            this.startAction = this.recordOptions.recordAsOneFile ? OBSRecordingAction.UNPAUSE : OBSRecordingAction.START;
-            this.endAction = this.recordOptions.recordAsOneFile ? OBSRecordingAction.PAUSE : OBSRecordingAction.STOP;
         }
         this.currentJSONFileSource.next(comboFilePath);
         super.loadJSON(comboFilePath);
@@ -97,7 +93,8 @@ export class DolphinRecorder extends DolphinLauncher {
                 if (payload.data && payload.data.gameEnded) {
                     await delay(DELAY_AMOUNT_MS);
                 }
-                await obsConnection.setRecordingState(this.endAction);
+                const endAction = this.recordOptions.recordAsOneFile ? OBSRecordingAction.PAUSE : OBSRecordingAction.STOP;
+                await obsConnection.setRecordingState(endAction);
                 break;
             case DolphinPlaybackStatus.QUEUE_EMPTY:
                 // Stop recording and quit Dolphin
@@ -134,7 +131,8 @@ export class DolphinRecorder extends DolphinLauncher {
     }
 
     private async _startRecording(): Promise<void> {
-        const action = obsConnection.isRecording() ? this.startAction : OBSRecordingAction.START;
+        const startAction = this.recordOptions.recordAsOneFile ? OBSRecordingAction.UNPAUSE : OBSRecordingAction.START;
+        const action = obsConnection.isRecording() ? startAction : OBSRecordingAction.START;
         await obsConnection.setRecordingState(action);
     }
 
