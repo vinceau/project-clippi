@@ -107,11 +107,11 @@ export const RecorderView: React.FC = () => {
                             <Icon name="save" /> Save JSON
                         </Button>
                     </div>
-                    <div>
+                    {validQueue && <div>
                         <Labelled title="Add file"><Button onClick={addFileHandler} icon="plus" /></Labelled>
-                        <Labelled title="Shuffle queue"><Button onClick={shuffleQueueHandler} disabled={!validQueue} icon="shuffle" /></Labelled>
-                        <Labelled title="Clear queue"><Button onClick={clearQueueHandler} disabled={!validQueue} icon="trash" /></Labelled>
-                    </div>
+                        <Labelled title="Shuffle queue"><Button onClick={shuffleQueueHandler} icon="shuffle" /></Labelled>
+                        <Labelled title="Clear queue"><Button onClick={clearQueueHandler} icon="trash" /></Labelled>
+                    </div>}
                 </Toolbar>
                 <MainBody themeName={theme.themeName}>
                     <DropPad
