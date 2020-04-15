@@ -10,6 +10,7 @@ import { Button, Icon } from "semantic-ui-react";
 import { RecordButton } from "@/components/recorder/RecordButton";
 import obsLogo from "@/styles/images/obs.png";
 import styled from "styled-components";
+import { Labelled } from "@/components/Labelled";
 
 enum RecordingMethod {
     TOGETHER = "together",
@@ -79,7 +80,10 @@ export const OBSStatusBar: React.FC = () => {
         color = obsRecordingStatus === OBSRecordingStatus.STOPPED ? "#00E461" : "#F30807";
     }
     const obsIsRecording = obsRecordingStatus === OBSRecordingStatus.RECORDING;
-
+    const recordButtonDisabled = !obsIsConnected || obsIsRecording;
+    const recordingButtonTitle = !obsIsConnected ? "Connect to OBS to enable recording" :
+        obsIsRecording ? "Recording in progress" :
+        recordValue === RecordingMethod.SEPARATE ? "Record each item as a separate video" : "Record all items together as a single video";
     return (
         <Outer>
             <ConnectionStatusDisplay
@@ -93,16 +97,18 @@ export const OBSStatusBar: React.FC = () => {
                 {innerText}
             </ConnectionStatusDisplay>
             <div>
-                <RecordButton
-                    onClick={onRecord}
-                    disabled={!obsIsConnected || obsIsRecording}
-                    onChange={onRecordChange}
-                    value={recordValue}
-                    options={recordingOptions}
-                >
-                    <Icon name="circle" />{recordButtonText}
-                </RecordButton>
-                <Button onClick={onPlay} style={{marginLeft: "0.25em"}} disabled={dolphinQueue.length === 0}><Icon name="play" />Play</Button>
+                <Labelled title={recordingButtonTitle} disabled={!recordButtonDisabled}>
+                    <RecordButton
+                        onClick={onRecord}
+                        disabled={recordButtonDisabled}
+                        onChange={onRecordChange}
+                        value={recordValue}
+                        options={recordingOptions}
+                    >
+                        <Icon name="circle" />{recordButtonText}
+                    </RecordButton>
+                </Labelled>
+                <Button onClick={onPlay} style={{ marginLeft: "0.25em" }} disabled={dolphinQueue.length === 0}><Icon name="play" />Play</Button>
             </div>
         </Outer>
     );
