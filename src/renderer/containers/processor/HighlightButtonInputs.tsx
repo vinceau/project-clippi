@@ -2,7 +2,7 @@ import React from "react";
 
 import { ButtonInput } from "@/components/gamecube/ButtonInput";
 import { DelayInput, InlineDropdown } from "@/components/InlineInputs";
-import { framesToMillis, framesToSeconds, millisToFrames, secondsToFrames } from "@/lib/utils";
+import { framesToSeconds, secondsToFrames } from "@/lib/utils";
 import { Dispatch, iRootState } from "@/store";
 import { useDispatch, useSelector } from "react-redux";
 import { Accordion, Icon } from "semantic-ui-react";
@@ -11,17 +11,18 @@ import styled from "styled-components";
 export const HighlightButtonInputs: React.FC = () => {
     const [showAdvanced, setShowAdvanced] = React.useState(false);
     const dispatch = useDispatch<Dispatch>();
-    const { inputButtonCombo, inputButtonPreInputFrames, inputButtonPostInputFrames, inputButtonHoldFrames,
-        inputButtonLockoutMs, inputButtonHold } = useSelector((state: iRootState) => state.filesystem);
+    const { inputButtonCombo, inputButtonPreInputFrames, inputButtonPostInputFrames,
+        inputButtonHoldAmount, inputButtonHoldUnits, inputButtonLockoutSecs, inputButtonHold } = useSelector((state: iRootState) => state.filesystem);
     const setInputButtonHold = (val: boolean) => dispatch.filesystem.setInputButtonHold(val);
     const setInputButtonCombo = (val: string[]) => dispatch.filesystem.setInputButtonCombo(val);
-    const setInputButtonLockoutMs = (val: string) => dispatch.filesystem.setInputButtonLockoutMs(+val);
-    const holdMs = Math.ceil(framesToMillis(inputButtonHoldFrames));
+    const setInputButtonLockoutSecs = (val: string) => dispatch.filesystem.setInputButtonLockoutSecs(+val);
     const preInputSeconds = framesToSeconds(inputButtonPreInputFrames);
     const postInputSeconds = framesToSeconds(inputButtonPostInputFrames);
-    const setHoldMillis = (ms: string) => {
-        const frames = millisToFrames(+ms);
-        dispatch.filesystem.setInputButtonHoldFrames(frames);
+    const setHoldAmount = (amount: string) => {
+        dispatch.filesystem.setInputButtonHoldAmount(+amount);
+    };
+    const setHoldUnits = (units: string) => {
+        dispatch.filesystem.setInputButtonHoldUnits(units);
     };
     const setPreInputSeconds = (secs: string) => {
         const frames = secondsToFrames(+secs);
@@ -43,6 +44,8 @@ export const HighlightButtonInputs: React.FC = () => {
             text: "presses",
         },
     ];
+    const holdOptions = ["frames", "seconds"].map(o => ({key: o, value: o, text: o}));
+
     const Outer = styled.div`
     padding-bottom: 10px;
     input {
@@ -55,12 +58,13 @@ export const HighlightButtonInputs: React.FC = () => {
     padding: 0 1em;
 
     li {
+        line-height: 25px;
         margin-bottom: 5px;
     }
     `;
     return (
         <Outer>
-            <div style={{ marginBottom: "10px", lineHeight: "24px" }}>
+            <div style={{ marginBottom: "10px", lineHeight: "28px" }}>
                 {"Highlight the moment someone "}
                 <InlineDropdown
                     value={inputButtonHold}
@@ -69,8 +73,12 @@ export const HighlightButtonInputs: React.FC = () => {
                 />
                 {inputButtonHold && <>
                     {" for "}
-                    <DelayInput value={holdMs.toString()} onChange={setHoldMillis} placeholder={`250`} />
-                    {" milliseconds"}
+                    <span style={{marginRight: "10px"}}><DelayInput value={inputButtonHoldAmount.toString()} onChange={setHoldAmount} placeholder={`2`} /></span>
+                    <InlineDropdown
+                        value={inputButtonHoldUnits}
+                        onChange={setHoldUnits}
+                        options={holdOptions}
+                    />
                 </>}
                 {" the combination:"}
             </div>
@@ -90,8 +98,8 @@ export const HighlightButtonInputs: React.FC = () => {
                             {" seconds"}
                         </li>
                         <li>
-                            {"Wait at least "} <DelayInput value={inputButtonLockoutMs.toString()} onChange={setInputButtonLockoutMs} placeholder={`5000`} />
-                            {" milliseconds between moments"}
+                            {"Wait at least "} <DelayInput value={inputButtonLockoutSecs.toString()} onChange={setInputButtonLockoutSecs} placeholder={`5`} />
+                            {" seconds between moments"}
                         </li>
                     </AdvancedOptions>
                 </Accordion.Content>

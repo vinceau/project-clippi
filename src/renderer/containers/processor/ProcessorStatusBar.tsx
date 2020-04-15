@@ -37,7 +37,7 @@ export const ProcessorStatusBar: React.FC = () => {
     const { comboFinderPercent, comboFinderLog, comboFinderProcessing } = useSelector((state: iRootState) => state.tempContainer);
     const { comboProfiles } = useSelector((state: iRootState) => state.slippi);
     const { openCombosWhenDone, filesPath, combosFilePath, includeSubFolders, deleteFilesWithNoCombos,
-        inputButtonCombo, inputButtonPreInputFrames, inputButtonPostInputFrames, inputButtonHoldFrames, inputButtonLockoutMs, inputButtonHold,
+        inputButtonCombo, inputButtonPreInputFrames, inputButtonPostInputFrames, inputButtonHoldUnits, inputButtonHoldAmount, inputButtonLockoutSecs, inputButtonHold,
         renameFiles, findCombos, highlightMethod, renameFormat, findComboProfile } = useSelector((state: iRootState) => state.filesystem);
 
     const complete = comboFinderPercent === 100;
@@ -52,12 +52,13 @@ export const ProcessorStatusBar: React.FC = () => {
             converted = mapConfigurationToFilterSettings(JSON.parse(slippiSettings));
         }
 
+        let inputButtonHoldFrames = inputButtonHoldUnits === "frames" ? inputButtonHoldAmount : inputButtonHoldAmount * 60;
         const buttonConfig: ButtonInputOptions = {
             buttonCombo: inputButtonCombo as Input[],
-            holdDurationFrames: inputButtonHold ? inputButtonHoldFrames : 1,
+            holdDurationFrames: inputButtonHold ? Math.ceil(inputButtonHoldFrames) : 1,
             preInputFrames: inputButtonPreInputFrames,
             postInputFrames: inputButtonPostInputFrames,
-            captureLockoutMs: inputButtonLockoutMs,
+            captureLockoutMs: inputButtonLockoutSecs * 1000,
         };
 
         const comboConfig: ComboOptions = {
