@@ -1,7 +1,7 @@
 import * as path from "path";
 import * as url from "url";
 
-import { DolphinPlayerOptions, openComboInDolphin } from "@/lib/dolphin";
+import { DolphinRecorderOptions, openComboInDolphin } from "@/lib/dolphin";
 import { Message } from "common/types";
 import { remote, shell } from "electron";
 import fs from "fs-extra";
@@ -70,7 +70,7 @@ export const getStatic = (val: string): string => {
     return path.resolve(path.join(imagePath, val));
 };
 
-export const loadFileInDolphin = async (options?: Partial<DolphinPlayerOptions>): Promise<void> => {
+export const loadFileInDolphin = async (options?: Partial<DolphinRecorderOptions>): Promise<void> => {
     const p = await getFilePath({
         filters: [{ name: "JSON files", extensions: ["json"] }],
     });
