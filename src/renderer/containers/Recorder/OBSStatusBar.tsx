@@ -17,10 +17,18 @@ enum RecordingMethod {
     SEPARATE = "separate",
 }
 
-const recordingOptions = [
-    { icon: "file video outline", text: "Together as one video", value: RecordingMethod.TOGETHER },
-    { icon: "film", text: "Seperate clips", value: RecordingMethod.SEPARATE },
-];
+const recordingOptions = {
+    [RecordingMethod.TOGETHER]: {
+        title: "Record all items together as a single video",
+        icon: "file video outline",
+        text: "Together as one video",
+    },
+    [RecordingMethod.SEPARATE]: {
+        title: "Record each item as a separate video",
+        icon: "film",
+        text: "Seperate clips",
+    },
+};
 
 const Outer = styled.div`
 display: flex;
@@ -84,6 +92,7 @@ export const OBSStatusBar: React.FC = () => {
     const recordingButtonTitle = !obsIsConnected ? "Connect to OBS to enable recording" :
         obsIsRecording ? "Recording in progress" :
         recordValue === RecordingMethod.SEPARATE ? "Record each item as a separate video" : "Record all items together as a single video";
+    const options = Object.entries(recordingOptions).map(([key, val]) => ({...val, value: key}));
     return (
         <Outer>
             <ConnectionStatusDisplay
@@ -103,7 +112,7 @@ export const OBSStatusBar: React.FC = () => {
                         disabled={recordButtonDisabled}
                         onChange={onRecordChange}
                         value={recordValue}
-                        options={recordingOptions}
+                        options={options}
                     >
                         <Icon name="circle" />{recordButtonText}
                     </RecordButton>
