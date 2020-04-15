@@ -1,12 +1,11 @@
 import React from "react";
 import { PlaybackQueueItem } from "./recorder/PlaybackQueueItem";
-
-interface FileInfo {
-    path: string;
-}
+import { DolphinEntry } from "@vinceau/slp-realtime";
+import { Droppable } from "react-beautiful-dnd";
 
 export const PlaybackQueue: React.FC<{
-    files: FileInfo[];
+    id: string;
+    files: DolphinEntry[];
     removeFile?: (index: number) => void;
 }> = (props) => {
     const removeFile = (index: number, path: string) => {
@@ -16,10 +15,18 @@ export const PlaybackQueue: React.FC<{
         }
     };
     return (
-        <div>
-            {props.files.map((file, i) => (
-                <PlaybackQueueItem key={`${i}--${file.path}`} path={file.path} onRemove={() => removeFile(i, file.path)}/>
-            ))}
-        </div>
+        <Droppable droppableId={props.id}>
+            {(provided) => (
+                <div
+                    ref={provided.innerRef}
+                    {...provided.droppableProps}
+                >
+                    {props.files.map((file, i) => (
+                        <PlaybackQueueItem key={JSON.stringify(file)} file={file} index={i} onRemove={() => removeFile(i, file.path)} />
+                    ))}
+                    {provided.placeholder}
+                </div>
+            )}
+        </Droppable>
     );
 };

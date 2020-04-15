@@ -1,5 +1,6 @@
 import * as React from "react";
 
+import { useHistory } from "react-router-dom";
 import { ConnectionStatus } from "@vinceau/slp-realtime";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -12,6 +13,8 @@ import { Dispatch, iRootState } from "@/store";
 import slippiLogo from "@/styles/images/slippi.png";
 
 export const StatusBar: React.FC = () => {
+    const history = useHistory();
+
     const { port } = useSelector((state: iRootState) => state.slippi);
     const { currentSlpFolderStream, slippiConnectionStatus } = useSelector((state: iRootState) => state.tempContainer);
     const dispatch = useDispatch<Dispatch>();
@@ -42,6 +45,8 @@ export const StatusBar: React.FC = () => {
         <div>
             <ConnectionStatusDisplay
                 icon={slippiLogo}
+                iconHoverText="Open Slippi settings"
+                onIconClick={() => history.push("/settings/slippi-settings")}
                 headerText={headerText}
                 headerHoverTitle={hoverText}
                 onHeaderClick={handleClick}

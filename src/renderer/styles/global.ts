@@ -31,6 +31,19 @@ export const GlobalStyle = createGlobalStyle<{
       color: ${({theme}) => theme.foreground} !important;
     }
 
+    .ui.card {
+      border: solid 1px ${({theme}) => theme.background3} !important;
+      box-shadow: none;
+      background: ${({theme}) => lighten(0.05, theme.background)};
+      .meta,
+      .header {
+        color: ${({theme}) => theme.foreground};
+      }
+      .extra {
+        border-color: ${({theme}) => theme.background3} !important;
+      }
+    }
+
     .ui.placeholder.segment,
     .ui.table thead th,
     .ui.table {

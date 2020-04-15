@@ -4,16 +4,44 @@ import { Icon } from "semantic-ui-react";
 import styled from "styled-components";
 import { transparentize } from "polished";
 import { Labelled } from "../Labelled";
+import { ThemeMode, useTheme } from "@/styles";
+import { lighten, darken } from "polished";
 
-const Outer = styled.div`
+import { DolphinEntry } from "@vinceau/slp-realtime";
+import { Draggable } from "react-beautiful-dnd";
+
+const Outer = styled.div<{
+    themeName: string;
+    isDragging: boolean;
+}>`
 display: flex;
 flex-direction: row;
 justify-content: space-between;
 align-items: center;
 padding: 10px;
 border-bottom: solid 1px ${p => transparentize(0.8, p.theme.foreground)};
-&:last-child {
-    border-bottom: none;
+background-color: ${p => {
+    const adjust = p.themeName === ThemeMode.DARK ? lighten : darken;
+    return adjust(0.1, p.theme.background);
+}};
+.remove-icon {
+    cursor: pointer;
+    opacity: 0;
+    transition: all 0.4s ease-in-out;
+    padding: 5px;
+}
+${p => p.isDragging && `
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    &&&,
+`}
+&:hover {
+    background-color: ${p => {
+        const adjust = p.themeName === ThemeMode.DARK ? lighten : darken;
+        return adjust(0.15, p.theme.background);
+    }};
+    .remove-icon {
+        opacity: 1;
+    }
 }
 `;
 
@@ -44,20 +72,36 @@ span {
 `;
 
 export const PlaybackQueueItem: React.FC<{
-    path: string;
+    index: number;
+    file: DolphinEntry;
     onRemove?: () => void;
 }> = props => {
-    const basename = path.basename(props.path);
+    const theme = useTheme();
+    const { index, file, onRemove } = props;
+    const basename = path.basename(file.path);
     return (
-        <Outer>
-            <Details>
-                <Icon size="big" name="file outline" />
-                <DetailsContent>
-                    <h3>{basename}</h3>
-                    <span>{props.path}</span>
-                </DetailsContent>
-            </Details>
-            <Labelled title="Remove"><Icon link size="large" name="close" onClick={props.onRemove} /></Labelled>
-        </Outer>
+        <Draggable draggableId={JSON.stringify(file)} index={index}>
+            {(provided, snapshot) => (
+                <Outer themeName={theme.themeName}
+                    {...provided.draggableProps}
+                    {...provided.dragHandleProps}
+                    ref={provided.innerRef}
+                    isDragging={snapshot.isDragging}
+                >
+                    <Details>
+                        <Icon size="big" name="file outline" />
+                        <DetailsContent>
+                            <h3>{basename}</h3>
+                            <span>{file.path}</span>
+                        </DetailsContent>
+                    </Details>
+                    <Labelled title="Remove">
+                        <div className="remove-icon" onClick={onRemove}>
+                            <Icon size="large" name="close" />
+                        </div>
+                    </Labelled>
+                </Outer>
+            )}
+        </Draggable>
     );
 };

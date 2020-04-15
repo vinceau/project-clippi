@@ -93,6 +93,22 @@ export const RecorderView: React.FC = () => {
     const onSaveHandler = () => {
         saveQueueToFile().catch(console.error);
     };
+    const onDragEnd = (result: any) => {
+        const { destination, source } = result;
+        if (!destination) {
+            return;
+        }
+        if (
+            destination.droppableId === source.droppableId &&
+            destination.index === source.index
+        ) {
+            return;
+        }
+        dispatch.tempContainer.moveDolphinQueueEntry({
+            startIndex: source.index,
+            endIndex: destination.index,
+        });
+    }
     const validQueue = dolphinQueue.length > 0;
     return (
         <Outer>
@@ -107,14 +123,16 @@ export const RecorderView: React.FC = () => {
                             <Icon name="save" /> Save JSON
                         </Button>
                     </div>
-                    <div>
+                    {validQueue && <div>
                         <Labelled title="Add file"><Button onClick={addFileHandler} icon="plus" /></Labelled>
-                        <Labelled title="Shuffle queue"><Button onClick={shuffleQueueHandler} disabled={!validQueue} icon="shuffle" /></Labelled>
-                        <Labelled title="Clear queue"><Button onClick={clearQueueHandler} disabled={!validQueue} icon="trash" /></Labelled>
-                    </div>
+                        <Labelled title="Shuffle queue"><Button onClick={shuffleQueueHandler} icon="shuffle" /></Labelled>
+                        <Labelled title="Clear queue"><Button onClick={clearQueueHandler} icon="trash" /></Labelled>
+                    </div>}
                 </Toolbar>
                 <MainBody themeName={theme.themeName}>
                     <DropPad
+                        id="recorder-drop-pad"
+                        onDragEnd={onDragEnd}
                         onDrop={(files) => droppedFilesHandler(files)} files={dolphinQueue}
                         onRemove={onRemove}
                     />

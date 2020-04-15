@@ -5,6 +5,8 @@ import styled from "styled-components";
 import { PlaybackQueue } from "./PlaybackQueue";
 import { PlaybackQueueEmpty } from "./PlaybackQueueEmpty";
 
+import { DragDropContext } from "react-beautiful-dnd";
+
 const Outer = styled.div`
 height: 100%;
 width: 100%;
@@ -25,8 +27,10 @@ left: 0;
 `;
 
 export const DropPad: React.FC<{
+    id: string;
     files: any[];
     onDrop: (files: any) => void;
+    onDragEnd: (result: any) => void;
     onRemove?: (index: number) => void;
 }> = (props) => {
     const accept = ".slp";
@@ -39,7 +43,10 @@ export const DropPad: React.FC<{
             <input {...getInputProps()} />
             {
                 props.files.length > 0 ?
-                    <PlaybackQueue files={props.files} removeFile={props.onRemove} /> :
+                    <DragDropContext onDragEnd={props.onDragEnd}>
+                        <PlaybackQueue id={props.id} files={props.files} removeFile={props.onRemove} />
+                    </DragDropContext>
+                    :
                     <PlaybackQueueEmpty onOpen={open}/>
             }
         </Outer>
