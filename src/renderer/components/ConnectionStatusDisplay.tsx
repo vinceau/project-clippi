@@ -10,6 +10,8 @@ import { ScanningDot } from "@/components/ScanningDot";
 
 export const ConnectionStatusDisplay: React.FC<{
     icon?: any;
+    iconHoverText?: string;
+    onIconClick?: () => void;
     headerText: string;
     headerHoverTitle: string;
     onHeaderClick?: () => void;
@@ -28,7 +30,19 @@ export const ConnectionStatusDisplay: React.FC<{
     `;
     return (
         <Outer>
-            {props.icon && <img src={props.icon} style={{ height: "35px", width: "35px" }} />}
+            {props.icon &&
+                <Labelled disabled={!props.iconHoverText} title={props.iconHoverText}>
+                    <img
+                        src={props.icon}
+                        onClick={props.onIconClick}
+                        style={{
+                            height: "35px",
+                            width: "35px",
+                            cursor: props.onIconClick ? "pointer" : "auto",
+                        }}
+                    />
+                </Labelled>
+            }
             <ConnectInfo>
                 <Labelled title={props.headerHoverTitle} onClick={props.onHeaderClick} position="right">
                     <Header sub>

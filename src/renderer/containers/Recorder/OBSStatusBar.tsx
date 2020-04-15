@@ -1,5 +1,6 @@
 import * as React from "react";
 
+import { useHistory } from "react-router-dom";
 import { ConnectionStatusDisplay } from "@/components/ConnectionStatusDisplay";
 import { loadQueueIntoDolphin } from "@/lib/dolphin";
 import { OBSConnectionStatus, OBSRecordingStatus } from "@/lib/obs";
@@ -38,6 +39,7 @@ align-items: center;
 `;
 
 export const OBSStatusBar: React.FC = () => {
+    const history = useHistory();
     const { recordSeparateClips } = useSelector((state: iRootState) => state.filesystem);
     const { obsConnectionStatus, obsRecordingStatus, dolphinQueue, dolphinPlaybackFile } = useSelector((state: iRootState) => state.tempContainer);
     const dispatch = useDispatch<Dispatch>();
@@ -97,6 +99,8 @@ export const OBSStatusBar: React.FC = () => {
         <Outer>
             <ConnectionStatusDisplay
                 icon={obsLogo}
+                iconHoverText="Open OBS settings"
+                onIconClick={() => history.push("/settings/obs-settings")}
                 headerText={headerText}
                 headerHoverTitle={hoverText}
                 onHeaderClick={handleClick}
