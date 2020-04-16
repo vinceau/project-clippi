@@ -1,6 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 
-import { lighten } from "polished";
+import { darken, lighten } from "polished";
 
 import { Theme, ThemeMode } from "./theme";
 
@@ -35,6 +35,14 @@ export const GlobalStyle = createGlobalStyle<{
       border: solid 1px ${({theme}) => theme.background3} !important;
       box-shadow: none;
       background: ${({theme}) => lighten(0.05, theme.background)};
+
+      .meta>a:not(.ui) {
+        color: ${({theme}) => darken(0.1, theme.foreground)};
+        &:hover {
+          opacity: 0.8;
+        }
+      }
+
       .meta,
       .header {
         color: ${({theme}) => theme.foreground};
