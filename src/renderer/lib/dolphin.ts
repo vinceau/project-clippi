@@ -23,8 +23,6 @@ import { BehaviorSubject, from } from "rxjs";
 import { concatMap, filter } from "rxjs/operators";
 import { onlyFilename } from "common/utils";
 
-const DELAY_AMOUNT_MS = 1000;
-
 // const START_RECORDING_BUFFER = 90;
 // const END_RECORDING_BUFFER = 60;
 
@@ -33,6 +31,7 @@ const defaultDolphinRecorderOptions = {
     recordAsOneFile: true,
     outputFilename: "",
     outputFolder: "ProjectClippi",
+    gameEndDelayMs: 1000,
 };
 
 export type DolphinRecorderOptions = typeof defaultDolphinRecorderOptions;
@@ -93,7 +92,7 @@ export class DolphinRecorder extends DolphinLauncher {
                 break;
             case DolphinPlaybackStatus.PLAYBACK_END:
                 if (payload.data && payload.data.gameEnded) {
-                    await delay(DELAY_AMOUNT_MS);
+                    await delay(this.recordOptions.gameEndDelayMs);
                 }
                 const endAction = this.recordOptions.recordAsOneFile ? OBSRecordingAction.PAUSE : OBSRecordingAction.STOP;
                 await obsConnection.setRecordingState(endAction);
