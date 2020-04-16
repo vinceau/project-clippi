@@ -1,11 +1,11 @@
+import { ThemeMode, useTheme } from "@/styles";
 import path from "path";
+import { transparentize } from "polished";
+import { darken, lighten } from "polished";
 import React from "react";
 import { Icon } from "semantic-ui-react";
 import styled from "styled-components";
-import { transparentize } from "polished";
 import { Labelled } from "../Labelled";
-import { ThemeMode, useTheme } from "@/styles";
-import { lighten, darken } from "polished";
 
 import { DolphinEntry } from "@vinceau/slp-realtime";
 import { Draggable } from "react-beautiful-dnd";

@@ -1,8 +1,8 @@
 import * as React from "react";
 
-import { useHistory } from "react-router-dom";
 import { ConnectionStatus } from "@vinceau/slp-realtime";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 import { ConnectionStatusDisplay } from "@/components/ConnectionStatusDisplay";
 import { InlineInput } from "@/components/InlineInputs";

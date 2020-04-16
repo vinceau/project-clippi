@@ -1,7 +1,7 @@
-import React from "react";
-import { PlaybackQueueItem } from "./recorder/PlaybackQueueItem";
 import { DolphinEntry } from "@vinceau/slp-realtime";
+import React from "react";
 import { Droppable } from "react-beautiful-dnd";
+import { PlaybackQueueItem } from "./recorder/PlaybackQueueItem";
 
 export const PlaybackQueue: React.FC<{
     id: string;

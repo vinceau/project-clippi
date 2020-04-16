@@ -1,17 +1,17 @@
 import * as React from "react";
 
-import { useHistory } from "react-router-dom";
 import { ConnectionStatusDisplay } from "@/components/ConnectionStatusDisplay";
 import { loadQueueIntoDolphin } from "@/lib/dolphin";
-import { OBSConnectionStatus, OBSRecordingStatus, connectToOBSAndNotify } from "@/lib/obs";
+import { OBSConnectionStatus, OBSRecordingStatus } from "@/lib/obs";
 import { Dispatch, iRootState } from "@/store";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { Button, Icon } from "semantic-ui-react";
 
+import { Labelled } from "@/components/Labelled";
 import { RecordButton } from "@/components/recorder/RecordButton";
 import obsLogo from "@/styles/images/obs.png";
 import styled from "styled-components";
-import { Labelled } from "@/components/Labelled";
 
 enum RecordingMethod {
     TOGETHER = "together",

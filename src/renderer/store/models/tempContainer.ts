@@ -5,11 +5,11 @@ import { Scene } from "obs-websocket-js";
 
 import { OBSConnectionStatus, OBSRecordingStatus } from "@/lib/obs";
 import { loadDolphinQueue } from "@/lib/utils";
+import { getFilePath } from "@/lib/utils";
 import { ConnectionStatus, DolphinEntry, DolphinQueueFormat, DolphinQueueOptions } from "@vinceau/slp-realtime";
 import { currentUser } from "common/twitch";
-import { HelixUser } from "twitch";
 import { shuffle } from "common/utils";
-import { getFilePath } from "@/lib/utils";
+import { HelixUser } from "twitch";
 
 export interface TempContainerState {
     slippiConnectionStatus: ConnectionStatus;

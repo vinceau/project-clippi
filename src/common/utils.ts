@@ -86,4 +86,4 @@ export const shuffle = (a: any[]) => {
 export const onlyFilename = (filepath: string): string => {
     const onlyExt = path.extname(filepath);
     return path.basename(filepath, onlyExt);
-}
+};

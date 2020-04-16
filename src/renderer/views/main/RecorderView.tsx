@@ -1,11 +1,11 @@
 import React from "react";
 
+import { darken, lighten } from "polished";
 import styled from "styled-components";
-import { lighten, darken } from "polished";
 
-import { ThemeMode, useTheme } from "@/styles";
 import { Labelled } from "@/components/Labelled";
 import { Dispatch, iRootState } from "@/store";
+import { ThemeMode, useTheme } from "@/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Icon } from "semantic-ui-react";
 
@@ -108,7 +108,7 @@ export const RecorderView: React.FC = () => {
             startIndex: source.index,
             endIndex: destination.index,
         });
-    }
+    };
     const validQueue = dolphinQueue.length > 0;
     return (
         <Outer>

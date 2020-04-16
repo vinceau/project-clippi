@@ -4,7 +4,7 @@ import { store } from "@/store";
 import { notify } from "./utils";
 
 import { BehaviorSubject, from, Subject } from "rxjs";
-import { map, switchMap, take, skip } from "rxjs/operators";
+import { map, skip, switchMap, take } from "rxjs/operators";
 
 export enum OBSRecordingAction {
     TOGGLE = "StartStopRecording",
@@ -30,7 +30,7 @@ const ACTION_STATE_MAP = {
     [OBSRecordingAction.PAUSE]: "RecordingPaused",
     [OBSRecordingAction.UNPAUSE]: "RecordingResumed",
     [OBSRecordingAction.STOP]: "RecordingStopped",
-}
+};
 
 class OBSConnection {
     private readonly socket: OBSWebSocket;

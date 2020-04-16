@@ -52,7 +52,7 @@ export const ProcessorStatusBar: React.FC = () => {
             converted = mapConfigurationToFilterSettings(JSON.parse(slippiSettings));
         }
 
-        let inputButtonHoldFrames = inputButtonHoldUnits === "frames" ? inputButtonHoldAmount : inputButtonHoldAmount * 60;
+        const inputButtonHoldFrames = inputButtonHoldUnits === "frames" ? inputButtonHoldAmount : inputButtonHoldAmount * 60;
         const buttonConfig: ButtonInputOptions = {
             buttonCombo: inputButtonCombo as Input[],
             holdDurationFrames: inputButtonHold ? Math.ceil(inputButtonHoldFrames) : 1,
