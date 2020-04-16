@@ -92,7 +92,10 @@ export class DolphinRecorder extends DolphinLauncher {
                 break;
             case DolphinPlaybackStatus.PLAYBACK_END:
                 if (payload.data && payload.data.gameEnded) {
-                    await delay(this.recordOptions.gameEndDelayMs);
+                    // Only delay if the game wasn't force quitted out
+                    if (!payload.data.forceQuit) {
+                        await delay(this.recordOptions.gameEndDelayMs);
+                    }
                 }
                 const endAction = this.recordOptions.recordAsOneFile ? OBSRecordingAction.PAUSE : OBSRecordingAction.STOP;
                 await obsConnection.setRecordingState(endAction);
