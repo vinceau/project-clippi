@@ -13,7 +13,7 @@ export const ConnectionStatusDisplay: React.FC<{
     iconHoverText?: string;
     onIconClick?: () => void;
     headerText: string;
-    headerHoverTitle: string;
+    headerHoverTitle?: string;
     onHeaderClick?: () => void;
     color?: string;
     shouldPulse?: boolean;
@@ -44,7 +44,7 @@ export const ConnectionStatusDisplay: React.FC<{
                 </Labelled>
             }
             <ConnectInfo>
-                <Labelled title={props.headerHoverTitle} onClick={props.onHeaderClick} position="right">
+                <Labelled disabled={!Boolean(props.headerHoverTitle)} title={props.headerHoverTitle} onClick={props.onHeaderClick} position="right">
                     <Header sub>
                         <ScanningDot shouldPulse={props.shouldPulse} color={props.color || "red"} /> {props.headerText}
                     </Header>

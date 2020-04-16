@@ -3,7 +3,7 @@ import * as React from "react";
 import { useHistory } from "react-router-dom";
 import { ConnectionStatusDisplay } from "@/components/ConnectionStatusDisplay";
 import { loadQueueIntoDolphin } from "@/lib/dolphin";
-import { OBSConnectionStatus, OBSRecordingStatus } from "@/lib/obs";
+import { OBSConnectionStatus, OBSRecordingStatus, connectToOBSAndNotify } from "@/lib/obs";
 import { Dispatch, iRootState } from "@/store";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Icon } from "semantic-ui-react";
@@ -47,6 +47,8 @@ export const OBSStatusBar: React.FC = () => {
     const recordValue = recordSeparateClips ? RecordingMethod.SEPARATE : RecordingMethod.TOGETHER;
     const recordButtonText = recordSeparateClips ? "Record separately" : "Record together";
 
+    const obsIsConnected = obsConnectionStatus === OBSConnectionStatus.CONNECTED;
+
     const onRecordChange = (value: string) => {
         dispatch.filesystem.setRecordSeparateClips(value === RecordingMethod.SEPARATE);
     };
@@ -62,33 +64,13 @@ export const OBSStatusBar: React.FC = () => {
         });
     };
 
-    const handleClick = () => {
-        /*
-        if (isFolderStream) {
-            // We should disconnect from the folder stream
-            streamManager.stopMonitoringSlpFolder();
-            return;
-        }
-        if (relayIsConnected) {
-            // We should disconnect from the Slippi relay
-            streamManager.disconnectFromSlippi();
-            return;
-        }
-        // Otherwise we should connect to the port
-        dispatch.slippi.connectToSlippi(port);
-        */
-    };
-    const hoverText = "abc"; // isFolderStream ? "Stop monitoring" : relayIsConnected ? "Click to disconnect" : "Click to connect";
-    const headerText = displayOBSStatus(obsConnectionStatus, obsRecordingStatus); // isFolderStream ? "Monitoring" : statusToLabel(slippiConnectionStatus);
-    const innerText = dolphinPlaybackFile ? dolphinPlaybackFile : "No file playing"; // isFolderStream ? <>{currentSlpFolderStream}</> :
-    // <>Relay Port: <InlineInput value={port} onChange={dispatch.slippi.setPort} /></>;
-    // const connected = isFolderStream || relayIsConnected;
     let color = "#888888";
-
-    const obsIsConnected = obsConnectionStatus === OBSConnectionStatus.CONNECTED;
     if (obsIsConnected) {
         color = obsRecordingStatus === OBSRecordingStatus.STOPPED ? "#00E461" : "#F30807";
     }
+    const headerText = displayOBSStatus(obsConnectionStatus, obsRecordingStatus);
+    const innerText = dolphinPlaybackFile ? dolphinPlaybackFile : "No file playing";
+
     const obsIsRecording = obsRecordingStatus === OBSRecordingStatus.RECORDING;
     const recordButtonDisabled = !obsIsConnected || obsIsRecording;
     const recordingButtonTitle = !obsIsConnected ? "Connect to OBS to enable recording" :
@@ -102,8 +84,6 @@ export const OBSStatusBar: React.FC = () => {
                 iconHoverText="Open OBS settings"
                 onIconClick={() => history.push("/settings/obs-settings")}
                 headerText={headerText}
-                headerHoverTitle={hoverText}
-                onHeaderClick={handleClick}
                 shouldPulse={obsIsRecording}
                 color={color}
             >
