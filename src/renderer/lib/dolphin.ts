@@ -38,7 +38,15 @@ export type DolphinRecorderOptions = typeof defaultDolphinRecorderOptions;
 
 const getDolphinPath = (): string => {
     const appData = remote.app.getPath("appData");
-    return path.join(appData, "Slippi Desktop App", "dolphin", "Dolphin.exe");
+    const dolphinPath =  path.join(appData, "Slippi Desktop App", "dolphin");
+    switch (process.platform) {
+        case "win32":
+            return path.join(dolphinPath, "Dolphin.exe");
+        case "darwin":
+            return path.join(dolphinPath, "Dolphin.app", "Contents", "MacOS", "Dolphin");
+        default:
+            return "";
+    }
 };
 
 export class DolphinRecorder extends DolphinLauncher {
