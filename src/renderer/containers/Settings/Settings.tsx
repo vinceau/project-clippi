@@ -25,16 +25,92 @@ import { TwitchIntegration } from "./TwitchIntegration";
 import OBSLogo from "@/styles/images/obs.svg";
 import SlippiLogo from "@/styles/images/slippi-logo.svg";
 
-const StyledMenuItem = styled(Menu.Item)<{
+const StyledMenuItem = styled(Menu.Item) <{
     header: boolean;
 }>`
 &&& {
-    color: ${({theme}) => theme.foreground} !important;
+    color: ${({ theme }) => theme.foreground} !important;
     &.active, &:not(.header):hover {
-        background: ${({theme}) => transparentize(0.3, theme.foreground3)} !important;
+        background: ${({ theme }) => transparentize(0.3, theme.foreground3)} !important;
     }
     ${p => p.header && "font-variant: all-small-caps !important;"}
 }
+`;
+
+const BottomMenuSection = styled.div`
+padding-top: 10px;
+padding-bottom: 10px;
+border-top: solid 1px ${({ theme }) => theme.background3};
+margin-top: 20px
+`;
+
+const MenuColumn = styled.div`
+flex-basis: 100%;
+overflow: hidden;
+overflow-y: auto;
+height: 100vh;
+color: ${({ theme }) => theme.foreground};
+background-color: ${({ theme }) => theme.background};
+border-right: solid 1px ${({ theme }) => theme.background3};
+@media ${device.mobileL} {
+    flex-basis: 40%;
+}
+@media ${device.tablet} {
+    flex-basis: 30%;
+}
+@media ${device.laptop} {
+    flex-basis: 25%;
+}
+`;
+const ContentColumn = styled.div`
+flex-basis: 0%;
+overflow: hidden;
+overflow-y: auto;
+height: 100vh;
+padding-left: 25px;
+@media ${device.mobileL} {
+    flex-basis: 70%;
+}
+@media ${device.tablet} {
+    flex-basis: 75%;
+}
+& > div {
+    padding-bottom: 50px;
+    padding-top: 50px;
+    padding-right: 100px;
+}
+`;
+const StyledMenu = styled(Menu)`
+&&& {
+    height: 100%;
+    width: 100%;
+    a.item {
+        & > i.icon {
+            float: left;
+            margin-right: 10px;
+            margin-left: 0;
+        }
+    }
+}
+`;
+const MenuContainer = styled.div`
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+height: 100%;
+padding: 50px;
+@media ${device.mobileL} {
+    padding-top: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 0;
+}
+`;
+const CloseButton = styled.div`
+    font-size: 25px;
+    position: fixed;
+    top: 20px;
+    right: 40px;
 `;
 
 export const SettingsPage: React.FC<{
@@ -75,66 +151,9 @@ export const SettingsPage: React.FC<{
         top: 0;
         visibility: visible;
         overflow: auto;
-        background-color: ${({theme}) => theme.background2};
+        background-color: ${({ theme }) => theme.background2};
         z-index: 1;
         ${!props.showSettings && hiddenSettings}
-    `;
-    const MenuColumn = styled.div`
-    flex-basis: 100%;
-    overflow: hidden;
-    overflow-y: auto;
-    height: 100vh;
-    color: ${({theme}) => theme.foreground};
-    background-color: ${({theme}) => theme.background};
-    border-right: solid 1px ${({theme}) => theme.background3};
-    @media ${device.mobileL} {
-        flex-basis: 30%;
-    }
-    @media ${device.tablet} {
-        flex-basis: 25%;
-    }
-    `;
-    const ContentColumn = styled.div`
-    flex-basis: 0%;
-    overflow: hidden;
-    overflow-y: auto;
-    height: 100vh;
-    padding-left: 25px;
-    @media ${device.mobileL} {
-        flex-basis: 70%;
-    }
-    @media ${device.tablet} {
-        flex-basis: 75%;
-    }
-    & > div {
-        padding-bottom: 50px;
-        padding-top: 50px;
-        padding-right: 100px;
-    }
-    `;
-    const StyledMenu = styled(Menu)`
-    &&& {
-        width: 100%;
-        padding: 50px;
-        a.item {
-            & > i.icon {
-                float: left;
-                margin-right: 10px;
-                margin-left: 0;
-            }
-        }
-        @media ${device.mobileL} {
-            padding-top: 20px;
-            padding-left: 10px;
-            padding-right: 10px;
-        }
-    }
-    `;
-    const CloseButton = styled.div`
-        font-size: 25px;
-        position: fixed;
-        top: 20px;
-        right: 40px;
     `;
     return (
         <SettingsContainer>
@@ -146,44 +165,50 @@ export const SettingsPage: React.FC<{
             <div style={{ display: "flex" }}>
                 <MenuColumn>
                     <StyledMenu secondary={true} vertical={true}>
-                        <StyledMenuItem header>Automator Settings</StyledMenuItem>
-                        <StyledMenuItem
-                            name="combo-settings"
-                            active={isActive("combo-settings")}
-                            onClick={handleItemClick}
-                        ><Icon name="filter" />Combo Filter</StyledMenuItem>
-                        <StyledMenuItem
-                            name="sound-settings"
-                            active={isActive("sound-settings")}
-                            onClick={handleItemClick}
-                        ><Icon name="music" />Sounds</StyledMenuItem>
-                        <StyledMenuItem header>Connection Settings</StyledMenuItem>
-                        <StyledMenuItem
-                            name="slippi-settings"
-                            active={isActive("slippi-settings")}
-                            onClick={handleItemClick}
-                        ><CustomIcon image={SlippiLogo} />Slippi Connection</StyledMenuItem>
-                        <StyledMenuItem
-                            name="obs-settings"
-                            active={isActive("obs-settings")}
-                            onClick={handleItemClick}
-                        ><CustomIcon image={OBSLogo} />OBS Configuration</StyledMenuItem>
-                        <StyledMenuItem
-                            name="account-settings"
-                            active={isActive("account-settings")}
-                            onClick={handleItemClick}
-                        ><Icon name="twitch" />Twitch Integration</StyledMenuItem>
-                        <StyledMenuItem header>App Settings</StyledMenuItem>
-                        <StyledMenuItem
-                            name="appearance-settings"
-                            active={isActive("appearance-settings")}
-                            onClick={handleItemClick}
-                        ><Icon name="paint brush" />Appearance</StyledMenuItem>
-                        <StyledMenuItem
-                            name="app-info"
-                            active={isActive("app-info")}
-                            onClick={handleItemClick}
-                        ><Icon name="info circle" />Info</StyledMenuItem>
+                        <MenuContainer>
+                            <div style={{ flex: "1" }}>
+                                <StyledMenuItem header>Automator Settings</StyledMenuItem>
+                                <StyledMenuItem
+                                    name="combo-settings"
+                                    active={isActive("combo-settings")}
+                                    onClick={handleItemClick}
+                                ><Icon name="filter" />Combo Filter</StyledMenuItem>
+                                <StyledMenuItem
+                                    name="sound-settings"
+                                    active={isActive("sound-settings")}
+                                    onClick={handleItemClick}
+                                ><Icon name="music" />Sounds</StyledMenuItem>
+                                <StyledMenuItem header>Connection Settings</StyledMenuItem>
+                                <StyledMenuItem
+                                    name="slippi-settings"
+                                    active={isActive("slippi-settings")}
+                                    onClick={handleItemClick}
+                                ><CustomIcon image={SlippiLogo} />Slippi Connection</StyledMenuItem>
+                                <StyledMenuItem
+                                    name="obs-settings"
+                                    active={isActive("obs-settings")}
+                                    onClick={handleItemClick}
+                                ><CustomIcon image={OBSLogo} />OBS Configuration</StyledMenuItem>
+                                <StyledMenuItem
+                                    name="account-settings"
+                                    active={isActive("account-settings")}
+                                    onClick={handleItemClick}
+                                ><Icon name="twitch" />Twitch Integration</StyledMenuItem>
+                                <StyledMenuItem header>App Settings</StyledMenuItem>
+                                <StyledMenuItem
+                                    name="appearance-settings"
+                                    active={isActive("appearance-settings")}
+                                    onClick={handleItemClick}
+                                ><Icon name="paint brush" />Appearance</StyledMenuItem>
+                            </div>
+                            <BottomMenuSection>
+                                <StyledMenuItem
+                                    name="app-info"
+                                    active={isActive("app-info")}
+                                    onClick={handleItemClick}
+                                ><Icon name="info circle" />Info</StyledMenuItem>
+                            </BottomMenuSection>
+                        </MenuContainer>
                     </StyledMenu>
                 </MenuColumn>
                 <ContentColumn>
