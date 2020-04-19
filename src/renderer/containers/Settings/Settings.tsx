@@ -20,6 +20,7 @@ import { FilterOptions } from "./FilterOptions";
 import { OBSSettings } from "./OBSSettings";
 import { SlippiPage } from "./SlippiPage";
 import { SoundSettings } from "./SoundSettings";
+import { PlaybackSettings } from "./PlaybackSettings";
 import { TwitchIntegration } from "./TwitchIntegration";
 
 import OBSLogo from "@/styles/images/obs.svg";
@@ -170,7 +171,7 @@ export const SettingsPage: React.FC<{
                     <StyledMenu secondary={true} vertical={true}>
                         <MenuContainer>
                             <div style={{ flex: "1" }}>
-                                <StyledMenuItem header>Automator Settings</StyledMenuItem>
+                                <StyledMenuItem header>App Settings</StyledMenuItem>
                                 <StyledMenuItem
                                     name="combo-settings"
                                     active={isActive("combo-settings")}
@@ -181,6 +182,16 @@ export const SettingsPage: React.FC<{
                                     active={isActive("sound-settings")}
                                     onClick={handleItemClick}
                                 ><Icon name="music" />Sounds</StyledMenuItem>
+                                <StyledMenuItem
+                                    name="playback-settings"
+                                    active={isActive("playback-settings")}
+                                    onClick={handleItemClick}
+                                ><Icon name="play circle" />Playback</StyledMenuItem>
+                                <StyledMenuItem
+                                    name="appearance-settings"
+                                    active={isActive("appearance-settings")}
+                                    onClick={handleItemClick}
+                                ><Icon name="paint brush" />Appearance</StyledMenuItem>
                                 <StyledMenuItem header>Connection Settings</StyledMenuItem>
                                 <StyledMenuItem
                                     name="slippi-settings"
@@ -197,12 +208,6 @@ export const SettingsPage: React.FC<{
                                     active={isActive("account-settings")}
                                     onClick={handleItemClick}
                                 ><Icon name="twitch" />Twitch Integration</StyledMenuItem>
-                                <StyledMenuItem header>App Settings</StyledMenuItem>
-                                <StyledMenuItem
-                                    name="appearance-settings"
-                                    active={isActive("appearance-settings")}
-                                    onClick={handleItemClick}
-                                ><Icon name="paint brush" />Appearance</StyledMenuItem>
                             </div>
                             <BottomMenuSection>
                                 <StyledMenuItem
@@ -219,10 +224,13 @@ export const SettingsPage: React.FC<{
                         <Switch>
                             <Route path={`${path}/combo-settings`} component={FilterOptions} />
                             <Route path={`${path}/sound-settings`} component={SoundSettings} />
+                            <Route path={`${path}/appearance-settings`} component={Appearance} />
+                            <Route path={`${path}/playback-settings`} component={PlaybackSettings} />
+
                             <Route path={`${path}/slippi-settings`} component={SlippiPage} />
                             <Route path={`${path}/obs-settings`} component={OBSSettings} />
                             <Route path={`${path}/account-settings`} component={TwitchIntegration} />
-                            <Route path={`${path}/appearance-settings`} component={Appearance} />
+
                             <Route path={`${path}/app-info`} component={InfoView} />
                             <Route exact path={path}>
                                 <Redirect to={`${path}/combo-settings`} />
