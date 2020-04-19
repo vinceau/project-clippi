@@ -30,7 +30,10 @@ const StyledMenuItem = styled(Menu.Item) <{
 }>`
 &&& {
     color: ${({ theme }) => theme.foreground} !important;
-    &.active, &:not(.header):hover {
+    &.active {
+        background: ${({ theme }) => transparentize(0.05, theme.foreground3)} !important;
+    }
+    &:not(.header):hover {
         background: ${({ theme }) => transparentize(0.3, theme.foreground3)} !important;
     }
     ${p => p.header && "font-variant: all-small-caps !important;"}
