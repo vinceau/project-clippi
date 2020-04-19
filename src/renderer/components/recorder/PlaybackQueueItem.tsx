@@ -27,7 +27,7 @@ background-color: ${p => {
 .remove-icon {
     cursor: pointer;
     opacity: 0;
-    transition: all 0.4s ease-in-out;
+    transition: all 0.2s ease-in-out;
     padding: 5px;
 }
 ${p => p.isDragging && `
