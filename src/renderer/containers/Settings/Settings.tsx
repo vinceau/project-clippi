@@ -40,7 +40,7 @@ const StyledMenuItem = styled(Menu.Item) <{
 const BottomMenuSection = styled.div`
 padding-top: 10px;
 padding-bottom: 10px;
-border-top: solid 1px ${({ theme }) => theme.background3};
+border-top: solid 1px ${({ theme }) => theme.foreground3};
 margin-top: 20px
 `;
 
