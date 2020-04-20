@@ -9,8 +9,7 @@ import { ProcessSection } from "@/components/ProcessSection";
 import { Dispatch, iRootState } from "@/store";
 import { HighlightOptions } from "../processor/HighlightOptions";
 import { RenameFiles } from "./RenameFiles";
-
-const isWindows = process.platform === "win32";
+import { FormContainer, Label, Field } from "@/components/Form";
 
 export const ComboFinder: React.FC = () => {
     const { openCombosWhenDone, includeSubFolders, deleteFilesWithNoCombos,
@@ -26,54 +25,58 @@ export const ComboFinder: React.FC = () => {
     const setCombosFilePath = (p: string) => dispatch.filesystem.setCombosFilePath(p);
     const setFilesPath = (p: string) => dispatch.filesystem.setFilesPath(p);
     return (
-        <div>
+        <FormContainer>
             <Form>
-                <Form.Field>
-                    <label>SLP Replay Directory</label>
-                    <FileInput
-                        value={filesPath}
-                        onChange={setFilesPath}
-                        directory={true}
-                    />
-                </Form.Field>
-                <Form.Field>
-                    <Checkbox
-                        label="Include subfolders"
-                        checked={includeSubFolders}
-                        onChange={(_, data) => onSubfolder(Boolean(data.checked))}
-                    />
-                </Form.Field>
+                <Field>
+                    <Label>SLP Replay Directory</Label>
+                    <div style={{ marginBottom: "10px" }}>
+                        <FileInput
+                            value={filesPath}
+                            onChange={setFilesPath}
+                            directory={true}
+                        />
+                    </div>
+                    <Form.Field>
+                        <Checkbox
+                            label="Include subfolders"
+                            checked={includeSubFolders}
+                            onChange={(_, data) => onSubfolder(Boolean(data.checked))}
+                        />
+                    </Form.Field>
+                </Field>
                 <ProcessSection
                     label="Find Highlights"
                     open={findCombos}
                     onOpenChange={setFindCombos}
                 >
                     <HighlightOptions />
-                    <Form.Field>
-                        <label>Output File</label>
-                        <FileInput
-                            value={combosFilePath}
-                            onChange={setCombosFilePath}
-                            saveFile={true}
-                            fileTypeFilters={[
-                                { name: "JSON files", extensions: ["json"] }
-                            ]}
-                        />
-                    </Form.Field>
-                    <Form.Field>
-                        <Checkbox
-                            label="Delete files with no highlights"
-                            checked={deleteFilesWithNoCombos}
-                            onChange={(_, data) => onSetDeleteFiles(Boolean(data.checked))}
-                        />
-                    </Form.Field>
-                    {isWindows && <Form.Field>
-                        <Checkbox
-                            label="Load output file into Dolphin when complete"
-                            checked={openCombosWhenDone}
-                            onChange={(_, data) => onSetOpenCombosWhenDone(Boolean(data.checked))}
-                        />
-                    </Form.Field>}
+                    <Field>
+                        <Label>Output File</Label>
+                        <div style={{ marginBottom: "10px" }}>
+                            <FileInput
+                                value={combosFilePath}
+                                onChange={setCombosFilePath}
+                                saveFile={true}
+                                fileTypeFilters={[
+                                    { name: "JSON files", extensions: ["json"] }
+                                ]}
+                            />
+                        </div>
+                        <Form.Field>
+                            <Checkbox
+                                label="Delete files with no highlights"
+                                checked={deleteFilesWithNoCombos}
+                                onChange={(_, data) => onSetDeleteFiles(Boolean(data.checked))}
+                            />
+                        </Form.Field>
+                        <Form.Field>
+                            <Checkbox
+                                label="Load output file into Dolphin when complete"
+                                checked={openCombosWhenDone}
+                                onChange={(_, data) => onSetOpenCombosWhenDone(Boolean(data.checked))}
+                            />
+                        </Form.Field>
+                    </Field>
                 </ProcessSection>
 
                 <ProcessSection
@@ -84,6 +87,6 @@ export const ComboFinder: React.FC = () => {
                     <RenameFiles value={renameFormat} onChange={setRenameFormat} />
                 </ProcessSection>
             </Form>
-        </div>
+        </FormContainer>
     );
 };

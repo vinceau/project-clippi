@@ -8,6 +8,7 @@ import { ContextOptions } from "@/components/ContextOptions";
 import { SlideReveal } from "@/components/ProcessSection";
 import { TemplatePreview } from "@/components/TemplatePreview";
 import { highlightInitialState } from "@/store/models/highlights";
+import { Field, Label } from "@/components/Form";
 
 const Section = styled.div`
 padding-bottom: 5px;
@@ -44,10 +45,8 @@ export const RenameFiles: React.FC<{
             <SlideReveal open={showOptions}>
                 <ContextOptions onLabelClick={insertText} />
             </SlideReveal>
-            <Section>
-                <b>Format</b>
-            </Section>
-            <Section>
+            <Field>
+                <Label>Format</Label>
                 <TextArea
                     ref={textRef}
                     placeholder={highlightInitialState.renameFormat}
@@ -57,8 +56,8 @@ export const RenameFiles: React.FC<{
                     }}
                     onBlur={() => props.onChange(renameFormat)}
                 />
-            </Section>
             <p style={{ wordBreak: "break-all" }}><b>Preview: </b><TemplatePreview template={renameFormat} metadata={{ startAt: "2001-11-21T17:33:54.000Z" }}/></p>
+            </Field>
         </div>
     );
 };

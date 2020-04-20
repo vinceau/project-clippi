@@ -16,12 +16,12 @@ interface FileInputProps extends Record<string, any> {
     value: string;
     onChange: (value: string) => void;
     directory?: boolean;
-    fileTypeFilters?: Array<{name: string, extensions: string[]}>;
+    fileTypeFilters?: Array<{ name: string, extensions: string[] }>;
     saveFile?: boolean;
 }
 
 export const FileInput: React.FC<FileInputProps> = props => {
-    const {value, directory, onChange, fileTypeFilters, saveFile} = props;
+    const { value, directory, onChange, fileTypeFilters, saveFile } = props;
     const [filesPath, setFilesPath] = React.useState<string>(value);
     const selectFromFileSystem = async () => {
         let p: string | null = null;
@@ -49,22 +49,24 @@ export const FileInput: React.FC<FileInputProps> = props => {
     };
     const actionLabel = saveFile ? "Save as" : "Choose";
     return (
-        <Input
-            style={{ width: "100%" }}
-            label={
-                <Button
-                    onClick={() => openFileOrParentFolder(filesPath)}
-                    disabled={!Boolean(filesPath)}
-                >
-                    <Labelled title="Open location">
-                        <NoMarginIcon name="folder open outline" />
-                    </Labelled>
-                </Button>
-            }
-            value={filesPath}
-            onChange={(_: any, { value }: any) => setFilesPath(value)}
-            onBlur={() => onChange(filesPath)}
-            action={<Button onClick={() => selectFromFileSystem().catch(console.error)}>{actionLabel}</Button>}
-        />
+        <div className="file-input">
+            <Input
+                style={{ width: "100%" }}
+                label={
+                    <Button
+                        onClick={() => openFileOrParentFolder(filesPath)}
+                        disabled={!Boolean(filesPath)}
+                    >
+                        <Labelled title="Open location">
+                            <NoMarginIcon name="folder open outline" />
+                        </Labelled>
+                    </Button>
+                }
+                value={filesPath}
+                onChange={(_: any, { value }: any) => setFilesPath(value)}
+                onBlur={() => onChange(filesPath)}
+                action={<Button onClick={() => selectFromFileSystem().catch(console.error)}>{actionLabel}</Button>}
+            />
+        </div>
     );
 };

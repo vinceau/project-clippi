@@ -11,6 +11,10 @@ export const GlobalStyle = createGlobalStyle<{
     color: ${({ theme }) => theme.foreground };
   }
 
+  .ui.form .file-input input[type=text] {
+    width: auto !important;
+  }
+
   .ui.modal.${ThemeMode.DARK},
   #app .${ThemeMode.DARK} {
     font-weight: 100;
