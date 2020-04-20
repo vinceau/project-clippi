@@ -8,6 +8,7 @@ import { soundPlayer } from "@/lib/sounds";
 import { SoundFileInfo } from "@/components/SoundFileInfo";
 import { Dispatch, dispatcher, iRootState } from "@/store";
 import { openFileOrParentFolder } from "../../lib/utils";
+import { FormContainer, PageHeader } from "@/components/Form";
 
 export const AddSoundButton = (props: any) => {
     return (
@@ -32,29 +33,31 @@ export const SoundSettings: React.FC = () => {
         dispatch.filesystem.removeSound(name);
     };
     return (
-        <div style={{paddingBottom: "100px"}}>
-            <h2>Sounds</h2>
-            {soundsExist ?
-                <>
-                    <div style={{marginBottom: "10px"}}>
-                        <AddSoundButton />
-                        <Button onClick={() => soundPlayer.stop()}>
-                            <Icon name="stop" />
+        <FormContainer>
+            <PageHeader>Sounds</PageHeader>
+            <div style={{ paddingBottom: "50px" }}>
+                {soundsExist ?
+                    <>
+                        <div style={{ marginBottom: "10px" }}>
+                            <AddSoundButton />
+                            <Button onClick={() => soundPlayer.stop()}>
+                                <Icon name="stop" />
                             Stop current sound
                         </Button>
-                    </div>
-                    <SoundTable onPathClick={onOpenFile} onRemove={removeSound} sounds={soundFiles} />
-                </>
-                :
-                <Segment placeholder>
-                    <Header icon>
-                        <Icon name="music" />
+                        </div>
+                        <SoundTable onPathClick={onOpenFile} onRemove={removeSound} sounds={soundFiles} />
+                    </>
+                    :
+                    <Segment placeholder>
+                        <Header icon>
+                            <Icon name="music" />
                         You have not added any sounds
                         </Header>
-                    <AddSoundButton primary={true} />
-                </Segment>
-            }
-        </div>
+                        <AddSoundButton primary={true} />
+                    </Segment>
+                }
+            </div>
+        </FormContainer>
     );
 };
 
@@ -68,15 +71,15 @@ const SoundTable: React.FC<{
     return (
         <div>
             {allSounds.map(key => {
-            const value = props.sounds[key];
-            return <SoundFileInfo
-                key={`${value}--${key}`}
-                name={key}
-                path={value}
-                onPathClick={() => props.onPathClick(key)}
-                onRemove={() => props.onRemove(key)}
-            />;
-        })}
+                const value = props.sounds[key];
+                return <SoundFileInfo
+                    key={`${value}--${key}`}
+                    name={key}
+                    path={value}
+                    onPathClick={() => props.onPathClick(key)}
+                    onRemove={() => props.onRemove(key)}
+                />;
+            })}
         </div>
     );
 };

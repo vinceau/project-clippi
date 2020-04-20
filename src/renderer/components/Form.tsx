@@ -3,6 +3,10 @@ import React from "react";
 import styled from "styled-components";
 import { Checkbox } from "semantic-ui-react";
 
+export const FormContainer = styled.div`
+max-width: 650px;
+`;
+
 export const PageHeader = styled.h1`
 font-variant: all-small-caps;
 margin-bottom: 10px;
@@ -46,6 +50,7 @@ const ToggleOuter = styled.div`
 display: flex;
 flex-direction: row;
 justify-content: space-between;
+align-items: center;
 `;
 
 export const Toggle: React.FC<{

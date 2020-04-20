@@ -10,6 +10,7 @@ import { Dispatch, iRootState } from "@/store";
 import { SlippiConnectionPlaceholder } from "../SlippiConnectionPlaceholder";
 
 import slippiLogo from "@/styles/images/slippi.png";
+import { PageHeader, FormContainer } from "@/components/Form";
 
 export const SlippiPage: React.FC = () => {
     const { port } = useSelector((state: iRootState) => state.slippi);
@@ -33,7 +34,7 @@ export const SlippiPage: React.FC = () => {
     const statusColor = statusToColor(status);
     return (
         <div>
-            <h2>Slippi Connection</h2>
+            <PageHeader>Slippi Connection</PageHeader>
             {connected ?
                 <ConnectionStatusCard
                     header={header}

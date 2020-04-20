@@ -1,7 +1,7 @@
 import React from "react";
 
 import { useTheme } from "@/styles";
-import { PageHeader, Field, Toggle } from "@/components/Form";
+import { FormContainer, PageHeader, Field, Toggle } from "@/components/Form";
 
 export const Appearance: React.FC = () => {
     const { themeName, toggle } = useTheme();
@@ -9,7 +9,7 @@ export const Appearance: React.FC = () => {
         toggle(darkModeChecked ? "dark" : "light");
     };
     return (
-        <div style={{maxWidth: "800px"}}>
+        <FormContainer>
             <PageHeader>Appearance</PageHeader>
             <Field>
                 <Toggle
@@ -18,6 +18,6 @@ export const Appearance: React.FC = () => {
                     label="Enable Dark Theme"
                 />
             </Field>
-        </div>
+        </FormContainer>
     );
 };

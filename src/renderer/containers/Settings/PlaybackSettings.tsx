@@ -4,13 +4,8 @@ import { FileInput } from "@/components/FileInput";
 
 import { useDispatch, useSelector } from "react-redux";
 import { Dispatch, iRootState } from "@/store";
-import styled from "styled-components";
-import { Label, Field, Text, PageHeader } from "@/components/Form";
+import { FormContainer, Label, Field, Text, PageHeader } from "@/components/Form";
 import { getDolphinExecutableName } from "@/lib/dolphin";
-
-const Outer = styled.div`
-max-width: 800px;
-`;
 
 export const PlaybackSettings: React.FC = () => {
     const dispatch = useDispatch<Dispatch>();
@@ -18,7 +13,7 @@ export const PlaybackSettings: React.FC = () => {
     const setMeleeIsoPath = (filePath: string) => dispatch.filesystem.setMeleeIsoPath(filePath);
     const setDolphinPath = (filePath: string) => dispatch.filesystem.setDolphinPath(filePath);
     return (
-        <Outer>
+        <FormContainer>
             <PageHeader>Playback</PageHeader>
             <Field>
                 <Label>Melee ISO File</Label>
@@ -37,6 +32,6 @@ export const PlaybackSettings: React.FC = () => {
                 />
                 <Text>The folder containing the <b>{getDolphinExecutableName()}</b> playback executable. You should only need to set this on Linux machines, or if you really know what you're doing.</Text>
             </Field>
-        </Outer>
+        </FormContainer>
     );
 };

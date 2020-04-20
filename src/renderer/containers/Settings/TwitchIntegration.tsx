@@ -5,6 +5,7 @@ import { Header, Icon, Loader, Segment } from "semantic-ui-react";
 
 import { TwitchClipInfo, TwitchConnectButton, TwitchUserStatus } from "@/components/twitch";
 import { Dispatch, iRootState } from "@/store";
+import { FormContainer, PageHeader } from "@/components/Form";
 
 export const TwitchIntegration = () => {
     const { twitchUser } = useSelector((state: iRootState) => state.tempContainer);
@@ -32,8 +33,8 @@ export const TwitchIntegration = () => {
         dispatch.twitch.logOutTwitch();
     };
     return (
-        <div>
-            <h2>Twitch Integration</h2>
+        <FormContainer>
+            <PageHeader>Twitch Integration</PageHeader>
             {!authToken ?
                 <TwitchConnectButton onClick={() => dispatch.twitch.fetchTwitchToken()} />
                 : twitchUser ?
@@ -57,6 +58,6 @@ export const TwitchIntegration = () => {
                     </Header>
                 </Segment>
             }
-        </div>
+        </FormContainer>
     );
 };
