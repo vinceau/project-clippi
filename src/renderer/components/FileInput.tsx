@@ -52,7 +52,10 @@ export const FileInput: React.FC<FileInputProps> = props => {
         <Input
             style={{ width: "100%" }}
             label={
-                <Button onClick={() => openFileOrParentFolder(filesPath)}>
+                <Button
+                    onClick={() => openFileOrParentFolder(filesPath)}
+                    disabled={!Boolean(filesPath)}
+                >
                     <Labelled title="Open location">
                         <NoMarginIcon name="folder open outline" />
                     </Labelled>

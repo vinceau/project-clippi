@@ -16,15 +16,12 @@ import path from "path";
 import { remote } from "electron";
 
 import { obsConnection, OBSRecordingAction } from "@/lib/obs";
-import { delay, getFilePath } from "@/lib/utils";
+import { delay, getFilePath, notify } from "@/lib/utils";
 import { store } from "@/store";
 import { DolphinLauncher, DolphinPlaybackPayload, DolphinPlaybackStatus, DolphinQueueFormat, generateDolphinQueuePayload } from "@vinceau/slp-realtime";
 import { onlyFilename } from "common/utils";
 import { BehaviorSubject, from } from "rxjs";
 import { concatMap, filter } from "rxjs/operators";
-
-// const START_RECORDING_BUFFER = 90;
-// const END_RECORDING_BUFFER = 60;
 
 const defaultDolphinRecorderOptions = {
     record: false,
@@ -36,9 +33,29 @@ const defaultDolphinRecorderOptions = {
 
 export type DolphinRecorderOptions = typeof defaultDolphinRecorderOptions;
 
-const getDolphinPath = (): string => {
+export const getDolphinPath = (): string => {
     const appData = remote.app.getPath("appData");
-    return path.join(appData, "Slippi Desktop App", "dolphin", "Dolphin.exe");
+    return path.join(appData, "Slippi Desktop App", "dolphin");
+};
+
+export const getDolphinExecutableName = (): string => {
+    switch (process.platform) {
+        case "win32":
+            return "Dolphin.exe";
+        case "darwin":
+            return "Dolphin.app";
+        default:
+            return "dolphin-emu";
+    }
+};
+
+const getDolphinExecutablePath = (parent?: string): string => {
+    const dolphinPath = parent ? parent : getDolphinPath();
+    const dolphinExec = path.join(dolphinPath, getDolphinExecutableName());
+    if (process.platform === "darwin") {
+        return path.join(dolphinExec, "Contents", "MacOS", "Dolphin");
+    }
+    return dolphinExec;
 };
 
 export class DolphinRecorder extends DolphinLauncher {
@@ -53,8 +70,8 @@ export class DolphinRecorder extends DolphinLauncher {
     private readonly currentBasenameSource = new BehaviorSubject<string>("");
     public currentBasename$ = this.currentBasenameSource.asObservable();
 
-    public constructor(dolphinPath: string, options?: any) {
-        super(dolphinPath, options);
+    public constructor(options?: any) {
+        super(options);
         this.recordOptions = Object.assign({}, defaultDolphinRecorderOptions);
         this.output.playbackStatus$.pipe(
             // Only process if recording is enabled and OBS is connected
@@ -159,13 +176,32 @@ const randomTempJSONFile = () => {
     return path.join(folder, filename);
 };
 
-export const dolphinPlayer = new DolphinRecorder(getDolphinPath(), {
-    // startBuffer: START_RECORDING_BUFFER,
-    // endBuffer: END_RECORDING_BUFFER,
-});
+export const dolphinRecorder = new DolphinRecorder();
+
+const _openComboInDolphin = async (filePath: string, options?: Partial<DolphinRecorderOptions>) => {
+    const { meleeIsoPath, dolphinPath } = store.getState().filesystem;
+    const dolphinExec = getDolphinExecutablePath(dolphinPath);
+    const dolphinExists = await fs.pathExists(dolphinExec);
+
+    if (!dolphinExists) {
+        throw new Error(`Dolphin executable doesn't exist at path: ${dolphinExec}`);
+    }
+
+    const meleeIsoExists = await fs.pathExists(meleeIsoPath);
+    const dolphinSettings = {
+        meleeIsoPath: meleeIsoExists ? meleeIsoPath : "",
+        dolphinPath: dolphinExec,
+        batch: meleeIsoExists,
+    };
+    dolphinRecorder.updateSettings(dolphinSettings);
+    await dolphinRecorder.recordJSON(filePath, options);
+};
 
 export const openComboInDolphin = (filePath: string, options?: Partial<DolphinRecorderOptions>) => {
-    dolphinPlayer.recordJSON(filePath, options).catch(console.error);
+    _openComboInDolphin(filePath, options).catch(err => {
+        console.error(err);
+        notify("Error loading Dolphin. Are your Dolphin playback settings correct?");
+    });
 };
 
 export const loadSlpFilesInDolphin = async (filenames: string[], options?: Partial<DolphinRecorderOptions>): Promise<void> => {

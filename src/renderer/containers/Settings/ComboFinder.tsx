@@ -13,15 +13,16 @@ import { RenameFiles } from "./RenameFiles";
 const isWindows = process.platform === "win32";
 
 export const ComboFinder: React.FC = () => {
-    const { openCombosWhenDone, filesPath, combosFilePath, includeSubFolders, deleteFilesWithNoCombos,
-        renameFiles, findCombos, renameFormat } = useSelector((state: iRootState) => state.filesystem);
+    const { openCombosWhenDone, includeSubFolders, deleteFilesWithNoCombos,
+        renameFiles, findCombos, renameFormat } = useSelector((state: iRootState) => state.highlights);
+    const { filesPath, combosFilePath } = useSelector((state: iRootState) => state.filesystem);
     const dispatch = useDispatch<Dispatch>();
-    const setRenameFormat = (format: string) => dispatch.filesystem.setRenameFormat(format);
-    const setRenameFiles = (checked: boolean) => dispatch.filesystem.setRenameFiles(checked);
-    const setFindCombos = (checked: boolean) => dispatch.filesystem.setFindCombos(checked);
-    const onSubfolder = (checked: boolean) => dispatch.filesystem.setIncludeSubFolders(checked);
-    const onSetDeleteFiles = (checked: boolean) => dispatch.filesystem.setFileDeletion(checked);
-    const onSetOpenCombosWhenDone = (checked: boolean) => dispatch.filesystem.setOpenCombosWhenDone(checked);
+    const setRenameFormat = (format: string) => dispatch.highlights.setRenameFormat(format);
+    const setRenameFiles = (checked: boolean) => dispatch.highlights.setRenameFiles(checked);
+    const setFindCombos = (checked: boolean) => dispatch.highlights.setFindCombos(checked);
+    const onSubfolder = (checked: boolean) => dispatch.highlights.setIncludeSubFolders(checked);
+    const onSetDeleteFiles = (checked: boolean) => dispatch.highlights.setFileDeletion(checked);
+    const onSetOpenCombosWhenDone = (checked: boolean) => dispatch.highlights.setOpenCombosWhenDone(checked);
     const setCombosFilePath = (p: string) => dispatch.filesystem.setCombosFilePath(p);
     const setFilesPath = (p: string) => dispatch.filesystem.setFilesPath(p);
     return (

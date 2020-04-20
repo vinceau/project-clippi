@@ -9,9 +9,9 @@ import { HighlightButtonInputs } from "./HighlightButtonInputs";
 export const HighlightOptions: React.FC = () => {
     const { comboProfiles } = useSelector((state: iRootState) => state.slippi);
     const dispatch = useDispatch<Dispatch>();
-    const { highlightMethod, findComboProfile } = useSelector((state: iRootState) => state.filesystem);
-    const setHighlightMethod = (val: FindComboOption) => dispatch.filesystem.setHighlightMethod(val);
-    const setFindComboProfile = (val: string) => dispatch.filesystem.setFindComboProfile(val);
+    const { highlightMethod, findComboProfile } = useSelector((state: iRootState) => state.highlights);
+    const setHighlightMethod = (val: FindComboOption) => dispatch.highlights.setHighlightMethod(val);
+    const setFindComboProfile = (val: string) => dispatch.highlights.setFindComboProfile(val);
     const options = [
         {
             key: "onlyCombos",
