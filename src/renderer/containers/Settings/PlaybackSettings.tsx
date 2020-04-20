@@ -4,16 +4,21 @@ import { Form } from "semantic-ui-react";
 
 import { FileInput } from "@/components/FileInput";
 
+import { useDispatch, useSelector } from "react-redux";
+import { Dispatch, iRootState } from "@/store";
 import styled from "styled-components";
 import { Label, Text, PageHeader } from "@/components/Form";
+import { getDolphinExecutableName } from "@/lib/dolphin";
 
 const Outer = styled.div`
 max-width: 800px;
 `;
 
 export const PlaybackSettings: React.FC = () => {
-    const [meleeIsoPath, setMeleeIsoPath] = React.useState("");
-    const [dolphinPath, setDolphinPath] = React.useState("");
+    const dispatch = useDispatch<Dispatch>();
+    const { meleeIsoPath, dolphinPath } = useSelector((state: iRootState) => state.filesystem);
+    const setMeleeIsoPath = (filePath: string) => dispatch.filesystem.setMeleeIsoPath(filePath);
+    const setDolphinPath = (filePath: string) => dispatch.filesystem.setDolphinPath(filePath);
     return (
         <Outer>
             <PageHeader>Playback</PageHeader>
@@ -30,12 +35,12 @@ export const PlaybackSettings: React.FC = () => {
                     <Label>Playback Dolphin Path</Label>
                     <FileInput
                         value={dolphinPath}
+                        directory={true}
                         onChange={setDolphinPath}
                     />
-                    <Text>The path to the Dolphin playback executable. You should only need to set this on Linux machines, or if you really know what you're doing.</Text>
+                    <Text>The folder containing a <b>{getDolphinExecutableName()}</b> executable. You should only need to set this on Linux machines, or if you really know what you're doing.</Text>
                 </Form.Field>
             </Form>
-            <p>{meleeIsoPath}</p>
         </Outer>
     );
 };

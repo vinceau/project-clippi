@@ -6,6 +6,7 @@ import produce from "immer";
 
 import { SoundMap } from "@/lib/sounds";
 import { getFilePath } from "@/lib/utils";
+import { getDolphinPath } from "@/lib/dolphin";
 
 const homeDirectory = remote.app.getPath("home");
 
@@ -13,6 +14,8 @@ export interface FileSystemState {
     filesPath: string;
     liveSlpFilesPath: string;
     combosFilePath: string;
+    meleeIsoPath: string;
+    dolphinPath: string;
     soundFiles: SoundMap;
     recordSeparateClips: boolean;
 }
@@ -21,6 +24,8 @@ export const fileSystemInitialState: FileSystemState = {
     filesPath: homeDirectory,
     liveSlpFilesPath: "",
     combosFilePath: path.join(homeDirectory, "combos.json"),
+    meleeIsoPath: "",
+    dolphinPath: getDolphinPath(),
     soundFiles: {},
     recordSeparateClips: false,
 };
@@ -55,6 +60,12 @@ export const filesystem = createModel({
         }),
         setRecordSeparateClips: (state: FileSystemState, payload: boolean): FileSystemState => produce(state, draft => {
             draft.recordSeparateClips = payload;
+        }),
+        setMeleeIsoPath: (state: FileSystemState, payload: string): FileSystemState => produce(state, draft => {
+            draft.meleeIsoPath = payload;
+        }),
+        setDolphinPath: (state: FileSystemState, payload: string): FileSystemState => produce(state, draft => {
+            draft.dolphinPath = payload;
         }),
     },
     effects: dispatch => ({
