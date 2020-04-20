@@ -36,9 +36,12 @@ margin-right: 10px;
 export const ProcessorStatusBar: React.FC = () => {
     const { comboFinderPercent, comboFinderLog, comboFinderProcessing } = useSelector((state: iRootState) => state.tempContainer);
     const { comboProfiles } = useSelector((state: iRootState) => state.slippi);
-    const { openCombosWhenDone, filesPath, combosFilePath, includeSubFolders, deleteFilesWithNoCombos,
-        inputButtonCombo, inputButtonPreInputFrames, inputButtonPostInputFrames, inputButtonHoldUnits, inputButtonHoldAmount, inputButtonLockoutSecs, inputButtonHold,
-        renameFiles, findCombos, highlightMethod, renameFormat, findComboProfile } = useSelector((state: iRootState) => state.filesystem);
+    const { openCombosWhenDone, includeSubFolders, deleteFilesWithNoCombos, renameFiles, findCombos, highlightMethod,
+        renameFormat, findComboProfile } = useSelector((state: iRootState) => state.highlights);
+    const { inputButtonCombo, inputButtonPreInputFrames, inputButtonPostInputFrames, inputButtonHoldUnits,
+        inputButtonHoldAmount, inputButtonLockoutSecs, inputButtonHold,
+        } = useSelector((state: iRootState) => state.inputButtons);
+    const { filesPath, combosFilePath } = useSelector((state: iRootState) => state.filesystem);
 
     const complete = comboFinderPercent === 100;
     const processBtnDisabled = (!findCombos && !renameFiles) || !combosFilePath;

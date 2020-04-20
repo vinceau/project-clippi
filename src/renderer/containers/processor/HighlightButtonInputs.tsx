@@ -12,25 +12,25 @@ export const HighlightButtonInputs: React.FC = () => {
     const [showAdvanced, setShowAdvanced] = React.useState(false);
     const dispatch = useDispatch<Dispatch>();
     const { inputButtonCombo, inputButtonPreInputFrames, inputButtonPostInputFrames,
-        inputButtonHoldAmount, inputButtonHoldUnits, inputButtonLockoutSecs, inputButtonHold } = useSelector((state: iRootState) => state.filesystem);
-    const setInputButtonHold = (val: boolean) => dispatch.filesystem.setInputButtonHold(val);
-    const setInputButtonCombo = (val: string[]) => dispatch.filesystem.setInputButtonCombo(val);
-    const setInputButtonLockoutSecs = (val: string) => dispatch.filesystem.setInputButtonLockoutSecs(+val);
+        inputButtonHoldAmount, inputButtonHoldUnits, inputButtonLockoutSecs, inputButtonHold } = useSelector((state: iRootState) => state.inputButtons);
+    const setInputButtonHold = (val: boolean) => dispatch.inputButtons.setInputButtonHold(val);
+    const setInputButtonCombo = (val: string[]) => dispatch.inputButtons.setInputButtonCombo(val);
+    const setInputButtonLockoutSecs = (val: string) => dispatch.inputButtons.setInputButtonLockoutSecs(+val);
     const preInputSeconds = framesToSeconds(inputButtonPreInputFrames);
     const postInputSeconds = framesToSeconds(inputButtonPostInputFrames);
     const setHoldAmount = (amount: string) => {
-        dispatch.filesystem.setInputButtonHoldAmount(+amount);
+        dispatch.inputButtons.setInputButtonHoldAmount(+amount);
     };
     const setHoldUnits = (units: string) => {
-        dispatch.filesystem.setInputButtonHoldUnits(units);
+        dispatch.inputButtons.setInputButtonHoldUnits(units);
     };
     const setPreInputSeconds = (secs: string) => {
         const frames = secondsToFrames(+secs);
-        dispatch.filesystem.setInputButtonPreInputFrames(frames);
+        dispatch.inputButtons.setInputButtonPreInputFrames(frames);
     };
     const setPostInputSeconds = (secs: string) => {
         const frames = secondsToFrames(+secs);
-        dispatch.filesystem.setInputButtonPostInputFrames(frames);
+        dispatch.inputButtons.setInputButtonPostInputFrames(frames);
     };
     const options = [
         {

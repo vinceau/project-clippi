@@ -7,7 +7,7 @@ import styled from "styled-components";
 import { ContextOptions } from "@/components/ContextOptions";
 import { SlideReveal } from "@/components/ProcessSection";
 import { TemplatePreview } from "@/components/TemplatePreview";
-import { fileSystemInitialState } from "@/store/models/filesystem";
+import { highlightInitialState } from "@/store/models/highlights";
 
 const Section = styled.div`
 padding-bottom: 5px;
@@ -50,7 +50,7 @@ export const RenameFiles: React.FC<{
             <Section>
                 <TextArea
                     ref={textRef}
-                    placeholder={fileSystemInitialState.renameFormat}
+                    placeholder={highlightInitialState.renameFormat}
                     value={renameFormat}
                     onChange={(_, { value }) => {
                         setRenameFormat(`${value || ""}`);
