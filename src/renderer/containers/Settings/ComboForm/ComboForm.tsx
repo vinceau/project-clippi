@@ -79,7 +79,7 @@ export const ComboForm: React.FC<{
                         <div>
                             <SemanticForm onSubmit={handleSubmit}>
                                 <ButtonContainer submitting={submitting} form={form} />
-                                <Field>
+                                <Field border="top">
                                     <Label>Character Filter</Label>
                                     <CharacterSelectAdapter name="characterFilter" isMulti={true} />
                                     <Text>Only match combos performed by these characters.</Text>
@@ -89,7 +89,7 @@ export const ComboForm: React.FC<{
                                     <PortSelectAdapter name="portFilter" />
                                     <Text>Only match combos performed by players using these ports.</Text>
                                 </Field>
-                                <Field>
+                                <Field border="bottom">
                                     <Label>Name Tag Filter</Label>
                                     <NameTagForm name="nameTags" pop={pop} push={push} values={values} />
                                     <Text>Only match combos performed by players using these name tags.</Text>
@@ -109,7 +109,7 @@ export const ComboForm: React.FC<{
                                     <PerCharPercent name="perCharMinComboPercents" pop={pop} push={push} values={values} />
                                     <Text>Only match combos if the character performing the combo does at least this much percent damage.</Text>
                                 </Field>
-                                <Field>
+                                <Field border="top">
                                     <FinalField name="comboMustKill" label="Combo Must Kill" component={ToggleAdapter} />
                                     <Text margin="none">Only match combos which take the opponents stock.</Text>
                                 </Field>
@@ -121,7 +121,7 @@ export const ComboForm: React.FC<{
                                     <FinalField name="excludeChainGrabs" label="Exclude Chain-grabs" component={ToggleAdapter} />
                                     <Text margin="none">Don't match combos which consist mainly of chain-grabs.</Text>
                                 </Field>
-                                <Field>
+                                <Field border="bottom">
                                     <FinalField name="excludeWobbles" label="Exclude Wobbles" component={ToggleAdapter} />
                                     <Text margin="none">Don't match combos which consist mainly of wobbling.</Text>
                                 </Field>
