@@ -23,9 +23,6 @@ import { onlyFilename } from "common/utils";
 import { BehaviorSubject, from } from "rxjs";
 import { concatMap, filter } from "rxjs/operators";
 
-// const START_RECORDING_BUFFER = 90;
-// const END_RECORDING_BUFFER = 60;
-
 const defaultDolphinRecorderOptions = {
     record: false,
     recordAsOneFile: true,
@@ -52,7 +49,7 @@ export const getDolphinExecutableName = (): string => {
     }
 };
 
-export const getDolphinExecutablePath = (parent?: string): string => {
+const getDolphinExecutablePath = (parent?: string): string => {
     const dolphinPath = parent ? parent : getDolphinPath();
     const dolphinExec = path.join(dolphinPath, getDolphinExecutableName());
     if (process.platform === "darwin") {
@@ -73,8 +70,8 @@ export class DolphinRecorder extends DolphinLauncher {
     private readonly currentBasenameSource = new BehaviorSubject<string>("");
     public currentBasename$ = this.currentBasenameSource.asObservable();
 
-    public constructor(dolphinPath: string, options?: any) {
-        super(dolphinPath, options);
+    public constructor(options?: any) {
+        super(options);
         this.recordOptions = Object.assign({}, defaultDolphinRecorderOptions);
         this.output.playbackStatus$.pipe(
             // Only process if recording is enabled and OBS is connected
@@ -179,13 +176,17 @@ const randomTempJSONFile = () => {
     return path.join(folder, filename);
 };
 
-export const dolphinPlayer = new DolphinRecorder(getDolphinPath(), {
-    // startBuffer: START_RECORDING_BUFFER,
-    // endBuffer: END_RECORDING_BUFFER,
-});
+export const dolphinRecorder = new DolphinRecorder();
 
 export const openComboInDolphin = (filePath: string, options?: Partial<DolphinRecorderOptions>) => {
-    dolphinPlayer.recordJSON(filePath, options).catch(console.error);
+    const { meleeIsoPath, dolphinPath } = store.getState().filesystem;
+    const dolphinSettings = {
+        meleeIsoPath,
+        dolphinPath: getDolphinExecutablePath(dolphinPath),
+        batch: Boolean(meleeIsoPath),
+    };
+    dolphinRecorder.updateSettings(dolphinSettings);
+    dolphinRecorder.recordJSON(filePath, options).catch(console.error);
 };
 
 export const loadSlpFilesInDolphin = async (filenames: string[], options?: Partial<DolphinRecorderOptions>): Promise<void> => {
