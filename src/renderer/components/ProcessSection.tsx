@@ -18,7 +18,7 @@ export const ProcessSection: React.FC<{
     return (
         <div style={{ padding: "10px 0" }}>
             <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <h3>{label}</h3>
+                <h3 style={{ cursor: "pointer" }} onClick={() => onOpenChange(!open)}>{label}</h3>
                 <Checkbox
                     toggle={true}
                     checked={open}
