@@ -37,19 +37,27 @@ export const NameTagForm: React.FC<{ name: string; values: any; push: any; pop: 
             <div>
                 <input placeholder="Type tags here and press enter..." autoCapitalize="none" autoComplete="off" autoCorrect="off" spellCheck="false" tabIndex={0} type="text" aria-autocomplete="list" onKeyDown={onKeyDown} value={tag} onChange={e => setTag(e.target.value)} />
             </div>
-            <div style={{ paddingTop: "10px" }}>
-                <FieldArray name={name}>
-                    {({ fields }) =>
-                        fields.map((n, index) => (
-                            <NameTagLabel
-                                key={`fields--${n}--${index}--${fields[index]}`}
-                                name={fields.value[index]}
-                                onClick={() => fields.remove(index)}
-                            />
-                        ))
+            <FieldArray name={name}>
+                {({ fields }) => {
+                    if (fields.length === 0) {
+                        return null;
                     }
-                </FieldArray>
-            </div>
+                    return (
+                        <div style={{ paddingTop: "10px" }}>
+                            {
+                                fields.map((n, index) => (
+                                    <NameTagLabel
+                                        key={`fields--${n}--${index}--${fields[index]}`}
+                                        name={fields.value[index]}
+                                        onClick={() => fields.remove(index)}
+                                    />
+                                ))
+                            }
+                        </div>
+                    );
+                }
+                }
+            </FieldArray>
         </div>
     );
 };
