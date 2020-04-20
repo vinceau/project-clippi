@@ -16,7 +16,7 @@ import path from "path";
 import { remote } from "electron";
 
 import { obsConnection, OBSRecordingAction } from "@/lib/obs";
-import { delay, getFilePath } from "@/lib/utils";
+import { delay, getFilePath, notify } from "@/lib/utils";
 import { store } from "@/store";
 import { DolphinLauncher, DolphinPlaybackPayload, DolphinPlaybackStatus, DolphinQueueFormat, generateDolphinQueuePayload } from "@vinceau/slp-realtime";
 import { onlyFilename } from "common/utils";
@@ -178,15 +178,30 @@ const randomTempJSONFile = () => {
 
 export const dolphinRecorder = new DolphinRecorder();
 
-export const openComboInDolphin = (filePath: string, options?: Partial<DolphinRecorderOptions>) => {
+const _openComboInDolphin = async (filePath: string, options?: Partial<DolphinRecorderOptions>) => {
     const { meleeIsoPath, dolphinPath } = store.getState().filesystem;
+    const dolphinExec = getDolphinExecutablePath(dolphinPath);
+    const dolphinExists = await fs.pathExists(dolphinExec);
+
+    if (!dolphinExists) {
+        throw new Error(`Dolphin executable doesn't exist at path: ${dolphinExec}`);
+    }
+
+    const meleeIsoExists = await fs.pathExists(meleeIsoPath);
     const dolphinSettings = {
-        meleeIsoPath,
-        dolphinPath: getDolphinExecutablePath(dolphinPath),
-        batch: Boolean(meleeIsoPath),
+        meleeIsoPath: meleeIsoExists ? meleeIsoPath : "",
+        dolphinPath: dolphinExec,
+        batch: meleeIsoExists,
     };
     dolphinRecorder.updateSettings(dolphinSettings);
-    dolphinRecorder.recordJSON(filePath, options).catch(console.error);
+    await dolphinRecorder.recordJSON(filePath, options);
+};
+
+export const openComboInDolphin = (filePath: string, options?: Partial<DolphinRecorderOptions>) => {
+    _openComboInDolphin(filePath, options).catch(err => {
+        console.error(err);
+        notify("Error loading Dolphin. Are your Dolphin playback settings correct?");
+    });
 };
 
 export const loadSlpFilesInDolphin = async (filenames: string[], options?: Partial<DolphinRecorderOptions>): Promise<void> => {
