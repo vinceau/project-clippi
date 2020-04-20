@@ -13,7 +13,7 @@ import { PerCharPercent } from "@/components/combos/PerCharPercent";
 import { PortSelectAdapter } from "@/components/combos/PortSelection";
 import { ComboConfiguration } from "@/lib/profile";
 import { CodeBlock } from "../../Misc";
-import { SemanticCheckboxInput } from "./FormAdapters";
+import { SemanticCheckboxInput, ToggleAdapter } from "./FormAdapters";
 import { Field, Label, Text } from "@/components/Form";
 
 type Values = Partial<ComboConfiguration>;
@@ -110,16 +110,20 @@ export const ComboForm: React.FC<{
                                     <Text>Only match combos if the character performing the combo does at least this much percent damage.</Text>
                                 </Field>
                                 <Field>
-                                    <FinalField name="comboMustKill" label="Combo Must Kill" component={SemanticCheckboxInput} />
+                                    <FinalField name="comboMustKill" label="Combo Must Kill" component={ToggleAdapter} />
+                                    <Text margin="none">Only match combos which take the opponents stock.</Text>
                                 </Field>
                                 <Field>
-                                    <FinalField name="excludeCPUs" label="Exclude CPUs" component={SemanticCheckboxInput} />
+                                    <FinalField name="excludeCPUs" label="Exclude CPUs" component={ToggleAdapter} />
+                                    <Text margin="none">Don't match combos which are played against CPUs.</Text>
                                 </Field>
                                 <Field>
-                                    <FinalField name="excludeChainGrabs" label="Exclude Chain-grabs" component={SemanticCheckboxInput} />
+                                    <FinalField name="excludeChainGrabs" label="Exclude Chain-grabs" component={ToggleAdapter} />
+                                    <Text margin="none">Don't match combos which consist mainly of chain-grabs.</Text>
                                 </Field>
                                 <Field>
-                                    <FinalField name="excludeWobbles" label="Exclude Wobbles" component={SemanticCheckboxInput} />
+                                    <FinalField name="excludeWobbles" label="Exclude Wobbles" component={ToggleAdapter} />
+                                    <Text margin="none">Don't match combos which consist mainly of wobbling.</Text>
                                 </Field>
 
                                 <Accordion>

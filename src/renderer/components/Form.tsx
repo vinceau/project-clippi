@@ -16,10 +16,14 @@ margin-bottom: 10px;
 }
 `;
 
-export const Text = styled.p`
+export const Text = styled.p<{
+    margin?: string;
+}>`
 font-size: 12px;
-margin-top: 10px;
 opacity: 0.8;
+${p => p.margin !== "none" && `
+margin-top: 10px;
+`}
 `;
 
 export const Field = styled.div<{
