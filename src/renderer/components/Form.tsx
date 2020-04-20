@@ -1,4 +1,7 @@
+import React from "react";
+
 import styled from "styled-components";
+import { Checkbox } from "semantic-ui-react";
 
 export const PageHeader = styled.h1`
 font-variant: all-small-caps;
@@ -34,3 +37,26 @@ border-bottom: solid 1px ${p.theme.foreground3};
 `}
 
 `;
+
+const ToggleOuter = styled.div`
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+`;
+
+export const Toggle: React.FC<{
+    label: string;
+    value: boolean;
+    onChange: (checked: boolean) => void;
+}> = (props) => {
+    return (
+        <ToggleOuter>
+            <Label>{props.label}</Label>
+            <Checkbox
+                checked={props.value}
+                onChange={(_, data) => props.onChange(Boolean(data.checked))}
+                toggle={true}
+            />
+        </ToggleOuter>
+    );
+};
