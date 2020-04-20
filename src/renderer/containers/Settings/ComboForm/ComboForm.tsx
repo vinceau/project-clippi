@@ -3,8 +3,8 @@ import * as React from "react";
 import styled from "styled-components";
 
 import arrayMutators from "final-form-arrays";
-import { Field, Form } from "react-final-form";
-import { Accordion, Button, Form as SemanticForm, Icon } from "semantic-ui-react";
+import { Field as FinalField, Form as FinalForm } from "react-final-form";
+import { Form as SemanticForm, Accordion, Button, Icon } from "semantic-ui-react";
 
 import { CharacterSelectAdapter } from "@/components/combos/CharacterSelect";
 import { NameTagForm } from "@/components/combos/NameTagForm";
@@ -14,6 +14,7 @@ import { PortSelectAdapter } from "@/components/combos/PortSelection";
 import { ComboConfiguration } from "@/lib/profile";
 import { CodeBlock } from "../../Misc";
 import { SemanticCheckboxInput } from "./FormAdapters";
+import { Field, Label, Text } from "@/components/Form";
 
 type Values = Partial<ComboConfiguration>;
 
@@ -60,7 +61,7 @@ export const ComboForm: React.FC<{
     };
     return (
         <div>
-            <Form
+            <FinalForm
                 onSubmit={props.onSubmit}
                 mutators={{
                     ...arrayMutators
@@ -78,42 +79,48 @@ export const ComboForm: React.FC<{
                         <div>
                             <SemanticForm onSubmit={handleSubmit}>
                                 <ButtonContainer submitting={submitting} form={form} />
-                                <SemanticForm.Field>
-                                    <label>Character Filter</label>
+                                <Field>
+                                    <Label>Character Filter</Label>
                                     <CharacterSelectAdapter name="characterFilter" isMulti={true} />
-                                </SemanticForm.Field>
-                                <SemanticForm.Field>
-                                    <label>Port Filter</label>
+                                    <Text>Only match combos performed by these characters.</Text>
+                                </Field>
+                                <Field>
+                                    <Label>Port Filter</Label>
                                     <PortSelectAdapter name="portFilter" />
-                                </SemanticForm.Field>
-                                <SemanticForm.Field>
-                                    <label>Minimum Combo Percent</label>
-                                    <Field name="minComboPercent" component="input" type="number" parse={(v: any) => parseInt(v, 10)} />
-                                </SemanticForm.Field>
-                                <SemanticForm.Field>
-                                    <label>Minimum Combo Length</label>
-                                    <Field name="minComboLength" component="input" type="number" parse={(v: any) => parseInt(v, 10)} />
-                                </SemanticForm.Field>
-                                <SemanticForm.Field>
-                                    <label>Name Tag Filter</label>
+                                    <Text>Only match combos performed by players using these ports.</Text>
+                                </Field>
+                                <Field>
+                                    <Label>Name Tag Filter</Label>
                                     <NameTagForm name="nameTags" pop={pop} push={push} values={values} />
-                                </SemanticForm.Field>
-                                <SemanticForm.Field>
-                                    <label>Character-specific Minimum Combo Percent</label>
+                                    <Text>Only match combos performed by players using these name tags.</Text>
+                                </Field>
+                                <Field>
+                                    <Label>Minimum Combo Length</Label>
+                                    <FinalField name="minComboLength" component="input" type="number" parse={(v: any) => parseInt(v, 10)} />
+                                    <Text>Only match combos which contain at least these many moves.</Text>
+                                </Field>
+                                <Field>
+                                    <Label>Minimum Combo Percent</Label>
+                                    <FinalField name="minComboPercent" component="input" type="number" parse={(v: any) => parseInt(v, 10)} />
+                                    <Text>Only match combos which do at least this much percent damage.</Text>
+                                </Field>
+                                <Field>
+                                    <Label>Character-specific Minimum Combo Percent</Label>
                                     <PerCharPercent name="perCharMinComboPercents" pop={pop} push={push} values={values} />
-                                </SemanticForm.Field>
-                                <SemanticForm.Field>
-                                    <Field name="comboMustKill" label="Combo Must Kill" component={SemanticCheckboxInput} />
-                                </SemanticForm.Field>
-                                <SemanticForm.Field>
-                                    <Field name="excludeCPUs" label="Exclude CPUs" component={SemanticCheckboxInput} />
-                                </SemanticForm.Field>
-                                <SemanticForm.Field>
-                                    <Field name="excludeChainGrabs" label="Exclude Chain-grabs" component={SemanticCheckboxInput} />
-                                </SemanticForm.Field>
-                                <SemanticForm.Field>
-                                    <Field name="excludeWobbles" label="Exclude Wobbles" component={SemanticCheckboxInput} />
-                                </SemanticForm.Field>
+                                    <Text>Only match combos if the character performing the combo does at least this much percent damage.</Text>
+                                </Field>
+                                <Field>
+                                    <FinalField name="comboMustKill" label="Combo Must Kill" component={SemanticCheckboxInput} />
+                                </Field>
+                                <Field>
+                                    <FinalField name="excludeCPUs" label="Exclude CPUs" component={SemanticCheckboxInput} />
+                                </Field>
+                                <Field>
+                                    <FinalField name="excludeChainGrabs" label="Exclude Chain-grabs" component={SemanticCheckboxInput} />
+                                </Field>
+                                <Field>
+                                    <FinalField name="excludeWobbles" label="Exclude Wobbles" component={SemanticCheckboxInput} />
+                                </Field>
 
                                 <Accordion>
                                     <Accordion.Title active={showAdvanced} onClick={() => setShowAdvanced(!showAdvanced)}>
@@ -122,26 +129,26 @@ export const ComboForm: React.FC<{
                                 </Accordion.Title>
                                     <Accordion.Content active={showAdvanced}>
 
-                                        <SemanticForm.Field>
-                                            <label>Chain Grabbers</label>
+                                        <Field>
+                                            <Label>Chain Grabbers</Label>
                                             <CharacterSelectAdapter name="chainGrabbers" isMulti={true} />
-                                        </SemanticForm.Field>
-                                        <SemanticForm.Field>
-                                            <label>Large Hit Threshold</label>
+                                        </Field>
+                                        <Field>
+                                            <Label>Large Hit Threshold</Label>
                                             <div>
                                                 <PercentageSlider name="largeHitThreshold" min="0" max="1" />
                                             </div>
-                                        </SemanticForm.Field>
-                                        <SemanticForm.Field>
-                                            <label>Chaingrab Threshold</label>
+                                        </Field>
+                                        <Field>
+                                            <Label>Chaingrab Threshold</Label>
                                             <div>
                                                 <PercentageSlider name="chainGrabThreshold" min="0" max="1" />
                                             </div>
-                                        </SemanticForm.Field>
-                                        <SemanticForm.Field>
-                                            <label>Minimum Pummels per Wobble</label>
-                                            <Field name="wobbleThreshold" component="input" type="number" parse={(v: any) => parseInt(v, 10)} />
-                                        </SemanticForm.Field>
+                                        </Field>
+                                        <Field>
+                                            <Label>Minimum Pummels per Wobble</Label>
+                                            <FinalField name="wobbleThreshold" component="input" type="number" parse={(v: any) => parseInt(v, 10)} />
+                                        </Field>
                                     </Accordion.Content>
                                 </Accordion>
                             <ButtonContainer submitting={submitting} form={form} />

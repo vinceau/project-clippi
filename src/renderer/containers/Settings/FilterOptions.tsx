@@ -5,8 +5,15 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { ComboConfiguration } from "@/lib/profile";
 import { Dispatch, iRootState } from "@/store";
-import { ProfileSelector } from "../../components/combos/ProfileSelection";
+import { ProfileSelector } from "@/components/combos/ProfileSelection";
 import { ComboForm } from "./ComboForm/ComboForm";
+import { PageHeader } from "@/components/Form";
+
+import styled from "styled-components";
+
+const Outer = styled.div`
+max-width: 800px;
+`;
 
 export const FilterOptions = () => {
     const { currentProfile, comboProfiles } = useSelector((state: iRootState) => state.slippi);
@@ -28,12 +35,12 @@ export const FilterOptions = () => {
         dispatch.slippi.deleteProfile(currentProfile);
     };
     return (
-        <div>
-            <h2>Combo Filter</h2>
+        <Outer>
+            <PageHeader>Combo Filter</PageHeader>
             <p>These options determine when the <b>combo occurs</b> and <b>conversion occurs</b> events trigger as well as combos found by the <b>Replay Processor</b>.
             Create new profiles by typing a new profile name in the dropdown below.</p>
             <ProfileSelector initialOptions={profileOptions} value={currentProfile} onChange={setProfile} />
             <ComboForm initialValues={initial} onSubmit={onSubmit} onDelete={onDelete} />
-        </div>
+        </Outer>
     );
 };
