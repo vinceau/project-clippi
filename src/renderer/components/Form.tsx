@@ -56,14 +56,19 @@ align-items: center;
 export const Toggle: React.FC<{
     label: string;
     value: boolean;
-    onChange: (checked: boolean) => void;
+    onChange?: (checked: boolean) => void;
 }> = (props) => {
+    const onChange = (value: boolean) => {
+        if (props.onChange) {
+            props.onChange(value);
+        }
+    }
     return (
         <ToggleOuter>
-            <Label>{props.label}</Label>
+            <Label style={{cursor: props.onChange ? "pointer" : "auto"}} onClick={() => onChange(!props.value)}>{props.label}</Label>
             <Checkbox
                 checked={props.value}
-                onChange={(_, data) => props.onChange(Boolean(data.checked))}
+                onChange={(_, data) => onChange(Boolean(data.checked))}
                 toggle={true}
             />
         </ToggleOuter>
