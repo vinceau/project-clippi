@@ -65,6 +65,10 @@ export const CharacterSelect = (props: any) => {
   const selectOptions = options ? options : sortedCharacterIDs;
   const mainTheme = useTheme();
   const customStyles: any = {
+      dropdownIndicator: (base: any) => ({
+        ...base,
+        padding: "0 8px",
+      }),
       multiValue: (base: any) => ({
         ...base,
         backgroundColor: "transparent",
@@ -72,6 +76,10 @@ export const CharacterSelect = (props: any) => {
       multiValueLabel: (base: any) => ({
         ...base,
         display: "none",
+      }),
+      control: (base: any) => ({
+        ...base,
+        minHeight: "35px",
       }),
   };
   if (mainTheme.themeName === ThemeMode.DARK) {
@@ -82,12 +90,14 @@ export const CharacterSelect = (props: any) => {
       });
       customStyles.dropdownIndicator = (base: any) => ({
         ...base,
+        padding: "0 8px",
         color: mainTheme.theme.background,
       });
       customStyles.control = (base: any) => ({
         ...base,
         backgroundColor: mainTheme.theme.foreground,
         color: mainTheme.theme.background,
+        minHeight: "35px",
       });
   }
 
