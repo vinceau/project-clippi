@@ -30,6 +30,7 @@ const StyledMenuItem = styled(Menu.Item) <{
     header: boolean;
 }>`
 &&& {
+    font-size: 1.2em;
     color: ${({ theme }) => theme.foreground} !important;
     margin-top: 2px !important;
     margin-bottom: 2px !important;
