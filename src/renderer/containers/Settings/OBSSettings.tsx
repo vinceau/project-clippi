@@ -7,8 +7,8 @@ import { ConnectionStatusCard } from "@/components/ConnectionStatusCard";
 import { connectToOBSAndNotify, obsConnection, OBSConnectionStatus } from "@/lib/obs";
 import { Dispatch, iRootState } from "@/store";
 
+import { Field, FormContainer, Label, PageHeader } from "@/components/Form";
 import OBSLogo from "@/styles/images/obs.png";
-import { FormContainer, Field, Label, PageHeader } from "@/components/Form";
 
 export const OBSSettings = () => {
     const { obsAddress, obsPort, obsPassword } = useSelector((state: iRootState) => state.slippi);

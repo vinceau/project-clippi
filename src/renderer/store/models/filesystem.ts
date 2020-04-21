@@ -4,9 +4,9 @@ import { createModel } from "@rematch/core";
 import { remote } from "electron";
 import produce from "immer";
 
+import { getDolphinPath } from "@/lib/dolphin";
 import { SoundMap } from "@/lib/sounds";
 import { getFilePath } from "@/lib/utils";
-import { getDolphinPath } from "@/lib/dolphin";
 
 const homeDirectory = remote.app.getPath("home");
 

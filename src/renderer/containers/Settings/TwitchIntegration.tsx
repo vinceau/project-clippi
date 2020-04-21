@@ -3,9 +3,9 @@ import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Header, Icon, Loader, Segment } from "semantic-ui-react";
 
+import { FormContainer, PageHeader } from "@/components/Form";
 import { TwitchClipInfo, TwitchConnectButton, TwitchUserStatus } from "@/components/twitch";
 import { Dispatch, iRootState } from "@/store";
-import { FormContainer, PageHeader } from "@/components/Form";
 
 export const TwitchIntegration = () => {
     const { twitchUser } = useSelector((state: iRootState) => state.tempContainer);

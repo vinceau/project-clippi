@@ -18,9 +18,9 @@ import { Appearance } from "@/views/settings/Appearance";
 import { InfoView } from "@/views/settings/InfoView";
 import { FilterOptions } from "./FilterOptions";
 import { OBSSettings } from "./OBSSettings";
+import { PlaybackSettings } from "./PlaybackSettings";
 import { SlippiPage } from "./SlippiPage";
 import { SoundSettings } from "./SoundSettings";
-import { PlaybackSettings } from "./PlaybackSettings";
 import { TwitchIntegration } from "./TwitchIntegration";
 
 import OBSLogo from "@/styles/images/obs.svg";

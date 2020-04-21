@@ -9,8 +9,8 @@ import { statusToColor, statusToLabel } from "@/lib/status";
 import { Dispatch, iRootState } from "@/store";
 import { SlippiConnectionPlaceholder } from "../SlippiConnectionPlaceholder";
 
+import { PageHeader } from "@/components/Form";
 import slippiLogo from "@/styles/images/slippi.png";
-import { PageHeader, FormContainer } from "@/components/Form";
 
 export const SlippiPage: React.FC = () => {
     const { port } = useSelector((state: iRootState) => state.slippi);

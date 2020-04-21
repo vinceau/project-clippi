@@ -1,7 +1,7 @@
 import React from "react";
 
-import styled from "styled-components";
 import { Checkbox } from "semantic-ui-react";
+import styled from "styled-components";
 
 export const FormContainer = styled.div`
 max-width: 650px;
@@ -62,7 +62,7 @@ export const Toggle: React.FC<{
         if (props.onChange) {
             props.onChange(value);
         }
-    }
+    };
     return (
         <ToggleOuter>
             <Label style={{cursor: props.onChange ? "pointer" : "auto"}} onClick={() => onChange(!props.value)}>{props.label}</Label>

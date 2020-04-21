@@ -2,10 +2,10 @@ import React from "react";
 
 import { FileInput } from "@/components/FileInput";
 
-import { useDispatch, useSelector } from "react-redux";
-import { Dispatch, iRootState } from "@/store";
-import { FormContainer, Label, Field, Text, PageHeader } from "@/components/Form";
+import { Field, FormContainer, Label, PageHeader, Text } from "@/components/Form";
 import { getDolphinExecutableName } from "@/lib/dolphin";
+import { Dispatch, iRootState } from "@/store";
+import { useDispatch, useSelector } from "react-redux";
 
 export const PlaybackSettings: React.FC = () => {
     const dispatch = useDispatch<Dispatch>();

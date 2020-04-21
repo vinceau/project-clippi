@@ -1,7 +1,7 @@
 import React from "react";
 
+import { Field, FormContainer, PageHeader, Toggle } from "@/components/Form";
 import { useTheme } from "@/styles";
-import { FormContainer, PageHeader, Field, Toggle } from "@/components/Form";
 
 export const Appearance: React.FC = () => {
     const { themeName, toggle } = useTheme();

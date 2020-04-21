@@ -6,10 +6,10 @@ import { Checkbox, Form } from "semantic-ui-react";
 import { FileInput } from "@/components/FileInput";
 import { ProcessSection } from "@/components/ProcessSection";
 
+import { Field, FormContainer, Label } from "@/components/Form";
 import { Dispatch, iRootState } from "@/store";
 import { HighlightOptions } from "../processor/HighlightOptions";
 import { RenameFiles } from "./RenameFiles";
-import { FormContainer, Label, Field } from "@/components/Form";
 
 export const ComboFinder: React.FC = () => {
     const { openCombosWhenDone, includeSubFolders, deleteFilesWithNoCombos,

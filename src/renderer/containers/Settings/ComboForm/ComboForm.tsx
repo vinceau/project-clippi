@@ -4,17 +4,17 @@ import styled from "styled-components";
 
 import arrayMutators from "final-form-arrays";
 import { Field as FinalField, Form as FinalForm } from "react-final-form";
-import { Form as SemanticForm, Accordion, Button, Icon } from "semantic-ui-react";
+import { Accordion, Button, Form as SemanticForm, Icon } from "semantic-ui-react";
 
 import { CharacterSelectAdapter } from "@/components/combos/CharacterSelect";
 import { NameTagForm } from "@/components/combos/NameTagForm";
 import { PercentageSlider } from "@/components/combos/PercentageSlider";
 import { PerCharPercent } from "@/components/combos/PerCharPercent";
 import { PortSelectAdapter } from "@/components/combos/PortSelection";
+import { Field, Label, Text } from "@/components/Form";
 import { ComboConfiguration } from "@/lib/profile";
 import { CodeBlock } from "../../Misc";
-import { SemanticCheckboxInput, ToggleAdapter } from "./FormAdapters";
-import { Field, Label, Text } from "@/components/Form";
+import { ToggleAdapter } from "./FormAdapters";
 
 type Values = Partial<ComboConfiguration>;
 

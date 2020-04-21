@@ -5,10 +5,10 @@ import { Button, Header, Icon, Segment } from "semantic-ui-react";
 
 import { soundPlayer } from "@/lib/sounds";
 
+import { FormContainer, PageHeader } from "@/components/Form";
 import { SoundFileInfo } from "@/components/SoundFileInfo";
 import { Dispatch, dispatcher, iRootState } from "@/store";
 import { openFileOrParentFolder } from "../../lib/utils";
-import { FormContainer, PageHeader } from "@/components/Form";
 
 export const AddSoundButton = (props: any) => {
     return (

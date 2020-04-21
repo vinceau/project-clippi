@@ -2,17 +2,12 @@ import * as React from "react";
 
 import insertTextAtCursor from "insert-text-at-cursor";
 import { TextArea } from "semantic-ui-react";
-import styled from "styled-components";
 
 import { ContextOptions } from "@/components/ContextOptions";
+import { Field, Label } from "@/components/Form";
 import { SlideReveal } from "@/components/ProcessSection";
 import { TemplatePreview } from "@/components/TemplatePreview";
 import { highlightInitialState } from "@/store/models/highlights";
-import { Field, Label } from "@/components/Form";
-
-const Section = styled.div`
-padding-bottom: 5px;
-`;
 
 export const RenameFiles: React.FC<{
     value: string;
