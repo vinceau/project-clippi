@@ -9,6 +9,16 @@ export const SlideReveal = styled.div`
     transition: all 0.3s ease-in-out;
 `;
 
+const Outer = styled.div`
+padding: 20px 0;
+border-top: solid 1px ${({ theme }) => theme.foreground3};
+`;
+
+const SectionLabel = styled.h3`
+cursor: pointer;
+margin-bottom: 0;
+`;
+
 export const ProcessSection: React.FC<{
     open: boolean;
     onOpenChange: (open: boolean) => void;
@@ -16,9 +26,9 @@ export const ProcessSection: React.FC<{
 }> = (props) => {
     const { open, onOpenChange, label } = props;
     return (
-        <div style={{ padding: "10px 0" }}>
+        <Outer>
             <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <h3 style={{ cursor: "pointer" }} onClick={() => onOpenChange(!open)}>{label}</h3>
+                <SectionLabel onClick={() => onOpenChange(!open)}>{label}</SectionLabel>
                 <Checkbox
                     toggle={true}
                     checked={open}
@@ -26,8 +36,10 @@ export const ProcessSection: React.FC<{
                 />
             </div>
             <SlideReveal open={open}>
-                {props.children}
+                <div style={{ marginTop: "10px" }}>
+                    {props.children}
+                </div>
             </SlideReveal>
-        </div>
+        </Outer>
     );
 };

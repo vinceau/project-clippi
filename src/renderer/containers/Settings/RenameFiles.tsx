@@ -56,7 +56,7 @@ export const RenameFiles: React.FC<{
                     }}
                     onBlur={() => props.onChange(renameFormat)}
                 />
-            <p style={{ wordBreak: "break-all" }}><b>Preview: </b><TemplatePreview template={renameFormat} metadata={{ startAt: "2001-11-21T17:33:54.000Z" }}/></p>
+            <p style={{ wordBreak: "break-all", marginTop: "10px" }}><b>Preview: </b><TemplatePreview template={renameFormat} metadata={{ startAt: "2001-11-21T17:33:54.000Z" }}/></p>
             </Field>
         </div>
     );
