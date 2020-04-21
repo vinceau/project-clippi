@@ -11,6 +11,15 @@ export const GlobalStyle = createGlobalStyle<{
     color: ${({ theme }) => theme.foreground };
   }
 
+  .ui.dropdown .menu>.item,
+  .ui.checkbox,
+  .ui.segment,
+  .ui.button,
+  .ui.modal,
+  .ui.form {
+    font-size: 1em;
+  }
+
   .ui.form .file-input input[type=text] {
     width: auto !important;
   }

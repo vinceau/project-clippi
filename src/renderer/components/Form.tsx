@@ -4,44 +4,44 @@ import { Checkbox } from "semantic-ui-react";
 import styled from "styled-components";
 
 export const FormContainer = styled.div`
-max-width: 650px;
+max-width: 65rem;
 `;
 
 export const PageHeader = styled.h1`
 font-variant: all-small-caps;
-margin-bottom: 10px;
+margin-bottom: 1rem;
 `;
 
 export const Label = styled.div`
 &&& {
 font-weight: 500;
-font-size: 14px;
-margin-bottom: 10px;
+font-size: 1.4rem;
+margin-bottom: 1rem;
 }
 `;
 
 export const Text = styled.p<{
     margin?: string;
 }>`
-font-size: 12px;
+font-size: 1.2rem;
 opacity: 0.8;
 ${p => p.margin !== "none" && `
-margin-top: 10px;
+margin-top: 1rem;
 `}
 `;
 
 export const Field = styled.div<{
     border?: string;
 }>`
-padding-top: 20px;
-padding-bottom: 20px;
+padding-top: 2rem;
+padding-bottom: 2rem;
 
 ${p => (p.border === "top" || p.border === "both") && `
-border-top: solid 1px ${p.theme.foreground3};
+border-top: solid 0.1rem ${p.theme.foreground3};
 `}
 
 ${p => (p.border === "bottom" || p.border === "both") && `
-border-bottom: solid 1px ${p.theme.foreground3};
+border-bottom: solid 0.1rem ${p.theme.foreground3};
 `}
 
 `;

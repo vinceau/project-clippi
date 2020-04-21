@@ -25,7 +25,7 @@ export const Labelled = (props: any) => {
     };
     return (
         <span style={onClick ? pointerStyle : undefined} onClick={onClick}>
-            <TippyLabel arrow={true} duration={200} position="bottom" {...rest}>
+            <TippyLabel size="big" arrow={true} duration={200} position="bottom" {...rest}>
                 {children}
             </TippyLabel>
         </span>

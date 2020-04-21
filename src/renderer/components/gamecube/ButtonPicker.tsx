@@ -28,9 +28,9 @@ export const ButtonPicker: React.FC<{
         setOpened(false);
     };
     const ButtonTextContainer = styled.div`
-    font-size: 26px;
+    font-size: 2em;
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 2em;
     `;
     return (
         <Modal

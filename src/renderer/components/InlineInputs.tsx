@@ -14,16 +14,7 @@ const generateOptions = (events: string[], mapOptionToLabel?: (opt: string) => s
 };
 
 export const InlineDropdown = (props: any) => {
-  const { value, customOptions, options, onChange, mapOptionToLabel, fontSize, prefix, disabledOptions, ...rest } = props;
-  const fontSizeCSS = (size: number) => css`
-    &&&,
-    * {
-      font-size: ${size}px;
-    }
-  `;
-  const Outer = styled.span`
-    ${fontSize ? fontSizeCSS(fontSize) : ""}
-  `;
+  const { value, customOptions, options, onChange, mapOptionToLabel, prefix, disabledOptions, ...rest } = props;
   let newOptions;
   if (customOptions && !options) {
     newOptions = generateOptions(customOptions, mapOptionToLabel, value, disabledOptions);
@@ -31,7 +22,7 @@ export const InlineDropdown = (props: any) => {
     newOptions = options;
   }
   return (
-    <Outer>
+    <span>
       {props.prefix ? `${props.prefix} ` : ""}
       <Dropdown
         scrolling={true}
@@ -41,7 +32,7 @@ export const InlineDropdown = (props: any) => {
         value={value}
         onChange={(_: any, { value }) => onChange(value)}
       />
-    </Outer>
+    </span>
   );
 };
 

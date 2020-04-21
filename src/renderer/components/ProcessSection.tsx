@@ -14,7 +14,7 @@ padding: 20px 0;
 border-top: solid 1px ${({ theme }) => theme.foreground3};
 `;
 
-const SectionLabel = styled.h3`
+const SectionLabel = styled.h2`
 cursor: pointer;
 margin-bottom: 0;
 `;
