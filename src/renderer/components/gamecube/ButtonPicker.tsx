@@ -55,7 +55,7 @@ export const ButtonPicker: React.FC<{
                 </div>
             </Modal.Content>
             <Modal.Actions>
-                <Button color="green" onClick={onSave}>
+                <Button disabled={buttons.length === 0} color="green" onClick={onSave}>
                     <Icon name="checkmark" /> Save
                 </Button>
             </Modal.Actions>

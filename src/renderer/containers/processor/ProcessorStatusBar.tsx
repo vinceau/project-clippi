@@ -44,7 +44,8 @@ export const ProcessorStatusBar: React.FC = () => {
     const { filesPath, combosFilePath } = useSelector((state: iRootState) => state.filesystem);
 
     const complete = comboFinderPercent === 100;
-    const processBtnDisabled = (!findCombos && !renameFiles) || !combosFilePath;
+    const validButtonCombo = !findCombos || highlightMethod !== FindComboOption.BUTTON_INPUTS || inputButtonCombo.length > 0;
+    const processBtnDisabled = (!findCombos && !renameFiles) || !combosFilePath || !validButtonCombo;
 
     const handleProcessClick = () => {
         console.log(`finding highlights from the slp files in ${filesPath} ${includeSubFolders && "and all subfolders"} and saving to ${combosFilePath}`);
