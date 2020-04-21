@@ -101,7 +101,7 @@ export const OBSStatusBar: React.FC = () => {
                         <Icon name="circle" />{recordButtonText}
                     </RecordButton>
                 </Labelled>
-                <Button onClick={onPlay} style={{ marginLeft: "0.25em" }} disabled={dolphinQueue.length === 0}><Icon name="play" />Play</Button>
+                <Button onClick={onPlay} disabled={dolphinQueue.length === 0}><Icon name="play" />Play</Button>
             </div>
         </Outer>
     );

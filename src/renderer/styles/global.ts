@@ -11,10 +11,16 @@ export const GlobalStyle = createGlobalStyle<{
     color: ${({ theme }) => theme.foreground };
   }
 
+  .ui.buttons {
+    font-size: 1em;
+    margin: 0;
+  }
+
   .ui.dropdown .menu>.item,
   .ui.checkbox,
   .ui.segment,
   .ui.button,
+  .ui.buttons .button,
   .ui.modal,
   .ui.form {
     font-size: 1em;
