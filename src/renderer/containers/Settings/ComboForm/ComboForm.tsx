@@ -123,39 +123,52 @@ export const ComboForm: React.FC<{
                                 </Field>
                                 <Field border="bottom">
                                     <FinalField name="excludeWobbles" label="Exclude Wobbles" component={ToggleAdapter} />
-                                    <Text margin="none">Don't match combos which consist mainly of wobbling.</Text>
+                                    <Text margin="none">Don't match combos which consist mainly of Wobbling.</Text>
                                 </Field>
 
-                                <Accordion>
-                                    <Accordion.Title active={showAdvanced} onClick={() => setShowAdvanced(!showAdvanced)}>
-                                        <Icon name="dropdown" />
-                                        Advanced Options
-                                </Accordion.Title>
-                                    <Accordion.Content active={showAdvanced}>
-
-                                        <Field>
-                                            <Label>Chain Grabbers</Label>
-                                            <CharacterSelectAdapter name="chainGrabbers" isMulti={true} />
-                                        </Field>
-                                        <Field>
-                                            <Label>Large Hit Threshold</Label>
-                                            <div>
-                                                <PercentageSlider name="largeHitThreshold" min="0" max="1" />
-                                            </div>
-                                        </Field>
-                                        <Field>
-                                            <Label>Chaingrab Threshold</Label>
-                                            <div>
-                                                <PercentageSlider name="chainGrabThreshold" min="0" max="1" />
-                                            </div>
-                                        </Field>
-                                        <Field>
-                                            <Label>Minimum Pummels per Wobble</Label>
-                                            <FinalField name="wobbleThreshold" component="input" type="number" parse={(v: any) => parseInt(v, 10)} />
-                                        </Field>
-                                    </Accordion.Content>
-                                </Accordion>
-                            <ButtonContainer submitting={submitting} form={form} />
+                                <div style={{ marginTop: "10px" }}>
+                                    <Accordion>
+                                        <Accordion.Title active={showAdvanced} onClick={() => setShowAdvanced(!showAdvanced)}>
+                                            <Icon name="dropdown" />
+                                            {showAdvanced ? "Hide " : "Show "} Advanced Options
+                                        </Accordion.Title>
+                                        <Accordion.Content active={showAdvanced}>
+                                            <Field>
+                                                <Label>Chain-grab Characters</Label>
+                                                <CharacterSelectAdapter name="chainGrabbers" isMulti={true} />
+                                                <Text>Only exclude chain-grabs performed by these characters.</Text>
+                                            </Field>
+                                            <Field>
+                                                <Label>Chain-grab Threshold</Label>
+                                                <div>
+                                                    <PercentageSlider name="chainGrabThreshold" min="0" max="1" />
+                                                </div>
+                                                <Text>
+                                                    When excluding chain-grabs, the chain-grabs must make up this much of the combo damage for it to be excluded.
+                                                    e.g. If the threshold is 0.8 then combos which consist 20% of chain-grabs won't be excluded.
+                                                </Text>
+                                            </Field>
+                                            <Field>
+                                                <Label>Large Hit Threshold</Label>
+                                                <div>
+                                                    <PercentageSlider name="largeHitThreshold" min="0" max="1" />
+                                                </div>
+                                                <Text>
+                                                    Exclude the combo if a single hit does proportionally this much combo damage. e.g. If the threshold is 0.8
+                                                    then no single move in the combo can do more than 80% of the total combo damage or the combo will be excluded.
+                                                </Text>
+                                            </Field>
+                                            <Field>
+                                                <Label>Minimum Pummels per Wobble</Label>
+                                                <FinalField name="wobbleThreshold" component="input" type="number" parse={(v: any) => parseInt(v, 10)} />
+                                                <Text>
+                                                    When excluding Wobbles, the Ice Climbers must pummel at least this many times in a Wobble for it to be excluded.
+                                                </Text>
+                                            </Field>
+                                        </Accordion.Content>
+                                    </Accordion>
+                                </div>
+                                <ButtonContainer submitting={submitting} form={form} />
                                 <CodeBlock values={values} />
                             </SemanticForm>
                         </div>
