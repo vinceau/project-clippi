@@ -11,7 +11,7 @@ export const Appearance: React.FC = () => {
     return (
         <FormContainer>
             <PageHeader>Appearance</PageHeader>
-            <Field>
+            <Field padding="bottom">
                 <Toggle
                     value={themeName === "dark"}
                     onChange={onOpenChange}

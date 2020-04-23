@@ -15,7 +15,7 @@ export const PlaybackSettings: React.FC = () => {
     return (
         <FormContainer>
             <PageHeader>Playback</PageHeader>
-            <Field>
+            <Field padding="bottom">
                 <Label>Melee ISO File</Label>
                 <FileInput
                     value={meleeIsoPath}

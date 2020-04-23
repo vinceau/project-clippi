@@ -44,7 +44,7 @@ export const OBSSettings = () => {
                 />
                 :
                 <Form onSubmit={connectToOBSAndNotify}>
-                    <CustomField>
+                    <CustomField padding="bottom">
                         <div>
                             <Label>IP Address</Label>
                             <Form.Input
