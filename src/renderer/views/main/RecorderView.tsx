@@ -23,6 +23,7 @@ const Content = styled.div`
 `;
 
 const Footer = styled.div`
+    display: flex;
     border-top: solid 1px ${({ theme }) => theme.background3};
     background-color: ${props => props.theme.background};
     height: 55px;

@@ -2,6 +2,9 @@ import React from "react";
 
 import ReactMarkdown from "react-markdown";
 
+import { Dispatch, iRootState } from "@/store";
+import { useDispatch, useSelector } from "react-redux";
+
 import styled from "styled-components";
 
 import supporters from "raw-loader!../../../../SUPPORTERS.md";
@@ -38,9 +41,15 @@ width: 6.4rem;
 `;
 
 export const InfoView: React.FC = () => {
+    const { isDev } = useSelector((state: iRootState) => state.slippi);
+    const dispatch = useDispatch<Dispatch>();
+    const handleLogoClick = () => {
+        console.log(isDev ? "Disabling dev" : "Enabling dev");
+        dispatch.slippi.setIsDev(!isDev);
+    };
     return (
         <Container>
-            <Logo src={clippiLogo} />
+            <Logo src={clippiLogo} onClick={handleLogoClick} />
             <h1>Project Clippi</h1>
             <Content>
                 <h3>Version {__VERSION__}</h3>
