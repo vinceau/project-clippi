@@ -9,7 +9,7 @@ max-width: 65rem;
 
 export const PageHeader = styled.h1`
 font-variant: all-small-caps;
-margin-bottom: 1rem;
+margin-bottom: 2rem;
 `;
 
 export const Label = styled.div`
