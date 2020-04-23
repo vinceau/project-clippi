@@ -30,8 +30,14 @@ export const ComboForm: React.FC<{
     }> = ({ submitting }) => {
         const OuterContainer = styled.div`
         padding: 2rem 0;
+        display: flex;
+        justify-content: space-between;
         & > button {
             margin-bottom: 3px !important;
+        }
+        .delete-button:hover {
+            background-color: #d01919;
+            color: white;
         }
         `;
         return (
@@ -41,7 +47,7 @@ export const ComboForm: React.FC<{
                     Save Profile
                 </Button>
                 <Button
-                    negative={true}
+                    className="delete-button"
                     type="button"
                     onClick={props.onDelete}
                 >
