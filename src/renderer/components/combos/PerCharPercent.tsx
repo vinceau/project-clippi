@@ -6,27 +6,13 @@ import { FieldArray } from "react-final-form-arrays";
 import { Button, Icon } from "semantic-ui-react";
 
 import { CharPercentOption } from "@/lib/profile";
-import { device } from "@/styles/device";
 import { SemanticInput } from "../../containers/Settings/ComboForm/FormAdapters";
 import { CharacterSelectAdapter } from "./CharacterSelect";
 
 const CharacterSelectContainer = styled.div`
-display: flex;
-flex-direction: column;
-align-items: center;
-padding: 5px 0;
-& > div {
-    padding: 2px;
-    flex-basis: 100%;
-    width: 100%;
-}
-@media ${device.tablet} {
-    flex-direction: row;
-    & > div {
-        flex-basis: 50%;
-        width: 50%;
-    }
-}
+display: grid;
+grid-gap: 1rem;
+grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr) );
 `;
 
 export const PerCharPercent: React.FC<{ name: string; values: any; push: any; pop: any }> = props => {
