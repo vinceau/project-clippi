@@ -3,6 +3,7 @@ import React from "react";
 import { darken, lighten } from "polished";
 import styled from "styled-components";
 
+import { Text } from "@/components/Form";
 import { Labelled } from "@/components/Labelled";
 import { Dispatch, iRootState } from "@/store";
 import { ThemeMode, useTheme } from "@/styles";
@@ -115,6 +116,7 @@ export const RecorderView: React.FC = () => {
         <Outer>
             <Content>
                 <h1>Playback Queue <Icon name="list" /></h1>
+                <Text margin="none">Create a playlist of replays and load them into Dolphin</Text>
                 <Toolbar>
                     <div>
                         <Button type="button" onClick={loadFileHandler}>

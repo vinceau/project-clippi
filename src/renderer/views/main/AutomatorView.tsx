@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 import { Icon } from "semantic-ui-react";
 
-import { FormContainer } from "@/components/Form";
+import { FormContainer, Text } from "@/components/Form";
 import { Automator } from "@/containers/Automator/Automator";
 import { StatusBar } from "@/containers/Automator/StatusBar";
 
@@ -35,6 +35,7 @@ export const AutomatorView: React.FC = () => {
             <Content>
                 <FormContainer>
                     <h1>Automator <Icon name="bolt" /></h1>
+                    <Text>Automatically execute commands when an in-game event occurs</Text>
                     <Automator />
                 </FormContainer>
             </Content>
