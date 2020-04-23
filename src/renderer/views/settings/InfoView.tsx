@@ -7,8 +7,9 @@ import styled from "styled-components";
 import supporters from "raw-loader!../../../../SUPPORTERS.md";
 
 import clippiLogo from "../../../../build/icon.png";
+import { FormContainer } from "@/components/Form";
 
-const Container = styled.div`
+const Container = styled(FormContainer)`
 text-align: center;
 
 ul {
@@ -18,8 +19,8 @@ ul {
 `;
 
 const Content = styled.div`
+padding-bottom: 2rem;
 p {
-    max-width: 600px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -27,8 +28,8 @@ p {
 
 const Footer = styled.div`
 font-style: italic;
-font-size: 16px;
-margin-top: 40px;
+font-size: 1.6rem;
+margin-top: 4rem;
 `;
 
 const Logo = styled.img`
