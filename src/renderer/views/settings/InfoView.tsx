@@ -6,6 +6,8 @@ import styled from "styled-components";
 
 import supporters from "raw-loader!../../../../SUPPORTERS.md";
 
+import clippiLogo from "../../../../build/icon.png";
+
 const Container = styled.div`
 text-align: center;
 
@@ -29,9 +31,15 @@ font-size: 16px;
 margin-top: 40px;
 `;
 
+const Logo = styled.img`
+height: 6.4rem;
+width: 6.4rem;
+`;
+
 export const InfoView: React.FC = () => {
     return (
         <Container>
+            <Logo src={clippiLogo} />
             <h1>Project Clippi</h1>
             <Content>
                 <h3>Version {__VERSION__}</h3>
