@@ -17,18 +17,18 @@ import { saveQueueToFile } from "@/lib/dolphin";
 const Content = styled.div`
     display: flex;
     flex-direction: column;
-    padding: 20px;
-    height: calc(100% - 56px);
+    padding: 2rem;
+    height: calc(100% - 5.6rem);
     overflow: hidden;
     overflow-y: auto;
 `;
 
 const Footer = styled.div`
     display: flex;
-    border-top: solid 1px ${({ theme }) => theme.background3};
+    border-top: solid 0.1rem ${({ theme }) => theme.background3};
     background-color: ${props => props.theme.background};
-    height: 55px;
-    padding: 0 20px;
+    height: 5.5rem;
+    padding: 0 2rem;
 `;
 
 const Outer = styled.div`
@@ -46,18 +46,19 @@ background-color: ${p => {
         const adjust = p.themeName === ThemeMode.DARK ? lighten : darken;
         return adjust(0.05, p.theme.background);
     }};
-border-radius: 5px;
+border-radius: 0.5rem;
 overflow: hidden;
 overflow-y: auto;
 position: relative;
 `;
 
 const Toolbar = styled.div`
+padding-top: 2rem;
 display: flex;
 flex-direction: row;
 justify-content: space-between;
 align-items: center;
-margin-bottom: 10px;
+margin-bottom: 1rem;
 `;
 
 export const RecorderView: React.FC = () => {
