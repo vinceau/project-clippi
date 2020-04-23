@@ -33,6 +33,13 @@ font-size: 20px;
 margin-right: 10px;
 `;
 
+const ButtonContainer = styled.div`
+.stop-button:hover {
+    background-color: #d01919;
+    color: white;
+}
+`;
+
 export const ProcessorStatusBar: React.FC = () => {
     const { comboFinderPercent, comboFinderLog, comboFinderProcessing } = useSelector((state: iRootState) => state.tempContainer);
     const { comboProfiles } = useSelector((state: iRootState) => state.slippi);
@@ -93,9 +100,9 @@ export const ProcessorStatusBar: React.FC = () => {
                 </>
                 }
             </ProcessStatus>
-            <div>
+            <ButtonContainer>
                 {comboFinderProcessing ?
-                    <Button negative={true} type="button" onClick={() => stopProcessing()}>
+                    <Button className="stop-button" type="button" onClick={() => stopProcessing()}>
                         <Icon name="stop" />
                             Stop processing
                     </Button>
@@ -105,7 +112,7 @@ export const ProcessorStatusBar: React.FC = () => {
                             Process replays
                     </Button>
                 }
-            </div>
+            </ButtonContainer>
         </Outer>
     );
 };
