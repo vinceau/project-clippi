@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { Dropdown, Input } from "semantic-ui-react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 const generateOptions = (events: string[], mapOptionToLabel?: (opt: string) => string, selectedValue?: string, disabledEvents?: string[]): Array<{ key: string; text: string; value: string }> => {
   const disabled = disabledEvents || [];
