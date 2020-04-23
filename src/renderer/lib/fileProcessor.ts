@@ -2,7 +2,7 @@ import path from "path";
 
 import Worker from "worker-loader!common/workers/fileProcessor.worker";
 
-import { dispatcher } from "@/store";
+import { store, dispatcher } from "@/store";
 import { FileProcessorOptions } from "common/fileProcessor";
 import { secondsToString } from "common/utils";
 import { CompletePayload, FileProcessorParentMessage, FileProcessorWorkerMessage, ProgressingPayload } from "common/workers/fileProcessor.worker.types";
@@ -48,7 +48,7 @@ const handleComplete = (payload: CompletePayload): void => {
     const { options, result } = payload;
     const timeTakenStr = secondsToString(result.timeTaken);
     const numCombos = result.combosFound;
-    const openCombos = Boolean(options.openCombosWhenDone);
+    const { openCombosWhenDone } = store.getState().highlights;
     console.log(`finished generating ${numCombos} highlights in ${timeTakenStr}`);
     let message = `Processed ${result.filesProcessed} files in ${timeTakenStr}`;
     if (options.findComboOption) {
@@ -58,7 +58,7 @@ const handleComplete = (payload: CompletePayload): void => {
     dispatcher.tempContainer.setPercent(100);
     dispatcher.tempContainer.setComboLog(message);
     notify(message, `Highlight processing complete`);
-    if (openCombos && options.outputFile) {
+    if (openCombosWhenDone && options.outputFile) {
         // check if we want to open the combo file after generation
         openComboInDolphin(options.outputFile);
     }

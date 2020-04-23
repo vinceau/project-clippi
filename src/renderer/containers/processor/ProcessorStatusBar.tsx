@@ -41,7 +41,7 @@ const StopButton = styled(Button)`
 export const ProcessorStatusBar: React.FC = () => {
     const { comboFinderPercent, comboFinderLog, comboFinderProcessing } = useSelector((state: iRootState) => state.tempContainer);
     const { comboProfiles } = useSelector((state: iRootState) => state.slippi);
-    const { openCombosWhenDone, includeSubFolders, deleteFilesWithNoCombos, renameFiles, findCombos, highlightMethod,
+    const { includeSubFolders, deleteFilesWithNoCombos, renameFiles, findCombos, highlightMethod,
         renameFormat, findComboProfile } = useSelector((state: iRootState) => state.highlights);
     const { inputButtonCombo, inputButtonPreInputFrames, inputButtonPostInputFrames, inputButtonHoldUnits,
         inputButtonHoldAmount, inputButtonLockoutSecs, inputButtonHold,
@@ -82,7 +82,6 @@ export const ProcessorStatusBar: React.FC = () => {
             includeSubFolders,
             outputFile: combosFilePath,
             renameTemplate: renameFormat,
-            openCombosWhenDone,
             config: findCombos && highlightMethod === FindComboOption.BUTTON_INPUTS ? buttonConfig : comboConfig,
         };
         startProcessing(options);

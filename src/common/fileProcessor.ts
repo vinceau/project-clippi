@@ -46,7 +46,6 @@ export interface FileProcessorOptions {
     includeSubFolders?: boolean;
     outputFile?: string;
     renameTemplate?: string;
-    openCombosWhenDone?: boolean;
     config: Partial<ButtonInputOptions> | ComboOptions;
 }
 
