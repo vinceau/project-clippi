@@ -56,7 +56,7 @@ export const OBSSettings = () => {
                 <Field>
                     <Label>Websocket Password</Label>
                     <Form.Input
-                        icon={<Icon name="eye" link={true} onClick={togglePass} />}
+                        icon={<Icon name={showPass ? "eye slash" : "eye"} link={true} onClick={togglePass} />}
                         type={showPass ? "text" : "password"}
                         placeholder="Password"
                         value={obsPassword}
