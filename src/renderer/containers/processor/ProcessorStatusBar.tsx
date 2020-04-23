@@ -10,8 +10,6 @@ import { mapConfigurationToFilterSettings } from "@/lib/profile";
 import { ComboFilterSettings, Input } from "@vinceau/slp-realtime";
 import { ButtonInputOptions, ComboOptions, FileProcessorOptions, FindComboOption } from "common/fileProcessor";
 
-const isWindows = process.platform === "win32";
-
 const Outer = styled.div`
 display: flex;
 flex-direction: row;
@@ -75,7 +73,6 @@ export const ProcessorStatusBar: React.FC = () => {
         const comboConfig: ComboOptions = {
             deleteZeroComboFiles: deleteFilesWithNoCombos,
             findComboCriteria: converted,
-            openCombosWhenDone: isWindows && openCombosWhenDone,
         };
 
         const options: FileProcessorOptions = {
@@ -85,6 +82,7 @@ export const ProcessorStatusBar: React.FC = () => {
             includeSubFolders,
             outputFile: combosFilePath,
             renameTemplate: renameFormat,
+            openCombosWhenDone,
             config: findCombos && highlightMethod === FindComboOption.BUTTON_INPUTS ? buttonConfig : comboConfig,
         };
         startProcessing(options);
