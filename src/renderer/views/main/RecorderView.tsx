@@ -113,7 +113,7 @@ export const RecorderView: React.FC = () => {
     return (
         <Outer>
             <Content>
-                <h1>Playback Queue <Icon name="video play" /></h1>
+                <h1>Playback Queue <Icon name="list" /></h1>
                 <Toolbar>
                     <div>
                         <Button type="button" onClick={loadFileHandler}>
