@@ -33,8 +33,8 @@ font-size: 20px;
 margin-right: 10px;
 `;
 
-const ButtonContainer = styled.div`
-.stop-button:hover {
+const StopButton = styled(Button)`
+&&&:hover {
     background-color: #d01919;
     color: white;
 }
@@ -100,19 +100,19 @@ export const ProcessorStatusBar: React.FC = () => {
                 </>
                 }
             </ProcessStatus>
-            <ButtonContainer>
+            <div>
                 {comboFinderProcessing ?
-                    <Button className="stop-button" type="button" onClick={() => stopProcessing()}>
+                    <StopButton type="button" onClick={() => stopProcessing()}>
                         <Icon name="stop" />
                             Stop processing
-                    </Button>
+                    </StopButton>
                     :
                     <Button primary={true} type="button" onClick={handleProcessClick} disabled={processBtnDisabled}>
                         <Icon name="fast forward" />
                             Process replays
                     </Button>
                 }
-            </ButtonContainer>
+            </div>
         </Outer>
     );
 };
