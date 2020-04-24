@@ -2,8 +2,8 @@ import produce from "immer";
 
 import { createModel } from "@rematch/core";
 
-import { notify } from "@/lib/utils";
 import { getLatestVersion, needsUpdate } from "@/lib/checkForUpdates";
+import { notify } from "@/lib/utils";
 
 export interface AppContainerState {
     latestVersion: string;

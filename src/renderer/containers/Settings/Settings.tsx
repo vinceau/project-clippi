@@ -1,6 +1,8 @@
 import * as React from "react";
 
+import { iRootState } from "@/store";
 import { transparentize } from "polished";
+import { useSelector } from "react-redux";
 import {
     Redirect,
     Route,
@@ -8,9 +10,7 @@ import {
     useHistory,
     useRouteMatch,
 } from "react-router-dom";
-import { Label, Icon, Menu } from "semantic-ui-react";
-import { iRootState } from "@/store";
-import { useSelector } from "react-redux";
+import { Icon, Label, Menu } from "semantic-ui-react";
 import styled, { css } from "styled-components";
 
 import { CustomIcon } from "@/components/CustomIcon";

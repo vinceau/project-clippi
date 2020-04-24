@@ -10,8 +10,8 @@ import styled from "styled-components";
 
 import supporters from "raw-loader!../../../../SUPPORTERS.md";
 
-import clippiLogo from "../../../../build/icon.png";
 import { FormContainer } from "@/components/Form";
+import clippiLogo from "../../../../build/icon.png";
 
 const Container = styled(FormContainer)`
 text-align: center;

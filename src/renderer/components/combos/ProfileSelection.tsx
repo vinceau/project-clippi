@@ -2,10 +2,10 @@ import * as React from "react";
 
 import styled from "styled-components";
 
-import { Dropdown } from "semantic-ui-react";
-import { Text, Label, Field } from "../Form";
-import { lighten, darken } from "polished";
 import { ThemeMode, useTheme } from "@/styles";
+import { darken, lighten } from "polished";
+import { Dropdown } from "semantic-ui-react";
+import { Field, Label, Text } from "../Form";
 
 const generateOptions = (opts: string[]) => {
     return opts.map(o => ({

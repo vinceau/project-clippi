@@ -2,7 +2,7 @@ import path from "path";
 
 import Worker from "worker-loader!common/workers/fileProcessor.worker";
 
-import { store, dispatcher } from "@/store";
+import { dispatcher, store } from "@/store";
 import { FileProcessorOptions } from "common/fileProcessor";
 import { secondsToString } from "common/utils";
 import { CompletePayload, FileProcessorParentMessage, FileProcessorWorkerMessage, ProgressingPayload } from "common/workers/fileProcessor.worker.types";

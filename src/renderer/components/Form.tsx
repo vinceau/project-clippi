@@ -52,7 +52,7 @@ border-bottom: solid 0.1rem ${p.theme.foreground3};
 `;
 Field.defaultProps = {
     padding: "both",
-}
+};
 
 const ToggleOuter = styled.div`
 display: flex;
