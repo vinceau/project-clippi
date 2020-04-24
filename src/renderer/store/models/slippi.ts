@@ -2,7 +2,7 @@ import produce from "immer";
 
 import { createModel } from "@rematch/core";
 
-import { EventActionConfig } from "@/actions";
+import { EventActionConfig } from "@/containers/actions";
 import { mapFilterSettingsToConfiguration } from "@/lib/profile";
 import { ActionEvent, comboFilter, streamManager } from "@/lib/realtime";
 import { notify } from "@/lib/utils";

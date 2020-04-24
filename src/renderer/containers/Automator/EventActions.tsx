@@ -6,7 +6,7 @@ import { produce } from "immer";
 import { Divider, Icon, List } from "semantic-ui-react";
 import styled from "styled-components";
 
-import { actionComponents } from "@/actions";
+import { actionComponents } from "@/containers/actions";
 import { InlineDropdown } from "@/components/InlineInputs";
 import { Labelled } from "@/components/Labelled";
 import { generateRandomEvent } from "@/lib/events";

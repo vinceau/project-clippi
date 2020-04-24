@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { Icon } from "semantic-ui-react";
 
 import { InlineDropdown } from "@/components/InlineInputs";
-import { AddSoundButton } from "@/containers/Settings/SoundSettings";
+import { AddSoundButton } from "@/containers/settings/SoundSettings";
 import { soundPlayer } from "@/lib/sounds";
 import { iRootState } from "@/store";
 import { ActionComponent } from "./types";

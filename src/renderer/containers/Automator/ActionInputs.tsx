@@ -6,7 +6,7 @@ import { Action as ActionDefinition } from "@vinceau/event-actions";
 import { produce } from "immer";
 import { Icon } from "semantic-ui-react";
 
-import { actionComponents } from "@/actions";
+import { actionComponents } from "@/containers/actions";
 import { InlineDropdown } from "@/components/InlineInputs";
 import { Labelled } from "@/components/Labelled";
 

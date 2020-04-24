@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { eventActionManager } from "@/actions";
+import { eventActionManager } from "@/containers/actions";
 import { ActionEvent } from "@/lib/realtime";
 import { isDevelopment, notify } from "@/lib/utils";
 

@@ -7,7 +7,7 @@ import { Icon } from "semantic-ui-react";
 import { Text } from "@/components/Form";
 import { ProcessorStatusBar } from "@/containers/processor/ProcessorStatusBar";
 import { ProgressBar } from "@/containers/processor/ProgressBar";
-import { ComboFinder } from "@/containers/Settings/ComboFinder";
+import { ComboFinder } from "@/containers/settings/ComboFinder";
 
 const Content = styled.div`
     padding: 20px;

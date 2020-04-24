@@ -3,7 +3,7 @@ import * as React from "react";
 import { ActionEvent } from "@/lib/realtime";
 import { AddEventDropdown, EventActions } from "./EventActions";
 
-import { EventActionConfig } from "@/actions";
+import { EventActionConfig } from "@/containers/actions";
 import { Dispatch, iRootState } from "@/store";
 import { useDispatch, useSelector } from "react-redux";
 

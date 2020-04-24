@@ -3,7 +3,7 @@ import createRematchPersist, { getPersistor } from "@rematch/persist";
 
 import * as models from "./models";
 
-import { updateEventActionManager } from "@/actions";
+import { updateEventActionManager } from "@/containers/actions";
 import { dolphinRecorder } from "@/lib/dolphin";
 import { obsConnection } from "@/lib/obs";
 import { mapConfigurationToFilterSettings } from "@/lib/profile";
