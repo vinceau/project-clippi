@@ -4,6 +4,7 @@ import ReactMarkdown from "react-markdown";
 
 import { Dispatch, iRootState } from "@/store";
 import { useDispatch, useSelector } from "react-redux";
+import { Icon } from "semantic-ui-react";
 
 import styled from "styled-components";
 
@@ -18,6 +19,10 @@ text-align: center;
 ul {
     list-style: none;
     padding: 0;
+}
+
+a:hover {
+    text-decoration: underline;
 }
 `;
 
@@ -45,11 +50,19 @@ ${({isDev}) => isDev && `
 `}
 `;
 
+const UpdateInfo = styled.h3`
+a {
+    color: red;
+    font-size: 1.2em;
+}
+padding: 1rem 0;
+`;
+
 const DEV_THRESHOLD = 7;
 
 export const InfoView: React.FC = () => {
     const [ clickCount, setClickCount ] = React.useState(0);
-    const { isDev } = useSelector((state: iRootState) => state.appContainer);
+    const { isDev, needsUpdate } = useSelector((state: iRootState) => state.appContainer);
     const dispatch = useDispatch<Dispatch>();
     const handleLogoClick = () => {
         setClickCount(clickCount + 1);
@@ -62,9 +75,15 @@ export const InfoView: React.FC = () => {
     return (
         <Container>
             <Logo isDev={isDev} src={clippiLogo} onClick={handleLogoClick} />
-            <h1>Project Clippi</h1>
+            <h1>Project Clippi v{__VERSION__}</h1>
             <Content>
-                <h3>Version {__VERSION__}</h3>
+                {needsUpdate &&
+                    <UpdateInfo>
+                        <a href="https://github.com/vinceau/project-clippi/releases/latest" target="_blank">
+                            <Icon name="exclamation triangle" /> New update available!
+                        </a>
+                    </UpdateInfo>
+                }
                 <p>
                     Commit {__BUILD__}<br />
                     {__DATE__}
