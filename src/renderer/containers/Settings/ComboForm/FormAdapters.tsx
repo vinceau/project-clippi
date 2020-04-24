@@ -1,5 +1,7 @@
 import * as React from "react";
 
+import styled from "styled-components";
+
 import { Toggle } from "@/components/Form";
 import { Checkbox, Form as SemanticForm, Input } from "semantic-ui-react";
 
@@ -27,13 +29,19 @@ export const SemanticCheckboxInput = (props: any) => {
     );
 };
 
+const StyledInput = styled(Input)`
+&&& input {
+    width: 20px !important;
+}
+`;
+
 export const SemanticInput = (props: any) => {
     const { inputLabel, input, meta, ...rest } = props;
     return (
         <SemanticForm.Field error={meta.error && meta.touched}>
             {/* <RenderCount /> */}
             {inputLabel && <label>{inputLabel}</label>}
-            <Input {...input} {...rest} />
+            <StyledInput {...input} {...rest} />
             {meta.error && meta.touched && (
                 <span style={{ color: "red" }}>{meta.error}</span>
             )}

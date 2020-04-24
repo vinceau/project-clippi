@@ -9,14 +9,14 @@ const OuterMenuIcon = styled.div<{
     active?: boolean;
 }>`
     position: relative;
-    height: 70px;
+    height: 7rem;
     width: 100%;
     color: ${({ theme }) => transparentize(0.5, theme.foreground)};
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 25px;
-    border-left: solid 4px transparent;
+    font-size: 2.5rem;
+    border-left: solid 0.4rem transparent;
     ${(props) => props.active && `
     color: ${props.theme.foreground};
     border-left-color: ${props.theme.foreground};

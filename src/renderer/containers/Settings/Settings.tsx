@@ -30,9 +30,10 @@ const StyledMenuItem = styled(Menu.Item) <{
     header: boolean;
 }>`
 &&& {
+    font-size: 1.4rem !important;
     color: ${({ theme }) => theme.foreground} !important;
-    margin-top: 2px !important;
-    margin-bottom: 2px !important;
+    margin-top: 0.2rem !important;
+    margin-bottom: 0.2rem !important;
     &.active {
         background: ${({ theme }) => transparentize(0.05, theme.foreground3)} !important;
     }
@@ -41,16 +42,16 @@ const StyledMenuItem = styled(Menu.Item) <{
     }
     ${p => p.header && `
     font-variant: all-small-caps !important;
-    font-size: 15px !important;
+    font-size: 1.6rem !important;
     `}
 }
 `;
 
 const BottomMenuSection = styled.div`
-padding-top: 10px;
-padding-bottom: 10px;
-border-top: solid 1px ${({ theme }) => theme.foreground3};
-margin-top: 20px
+padding-top: 1rem;
+padding-bottom: 1rem;
+border-top: solid 0.1rem ${({ theme }) => theme.foreground3};
+margin-top: 2rem;
 `;
 
 const MenuColumn = styled.div`
@@ -60,7 +61,7 @@ overflow-y: auto;
 height: 100vh;
 color: ${({ theme }) => theme.foreground};
 background-color: ${({ theme }) => theme.background};
-border-right: solid 1px ${({ theme }) => theme.background3};
+border-right: solid 0.1rem ${({ theme }) => theme.background3};
 @media ${device.mobileL} {
     flex-basis: 40%;
 }
@@ -76,7 +77,7 @@ flex-basis: 0%;
 overflow: hidden;
 overflow-y: auto;
 height: 100vh;
-padding-left: 25px;
+padding-left: 2.5rem;
 @media ${device.mobileL} {
     flex-basis: 70%;
 }
@@ -84,9 +85,9 @@ padding-left: 25px;
     flex-basis: 75%;
 }
 & > div {
-    padding-bottom: 50px;
-    padding-top: 50px;
-    padding-right: 100px;
+    padding-bottom: 5rem;
+    padding-top: 5rem;
+    padding-right: 10rem;
 }
 `;
 const StyledMenu = styled(Menu)`
@@ -96,7 +97,7 @@ const StyledMenu = styled(Menu)`
     a.item {
         & > i.icon {
             float: left;
-            margin-right: 10px;
+            margin-right: 1rem;
             margin-left: 0;
         }
     }
@@ -107,19 +108,19 @@ display: flex;
 flex-direction: column;
 justify-content: space-between;
 height: 100%;
-padding: 50px;
+padding: 5rem;
 @media ${device.mobileL} {
-    padding-top: 20px;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-top: 2rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
     padding-bottom: 0;
 }
 `;
 const CloseButton = styled.div`
-    font-size: 25px;
+    font-size: 2rem;
     position: fixed;
-    top: 20px;
-    right: 40px;
+    top: 2rem;
+    right: 4rem;
 `;
 
 export const SettingsPage: React.FC<{

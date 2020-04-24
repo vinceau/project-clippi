@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 import { Icon } from "semantic-ui-react";
 
+import { Text } from "@/components/Form";
 import { ProcessorStatusBar } from "@/containers/processor/ProcessorStatusBar";
 import { ProgressBar } from "@/containers/processor/ProgressBar";
 import { ComboFinder } from "@/containers/Settings/ComboFinder";
@@ -36,6 +37,7 @@ export const ReplayProcessorView: React.FC = () => {
         <Outer>
             <Content>
                 <h1>Replay Processor <Icon name="fast forward" /></h1>
+                <Text>Find combos and highlights from your replay files</Text>
                 <ComboFinder />
             </Content>
             <Footer>

@@ -17,6 +17,7 @@ export interface SlippiState {
     obsAddress: string;
     obsPort: string;
     obsPassword: string;
+    isDev: boolean;
 }
 
 const defaultSettings = JSON.stringify(mapFilterSettingsToConfiguration(comboFilter.getSettings()));
@@ -31,11 +32,17 @@ const initialState: SlippiState = {
     obsAddress: "localhost",
     obsPort: "4444",
     obsPassword: "",
+    isDev: false,
 };
 
 export const slippi = createModel({
     state: initialState,
     reducers: {
+        setIsDev: (state: SlippiState, payload: boolean): SlippiState => {
+            return produce(state, draft => {
+                draft.isDev = payload;
+            });
+        },
         setOBSAddress: (state: SlippiState, payload: string): SlippiState => {
             return produce(state, draft => {
                 draft.obsAddress = payload;

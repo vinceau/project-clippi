@@ -37,7 +37,6 @@ export interface ButtonInputOptions {
 export interface ComboOptions {
     findComboCriteria: Partial<ComboFilterSettings>;
     deleteZeroComboFiles?: boolean;
-    openCombosWhenDone?: boolean;
 }
 
 export interface FileProcessorOptions {

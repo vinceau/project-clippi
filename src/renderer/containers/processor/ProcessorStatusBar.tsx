@@ -10,8 +10,6 @@ import { mapConfigurationToFilterSettings } from "@/lib/profile";
 import { ComboFilterSettings, Input } from "@vinceau/slp-realtime";
 import { ButtonInputOptions, ComboOptions, FileProcessorOptions, FindComboOption } from "common/fileProcessor";
 
-const isWindows = process.platform === "win32";
-
 const Outer = styled.div`
 display: flex;
 flex-direction: row;
@@ -33,10 +31,17 @@ font-size: 20px;
 margin-right: 10px;
 `;
 
+const StopButton = styled(Button)`
+&&&:hover {
+    background-color: #d01919;
+    color: white;
+}
+`;
+
 export const ProcessorStatusBar: React.FC = () => {
     const { comboFinderPercent, comboFinderLog, comboFinderProcessing } = useSelector((state: iRootState) => state.tempContainer);
     const { comboProfiles } = useSelector((state: iRootState) => state.slippi);
-    const { openCombosWhenDone, includeSubFolders, deleteFilesWithNoCombos, renameFiles, findCombos, highlightMethod,
+    const { includeSubFolders, deleteFilesWithNoCombos, renameFiles, findCombos, highlightMethod,
         renameFormat, findComboProfile } = useSelector((state: iRootState) => state.highlights);
     const { inputButtonCombo, inputButtonPreInputFrames, inputButtonPostInputFrames, inputButtonHoldUnits,
         inputButtonHoldAmount, inputButtonLockoutSecs, inputButtonHold,
@@ -68,7 +73,6 @@ export const ProcessorStatusBar: React.FC = () => {
         const comboConfig: ComboOptions = {
             deleteZeroComboFiles: deleteFilesWithNoCombos,
             findComboCriteria: converted,
-            openCombosWhenDone: isWindows && openCombosWhenDone,
         };
 
         const options: FileProcessorOptions = {
@@ -95,10 +99,10 @@ export const ProcessorStatusBar: React.FC = () => {
             </ProcessStatus>
             <div>
                 {comboFinderProcessing ?
-                    <Button negative={true} type="button" onClick={() => stopProcessing()}>
+                    <StopButton type="button" onClick={() => stopProcessing()}>
                         <Icon name="stop" />
                             Stop processing
-                    </Button>
+                    </StopButton>
                     :
                     <Button primary={true} type="button" onClick={handleProcessClick} disabled={processBtnDisabled}>
                         <Icon name="fast forward" />

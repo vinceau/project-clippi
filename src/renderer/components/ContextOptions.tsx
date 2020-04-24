@@ -30,8 +30,9 @@ export const ContextOptions: React.FC<{
                 arrow={true}
                 duration={200}
                 position="top"
+                size="big"
             >
-                <Label as="a" onClick={() => clickHandler(d.contextName)} style={{margin: "2px"}}>{d.contextName}</Label>
+                <Label as="a" onClick={() => clickHandler(d.contextName)} style={{margin: "2px", fontSize: "1.1rem"}}>{d.contextName}</Label>
             </TippyLabel>
         ))}
         </div>

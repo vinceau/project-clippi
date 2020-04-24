@@ -51,7 +51,7 @@ const mapEventToName: { [eventName: string]: string } = {
   }
 */
 
-const EventHeader = styled.div`
+const EventHeader = styled.h2`
   padding: 10px 0;
   display: flex;
   align-items: center;
@@ -110,8 +110,8 @@ export const EventActions = (props: any) => {
           disabledOptions={disabledOptions}
         />
         <EventHeaderButtons>
-          <Labelled onClick={() => testRunActions(value.event, value.actions)} title="Test run"><Icon name="play" size="big" /></Labelled>
-          <Labelled onClick={onRemove} title="Remove"><Icon name="remove" size="big" /></Labelled>
+          <Labelled onClick={() => testRunActions(value.event, value.actions)} title="Test run"><Icon name="play" size="large" /></Labelled>
+          <Labelled onClick={onRemove} title="Remove"><Icon name="remove" size="large" /></Labelled>
         </EventHeaderButtons>
       </EventHeader>
       <List divided>

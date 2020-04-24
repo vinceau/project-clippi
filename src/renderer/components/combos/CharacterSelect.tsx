@@ -64,10 +64,11 @@ export const CharacterSelect = (props: any) => {
   const newOnChange = (v: any) => onChange(parseValue(v));
   const selectOptions = options ? options : sortedCharacterIDs;
   const mainTheme = useTheme();
+  const minHeight = "3.8rem";
   const customStyles: any = {
       dropdownIndicator: (base: any) => ({
         ...base,
-        padding: "0 8px",
+        padding: "0 0.8rem",
       }),
       multiValue: (base: any) => ({
         ...base,
@@ -79,7 +80,7 @@ export const CharacterSelect = (props: any) => {
       }),
       control: (base: any) => ({
         ...base,
-        minHeight: "35px",
+        minHeight,
       }),
   };
   if (mainTheme.themeName === ThemeMode.DARK) {
@@ -90,14 +91,14 @@ export const CharacterSelect = (props: any) => {
       });
       customStyles.dropdownIndicator = (base: any) => ({
         ...base,
-        padding: "0 8px",
+        padding: "0 0.8rem",
         color: mainTheme.theme.background,
       });
       customStyles.control = (base: any) => ({
         ...base,
         backgroundColor: mainTheme.theme.foreground,
         color: mainTheme.theme.background,
-        minHeight: "35px",
+        minHeight,
       });
   }
 

@@ -31,16 +31,20 @@ const recordingOptions = {
     },
 };
 
-const Outer = styled.div`
+const Outer = styled.div<{
+    isDev: boolean;
+}>`
 display: flex;
+flex-grow: 1;
 flex-direction: row;
-justify-content: space-between;
+justify-content: ${({isDev}) => isDev ? "space-between" : "flex-end"};
 align-items: center;
 `;
 
 export const OBSStatusBar: React.FC = () => {
     const history = useHistory();
     const { recordSeparateClips } = useSelector((state: iRootState) => state.filesystem);
+    const { isDev } = useSelector((state: iRootState) => state.slippi);
     const { obsConnectionStatus, obsRecordingStatus, dolphinQueue, dolphinPlaybackFile } = useSelector((state: iRootState) => state.tempContainer);
     const dispatch = useDispatch<Dispatch>();
 
@@ -78,8 +82,8 @@ export const OBSStatusBar: React.FC = () => {
         recordValue === RecordingMethod.SEPARATE ? "Record each item as a separate video" : "Record all items together as a single video";
     const options = Object.entries(recordingOptions).map(([key, val]) => ({...val, value: key}));
     return (
-        <Outer>
-            <ConnectionStatusDisplay
+        <Outer isDev={isDev}>
+            {isDev && <ConnectionStatusDisplay
                 icon={obsLogo}
                 iconHoverText="Open OBS settings"
                 onIconClick={() => history.push("/settings/obs-settings")}
@@ -88,9 +92,9 @@ export const OBSStatusBar: React.FC = () => {
                 color={color}
             >
                 {innerText}
-            </ConnectionStatusDisplay>
+            </ConnectionStatusDisplay>}
             <div>
-                <Labelled title={recordingButtonTitle} disabled={!recordButtonDisabled}>
+                {isDev && <Labelled title={recordingButtonTitle} disabled={!recordButtonDisabled}>
                     <RecordButton
                         onClick={onRecord}
                         disabled={recordButtonDisabled}
@@ -100,8 +104,8 @@ export const OBSStatusBar: React.FC = () => {
                     >
                         <Icon name="circle" />{recordButtonText}
                     </RecordButton>
-                </Labelled>
-                <Button onClick={onPlay} style={{ marginLeft: "0.25em" }} disabled={dolphinQueue.length === 0}><Icon name="play" />Play</Button>
+                </Labelled>}
+                <Button primary={true} onClick={onPlay} disabled={dolphinQueue.length === 0}><Icon name="play" />Play</Button>
             </div>
         </Outer>
     );
