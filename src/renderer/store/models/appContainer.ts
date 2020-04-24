@@ -8,12 +8,14 @@ import { getLatestVersion, needsUpdate } from "@/lib/checkForUpdates";
 export interface AppContainerState {
     latestVersion: string;
     nextUpdateCheckTime: string;  // ISO Date string
+    needsUpdate: boolean;
     isDev: boolean;
 }
 
 const initialState: AppContainerState = {
     latestVersion: "0.0.0",
     nextUpdateCheckTime: new Date(0).toISOString(),  // 1st of Jan 1970
+    needsUpdate: false,
     isDev: false,
 };
 
@@ -23,6 +25,11 @@ export const appContainer = createModel({
         setIsDev: (state: AppContainerState, payload: boolean): AppContainerState => {
             return produce(state, draft => {
                 draft.isDev = payload;
+            });
+        },
+        setNeedsUpdate: (state: AppContainerState, payload: boolean): AppContainerState => {
+            return produce(state, draft => {
+                draft.needsUpdate = payload;
             });
         },
         setNextUpdateCheckTime: (state: AppContainerState, payload: Date): AppContainerState => {
@@ -39,7 +46,6 @@ export const appContainer = createModel({
     effects: dispatch => ({
         async checkForUpdates(_, rootState) {
             // If the last check was within the last day then return
-            const lastKnownVersion = rootState.appContainer.latestVersion;
             const nextUpdateAt = new Date(rootState.appContainer.nextUpdateCheckTime);
             if (nextUpdateAt > new Date()) {
                 console.log(`Next update check: ${nextUpdateAt}`);
@@ -48,6 +54,7 @@ export const appContainer = createModel({
 
             console.log("Checking for updates...");
             try {
+                const lastKnownVersion = rootState.appContainer.latestVersion;
                 const latest = await getLatestVersion("vinceau", "project-clippi");
 
                 const newUpdateTime = new Date();
@@ -58,7 +65,10 @@ export const appContainer = createModel({
                 if (latest !== lastKnownVersion) {
                     console.log(`Setting latest version to: ${latest}`);
                     dispatch.appContainer.setLatestVersion(latest);
-                    if (needsUpdate(latest)) {
+
+                    const shouldUpdate = needsUpdate(latest);
+                    dispatch.appContainer.setNeedsUpdate(shouldUpdate);
+                    if (shouldUpdate) {
                         notify("A new Project Clippi update is available!");
                     }
                 }

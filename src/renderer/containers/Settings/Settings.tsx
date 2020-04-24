@@ -8,7 +8,9 @@ import {
     useHistory,
     useRouteMatch,
 } from "react-router-dom";
-import { Icon, Menu } from "semantic-ui-react";
+import { Label, Icon, Menu } from "semantic-ui-react";
+import { iRootState } from "@/store";
+import { useSelector } from "react-redux";
 import styled, { css } from "styled-components";
 
 import { CustomIcon } from "@/components/CustomIcon";
@@ -122,11 +124,17 @@ const CloseButton = styled.div`
     top: 2rem;
     right: 4rem;
 `;
+const InfoLabel = styled.div`
+display: flex;
+justify-content: space-between;
+align-items: center;
+`;
 
 export const SettingsPage: React.FC<{
     showSettings: boolean;
     onClose: () => void;
 }> = props => {
+    const { needsUpdate } = useSelector((state: iRootState) => state.appContainer);
     const { path } = useRouteMatch();
     const history = useHistory();
 
@@ -220,7 +228,12 @@ export const SettingsPage: React.FC<{
                                     name="app-info"
                                     active={isActive("app-info")}
                                     onClick={handleItemClick}
-                                ><Icon name="info circle" />Info</StyledMenuItem>
+                                >
+                                    <InfoLabel>
+                                        <span><Icon name="info circle" /> Info</span>
+                                        {needsUpdate && <Label circular color="red" empty />}
+                                    </InfoLabel>
+                                </StyledMenuItem>
                             </BottomMenuSection>
                         </MenuContainer>
                     </StyledMenu>
