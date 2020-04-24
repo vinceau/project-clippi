@@ -5,13 +5,19 @@ import { hot } from "react-hot-loader/root";
 import { HashRouter as Router, Redirect, Route, Switch } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 
+import { useDispatch } from "react-redux";
+import { Dispatch } from "@/store";
 import { History } from "@/components/History";
 import { darkTheme, GlobalStyle, lightTheme, ThemeManager, ThemeMode, useTheme } from "@/styles";
 import { MainView } from "@/views/main/MainView";
 import { SettingsView } from "@/views/settings/SettingsView";
 
 const App: React.FC = () => {
+    const dispatch = useDispatch<Dispatch>();
     const theme = useTheme();
+    React.useEffect(() => {
+        dispatch.appContainer.checkForUpdates();
+    }, []);
     return (
         <div className={theme.themeName}>
             <History />

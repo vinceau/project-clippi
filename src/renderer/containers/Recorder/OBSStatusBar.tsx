@@ -44,7 +44,7 @@ align-items: center;
 export const OBSStatusBar: React.FC = () => {
     const history = useHistory();
     const { recordSeparateClips } = useSelector((state: iRootState) => state.filesystem);
-    const { isDev } = useSelector((state: iRootState) => state.slippi);
+    const { isDev } = useSelector((state: iRootState) => state.appContainer);
     const { obsConnectionStatus, obsRecordingStatus, dolphinQueue, dolphinPlaybackFile } = useSelector((state: iRootState) => state.tempContainer);
     const dispatch = useDispatch<Dispatch>();
 
