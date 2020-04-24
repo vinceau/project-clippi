@@ -49,13 +49,13 @@ const DEV_THRESHOLD = 7;
 
 export const InfoView: React.FC = () => {
     const [ clickCount, setClickCount ] = React.useState(0);
-    const { isDev } = useSelector((state: iRootState) => state.slippi);
+    const { isDev } = useSelector((state: iRootState) => state.appContainer);
     const dispatch = useDispatch<Dispatch>();
     const handleLogoClick = () => {
         setClickCount(clickCount + 1);
         if (clickCount === DEV_THRESHOLD - 1) {
             console.log(isDev ? "Disabling dev" : "Enabling dev");
-            dispatch.slippi.setIsDev(!isDev);
+            dispatch.appContainer.setIsDev(!isDev);
             setClickCount(0);
         }
     };
