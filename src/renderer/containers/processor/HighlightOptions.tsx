@@ -1,10 +1,21 @@
 import React from "react";
 
+import { Hint } from "@/components/Hint";
 import { InlineDropdown } from "@/components/InlineInputs";
 import { Dispatch, iRootState } from "@/store";
 import { FindComboOption } from "common/fileProcessor";
 import { useDispatch, useSelector } from "react-redux";
 import { HighlightButtonInputs } from "./HighlightButtonInputs";
+
+const highlightLabels = {
+    [FindComboOption.COMBOS]: "combos",
+    [FindComboOption.CONVERSIONS]: "conversions",
+};
+
+const highlightHints = {
+    [FindComboOption.COMBOS]: "Stricter conversions, requiring the opponent to be hit again within 45 frames after hit-stun ends",
+    [FindComboOption.CONVERSIONS]: "Requires the opponent to be hit again within 45 frames of touching the ground",
+};
 
 export const HighlightOptions: React.FC = () => {
     const { comboProfiles } = useSelector((state: iRootState) => state.slippi);
@@ -40,7 +51,6 @@ export const HighlightOptions: React.FC = () => {
     if (!allProfiles.includes(findComboProfile)) {
         setFindComboProfile(allProfiles[0]);
     }
-
     return (
         <div>
             <div style={{ marginBottom: "1rem" }}>
@@ -55,7 +65,9 @@ export const HighlightOptions: React.FC = () => {
                 <HighlightButtonInputs />
                 :
                 <div>
-                    {"Highlight combos matching the "}
+                    {"Highlight "}
+                    <Hint text={highlightHints[highlightMethod]}>{highlightLabels[highlightMethod]}</Hint>
+                    {" matching the "}
                     <InlineDropdown
                         value={findComboProfile}
                         onChange={setFindComboProfile}
