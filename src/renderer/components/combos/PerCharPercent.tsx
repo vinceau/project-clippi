@@ -6,8 +6,8 @@ import { FieldArray } from "react-final-form-arrays";
 import { Button, Icon } from "semantic-ui-react";
 
 import { CharPercentOption } from "@/lib/profile";
-import { SemanticInput } from "./FormAdapters";
 import { CharacterSelectAdapter } from "./CharacterSelect";
+import { SemanticInput } from "./FormAdapters";
 
 const CharacterSelectContainer = styled.div`
 display: grid;

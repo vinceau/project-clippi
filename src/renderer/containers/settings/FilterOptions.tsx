@@ -3,11 +3,11 @@ import * as React from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 
+import { ComboForm } from "@/components/combos/ComboForm";
 import { ProfileSelector } from "@/components/combos/ProfileSelection";
 import { FormContainer, PageHeader } from "@/components/Form";
 import { ComboConfiguration } from "@/lib/profile";
 import { Dispatch, iRootState } from "@/store";
-import { ComboForm } from "@/components/combos/ComboForm";
 
 export const FilterOptions = () => {
     const { currentProfile, comboProfiles } = useSelector((state: iRootState) => state.slippi);

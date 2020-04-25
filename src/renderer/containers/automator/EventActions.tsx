@@ -6,13 +6,13 @@ import { produce } from "immer";
 import { Divider, Icon, List } from "semantic-ui-react";
 import styled from "styled-components";
 
-import { actionComponents } from "@/containers/actions";
+import { CodeBlock } from "@/components/CodeBlock";
 import { InlineDropdown } from "@/components/InlineInputs";
 import { Labelled } from "@/components/Labelled";
+import { actionComponents } from "@/containers/actions";
 import { generateRandomEvent } from "@/lib/events";
 import { ActionEvent, testRunActions } from "@/lib/realtime";
 import { isDevelopment } from "@/lib/utils";
-import { CodeBlock } from "@/components/CodeBlock";
 import { ActionInput, AddActionInput } from "./ActionInputs";
 
 const allEvents: ActionEvent[] = [

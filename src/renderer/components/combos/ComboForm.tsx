@@ -6,15 +6,15 @@ import arrayMutators from "final-form-arrays";
 import { Field as FinalField, Form as FinalForm } from "react-final-form";
 import { Accordion, Button, Form as SemanticForm, Icon } from "semantic-ui-react";
 
+import { CodeBlock } from "@/components/CodeBlock";
+import { Field, Label, Text } from "@/components/Form";
+import { ComboConfiguration } from "@/lib/profile";
 import { CharacterSelectAdapter } from "./CharacterSelect";
+import { ToggleAdapter } from "./FormAdapters";
 import { NameTagForm } from "./NameTagForm";
 import { PercentageSlider } from "./PercentageSlider";
 import { PerCharPercent } from "./PerCharPercent";
 import { PortSelectAdapter } from "./PortSelection";
-import { Field, Label, Text } from "@/components/Form";
-import { ComboConfiguration } from "@/lib/profile";
-import { CodeBlock } from "@/components/CodeBlock";
-import { ToggleAdapter } from "./FormAdapters";
 
 type Values = Partial<ComboConfiguration>;
 

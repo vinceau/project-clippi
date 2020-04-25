@@ -8,8 +8,8 @@ import { iRootState } from "@/store";
 import { useSelector } from "react-redux";
 
 import { Text } from "@/components/Form";
-import { ProcessorStatusBar } from "@/containers/processor/ProcessorStatusBar";
 import { ProgressBar } from "@/components/ProgressBar";
+import { ProcessorStatusBar } from "@/containers/processor/ProcessorStatusBar";
 import { ComboFinder } from "@/containers/settings/ComboFinder";
 
 const Content = styled.div`
