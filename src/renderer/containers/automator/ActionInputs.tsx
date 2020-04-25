@@ -42,12 +42,20 @@ const ActionComponentBlock = (props: any) => {
     margin-left: 10px;
     width: 100%;
     `;
+    const ActionDetails = styled.div`
+    margin: 1rem 0;
+    padding: 0.5rem 0;
+    padding-left: 2rem;
+    border-left: solid 0.3rem ${({ theme }) => theme.foreground3};
+    font-size: 1.2rem;
+    line-height: 2rem;
+    `;
     return (
         <Outer {...rest}>
             <div>{icon}</div>
             <Content>
                 <div>{header}</div>
-                {children && <div style={{ margin: "1rem 0", marginLeft: "1rem" }}>{children}</div>}
+                {children && <ActionDetails>{children}</ActionDetails>}
             </Content>
         </Outer>
     );

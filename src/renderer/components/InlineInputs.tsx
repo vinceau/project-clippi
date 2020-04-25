@@ -66,11 +66,12 @@ export const BufferedInput = (props: any) => {
 };
 
 export const SimpleInput = styled.input`
-  padding: 3px;
+  padding: 0.3rem;
   text-align: center;
-  border-radius: 3px;
-  border: 1px solid #d4d4d5;
+  border-radius: 0.3rem;
+  border: solid 0.1rem #d4d4d5;
   font-weight: bold;
+  margin: 0 0.5rem;
 `;
 
 export const DelayInput: React.FC<{
