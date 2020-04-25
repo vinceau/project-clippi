@@ -47,7 +47,6 @@ export const HighlightButtonInputs: React.FC = () => {
     const holdOptions = ["frames", "seconds"].map(o => ({key: o, value: o, text: o}));
 
     const Outer = styled.div`
-    padding-bottom: 10px;
     input {
         padding: 3px !important;
     }
