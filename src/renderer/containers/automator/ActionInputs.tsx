@@ -47,7 +47,6 @@ const ActionComponentBlock = (props: any) => {
     padding: 0.5rem 0;
     padding-left: 2rem;
     border-left: solid 0.3rem ${({ theme }) => theme.foreground3};
-    font-size: 1.2rem;
     line-height: 2rem;
     `;
     return (
