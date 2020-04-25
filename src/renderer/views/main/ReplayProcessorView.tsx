@@ -4,9 +4,12 @@ import styled from "styled-components";
 
 import { Icon } from "semantic-ui-react";
 
+import { iRootState } from "@/store";
+import { useSelector } from "react-redux";
+
 import { Text } from "@/components/Form";
 import { ProcessorStatusBar } from "@/containers/processor/ProcessorStatusBar";
-import { ProgressBar } from "@/containers/processor/ProgressBar";
+import { ProgressBar } from "@/components/ProgressBar";
 import { ComboFinder } from "@/containers/settings/ComboFinder";
 
 const Content = styled.div`
@@ -33,6 +36,7 @@ flex-direction: column;
 `;
 
 export const ReplayProcessorView: React.FC = () => {
+    const { comboFinderPercent } = useSelector((state: iRootState) => state.tempContainer);
     return (
         <Outer>
             <Content>
@@ -42,7 +46,7 @@ export const ReplayProcessorView: React.FC = () => {
             </Content>
             <Footer>
                 <ProcessorStatusBar />
-                <ProgressBar />
+                {comboFinderPercent !== 100 && <ProgressBar percent={comboFinderPercent} />}
             </Footer>
         </Outer>
     );

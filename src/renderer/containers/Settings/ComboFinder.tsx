@@ -6,10 +6,11 @@ import { Checkbox, Form } from "semantic-ui-react";
 import { FileInput } from "@/components/FileInput";
 import { ProcessSection } from "@/components/ProcessSection";
 
+import { highlightInitialState } from "@/store/models/highlights";
 import { Field, FormContainer, Label } from "@/components/Form";
 import { Dispatch, iRootState } from "@/store";
 import { HighlightOptions } from "../processor/HighlightOptions";
-import { RenameFiles } from "./RenameFiles";
+import { RenameFiles } from "@/components/RenameFiles";
 
 export const ComboFinder: React.FC = () => {
     const { openCombosWhenDone, includeSubFolders, deleteFilesWithNoCombos,
@@ -84,7 +85,11 @@ export const ComboFinder: React.FC = () => {
                     open={renameFiles}
                     onOpenChange={setRenameFiles}
                 >
-                    <RenameFiles value={renameFormat} onChange={setRenameFormat} />
+                    <RenameFiles
+                        value={renameFormat}
+                        onChange={setRenameFormat}
+                        placeholder={highlightInitialState.renameFormat}
+                    />
                 </ProcessSection>
             </Form>
         </FormContainer>

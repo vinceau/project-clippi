@@ -12,7 +12,7 @@ import { Labelled } from "@/components/Labelled";
 import { generateRandomEvent } from "@/lib/events";
 import { ActionEvent, testRunActions } from "@/lib/realtime";
 import { isDevelopment } from "@/lib/utils";
-import { CodeBlock } from "../Misc";
+import { CodeBlock } from "@/components/CodeBlock";
 import { ActionInput, AddActionInput } from "./ActionInputs";
 
 const allEvents: ActionEvent[] = [

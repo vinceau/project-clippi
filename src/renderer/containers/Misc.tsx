@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { eventActionManager } from "@/containers/actions";
 import { ActionEvent } from "@/lib/realtime";
-import { isDevelopment, notify } from "@/lib/utils";
+import { notify } from "@/lib/utils";
 
 export const DevTools = () => {
     const handleClick = () => {
@@ -20,13 +20,4 @@ export const DevTools = () => {
             <button onClick={customEvent}>trigger test event</button>
         </div>
     );
-};
-
-export const CodeBlock: React.FC<{
-    values: any
-}> = (props) => {
-    if (isDevelopment) {
-        return (<pre style={{overflowX: "auto"}}>{(JSON as any).stringify(props.values, 0, 2)}</pre>);
-    }
-    return null;
 };

@@ -7,7 +7,7 @@ import { ProfileSelector } from "@/components/combos/ProfileSelection";
 import { FormContainer, PageHeader } from "@/components/Form";
 import { ComboConfiguration } from "@/lib/profile";
 import { Dispatch, iRootState } from "@/store";
-import { ComboForm } from "./combo-form/ComboForm";
+import { ComboForm } from "@/components/combos/ComboForm";
 
 export const FilterOptions = () => {
     const { currentProfile, comboProfiles } = useSelector((state: iRootState) => state.slippi);

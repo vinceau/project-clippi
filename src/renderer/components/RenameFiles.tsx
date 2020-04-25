@@ -7,11 +7,11 @@ import { ContextOptions } from "@/components/ContextOptions";
 import { Field, Label } from "@/components/Form";
 import { SlideReveal } from "@/components/ProcessSection";
 import { TemplatePreview } from "@/components/TemplatePreview";
-import { highlightInitialState } from "@/store/models/highlights";
 
 export const RenameFiles: React.FC<{
     value: string;
     onChange: (value: string) => void;
+    placeholder?: string;
 }> = props => {
     const [showOptions, setShowOptions] = React.useState(false);
     const [renameFormat, setRenameFormat] = React.useState(props.value);
@@ -44,7 +44,7 @@ export const RenameFiles: React.FC<{
                 <Label>Format</Label>
                 <TextArea
                     ref={textRef}
-                    placeholder={highlightInitialState.renameFormat}
+                    placeholder={props.placeholder}
                     value={renameFormat}
                     onChange={(_, { value }) => {
                         setRenameFormat(`${value || ""}`);
