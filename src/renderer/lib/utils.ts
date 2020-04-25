@@ -15,6 +15,7 @@ export const delay = async (ms: number): Promise<void> => {
 
 const folderOptions = {
     properties: ["openDirectory"],
+    filters: [ { name: "All Files", extensions: ["*"] } ],
 };
 
 const fileOptions = {
