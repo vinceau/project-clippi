@@ -3,7 +3,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
-import { SettingsPage } from "@/containers/settings/Settings";
+import { SettingsPage } from "@/containers/zxcv/Settings";
 import { iRootState } from "@/store";
 
 export const SettingsView: React.FC = () => {

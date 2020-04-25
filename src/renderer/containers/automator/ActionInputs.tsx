@@ -47,7 +47,7 @@ const ActionComponentBlock = (props: any) => {
             <div>{icon}</div>
             <Content>
                 <div>{header}</div>
-                {children && <div style={{ margin: "10px 0" }}>{children}</div>}
+                {children && <div style={{ margin: "1rem 0", marginLeft: "1rem" }}>{children}</div>}
             </Content>
         </Outer>
     );

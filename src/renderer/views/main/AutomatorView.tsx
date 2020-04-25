@@ -5,8 +5,8 @@ import styled from "styled-components";
 import { Icon } from "semantic-ui-react";
 
 import { FormContainer, Text } from "@/components/Form";
-import { Automator } from "@/containers/automator/Automator";
-import { StatusBar } from "@/containers/automator/StatusBar";
+import { Automator } from "@/containers/asdf/Automator";
+import { StatusBar } from "@/containers/asdf/StatusBar";
 
 const Content = styled.div`
     padding: 20px;
