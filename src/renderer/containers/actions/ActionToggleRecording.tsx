@@ -21,6 +21,10 @@ const obsRecordingLabel = (action: OBSRecordingAction): string => {
             return "start";
         case OBSRecordingAction.STOP:
             return "stop";
+        case OBSRecordingAction.PAUSE:
+            return "pause";
+        case OBSRecordingAction.UNPAUSE:
+            return "unpause";
         default:
             console.error(`Unknown OBS action: ${action}`);
             return "";
@@ -35,6 +39,10 @@ const pastObsRecordingLabel = (action: OBSRecordingAction): string => {
             return "started";
         case OBSRecordingAction.STOP:
             return "stopped";
+        case OBSRecordingAction.PAUSE:
+            return "paused";
+        case OBSRecordingAction.UNPAUSE:
+            return "unpaused";
         default:
             console.error(`Unknown OBS action: ${action}`);
             return "";
@@ -45,6 +53,8 @@ const recordActions = [
     OBSRecordingAction.TOGGLE,
     OBSRecordingAction.START,
     OBSRecordingAction.STOP,
+    OBSRecordingAction.PAUSE,
+    OBSRecordingAction.UNPAUSE,
 ].map(a => ({
     key: obsRecordingLabel(a),
     value: a,
