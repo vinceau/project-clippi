@@ -105,7 +105,7 @@ export const ProcessorStatusBar: React.FC = () => {
                     </StopButton>
                     :
                     <Button primary={true} type="button" onClick={handleProcessClick} disabled={processBtnDisabled}>
-                        <Icon name="angle double right" style={{ margin: "0", marginRight: "0.6rem" }} /> Process replays
+                        <Icon name="angle double right" style={{ margin: "0", marginRight: "0.3rem" }} /> Process replays
                     </Button>
                 }
             </div>
