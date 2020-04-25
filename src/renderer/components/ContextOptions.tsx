@@ -4,8 +4,8 @@ import * as React from "react";
 import { Context } from "@vinceau/event-actions";
 import { Label } from "semantic-ui-react";
 
-import { generateFileRenameContext } from "@/lib/context";
 import { contextDescriptions } from "@/lib/contextDescriptions";
+import { generateFileRenameContext } from "common/context";
 import { TippyLabel } from "./Labelled";
 
 export const ContextOptions: React.FC<{
@@ -30,8 +30,9 @@ export const ContextOptions: React.FC<{
                 arrow={true}
                 duration={200}
                 position="top"
+                size="big"
             >
-                <Label as="a" onClick={() => clickHandler(d.contextName)} style={{margin: "2px"}}>{d.contextName}</Label>
+                <Label as="a" onClick={() => clickHandler(d.contextName)} style={{margin: "2px", fontSize: "1.1rem"}}>{d.contextName}</Label>
             </TippyLabel>
         ))}
         </div>

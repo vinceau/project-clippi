@@ -111,6 +111,7 @@
         "react-a11y-role-has-required-aria-props": false,
         "completed-docs": false,
         "jsx-alignment": false,
-        "no-use-before-declare": false
+        "no-use-before-declare": false,
+        "member-ordering": false
     }
 }

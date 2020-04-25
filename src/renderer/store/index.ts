@@ -3,7 +3,9 @@ import createRematchPersist, { getPersistor } from "@rematch/persist";
 
 import * as models from "./models";
 
-import { updateEventActionManager } from "@/actions";
+import { updateEventActionManager } from "@/containers/actions";
+import { dolphinRecorder } from "@/lib/dolphin";
+import { obsConnection } from "@/lib/obs";
 import { mapConfigurationToFilterSettings } from "@/lib/profile";
 import { comboFilter } from "@/lib/realtime";
 import { soundPlayer } from "@/lib/sounds";
@@ -50,4 +52,17 @@ const storeSync = () => {
 
 store.subscribe(() => {
     storeSync();
+});
+
+obsConnection.connectionStatus$.subscribe(status => {
+    dispatcher.tempContainer.setOBSConnectionStatus(status);
+});
+obsConnection.recordingStatus$.subscribe(status => {
+    dispatcher.tempContainer.setOBSRecordingStatus(status);
+});
+obsConnection.scenes$.subscribe(scenes => {
+    dispatcher.tempContainer.setOBSScenes(scenes);
+});
+dolphinRecorder.currentBasename$.subscribe(name => {
+    dispatcher.tempContainer.setDolphinPlaybackFile(name);
 });

@@ -1,4 +1,5 @@
 import fs from "fs-extra";
+import path from "path";
 
 import { EOL } from "os";
 import { Writable } from "stream";
@@ -62,4 +63,27 @@ export const pipeFileContents = async (filename: string, destination: Writable):
 
 export const writeFile = async (contents: string, filename: string, append?: boolean): Promise<void> => {
     await fs.outputFile(filename, contents + EOL, { flag: append ? "a" : "w" });
+};
+
+/**
+ * Shuffles array in place. ES6 version
+ *
+ * Taken from: https://stackoverflow.com/a/6274381
+ * @param {Array} a items An array containing the items.
+ */
+export const shuffle = (a: any[]) => {
+    let j: number;
+    let x: any;
+    for (let i = a.length - 1; i > 0; i--) {
+        j = Math.floor(Math.random() * (i + 1));
+        x = a[i];
+        a[i] = a[j];
+        a[j] = x;
+    }
+    return a;
+};
+
+export const onlyFilename = (filepath: string): string => {
+    const onlyExt = path.extname(filepath);
+    return path.basename(filepath, onlyExt);
 };

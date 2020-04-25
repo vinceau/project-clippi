@@ -1,10 +1,13 @@
 import * as path from "path";
 import * as url from "url";
 
-import cp from "child_process";
+import { DolphinRecorderOptions, openComboInDolphin } from "@/lib/dolphin";
 import { Message } from "common/types";
 import { remote, shell } from "electron";
+import fs from "fs-extra";
 import { ipc } from "./rendererIpc";
+
+import { DolphinQueueFormat } from "@vinceau/slp-realtime";
 
 export const delay = async (ms: number): Promise<void> => {
     await new Promise(resolve => setTimeout(resolve, ms));
@@ -12,6 +15,7 @@ export const delay = async (ms: number): Promise<void> => {
 
 const folderOptions = {
     properties: ["openDirectory"],
+    filters: [ { name: "All Files", extensions: ["*"] } ],
 };
 
 const fileOptions = {
@@ -20,10 +24,14 @@ const fileOptions = {
 
 export const getFolderPath = async (options?: any): Promise<string | null> => {
     const dialogOptions = options ? options : folderOptions;
-    return getFilePath(dialogOptions);
+    const paths = await getFilePath(dialogOptions);
+    if (paths && paths.length > 0) {
+        return paths[0];
+    }
+    return null;
 };
 
-export const getFilePath = async (options?: any, save?: boolean): Promise<string | null> => {
+export const getFilePath = async (options?: any, save?: boolean): Promise<string[] | null> => {
     const dialogOptions = options ? options : fileOptions;
     try {
         const p = await ipc.sendSyncWithTimeout(
@@ -63,20 +71,23 @@ export const getStatic = (val: string): string => {
     return path.resolve(path.join(imagePath, val));
 };
 
-export const openComboInDolphin = (comboFilePath: string): void => {
-    const appData = remote.app.getPath("appData");
-    const dolphinPath = path.join(appData, "Slippi Desktop App", "dolphin", "Dolphin.exe");
-    console.log(dolphinPath);
-    cp.execFile(dolphinPath, ["-i", comboFilePath]);
-};
-
-export const loadFileInDolphin = async (): Promise<void> => {
+export const loadFileInDolphin = async (options?: Partial<DolphinRecorderOptions>): Promise<void> => {
     const p = await getFilePath({
         filters: [{ name: "JSON files", extensions: ["json"] }],
     });
-    if (p) {
-        openComboInDolphin(p);
+    if (p && p.length > 0) {
+        openComboInDolphin(p[0], options);
     }
+};
+
+export const loadDolphinQueue = async (): Promise<DolphinQueueFormat | null> => {
+    const p = await getFilePath({
+        filters: [{ name: "JSON files", extensions: ["json"] }],
+    });
+    if (p && p.length > 0) {
+        return fs.readJson(p[0]);
+    }
+    return null;
 };
 
 /**
@@ -103,4 +114,20 @@ export const parseSecondsDelayValue = (defaultSeconds: number, delaySeconds?: st
 
 export const capitalize = (s: string) => {
     return s.charAt(0).toUpperCase() + s.slice(1);
+};
+
+export const framesToMillis = (frames: number): number => {
+    return framesToSeconds(frames) * 1000;
+};
+
+export const framesToSeconds = (frames: number): number => {
+    return frames / 60.0;
+};
+
+export const secondsToFrames = (secs: number): number => {
+    return secs * 60.0;
+};
+
+export const millisToFrames = (ms: number): number => {
+    return secondsToFrames(ms / 1000);
 };

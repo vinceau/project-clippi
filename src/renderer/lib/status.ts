@@ -18,7 +18,7 @@ export const statusToLabel = (status: ConnectionStatus): string => {
 export const statusToColor = (status: ConnectionStatus): string => {
     switch (status) {
         case ConnectionStatus.DISCONNECTED:
-            return "#F30807";
+            return "#888888";
         case ConnectionStatus.CONNECTING:
         case ConnectionStatus.RECONNECTING:
             return "#FFB424";

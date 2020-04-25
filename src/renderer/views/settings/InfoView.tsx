@@ -2,22 +2,33 @@ import React from "react";
 
 import ReactMarkdown from "react-markdown";
 
+import { Dispatch, iRootState } from "@/store";
+import { useDispatch, useSelector } from "react-redux";
+import { Icon } from "semantic-ui-react";
+
 import styled from "styled-components";
 
 import supporters from "raw-loader!../../../../SUPPORTERS.md";
 
-const Container = styled.div`
+import { FormContainer } from "@/components/Form";
+import clippiLogo from "../../../../build/icon.png";
+
+const Container = styled(FormContainer)`
 text-align: center;
 
 ul {
     list-style: none;
     padding: 0;
 }
+
+a:hover {
+    text-decoration: underline;
+}
 `;
 
 const Content = styled.div`
+padding-bottom: 2rem;
 p {
-    max-width: 600px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -25,16 +36,54 @@ p {
 
 const Footer = styled.div`
 font-style: italic;
-font-size: 16px;
-margin-top: 40px;
+font-size: 1.6rem;
+margin-top: 4rem;
 `;
 
+const Logo = styled.img<{
+    isDev: boolean;
+}>`
+height: 6.4rem;
+width: 6.4rem;
+${({isDev}) => isDev && `
+    transform: scaleX(-1);
+`}
+`;
+
+const UpdateInfo = styled.h3`
+a {
+    color: red;
+    font-size: 1.2em;
+}
+padding: 1rem 0;
+`;
+
+const DEV_THRESHOLD = 7;
+
 export const InfoView: React.FC = () => {
+    const [ clickCount, setClickCount ] = React.useState(0);
+    const { isDev, needsUpdate } = useSelector((state: iRootState) => state.appContainer);
+    const dispatch = useDispatch<Dispatch>();
+    const handleLogoClick = () => {
+        setClickCount(clickCount + 1);
+        if (clickCount === DEV_THRESHOLD - 1) {
+            console.log(isDev ? "Disabling dev" : "Enabling dev");
+            dispatch.appContainer.setIsDev(!isDev);
+            setClickCount(0);
+        }
+    };
     return (
         <Container>
-            <h1>Project Clippi</h1>
+            <Logo isDev={isDev} src={clippiLogo} onClick={handleLogoClick} />
+            <h1>Project Clippi v{__VERSION__}</h1>
             <Content>
-                <h3>Version {__VERSION__}</h3>
+                {needsUpdate &&
+                    <UpdateInfo>
+                        <a href="https://github.com/vinceau/project-clippi/releases/latest" target="_blank">
+                            <Icon name="exclamation triangle" /> New update available!
+                        </a>
+                    </UpdateInfo>
+                }
                 <p>
                     Commit {__BUILD__}<br />
                     {__DATE__}

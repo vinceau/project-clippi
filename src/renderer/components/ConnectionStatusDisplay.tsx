@@ -7,11 +7,13 @@ import { Header } from "semantic-ui-react";
 import { Labelled } from "@/components/Labelled";
 
 import { ScanningDot } from "@/components/ScanningDot";
-import slippiLogo from "@/styles/images/slippi.png";
 
 export const ConnectionStatusDisplay: React.FC<{
+    icon?: any;
+    iconHoverText?: string;
+    onIconClick?: () => void;
     headerText: string;
-    headerHoverTitle: string;
+    headerHoverTitle?: string;
     onHeaderClick?: () => void;
     color?: string;
     shouldPulse?: boolean;
@@ -28,9 +30,21 @@ export const ConnectionStatusDisplay: React.FC<{
     `;
     return (
         <Outer>
-            <img src={slippiLogo} style={{ height: "35px", width: "35px" }} />
+            {props.icon &&
+                <Labelled disabled={!props.iconHoverText} title={props.iconHoverText}>
+                    <img
+                        src={props.icon}
+                        onClick={props.onIconClick}
+                        style={{
+                            height: "35px",
+                            width: "35px",
+                            cursor: props.onIconClick ? "pointer" : "auto",
+                        }}
+                    />
+                </Labelled>
+            }
             <ConnectInfo>
-                <Labelled title={props.headerHoverTitle} onClick={props.onHeaderClick} position="right">
+                <Labelled disabled={!Boolean(props.headerHoverTitle)} title={props.headerHoverTitle} onClick={props.onHeaderClick} position="right">
                     <Header sub>
                         <ScanningDot shouldPulse={props.shouldPulse} color={props.color || "red"} /> {props.headerText}
                     </Header>

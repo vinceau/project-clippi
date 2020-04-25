@@ -1,8 +1,8 @@
 import React from "react";
 
+import { transparentize } from "polished";
 import { Icon } from "semantic-ui-react";
 import styled from "styled-components";
-import { transparentize } from "polished";
 import { Labelled } from "./Labelled";
 
 const Container = styled.div`
@@ -27,7 +27,6 @@ h2 {
 }
 `;
 
-
 export const SoundFileInfo: React.FC<{
     name: string;
     path: string;
@@ -47,7 +46,7 @@ export const SoundFileInfo: React.FC<{
                 </div>
             </div>
             <div style={{fontSize: "20px"}}>
-                <Labelled title="Remove"><Icon name="trash" link onClick={props.onRemove} /></Labelled>
+                <Labelled title="Remove"><Icon name="trash" onClick={props.onRemove} /></Labelled>
             </div>
         </Container>
     );

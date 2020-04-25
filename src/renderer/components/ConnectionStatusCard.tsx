@@ -2,7 +2,7 @@ import * as React from "react";
 
 import styled from "styled-components";
 
-import { Card, Button, Image } from "semantic-ui-react";
+import { Button, Card, Image } from "semantic-ui-react";
 
 import { ScanningDot } from "@/components/ScanningDot";
 

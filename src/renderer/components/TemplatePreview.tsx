@@ -1,7 +1,7 @@
 import * as React from "react";
 
-import { parseFileRenameFormat } from "@/lib/context";
 import { GameStartType } from "@vinceau/slp-realtime";
+import { parseFileRenameFormat } from "common/context";
 
 export const TemplatePreview: React.FC<{
     template: string;

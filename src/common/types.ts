@@ -11,7 +11,7 @@ export type ResponseType<X extends Message> =
     X extends Message.AuthenticateTwitch ? string :
     X extends Message.SignOutTwitch ? void :
     X extends Message.Notify ? void :
-    X extends Message.SelectDirectory ? string :
+    X extends Message.SelectDirectory ? string[] :
 
     // main to renderer
     never;

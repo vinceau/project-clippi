@@ -1,8 +1,8 @@
 
 import * as React from "react";
 
+import { ThemeMode, useTheme } from "@/styles";
 import { Tooltip } from "react-tippy";
-import { useTheme, ThemeMode } from "@/styles";
 
 export const TippyLabel = (props: any) => {
     const { children, style, ...rest } = props;
@@ -25,7 +25,7 @@ export const Labelled = (props: any) => {
     };
     return (
         <span style={onClick ? pointerStyle : undefined} onClick={onClick}>
-            <TippyLabel arrow={true} duration={200} position="bottom" {...rest}>
+            <TippyLabel size="big" arrow={true} duration={200} position="bottom" {...rest}>
                 {children}
             </TippyLabel>
         </span>

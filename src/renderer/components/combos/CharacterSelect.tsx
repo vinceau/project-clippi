@@ -4,9 +4,9 @@ import { Field } from "react-final-form";
 import Select, { components, MultiValueProps, OptionProps, OptionTypeBase, SingleValueProps } from "react-select";
 import styled from "styled-components";
 
+import { ThemeMode, useTheme } from "@/styles";
 import { CharacterIcon } from "../CharacterIcon";
 import { CharacterLabel } from "./CharacterLabel";
-import { useTheme, ThemeMode } from "@/styles";
 
 export const sortedCharacterInfos: CharacterInfo[] = getAllCharacters()
   .sort((a, b) => {
@@ -64,7 +64,12 @@ export const CharacterSelect = (props: any) => {
   const newOnChange = (v: any) => onChange(parseValue(v));
   const selectOptions = options ? options : sortedCharacterIDs;
   const mainTheme = useTheme();
+  const minHeight = "3.8rem";
   const customStyles: any = {
+      dropdownIndicator: (base: any) => ({
+        ...base,
+        padding: "0 0.8rem",
+      }),
       multiValue: (base: any) => ({
         ...base,
         backgroundColor: "transparent",
@@ -72,6 +77,10 @@ export const CharacterSelect = (props: any) => {
       multiValueLabel: (base: any) => ({
         ...base,
         display: "none",
+      }),
+      control: (base: any) => ({
+        ...base,
+        minHeight,
       }),
   };
   if (mainTheme.themeName === ThemeMode.DARK) {
@@ -82,12 +91,14 @@ export const CharacterSelect = (props: any) => {
       });
       customStyles.dropdownIndicator = (base: any) => ({
         ...base,
+        padding: "0 0.8rem",
         color: mainTheme.theme.background,
       });
       customStyles.control = (base: any) => ({
         ...base,
         backgroundColor: mainTheme.theme.foreground,
         color: mainTheme.theme.background,
+        minHeight,
       });
   }
 

@@ -56,18 +56,34 @@ export const getMenuTemplate = (app: App, platform: string): Electron.MenuItemCo
     };
     menuItems.push(edit);
 
+    const view: Electron.MenuItemConstructorOptions = {
+        label: "View",
+        submenu: [
+            { role: "reload" },
+            { role: "forcereload" },
+            { role: "toggledevtools" },
+            { type: "separator" },
+            { role: "resetzoom" },
+            { role: "zoomin", accelerator: "CommandOrControl+=" },
+            { role: "zoomout" },
+            { type: "separator" },
+            { role: "togglefullscreen" }
+        ]
+    };
+    menuItems.push(view);
+
     if (platform === "darwin") {
         menuItems.push(
-        {
-            type: "separator"
-        },
-        {
-            label: "Quit",
-            click: () => {
-                app.quit();
+            {
+                type: "separator"
+            },
+            {
+                label: "Quit",
+                click: () => {
+                    app.quit();
+                }
             }
-        }
-    );
+        );
     }
     return menuItems;
 };

@@ -4,8 +4,9 @@ import styled from "styled-components";
 
 import { Icon } from "semantic-ui-react";
 
-import { Automator } from "@/containers/Automator/Automator";
-import { StatusBar } from "@/containers/Automator/StatusBar";
+import { FormContainer, Text } from "@/components/Form";
+import { Automator } from "@/containers/automator/Automator";
+import { StatusBar } from "@/containers/automator/StatusBar";
 
 const Content = styled.div`
     padding: 20px;
@@ -15,7 +16,7 @@ const Content = styled.div`
 `;
 
 const Footer = styled.div`
-    border-top: solid 1px ${({theme}) => theme.background3};
+    border-top: solid 1px ${({ theme }) => theme.background3};
     background-color: ${props => props.theme.background};
     height: 55px;
     padding-left: 20px;
@@ -32,8 +33,11 @@ export const AutomatorView: React.FC = () => {
     return (
         <Outer>
             <Content>
-                <h1>Automator <Icon name="bolt" /></h1>
-                <Automator />
+                <FormContainer>
+                    <h1>Automator <Icon name="bolt" /></h1>
+                    <Text>Automatically execute commands when an in-game event occurs</Text>
+                    <Automator />
+                </FormContainer>
             </Content>
             <Footer>
                 <StatusBar />

@@ -4,7 +4,7 @@ import { createModel } from "@rematch/core";
 import { remote } from "electron";
 import produce from "immer";
 
-import { FindComboOption } from "@/lib/fileProcessor";
+import { getDolphinPath } from "@/lib/dolphin";
 import { SoundMap } from "@/lib/sounds";
 import { getFilePath } from "@/lib/utils";
 
@@ -14,30 +14,20 @@ export interface FileSystemState {
     filesPath: string;
     liveSlpFilesPath: string;
     combosFilePath: string;
-    includeSubFolders: boolean;
-    deleteFilesWithNoCombos: boolean;
-    findCombos: boolean;
-    findComboProfile: string;
-    findComboOption: FindComboOption;
-    renameFiles: boolean;
-    renameFormat: string;
-    openCombosWhenDone: boolean;
+    meleeIsoPath: string;
+    dolphinPath: string;
     soundFiles: SoundMap;
+    recordSeparateClips: boolean;
 }
 
 export const fileSystemInitialState: FileSystemState = {
     filesPath: homeDirectory,
     liveSlpFilesPath: "",
     combosFilePath: path.join(homeDirectory, "combos.json"),
-    includeSubFolders: false,
-    deleteFilesWithNoCombos: false,
-    findCombos: true,
-    findComboProfile: "default",
-    findComboOption: FindComboOption.OnlyCombos,
-    renameFiles: false,
-    renameFormat: "{{YY}}{{MM}}{{DD}}_{{HH}}{{mm}}_{{playerShortChar}}_v_{{opponentShortChar}}_({{shortStage}}).slp",
-    openCombosWhenDone: false,
+    meleeIsoPath: "",
+    dolphinPath: getDolphinPath(),
     soundFiles: {},
+    recordSeparateClips: false,
 };
 
 export const filesystem = createModel({
@@ -65,32 +55,17 @@ export const filesystem = createModel({
         setFilesPath: (state: FileSystemState, payload: string): FileSystemState => produce(state, draft => {
             draft.filesPath = payload;
         }),
-        setFindComboProfile: (state: FileSystemState, payload: string): FileSystemState => produce(state, draft => {
-            draft.findComboProfile = payload;
-        }),
-        setFindComboOption: (state: FileSystemState, payload: FindComboOption): FileSystemState => produce(state, draft => {
-            draft.findComboOption = payload;
-        }),
         setCombosFilePath: (state: FileSystemState, payload: string): FileSystemState => produce(state, draft => {
             draft.combosFilePath = payload;
         }),
-        setIncludeSubFolders: (state: FileSystemState, payload: boolean): FileSystemState => produce(state, draft => {
-            draft.includeSubFolders = payload;
+        setRecordSeparateClips: (state: FileSystemState, payload: boolean): FileSystemState => produce(state, draft => {
+            draft.recordSeparateClips = payload;
         }),
-        setFileDeletion: (state: FileSystemState, payload: boolean): FileSystemState => produce(state, draft => {
-            draft.deleteFilesWithNoCombos = payload;
+        setMeleeIsoPath: (state: FileSystemState, payload: string): FileSystemState => produce(state, draft => {
+            draft.meleeIsoPath = payload;
         }),
-        setFindCombos: (state: FileSystemState, payload: boolean): FileSystemState => produce(state, draft => {
-            draft.findCombos = payload;
-        }),
-        setRenameFiles: (state: FileSystemState, payload: boolean): FileSystemState => produce(state, draft => {
-            draft.renameFiles = payload;
-        }),
-        setRenameFormat: (state: FileSystemState, payload: string): FileSystemState => produce(state, draft => {
-            draft.renameFormat = payload;
-        }),
-        setOpenCombosWhenDone: (state: FileSystemState, payload: boolean): FileSystemState => produce(state, draft => {
-            draft.openCombosWhenDone = payload;
+        setDolphinPath: (state: FileSystemState, payload: string): FileSystemState => produce(state, draft => {
+            draft.dolphinPath = payload;
         }),
     },
     effects: dispatch => ({
@@ -98,11 +73,11 @@ export const filesystem = createModel({
             const p = await getFilePath({
                 filters: [{ name: "Audio files", extensions: ["flac", "mp3", "m4a", "webm", "wav", "aac", "ogg", "opus"] }],
             }, false);
-            if (p) {
-                const name = path.basename(p);
+            if (p && p.length > 0) {
+                const name = path.basename(p[0]);
                 dispatch.filesystem.setSound({
                     name,
-                    filePath: p,
+                    filePath: p[0],
                 });
             }
         },

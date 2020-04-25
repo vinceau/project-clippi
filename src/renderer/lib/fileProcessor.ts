@@ -1,211 +1,83 @@
-import * as path from "path";
+import path from "path";
 
-import fg from "fast-glob";
-import fs from "fs-extra";
+import Worker from "worker-loader!common/workers/fileProcessor.worker";
 
-import { ComboEventPayload, ComboFilter, DolphinComboQueue, SlippiGame, SlpRealTime, SlpStream } from "@vinceau/slp-realtime";
-import { Observable } from "rxjs";
+import { dispatcher, store } from "@/store";
+import { FileProcessorOptions } from "common/fileProcessor";
+import { secondsToString } from "common/utils";
+import { CompletePayload, FileProcessorParentMessage, FileProcessorWorkerMessage, ProgressingPayload } from "common/workers/fileProcessor.worker.types";
+import { openComboInDolphin } from "./dolphin";
+import { notify } from "./utils";
 
-import { store } from "@/store";
-import { deleteFile, pipeFileContents } from "common/utils";
-import { parseFileRenameFormat } from "./context";
-import { mapConfigurationToFilterSettings } from "./profile";
+const worker = new Worker();
 
-export enum FindComboOption {
-    OnlyCombos = 0,
-    OnlyConversions = 1,
-}
-
-interface FileProcessorOptions {
-    filesPath: string;
-    renameFiles: boolean;
-    findCombos: boolean;
-    findComboProfile?: string;
-    findComboOption?: FindComboOption;
-    includeSubFolders?: boolean;
-    deleteZeroComboFiles?: boolean;
-    outputFile?: string;
-    renameTemplate?: string;
-}
-
-interface ProcessOutput {
-    combosFound: number;
-    filesProcessed: number;
-    timeTaken: number; // in seconds
-}
-
-const uniqueFilename = (name: string) => {
-    const randomSuffix = Math.random().toString(36).slice(2).substring(0, 5);
-    const onlyExt = path.extname(name);
-    const onlyFilename = path.basename(name, onlyExt);
-    const dir = path.dirname(name);
-    return path.join(dir, `${onlyFilename}_${randomSuffix}${onlyExt}`);
+worker.onmessage = (event) => {
+    console.log(`got message from worker! payload:`);
+    console.log(event.data);
+    const eventType = event.data.type as FileProcessorWorkerMessage;
+    switch (eventType) {
+        case FileProcessorWorkerMessage.PROGRESS:
+            const progressPayload: ProgressingPayload = event.data.payload;
+            handleProgress(progressPayload);
+            break;
+        case FileProcessorWorkerMessage.BUSY:
+            break;
+        case FileProcessorWorkerMessage.COMPLETE:
+            const completePayload: CompletePayload = event.data.payload;
+            handleComplete(completePayload);
+            break;
+    }
 };
 
-const renameFile = async (currentFilename: string, newFilename: string): Promise<string> => {
-    // Return if the new filename is the same as the current name
-    const fullFilename = path.basename(currentFilename);
-    if (fullFilename === newFilename) {
-        console.log("Filename is already named! Skipping rename...");
-        return currentFilename;
+const handleProgress = (payload: ProgressingPayload): void => {
+    const { result, total, filename, options, index } = payload;
+    dispatcher.tempContainer.setPercent(Math.floor((index + 1) / total * 100));
+    if (options.findComboOption) {
+        if (result.fileDeleted) {
+            dispatcher.tempContainer.setComboLog(`Deleted ${filename}`);
+        } else {
+            const base = path.basename(result.newFilename || filename);
+            dispatcher.tempContainer.setComboLog(`Found ${result.numCombos} highlights in: ${base}`);
+        }
+    } else if (options.renameFiles && result.newFilename) {
+        dispatcher.tempContainer.setComboLog(`Renamed ${filename} to ${result.newFilename}`);
     }
-    // Make sure the new filename doesn't already exist
-    const directory = path.dirname(currentFilename);
-    let newFullFilename = path.join(directory, newFilename);
-    // Make sure the directory exists
-    await fs.ensureDir(path.dirname(newFullFilename));
-    const exists = await fs.pathExists(newFullFilename);
-    if (exists) {
-        // Append a random suffix to the end to avoid conflicts
-        newFullFilename = uniqueFilename(newFullFilename);
-    }
-    await fs.rename(currentFilename, newFullFilename);
-    console.log(`Renamed ${currentFilename} to ${newFullFilename}`);
-    // Return the new filename so we know how to further process it
-    return newFullFilename;
 };
 
-export interface ProcessResult {
-    numCombos?: number;
-    newFilename?: string;
-    fileDeleted?: boolean;
-}
-
-export class FileProcessor {
-    private readonly queue = new DolphinComboQueue();
-    private stopRequested: boolean = false;
-    private readonly realtime = new SlpRealTime();
-    private combos$: Observable<ComboEventPayload> | null = null;
-    private readonly comboFilter = new ComboFilter();
-
-    public stop(): void {
-        this.stopRequested = true;
+const handleComplete = (payload: CompletePayload): void => {
+    const { options, result } = payload;
+    const timeTakenStr = secondsToString(result.timeTaken);
+    const numCombos = result.combosFound;
+    const { openCombosWhenDone } = store.getState().highlights;
+    console.log(`finished generating ${numCombos} highlights in ${timeTakenStr}`);
+    let message = `Processed ${result.filesProcessed} files in ${timeTakenStr}`;
+    if (options.findComboOption) {
+        message += ` and found ${numCombos} highlights`;
     }
-
-    public async process(
-        opts: FileProcessorOptions,
-        callback?: (i: number, total: number, filename: string, data: ProcessResult) => void,
-    ): Promise<ProcessOutput> {
-        const before = new Date();  // Use this to track elapsed time
-        this.stopRequested = false;
-        this.queue.clear();
-
-        const patterns = ["**/*.slp"];
-        const options = {
-            absolute: true,
-            cwd: opts.filesPath,
-            onlyFiles: true,
-            deep: opts.includeSubFolders ? undefined : 1,
-        };
-
-        // Set up the combos observable in advance
-        switch (opts.findComboOption) {
-            case FindComboOption.OnlyCombos:
-                this.combos$ = this.realtime.combo.end$;
-                break;
-            case FindComboOption.OnlyConversions:
-                this.combos$ = this.realtime.combo.conversion$;
-                break;
-            default:
-                this.combos$ = null;
-        }
-
-        if (opts.findCombos && opts.findComboProfile) {
-            const { comboProfiles } = store.getState().slippi;
-            const slippiSettings = comboProfiles[opts.findComboProfile];
-            if (slippiSettings) {
-                const converted = mapConfigurationToFilterSettings(JSON.parse(slippiSettings));
-                this.comboFilter.updateSettings(converted);
-            }
-        }
-
-        let filesProcessed = 0;
-        const entries = await fg(patterns, options);
-        for (const [i, filename] of (entries.entries())) {
-            if (this.stopRequested) {
-                break;
-            }
-
-            const res = await this._processFile(filename, opts);
-            if (callback) {
-                callback(i, entries.length, filename, res);
-            }
-            filesProcessed += 1;
-        }
-
-        // Write out files if we found combos
-        let totalCombos = 0;
-        if (opts.findCombos && opts.outputFile) {
-            totalCombos = await this.queue.writeFile(opts.outputFile);
-            console.log(`Wrote ${totalCombos} out to ${opts.outputFile}`);
-        }
-
-        // Return elapsed time and other stats
-        const after = new Date();
-        const millisElapsed = Math.abs(after.getTime() - before.getTime());
-        return {
-            timeTaken: millisElapsed / 1000,
-            filesProcessed,
-            combosFound: totalCombos,
-        };
+    dispatcher.tempContainer.setComboFinderProcessing(false);
+    dispatcher.tempContainer.setPercent(100);
+    dispatcher.tempContainer.setComboLog(message);
+    notify(message, `Highlight processing complete`);
+    if (openCombosWhenDone && options.outputFile) {
+        // check if we want to open the combo file after generation
+        openComboInDolphin(options.outputFile);
     }
+};
 
-    private async _processFile(filename: string, options: Partial<FileProcessorOptions>): Promise<ProcessResult> {
-        console.log(`Processing file: ${filename}`);
-        const res: ProcessResult = {};
+export const startProcessing = (options: FileProcessorOptions): void => {
+    console.log(options);
+    // Reset processing state
+    dispatcher.tempContainer.setPercent(0);
+    dispatcher.tempContainer.setComboLog("");
+    dispatcher.tempContainer.setComboFinderProcessing(true);
+    worker.postMessage({
+        type: FileProcessorParentMessage.START,
+        payload: { options },
+    });
+};
 
-        const game = new SlippiGame(filename);
-        const settings = game.getSettings();
-        const metadata = game.getMetadata();
-
-        // Handle file renaming
-        if (options.renameFiles && options.renameTemplate) {
-            const fullFilename = path.basename(filename);
-            res.newFilename = parseFileRenameFormat(options.renameTemplate, settings, metadata, fullFilename);
-            filename = await renameFile(filename, res.newFilename);
-        }
-
-        // Handle combo finding
-        if (options.findCombos) {
-            res.numCombos = await this._findCombos(filename, metadata);
-            // Delete the file if no combos were found
-            if (options.deleteZeroComboFiles && res.numCombos === 0) {
-                console.log(`No combos found in ${filename}. Deleting...`);
-                await deleteFile(filename);
-                res.fileDeleted = true;
-            }
-        }
-
-        return res;
-    }
-
-    /*
-     * Finds combos and adds them to the dolphin queue. Returns the number of combos found.
-     */
-    private async _findCombos(filename: string, metadata?: any): Promise<number> {
-        if (!this.combos$) {
-            return 0;
-        }
-
-        const slpStream = new SlpStream({ singleGameMode: true });
-        this.realtime.setStream(slpStream);
-
-        let count = 0;
-        const sub = this.combos$.subscribe(payload => {
-            const { combo, settings } = payload;
-            if (this.comboFilter.isCombo(combo, settings, metadata)) {
-                this.queue.addCombo(filename, combo);
-                count += 1;
-            }
-        });
-
-        await pipeFileContents(filename, slpStream);
-        console.log(`Found ${count} combos in ${filename}`);
-
-        sub.unsubscribe();
-        return count;
-    }
-
-}
-
-export const fileProcessor = new FileProcessor();
+export const stopProcessing = (): void => {
+    worker.postMessage({
+        type: FileProcessorParentMessage.STOP,
+    });
+};

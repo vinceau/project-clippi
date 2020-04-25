@@ -1,9 +1,9 @@
 import React from "react";
 
-import styled from "styled-components";
 import { device } from "@/styles/device";
 import { transparentize } from "polished";
 import { Icon } from "semantic-ui-react";
+import styled from "styled-components";
 
 import { format } from "timeago.js";
 import { Labelled } from "../Labelled";
@@ -69,7 +69,7 @@ export const TwitchClipInfo: React.FC<{
             </div>
             <ButtonsContainer>
                 <Labelled title="Edit"><a href={url + "/edit"} target="_blank"><Icon name="pencil" /></a></Labelled>
-                <Labelled title="Remove"><Icon name="trash" link onClick={onRemove} /></Labelled>
+                <Labelled title="Remove"><Icon name="trash" onClick={onRemove} /></Labelled>
             </ButtonsContainer>
         </ClipContainer>
     );
