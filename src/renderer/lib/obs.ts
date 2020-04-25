@@ -107,7 +107,7 @@ class OBSConnection {
     }
 
     private async _safelyToggleRecording(): Promise<void> {
-        return new Promise(resolve => {
+        return new Promise((resolve, reject) => {
             // Resolve when the recording status changed
             this.recordingStatus$.pipe(
                 // This is going to resolve instantly, so we want to skip the first value
@@ -117,18 +117,18 @@ class OBSConnection {
             ).subscribe(() => {
                 resolve();
             });
-            this.socket.send(OBSRecordingAction.TOGGLE);
+            this.socket.send(OBSRecordingAction.TOGGLE).catch(reject);
         });
     }
 
     private async _safelySetRecordingState(rec: OBSRecordingAction): Promise<void> {
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
             // Attach the handler first
             this.socket.once(ACTION_STATE_MAP[rec], () => {
                 resolve();
             });
 
-            this.socket.send(rec);
+            this.socket.send(rec).catch(reject);
         });
     }
 
