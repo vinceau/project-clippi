@@ -110,8 +110,8 @@ export const EventActions = (props: any) => {
           disabledOptions={disabledOptions}
         />
         <EventHeaderButtons>
-          <Labelled onClick={() => testRunActions(value.event, value.actions)} title="Test run"><Icon name="play" size="large" /></Labelled>
-          <Labelled onClick={onRemove} title="Remove"><Icon name="remove" size="large" /></Labelled>
+          <Labelled onClick={() => testRunActions(value.event, value.actions)} title="Test run"><Icon name="play" /></Labelled>
+          <Labelled onClick={onRemove} title="Remove"><Icon name="remove" /></Labelled>
         </EventHeaderButtons>
       </EventHeader>
       <List divided>
