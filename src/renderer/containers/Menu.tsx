@@ -24,8 +24,8 @@ export const Menu: React.FC = () => {
         <Outer>
             <div>
                 <MenuIconLink to={`${match.url}/automator`} label="Automator"><Icon name="bolt" /></MenuIconLink>
-                <MenuIconLink to={`${match.url}/processor`} label="Replay Processor"><Icon name="fast forward" /></MenuIconLink>
-                <MenuIconLink to={`${match.url}/recorder`} label="Playback Queue"><Icon name="list" /></MenuIconLink>
+                <MenuIconLink to={`${match.url}/processor`} label="Replay Processor"><Icon name="angle double right" /></MenuIconLink>
+                <MenuIconLink to={`${match.url}/recorder`} label="Playback Queue"><Icon name="play circle" /></MenuIconLink>
                 {/* <MenuIconLink to={`${match.url}/streamer`} label="Stream Assistant"><Icon name="tv" /></MenuIconLink> */}
             </div>
             <div>

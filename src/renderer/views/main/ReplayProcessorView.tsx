@@ -40,7 +40,7 @@ export const ReplayProcessorView: React.FC = () => {
     return (
         <Outer>
             <Content>
-                <h1>Replay Processor <Icon name="fast forward" /></h1>
+                <h1>Replay Processor <Icon name="angle double right" /></h1>
                 <Text>Find combos and highlights from your replay files</Text>
                 <ComboFinder />
             </Content>

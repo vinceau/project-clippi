@@ -116,7 +116,7 @@ export const RecorderView: React.FC = () => {
     return (
         <Outer>
             <Content>
-                <h1>Playback Queue <Icon name="list" /></h1>
+                <h1>Playback Queue <Icon name="play circle" /></h1>
                 <Text margin="none">Create a playlist of replays and load them into Dolphin</Text>
                 <Toolbar>
                     <div>
