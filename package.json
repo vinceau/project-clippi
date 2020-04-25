@@ -79,7 +79,7 @@
     "electron-webpack-ts": "^3.2.0",
     "node-sass": "^4.14.0",
     "raw-loader": "^4.0.1",
-    "react-hot-loader": "4.12.20",
+    "react-hot-loader": "4.6.5",
     "sass-loader": "^7.1.0",
     "ts-unused-exports": "^6.1.2",
     "tslint": "^5.20.1",
