@@ -10,7 +10,15 @@ An Automation Framework for Super Smash Bros. Melee
 [![Build Status](https://github.com/vinceau/project-clippi/workflows/build/badge.svg)](https://github.com/vinceau/project-clippi/actions?workflow=build)
 [![License](https://img.shields.io/badge/license-MIT-brightgreen)](https://github.com/vinceau/project-clippi/blob/master/LICENSE)
 
-Project Clippi is your must-have Slippi toolkit for tapping into real-time game data and processing replay files. Automatically execute actions when an in-game event occurs. Automatically find and curate combos for that sick combo video. Automatically rename all your SLP files by player, character, or stage for better organisation. Everything is open source and fully-customisable. The possibilities are endless.
+Project Clippi is your must-have Slippi toolkit for tapping into real-time game data and processing replay files. Automatically execute actions when an in-game event occurs. Automatically find and curate combos for that sick combo video. Automatically rename and reorganise your SLP files.
+
+Everything is open source and fully-customisable. The possibilities are endless.
+
+</div>
+
+## Screenshots
+
+<div align="center">
 
 *Detect events and execute actions!*
 
