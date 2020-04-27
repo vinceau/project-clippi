@@ -44,7 +44,7 @@ export const ComboForm: React.FC<{
             <OuterContainer>
                 <Button primary type="submit" disabled={submitting}>
                     <Icon name="save" />
-                    Save Profile
+                    Save profile
                 </Button>
                 <Button
                     className="delete-button"
@@ -52,7 +52,7 @@ export const ComboForm: React.FC<{
                     onClick={props.onDelete}
                 >
                     <Icon name="trash" />
-                    Delete Profile
+                    Delete profile
                 </Button>
             </OuterContainer>
         );
