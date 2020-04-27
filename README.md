@@ -10,7 +10,7 @@ An Automation Framework for Super Smash Bros. Melee
 [![Build Status](https://github.com/vinceau/project-clippi/workflows/build/badge.svg)](https://github.com/vinceau/project-clippi/actions?workflow=build)
 [![License](https://img.shields.io/badge/license-MIT-brightgreen)](https://github.com/vinceau/project-clippi/blob/master/LICENSE)
 
-Project Clippi is your portal into real-time game data. Detect an event → execute an action. Someone did a sick combo? Twitch clip it. A new game is starting? Change OBS scenes. A player died? Play a sound. Everything is open source and fully-customisable. The possibilities are endless.
+Project Clippi is your must-have Slippi toolkit for tapping into real-time game data and processing replay files. Automatically execute actions when an in-game event occurs. Automatically find and curate combos for that sick combo video. Automatically rename all your SLP files by player, character, or stage for better organisation. Everything is open source and fully-customisable. The possibilities are endless.
 
 *Detect events and execute actions!*
 
@@ -19,10 +19,6 @@ Project Clippi is your portal into real-time game data. Detect an event → exec
 *Built in replay processor helps you find combos and organise your SLP replays!*
 
 ![slp file processor screenshot](/docs/images/2-processor.png)
-
-*Drag and drop your SLP files and click play to easily load them into Dolphin!*
-
-![slp playback queue screenshot](/docs/images/3-playback.png)
 
 </div>
 
@@ -42,9 +38,11 @@ Download Project Clippi for your operating system using the links below or check
 * [Project Clippi for MacOS](https://github.com/vinceau/project-clippi/releases/latest/download/Project-Clippi-1.3.0.dmg)
 * [Project Clippi for Linux](https://github.com/vinceau/project-clippi/releases/latest/download/Project-Clippi-1.3.0.AppImage)
 
-## Getting Started
+## Usage
 
-You have two options when connecting Project Clippi to a Slippi source. You can connect to a console source using the [Slippi Desktop App](https://slippi.gg/downloads) as a relay, or connect to a folder that has live SLP files being written to it. e.g. Slippi Dolphin. Follow the links below based on what source you are connecting to.
+To use make combo videos using Project Clippi, check out [this guide](https://medium.com/@vinceau/how-to-make-combo-videos-using-project-clippi-6bf2758f546e).
+
+To take advantage of real-time game events you will need to connect Project Clippi to a Slippi source. You can connect to a console source using the [Slippi Desktop App](https://slippi.gg/downloads) as a relay, or connect to a folder that has live SLP files being written to it. e.g. Slippi Dolphin. Follow the links below based on what source you are connecting to.
 
 * [Connecting to a Slippi Relay](docs/connect_to_relay/README.md)
 * [Connecting to a folder (Dolphin)](docs/connect_to_folder/README.md)
