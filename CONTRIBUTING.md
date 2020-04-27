@@ -84,7 +84,7 @@ set ELECTRON_WEBPACK_APP_TWITCH_CLIENT_ID=YourTwitchClientID
 export ELECTRON_WEBPACK_APP_TWITCH_CLIENT_ID="YourTwitchClientID";
 ```
 
-### I can't run the app because of a 'Can't resolve fsevents' warning
+### I get a 'can't resolve fsevents' error when running the app
 
 [This issue](https://github.com/vinceau/project-clippi/issues/48) happens when you run `yarn run start` on Windows and it's got something to do with importing `chokidar` from a Web worker.
 
