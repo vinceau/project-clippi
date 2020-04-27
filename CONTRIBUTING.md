@@ -44,7 +44,7 @@ cd project-clippi
 yarn install
 ```
 
-If you're running Windows, you may have to modify the `node_modules/@vinceau/slp-realtime/node_modules/chokidar/
+If you're running Windows, you may also have to modify a file in `node_modules` or you'll get an error when starting the app. See [this section](#i-cant-run-the-app-because-of-a-cant-resolve-fsevents-warning) for more information.
 
 ### Build
 
@@ -86,6 +86,6 @@ export ELECTRON_WEBPACK_APP_TWITCH_CLIENT_ID="YourTwitchClientID";
 
 ### I can't run the app because of a 'Can't resolve fsevents' warning
 
-This issue happens when you run `yarn run start` on Windows and it's got something to do with importing `chokidar` from a Web worker. See [this issue](https://github.com/vinceau/project-clippi/issues/48) for more information.
+[This issue](https://github.com/vinceau/project-clippi/issues/48) happens when you run `yarn run start` on Windows and it's got something to do with importing `chokidar` from a Web worker.
 
 A work around for the time being is to delete lines 8-12 from the `node_modules/@vinceau/slp-realtime/node_modules/chokidar/lib/fsevents-handler.js` file. You'll have to re-delete those lines whenever you run `yarn install`.
