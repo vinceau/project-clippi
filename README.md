@@ -32,7 +32,7 @@ Project Clippi is your must-have Slippi toolkit for tapping into real-time game 
 
 ## Download
 
-Download Project Clippi for your operating system using the links below or check out [the releases page](https://github.com/vinceau/project-clippi/releases) for more information.
+Download Project Clippi for your operating system using the links below or check out [the releases page](https://github.com/vinceau/project-clippi/releases/latest) for more information.
 
 * [Project Clippi for Windows](https://github.com/vinceau/project-clippi/releases/latest/download/Project-Clippi-1.3.0.exe)
 * [Project Clippi for MacOS](https://github.com/vinceau/project-clippi/releases/latest/download/Project-Clippi-1.3.0.dmg)
@@ -40,7 +40,7 @@ Download Project Clippi for your operating system using the links below or check
 
 ## Usage
 
-To use make combo videos using Project Clippi, check out [this guide](https://medium.com/@vinceau/how-to-make-combo-videos-using-project-clippi-6bf2758f546e).
+To make combo videos using Project Clippi, check out [this guide](https://medium.com/@vinceau/how-to-make-combo-videos-using-project-clippi-6bf2758f546e).
 
 To take advantage of real-time game events you will need to connect Project Clippi to a Slippi source. You can connect to a console source using the [Slippi Desktop App](https://slippi.gg/downloads) as a relay, or connect to a folder that has live SLP files being written to it. e.g. Slippi Dolphin. Follow the links below based on what source you are connecting to.
 
