@@ -59,7 +59,7 @@ export const PlaybackSettings: React.FC = () => {
                     directory={true}
                     onChange={setDolphinPath}
                 />
-                <Text>The folder containing the <b>{getDolphinExecutableName()}</b> playback executable. Only modify this if you really know what you're doing or if you're using a Linux machine.</Text>
+                <Text>The folder containing the <b>{getDolphinExecutableName()}</b> playback executable. Do NOT modify this unless you're using Linux or you <i>really</i> know what you're doing.</Text>
             </Field>
         </FormContainer>
     );
