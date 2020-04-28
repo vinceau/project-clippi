@@ -3,15 +3,39 @@ import React from "react";
 import { FileInput } from "@/components/FileInput";
 
 import { Field, FormContainer, Label, PageHeader, Text } from "@/components/Form";
-import { getDolphinExecutableName } from "@/lib/dolphin";
+import { getDolphinExecutableName, getDolphinPath } from "@/lib/dolphin";
 import { Dispatch, iRootState } from "@/store";
 import { useDispatch, useSelector } from "react-redux";
+
+import styled from "styled-components";
+import { isMacOrWindows } from "@/lib/utils";
+import { Labelled } from "@/components/Labelled";
+
+const DolphinPathLabel = styled.div`
+display: flex;
+flex-direction: row;
+align-items: center;
+justify-content: space-between;
+`;
+
+const ResetButton = styled.span`
+font-size: 1.2rem;
+opacity: 0.8;
+&:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+`;
+
+const defaultDolphinPath = getDolphinPath();
 
 export const PlaybackSettings: React.FC = () => {
     const dispatch = useDispatch<Dispatch>();
     const { meleeIsoPath, dolphinPath } = useSelector((state: iRootState) => state.filesystem);
     const setMeleeIsoPath = (filePath: string) => dispatch.filesystem.setMeleeIsoPath(filePath);
     const setDolphinPath = (filePath: string) => dispatch.filesystem.setDolphinPath(filePath);
+    const resetDolphinPath = () => dispatch.filesystem.setDolphinPath(defaultDolphinPath);
+    const showResetButton = isMacOrWindows && dolphinPath !== defaultDolphinPath;
     return (
         <FormContainer>
             <PageHeader>Playback</PageHeader>
@@ -24,7 +48,12 @@ export const PlaybackSettings: React.FC = () => {
                 <Text>The path to an NTSC Melee 1.02 ISO. Dolphin will auto-launch this title when playing back replays.</Text>
             </Field>
             <Field border="top">
-                <Label>Playback Dolphin Path</Label>
+                <DolphinPathLabel>
+                    <Label>Playback Dolphin Path</Label>
+                    {showResetButton && <Labelled title="Restore default value">
+                        <ResetButton onClick={resetDolphinPath}>Reset</ResetButton>
+                    </Labelled>}
+                </DolphinPathLabel>
                 <FileInput
                     value={dolphinPath}
                     directory={true}
