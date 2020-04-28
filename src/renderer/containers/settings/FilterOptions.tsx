@@ -2,6 +2,7 @@
 import * as React from "react";
 
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 import { ComboForm } from "@/components/combos/ComboForm";
 import { ProfileSelector } from "@/components/combos/ProfileSelection";
@@ -21,12 +22,14 @@ export const FilterOptions = () => {
             name: currentProfile,
             settings: valueString,
         });
+        toast("Profile saved");
     };
     const setProfile = (profile: string) => {
         dispatch.slippi.setCurrentProfile(profile);
     };
     const onDelete = () => {
         dispatch.slippi.deleteProfile(currentProfile);
+        toast("Profile deleted");
     };
     return (
         <FormContainer>
