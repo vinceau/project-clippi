@@ -13,7 +13,7 @@ import { Dispatch, dispatcher, iRootState } from "@/store";
 import { device } from "@/styles/device";
 
 import dolphinLogoSVG from "@/styles/images/dolphin.svg";
-import slippiLogoSVG from "@/styles/images/slippi-logo.svg";
+import { SlippiIcon } from "@/components/SlippiIcon";
 
 export const SlippiConnectionPlaceholder: React.FC<{
     port: string;
@@ -80,7 +80,7 @@ export const SlippiConnectionPlaceholder: React.FC<{
                 <Grid.Row verticalAlign="middle">
                     <Grid.Column>
                         <VerticalHeader icon>
-                            <CustomIcon image={slippiLogoSVG} size={54} />
+                            <SlippiIcon size={54} />
                             Connect to a Slippi Relay
                         </VerticalHeader>
                         <Input

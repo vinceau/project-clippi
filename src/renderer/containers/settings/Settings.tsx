@@ -26,7 +26,7 @@ import { SoundSettings } from "./SoundSettings";
 import { TwitchIntegration } from "./TwitchIntegration";
 
 import OBSLogo from "@/styles/images/obs.svg";
-import SlippiLogo from "@/styles/images/slippi-logo.svg";
+import { SlippiIcon } from "@/components/SlippiIcon";
 
 const StyledMenuItem = styled(Menu.Item) <{
     header: boolean;
@@ -211,7 +211,7 @@ export const SettingsPage: React.FC<{
                                     name="slippi-settings"
                                     active={isActive("slippi-settings")}
                                     onClick={handleItemClick}
-                                ><CustomIcon image={SlippiLogo} />Slippi Connection</StyledMenuItem>
+                                ><SlippiIcon />Slippi Connection</StyledMenuItem>
                                 <StyledMenuItem
                                     name="obs-settings"
                                     active={isActive("obs-settings")}
