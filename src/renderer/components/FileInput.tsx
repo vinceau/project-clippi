@@ -27,8 +27,14 @@ interface FileInputProps extends Record<string, any> {
 }
 
 export const FileInput: React.FC<FileInputProps> = props => {
-    const { value, directory, onChange, fileTypeFilters, saveFile } = props;
+    const { value, directory, onChange, fileTypeFilters, saveFile, placeholder } = props;
     const [filesPath, setFilesPath] = React.useState<string>(value);
+
+    // Make sure we display the correct value
+    React.useEffect(() => {
+        setFilesPath(value);
+    }, [value]);
+
     const selectFromFileSystem = async () => {
         let p: string | null = null;
         if (directory) {
@@ -72,6 +78,7 @@ export const FileInput: React.FC<FileInputProps> = props => {
                 onChange={(_: any, { value }: any) => setFilesPath(value)}
                 onBlur={() => onChange(filesPath)}
                 action={<Button onClick={() => selectFromFileSystem().catch(console.error)}>{actionLabel}</Button>}
+                placeholder={placeholder}
             />
         </Outer>
     );
