@@ -16,7 +16,7 @@ import path from "path";
 import { remote } from "electron";
 
 import { obsConnection, OBSRecordingAction } from "@/lib/obs";
-import { delay, getFilePath, notify } from "@/lib/utils";
+import { delay, getFilePath, notify, isMacOrWindows } from "@/lib/utils";
 import { store } from "@/store";
 import { DolphinLauncher, DolphinPlaybackPayload, DolphinPlaybackStatus, DolphinQueueFormat, generateDolphinQueuePayload } from "@vinceau/slp-realtime";
 import { onlyFilename } from "common/utils";
@@ -34,7 +34,7 @@ const defaultDolphinRecorderOptions = {
 export type DolphinRecorderOptions = typeof defaultDolphinRecorderOptions;
 
 export const getDolphinPath = (): string => {
-    if (process.platform === "win32" || process.platform === "darwin") {
+    if (isMacOrWindows) {
         const appData = remote.app.getPath("appData");
         return path.join(appData, "Slippi Desktop App", "dolphin");
     }

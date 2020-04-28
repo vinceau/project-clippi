@@ -61,6 +61,8 @@ export const notify = (message: string, title?: string) => {
 
 export const isDevelopment = process.env.NODE_ENV !== "production";
 
+export const isMacOrWindows = process.platform === "darwin" || process.platform === "win32";
+
 // see https://github.com/electron-userland/electron-webpack/issues/99#issuecomment-459251702
 export const getStatic = (val: string): string => {
     if (isDevelopment) {
