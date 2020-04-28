@@ -3,12 +3,18 @@ import * as React from "react";
 import styled from "styled-components";
 
 import { Button, Icon, Input } from "semantic-ui-react";
-import { getFilePath, getFolderPath, openFileOrParentFolder } from "../lib/utils";
+import { getFilePath, getFolderPath, openFileOrParentFolder } from "@/lib/utils";
 import { Labelled } from "./Labelled";
 
 const NoMarginIcon = styled(Icon)`
 &&& {
     margin: 0 !important;
+}
+`;
+
+const Outer = styled.div`
+input[type=text] {
+    width: auto !important;
 }
 `;
 
@@ -49,7 +55,7 @@ export const FileInput: React.FC<FileInputProps> = props => {
     };
     const actionLabel = saveFile ? "Save as" : "Choose";
     return (
-        <div className="file-input">
+        <Outer>
             <Input
                 style={{ width: "100%" }}
                 label={
@@ -67,6 +73,6 @@ export const FileInput: React.FC<FileInputProps> = props => {
                 onBlur={() => onChange(filesPath)}
                 action={<Button onClick={() => selectFromFileSystem().catch(console.error)}>{actionLabel}</Button>}
             />
-        </div>
+        </Outer>
     );
 };
