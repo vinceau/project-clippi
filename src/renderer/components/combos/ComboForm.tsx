@@ -95,7 +95,7 @@ export const ComboForm: React.FC<{
                                 <Field>
                                     <Label>Minimum Combo Length</Label>
                                     <FinalField name="minComboLength" component="input" type="number" parse={(v: any) => parseInt(v, 10)} />
-                                    <Text>Only match combos which contain at least these many moves.</Text>
+                                    <Text>Only match combos which contain at least this many moves.</Text>
                                 </Field>
                                 <Field>
                                     <Label>Minimum Combo Percent</Label>
@@ -109,7 +109,7 @@ export const ComboForm: React.FC<{
                                 </Field>
                                 <Field border="top">
                                     <FinalField name="comboMustKill" label="Combo Must Kill" component={ToggleAdapter} />
-                                    <Text margin="none">Only match combos which take the opponents stock.</Text>
+                                    <Text margin="none">Only match combos which take the opponent's stock.</Text>
                                 </Field>
                                 <Field>
                                     <FinalField name="excludeCPUs" label="Exclude CPUs" component={ToggleAdapter} />
