@@ -128,7 +128,7 @@ export const ComboForm: React.FC<{
                                     <Accordion>
                                         <Accordion.Title active={showAdvanced} onClick={() => setShowAdvanced(!showAdvanced)}>
                                             <Icon name="dropdown" />
-                                            {showAdvanced ? "Hide " : "Show "} Advanced Options
+                                            {showAdvanced ? "Hide " : "Show "} advanced options
                                         </Accordion.Title>
                                         <Accordion.Content active={showAdvanced}>
                                             <Field>
