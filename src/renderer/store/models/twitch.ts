@@ -1,6 +1,6 @@
 import { createModel } from "@rematch/core";
 import { produce } from "immer";
-import { fetchTwitchAuthToken, signOutTwitch } from "../../lib/twitch";
+import { fetchTwitchAuthToken, signOutTwitch } from "@/lib/twitch";
 
 export interface TwitchClip {
     clipID: string;
