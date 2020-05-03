@@ -10,6 +10,7 @@ import { CharacterSelectAdapter } from "./CharacterSelect";
 import { SemanticInput } from "./FormAdapters";
 
 const CharacterSelectContainer = styled.div`
+margin-top: 1rem;
 display: grid;
 grid-gap: 1rem;
 grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr) );
