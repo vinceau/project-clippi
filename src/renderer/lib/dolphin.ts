@@ -203,7 +203,13 @@ const _openComboInDolphin = async (filePath: string, options?: Partial<DolphinRe
 export const openComboInDolphin = (filePath: string, options?: Partial<DolphinRecorderOptions>) => {
     _openComboInDolphin(filePath, options).catch(err => {
         console.error(err);
-        notify("Error loading Dolphin. Are your Dolphin playback settings correct?");
+        if (isMacOrWindows) {
+            notify("Error loading Dolphin. Download the Slippi Desktop App at the link that is opened to fix this issue.");
+            window.open("https://slippi.gg/downloads");
+        } else {
+            notify("Error loading Dolphin. Build a Playback Dolphin with Slippi-FM-Installer and then set the Playback Path.");
+            window.open("https://github.com/project-slippi/Slippi-FM-installer/blob/master/README.md");
+        }
     });
 };
 
