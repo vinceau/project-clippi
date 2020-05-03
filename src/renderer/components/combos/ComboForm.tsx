@@ -83,14 +83,14 @@ export const ComboForm: React.FC<{
                                     <Text>Only match combos performed by these characters.</Text>
                                 </Field>
                                 <Field>
-                                    <Label>Port Filter</Label>
-                                    <PortSelectAdapter name="portFilter" />
-                                    <Text>Only match combos performed by players using these ports.</Text>
-                                </Field>
-                                <Field border="bottom">
                                     <Label>Name Tag Filter</Label>
                                     <NameTagForm name="nameTags" pop={pop} push={push} values={values} />
                                     <Text>Only match combos performed by players using these name tags.</Text>
+                                </Field>
+                                <Field border="bottom">
+                                    <Label>Port Filter</Label>
+                                    <PortSelectAdapter name="portFilter" />
+                                    <Text>Only match combos performed by players using these ports.</Text>
                                 </Field>
                                 <Field>
                                     <Label>Minimum Combo Length</Label>
