@@ -16,7 +16,8 @@ import path from "path";
 import { remote } from "electron";
 
 import { obsConnection, OBSRecordingAction } from "@/lib/obs";
-import { delay, getFilePath, notify, isMacOrWindows } from "@/lib/utils";
+import { delay, getFilePath, isMacOrWindows } from "@/lib/utils";
+import { toast } from "react-toastify";
 import { store } from "@/store";
 import { DolphinLauncher, DolphinPlaybackPayload, DolphinPlaybackStatus, DolphinQueueFormat, generateDolphinQueuePayload } from "@vinceau/slp-realtime";
 import { onlyFilename } from "common/utils";
@@ -204,11 +205,13 @@ export const openComboInDolphin = (filePath: string, options?: Partial<DolphinRe
     _openComboInDolphin(filePath, options).catch(err => {
         console.error(err);
         if (isMacOrWindows) {
-            notify("Error loading Dolphin. Download the Slippi Desktop App at the link that is opened to fix this issue.");
-            window.open("https://slippi.gg/downloads");
+            toast("Error loading Dolphin. Download the Slippi Desktop App.", {autoClose: false, onClick: () => {
+                window.open("https://slippi.gg/downloads");
+            }});
         } else {
-            notify("Error loading Dolphin. Build a Playback Dolphin with Slippi-FM-Installer and then set the Playback Path.");
-            window.open("https://github.com/project-slippi/Slippi-FM-installer/blob/master/README.md");
+            toast("Error loading Dolphin. Build a Playback Dolphin with Slippi-FM-Installer and then set the Playback Path.", {autoClose: false, onClick: () => {
+                window.open("https://github.com/project-slippi/Slippi-FM-installer/blob/master/README.md");
+            }});
         }
     });
 };
