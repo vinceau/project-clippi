@@ -22,14 +22,18 @@ export const FilterOptions = () => {
             name: currentProfile,
             settings: valueString,
         });
-        toast("Profile saved");
+        toast("Profile saved", {
+            toastId: "profile-saved",
+        });
     };
     const setProfile = (profile: string) => {
         dispatch.slippi.setCurrentProfile(profile);
     };
     const onDelete = () => {
         dispatch.slippi.deleteProfile(currentProfile);
-        toast("Profile deleted");
+        toast("Profile deleted", {
+            toastId: "profile-deleted",
+        });
     };
     return (
         <FormContainer>
