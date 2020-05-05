@@ -44,7 +44,7 @@ cd project-clippi
 yarn install
 ```
 
-If you're running Windows, you may also have to modify a file in `node_modules` or you'll get an error when starting the app. See [this section](#i-cant-run-the-app-because-of-a-cant-resolve-fsevents-warning) for more information.
+If you're running Windows, you may also have to modify a file in `node_modules` or you'll get an error when starting the app. See [this section](#i-get-a-cant-resolve-fsevents-error-when-running-the-app) for more information.
 
 ### Build
 
