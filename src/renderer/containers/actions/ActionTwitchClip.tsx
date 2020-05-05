@@ -6,8 +6,8 @@ import { Icon } from "semantic-ui-react";
 
 import { DelayInput, NotifyInput, SimpleInput } from "@/components/InlineInputs";
 import { delay as waitMillis, notify as sendNotification, parseSecondsDelayValue } from "@/lib/utils";
-import { createTwitchClip } from "common/twitch";
 import { dispatcher, store } from "@/store";
+import { createTwitchClip } from "common/twitch";
 import { ActionComponent } from "./types";
 
 const DEFAULT_DELAY_SECONDS = 10;

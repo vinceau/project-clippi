@@ -7,9 +7,9 @@ import { getDolphinExecutableName, getDolphinPath } from "@/lib/dolphin";
 import { Dispatch, iRootState } from "@/store";
 import { useDispatch, useSelector } from "react-redux";
 
-import styled from "styled-components";
-import { isMacOrWindows } from "@/lib/utils";
 import { Labelled } from "@/components/Labelled";
+import { isMacOrWindows } from "@/lib/utils";
+import styled from "styled-components";
 
 const DolphinPathLabel = styled.div`
 display: flex;

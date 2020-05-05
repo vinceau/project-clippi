@@ -7,8 +7,8 @@ import { soundPlayer } from "@/lib/sounds";
 
 import { FormContainer, PageHeader } from "@/components/Form";
 import { SoundFileInfo } from "@/components/SoundFileInfo";
-import { Dispatch, dispatcher, iRootState } from "@/store";
 import { openFileOrParentFolder } from "@/lib/utils";
+import { Dispatch, dispatcher, iRootState } from "@/store";
 
 export const AddSoundButton = (props: any) => {
     return (

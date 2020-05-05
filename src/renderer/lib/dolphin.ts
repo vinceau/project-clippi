@@ -16,7 +16,7 @@ import path from "path";
 import { remote } from "electron";
 
 import { obsConnection, OBSRecordingAction } from "@/lib/obs";
-import { delay, getFilePath, notify, isMacOrWindows } from "@/lib/utils";
+import { delay, getFilePath, isMacOrWindows, notify } from "@/lib/utils";
 import { store } from "@/store";
 import { DolphinLauncher, DolphinPlaybackPayload, DolphinPlaybackStatus, DolphinQueueFormat, generateDolphinQueuePayload } from "@vinceau/slp-realtime";
 import { onlyFilename } from "common/utils";

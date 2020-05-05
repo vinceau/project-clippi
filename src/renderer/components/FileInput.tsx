@@ -2,8 +2,8 @@ import * as React from "react";
 
 import styled from "styled-components";
 
-import { Button, Icon, Input } from "semantic-ui-react";
 import { getFilePath, getFolderPath, openFileOrParentFolder } from "@/lib/utils";
+import { Button, Icon, Input } from "semantic-ui-react";
 import { Labelled } from "./Labelled";
 
 const NoMarginIcon = styled(Icon)`

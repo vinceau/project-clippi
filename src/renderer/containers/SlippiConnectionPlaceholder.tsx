@@ -12,8 +12,8 @@ import { getFolderPath } from "@/lib/utils";
 import { Dispatch, dispatcher, iRootState } from "@/store";
 import { device } from "@/styles/device";
 
-import dolphinLogoSVG from "@/styles/images/dolphin.svg";
 import { SlippiIcon } from "@/components/SlippiIcon";
+import dolphinLogoSVG from "@/styles/images/dolphin.svg";
 
 export const SlippiConnectionPlaceholder: React.FC<{
     port: string;
