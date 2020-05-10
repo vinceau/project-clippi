@@ -1,5 +1,7 @@
 import * as React from "react";
 
+import styled from "styled-components";
+
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Header, Icon, Segment } from "semantic-ui-react";
 
@@ -9,6 +11,7 @@ import { FormContainer, PageHeader } from "@/components/Form";
 import { SoundFileInfo } from "@/components/SoundFileInfo";
 import { openFileOrParentFolder } from "@/lib/utils";
 import { Dispatch, dispatcher, iRootState } from "@/store";
+import { device } from "@/styles/device";
 
 export const AddSoundButton = (props: any) => {
     return (
@@ -18,6 +21,18 @@ export const AddSoundButton = (props: any) => {
         </Button>
     );
 };
+
+const ButtonContainer = styled.div`
+margin-bottom: 1rem;
+
+button {
+    width: 100% !important;
+    margin-bottom: 0.25em !important;
+    @media ${device.tablet} {
+        width: auto !important;
+    }
+}
+`;
 
 export const SoundSettings: React.FC = () => {
     const soundFiles = useSelector((state: iRootState) => state.filesystem.soundFiles);
@@ -38,13 +53,13 @@ export const SoundSettings: React.FC = () => {
             <div style={{ paddingBottom: "50px" }}>
                 {soundsExist ?
                     <>
-                        <div style={{ marginBottom: "10px" }}>
+                        <ButtonContainer>
                             <AddSoundButton />
                             <Button onClick={() => soundPlayer.stop()}>
                                 <Icon name="stop" />
-                            Stop current sound
-                        </Button>
-                        </div>
+                                Stop current sound
+                            </Button>
+                        </ButtonContainer>
                         <SoundTable onPathClick={onOpenFile} onRemove={removeSound} sounds={soundFiles} />
                     </>
                     :
