@@ -6,10 +6,10 @@ import styled from "styled-components";
 import { Labelled } from "./Labelled";
 
 const Container = styled.div`
-border: solid 1px ${({ theme }) => theme.background3}
-border-radius: 3px;
-margin-bottom: 5px;
-padding: 10px;
+border: solid 0.1rem ${({ theme }) => theme.background3}
+border-radius: 0.3rem;
+margin-bottom: 0.5rem;
+padding: 1rem;
 display: flex;
 justify-content: space-between;
 align-items: center;
@@ -20,10 +20,22 @@ a {
 
 }
 h2 {
-    font-size: 18px;
+    font-size: 1.8rem;
     margin: 0;
-    margin-bottom: 5px;
+    margin-bottom: 0.5rem;
     cursor: pointer;
+}
+&:hover .remove-button {
+    opacity: 1;
+}
+
+.remove-button {
+    opacity: 0;
+    font-size: 2rem;
+    padding-left: 1rem;
+    &:hover {
+        cursor: pointer;
+    }
 }
 `;
 
@@ -41,7 +53,7 @@ export const SoundFileInfo: React.FC<{
                     {props.path}
                 </div>
             </div>
-            <div style={{fontSize: "20px"}}>
+            <div className="remove-button">
                 <Labelled title="Remove"><Icon name="trash" onClick={props.onRemove} /></Labelled>
             </div>
         </Container>
