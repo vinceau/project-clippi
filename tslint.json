@@ -1,7 +1,9 @@
 {
     "extends": [
         "tslint:recommended",
-        "tslint-react"
+        "tslint-react",
+        "tslint-plugin-prettier",
+        "tslint-config-prettier"
     ],
     "rulesDirectory": [
         "node_modules/tslint-microsoft-contrib"
@@ -112,6 +114,7 @@
         "completed-docs": false,
         "jsx-alignment": false,
         "no-use-before-declare": false,
-        "member-ordering": false
+        "member-ordering": false,
+        "prettier": true
     }
 }
