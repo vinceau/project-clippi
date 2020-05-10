@@ -30,17 +30,13 @@ h2 {
 export const SoundFileInfo: React.FC<{
     name: string;
     path: string;
-    onPathClick: () => void;
+    onPathClick?: () => void;
     onRemove: () => void;
 }> = props => {
-    const pathClick = (e: any) => {
-        e.preventDefault();
-        props.onPathClick();
-    };
     return (
         <Container>
             <div>
-                <Labelled title="Open location"><h2 onClick={pathClick}>{props.name}</h2></Labelled>
+                <Labelled title="Open location"><h2 onClick={props.onPathClick}>{props.name}</h2></Labelled>
                 <div>
                     {props.path}
                 </div>
