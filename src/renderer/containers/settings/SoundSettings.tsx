@@ -13,9 +13,9 @@ import { openFileOrParentFolder } from "@/lib/utils";
 import { Dispatch, dispatcher, iRootState } from "@/store";
 import { device } from "@/styles/device";
 
-export const AddSoundButton = (props: any) => {
+const AddSoundButton = (props: any) => {
     return (
-        <Button onClick={() => dispatcher.filesystem.addSound()} {...props}>
+        <Button {...props}>
             <Icon name="add" />
             Add sound
         </Button>
@@ -54,7 +54,9 @@ export const SoundSettings: React.FC = () => {
                 {soundsExist ?
                     <>
                         <ButtonContainer>
-                            <AddSoundButton />
+                            <AddSoundButton
+                                onClick={() => dispatch.filesystem.addSound()}
+                            />
                             <Button onClick={() => soundPlayer.stop()}>
                                 <Icon name="stop" />
                                 Stop current sound
@@ -68,7 +70,10 @@ export const SoundSettings: React.FC = () => {
                             <Icon name="music" />
                         You have not added any sounds
                         </Header>
-                        <AddSoundButton primary={true} />
+                        <AddSoundButton
+                            onClick={() => dispatch.filesystem.addSound()}
+                            primary={true}
+                        />
                     </Segment>
                 }
             </div>
