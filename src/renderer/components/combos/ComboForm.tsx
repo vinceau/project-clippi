@@ -132,6 +132,12 @@ export const ComboForm: React.FC<{
                                         </Accordion.Title>
                                         <Accordion.Content active={showAdvanced}>
                                             <Field>
+                                                <FinalField name="fuzzyNameTagMatching" label="Fuzzy Name Tag Matching" component={ToggleAdapter} />
+                                                <Text margin="none">When this is enabled, name tags will match in a case-insensitive manner. Name tags containing spaces
+                                                will also match with variants where the spaces are replaced with underscores.
+                                                </Text>
+                                            </Field>
+                                            <Field>
                                                 <Label>Chain-grab Characters</Label>
                                                 <CharacterSelectAdapter name="chainGrabbers" isMulti={true} />
                                                 <Text>Only exclude chain-grabs performed by these characters.</Text>
