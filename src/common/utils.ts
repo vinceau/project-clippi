@@ -53,18 +53,6 @@ export const deleteFile = async (filepath: string, permanent?: boolean): Promise
     return trash(filepath);
 };
 
-export const pipeFileContents = async (filename: string, destination: Writable): Promise<void> => {
-    return new Promise((resolve): void => {
-        const readStream = fs.createReadStream(filename);
-        readStream.on("open", () => {
-            readStream.pipe(destination);
-        });
-        readStream.on("close", () => {
-            resolve();
-        });
-    });
-};
-
 export const writeFile = async (contents: string, filename: string, append?: boolean): Promise<void> => {
     await fs.outputFile(filename, contents + EOL, { flag: append ? "a" : "w" });
 };

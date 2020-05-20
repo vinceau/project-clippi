@@ -5,12 +5,12 @@ import moment from "moment";
 import fg from "fast-glob";
 import fs from "fs-extra";
 
-import { checkCombo, ComboEventPayload, ComboFilterSettings, defaultComboFilterSettings, DolphinPlaybackItem, Frames, generateDolphinQueuePayload, Input, SlippiGame, SlpRealTime, SlpStream } from "@vinceau/slp-realtime";
+import { checkCombo, ComboEventPayload, ComboFilterSettings, defaultComboFilterSettings, DolphinPlaybackItem, Frames, generateDolphinQueuePayload, Input, pipeFileContents, SlippiGame, SlpRealTime, SlpStream } from "@vinceau/slp-realtime";
 import { Observable } from "rxjs";
 import { filter, map, throttleTime } from "rxjs/operators";
 
 import { parseFileRenameFormat } from "./context";
-import { deleteFile, pipeFileContents, assertExtension } from "./utils";
+import { assertExtension, deleteFile } from "./utils";
 
 export enum FindComboOption {
     COMBOS = "COMBOS",
