@@ -91,3 +91,11 @@ export const onlyFilename = (filepath: string): string => {
     const onlyExt = path.extname(filepath);
     return path.basename(filepath, onlyExt);
 };
+
+export const assertExtension = (filename: string, extension: string): string => {
+    const onlyExt = path.extname(filename);
+    if (onlyExt !== extension) {
+        return filename + extension;
+    }
+    return filename;
+};

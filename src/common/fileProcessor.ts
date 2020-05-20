@@ -10,7 +10,7 @@ import { Observable } from "rxjs";
 import { filter, map, throttleTime } from "rxjs/operators";
 
 import { parseFileRenameFormat } from "./context";
-import { deleteFile, pipeFileContents } from "./utils";
+import { deleteFile, pipeFileContents, assertExtension } from "./utils";
 
 export enum FindComboOption {
     COMBOS = "COMBOS",
@@ -172,6 +172,7 @@ export class FileProcessor {
         if (options.renameFiles && options.renameTemplate) {
             const fullFilename = path.basename(filename);
             res.newFilename = parseFileRenameFormat(options.renameTemplate, settings, metadata, fullFilename);
+            res.newFilename = assertExtension(res.newFilename, ".slp");
             filename = await renameFile(filename, res.newFilename);
         }
 
