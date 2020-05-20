@@ -46,12 +46,9 @@ export const RenameFiles: React.FC<{
     const [renameFormat, setRenameFormat] = React.useState(props.value);
     const textRef: any = React.useRef();
     const showResetButton = renameFormat !== defaultRenameFormat;
-    const persistFormat = () => {
-        props.onChange(renameFormat);
-    };
     const resetFormat = () => {
         setRenameFormat(defaultRenameFormat);
-        persistFormat();
+        props.onChange(defaultRenameFormat);
     };
     const insertText = (text: string) => {
         const el = textRef.current;
@@ -91,7 +88,7 @@ export const RenameFiles: React.FC<{
                     onChange={(_, { value }) => {
                         setRenameFormat(`${value || ""}`);
                     }}
-                    onBlur={persistFormat}
+                    onBlur={() => props.onChange(renameFormat)}
                 />
                 <PreviewContainer>
                     <b>Preview: </b><TemplatePreview template={renameFormat} metadata={metadata}/>
