@@ -33,10 +33,10 @@ const handleProgress = (payload: ProgressingPayload): void => {
     const { result, total, filename, options, index } = payload;
     dispatcher.tempContainer.setPercent(Math.floor((index + 1) / total * 100));
     if (options.findComboOption) {
+        const base = path.basename(result.newFilename || filename);
         if (result.fileDeleted) {
-            dispatcher.tempContainer.setComboLog(`Deleted ${filename}`);
+            dispatcher.tempContainer.setComboLog(`Deleted: ${base}`);
         } else {
-            const base = path.basename(result.newFilename || filename);
             dispatcher.tempContainer.setComboLog(`Found ${result.numCombos} highlights in: ${base}`);
         }
     } else if (options.renameFiles && result.newFilename) {
