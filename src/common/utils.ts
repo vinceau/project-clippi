@@ -3,7 +3,6 @@ import path from "path";
 import trash from "trash";
 
 import { EOL } from "os";
-import { Writable } from "stream";
 
 export const delay = async (ms: number): Promise<void> => {
     await new Promise(resolve => setTimeout(resolve, ms));
