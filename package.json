@@ -28,6 +28,7 @@
     "@vinceau/event-actions": "^0.0.4",
     "@vinceau/slp-realtime": "^2.3.6",
     "electron-context-menu": "^0.15.1",
+    "electron-store": "^5.1.1",
     "fast-glob": "^3.1.1",
     "final-form": "^4.18.6",
     "final-form-arrays": "^3.0.2",
