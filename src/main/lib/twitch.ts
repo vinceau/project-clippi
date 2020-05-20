@@ -72,14 +72,14 @@ export class TwitchController {
 
   public async clip(
     channelName?: string,
-    createAfterDelay?: boolean,
+    createAfterDelay?: boolean
   ): Promise<string> {
     if (!this.client || !this.currentUser) {
       throw new Error("Not logged in to Twitch");
     }
 
     // The id of the channel we want to clip
-    let channelId = this.currentUser.id;  // Default to our own channel
+    let channelId = this.currentUser.id; // Default to our own channel
     if (channelName) {
       const user = await this.client.helix.users.getUserByName(channelName);
       if (!user) {
@@ -95,15 +95,25 @@ export class TwitchController {
     });
 
     // Join chat channel and post message
-    if (this.isChatConnected && this.chatClient) {
+    try {
       const channelToJoin = channelName || this.currentUser.name;
-      await this.chatClient.join(channelToJoin);
-      console.log(`Joined Twitch chat for channel: ${channelToJoin}`);
-      this.chatClient.say(channelToJoin, `Clipped with Project Clippi: ${clipId}`);
+      const url = `https://clips.twitch.tv/${clipId}`;
+      await this.chat(channelToJoin, `Clipped with Project Clippi: ${url}`);
+    } catch (err) {
+      // Catch the error so we can always return the clip ID
+      console.error(err);
     }
 
     // Return the Twitch clip
     return clipId;
+  }
+
+  public async chat(channel: string, message: string): Promise<void> {
+    if (this.isChatConnected && this.chatClient) {
+      await this.chatClient.join(channel);
+      console.log(`Joined Twitch chat for channel: ${channel}`);
+      this.chatClient.say(channel, message);
+    }
   }
 
   public async signOut() {
