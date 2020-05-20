@@ -2,13 +2,13 @@ import TwitchClient, { HelixUser } from "twitch";
 import ChatClient from "twitch-chat-client";
 import ElectronAuthProvider from "twitch-electron-auth-provider";
 
-import { TwitchClientId } from "common/twitch";
 import { deleteCookie, fetchCookies } from "./session";
 
 import Store from "electron-store";
 
 const store = new Store();
 
+const TWITCH_CLIENT_ID = process.env.ELECTRON_WEBPACK_APP_TWITCH_CLIENT_ID || "";
 const TWITCH_REDIRECT_URI = "http://localhost:3000/auth/twitch/callback";
 const TOKEN_STORE_KEY = "twitch-access-token";
 
@@ -159,7 +159,7 @@ export class TwitchController {
     if (this.accessToken && validScopes(scopes, this.accessToken.scopes)) {
       // We got a token so just use that
       return TwitchClient.withCredentials(
-        TwitchClientId,
+        TWITCH_CLIENT_ID,
         this.accessToken.token
       );
     }
@@ -167,7 +167,7 @@ export class TwitchController {
     // We haven't authenticated yet
     const client = new TwitchClient({
       authProvider: new ElectronAuthProvider({
-        clientId: TwitchClientId,
+        clientId: TWITCH_CLIENT_ID,
         redirectURI: TWITCH_REDIRECT_URI,
       }),
     });
