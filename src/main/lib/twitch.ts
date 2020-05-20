@@ -116,6 +116,25 @@ export class TwitchController {
     }
   }
 
+  public async isStreaming(channelName?: string): Promise<boolean> {
+    if (!this.client || !this.currentUser) {
+      throw new Error("Not logged in to Twitch");
+    }
+
+    let user: HelixUser | null;
+    if (channelName) {
+      user = await this.client.helix.users.getUserByName(channelName);
+    } else {
+      user = this.currentUser;
+    }
+    if (!user) {
+      return false;
+    }
+    const s = await user.getStream();
+    console.log(s);
+    return s !== null;
+  }
+
   public async signOut() {
     // Delete token
     store.delete(TOKEN_STORE_KEY);
