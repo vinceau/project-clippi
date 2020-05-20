@@ -15,6 +15,9 @@ export const readFile = async (filePath: string): Promise<Buffer> => {
 };
 
 export const secondsToString = (seconds: number): string => {
+    if (seconds < 1) {
+        return "under a second";
+    }
     return millisToString(seconds * 1000);
 };
 
