@@ -1,5 +1,6 @@
 import fs from "fs-extra";
 import path from "path";
+import trash from "trash";
 
 import { EOL } from "os";
 import { Writable } from "stream";
@@ -45,8 +46,11 @@ export const timeDifferenceString = (before: Date, after: Date): string => {
     return millisToString(diff);
 };
 
-export const deleteFile = async (filepath: string): Promise<void> => {
-    await fs.unlink(filepath);
+export const deleteFile = async (filepath: string, permanent?: boolean): Promise<void> => {
+    if (permanent) {
+        return fs.unlink(filepath);
+    }
+    return trash(filepath);
 };
 
 export const pipeFileContents = async (filename: string, destination: Writable): Promise<void> => {

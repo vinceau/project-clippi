@@ -61,6 +61,7 @@
     "source-map-support": "^0.5.10",
     "styled-components": "^4.4.1",
     "timeago.js": "^4.0.2",
+    "trash": "^6.1.1",
     "twitch": "^3.5.6",
     "twitch-electron-auth-provider": "^3.5.6"
   },
