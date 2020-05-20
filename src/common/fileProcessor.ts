@@ -12,6 +12,8 @@ import { filter, map, throttleTime } from "rxjs/operators";
 import { parseFileRenameFormat } from "./context";
 import { assertExtension, deleteFile } from "./utils";
 
+const SLP_FILE_EXT = ".slp";
+
 export enum FindComboOption {
     COMBOS = "COMBOS",
     CONVERSIONS = "CONVERSIONS",
@@ -116,7 +118,7 @@ export class FileProcessor {
         this.stopRequested = false;
         this.queue = [];
 
-        const patterns = ["**/*.slp"];
+        const patterns = [`**/*${SLP_FILE_EXT}`];
         const options = {
             absolute: true,
             cwd: opts.filesPath,
@@ -172,7 +174,7 @@ export class FileProcessor {
         if (options.renameFiles && options.renameTemplate) {
             const fullFilename = path.basename(filename);
             res.newFilename = parseFileRenameFormat(options.renameTemplate, settings, metadata, fullFilename);
-            res.newFilename = assertExtension(res.newFilename, ".slp");
+            res.newFilename = assertExtension(res.newFilename, SLP_FILE_EXT);
             filename = await renameFile(filename, res.newFilename);
         }
 
