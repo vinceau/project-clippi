@@ -1,17 +1,28 @@
-import twitchElectronAuthProvider from "twitch-electron-auth-provider";
+import TwitchClient from "twitch";
+import ElectronAuthProvider from "twitch-electron-auth-provider";
 
 import { TwitchClientId } from "common/twitch";
+import { TwitchAccessToken } from "common/types";
 import { deleteCookie, fetchCookies } from "./session";
 
 const TWITCH_REDIRECT_URI = "http://localhost:3000/auth/twitch/callback";
 
-export const authenticateTwitch = async (scopes: string | string[]): Promise<string> => {
-    const provider = new twitchElectronAuthProvider({
-        clientId: TwitchClientId,
-        redirectURI: TWITCH_REDIRECT_URI,
+export const authenticateTwitch = async (scopes: string | string[]): Promise<TwitchAccessToken | null> => {
+    const client = new TwitchClient({
+        authProvider: new ElectronAuthProvider({
+            clientId: TwitchClientId,
+            redirectURI: TWITCH_REDIRECT_URI,
+        })
     });
-    const tok = await provider.getAccessToken(scopes);
-    return tok.accessToken;
+    const token = await client.getAccessToken(scopes);
+    if (!token) {
+        return null;
+    }
+    return {
+        token: token.accessToken,
+        expiryDate: token.expiryDate,
+        scopes: token.scope,
+    };
 };
 
 export const clearAllTwitchCookies = async (): Promise<void> => {

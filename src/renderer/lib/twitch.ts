@@ -1,7 +1,7 @@
-import { Message } from "common/types";
+import { TwitchAccessToken, Message } from "common/types";
 import { ipc } from "./rendererIpc";
 
-export const fetchTwitchAuthToken = async (scopes: string | string[]): Promise<string> => {
+export const fetchTwitchAuthToken = async (scopes: string | string[]): Promise<TwitchAccessToken | null> => {
     const token = await ipc.sendSyncWithTimeout(
         Message.AuthenticateTwitch,
         0, // timeout

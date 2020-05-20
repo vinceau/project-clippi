@@ -1,3 +1,4 @@
+import { TwitchAccessToken } from "common/types";
 import { createModel } from "@rematch/core";
 import { produce } from "immer";
 
@@ -9,21 +10,21 @@ export interface TwitchClip {
 }
 
 export interface TwitchState {
-    authToken: string;
+    accessToken: TwitchAccessToken | null;
     clips: { [ clipID: string ]: TwitchClip };
 }
 
 const initialState: TwitchState = {
-    authToken: "",
+    accessToken: null,
     clips: {},
 };
 
 export const twitch = createModel({
     state: initialState,
     reducers: {
-        setAuthToken: (state: TwitchState, payload: string): TwitchState =>
+        setAccessToken: (state: TwitchState, payload: TwitchAccessToken | null): TwitchState =>
             produce(state, draft => {
-                draft.authToken = payload;
+                draft.accessToken = payload;
             }),
         addTwitchClip: (state: TwitchState, payload: TwitchClip): TwitchState => {
             const clips = produce(state.clips, draft => {
@@ -44,15 +45,16 @@ export const twitch = createModel({
     },
     effects: dispatch => ({
         async fetchTwitchToken() {
-            const scopes = ["user_read", "clips:edit"];
+            const scopes = ["user_read", "clips:edit", "chat:read", "chat:edit"];
             console.log(`fetching twitch token with the following scopes: ${scopes}`);
             const token = await fetchTwitchAuthToken(scopes);
-            console.log(`got back token: ${token}`);
-            dispatch.twitch.setAuthToken(token);
+            console.log("got back token:");
+            console.log(token);
+            dispatch.twitch.setAccessToken(token);
         },
         async logOutTwitch() {
             await signOutTwitch();
-            dispatch.twitch.setAuthToken("");
+            dispatch.twitch.setAccessToken(null);
         },
     }),
 });

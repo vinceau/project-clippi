@@ -1,3 +1,9 @@
+export interface TwitchAccessToken {
+    token: string;
+    expiryDate: Date | null;
+    scopes: string[];
+}
+
 export enum Message {
     // renderer to main
     AuthenticateTwitch = "authenticateTwitch",
@@ -8,7 +14,7 @@ export enum Message {
 
 export type ResponseType<X extends Message> =
     // renderer to main
-    X extends Message.AuthenticateTwitch ? string :
+    X extends Message.AuthenticateTwitch ? TwitchAccessToken | null :
     X extends Message.SignOutTwitch ? void :
     X extends Message.Notify ? void :
     X extends Message.SelectDirectory ? string[] :
