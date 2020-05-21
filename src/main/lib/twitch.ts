@@ -164,15 +164,18 @@ export class TwitchController {
   }
 
   private async _authenticateTwitch(scopes: string[]): Promise<TwitchClient> {
-    // Check if we have a token stored
+    // Try to reuse stored token
     this.accessToken = store.get(TOKEN_STORE_KEY, null);
-    // Create Twitch client
     if (this.accessToken && validScopes(scopes, this.accessToken.scopes)) {
-      // We got a token so just use that
-      return TwitchClient.withCredentials(
-        TWITCH_CLIENT_ID,
-        this.accessToken.token
-      );
+      // Validate the expiry date
+      const expiryDate = this.accessToken.expiryDate ? new Date(this.accessToken.expiryDate) : null;
+      const now = new Date();
+      if (!expiryDate || expiryDate > now) {
+        return TwitchClient.withCredentials(
+          TWITCH_CLIENT_ID,
+          this.accessToken.token
+        );
+      }
     }
 
     // We haven't authenticated yet
