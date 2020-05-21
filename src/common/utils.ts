@@ -2,7 +2,12 @@ import fs from "fs-extra";
 import path from "path";
 import trash from "trash";
 
+import { shell } from "electron";
 import { EOL } from "os";
+
+export const isDevelopment = process.env.NODE_ENV !== "production";
+
+export const isMacOrWindows = process.platform === "darwin" || process.platform === "win32";
 
 export const delay = async (ms: number): Promise<void> => {
     await new Promise(resolve => setTimeout(resolve, ms));
@@ -88,4 +93,46 @@ export const assertExtension = (filename: string, extension: string): string => 
         return filename + extension;
     }
     return filename;
+};
+
+/**
+ * Open the specified file in the system file explorer.
+ * If the file doesn't exist, open the parent directory.
+ * If the parent directory doesn't exist, try the parent's parent directory etc.
+ */
+export const openFileOrParentFolder = (fileName: string) => {
+    let opened = shell.showItemInFolder(fileName);
+    let parentFolder = fileName;
+    while (!opened) {
+        parentFolder = path.dirname(parentFolder);
+        opened = shell.openItem(parentFolder);
+    }
+};
+
+export const parseSecondsDelayValue = (defaultSeconds: number, delaySeconds?: string): number => {
+    let seconds = parseInt(delaySeconds || defaultSeconds.toString(), 10);
+    if (isNaN(seconds)) {
+        seconds = defaultSeconds;
+    }
+    return seconds;
+};
+
+export const capitalize = (s: string) => {
+    return s.charAt(0).toUpperCase() + s.slice(1);
+};
+
+export const framesToMillis = (frames: number): number => {
+    return framesToSeconds(frames) * 1000;
+};
+
+export const framesToSeconds = (frames: number): number => {
+    return frames / 60.0;
+};
+
+export const secondsToFrames = (secs: number): number => {
+    return secs * 60.0;
+};
+
+export const millisToFrames = (ms: number): number => {
+    return secondsToFrames(ms / 1000);
 };

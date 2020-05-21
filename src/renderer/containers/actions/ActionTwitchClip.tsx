@@ -5,8 +5,9 @@ import { produce } from "immer";
 import { Icon } from "semantic-ui-react";
 
 import { DelayInput, NotifyInput, SimpleInput } from "@/components/InlineInputs";
-import { delay as waitMillis, notify as sendNotification, parseSecondsDelayValue } from "@/lib/utils";
+import { notify as sendNotification } from "@/lib/utils";
 import { dispatcher, store } from "@/store";
+import { delay as waitMillis, parseSecondsDelayValue } from "common/utils";
 import { createTwitchClip } from "../../lib/twitch";
 import { ActionComponent } from "./types";
 

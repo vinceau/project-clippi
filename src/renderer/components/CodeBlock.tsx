@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { isDevelopment } from "@/lib/utils";
+import { isDevelopment } from "common/utils";
 
 export const CodeBlock: React.FC<{
     values: any

@@ -5,12 +5,11 @@ import { format as formatUrl } from "url";
 import { setupListeners } from "./listeners";
 import { setupIPC } from "./mainIpc";
 
+import { isDevelopment } from "common/utils";
 import contextMenu from "electron-context-menu";
 import { getMenuTemplate } from "./menu";
 
 contextMenu();
-
-const isDevelopment = process.env.NODE_ENV !== "production";
 
 // global reference to mainWindow (necessary to prevent window from being garbage collected)
 let mainWindow: BrowserWindow | null;

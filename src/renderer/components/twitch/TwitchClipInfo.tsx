@@ -1,7 +1,7 @@
 import React from "react";
 
-import { TwitchClip } from "common/types";
 import { device } from "@/styles/device";
+import { TwitchClip } from "common/types";
 import { transparentize } from "polished";
 import { Icon } from "semantic-ui-react";
 import styled from "styled-components";

@@ -6,8 +6,7 @@ import { Scene } from "obs-websocket-js";
 import { authenticateTwitch, signOutTwitch } from "../../lib/twitch";
 
 import { OBSConnectionStatus, OBSRecordingStatus } from "@/lib/obs";
-import { loadDolphinQueue } from "@/lib/utils";
-import { getFilePath } from "@/lib/utils";
+import { getFilePath, loadDolphinQueue } from "@/lib/utils";
 import { ConnectionStatus, DolphinEntry, DolphinQueueFormat, DolphinQueueOptions } from "@vinceau/slp-realtime";
 import { TwitchUser } from "common/types";
 import { shuffle } from "common/utils";

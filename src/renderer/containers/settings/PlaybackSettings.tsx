@@ -8,7 +8,7 @@ import { Dispatch, iRootState } from "@/store";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Labelled } from "@/components/Labelled";
-import { isMacOrWindows } from "@/lib/utils";
+import { isMacOrWindows } from "common/utils";
 import styled from "styled-components";
 
 const DolphinPathLabel = styled.div`

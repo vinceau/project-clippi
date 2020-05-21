@@ -16,9 +16,10 @@ import path from "path";
 import { remote } from "electron";
 
 import { obsConnection, OBSRecordingAction } from "@/lib/obs";
-import { delay, getFilePath, isMacOrWindows, notify } from "@/lib/utils";
+import { getFilePath, notify } from "@/lib/utils";
 import { store } from "@/store";
 import { DolphinLauncher, DolphinPlaybackPayload, DolphinPlaybackStatus, DolphinQueueFormat, generateDolphinQueuePayload } from "@vinceau/slp-realtime";
+import { delay, isMacOrWindows } from "common/utils";
 import { onlyFilename } from "common/utils";
 import { BehaviorSubject, from } from "rxjs";
 import { concatMap, filter } from "rxjs/operators";

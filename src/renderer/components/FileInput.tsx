@@ -2,7 +2,8 @@ import * as React from "react";
 
 import styled from "styled-components";
 
-import { getFilePath, getFolderPath, openFileOrParentFolder } from "@/lib/utils";
+import { getFilePath, getFolderPath } from "@/lib/utils";
+import { openFileOrParentFolder } from "common/utils";
 import { Button, Icon, Input } from "semantic-ui-react";
 import { Labelled } from "./Labelled";
 

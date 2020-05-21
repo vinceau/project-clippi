@@ -2,8 +2,8 @@ import React from "react";
 
 import { ButtonInput } from "@/components/gamecube/ButtonInput";
 import { DelayInput, InlineDropdown } from "@/components/InlineInputs";
-import { framesToSeconds, secondsToFrames } from "@/lib/utils";
 import { Dispatch, iRootState } from "@/store";
+import { framesToSeconds, secondsToFrames } from "common/utils";
 import { useDispatch, useSelector } from "react-redux";
 import { Accordion, Icon } from "semantic-ui-react";
 import styled from "styled-components";
