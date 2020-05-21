@@ -46,10 +46,11 @@ export const setupListeners = (ipc: IPC) => {
 
         const {
             channel,
+            postToChat,
         } = value;
 
         try {
-            const clipID = await twitchController.clip(channel);
+            const clipID = await twitchController.clip(channel, postToChat);
             console.log(`Created a clip: ${clipID}`);
             const clip = {
                 channel: channel ? channel : currentUser.name,

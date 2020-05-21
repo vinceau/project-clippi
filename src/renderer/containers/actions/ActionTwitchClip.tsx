@@ -35,7 +35,7 @@ const actionCreateClip: ActionTypeGenerator = (params: ActionCreateTwitchClipPar
             if (seconds > 0) {
                 await waitMillis(seconds * 1000);
             }
-            const clip = await createTwitchClip(params.channel);
+            const clip = await createTwitchClip(params.channel, true);
             dispatcher.twitch.addTwitchClip(clip);
             if (params.notify) {
                 sendNotification(`Clipped ${clip.clipID}`, "Twitch clip created");

@@ -9,11 +9,11 @@ export const authenticateTwitch = async (scopes: string[]): Promise<TwitchUser |
     );
 };
 
-export const createTwitchClip = async (channel?: string): Promise<TwitchClip> => {
+export const createTwitchClip = async (channel?: string, postToChat?: boolean): Promise<TwitchClip> => {
     const clip = await ipc.sendSyncWithTimeout(
         Message.CreateTwitchClip,
         0, // timeout
-        { channel }
+        { channel, postToChat }
     );
     if (!clip) {
         throw new Error("Failed to create Twitch clip");

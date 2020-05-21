@@ -33,7 +33,7 @@ export type ResponseType<X extends Message> =
 export type RequestType<X extends Message> =
     // renderer to main
     X extends Message.AuthenticateTwitch ? { scopes: string[] } :
-    X extends Message.CreateTwitchClip ? { channel?: string } :
+    X extends Message.CreateTwitchClip ? { channel?: string, postToChat?: boolean } :
     X extends Message.SignOutTwitch ? any :
     X extends Message.Notify ? { message: string; title?: string } :
     X extends Message.SelectDirectory ? { options: any, save?: boolean } :
