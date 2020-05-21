@@ -15,6 +15,7 @@ const DEFAULT_DELAY_SECONDS = 10;
 interface ActionCreateTwitchClipParams {
     delaySeconds?: string;
     notify?: boolean;
+    postToChat?: boolean;
     channel?: string;
 }
 
@@ -24,6 +25,7 @@ const defaultParams = (): ActionCreateTwitchClipParams => {
     return {
         delaySeconds: DEFAULT_DELAY_SECONDS.toString(),
         notify: false,
+        postToChat: true,
         channel,
     };
 };
@@ -35,7 +37,7 @@ const actionCreateClip: ActionTypeGenerator = (params: ActionCreateTwitchClipPar
             if (seconds > 0) {
                 await waitMillis(seconds * 1000);
             }
-            const clip = await createTwitchClip(params.channel, true);
+            const clip = await createTwitchClip(params.channel, params.postToChat);
             dispatcher.twitch.addTwitchClip(clip);
             if (params.notify) {
                 sendNotification(`Clipped ${clip.clipID}`, "Twitch clip created");
