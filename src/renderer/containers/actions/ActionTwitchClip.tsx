@@ -7,8 +7,8 @@ import { Icon } from "semantic-ui-react";
 import { DelayInput, NotifyInput, SimpleInput } from "@/components/InlineInputs";
 import { delay as waitMillis, notify as sendNotification, parseSecondsDelayValue } from "@/lib/utils";
 import { dispatcher, store } from "@/store";
-import { createTwitchClip } from "common/twitch";
 import { ActionComponent } from "./types";
+import { createTwitchClip } from "@/lib/twitch";
 
 const DEFAULT_DELAY_SECONDS = 10;
 
@@ -30,13 +30,12 @@ const defaultParams = (): ActionCreateTwitchClipParams => {
 
 const actionCreateClip: ActionTypeGenerator = (params: ActionCreateTwitchClipParams) => {
     return async (ctx: Context): Promise<Context> => {
-        const token = store.getState().twitch.authToken;
         try {
             const seconds = parseSecondsDelayValue(DEFAULT_DELAY_SECONDS, params.delaySeconds);
             if (seconds > 0) {
                 await waitMillis(seconds * 1000);
             }
-            const clipID = await createTwitchClip(token, false, params.channel);
+            const clipID = await createTwitchClip(params.channel);
             // Get timestamp in seconds
             const timestamp = (new Date()).getTime() / 1000;
             dispatcher.twitch.addTwitchClip({
@@ -52,7 +51,7 @@ const actionCreateClip: ActionTypeGenerator = (params: ActionCreateTwitchClipPar
             };
         } catch (err) {
             console.error(err);
-            sendNotification(`Failed to clip. ${params.channel ? "Is " + params.channel : "Are you"} live?`);
+            // sendNotification(`Failed to clip. ${params.channel ? "Is " + params.channel : "Are you"} live?`);
             return ctx;
         }
     };

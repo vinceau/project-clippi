@@ -50,9 +50,14 @@ export class TwitchController {
   private accessToken: TwitchAccessToken | null = null;
   private isChatConnected = false;
 
-  public async authenticate(scopes: string[]) {
+  public async authenticate(scopes: string[]): Promise<HelixUser | null> {
     // Connect to Twitch chat server
     this.client = await this._authenticateTwitch(scopes);
+
+    // Ensure a valid access token
+    if (!this.accessToken) {
+      return null;
+    }
 
     // Connect the chat client so we're ready to post clip links
     this.chatClient = ChatClient.forTwitchClient(this.client);
@@ -63,11 +68,10 @@ export class TwitchController {
     await this.chatClient.connect();
 
     // Store the current user
-    if (this.accessToken) {
-      this.currentUser = await this.client.helix.users.getUserById(
-        this.accessToken.userId
-      );
-    }
+    this.currentUser = await this.client.helix.users.getUserById(
+      this.accessToken.userId
+    );
+    return this.currentUser;
   }
 
   public async clip(
@@ -188,3 +192,5 @@ export class TwitchController {
     return client;
   }
 }
+
+export const twitchController = new TwitchController();
