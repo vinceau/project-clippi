@@ -7,7 +7,7 @@ import { Icon } from "semantic-ui-react";
 import { DelayInput, NotifyInput, SimpleInput } from "@/components/InlineInputs";
 import { delay as waitMillis, notify as sendNotification, parseSecondsDelayValue } from "@/lib/utils";
 import { dispatcher, store } from "@/store";
-import { createTwitchClip } from "common/twitch";
+import { createTwitchClip } from "../../lib/twitch";
 import { ActionComponent } from "./types";
 
 const DEFAULT_DELAY_SECONDS = 10;
@@ -15,6 +15,7 @@ const DEFAULT_DELAY_SECONDS = 10;
 interface ActionCreateTwitchClipParams {
     delaySeconds?: string;
     notify?: boolean;
+    postToChat?: boolean;
     channel?: string;
 }
 
@@ -24,35 +25,30 @@ const defaultParams = (): ActionCreateTwitchClipParams => {
     return {
         delaySeconds: DEFAULT_DELAY_SECONDS.toString(),
         notify: false,
+        postToChat: true,
         channel,
     };
 };
 
 const actionCreateClip: ActionTypeGenerator = (params: ActionCreateTwitchClipParams) => {
     return async (ctx: Context): Promise<Context> => {
-        const token = store.getState().twitch.authToken;
         try {
             const seconds = parseSecondsDelayValue(DEFAULT_DELAY_SECONDS, params.delaySeconds);
             if (seconds > 0) {
                 await waitMillis(seconds * 1000);
             }
-            const clipID = await createTwitchClip(token, false, params.channel);
-            // Get timestamp in seconds
-            const timestamp = (new Date()).getTime() / 1000;
-            dispatcher.twitch.addTwitchClip({
-                clipID,
-                timestamp,
-            });
+            const clip = await createTwitchClip(params.channel, params.postToChat);
+            dispatcher.twitch.addTwitchClip(clip);
             if (params.notify) {
-                sendNotification(`Clipped ${clipID}`, "Twitch clip created");
+                sendNotification(`Clipped ${clip.clipID}`, "Twitch clip created");
             }
             return {
                 ...ctx,
-                clipID,
+                clipID: clip.clipID,
             };
         } catch (err) {
             console.error(err);
-            sendNotification(`Failed to clip. ${params.channel ? "Is " + params.channel : "Are you"} live?`);
+            // sendNotification(`Failed to clip. ${params.channel ? "Is " + params.channel : "Are you"} live?`);
             return ctx;
         }
     };
