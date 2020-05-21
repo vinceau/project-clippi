@@ -183,7 +183,9 @@ export const dolphinRecorder = new DolphinRecorder();
 
 const _openComboInDolphin = async (filePath: string, options?: Partial<DolphinRecorderOptions>) => {
     const { meleeIsoPath, dolphinPath } = store.getState().filesystem;
-    const dolphinExec = getDolphinExecutablePath(dolphinPath);
+    const { isDev } = store.getState().appContainer;
+    const dolphinParentPath = isDev || !isMacOrWindows ? dolphinPath : undefined;
+    const dolphinExec = getDolphinExecutablePath(dolphinParentPath);
     const dolphinExists = await fs.pathExists(dolphinExec);
 
     if (!dolphinExists) {
