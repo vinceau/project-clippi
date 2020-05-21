@@ -1,5 +1,5 @@
+import { Message, TwitchUser } from "common/types";
 import { ipc } from "./rendererIpc";
-import { TwitchUser, Message } from "common/types";
 
 export const authenticateTwitch = async (scopes: string[]): Promise<TwitchUser | null> => {
     return await ipc.sendSyncWithTimeout(

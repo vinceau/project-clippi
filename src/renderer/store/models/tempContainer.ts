@@ -9,8 +9,8 @@ import { OBSConnectionStatus, OBSRecordingStatus } from "@/lib/obs";
 import { loadDolphinQueue } from "@/lib/utils";
 import { getFilePath } from "@/lib/utils";
 import { ConnectionStatus, DolphinEntry, DolphinQueueFormat, DolphinQueueOptions } from "@vinceau/slp-realtime";
-import { shuffle } from "common/utils";
 import { TwitchUser } from "common/types";
+import { shuffle } from "common/utils";
 
 export interface TempContainerState {
     slippiConnectionStatus: ConnectionStatus;
