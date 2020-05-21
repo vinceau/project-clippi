@@ -3,7 +3,7 @@ import produce from "immer";
 
 import { Scene } from "obs-websocket-js";
 
-import { authenticateTwitch, signOutTwitch } from "@/lib/twitch";
+import { authenticateTwitch, signOutTwitch } from "../../lib/twitch";
 
 import { OBSConnectionStatus, OBSRecordingStatus } from "@/lib/obs";
 import { loadDolphinQueue } from "@/lib/utils";

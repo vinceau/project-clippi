@@ -8,7 +8,7 @@ import { DelayInput, NotifyInput, SimpleInput } from "@/components/InlineInputs"
 import { delay as waitMillis, notify as sendNotification, parseSecondsDelayValue } from "@/lib/utils";
 import { dispatcher, store } from "@/store";
 import { ActionComponent } from "./types";
-import { createTwitchClip } from "@/lib/twitch";
+import { createTwitchClip } from "../../lib/twitch";
 
 const DEFAULT_DELAY_SECONDS = 10;
 
