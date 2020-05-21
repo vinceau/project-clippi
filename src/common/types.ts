@@ -4,6 +4,12 @@ export interface TwitchUser {
     name: string;
 }
 
+export interface TwitchClip {
+    clipID: string;
+    channel: string;
+    timestamp: Date;
+}
+
 export enum Message {
     // renderer to main
     AuthenticateTwitch = "authenticateTwitch",
@@ -16,7 +22,7 @@ export enum Message {
 export type ResponseType<X extends Message> =
     // renderer to main
     X extends Message.AuthenticateTwitch ? TwitchUser | null :  // Respond with an error message if necessary
-    X extends Message.CreateTwitchClip ? string | null :  // clip ID or null if error
+    X extends Message.CreateTwitchClip ? TwitchClip | null :  // clip ID or null if error
     X extends Message.SignOutTwitch ? any :
     X extends Message.Notify ? void :
     X extends Message.SelectDirectory ? string[] :

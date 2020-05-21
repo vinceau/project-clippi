@@ -38,14 +38,25 @@ export const setupListeners = (ipc: IPC) => {
             throw new Error("Should not have received error");
         }
 
+        const currentUser = twitchController.getCurrentUser();
+        if (!currentUser) {
+            console.error("Error creating clip: not authenticated with Twitch");
+            return null;
+        }
+
         const {
             channel,
         } = value;
 
         try {
-            const clipId = await twitchController.clip(channel);
-            console.log(`Created a clip: ${clipId}`);
-            return clipId;
+            const clipID = await twitchController.clip(channel);
+            console.log(`Created a clip: ${clipID}`);
+            const clip = {
+                channel: channel ? channel : currentUser.name,
+                clipID,
+                timestamp: new Date(),
+            };
+            return clip;
         } catch (err) {
             console.error(err);
             showNotification("Error creating Twitch clip");

@@ -50,6 +50,10 @@ export class TwitchController {
   private accessToken: TwitchAccessToken | null = null;
   private isChatConnected = false;
 
+  public getCurrentUser(): HelixUser | null {
+    return this.currentUser;
+  }
+
   public async authenticate(scopes: string[]): Promise<HelixUser | null> {
     // Connect to Twitch chat server
     this.client = await this._authenticateTwitch(scopes);

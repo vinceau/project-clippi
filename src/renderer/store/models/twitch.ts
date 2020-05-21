@@ -1,13 +1,14 @@
+import { TwitchClip } from "common/types";
+
 import { createModel } from "@rematch/core";
 import { produce } from "immer";
 
-export interface TwitchClip {
-    clipID: string;
-    timestamp: number;
+interface TwitchClipMap {
+    [ clipID: string ]: TwitchClip;
 }
 
 export interface TwitchState {
-    clips: { [ clipID: string ]: TwitchClip };
+    clips: TwitchClipMap;
 }
 
 const initialState: TwitchState = {

@@ -1,5 +1,6 @@
 import React from "react";
 
+import { TwitchClip } from "common/types";
 import { device } from "@/styles/device";
 import { transparentize } from "polished";
 import { Icon } from "semantic-ui-react";
@@ -7,11 +8,6 @@ import styled from "styled-components";
 
 import { format } from "timeago.js";
 import { Labelled } from "../Labelled";
-
-interface TwitchClip {
-    clipID: string;
-    timestamp: number;
-}
 
 const ClipContainer = styled.div`
 border: solid 1px ${({ theme }) => theme.background3}
@@ -54,7 +50,7 @@ export const TwitchClipInfo: React.FC<{
     clip: TwitchClip,
     onRemove?: (clipID: string) => void,
 }> = (props) => {
-    const timestamp = format(props.clip.timestamp * 1000);
+    const timestamp = format(props.clip.timestamp);
     const url = `https://clips.twitch.tv/${props.clip.clipID}`;
     const onRemove = () => {
         if (props.onRemove) {

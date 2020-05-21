@@ -1,4 +1,4 @@
-import { Message, TwitchUser } from "common/types";
+import { Message, TwitchClip, TwitchUser } from "common/types";
 import { ipc } from "./rendererIpc";
 
 export const authenticateTwitch = async (scopes: string[]): Promise<TwitchUser | null> => {
@@ -9,16 +9,19 @@ export const authenticateTwitch = async (scopes: string[]): Promise<TwitchUser |
     );
 };
 
-export const createTwitchClip = async (channel?: string): Promise<string> => {
-    const clipId = await ipc.sendSyncWithTimeout(
+export const createTwitchClip = async (channel?: string): Promise<TwitchClip> => {
+    const clip = await ipc.sendSyncWithTimeout(
         Message.CreateTwitchClip,
         0, // timeout
         { channel }
     );
-    if (!clipId) {
+    if (!clip) {
         throw new Error("Failed to create Twitch clip");
     }
-    return clipId;
+    return {
+        ...clip,
+        timestamp: new Date(clip.timestamp),  // Rehydrate the timestamp
+    };
 };
 
 export const signOutTwitch = async (): Promise<void> => {
