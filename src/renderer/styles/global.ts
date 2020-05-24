@@ -11,14 +11,6 @@ export const GlobalStyle = createGlobalStyle<{
     color: ${({ theme }) => theme.foreground };
   }
 
-  .custom-toast {
-    background: ${({theme}) => theme.foreground};
-    color: ${({theme}) => theme.background};
-    & > .Toastify__close-button {
-      color: ${({theme}) => theme.background};
-    }
-  }
-
   .ui.buttons {
     font-size: 1em;
     margin: 0;

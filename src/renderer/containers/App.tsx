@@ -3,7 +3,6 @@ import React from "react";
 import { hot } from "react-hot-loader/root";
 import { useDispatch } from "react-redux";
 import { HashRouter as Router, Redirect, Route, Switch } from "react-router-dom";
-import { Slide, ToastContainer } from "react-toastify";
 import { ThemeProvider } from "styled-components";
 
 import { History } from "@/components/History";
@@ -11,6 +10,8 @@ import { Dispatch } from "@/store";
 import { darkTheme, GlobalStyle, lightTheme, ThemeManager, ThemeMode, useTheme } from "@/styles";
 import { MainView } from "@/views/main/MainView";
 import { SettingsView } from "@/views/settings/SettingsView";
+import { Slide } from "react-toastify";
+import { CloseButton, StyledToastContainer } from "./toasts/ToastContainer";
 
 const App: React.FC = () => {
     const dispatch = useDispatch<Dispatch>();
@@ -21,7 +22,7 @@ const App: React.FC = () => {
     return (
         <div className={theme.themeName}>
             <History />
-            <ToastContainer toastClassName="custom-toast" position="bottom-center" hideProgressBar={true} autoClose={3000} transition={Slide} />
+            <StyledToastContainer toastClassName="custom-toast" autoClose={false} transition={Slide} closeButton={<CloseButton />} />
             <ThemeProvider theme={theme.themeName === ThemeMode.LIGHT ? lightTheme : darkTheme}>
                 <GlobalStyle />
                 <Switch>
