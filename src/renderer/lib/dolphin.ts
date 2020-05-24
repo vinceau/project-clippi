@@ -23,7 +23,7 @@ import { delay, isMacOrWindows } from "common/utils";
 import { onlyFilename } from "common/utils";
 import { BehaviorSubject, from } from "rxjs";
 import { concatMap, filter } from "rxjs/operators";
-import { showNoDolphinToast } from "./toasts";
+import { toastNoDolphin } from "./toasts";
 
 const defaultDolphinRecorderOptions = {
     record: false,
@@ -197,7 +197,7 @@ const validDolphinExecutable = async (): Promise<string> => {
     const dolphinExists = await fs.pathExists(dolphinExec);
 
     if (!dolphinExists) {
-        showNoDolphinToast();
+        toastNoDolphin();
         throw new Error(`Dolphin executable doesn't exist at path: ${dolphinExec}`);
     }
     return dolphinExec;

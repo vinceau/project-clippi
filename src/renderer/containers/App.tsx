@@ -10,8 +10,7 @@ import { Dispatch } from "@/store";
 import { darkTheme, GlobalStyle, lightTheme, ThemeManager, ThemeMode, useTheme } from "@/styles";
 import { MainView } from "@/views/main/MainView";
 import { SettingsView } from "@/views/settings/SettingsView";
-import { Slide } from "react-toastify";
-import { CloseButton, StyledToastContainer } from "./toasts/ToastContainer";
+import { ToastContainer } from "@/components/toasts/ToastContainer";
 
 const App: React.FC = () => {
     const dispatch = useDispatch<Dispatch>();
@@ -22,7 +21,7 @@ const App: React.FC = () => {
     return (
         <div className={theme.themeName}>
             <History />
-            <StyledToastContainer toastClassName="custom-toast" autoClose={false} transition={Slide} closeButton={<CloseButton />} />
+            <ToastContainer />
             <ThemeProvider theme={theme.themeName === ThemeMode.LIGHT ? lightTheme : darkTheme}>
                 <GlobalStyle />
                 <Switch>
