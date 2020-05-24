@@ -9,6 +9,7 @@ import { ProfileSelector } from "@/components/combos/ProfileSelection";
 import { FormContainer, PageHeader } from "@/components/Form";
 import { ComboConfiguration } from "@/lib/profile";
 import { Dispatch, iRootState } from "@/store";
+import { DEFAULT_PROFILE } from "@/store/models/slippi";
 
 export const FilterOptions = () => {
     const { currentProfile, comboProfiles } = useSelector((state: iRootState) => state.slippi);
@@ -39,7 +40,7 @@ export const FilterOptions = () => {
         <FormContainer>
             <PageHeader>Combo Filter</PageHeader>
             <ProfileSelector initialOptions={profileOptions} value={currentProfile} onChange={setProfile} />
-            <ComboForm initialValues={initial} onSubmit={onSubmit} onDelete={onDelete} />
+            <ComboForm initialValues={initial} onSubmit={onSubmit} onDelete={onDelete} currentProfile={currentProfile} />
         </FormContainer>
     );
 };

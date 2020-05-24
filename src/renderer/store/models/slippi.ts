@@ -7,7 +7,7 @@ import { mapFilterSettingsToConfiguration } from "@/lib/profile";
 import { ActionEvent, comboFilter, streamManager } from "@/lib/realtime";
 import { notify } from "@/lib/utils";
 
-const DEFAULT_PROFILE = "default";
+export const DEFAULT_PROFILE = "default";
 
 export interface SlippiState {
     port: string;

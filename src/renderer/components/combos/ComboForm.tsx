@@ -15,48 +15,62 @@ import { NameTagForm } from "./NameTagForm";
 import { PercentageSlider } from "./PercentageSlider";
 import { PerCharPercent } from "./PerCharPercent";
 import { PortSelectAdapter } from "./PortSelection";
+import { DEFAULT_PROFILE } from "@/store/models/slippi";
 
 type Values = Partial<ComboConfiguration>;
 
+const ButtonContainer: React.FC<{
+    submitting: boolean;
+    currentProfile?: string;
+    onDelete?: () => void;
+}> = ({ submitting, currentProfile, onDelete }) => {
+    const OuterContainer = styled.div`
+    padding: 2rem 0;
+    display: flex;
+    justify-content: space-between;
+    & > button {
+        margin-bottom: 3px !important;
+    }
+    .delete-button:hover {
+        background-color: #d01919;
+        color: white;
+    }
+    `;
+    return (
+        <OuterContainer>
+            <Button primary type="submit" disabled={submitting}>
+                <Icon name="save" />
+                Save profile
+            </Button>
+            <Button
+                className="delete-button"
+                type="button"
+                onClick={onDelete}
+            >
+            {
+                (currentProfile === DEFAULT_PROFILE) ?
+                <>
+                <Icon name="undo" />
+                Reset profile
+                </>
+                :
+                <>
+                <Icon name="trash" />
+                Delete profile
+                </>
+            }
+            </Button>
+        </OuterContainer>
+    );
+};
+
 export const ComboForm: React.FC<{
     initialValues: Values;
+    currentProfile?: string;
     onDelete: () => void;
     onSubmit: (values: Values) => void;
 }> = props => {
     const [showAdvanced, setShowAdvanced] = React.useState(false);
-    const ButtonContainer: React.FC<{
-        submitting: boolean;
-        form: any;
-    }> = ({ submitting }) => {
-        const OuterContainer = styled.div`
-        padding: 2rem 0;
-        display: flex;
-        justify-content: space-between;
-        & > button {
-            margin-bottom: 3px !important;
-        }
-        .delete-button:hover {
-            background-color: #d01919;
-            color: white;
-        }
-        `;
-        return (
-            <OuterContainer>
-                <Button primary type="submit" disabled={submitting}>
-                    <Icon name="save" />
-                    Save profile
-                </Button>
-                <Button
-                    className="delete-button"
-                    type="button"
-                    onClick={props.onDelete}
-                >
-                    <Icon name="trash" />
-                    Delete profile
-                </Button>
-            </OuterContainer>
-        );
-    };
     return (
         <div>
             <FinalForm
@@ -72,11 +86,10 @@ export const ComboForm: React.FC<{
                     },
                     submitting,
                     values,
-                    form
                 }) => (
                         <div>
                             <SemanticForm onSubmit={handleSubmit}>
-                                <ButtonContainer submitting={submitting} form={form} />
+                                <ButtonContainer submitting={submitting} currentProfile={props.currentProfile} onDelete={props.onDelete} />
                                 <Field border="top">
                                     <Label>Character Filter</Label>
                                     <CharacterSelectAdapter name="characterFilter" isMulti={true} />
@@ -172,7 +185,7 @@ export const ComboForm: React.FC<{
                                         </Accordion.Content>
                                     </Accordion>
                                 </div>
-                                <ButtonContainer submitting={submitting} form={form} />
+                                <ButtonContainer submitting={submitting} currentProfile={props.currentProfile} onDelete={props.onDelete} />
                                 <CodeBlock values={values} />
                             </SemanticForm>
                         </div>
