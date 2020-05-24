@@ -22,7 +22,7 @@ export const FilterOptions = () => {
             name: currentProfile,
             settings: valueString,
         });
-        toast("Profile saved", {
+        toast.success("Profile saved", {
             toastId: "profile-saved",
         });
     };
@@ -31,7 +31,7 @@ export const FilterOptions = () => {
     };
     const onDelete = () => {
         dispatch.slippi.deleteProfile(currentProfile);
-        toast("Profile deleted", {
+        toast.info("Profile deleted", {
             toastId: "profile-deleted",
         });
     };
