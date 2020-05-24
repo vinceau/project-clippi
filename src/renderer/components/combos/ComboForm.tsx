@@ -9,13 +9,13 @@ import { Accordion, Button, Form as SemanticForm, Icon } from "semantic-ui-react
 import { CodeBlock } from "@/components/CodeBlock";
 import { Field, Label, Text } from "@/components/Form";
 import { ComboConfiguration } from "@/lib/profile";
+import { DEFAULT_PROFILE } from "@/store/models/slippi";
 import { CharacterSelectAdapter } from "./CharacterSelect";
 import { ToggleAdapter } from "./FormAdapters";
 import { NameTagForm } from "./NameTagForm";
 import { PercentageSlider } from "./PercentageSlider";
 import { PerCharPercent } from "./PerCharPercent";
 import { PortSelectAdapter } from "./PortSelection";
-import { DEFAULT_PROFILE } from "@/store/models/slippi";
 
 type Values = Partial<ComboConfiguration>;
 

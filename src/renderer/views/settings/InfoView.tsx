@@ -11,9 +11,9 @@ import styled from "styled-components";
 import supporters from "raw-loader!../../../../SUPPORTERS.md";
 
 import { FormContainer } from "@/components/Form";
-import clippiLogo from "../../../../build/icon.png";
 import { Labelled } from "@/components/Labelled";
 import { needsUpdate } from "@/lib/checkForUpdates";
+import clippiLogo from "../../../../build/icon.png";
 
 const Container = styled(FormContainer)`
 text-align: center;

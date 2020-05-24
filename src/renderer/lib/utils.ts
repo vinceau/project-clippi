@@ -3,10 +3,10 @@ import * as url from "url";
 
 import fs from "fs-extra";
 
-import { shell, remote } from "electron";
+import { remote, shell } from "electron";
 
-import { ipc } from "./rendererIpc";
 import { Message } from "common/types";
+import { ipc } from "./rendererIpc";
 
 import { DolphinQueueFormat } from "@vinceau/slp-realtime";
 import { isDevelopment } from "common/utils";

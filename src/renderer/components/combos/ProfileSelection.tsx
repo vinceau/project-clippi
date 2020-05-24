@@ -4,9 +4,9 @@ import styled from "styled-components";
 
 import { ThemeMode, useTheme } from "@/styles";
 import { darken, lighten } from "polished";
+import { toast } from "react-toastify";
 import { Dropdown } from "semantic-ui-react";
 import { Field, Label, Text } from "../Form";
-import { toast } from "react-toastify";
 
 const generateOptions = (opts: string[]) => {
     return opts.map(o => ({

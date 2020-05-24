@@ -1,12 +1,12 @@
 import fs from "fs-extra";
 
+import { mapConfigurationToFilterSettings, mapFilterSettingsToConfiguration } from "@/lib/profile";
+import { defaultComboFilterSettings } from "@vinceau/slp-realtime";
 import { produce } from "immer";
 import { createTransform } from "redux-persist";
 import { FileSystemState } from "./models/filesystem";
-import { TwitchState } from "./models/twitch";
 import { SlippiState } from "./models/slippi";
-import { mapConfigurationToFilterSettings, mapFilterSettingsToConfiguration } from "@/lib/profile";
-import { defaultComboFilterSettings } from "@vinceau/slp-realtime";
+import { TwitchState } from "./models/twitch";
 
 export const transformer = createTransform(
     state => state,
@@ -20,7 +20,7 @@ export const transformer = createTransform(
                     const converted = mapConfigurationToFilterSettings(JSON.parse(value));
                     // Join it with the default settings
                     const newConverted = Object.assign({}, defaultComboFilterSettings, converted);
-                    (draft as SlippiState).comboProfiles[key] = JSON.stringify(mapFilterSettingsToConfiguration(newConverted))
+                    (draft as SlippiState).comboProfiles[key] = JSON.stringify(mapFilterSettingsToConfiguration(newConverted));
                 }
                 break;
             case "twitch":

@@ -1,6 +1,6 @@
 import React from "react";
-import styled from "styled-components";
 import { Slide, ToastContainer as TC } from "react-toastify";
+import styled from "styled-components";
 
 const CloseButton: React.FC<{
     closeToast?: () => void;

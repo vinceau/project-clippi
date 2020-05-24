@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { ConnectionStatusDisplay } from "@/components/ConnectionStatusDisplay";
-import { loadQueueIntoDolphin, dolphinRecorder } from "@/lib/dolphin";
+import { dolphinRecorder, loadQueueIntoDolphin } from "@/lib/dolphin";
 import { OBSConnectionStatus, OBSRecordingStatus } from "@/lib/obs";
 import { Dispatch, iRootState } from "@/store";
 import { useDispatch, useSelector } from "react-redux";

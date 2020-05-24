@@ -1,7 +1,7 @@
 import React from "react";
 
-import { toast } from "react-toastify";
 import { NoDolphinToast } from "@/components/toasts/NoDolphinToast";
+import { toast } from "react-toastify";
 
 export const toastNoDolphin = () => {
     toast.error(<NoDolphinToast />, {

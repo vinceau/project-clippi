@@ -26,8 +26,8 @@ import { SoundSettings } from "./SoundSettings";
 import { TwitchIntegration } from "./TwitchIntegration";
 
 import { SlippiIcon } from "@/components/SlippiIcon";
-import OBSLogo from "@/styles/images/obs.svg";
 import { needsUpdate } from "@/lib/checkForUpdates";
+import OBSLogo from "@/styles/images/obs.svg";
 
 const StyledMenuItem = styled(Menu.Item) <{
     header: boolean;
