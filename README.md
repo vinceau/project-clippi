@@ -28,6 +28,10 @@ Everything is open source and fully-customisable. The possibilities are endless.
 
 ![slp file processor screenshot](/docs/images/2-processor.png)
 
+*Easily load SLP files into Dolphin with just a drag and drop!*
+
+![Project Clippi playback queue screenshot](/docs/images/3-playback.png)
+
 </div>
 
 
