@@ -1,12 +1,12 @@
 import * as path from "path";
 import * as url from "url";
 
-import { shell } from "electron";
-import { DolphinRecorderOptions, openComboInDolphin } from "@/lib/dolphin";
-import { Message } from "common/types";
-import { remote } from "electron";
 import fs from "fs-extra";
+
+import { shell, remote } from "electron";
+
 import { ipc } from "./rendererIpc";
+import { Message } from "common/types";
 
 import { DolphinQueueFormat } from "@vinceau/slp-realtime";
 import { isDevelopment } from "common/utils";
@@ -65,15 +65,6 @@ export const getStatic = (val: string): string => {
     const appPath = remote.app.getAppPath();
     const imagePath = path.join(appPath, "../static");
     return path.resolve(path.join(imagePath, val));
-};
-
-export const loadFileInDolphin = async (options?: Partial<DolphinRecorderOptions>): Promise<void> => {
-    const p = await getFilePath({
-        filters: [{ name: "JSON files", extensions: ["json"] }],
-    });
-    if (p && p.length > 0) {
-        openComboInDolphin(p[0], options);
-    }
 };
 
 export const loadDolphinQueue = async (): Promise<DolphinQueueFormat | null> => {
