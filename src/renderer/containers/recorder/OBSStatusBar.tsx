@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { ConnectionStatusDisplay } from "@/components/ConnectionStatusDisplay";
-import { loadQueueIntoDolphin } from "@/lib/dolphin";
+import { loadQueueIntoDolphin, dolphinRecorder } from "@/lib/dolphin";
 import { OBSConnectionStatus, OBSRecordingStatus } from "@/lib/obs";
 import { Dispatch, iRootState } from "@/store";
 import { useDispatch, useSelector } from "react-redux";
@@ -41,11 +41,18 @@ justify-content: ${({isDev}) => isDev ? "space-between" : "flex-end"};
 align-items: center;
 `;
 
+const StopButton = styled(Button)`
+&&&:hover {
+    background-color: #d01919;
+    color: white;
+}
+`;
+
 export const OBSStatusBar: React.FC = () => {
     const history = useHistory();
     const { recordSeparateClips } = useSelector((state: iRootState) => state.filesystem);
     const { isDev } = useSelector((state: iRootState) => state.appContainer);
-    const { obsConnectionStatus, obsRecordingStatus, dolphinQueue, dolphinPlaybackFile } = useSelector((state: iRootState) => state.tempContainer);
+    const { obsConnectionStatus, obsRecordingStatus, dolphinQueue, dolphinPlaybackFile, dolphinRunning } = useSelector((state: iRootState) => state.tempContainer);
     const dispatch = useDispatch<Dispatch>();
 
     const recordValue = recordSeparateClips ? RecordingMethod.SEPARATE : RecordingMethod.TOGETHER;
@@ -67,6 +74,10 @@ export const OBSStatusBar: React.FC = () => {
             recordAsOneFile: !recordSeparateClips,
         });
     };
+
+    const stop = () => {
+        dolphinRecorder.killDolphin();
+    }
 
     let color = "#888888";
     if (obsIsConnected) {
@@ -94,6 +105,13 @@ export const OBSStatusBar: React.FC = () => {
                 {innerText}
             </ConnectionStatusDisplay>}
             <div>
+                {dolphinRunning ?
+                    <StopButton type="button" onClick={stop}>
+                        <Icon name="stop" />
+                            Stop
+                    </StopButton>
+                :
+                <>
                 {isDev && <Labelled title={recordingButtonTitle} disabled={!recordButtonDisabled}>
                     <RecordButton
                         onClick={onRecord}
@@ -106,6 +124,7 @@ export const OBSStatusBar: React.FC = () => {
                     </RecordButton>
                 </Labelled>}
                 <Button primary={true} onClick={onPlay} disabled={dolphinQueue.length === 0}><Icon name="play" />Play</Button>
+                </>}
             </div>
         </Outer>
     );

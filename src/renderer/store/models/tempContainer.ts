@@ -27,6 +27,7 @@ export interface TempContainerState {
     dolphinQueue: DolphinEntry[];
     dolphinQueueOptions: DolphinQueueOptions;
     dolphinPlaybackFile: string;
+    dolphinRunning: boolean;
 }
 
 const initialDolphinQueueOptions = {
@@ -55,6 +56,7 @@ const initialState: TempContainerState = {
     dolphinQueue: [],
     dolphinQueueOptions: Object.assign({}, initialDolphinQueueOptions),
     dolphinPlaybackFile: "",
+    dolphinRunning: false,
 };
 
 export const tempContainer = createModel({
@@ -158,6 +160,9 @@ export const tempContainer = createModel({
         }),
         setDolphinPlaybackFile: (state: TempContainerState, payload: string): TempContainerState => produce(state, draft => {
             draft.dolphinPlaybackFile = payload;
+        }),
+        setDolphinRunning: (state: TempContainerState, payload: boolean): TempContainerState => produce(state, draft => {
+            draft.dolphinRunning = payload;
         }),
     },
     effects: dispatch => ({

@@ -83,9 +83,9 @@ export class DolphinRecorder extends DolphinLauncher {
             // Process the values synchronously one at time
             concatMap((payload) => from(this._handleDolphinPlayback(payload))),
         ).subscribe();
-        this.dolphinQuit$.pipe(
+        this.dolphinRunning$.pipe(
             // Only process if recording is enabled and OBS is connected
-            filter(() => this.recordOptions.record && obsConnection.isConnected()),
+            filter((isRunning) => !isRunning && this.recordOptions.record && obsConnection.isConnected()),
             concatMap(() => from(this._stopRecording())),
         ).subscribe();
     }
@@ -167,7 +167,13 @@ export class DolphinRecorder extends DolphinLauncher {
         // Restore the original user filename format
         await obsConnection.setFilenameFormat(this.userFilenameFormat);
 
-        if (killDolphin && this.dolphin) {
+        if (killDolphin) {
+            this.killDolphin();
+        }
+    }
+
+    public killDolphin() {
+        if (this.dolphin) {
             this.dolphin.kill();
         }
     }
