@@ -78,6 +78,7 @@ export const PlaybackQueueItem: React.FC<{
     const theme = useTheme();
     const { index, file, onRemove } = props;
     const basename = path.basename(file.path);
+    const dirname = path.dirname(file.path);
     return (
         <Draggable draggableId={JSON.stringify(file)} index={index}>
             {(provided, snapshot) => (
@@ -91,7 +92,7 @@ export const PlaybackQueueItem: React.FC<{
                         <Icon size="big" name="file outline" />
                         <DetailsContent>
                             <h3>{basename}</h3>
-                            <span>{file.path}</span>
+                            <span>{dirname}</span>
                         </DetailsContent>
                     </Details>
                     <Labelled title="Remove">
