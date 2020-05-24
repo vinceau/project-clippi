@@ -63,7 +63,7 @@ export const appContainer = createModel({
                 dispatch.appContainer.setNextUpdateCheckTime(newUpdateTime);
 
                 if (latest !== lastKnownVersion) {
-                    console.log(`Setting latest version to: ${latest}`);
+                    console.log(`Current version: ${__VERSION__}. Latest version: ${latest}`);
                     dispatch.appContainer.setLatestVersion(latest);
 
                     const shouldUpdate = needsUpdate(latest);
