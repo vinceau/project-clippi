@@ -1,6 +1,7 @@
 import * as path from "path";
 import * as url from "url";
 
+import { shell } from "electron";
 import { DolphinRecorderOptions, openComboInDolphin } from "@/lib/dolphin";
 import { Message } from "common/types";
 import { remote } from "electron";
@@ -83,4 +84,18 @@ export const loadDolphinQueue = async (): Promise<DolphinQueueFormat | null> => 
         return fs.readJson(p[0]);
     }
     return null;
+};
+
+/**
+ * Open the specified file in the system file explorer.
+ * If the file doesn't exist, open the parent directory.
+ * If the parent directory doesn't exist, try the parent's parent directory etc.
+ */
+export const openFileOrParentFolder = (fileName: string) => {
+    let opened = shell.showItemInFolder(fileName);
+    let parentFolder = fileName;
+    while (!opened) {
+        parentFolder = path.dirname(parentFolder);
+        opened = shell.openItem(parentFolder);
+    }
 };

@@ -11,7 +11,7 @@ import { FormContainer, PageHeader } from "@/components/Form";
 import { SoundFileInfo } from "@/components/SoundFileInfo";
 import { Dispatch, iRootState } from "@/store";
 import { device } from "@/styles/device";
-import { openFileOrParentFolder } from "common/utils";
+import { openFileOrParentFolder } from "@/lib/utils";
 
 const AddSoundButton = (props: any) => {
     return (

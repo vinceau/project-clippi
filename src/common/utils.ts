@@ -2,7 +2,6 @@ import fs from "fs-extra";
 import path from "path";
 import trash from "trash";
 
-import { shell } from "electron";
 import { EOL } from "os";
 
 export const isDevelopment = process.env.NODE_ENV !== "production";
@@ -93,20 +92,6 @@ export const assertExtension = (filename: string, extension: string): string => 
         return filename + extension;
     }
     return filename;
-};
-
-/**
- * Open the specified file in the system file explorer.
- * If the file doesn't exist, open the parent directory.
- * If the parent directory doesn't exist, try the parent's parent directory etc.
- */
-export const openFileOrParentFolder = (fileName: string) => {
-    let opened = shell.showItemInFolder(fileName);
-    let parentFolder = fileName;
-    while (!opened) {
-        parentFolder = path.dirname(parentFolder);
-        opened = shell.openItem(parentFolder);
-    }
 };
 
 export const parseSecondsDelayValue = (defaultSeconds: number, delaySeconds?: string): number => {
