@@ -6,6 +6,7 @@ import { ThemeMode, useTheme } from "@/styles";
 import { darken, lighten } from "polished";
 import { Dropdown } from "semantic-ui-react";
 import { Field, Label, Text } from "../Form";
+import { toast } from "react-toastify";
 
 const generateOptions = (opts: string[]) => {
     return opts.map(o => ({
@@ -30,7 +31,13 @@ export const ProfileSelector = (props: any) => {
     const theme = useTheme();
     const { initialOptions, value, onChange, ...rest } = props;
     const options = generateOptions(initialOptions);
-    const handleChange = (_: any, { value }: any) => onChange(value);
+    const handleNewItem = (_: any, data: any) => {
+        const notification = <>Created <b>{data.value}</b> profile.</>;
+        toast.info(notification, {
+            toastId: `${data.value}-profile-created`,
+        });
+        onChange(data.value);
+    };
     return (
     <Outer themeName={theme.themeName}>
         <Field>
@@ -43,8 +50,8 @@ export const ProfileSelector = (props: any) => {
                 selection
                 allowAdditions
                 value={value}
-                onAddItem={handleChange}
-                onChange={handleChange}
+                onAddItem={handleNewItem}
+                onChange={(_: any, data: any) => onChange(data.value)}
                 {...rest}
             />
             <Text>

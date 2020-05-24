@@ -23,8 +23,9 @@ export const FilterOptions = () => {
             name: currentProfile,
             settings: valueString,
         });
-        toast.success("Profile saved", {
-            toastId: "profile-saved",
+        const notification = <>Saved <b>{currentProfile}</b> profile.</>;
+        toast.success(notification, {
+            toastId: `${currentProfile}-profile-saved`,
         });
     };
     const setProfile = (profile: string) => {
@@ -32,8 +33,12 @@ export const FilterOptions = () => {
     };
     const onDelete = () => {
         dispatch.slippi.deleteProfile(currentProfile);
-        toast.info("Profile deleted", {
-            toastId: "profile-deleted",
+        let notification = <>Deleted <b>{currentProfile}</b> profile.</>;
+        if (currentProfile === DEFAULT_PROFILE) {
+            notification = <>Reset <b>{DEFAULT_PROFILE}</b> profile settings.</>;
+        }
+        toast.info(notification, {
+            toastId: `${currentProfile}-profile-deleted`,
         });
     };
     return (
