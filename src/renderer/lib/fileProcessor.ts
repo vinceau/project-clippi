@@ -60,7 +60,10 @@ const handleComplete = (payload: CompletePayload): void => {
     notify(message, `Highlight processing complete`);
     if (openCombosWhenDone && options.outputFile) {
         // check if we want to open the combo file after generation
-        openComboInDolphin(options.outputFile);
+        openComboInDolphin(options.outputFile).catch(err => {
+            console.error(err);
+            notify("Error loading Dolphin. Ensure you have the Slippi Desktop app installed and try again.");
+        });
     }
 };
 

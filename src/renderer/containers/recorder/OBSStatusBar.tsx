@@ -65,19 +65,19 @@ export const OBSStatusBar: React.FC = () => {
     };
 
     const onPlay = () => {
-        loadQueueIntoDolphin({ record: false });
+        loadQueueIntoDolphin({ record: false }).catch(console.error);
     };
 
     const onRecord = () => {
         loadQueueIntoDolphin({
             record: true,
             recordAsOneFile: !recordSeparateClips,
-        });
+        }).catch(console.error);
     };
 
-    const stop = () => {
+    const onStop = () => {
         dolphinRecorder.killDolphin();
-    }
+    };
 
     let color = "#888888";
     if (obsIsConnected) {
@@ -106,7 +106,7 @@ export const OBSStatusBar: React.FC = () => {
             </ConnectionStatusDisplay>}
             <div>
                 {dolphinRunning ?
-                    <StopButton type="button" onClick={stop}>
+                    <StopButton type="button" onClick={onStop}>
                         <Icon name="stop" />
                             Stop
                     </StopButton>

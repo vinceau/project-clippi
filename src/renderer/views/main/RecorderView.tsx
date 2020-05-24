@@ -73,16 +73,6 @@ export const RecorderView: React.FC = () => {
     };
     const droppedFilesHandler = (files: string[]) => {
         dispatch.tempContainer.appendDolphinQueue(files.map(p => ({ path: p })));
-        // const filepaths = files.map(f => f.path);
-        // setFiles(filepaths)
-        /*
-        const options = {
-            record: true,
-            pauseBetweenEntries: false,
-        }
-        console.log(options);
-        loadSlpFilesInDolphin(filepaths, options).catch(console.error);
-        */
     };
     const addFileHandler = () => {
         dispatch.tempContainer.addFileToDolphinQueue();

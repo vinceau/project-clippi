@@ -16,9 +16,9 @@ import path from "path";
 import { remote } from "electron";
 
 import { obsConnection, OBSRecordingAction } from "@/lib/obs";
-import { getFilePath, notify } from "@/lib/utils";
+import { getFilePath } from "@/lib/utils";
 import { store } from "@/store";
-import { DolphinLauncher, DolphinPlaybackPayload, DolphinPlaybackStatus, DolphinQueueFormat, generateDolphinQueuePayload } from "@vinceau/slp-realtime";
+import { DolphinLauncher, DolphinPlaybackPayload, DolphinPlaybackStatus, DolphinQueueFormat } from "@vinceau/slp-realtime";
 import { delay, isMacOrWindows } from "common/utils";
 import { onlyFilename } from "common/utils";
 import { BehaviorSubject, from } from "rxjs";
@@ -189,16 +189,24 @@ const randomTempJSONFile = () => {
 
 export const dolphinRecorder = new DolphinRecorder();
 
-const _openComboInDolphin = async (filePath: string, options?: Partial<DolphinRecorderOptions>) => {
-    const { meleeIsoPath, dolphinPath } = store.getState().filesystem;
+const validDolphinExecutable = async (): Promise<string> => {
+    const { dolphinPath } = store.getState().filesystem;
     const { isDev } = store.getState().appContainer;
     const dolphinParentPath = isDev || !isMacOrWindows ? dolphinPath : undefined;
     const dolphinExec = getDolphinExecutablePath(dolphinParentPath);
     const dolphinExists = await fs.pathExists(dolphinExec);
 
     if (!dolphinExists) {
+        showNoDolphinToast();
         throw new Error(`Dolphin executable doesn't exist at path: ${dolphinExec}`);
     }
+    return dolphinExec;
+};
+
+export const openComboInDolphin = async (filePath: string, options?: Partial<DolphinRecorderOptions>): Promise<void> => {
+    const { meleeIsoPath } = store.getState().filesystem;
+    // Ensure we have a valid Dolphin executable
+    const dolphinExec = await validDolphinExecutable();
 
     const meleeIsoExists = await fs.pathExists(meleeIsoPath);
     const dolphinSettings = {
@@ -210,41 +218,16 @@ const _openComboInDolphin = async (filePath: string, options?: Partial<DolphinRe
     await dolphinRecorder.recordJSON(filePath, options);
 };
 
-export const openComboInDolphin = (filePath: string, options?: Partial<DolphinRecorderOptions>) => {
-    _openComboInDolphin(filePath, options).catch(err => {
-        console.error(err);
-        showNoDolphinToast();
-        notify("Error loading Dolphin. Are your Dolphin playback settings correct?");
-    });
-};
-
-export const loadSlpFilesInDolphin = async (filenames: string[], options?: Partial<DolphinRecorderOptions>): Promise<void> => {
-    const queue = filenames
-        .filter(filename => path.extname(filename) === ".slp")
-        .map(filename => ({path: filename}));
-    console.log(queue);
-    if (queue.length === 0) {
-        return;
-    }
-
-    const payload = generateDolphinQueuePayload(queue);
-    await loadPayloadIntoDolphin(payload, options);
-};
-
-const loadPayloadIntoDolphin = async (payload: string, options?: Partial<DolphinRecorderOptions>): Promise<void> => {
-    const outputFile = randomTempJSONFile();
-    await fs.writeFile(outputFile, payload);
-    openComboInDolphin(outputFile, options);
-};
-
-export const loadQueueIntoDolphin = (options?: Partial<DolphinRecorderOptions>): void => {
+export const loadQueueIntoDolphin = async (options?: Partial<DolphinRecorderOptions>): Promise<void> => {
     const { dolphinQueue, dolphinQueueOptions } = store.getState().tempContainer;
     const queue: DolphinQueueFormat = {
         ...dolphinQueueOptions,
         queue: dolphinQueue,
     };
     const payload = JSON.stringify(queue, undefined, 2);
-    loadPayloadIntoDolphin(payload, options).catch(console.error);
+    const outputFile = randomTempJSONFile();
+    await fs.writeFile(outputFile, payload);
+    await openComboInDolphin(outputFile, options);
 };
 
 export const saveQueueToFile = async (): Promise<void> => {
