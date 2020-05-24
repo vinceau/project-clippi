@@ -23,6 +23,7 @@ import { delay, isMacOrWindows } from "common/utils";
 import { onlyFilename } from "common/utils";
 import { BehaviorSubject, from } from "rxjs";
 import { concatMap, filter } from "rxjs/operators";
+import { showNoDolphinToast } from "./toasts";
 
 const defaultDolphinRecorderOptions = {
     record: false,
@@ -212,6 +213,7 @@ const _openComboInDolphin = async (filePath: string, options?: Partial<DolphinRe
 export const openComboInDolphin = (filePath: string, options?: Partial<DolphinRecorderOptions>) => {
     _openComboInDolphin(filePath, options).catch(err => {
         console.error(err);
+        showNoDolphinToast();
         notify("Error loading Dolphin. Are your Dolphin playback settings correct?");
     });
 };
