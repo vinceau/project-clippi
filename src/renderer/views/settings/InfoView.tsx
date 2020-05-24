@@ -12,6 +12,7 @@ import supporters from "raw-loader!../../../../SUPPORTERS.md";
 
 import { FormContainer } from "@/components/Form";
 import clippiLogo from "../../../../build/icon.png";
+import { Labelled } from "@/components/Labelled";
 
 const Container = styled(FormContainer)`
 text-align: center;
@@ -80,7 +81,7 @@ export const InfoView: React.FC = () => {
                 {needsUpdate &&
                     <UpdateInfo>
                         <a href="https://github.com/vinceau/project-clippi/releases/latest" target="_blank">
-                            <Icon name="exclamation triangle" /> New update available!
+                            <Labelled title="Open releases page"><Icon name="exclamation triangle" /> New update available!</Labelled>
                         </a>
                     </UpdateInfo>
                 }
@@ -88,8 +89,11 @@ export const InfoView: React.FC = () => {
                     Commit {__BUILD__}<br />
                     {__DATE__}
                 </p>
-                <p>Source code available on <a href="https://github.com/vinceau/project-clippi" target="_blank">Github</a>.</p>
-                <p>Please report bugs by tweeting at <a href="https://twitter.com/ProjectClippi" target="_blank">@ProjectClippi</a>.</p>
+                <div style={{paddingTop: "2rem"}}>
+                    <p>Made with love by <a href="https://twitter.com/_vinceau" target="_blank">Vincent Au</a> and <a href="https://github.com/vinceau/project-clippi/graphs/contributors" target="_blank">contributors</a>.</p>
+                    <p>Source code available on <a href="https://github.com/vinceau/project-clippi" target="_blank">Github</a>.<br />
+                    Please report bugs by tweeting at <a href="https://twitter.com/ProjectClippi" target="_blank">@ProjectClippi</a>.</p>
+                </div>
             </Content>
             <h1>Acknowledgements</h1>
             <Content>
