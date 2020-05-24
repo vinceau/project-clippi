@@ -40,11 +40,17 @@ const StyledToastContainer = styled(TC).attrs({
         background-color: rgb(191, 38, 0);
     }
   }
-  .Toastify__toast--warning {
+  .Toastify__toast--info {
+    color: rgb(38, 132, 255);
+    background: #daecff;
+    &::before {
+        content: 'ⓘ';
+        background-color: rgb(38, 132, 255);
+    }
   }
   .Toastify__toast--success {
-    background: #E3FCEF;
     color: rgb(0, 102, 68);
+    background: #E3FCEF;
     &::before {
         content: '✓';
         background-color: rgb(54, 179, 126);

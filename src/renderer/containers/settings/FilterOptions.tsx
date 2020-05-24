@@ -31,7 +31,7 @@ export const FilterOptions = () => {
     };
     const onDelete = () => {
         dispatch.slippi.deleteProfile(currentProfile);
-        toast.success("Profile deleted", {
+        toast.info("Profile deleted", {
             toastId: "profile-deleted",
         });
     };
