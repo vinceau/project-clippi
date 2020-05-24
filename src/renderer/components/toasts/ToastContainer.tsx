@@ -59,6 +59,7 @@ const StyledToastContainer = styled(TC).attrs({
   .Toastify__toast-body {
     margin-left: 10px;
     font-size: 13px;
+    font-weight: normal;
     h3 {
       font-size: 15px;
     }
