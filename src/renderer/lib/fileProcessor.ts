@@ -57,13 +57,14 @@ const handleComplete = (payload: CompletePayload): void => {
     dispatcher.tempContainer.setComboFinderProcessing(false);
     dispatcher.tempContainer.setPercent(100);
     dispatcher.tempContainer.setComboLog(message);
-    notify(message, `Highlight processing complete`);
     if (openCombosWhenDone && options.outputFile) {
         // check if we want to open the combo file after generation
         openComboInDolphin(options.outputFile).catch(err => {
             console.error(err);
             notify("Error loading Dolphin. Ensure you have the Slippi Desktop app installed and try again.");
         });
+    } else {
+        notify(message, `Highlight processing complete`);
     }
 };
 
