@@ -1,6 +1,7 @@
 // Import all the styles first since they will be overwritten
-import "react-tippy/dist/tippy.css"; // React-tippy styles
-import "semantic-ui-css/semantic.min.css"; // Semantic UI styles
+import "react-tippy/dist/tippy.css";                 // React-tippy styles
+import "react-toastify/dist/ReactToastify.min.css";  // Toast styles
+import "semantic-ui-css/semantic.min.css";           // Semantic UI styles
 
 import "@/styles/index.scss"; // Our custom styles
 

@@ -5,12 +5,14 @@ import moment from "moment";
 import fg from "fast-glob";
 import fs from "fs-extra";
 
-import { checkCombo, ComboEventPayload, ComboFilterSettings, defaultComboFilterSettings, DolphinPlaybackItem, Frames, generateDolphinQueuePayload, Input, SlippiGame, SlpRealTime, SlpStream } from "@vinceau/slp-realtime";
+import { checkCombo, ComboEventPayload, ComboFilterSettings, defaultComboFilterSettings, DolphinPlaybackItem, Frames, generateDolphinQueuePayload, Input, pipeFileContents, SlippiGame, SlpRealTime, SlpStream } from "@vinceau/slp-realtime";
 import { Observable } from "rxjs";
 import { filter, map, throttleTime } from "rxjs/operators";
 
 import { parseFileRenameFormat } from "./context";
-import { deleteFile, pipeFileContents } from "./utils";
+import { assertExtension, deleteFile } from "./utils";
+
+const SLP_FILE_EXT = ".slp";
 
 export enum FindComboOption {
     COMBOS = "COMBOS",
@@ -116,7 +118,7 @@ export class FileProcessor {
         this.stopRequested = false;
         this.queue = [];
 
-        const patterns = ["**/*.slp"];
+        const patterns = [`**/*${SLP_FILE_EXT}`];
         const options = {
             absolute: true,
             cwd: opts.filesPath,
@@ -172,6 +174,7 @@ export class FileProcessor {
         if (options.renameFiles && options.renameTemplate) {
             const fullFilename = path.basename(filename);
             res.newFilename = parseFileRenameFormat(options.renameTemplate, settings, metadata, fullFilename);
+            res.newFilename = assertExtension(res.newFilename, SLP_FILE_EXT);
             filename = await renameFile(filename, res.newFilename);
         }
 

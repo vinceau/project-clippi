@@ -82,6 +82,11 @@ export const CharacterSelect = (props: any) => {
         ...base,
         minHeight,
       }),
+      placeholder: (base: any) => ({
+        ...base,
+        whiteSpace: "nowrap",
+        opacity: 0.4,
+      }),
   };
   if (mainTheme.themeName === ThemeMode.DARK) {
       customStyles.menuList = (base: any) => ({
@@ -112,6 +117,7 @@ export const CharacterSelect = (props: any) => {
     components={{ ...components, MultiValueRemove, Option, SingleValue }}
     menuColor={mainTheme.theme.background}
     styles={customStyles}
+    placeholder={`Choose your character${props.isMulti ? "s" : ""}...`}
   />);
 };
 

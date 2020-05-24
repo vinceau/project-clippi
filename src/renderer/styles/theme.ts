@@ -25,6 +25,7 @@ export const lightTheme: Theme = {
     background3: "#d4d4d5",
 };
 
+// Color palette: https://paletton.com/#uid=13X0u0k8Zaw6JmT8khnfM8Ll-7w
 export const darkTheme: Theme = {
     primary: "#000",
     secondary: "#FFF",

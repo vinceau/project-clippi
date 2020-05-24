@@ -12,7 +12,7 @@ import { Labelled } from "@/components/Labelled";
 import { actionComponents } from "@/containers/actions";
 import { generateRandomEvent } from "@/lib/events";
 import { ActionEvent, testRunActions } from "@/lib/realtime";
-import { isDevelopment } from "@/lib/utils";
+import { isDevelopment } from "common/utils";
 import { ActionInput, AddActionInput } from "./ActionInputs";
 
 const allEvents: ActionEvent[] = [

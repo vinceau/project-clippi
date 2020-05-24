@@ -66,3 +66,6 @@ obsConnection.scenes$.subscribe(scenes => {
 dolphinRecorder.currentBasename$.subscribe(name => {
     dispatcher.tempContainer.setDolphinPlaybackFile(name);
 });
+dolphinRecorder.dolphinRunning$.subscribe((isRunning) => {
+    dispatcher.tempContainer.setDolphinRunning(isRunning);
+});

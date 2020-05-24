@@ -22,7 +22,13 @@ export const PlaybackQueue: React.FC<{
                     {...provided.droppableProps}
                 >
                     {props.files.map((file, i) => (
-                        <PlaybackQueueItem key={JSON.stringify(file)} file={file} index={i} onRemove={() => removeFile(i, file.path)} />
+                        <PlaybackQueueItem
+                            key={JSON.stringify(file)}
+                            file={file}
+                            index={i}
+                            total={props.files.length}
+                            onRemove={() => removeFile(i, file.path)}
+                        />
                     ))}
                     {provided.placeholder}
                 </div>

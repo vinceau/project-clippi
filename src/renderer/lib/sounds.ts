@@ -1,7 +1,5 @@
+import { isDevelopment, readFile } from "common/utils";
 import { Howl } from "howler";
-import { isDevelopment } from "./utils";
-
-import { readFile } from "common/utils";
 
 const generateHowlOptions = async (soundPath: string): Promise<any> => {
     if (isDevelopment) {

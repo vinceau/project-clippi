@@ -11,6 +11,8 @@ import styled from "styled-components";
 import supporters from "raw-loader!../../../../SUPPORTERS.md";
 
 import { FormContainer } from "@/components/Form";
+import { Labelled } from "@/components/Labelled";
+import { needsUpdate } from "@/lib/checkForUpdates";
 import clippiLogo from "../../../../build/icon.png";
 
 const Container = styled(FormContainer)`
@@ -62,8 +64,9 @@ const DEV_THRESHOLD = 7;
 
 export const InfoView: React.FC = () => {
     const [ clickCount, setClickCount ] = React.useState(0);
-    const { isDev, needsUpdate } = useSelector((state: iRootState) => state.appContainer);
+    const { isDev, latestVersion } = useSelector((state: iRootState) => state.appContainer);
     const dispatch = useDispatch<Dispatch>();
+    const updateAvailable = needsUpdate(latestVersion);
     const handleLogoClick = () => {
         setClickCount(clickCount + 1);
         if (clickCount === DEV_THRESHOLD - 1) {
@@ -77,10 +80,10 @@ export const InfoView: React.FC = () => {
             <Logo isDev={isDev} src={clippiLogo} onClick={handleLogoClick} />
             <h1>Project Clippi v{__VERSION__}</h1>
             <Content>
-                {needsUpdate &&
+                {updateAvailable &&
                     <UpdateInfo>
                         <a href="https://github.com/vinceau/project-clippi/releases/latest" target="_blank">
-                            <Icon name="exclamation triangle" /> New update available!
+                            <Labelled title="Open releases page"><Icon name="exclamation triangle" /> New update available!</Labelled>
                         </a>
                     </UpdateInfo>
                 }
@@ -88,8 +91,11 @@ export const InfoView: React.FC = () => {
                     Commit {__BUILD__}<br />
                     {__DATE__}
                 </p>
-                <p>Source code available on <a href="https://github.com/vinceau/project-clippi" target="_blank">Github</a>.</p>
-                <p>Please report bugs by tweeting at <a href="https://twitter.com/ProjectClippi" target="_blank">@ProjectClippi</a>.</p>
+                <div style={{paddingTop: "2rem"}}>
+                    <p>Made with love by <a href="https://twitter.com/_vinceau" target="_blank">Vincent Au</a> and <a href="https://github.com/vinceau/project-clippi/graphs/contributors" target="_blank">contributors</a>.</p>
+                    <p>Source code available on <a href="https://github.com/vinceau/project-clippi" target="_blank">Github</a>.<br />
+                    Please report bugs by tweeting at <a href="https://twitter.com/ProjectClippi" target="_blank">@ProjectClippi</a>.</p>
+                </div>
             </Content>
             <h1>Acknowledgements</h1>
             <Content>

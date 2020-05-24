@@ -8,7 +8,7 @@ const NameTagLabel: React.FC<{
     onClick: () => void;
 }> = props => {
     return (
-        <Label>
+        <Label style={{ fontSize: "0.8em" }}>
             {props.name}
             <Icon name="delete" link onClick={props.onClick} />
         </Label>

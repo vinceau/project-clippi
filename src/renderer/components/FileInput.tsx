@@ -2,13 +2,19 @@ import * as React from "react";
 
 import styled from "styled-components";
 
+import { getFilePath, getFolderPath, openFileOrParentFolder } from "@/lib/utils";
 import { Button, Icon, Input } from "semantic-ui-react";
-import { getFilePath, getFolderPath, openFileOrParentFolder } from "../lib/utils";
 import { Labelled } from "./Labelled";
 
 const NoMarginIcon = styled(Icon)`
 &&& {
     margin: 0 !important;
+}
+`;
+
+const Outer = styled.div`
+input[type=text] {
+    width: auto !important;
 }
 `;
 
@@ -21,8 +27,14 @@ interface FileInputProps extends Record<string, any> {
 }
 
 export const FileInput: React.FC<FileInputProps> = props => {
-    const { value, directory, onChange, fileTypeFilters, saveFile } = props;
+    const { value, directory, onChange, fileTypeFilters, saveFile, placeholder } = props;
     const [filesPath, setFilesPath] = React.useState<string>(value);
+
+    // Make sure we display the correct value
+    React.useEffect(() => {
+        setFilesPath(value);
+    }, [value]);
+
     const selectFromFileSystem = async () => {
         let p: string | null = null;
         if (directory) {
@@ -49,7 +61,7 @@ export const FileInput: React.FC<FileInputProps> = props => {
     };
     const actionLabel = saveFile ? "Save as" : "Choose";
     return (
-        <div className="file-input">
+        <Outer>
             <Input
                 style={{ width: "100%" }}
                 label={
@@ -66,7 +78,8 @@ export const FileInput: React.FC<FileInputProps> = props => {
                 onChange={(_: any, { value }: any) => setFilesPath(value)}
                 onBlur={() => onChange(filesPath)}
                 action={<Button onClick={() => selectFromFileSystem().catch(console.error)}>{actionLabel}</Button>}
+                placeholder={placeholder}
             />
-        </div>
+        </Outer>
     );
 };

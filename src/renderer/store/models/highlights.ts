@@ -3,6 +3,8 @@ import produce from "immer";
 
 import { FindComboOption } from "common/fileProcessor";
 
+export const defaultRenameFormat = "{{YY}}{{MM}}{{DD}}_{{HH}}{{mm}}_{{playerShortChar}}_v_{{opponentShortChar}}_({{shortStage}}).slp";
+
 export interface HighlightState {
     includeSubFolders: boolean;
     deleteFilesWithNoCombos: boolean;
@@ -21,7 +23,7 @@ export const highlightInitialState: HighlightState = {
     findComboProfile: "default",
     highlightMethod: FindComboOption.COMBOS,
     renameFiles: false,
-    renameFormat: "{{YY}}{{MM}}{{DD}}_{{HH}}{{mm}}_{{playerShortChar}}_v_{{opponentShortChar}}_({{shortStage}}).slp",
+    renameFormat: defaultRenameFormat,
     openCombosWhenDone: false,
 };
 

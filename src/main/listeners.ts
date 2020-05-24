@@ -3,7 +3,7 @@ import { Message } from "common/types";
 
 import { openFileSystemDialog } from "./lib/fileSystem";
 import { showNotification } from "./lib/notifications";
-import { authenticateTwitch, clearAllTwitchCookies } from "./lib/twitch";
+import { twitchController } from "./lib/twitch";
 
 export const setupListeners = (ipc: IPC) => {
 
@@ -16,8 +16,53 @@ export const setupListeners = (ipc: IPC) => {
             scopes,
         } = value;
 
-        const token = await authenticateTwitch(scopes);
-        return token;
+        try {
+            const user = await twitchController.authenticate(scopes);
+            if (!user) {
+                return null;
+            }
+            return {
+                displayName: user.displayName,
+                profilePictureUrl: user.profilePictureUrl,
+                name: user.name,
+            };
+        } catch (err) {
+            console.error(err);
+            showNotification("Error authenticating with Twitch");
+            return null;
+        }
+    });
+
+    ipc.on(Message.CreateTwitchClip, async (value, _error?: Error) => {
+        if (_error) {
+            throw new Error("Should not have received error");
+        }
+
+        const currentUser = twitchController.getCurrentUser();
+        if (!currentUser) {
+            console.error("Error creating clip: not authenticated with Twitch");
+            return null;
+        }
+
+        const {
+            channel,
+            postToChat,
+        } = value;
+
+        try {
+            const clipID = await twitchController.clip(channel, postToChat);
+            console.log(`Created a clip: ${clipID}`);
+            const clip = {
+                channel: channel ? channel : currentUser.name,
+                clipID,
+                timestamp: new Date(),
+            };
+            return clip;
+        } catch (err) {
+            console.error(err);
+            showNotification("Error creating Twitch clip");
+            return null;
+        }
     });
 
     ipc.on(Message.SignOutTwitch, async (_, _error?: Error) => {
@@ -25,7 +70,13 @@ export const setupListeners = (ipc: IPC) => {
             throw new Error("Should not have received error");
         }
 
-        await clearAllTwitchCookies();
+        try {
+            await twitchController.signOut();
+        } catch (err) {
+            console.error(err);
+            showNotification("Error signing out of Twitch");
+            return err;
+        }
     });
 
     ipc.on(Message.SelectDirectory, async (value, _error?: Error) => {

@@ -1,12 +1,41 @@
 import * as React from "react";
 
 import insertTextAtCursor from "insert-text-at-cursor";
+import styled from "styled-components";
+
 import { TextArea } from "semantic-ui-react";
 
 import { ContextOptions } from "@/components/ContextOptions";
 import { Field, Label } from "@/components/Form";
 import { SlideReveal } from "@/components/ProcessSection";
 import { TemplatePreview } from "@/components/TemplatePreview";
+import { defaultRenameFormat } from "@/store/models/highlights";
+import { Labelled } from "./Labelled";
+
+const FormatLabel = styled.div`
+display: flex;
+flex-direction: row;
+align-items: center;
+justify-content: space-between;
+`;
+
+const ResetButton = styled.span`
+font-size: 1.2rem;
+opacity: 0.8;
+&:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+`;
+
+const PreviewContainer = styled.p`
+word-break: break-all;
+margin-top: 1rem;
+`;
+
+const metadata = {
+    startAt: "2001-11-21T17:33:54.000Z",
+};
 
 export const RenameFiles: React.FC<{
     value: string;
@@ -16,6 +45,11 @@ export const RenameFiles: React.FC<{
     const [showOptions, setShowOptions] = React.useState(false);
     const [renameFormat, setRenameFormat] = React.useState(props.value);
     const textRef: any = React.useRef();
+    const showResetButton = renameFormat !== defaultRenameFormat;
+    const resetFormat = () => {
+        setRenameFormat(defaultRenameFormat);
+        props.onChange(defaultRenameFormat);
+    };
     const insertText = (text: string) => {
         const el = textRef.current;
         if (!el) {
@@ -41,7 +75,12 @@ export const RenameFiles: React.FC<{
                 <ContextOptions onLabelClick={insertText} />
             </SlideReveal>
             <Field>
-                <Label>Format</Label>
+                <FormatLabel>
+                    <Label>Format</Label>
+                    {showResetButton && <Labelled title="Restore default value">
+                        <ResetButton onClick={resetFormat}>Reset</ResetButton>
+                    </Labelled>}
+                </FormatLabel>
                 <TextArea
                     ref={textRef}
                     placeholder={props.placeholder}
@@ -51,7 +90,9 @@ export const RenameFiles: React.FC<{
                     }}
                     onBlur={() => props.onChange(renameFormat)}
                 />
-            <p style={{ wordBreak: "break-all", marginTop: "10px" }}><b>Preview: </b><TemplatePreview template={renameFormat} metadata={{ startAt: "2001-11-21T17:33:54.000Z" }}/></p>
+                <PreviewContainer>
+                    <b>Preview: </b><TemplatePreview template={renameFormat} metadata={metadata}/>
+                </PreviewContainer>
             </Field>
         </div>
     );

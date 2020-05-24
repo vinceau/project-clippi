@@ -1,5 +1,7 @@
 import * as React from "react";
 
+import styled from "styled-components";
+
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Header, Icon, Segment } from "semantic-ui-react";
 
@@ -7,17 +9,30 @@ import { soundPlayer } from "@/lib/sounds";
 
 import { FormContainer, PageHeader } from "@/components/Form";
 import { SoundFileInfo } from "@/components/SoundFileInfo";
-import { Dispatch, dispatcher, iRootState } from "@/store";
-import { openFileOrParentFolder } from "../../lib/utils";
+import { openFileOrParentFolder } from "@/lib/utils";
+import { Dispatch, iRootState } from "@/store";
+import { device } from "@/styles/device";
 
-export const AddSoundButton = (props: any) => {
+const AddSoundButton = (props: any) => {
     return (
-        <Button onClick={() => dispatcher.filesystem.addSound()} {...props}>
+        <Button {...props}>
             <Icon name="add" />
             Add sound
         </Button>
     );
 };
+
+const ButtonContainer = styled.div`
+margin-bottom: 1rem;
+
+button {
+    width: 100% !important;
+    margin-bottom: 0.25em !important;
+    @media ${device.tablet} {
+        width: auto !important;
+    }
+}
+`;
 
 export const SoundSettings: React.FC = () => {
     const soundFiles = useSelector((state: iRootState) => state.filesystem.soundFiles);
@@ -38,13 +53,15 @@ export const SoundSettings: React.FC = () => {
             <div style={{ paddingBottom: "50px" }}>
                 {soundsExist ?
                     <>
-                        <div style={{ marginBottom: "10px" }}>
-                            <AddSoundButton />
+                        <ButtonContainer>
+                            <AddSoundButton
+                                onClick={() => dispatch.filesystem.addSound()}
+                            />
                             <Button onClick={() => soundPlayer.stop()}>
                                 <Icon name="stop" />
-                            Stop current sound
-                        </Button>
-                        </div>
+                                Stop current sound
+                            </Button>
+                        </ButtonContainer>
                         <SoundTable onPathClick={onOpenFile} onRemove={removeSound} sounds={soundFiles} />
                     </>
                     :
@@ -53,7 +70,10 @@ export const SoundSettings: React.FC = () => {
                             <Icon name="music" />
                         You have not added any sounds
                         </Header>
-                        <AddSoundButton primary={true} />
+                        <AddSoundButton
+                            onClick={() => dispatch.filesystem.addSound()}
+                            primary={true}
+                        />
                     </Segment>
                 }
             </div>

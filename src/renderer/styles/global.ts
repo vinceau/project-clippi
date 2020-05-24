@@ -26,10 +26,6 @@ export const GlobalStyle = createGlobalStyle<{
     font-size: 1em;
   }
 
-  .ui.form .file-input input[type=text] {
-    width: auto !important;
-  }
-
   .ui.modal.${ThemeMode.DARK},
   #app .${ThemeMode.DARK} {
     font-weight: 100;

@@ -33,10 +33,10 @@ const handleProgress = (payload: ProgressingPayload): void => {
     const { result, total, filename, options, index } = payload;
     dispatcher.tempContainer.setPercent(Math.floor((index + 1) / total * 100));
     if (options.findComboOption) {
+        const base = path.basename(result.newFilename || filename);
         if (result.fileDeleted) {
-            dispatcher.tempContainer.setComboLog(`Deleted ${filename}`);
+            dispatcher.tempContainer.setComboLog(`Deleted: ${base}`);
         } else {
-            const base = path.basename(result.newFilename || filename);
             dispatcher.tempContainer.setComboLog(`Found ${result.numCombos} highlights in: ${base}`);
         }
     } else if (options.renameFiles && result.newFilename) {
@@ -57,10 +57,14 @@ const handleComplete = (payload: CompletePayload): void => {
     dispatcher.tempContainer.setComboFinderProcessing(false);
     dispatcher.tempContainer.setPercent(100);
     dispatcher.tempContainer.setComboLog(message);
-    notify(message, `Highlight processing complete`);
     if (openCombosWhenDone && options.outputFile) {
         // check if we want to open the combo file after generation
-        openComboInDolphin(options.outputFile);
+        openComboInDolphin(options.outputFile).catch(err => {
+            console.error(err);
+            notify("Error loading Dolphin. Ensure you have the Slippi Desktop app installed and try again.");
+        });
+    } else {
+        notify(message, `Highlight processing complete`);
     }
 };
 
