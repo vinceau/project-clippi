@@ -52,6 +52,10 @@ const StyledToastContainer = styled(TC).attrs({
   }
   .Toastify__toast-body {
     margin-left: 10px;
+    font-size: 13px;
+    h3 {
+      font-size: 15px;
+    }
   }
   .Toastify__progress-bar {
   }
