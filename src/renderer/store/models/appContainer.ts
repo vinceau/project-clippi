@@ -8,14 +8,12 @@ import { notify } from "@/lib/utils";
 export interface AppContainerState {
     latestVersion: string;
     nextUpdateCheckTime: string;  // ISO Date string
-    needsUpdate: boolean;
     isDev: boolean;
 }
 
 const initialState: AppContainerState = {
     latestVersion: "0.0.0",
     nextUpdateCheckTime: new Date(0).toISOString(),  // 1st of Jan 1970
-    needsUpdate: false,
     isDev: false,
 };
 
@@ -25,11 +23,6 @@ export const appContainer = createModel({
         setIsDev: (state: AppContainerState, payload: boolean): AppContainerState => {
             return produce(state, draft => {
                 draft.isDev = payload;
-            });
-        },
-        setNeedsUpdate: (state: AppContainerState, payload: boolean): AppContainerState => {
-            return produce(state, draft => {
-                draft.needsUpdate = payload;
             });
         },
         setNextUpdateCheckTime: (state: AppContainerState, payload: Date): AppContainerState => {
@@ -66,9 +59,8 @@ export const appContainer = createModel({
                     console.log(`Current version: ${__VERSION__}. Latest version: ${latest}`);
                     dispatch.appContainer.setLatestVersion(latest);
 
-                    const shouldUpdate = needsUpdate(latest);
-                    dispatch.appContainer.setNeedsUpdate(shouldUpdate);
-                    if (shouldUpdate) {
+                    // Notify if necessary
+                    if (needsUpdate(latest)) {
                         notify("A new Project Clippi update is available!");
                     }
                 }

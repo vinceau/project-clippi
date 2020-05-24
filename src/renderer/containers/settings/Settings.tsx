@@ -27,6 +27,7 @@ import { TwitchIntegration } from "./TwitchIntegration";
 
 import { SlippiIcon } from "@/components/SlippiIcon";
 import OBSLogo from "@/styles/images/obs.svg";
+import { needsUpdate } from "@/lib/checkForUpdates";
 
 const StyledMenuItem = styled(Menu.Item) <{
     header: boolean;
@@ -134,10 +135,11 @@ export const SettingsPage: React.FC<{
     showSettings: boolean;
     onClose: () => void;
 }> = props => {
-    const { needsUpdate } = useSelector((state: iRootState) => state.appContainer);
+    const { latestVersion } = useSelector((state: iRootState) => state.appContainer);
     const { path } = useRouteMatch();
     const history = useHistory();
 
+    const updateAvailable = needsUpdate(latestVersion);
     const isActive = (name: string): boolean => {
         return history.location.pathname.includes(name);
     };
@@ -231,7 +233,7 @@ export const SettingsPage: React.FC<{
                                 >
                                     <InfoLabel>
                                         <span><Icon name="info circle" /> Info</span>
-                                        {needsUpdate && <Label circular color="red" empty />}
+                                        {updateAvailable && <Label circular color="red" empty />}
                                     </InfoLabel>
                                 </StyledMenuItem>
                             </BottomMenuSection>

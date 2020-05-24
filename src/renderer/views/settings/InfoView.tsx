@@ -13,6 +13,7 @@ import supporters from "raw-loader!../../../../SUPPORTERS.md";
 import { FormContainer } from "@/components/Form";
 import clippiLogo from "../../../../build/icon.png";
 import { Labelled } from "@/components/Labelled";
+import { needsUpdate } from "@/lib/checkForUpdates";
 
 const Container = styled(FormContainer)`
 text-align: center;
@@ -63,8 +64,9 @@ const DEV_THRESHOLD = 7;
 
 export const InfoView: React.FC = () => {
     const [ clickCount, setClickCount ] = React.useState(0);
-    const { isDev, needsUpdate } = useSelector((state: iRootState) => state.appContainer);
+    const { isDev, latestVersion } = useSelector((state: iRootState) => state.appContainer);
     const dispatch = useDispatch<Dispatch>();
+    const updateAvailable = needsUpdate(latestVersion);
     const handleLogoClick = () => {
         setClickCount(clickCount + 1);
         if (clickCount === DEV_THRESHOLD - 1) {
@@ -78,7 +80,7 @@ export const InfoView: React.FC = () => {
             <Logo isDev={isDev} src={clippiLogo} onClick={handleLogoClick} />
             <h1>Project Clippi v{__VERSION__}</h1>
             <Content>
-                {needsUpdate &&
+                {updateAvailable &&
                     <UpdateInfo>
                         <a href="https://github.com/vinceau/project-clippi/releases/latest" target="_blank">
                             <Labelled title="Open releases page"><Icon name="exclamation triangle" /> New update available!</Labelled>
