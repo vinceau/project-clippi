@@ -3,14 +3,14 @@ import React from "react";
 import styled from "styled-components";
 
 export const AButton: React.FC<{
-    pressed?: boolean;
-    color?: string;
-    onClick?: () => void;
+  pressed?: boolean;
+  color?: string;
+  onClick?: () => void;
 }> = (props) => {
-    const { pressed, onClick } = props;
-    const buttonColor = props.color || "#00674F";
-    const textColor = "white";
-    const Outer = styled.div`
+  const { pressed, onClick } = props;
+  const buttonColor = props.color || "#00674F";
+  const textColor = "white";
+  const Outer = styled.div`
         width: 9em;
         height: 9em;
         border-radius: 50%;
@@ -19,11 +19,15 @@ export const AButton: React.FC<{
         display: flex;
         justify-content: center;
         align-items: center;
-        ${onClick && `
+        ${
+          onClick &&
+          `
             cursor: pointer;
             &:hover {
                 ${
-                    pressed ? "opacity: 0.85;" : `
+                  pressed
+                    ? "opacity: 0.85;"
+                    : `
                     background-color: ${buttonColor};
                     span {
                         color: ${textColor};
@@ -31,15 +35,16 @@ export const AButton: React.FC<{
                     `
                 }
             }
-        `}
+        `
+        }
         span {
             font-size: 4.8em;
             color: ${pressed ? textColor : buttonColor}
         }
     `;
-    return (
-        <Outer onClick={onClick}>
-            <span>A</span>
-        </Outer>
-    );
+  return (
+    <Outer onClick={onClick}>
+      <span>A</span>
+    </Outer>
+  );
 };

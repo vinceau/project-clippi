@@ -7,7 +7,6 @@ export const dim = "\x1b[2m";
 export const highlight = "\x1b[36m";
 
 export const setupIPC = (app: App, window: BrowserWindow) => {
-
   // ipc communication
   ipcMain.on("quit", () => {
     app.quit();

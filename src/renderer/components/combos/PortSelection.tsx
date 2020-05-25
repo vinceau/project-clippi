@@ -1,5 +1,6 @@
-import * as React from "react";
-import { Field } from "react-final-form";
+import React from "react";
+
+import { Field, FieldProps } from "react-final-form";
 import { Checkbox, Grid, GridColumnProps } from "semantic-ui-react";
 
 export interface PortSelectionProps {
@@ -37,11 +38,8 @@ export const PortSelection: React.FC<PortSelectionProps> = (props) => {
   );
 };
 
-export const PortSelectAdapter: React.FC<
-  {
-    name: string;
-  } & PortSelectionProps
-> = (props) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const PortSelectAdapter: React.FC<any> = (props) => {
   const { name, ...rest } = props;
   return (
     <Field name={name}>

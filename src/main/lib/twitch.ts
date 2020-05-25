@@ -20,10 +20,7 @@ interface TwitchAccessToken {
 }
 
 // Ensure we hae sufficient scopes
-const validScopes = (
-  neededScopes: string[],
-  existingScopes: string[]
-): boolean => {
+const validScopes = (neededScopes: string[], existingScopes: string[]): boolean => {
   for (const s of neededScopes) {
     if (!existingScopes.includes(s)) {
       return false;
@@ -72,17 +69,11 @@ export class TwitchController {
     await this.chatClient.connect();
 
     // Store the current user
-    this.currentUser = await this.client.helix.users.getUserById(
-      this.accessToken.userId
-    );
+    this.currentUser = await this.client.helix.users.getUserById(this.accessToken.userId);
     return this.currentUser;
   }
 
-  public async clip(
-    channelName?: string,
-    postToChat?: boolean,
-    createAfterDelay?: boolean,
-  ): Promise<string> {
+  public async clip(channelName?: string, postToChat?: boolean, createAfterDelay?: boolean): Promise<string> {
     if (!this.client || !this.currentUser) {
       throw new Error("Not logged in to Twitch");
     }
@@ -171,10 +162,7 @@ export class TwitchController {
       const expiryDate = this.accessToken.expiryDate ? new Date(this.accessToken.expiryDate) : null;
       const now = new Date();
       if (!expiryDate || expiryDate > now) {
-        return TwitchClient.withCredentials(
-          TWITCH_CLIENT_ID,
-          this.accessToken.token
-        );
+        return TwitchClient.withCredentials(TWITCH_CLIENT_ID, this.accessToken.token);
       }
     }
 
