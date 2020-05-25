@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import styled from "styled-components";
+import styled from "@emotion/styled";
 
 import arrayMutators from "final-form-arrays";
 import { Field as FinalField, Form as FinalForm } from "react-final-form";

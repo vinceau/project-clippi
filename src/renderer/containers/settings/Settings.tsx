@@ -5,7 +5,7 @@ import { transparentize } from "polished";
 import { useSelector } from "react-redux";
 import { Redirect, Route, Switch, useHistory, useRouteMatch } from "react-router-dom";
 import { Icon, Label, Menu } from "semantic-ui-react";
-import styled, { css } from "styled-components";
+import styled from "@emotion/styled";
 
 import { CustomIcon } from "@/components/CustomIcon";
 import { Labelled } from "@/components/Labelled";
@@ -24,7 +24,7 @@ import { needsUpdate } from "@/lib/checkForUpdates";
 import OBSLogo from "@/styles/images/obs.svg";
 
 const StyledMenuItem = styled(Menu.Item)<{
-  header: boolean;
+  header?: boolean;
 }>`
   &&& {
     font-size: 1.4rem !important;
@@ -128,7 +128,6 @@ const InfoLabel = styled.div`
 `;
 
 export const SettingsPage: React.FC<{
-  showSettings: boolean;
   onClose: () => void;
 }> = (props) => {
   const { latestVersion } = useSelector((state: iRootState) => state.appContainer);
@@ -155,11 +154,6 @@ export const SettingsPage: React.FC<{
   const handleItemClick = (_: any, { name }: any) => {
     history.push(`${path}/${name}`);
   };
-  const hiddenSettings = css`
-    visibility: hidden;
-    overflow: hidden;
-    height: 0;
-  `;
   const SettingsContainer = styled.div`
     position: absolute;
     width: 100%;
@@ -169,7 +163,6 @@ export const SettingsPage: React.FC<{
     overflow: auto;
     background-color: ${({ theme }) => theme.background2};
     z-index: 1;
-    ${!props.showSettings && hiddenSettings}
   `;
   return (
     <SettingsContainer>

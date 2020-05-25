@@ -1,5 +1,5 @@
 import * as React from "react";
-import styled from "styled-components";
+import styled from "@emotion/styled";
 
 import { getStatic } from "@/lib/utils";
 import { Character, getCharacterShortName } from "@vinceau/slp-realtime";

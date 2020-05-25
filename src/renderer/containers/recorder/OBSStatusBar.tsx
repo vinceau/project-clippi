@@ -11,7 +11,7 @@ import { Button, Icon } from "semantic-ui-react";
 import { Labelled } from "@/components/Labelled";
 import { RecordButton } from "@/components/recorder/RecordButton";
 import obsLogo from "@/styles/images/obs.png";
-import styled from "styled-components";
+import styled from "@emotion/styled";
 
 enum RecordingMethod {
   TOGETHER = "together",

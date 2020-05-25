@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styled from "@emotion/styled";
 
 import { transparentize } from "polished";
 import { Link, Route } from "react-router-dom";

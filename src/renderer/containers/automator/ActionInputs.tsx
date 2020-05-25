@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import styled from "styled-components";
+import styled from "@emotion/styled";
 
 import { Action as ActionDefinition } from "@vinceau/event-actions";
 import { produce } from "immer";

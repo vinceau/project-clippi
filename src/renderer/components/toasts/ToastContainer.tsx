@@ -1,6 +1,6 @@
 import React from "react";
 import { Slide, ToastContainer as TC } from "react-toastify";
-import styled from "styled-components";
+import styled from "@emotion/styled";
 
 const CloseButton: React.FC<{
   closeToast?: () => void;
@@ -10,9 +10,7 @@ const CloseButton: React.FC<{
   </span>
 );
 
-const StyledToastContainer = styled(TC).attrs({
-  // custom props
-})`
+const StyledToastContainer = styled(TC)`
   .Toastify__toast-container {
   }
   .Toastify__toast {
@@ -72,6 +70,6 @@ const StyledToastContainer = styled(TC).attrs({
   }
 `;
 
-export const ToastContainer = () => (
+export const ToastContainer = (): JSX.Element => (
   <StyledToastContainer autoClose={3000} transition={Slide} hideProgressBar={true} closeButton={<CloseButton />} />
 );

@@ -1,11 +1,13 @@
 import * as React from "react";
-import styled from "styled-components";
+import styled from "@emotion/styled";
 
 import { Checkbox } from "semantic-ui-react";
 
-export const SlideReveal = styled.div`
-  overflow-y: ${(props: { open: boolean }) => (props.open ? "visible" : "hidden")};
-  max-height: ${(props: { open: boolean }) => (props.open ? "1000px" : "0")};
+export const SlideReveal = styled.div<{
+  open: boolean;
+}>`
+  overflow-y: ${({ open }) => (open ? "visible" : "hidden")};
+  max-height: ${({ open }) => (open ? "1000px" : "0")};
   transition: all 0.3s ease-in-out;
 `;
 

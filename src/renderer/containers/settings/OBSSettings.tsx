@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Form, Icon } from "semantic-ui-react";
-import styled from "styled-components";
+import styled from "@emotion/styled";
 
 import { ConnectionStatusCard } from "@/components/ConnectionStatusCard";
 import { connectToOBSAndNotify, obsConnection, OBSConnectionStatus } from "@/lib/obs";

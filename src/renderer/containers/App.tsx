@@ -3,7 +3,7 @@ import React from "react";
 import { hot } from "react-hot-loader/root";
 import { useDispatch } from "react-redux";
 import { HashRouter as Router, Redirect, Route, Switch } from "react-router-dom";
-import { ThemeProvider } from "styled-components";
+import { ThemeProvider } from "emotion-theming";
 
 import { History } from "@/components/History";
 import { ToastContainer } from "@/components/toasts/ToastContainer";

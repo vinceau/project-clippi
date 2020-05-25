@@ -1,5 +1,5 @@
 import { transparentize } from "polished";
-import { css, keyframes } from "styled-components";
+import { css, keyframes } from "@emotion/core";
 
 const pulse = (size: string, color: string) => keyframes`
     0% {

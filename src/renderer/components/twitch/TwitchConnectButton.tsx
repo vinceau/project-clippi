@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { Icon } from "semantic-ui-react";
-import styled from "styled-components";
+import styled from "@emotion/styled";
 
 export const TwitchConnectButton: React.FC<{
   onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;

@@ -10,5 +10,5 @@ export const SettingsView: React.FC = () => {
   const history = useHistory();
   const { latestPath } = useSelector((state: iRootState) => state.tempContainer);
   const mainPage = latestPath.main || "/";
-  return <SettingsPage showSettings={true} onClose={() => history.push(mainPage)} />;
+  return <SettingsPage onClose={() => history.push(mainPage)} />;
 };

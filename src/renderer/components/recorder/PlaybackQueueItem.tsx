@@ -4,7 +4,7 @@ import { transparentize } from "polished";
 import { darken, lighten } from "polished";
 import React from "react";
 import { Icon } from "semantic-ui-react";
-import styled from "styled-components";
+import styled from "@emotion/styled";
 import { Labelled } from "../Labelled";
 
 import { DolphinEntry } from "@vinceau/slp-realtime";
