@@ -9,6 +9,7 @@ import { Accordion, Button, Form as SemanticForm, Icon } from "semantic-ui-react
 import { CodeBlock } from "@/components/CodeBlock";
 import { Field, Label, Text } from "@/components/Form";
 import { ComboConfiguration } from "@/lib/profile";
+import { DEFAULT_PROFILE } from "@/store/models/slippi";
 import { CharacterSelectAdapter } from "./CharacterSelect";
 import { ToggleAdapter } from "./FormAdapters";
 import { NameTagForm } from "./NameTagForm";
@@ -18,45 +19,58 @@ import { PortSelectAdapter } from "./PortSelection";
 
 type Values = Partial<ComboConfiguration>;
 
+const ButtonContainer: React.FC<{
+    submitting: boolean;
+    currentProfile?: string;
+    onDelete?: () => void;
+}> = ({ submitting, currentProfile, onDelete }) => {
+    const OuterContainer = styled.div`
+    padding: 2rem 0;
+    display: flex;
+    justify-content: space-between;
+    & > button {
+        margin-bottom: 3px !important;
+    }
+    .delete-button:hover {
+        background-color: #d01919;
+        color: white;
+    }
+    `;
+    return (
+        <OuterContainer>
+            <Button primary type="submit" disabled={submitting}>
+                <Icon name="save" />
+                Save profile
+            </Button>
+            <Button
+                className="delete-button"
+                type="button"
+                onClick={onDelete}
+            >
+            {
+                (currentProfile === DEFAULT_PROFILE) ?
+                <>
+                <Icon name="undo" />
+                Reset profile
+                </>
+                :
+                <>
+                <Icon name="trash" />
+                Delete profile
+                </>
+            }
+            </Button>
+        </OuterContainer>
+    );
+};
+
 export const ComboForm: React.FC<{
     initialValues: Values;
+    currentProfile?: string;
     onDelete: () => void;
     onSubmit: (values: Values) => void;
 }> = props => {
     const [showAdvanced, setShowAdvanced] = React.useState(false);
-    const ButtonContainer: React.FC<{
-        submitting: boolean;
-        form: any;
-    }> = ({ submitting }) => {
-        const OuterContainer = styled.div`
-        padding: 2rem 0;
-        display: flex;
-        justify-content: space-between;
-        & > button {
-            margin-bottom: 3px !important;
-        }
-        .delete-button:hover {
-            background-color: #d01919;
-            color: white;
-        }
-        `;
-        return (
-            <OuterContainer>
-                <Button primary type="submit" disabled={submitting}>
-                    <Icon name="save" />
-                    Save profile
-                </Button>
-                <Button
-                    className="delete-button"
-                    type="button"
-                    onClick={props.onDelete}
-                >
-                    <Icon name="trash" />
-                    Delete profile
-                </Button>
-            </OuterContainer>
-        );
-    };
     return (
         <div>
             <FinalForm
@@ -72,11 +86,10 @@ export const ComboForm: React.FC<{
                     },
                     submitting,
                     values,
-                    form
                 }) => (
                         <div>
                             <SemanticForm onSubmit={handleSubmit}>
-                                <ButtonContainer submitting={submitting} form={form} />
+                                <ButtonContainer submitting={submitting} currentProfile={props.currentProfile} onDelete={props.onDelete} />
                                 <Field border="top">
                                     <Label>Character Filter</Label>
                                     <CharacterSelectAdapter name="characterFilter" isMulti={true} />
@@ -132,6 +145,12 @@ export const ComboForm: React.FC<{
                                         </Accordion.Title>
                                         <Accordion.Content active={showAdvanced}>
                                             <Field>
+                                                <FinalField name="fuzzyNameTagMatching" label="Fuzzy Name Tag Matching" component={ToggleAdapter} />
+                                                <Text margin="none">When this is enabled, name tags will match in a case-insensitive manner. Name tags containing spaces
+                                                will also match with variants where the spaces are replaced with underscores.
+                                                </Text>
+                                            </Field>
+                                            <Field>
                                                 <Label>Chain-grab Characters</Label>
                                                 <CharacterSelectAdapter name="chainGrabbers" isMulti={true} />
                                                 <Text>Only exclude chain-grabs performed by these characters.</Text>
@@ -166,7 +185,7 @@ export const ComboForm: React.FC<{
                                         </Accordion.Content>
                                     </Accordion>
                                 </div>
-                                <ButtonContainer submitting={submitting} form={form} />
+                                <ButtonContainer submitting={submitting} currentProfile={props.currentProfile} onDelete={props.onDelete} />
                                 <CodeBlock values={values} />
                             </SemanticForm>
                         </div>

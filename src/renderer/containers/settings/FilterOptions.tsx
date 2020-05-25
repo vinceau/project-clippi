@@ -9,6 +9,7 @@ import { ProfileSelector } from "@/components/combos/ProfileSelection";
 import { FormContainer, PageHeader } from "@/components/Form";
 import { ComboConfiguration } from "@/lib/profile";
 import { Dispatch, iRootState } from "@/store";
+import { DEFAULT_PROFILE } from "@/store/models/slippi";
 
 export const FilterOptions = () => {
     const { currentProfile, comboProfiles } = useSelector((state: iRootState) => state.slippi);
@@ -22,8 +23,9 @@ export const FilterOptions = () => {
             name: currentProfile,
             settings: valueString,
         });
-        toast("Profile saved", {
-            toastId: "profile-saved",
+        const notification = <>Saved <b>{currentProfile}</b> profile.</>;
+        toast.success(notification, {
+            toastId: `${currentProfile}-profile-saved`,
         });
     };
     const setProfile = (profile: string) => {
@@ -31,15 +33,19 @@ export const FilterOptions = () => {
     };
     const onDelete = () => {
         dispatch.slippi.deleteProfile(currentProfile);
-        toast("Profile deleted", {
-            toastId: "profile-deleted",
+        let notification = <>Deleted <b>{currentProfile}</b> profile.</>;
+        if (currentProfile === DEFAULT_PROFILE) {
+            notification = <>Reset <b>{DEFAULT_PROFILE}</b> profile settings.</>;
+        }
+        toast.info(notification, {
+            toastId: `${currentProfile}-profile-deleted`,
         });
     };
     return (
         <FormContainer>
             <PageHeader>Combo Filter</PageHeader>
             <ProfileSelector initialOptions={profileOptions} value={currentProfile} onChange={setProfile} />
-            <ComboForm initialValues={initial} onSubmit={onSubmit} onDelete={onDelete} />
+            <ComboForm initialValues={initial} onSubmit={onSubmit} onDelete={onDelete} currentProfile={currentProfile} />
         </FormContainer>
     );
 };

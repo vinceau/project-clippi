@@ -6,7 +6,8 @@ import { produce } from "immer";
 import { CustomIcon } from "@/components/CustomIcon";
 import { DelayInput, InlineDropdown, NotifyInput } from "@/components/InlineInputs";
 import { obsConnection, OBSRecordingAction } from "@/lib/obs";
-import { capitalize, delay as waitMillis, notify, parseSecondsDelayValue } from "@/lib/utils";
+import { notify } from "@/lib/utils";
+import { capitalize, delay as waitMillis, parseSecondsDelayValue } from "common/utils";
 import { ActionComponent } from "./types";
 
 import obsIcon from "@/styles/images/obs.svg";

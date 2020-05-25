@@ -72,12 +72,14 @@ span {
 
 export const PlaybackQueueItem: React.FC<{
     index: number;
+    total?: number;
     file: DolphinEntry;
     onRemove?: () => void;
 }> = props => {
     const theme = useTheme();
-    const { index, file, onRemove } = props;
+    const { index, file, onRemove, total } = props;
     const basename = path.basename(file.path);
+    const dirname = path.dirname(file.path);
     return (
         <Draggable draggableId={JSON.stringify(file)} index={index}>
             {(provided, snapshot) => (
@@ -88,10 +90,10 @@ export const PlaybackQueueItem: React.FC<{
                     isDragging={snapshot.isDragging}
                 >
                     <Details>
-                        <Icon size="big" name="file outline" />
+                        <Labelled title={`${index + 1}${total && ` of ${total}`}`}><Icon size="big" name="file outline" /></Labelled>
                         <DetailsContent>
                             <h3>{basename}</h3>
-                            <span>{file.path}</span>
+                            <span>{dirname}</span>
                         </DetailsContent>
                     </Details>
                     <Labelled title="Remove">

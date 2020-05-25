@@ -28,6 +28,10 @@ Everything is open source and fully-customisable. The possibilities are endless.
 
 ![slp file processor screenshot](/docs/images/2-processor.png)
 
+*Easily load SLP files into Dolphin with just a drag and drop!*
+
+![Project Clippi playback queue screenshot](/docs/images/3-playback.png)
+
 </div>
 
 
@@ -42,9 +46,9 @@ Everything is open source and fully-customisable. The possibilities are endless.
 
 Download Project Clippi for your operating system using the links below or check out [the releases page](https://github.com/vinceau/project-clippi/releases/latest) for more information.
 
-* [Project Clippi for Windows](https://github.com/vinceau/project-clippi/releases/latest/download/Project-Clippi-1.3.0.exe)
-* [Project Clippi for MacOS](https://github.com/vinceau/project-clippi/releases/latest/download/Project-Clippi-1.3.0.dmg)
-* [Project Clippi for Linux](https://github.com/vinceau/project-clippi/releases/latest/download/Project-Clippi-1.3.0.AppImage)
+* [Project Clippi for Windows](https://github.com/vinceau/project-clippi/releases/latest/download/Project-Clippi-1.3.1.exe)
+* [Project Clippi for MacOS](https://github.com/vinceau/project-clippi/releases/latest/download/Project-Clippi-1.3.1.dmg)
+* [Project Clippi for Linux](https://github.com/vinceau/project-clippi/releases/latest/download/Project-Clippi-1.3.1.AppImage)
 
 ## Usage
 

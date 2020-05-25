@@ -8,9 +8,9 @@ import { TwitchClipInfo, TwitchConnectButton, TwitchUserStatus } from "@/compone
 import { Dispatch, iRootState } from "@/store";
 
 export const TwitchIntegration = () => {
-    const { twitchUser } = useSelector((state: iRootState) => state.tempContainer);
+    const { twitchUser, twitchLoading } = useSelector((state: iRootState) => state.tempContainer);
     const dispatch = useDispatch<Dispatch>();
-    const { authToken, clips } = useSelector((state: iRootState) => state.twitch);
+    const { clips } = useSelector((state: iRootState) => state.twitch);
     const allClips = Object.values(clips);
     allClips.sort((x, y) => {
         if (x.timestamp > y.timestamp) {
@@ -22,30 +22,22 @@ export const TwitchIntegration = () => {
         return 0;
     });
 
-    // If the name is not provided
-    React.useEffect(() => {
-        if (!twitchUser && authToken) {
-            dispatch.tempContainer.updateUser(authToken);
-        }
-    });
-
     const onSignOut = () => {
-        dispatch.twitch.logOutTwitch();
+        dispatch.tempContainer.logOutTwitch();
     };
     return (
         <FormContainer>
             <PageHeader>Twitch Integration</PageHeader>
-            {!authToken ?
-                <TwitchConnectButton onClick={() => dispatch.twitch.fetchTwitchToken()} />
-                : twitchUser ?
-                    <TwitchUserStatus
-                        displayName={twitchUser.displayName}
-                        image={twitchUser.profilePictureUrl}
-                        channel={twitchUser.name}
-                        onSignOut={onSignOut}
-                    />
-                    :
-                    <Loader active={true} inline={true} content="Loading" />
+            {twitchUser ?
+                <TwitchUserStatus
+                    displayName={twitchUser.displayName}
+                    image={twitchUser.profilePictureUrl}
+                    channel={twitchUser.name}
+                    onSignOut={onSignOut}
+                />
+                : twitchLoading ?
+                <Loader active={true} inline={true} content="Loading" />
+                : <TwitchConnectButton onClick={() => dispatch.tempContainer.authenticateTwitch()} />
             }
             <h2>Clips</h2>
             {allClips.length > 0 ?

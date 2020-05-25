@@ -1,17 +1,13 @@
 import React from "react";
 
 import { device } from "@/styles/device";
+import { TwitchClip } from "common/types";
 import { transparentize } from "polished";
 import { Icon } from "semantic-ui-react";
 import styled from "styled-components";
 
 import { format } from "timeago.js";
 import { Labelled } from "../Labelled";
-
-interface TwitchClip {
-    clipID: string;
-    timestamp: number;
-}
 
 const ClipContainer = styled.div`
 border: solid 1px ${({ theme }) => theme.background3}
@@ -54,18 +50,23 @@ export const TwitchClipInfo: React.FC<{
     clip: TwitchClip,
     onRemove?: (clipID: string) => void,
 }> = (props) => {
-    const timestamp = format(props.clip.timestamp * 1000);
+    const timestamp = format(props.clip.timestamp);
     const url = `https://clips.twitch.tv/${props.clip.clipID}`;
     const onRemove = () => {
         if (props.onRemove) {
             props.onRemove(props.clip.clipID);
         }
     };
+    const channelUrl = props.clip.channel ? `https://twitch.tv/${props.clip.channel}` : undefined;
     return (
         <ClipContainer>
             <div>
-                <Labelled title="Open in Twitch"><a href={url} target="_blank"><h2>{props.clip.clipID}</h2></a></Labelled>
-                <div>{timestamp}</div>
+                <Labelled title="Show clip in browser"><a href={url} target="_blank"><h2>{props.clip.clipID}</h2></a></Labelled>
+                <div>{props.clip.channel && <span>
+                    <Labelled title="Go to Twitch channel">
+                        <a href={channelUrl} target="_blank">{props.clip.channel}</a>
+                    </Labelled> {" | "}
+                </span>} {timestamp}</div>
             </div>
             <ButtonsContainer>
                 <Labelled title="Edit"><a href={url + "/edit"} target="_blank"><Icon name="pencil" /></a></Labelled>

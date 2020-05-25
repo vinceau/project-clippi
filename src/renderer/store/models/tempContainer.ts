@@ -3,20 +3,21 @@ import produce from "immer";
 
 import { Scene } from "obs-websocket-js";
 
+import { authenticateTwitch, signOutTwitch } from "../../lib/twitch";
+
 import { OBSConnectionStatus, OBSRecordingStatus } from "@/lib/obs";
-import { loadDolphinQueue } from "@/lib/utils";
-import { getFilePath } from "@/lib/utils";
+import { getFilePath, loadDolphinQueue } from "@/lib/utils";
 import { ConnectionStatus, DolphinEntry, DolphinQueueFormat, DolphinQueueOptions } from "@vinceau/slp-realtime";
-import { currentUser } from "common/twitch";
+import { TwitchUser } from "common/types";
 import { shuffle } from "common/utils";
-import { HelixUser } from "twitch";
 
 export interface TempContainerState {
     slippiConnectionStatus: ConnectionStatus;
     obsConnectionStatus: OBSConnectionStatus;
     obsRecordingStatus: OBSRecordingStatus;
     obsScenes: Scene[];
-    twitchUser: HelixUser | null;
+    twitchUser: TwitchUser | null;
+    twitchLoading: boolean;
     showSettings: boolean;
     currentSlpFolderStream: string;
     comboFinderPercent: number;
@@ -26,6 +27,7 @@ export interface TempContainerState {
     dolphinQueue: DolphinEntry[];
     dolphinQueueOptions: DolphinQueueOptions;
     dolphinPlaybackFile: string;
+    dolphinRunning: boolean;
 }
 
 const initialDolphinQueueOptions = {
@@ -41,6 +43,7 @@ const initialState: TempContainerState = {
     obsRecordingStatus: OBSRecordingStatus.RECORDING,
     obsScenes: [],
     twitchUser: null,
+    twitchLoading: false,
     showSettings: false,
     currentSlpFolderStream: "",
     comboFinderPercent: 0,
@@ -53,6 +56,7 @@ const initialState: TempContainerState = {
     dolphinQueue: [],
     dolphinQueueOptions: Object.assign({}, initialDolphinQueueOptions),
     dolphinPlaybackFile: "",
+    dolphinRunning: false,
 };
 
 export const tempContainer = createModel({
@@ -70,8 +74,11 @@ export const tempContainer = createModel({
         setOBSScenes: (state: TempContainerState, payload: Scene[]): TempContainerState => produce(state, draft => {
             draft.obsScenes = payload;
         }),
-        setTwitchUser: (state: TempContainerState, payload: HelixUser): TempContainerState => produce(state, draft => {
+        setTwitchUser: (state: TempContainerState, payload: TwitchUser): TempContainerState => produce(state, draft => {
             draft.twitchUser = payload;
+        }),
+        setTwitchLoading: (state: TempContainerState, payload: boolean): TempContainerState => produce(state, draft => {
+            draft.twitchLoading = payload;
         }),
         toggleSettings: (state: TempContainerState): TempContainerState => produce(state, draft => {
             draft.showSettings = !state.showSettings;
@@ -154,16 +161,11 @@ export const tempContainer = createModel({
         setDolphinPlaybackFile: (state: TempContainerState, payload: string): TempContainerState => produce(state, draft => {
             draft.dolphinPlaybackFile = payload;
         }),
+        setDolphinRunning: (state: TempContainerState, payload: boolean): TempContainerState => produce(state, draft => {
+            draft.dolphinRunning = payload;
+        }),
     },
     effects: dispatch => ({
-        async updateUser(token: string) {
-            const user = await currentUser(token);
-            if (!user) {
-                console.error(`Could not get user using token: ${token}`);
-                return;
-            }
-            dispatch.tempContainer.setTwitchUser(user);
-        },
         async loadDolphinQueue() {
             const dolphinQueue = await loadDolphinQueue();
             if (!dolphinQueue) {
@@ -184,6 +186,20 @@ export const tempContainer = createModel({
                     }))
                 );
             }
+        },
+        async authenticateTwitch() {
+            dispatch.tempContainer.setTwitchLoading(true);
+            const scopes = ["user_read", "clips:edit", "chat:read", "chat:edit"];
+            console.log(`Authenticating with Twitch using the scopes: ${scopes}`);
+            const user = await authenticateTwitch(scopes);
+            console.log("Got the following user object back from Twitch:");
+            console.log(user);
+            dispatch.tempContainer.setTwitchUser(user);
+            dispatch.tempContainer.setTwitchLoading(false);
+        },
+        async logOutTwitch() {
+            await signOutTwitch();
+            dispatch.tempContainer.setTwitchUser(null);
         },
     }),
 });

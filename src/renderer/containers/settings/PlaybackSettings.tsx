@@ -8,7 +8,7 @@ import { Dispatch, iRootState } from "@/store";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Labelled } from "@/components/Labelled";
-import { isMacOrWindows } from "@/lib/utils";
+import { isMacOrWindows } from "common/utils";
 import styled from "styled-components";
 
 const DolphinPathLabel = styled.div`
@@ -32,10 +32,12 @@ const defaultDolphinPath = getDolphinPath();
 export const PlaybackSettings: React.FC = () => {
     const dispatch = useDispatch<Dispatch>();
     const { meleeIsoPath, dolphinPath } = useSelector((state: iRootState) => state.filesystem);
+    const { isDev } = useSelector((state: iRootState) => state.appContainer);
     const setMeleeIsoPath = (filePath: string) => dispatch.filesystem.setMeleeIsoPath(filePath);
     const setDolphinPath = (filePath: string) => dispatch.filesystem.setDolphinPath(filePath);
     const resetDolphinPath = () => dispatch.filesystem.setDolphinPath(defaultDolphinPath);
-    const showResetButton = isMacOrWindows && dolphinPath !== defaultDolphinPath;
+    const showDolphinPathField = isDev || !isMacOrWindows;
+    const showResetButton = showDolphinPathField && dolphinPath !== defaultDolphinPath;
     return (
         <FormContainer>
             <PageHeader>Playback</PageHeader>
@@ -50,7 +52,7 @@ export const PlaybackSettings: React.FC = () => {
                     This file should match the Melee ISO File in the Slippi Desktop App.
                 </Text>
             </Field>
-            <Field border="top">
+            {showDolphinPathField && <Field border="top">
                 <DolphinPathLabel>
                     <Label>Playback Dolphin Path</Label>
                     {showResetButton && <Labelled title="Restore default value">
@@ -67,7 +69,7 @@ export const PlaybackSettings: React.FC = () => {
                     this unless you're using Linux or you <i>really</i> know what you're doing. This path should match the
                     Playback Dolphin Path in the Slippi Desktop App.
                 </Text>
-            </Field>
+            </Field>}
         </FormContainer>
     );
 };
