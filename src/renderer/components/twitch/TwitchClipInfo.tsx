@@ -2,7 +2,7 @@ import React from "react";
 
 import { transparentize } from "polished";
 import { Icon } from "semantic-ui-react";
-import styled from "styled-components";
+import styled from "@emotion/styled";
 import { format } from "timeago.js";
 
 import { device } from "@/styles/device";

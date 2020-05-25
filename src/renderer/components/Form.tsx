@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Checkbox } from "semantic-ui-react";
-import styled from "styled-components";
+import styled from "@emotion/styled";
 
 export const FormContainer = styled.div`
   max-width: 65rem;

@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import styled from "styled-components";
+import styled from "@emotion/styled";
 
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Divider, Grid, Header, Input, Segment } from "semantic-ui-react";

@@ -2,7 +2,7 @@
 import React, { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 
-import styled from "styled-components";
+import styled from "@emotion/styled";
 import { PlaybackQueue } from "./PlaybackQueue";
 import { PlaybackQueueEmpty } from "./PlaybackQueueEmpty";
 

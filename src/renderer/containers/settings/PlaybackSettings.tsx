@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { Labelled } from "@/components/Labelled";
 import { isMacOrWindows } from "common/utils";
-import styled from "styled-components";
+import styled from "@emotion/styled";
 
 const DolphinPathLabel = styled.div`
   display: flex;

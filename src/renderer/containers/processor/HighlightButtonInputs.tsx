@@ -6,7 +6,7 @@ import { Dispatch, iRootState } from "@/store";
 import { framesToSeconds, secondsToFrames } from "common/utils";
 import { useDispatch, useSelector } from "react-redux";
 import { Accordion, Icon } from "semantic-ui-react";
-import styled from "styled-components";
+import styled from "@emotion/styled";
 
 export const HighlightButtonInputs: React.FC = () => {
   const [showAdvanced, setShowAdvanced] = React.useState(false);

@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import insertTextAtCursor from "insert-text-at-cursor";
-import styled from "styled-components";
+import styled from "@emotion/styled";
 
 import { TextArea } from "semantic-ui-react";
 

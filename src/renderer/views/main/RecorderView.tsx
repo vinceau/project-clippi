@@ -1,7 +1,7 @@
 import React from "react";
 
 import { darken, lighten } from "polished";
-import styled from "styled-components";
+import styled from "@emotion/styled";
 
 import { Text } from "@/components/Form";
 import { Labelled } from "@/components/Labelled";

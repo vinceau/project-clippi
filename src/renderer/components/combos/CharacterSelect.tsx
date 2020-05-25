@@ -2,7 +2,7 @@ import { Character, CharacterInfo, getAllCharacters, getCharacterName } from "@v
 import * as React from "react";
 import { Field } from "react-final-form";
 import Select, { components, MultiValueProps, OptionProps, OptionTypeBase, SingleValueProps } from "react-select";
-import styled from "styled-components";
+import styled from "@emotion/styled";
 
 import { ThemeMode, useTheme } from "@/styles";
 import { CharacterIcon } from "../CharacterIcon";
