@@ -1,17 +1,11 @@
+import { Theme } from "@emotion/styled";
+
+// Re-export the theme
+export { Theme } from "@emotion/styled";
+
 export enum ThemeMode {
   DARK = "dark",
   LIGHT = "light",
-}
-
-export interface Theme {
-  primary: string;
-  secondary: string;
-  foreground: string;
-  foreground2: string;
-  foreground3: string;
-  background: string;
-  background2: string;
-  background3: string;
 }
 
 export const lightTheme: Theme = {

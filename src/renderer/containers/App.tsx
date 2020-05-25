@@ -4,6 +4,7 @@ import { hot } from "react-hot-loader/root";
 import { useDispatch } from "react-redux";
 import { HashRouter as Router, Redirect, Route, Switch } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
+import { ThemeProvider as EmotionThemeProvider } from "emotion-theming";
 
 import { History } from "@/components/History";
 import { ToastContainer } from "@/components/toasts/ToastContainer";
@@ -22,16 +23,18 @@ const App: React.FC = () => {
     <div className={theme.themeName}>
       <History />
       <ToastContainer />
-      <ThemeProvider theme={theme.themeName === ThemeMode.LIGHT ? lightTheme : darkTheme}>
-        <GlobalStyle />
-        <Switch>
-          <Route path="/main" component={MainView} />
-          <Route path="/settings" component={SettingsView} />
-          <Route exact path="/">
-            <Redirect to="/main" />
-          </Route>
-        </Switch>
-      </ThemeProvider>
+      <EmotionThemeProvider theme={theme.themeName === ThemeMode.LIGHT ? lightTheme : darkTheme}>
+        <ThemeProvider theme={theme.themeName === ThemeMode.LIGHT ? lightTheme : darkTheme}>
+          <GlobalStyle />
+          <Switch>
+            <Route path="/main" component={MainView} />
+            <Route path="/settings" component={SettingsView} />
+            <Route exact path="/">
+              <Redirect to="/main" />
+            </Route>
+          </Switch>
+        </ThemeProvider>
+      </EmotionThemeProvider>
     </div>
   );
 };
