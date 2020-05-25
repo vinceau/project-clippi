@@ -1,6 +1,6 @@
 import * as path from "path";
 
-import { app, BrowserWindow, Menu, shell } from "electron";
+import { app, BrowserWindow, Menu, shell, Event } from "electron";
 import { format as formatUrl } from "url";
 import { setupListeners } from "./listeners";
 import { setupIPC } from "./mainIpc";
@@ -15,10 +15,12 @@ contextMenu();
 let mainWindow: BrowserWindow | null;
 
 function createMainWindow() {
-  const window = new BrowserWindow({ webPreferences: {
-    nodeIntegration: true, // <--- flag
-    nodeIntegrationInWorker: true // <---  for web workers
-  } });
+  const window = new BrowserWindow({
+    webPreferences: {
+      nodeIntegration: true, // <--- flag
+      nodeIntegrationInWorker: true, // <---  for web workers
+    },
+  });
 
   window.webContents.on("did-frame-finish-load", () => {
     if (isDevelopment) {
@@ -32,11 +34,13 @@ function createMainWindow() {
   if (isDevelopment) {
     window.loadURL(`http://localhost:${process.env.ELECTRON_WEBPACK_WDS_PORT}`);
   } else {
-    window.loadURL(formatUrl({
-      pathname: path.join(__dirname, "index.html"),
-      protocol: "file",
-      slashes: true
-    }));
+    window.loadURL(
+      formatUrl({
+        pathname: path.join(__dirname, "index.html"),
+        protocol: "file",
+        slashes: true,
+      })
+    );
   }
 
   window.on("closed", () => {
@@ -72,8 +76,8 @@ app.on("ready", () => {
 
   // Set any anchor links to open in default web browser
   mainWindow = createMainWindow();
-  mainWindow.webContents.on("new-window", (event: any, url: string) => {
-      event.preventDefault();
-      shell.openExternal(url);
+  mainWindow.webContents.on("new-window", (event: Event, url: string) => {
+    event.preventDefault();
+    shell.openExternal(url);
   });
 });

@@ -18,7 +18,7 @@
     "dist:win": "yarn run dist --x64 -w",
     "dist:mac": "yarn run dist -m",
     "dist:linux": "yarn run dist -l",
-    "lint": "tslint -p .",
+    "lint": "eslint \"src/**/*.{ts,tsx}\"",
     "lint:fix": "yarn run lint --fix"
   },
   "dependencies": {
@@ -77,18 +77,24 @@
     "@types/react-select": "^3.0.8",
     "@types/semver": "^7.1.0",
     "@types/styled-components": "^4.4.1",
+    "@typescript-eslint/eslint-plugin": "^3.0.0",
+    "@typescript-eslint/parser": "^3.0.0",
     "electron": "4.1.1",
     "electron-builder": "22.5.1",
     "electron-webpack": "^2.8.2",
     "electron-webpack-ts": "^3.2.0",
+    "eslint": "^7.1.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.3",
+    "eslint-plugin-react": "^7.20.0",
+    "husky": "^4.2.5",
     "node-sass": "^4.14.0",
+    "prettier": "2.0.5",
+    "pretty-quick": "^2.0.1",
     "raw-loader": "^4.0.1",
     "react-hot-loader": "4.6.5",
     "sass-loader": "^7.1.0",
     "ts-unused-exports": "^6.1.2",
-    "tslint": "^5.20.1",
-    "tslint-microsoft-contrib": "^6.2.0",
-    "tslint-react": "^4.1.0",
     "typescript": "^3.3.3333",
     "webpack": "4.43.0",
     "webpack-build-notifier": "^0.1.30",
@@ -119,6 +125,11 @@
         "AppImage"
       ],
       "category": "Office"
+    }
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
     }
   }
 }

@@ -110,8 +110,12 @@ export const EventActions = (props: any) => {
           disabledOptions={disabledOptions}
         />
         <EventHeaderButtons>
-          <Labelled onClick={() => testRunActions(value.event, value.actions)} title="Test run"><Icon name="play" /></Labelled>
-          <Labelled onClick={onRemove} title="Remove"><Icon name="remove" /></Labelled>
+          <Labelled onClick={() => testRunActions(value.event, value.actions)} title="Test run">
+            <Icon name="play" />
+          </Labelled>
+          <Labelled onClick={onRemove} title="Remove">
+            <Icon name="remove" />
+          </Labelled>
         </EventHeaderButtons>
       </EventHeader>
       <List divided>
@@ -141,10 +145,10 @@ export const EventActions = (props: any) => {
 
 export const AddEventDropdown = (props: any) => {
   const { onChange, disabledOptions } = props;
-  const unusedOptions = allEvents.filter(a => !disabledOptions.includes(a));
+  const unusedOptions = allEvents.filter((a) => !disabledOptions.includes(a));
   const addText = generateRandomEvent();
   const CustomContainer = styled.div`
-  ${unusedOptions.length === 0 && "display: none;"}
+    ${unusedOptions.length === 0 && "display: none;"}
   `;
   return (
     <CustomContainer>

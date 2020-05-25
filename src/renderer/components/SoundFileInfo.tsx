@@ -40,22 +40,24 @@ h2 {
 `;
 
 export const SoundFileInfo: React.FC<{
-    name: string;
-    path: string;
-    onPathClick?: () => void;
-    onRemove: () => void;
-}> = props => {
-    return (
-        <Container>
-            <div>
-                <Labelled title="Open location"><h2 onClick={props.onPathClick}>{props.name}</h2></Labelled>
-                <div>
-                    {props.path}
-                </div>
-            </div>
-            <div className="remove-button">
-                <Labelled title="Remove"><Icon name="trash" onClick={props.onRemove} /></Labelled>
-            </div>
-        </Container>
-    );
+  name: string;
+  path: string;
+  onPathClick?: () => void;
+  onRemove: () => void;
+}> = (props) => {
+  return (
+    <Container>
+      <div>
+        <Labelled title="Open location">
+          <h2 onClick={props.onPathClick}>{props.name}</h2>
+        </Labelled>
+        <div>{props.path}</div>
+      </div>
+      <div className="remove-button">
+        <Labelled title="Remove">
+          <Icon name="trash" onClick={props.onRemove} />
+        </Labelled>
+      </div>
+    </Container>
+  );
 };
