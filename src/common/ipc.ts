@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { IpcMain, IpcRenderer, WebContents } from "electron";
 
 import { Message, RequestType, ResponseType } from "common/types";

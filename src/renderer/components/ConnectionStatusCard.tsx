@@ -7,7 +7,7 @@ import { Button, Card, Image } from "semantic-ui-react";
 import { ScanningDot } from "@/components/ScanningDot";
 
 export const ConnectionStatusCard: React.FC<{
-  userImage: any;
+  userImage: string;
   header: string;
   subHeader: string;
   statusColor?: string;

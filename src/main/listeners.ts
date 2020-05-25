@@ -5,7 +5,7 @@ import { openFileSystemDialog } from "./lib/fileSystem";
 import { showNotification } from "./lib/notifications";
 import { twitchController } from "./lib/twitch";
 
-export const setupListeners = (ipc: IPC) => {
+export const setupListeners = (ipc: IPC): void => {
   ipc.on(Message.AuthenticateTwitch, async (value, _error?: Error) => {
     if (_error) {
       throw new Error("Should not have received error");

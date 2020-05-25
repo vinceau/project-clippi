@@ -9,7 +9,7 @@ import { Labelled } from "@/components/Labelled";
 import { ScanningDot } from "@/components/ScanningDot";
 
 export const ConnectionStatusDisplay: React.FC<{
-  icon?: any;
+  icon?: string;
   iconHoverText?: string;
   onIconClick?: () => void;
   headerText: string;

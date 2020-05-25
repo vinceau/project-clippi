@@ -137,7 +137,7 @@ export class TwitchController {
     return s !== null;
   }
 
-  public async signOut() {
+  public async signOut(): Promise<void> {
     // Delete token
     store.delete(TOKEN_STORE_KEY);
     // Clear session store

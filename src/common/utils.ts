@@ -69,9 +69,9 @@ export const writeFile = async (contents: string, filename: string, append?: boo
  * Taken from: https://stackoverflow.com/a/6274381
  * @param {Array} a items An array containing the items.
  */
-export const shuffle = (a: any[]) => {
+export const shuffle = <T>(a: T[]): T[] => {
   let j: number;
-  let x: any;
+  let x: T;
   for (let i = a.length - 1; i > 0; i--) {
     j = Math.floor(Math.random() * (i + 1));
     x = a[i];
@@ -102,7 +102,7 @@ export const parseSecondsDelayValue = (defaultSeconds: number, delaySeconds?: st
   return seconds;
 };
 
-export const capitalize = (s: string) => {
+export const capitalize = (s: string): string => {
   return s.charAt(0).toUpperCase() + s.slice(1);
 };
 

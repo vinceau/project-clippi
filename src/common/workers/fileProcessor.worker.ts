@@ -33,6 +33,7 @@ const startProcessing = async (options: FileProcessorOptions): Promise<ProcessOu
 };
 
 // Worker.ts
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const ctx: Worker = self as any;
 
 // Post data to parent thread

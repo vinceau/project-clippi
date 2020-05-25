@@ -86,6 +86,7 @@ export const RecorderView: React.FC = () => {
   const onSaveHandler = () => {
     saveQueueToFile().catch(console.error);
   };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onDragEnd = (result: any) => {
     const { destination, source } = result;
     if (!destination) {

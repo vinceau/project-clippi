@@ -15,6 +15,7 @@ export const deleteCookie = async (cookie: Cookie): Promise<void> => {
       url += cookie.domain;
       url += cookie.path;
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       sesh.cookies.remove(url, cookie.name, (err: any) => {
         if (err) {
           reject(err);
