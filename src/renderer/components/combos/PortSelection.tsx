@@ -2,13 +2,18 @@ import * as React from "react";
 import { Field } from "react-final-form";
 import { Checkbox, Grid, GridColumnProps } from "semantic-ui-react";
 
-export const PortSelection = (props: any) => {
+export interface PortSelectionProps {
+  value: number[];
+  onChange: (value: number[]) => void;
+}
+
+export const PortSelection: React.FC<PortSelectionProps> = (props) => {
   const { value, onChange } = props;
   const newOnChange = (port: number) => {
     let newValues: number[] = Array.from(value);
     if (value.includes(port)) {
       // We want to remove it from the list
-      newValues = (value as number[]).filter(a => a !== port);
+      newValues = value.filter((a) => a !== port);
     } else {
       newValues.push(port);
     }
@@ -23,7 +28,7 @@ export const PortSelection = (props: any) => {
   const allPorts = [1, 2, 3, 4];
   return (
     <Grid>
-      {allPorts.map(p => (
+      {allPorts.map((p) => (
         <Grid.Column key={`port-selection-${p}`} {...columnProps}>
           <Checkbox label={`Port ${p}`} checked={value.includes(p)} onChange={() => newOnChange(p)} />
         </Grid.Column>
@@ -32,14 +37,18 @@ export const PortSelection = (props: any) => {
   );
 };
 
-export const PortSelectAdapter = (props: any) => {
+export const PortSelectAdapter: React.FC<
+  {
+    name: string;
+  } & PortSelectionProps
+> = (props) => {
   const { name, ...rest } = props;
-  return (<Field name={name}>
-    {fprops => {
-      const { input, ...frest } = fprops;
-      return (
-        <PortSelection {...rest} {...frest} {...input} />
-      );
-    }}
-  </Field>);
+  return (
+    <Field name={name}>
+      {(fprops) => {
+        const { input, ...frest } = fprops;
+        return <PortSelection {...rest} {...frest} {...input} />;
+      }}
+    </Field>
+  );
 };

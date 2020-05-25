@@ -12,14 +12,14 @@ import { soundPlayer } from "@/lib/sounds";
 import { transformer } from "./transformer";
 
 const persistPlugin = createRematchPersist({
-    version: 1,
-    blacklist: ["tempContainer"],
-    transforms: [transformer],
+  version: 1,
+  blacklist: ["tempContainer"],
+  transforms: [transformer],
 });
 
 export const store = init({
-    models,
-    plugins: [persistPlugin],
+  models,
+  plugins: [persistPlugin],
 });
 
 export const dispatcher = store.dispatch;
@@ -32,40 +32,40 @@ export type iRootState = RematchRootState<typeof models>;
 export const Models = models;
 
 const storeSync = () => {
-    const state = store.getState();
+  const state = store.getState();
 
-    // Restore events
-    const events = state.slippi.events;
-    updateEventActionManager(events);
+  // Restore events
+  const events = state.slippi.events;
+  updateEventActionManager(events);
 
-    // Restore sound files
-    const soundFiles = state.filesystem.soundFiles;
-    soundPlayer.sounds = soundFiles;
+  // Restore sound files
+  const soundFiles = state.filesystem.soundFiles;
+  soundPlayer.sounds = soundFiles;
 
-    // Restore combo settings
-    const slippiSettings = state.slippi.comboProfiles[state.slippi.currentProfile];
-    const converted = mapConfigurationToFilterSettings(JSON.parse(slippiSettings));
-    if (slippiSettings) {
-        comboFilter.updateSettings(converted);
-    }
+  // Restore combo settings
+  const slippiSettings = state.slippi.comboProfiles[state.slippi.currentProfile];
+  const converted = mapConfigurationToFilterSettings(JSON.parse(slippiSettings));
+  if (slippiSettings) {
+    comboFilter.updateSettings(converted);
+  }
 };
 
 store.subscribe(() => {
-    storeSync();
+  storeSync();
 });
 
-obsConnection.connectionStatus$.subscribe(status => {
-    dispatcher.tempContainer.setOBSConnectionStatus(status);
+obsConnection.connectionStatus$.subscribe((status) => {
+  dispatcher.tempContainer.setOBSConnectionStatus(status);
 });
-obsConnection.recordingStatus$.subscribe(status => {
-    dispatcher.tempContainer.setOBSRecordingStatus(status);
+obsConnection.recordingStatus$.subscribe((status) => {
+  dispatcher.tempContainer.setOBSRecordingStatus(status);
 });
-obsConnection.scenes$.subscribe(scenes => {
-    dispatcher.tempContainer.setOBSScenes(scenes);
+obsConnection.scenes$.subscribe((scenes) => {
+  dispatcher.tempContainer.setOBSScenes(scenes);
 });
-dolphinRecorder.currentBasename$.subscribe(name => {
-    dispatcher.tempContainer.setDolphinPlaybackFile(name);
+dolphinRecorder.currentBasename$.subscribe((name) => {
+  dispatcher.tempContainer.setDolphinPlaybackFile(name);
 });
 dolphinRecorder.dolphinRunning$.subscribe((isRunning) => {
-    dispatcher.tempContainer.setDolphinRunning(isRunning);
+  dispatcher.tempContainer.setDolphinRunning(isRunning);
 });
