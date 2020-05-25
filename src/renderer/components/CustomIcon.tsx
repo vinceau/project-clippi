@@ -1,6 +1,7 @@
 import * as React from "react";
 
-import styled, { css } from "styled-components";
+import { css } from "@emotion/core";
+import styled from "@emotion/styled";
 
 export const CustomIcon: React.FC<{
   image: string;
