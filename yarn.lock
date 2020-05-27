@@ -3011,6 +3011,11 @@ core-js-pure@^3.0.0:
   resolved "https://registry.yarnpkg.com/core-js-pure/-/core-js-pure-3.6.5.tgz#c79e75f5e38dbc85a662d91eea52b8256d53b813"
   integrity sha512-lacdXOimsiD0QyNf9BC/mxivNJ/ybBGJXQFKzRekp1WTHoVUWsUHEn+2T8GJAzzIhyOuXA+gOxCVN3l+5PLPUA==
 
+core-js@^3.0.0:
+  version "3.6.5"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.6.5.tgz#7395dc273af37fb2e50e9bd3d9fe841285231d1a"
+  integrity sha512-vZVEEwZoIsI+vPEuoF9Iqf5H7/M3eeQqWlQnYa8FSKKePuYTf5MWnxb5SDAzCa60b3JBRS5g9b+Dq7b1y/RCrA==
+
 core-util-is@1.0.2, core-util-is@~1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/core-util-is/-/core-util-is-1.0.2.tgz#b5fd54220aa2bc5ab57aab7140c940754503c1a7"
@@ -8016,6 +8021,11 @@ react-beautiful-dnd@^13.0.0:
     redux "^4.0.4"
     use-memo-one "^1.1.1"
 
+react-children-utilities@^1.2.1:
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/react-children-utilities/-/react-children-utilities-1.3.3.tgz#4d6725b51471c119e5319a309d07c51543b65cb2"
+  integrity sha512-4VnHQweSerPlsKS65dBeKuAPDhHAOllDgsjDLLdluMOZ+1yOE29pFqdGAnnOnFVfhIhvYnGyRbiJ7NtMemsu7w==
+
 react-dom@^16.8.3:
   version "16.12.0"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.12.0.tgz#0da4b714b8d13c2038c9396b54a92baea633fe11"
@@ -8049,6 +8059,13 @@ react-final-form@^6.3.3:
   dependencies:
     "@babel/runtime" "^7.4.5"
     ts-essentials "^3.0.2"
+
+react-gamecube@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/react-gamecube/-/react-gamecube-0.0.1.tgz#460f10a16f35657212707b4d78e4b9a1e35f6772"
+  integrity sha512-PXGW5VsSBQuxQb3RyvjBoZ2w28Ge07y/mgbHZpOVr2jbkq3n2dX1AgPIKSLNkPBVROCIqidBBwqSYZJEamDhYw==
+  dependencies:
+    react-svg-unique-id "^1.3.3"
 
 react-hot-loader@4.6.5:
   version "4.6.5"
@@ -8174,6 +8191,14 @@ react-select@^3.0.8:
     prop-types "^15.6.0"
     react-input-autosize "^2.2.2"
     react-transition-group "^2.2.1"
+
+react-svg-unique-id@^1.3.3:
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/react-svg-unique-id/-/react-svg-unique-id-1.3.3.tgz#277a0f8d752bd3cbf8565bc7ee7c487bf4586eff"
+  integrity sha512-Cbm4jz1svWHUm9eGN4nALt3vzA9nZXw//oDYOYQIK5qgUPze3wru7od6I5Omhq6lRtUlOYPE5Rhx5659sLWcrw==
+  dependencies:
+    core-js "^3.0.0"
+    react-children-utilities "^1.2.1"
 
 react-tippy@^1.3.1:
   version "1.3.1"

@@ -27,7 +27,7 @@ export const ButtonInput: React.FC<{
         <Labelled title="Click to select a button combination" style={{ width: "100%" }}>
           <Target>
             {value && value.length > 0 ? (
-              <ButtonPreview value={value} />
+              <ButtonPreview value={value} pressed={true} />
             ) : (
               <SelectButton>No buttons selected</SelectButton>
             )}

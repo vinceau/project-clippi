@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { css, jsx } from "@emotion/core";
 import React from "react";
 
 import styled from "@emotion/styled";
@@ -17,68 +19,66 @@ import {
   XButton,
   YButton,
   ZButton,
-} from "./buttons";
+} from "react-gamecube";
 
 export const ButtonPreview: React.FC<{
   value: string[];
   pressed?: boolean;
 }> = (props) => {
   const { value, pressed } = props;
-  const shouldShow = (button: Input): boolean => {
-    return value.includes(button);
-  };
-  const Outer = styled.div`
-    font-size: 0.3em;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-  `;
   const ButtonContainer = styled.div<{
     show: boolean;
   }>`
-    display: ${(p) => (p.show ? "block" : "none")}
+    display: ${({ show }) => (show ? "block" : "none")};
     margin: 5px;
-    `;
+  `;
   return (
-    <Outer>
-      <ButtonContainer show={shouldShow(Input.Z)}>
+    <div
+      css={css`
+        font-size: 0.4em;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+      `}
+    >
+      <ButtonContainer show={value.includes(Input.Z)}>
         <ZButton pressed={pressed} />
       </ButtonContainer>
-      <ButtonContainer show={shouldShow(Input.L)}>
+      <ButtonContainer show={value.includes(Input.L)}>
         <LTrigger pressed={pressed} />
       </ButtonContainer>
-      <ButtonContainer show={shouldShow(Input.R)}>
+      <ButtonContainer show={value.includes(Input.R)}>
         <RTrigger pressed={pressed} />
       </ButtonContainer>
-      <ButtonContainer show={shouldShow(Input.A)}>
+      <ButtonContainer show={value.includes(Input.A)}>
         <AButton pressed={pressed} />
       </ButtonContainer>
-      <ButtonContainer show={shouldShow(Input.B)}>
+      <ButtonContainer show={value.includes(Input.B)}>
         <BButton pressed={pressed} />
       </ButtonContainer>
-      <ButtonContainer show={shouldShow(Input.X)}>
+      <ButtonContainer show={value.includes(Input.X)}>
         <XButton pressed={pressed} />
       </ButtonContainer>
-      <ButtonContainer show={shouldShow(Input.Y)}>
+      <ButtonContainer show={value.includes(Input.Y)}>
         <YButton pressed={pressed} />
       </ButtonContainer>
-      <ButtonContainer show={shouldShow(Input.START)}>
+      <ButtonContainer show={value.includes(Input.START)}>
         <StartButton pressed={pressed} />
       </ButtonContainer>
-      <ButtonContainer show={shouldShow(Input.D_UP)}>
+      <ButtonContainer show={value.includes(Input.D_UP)}>
         <DpadUp pressed={pressed} />
       </ButtonContainer>
-      <ButtonContainer show={shouldShow(Input.D_DOWN)}>
+      <ButtonContainer show={value.includes(Input.D_DOWN)}>
         <DpadDown pressed={pressed} />
       </ButtonContainer>
-      <ButtonContainer show={shouldShow(Input.D_LEFT)}>
+      <ButtonContainer show={value.includes(Input.D_LEFT)}>
         <DpadLeft pressed={pressed} />
       </ButtonContainer>
-      <ButtonContainer show={shouldShow(Input.D_RIGHT)}>
+      <ButtonContainer show={value.includes(Input.D_RIGHT)}>
         <DpadRight pressed={pressed} />
       </ButtonContainer>
-    </Outer>
+    </div>
   );
 };
 
