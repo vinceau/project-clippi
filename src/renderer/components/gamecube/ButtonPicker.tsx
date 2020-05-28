@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { css, jsx } from "@emotion/core";
 import React from "react";
 
 import { Button, Icon, Modal } from "semantic-ui-react";
@@ -19,6 +21,9 @@ export const ButtonPicker: React.FC<{
     // props value is the true value so reset the state
     setButtons(props.value || []);
     setOpened(true);
+  };
+  const onReset = () => {
+    setButtons([]);
   };
   const onSave = () => {
     console.log("saving...");
@@ -49,7 +54,18 @@ export const ButtonPicker: React.FC<{
           <ControllerLayout value={buttons} onChange={setButtons} />
         </div>
       </Modal.Content>
-      <Modal.Actions>
+      <Modal.Actions
+        css={css`
+          display: flex;
+          justify-content: space-between;
+          & > button {
+            margin: 0 !important;
+          }
+        `}
+      >
+        <Button disabled={buttons.length === 0} onClick={onReset}>
+          <Icon name="undo" /> Reset
+        </Button>
         <Button disabled={buttons.length === 0} color="green" onClick={onSave}>
           <Icon name="checkmark" /> Save
         </Button>
