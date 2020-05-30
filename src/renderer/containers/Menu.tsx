@@ -2,12 +2,10 @@ import * as React from "react";
 
 import styled from "@emotion/styled";
 
-import { useSelector } from "react-redux";
 import { Link, useRouteMatch } from "react-router-dom";
 import { Icon } from "semantic-ui-react";
 
 import { MenuIcon, MenuIconLink } from "@/components/layout/MenuIcon";
-import { iRootState } from "@/store";
 
 const Outer = styled.div`
   height: 100%;
@@ -16,10 +14,11 @@ const Outer = styled.div`
   justify-content: space-between;
 `;
 
-export const Menu: React.FC = () => {
+export const Menu: React.FC<{
+  settingsPage: string;
+}> = (props) => {
   const match = useRouteMatch();
-  const { latestPath } = useSelector((state: iRootState) => state.tempContainer);
-  const settingsPage = latestPath.settings || "/settings";
+  const { settingsPage } = props;
   return (
     <Outer>
       <div>
