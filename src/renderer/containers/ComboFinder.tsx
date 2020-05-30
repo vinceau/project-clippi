@@ -10,7 +10,7 @@ import { Field, FormContainer, Label } from "@/components/Form";
 import { RenameFiles } from "@/components/RenameFiles";
 import { Dispatch, iRootState } from "@/store";
 import { highlightInitialState } from "@/store/models/highlights";
-import { HighlightOptions } from "../processor/HighlightOptions";
+import { HighlightOptions } from "@/containers/processor/HighlightOptions";
 
 export const ComboFinder: React.FC = () => {
   const {

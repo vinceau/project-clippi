@@ -1,8 +1,11 @@
 import * as React from "react";
 
-import { iRootState } from "@/store";
-import { transparentize } from "polished";
 import { useSelector } from "react-redux";
+
+import { needsUpdate } from "@/lib/checkForUpdates";
+import { iRootState } from "@/store";
+
+import { transparentize } from "polished";
 import { Redirect, Route, Switch, useHistory, useRouteMatch } from "react-router-dom";
 import { Icon, Label, Menu } from "semantic-ui-react";
 import styled from "@emotion/styled";
@@ -20,7 +23,6 @@ import { SoundSettings } from "./SoundSettings";
 import { TwitchIntegration } from "./TwitchIntegration";
 
 import { SlippiIcon } from "@/components/SlippiIcon";
-import { needsUpdate } from "@/lib/checkForUpdates";
 import OBSLogo from "@/styles/images/obs.svg";
 
 const StyledMenuItem = styled(Menu.Item)<{
@@ -127,14 +129,18 @@ const InfoLabel = styled.div`
   align-items: center;
 `;
 
-export const SettingsPage: React.FC<{
-  onClose: () => void;
-}> = (props) => {
-  const { latestVersion } = useSelector((state: iRootState) => state.appContainer);
-  const { path } = useRouteMatch();
+export const SettingsView: React.FC = () => {
   const history = useHistory();
+  const { path } = useRouteMatch();
+  const { latestVersion } = useSelector((state: iRootState) => state.appContainer);
+  const { latestPath } = useSelector((state: iRootState) => state.tempContainer);
+
+  const mainPage = latestPath.main || "/";
 
   const updateAvailable = needsUpdate(latestVersion);
+
+  const onClose = () => history.push(mainPage);
+
   const isActive = (name: string): boolean => {
     return history.location.pathname.includes(name);
   };
@@ -142,7 +148,7 @@ export const SettingsPage: React.FC<{
   // Close settings page on Escape
   const escFunction = React.useCallback((event) => {
     if (event.keyCode === 27) {
-      props.onClose();
+      onClose();
     }
   }, []);
 
@@ -167,7 +173,7 @@ export const SettingsPage: React.FC<{
   return (
     <SettingsContainer>
       <CloseButton>
-        <Labelled onClick={props.onClose} title="Close">
+        <Labelled onClick={onClose} title="Close">
           <Icon name="close" />
         </Labelled>
       </CloseButton>

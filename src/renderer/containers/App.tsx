@@ -9,8 +9,7 @@ import { History } from "@/components/History";
 import { ToastContainer } from "@/components/toasts/ToastContainer";
 import { Dispatch } from "@/store";
 import { darkTheme, GlobalStyle, lightTheme, ThemeManager, ThemeMode, useTheme } from "@/styles";
-import { MainView } from "@/views/main/MainView";
-import { SettingsView } from "@/views/settings/SettingsView";
+import { MainView, SettingsView } from "@/views";
 
 const App: React.FC = () => {
   const dispatch = useDispatch<Dispatch>();

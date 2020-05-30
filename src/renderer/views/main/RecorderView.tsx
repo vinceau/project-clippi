@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Button, Icon } from "semantic-ui-react";
 
 import { DropPad } from "@/components/DropPad";
-import { OBSStatusBar } from "@/containers/recorder/OBSStatusBar";
+import { OBSStatusBar } from "@/containers/OBSStatusBar";
 import { saveQueueToFile } from "@/lib/dolphin";
 
 const Content = styled.div`
