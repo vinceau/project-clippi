@@ -59,6 +59,7 @@ const StyledToastContainer = styled(TC)`
     }
   }
   .Toastify__toast-body {
+    max-width: 100%;
     margin-left: 10px;
     font-size: 13px;
     font-weight: normal;

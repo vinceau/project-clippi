@@ -14,6 +14,7 @@ import {
 } from "common/workers/fileProcessor.worker.types";
 import { openComboInDolphin } from "./dolphin";
 import { notify } from "./utils";
+import { toastProcessingError } from "./toasts";
 
 const worker = new Worker();
 
@@ -82,6 +83,7 @@ const handleError = (payload: ErrorPayload): void => {
   const { message } = payload;
   dispatcher.tempContainer.setComboFinderProcessing(false);
   notify(message, "An error occurred during processing");
+  toastProcessingError(message);
 };
 
 export const startProcessing = (options: FileProcessorOptions): void => {
