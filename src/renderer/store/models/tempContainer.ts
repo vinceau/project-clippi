@@ -158,7 +158,8 @@ export const tempContainer = createModel({
     },
     setDolphinQueueOptions: (state: TempContainerState, payload: Partial<DolphinQueueOptions>): TempContainerState => {
       const newState = produce(state.dolphinQueueOptions, (draft) => {
-        draft = Object.assign({}, draft, payload);
+        const merged = Object.assign({}, draft, payload);
+        draft = merged;
       });
       return produce(state, (draft) => {
         draft.dolphinQueueOptions = newState;
