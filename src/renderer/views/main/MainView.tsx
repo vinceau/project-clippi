@@ -6,7 +6,7 @@ import styled from "@emotion/styled";
 
 import { Redirect, Route, Switch, useRouteMatch } from "react-router-dom";
 
-import { Menu } from "@/containers/Menu";
+import { Menu } from "@/components/layout/Menu";
 import { AutomatorView } from "./AutomatorView";
 import { RecorderView } from "./RecorderView";
 import { ReplayProcessorView } from "./ReplayProcessorView";
