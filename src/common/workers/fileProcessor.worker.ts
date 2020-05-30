@@ -55,15 +55,25 @@ ctx.addEventListener("message", async (event) => {
       }
 
       // Start the processing
-      const startPayload = event.data.payload as StartProcessingPayload;
-      const result = await startProcessing(startPayload.options);
-      ctx.postMessage({
-        type: FileProcessorWorkerMessage.COMPLETE,
-        payload: {
-          result,
-          options: startPayload.options,
-        },
-      });
+      try {
+        const startPayload = event.data.payload as StartProcessingPayload;
+        const result = await startProcessing(startPayload.options);
+        ctx.postMessage({
+          type: FileProcessorWorkerMessage.COMPLETE,
+          payload: {
+            result,
+            options: startPayload.options,
+          },
+        });
+      } catch (err) {
+        console.error(err);
+        ctx.postMessage({
+          type: FileProcessorWorkerMessage.ERROR,
+          payload: {
+            message: err.message,
+          },
+        });
+      }
       break;
     case FileProcessorParentMessage.STOP:
       fileProcessor.stop();

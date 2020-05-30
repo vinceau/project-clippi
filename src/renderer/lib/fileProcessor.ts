@@ -10,6 +10,7 @@ import {
   FileProcessorParentMessage,
   FileProcessorWorkerMessage,
   ProgressingPayload,
+  ErrorPayload,
 } from "common/workers/fileProcessor.worker.types";
 import { openComboInDolphin } from "./dolphin";
 import { notify } from "./utils";
@@ -26,6 +27,10 @@ worker.onmessage = (event) => {
       handleProgress(progressPayload);
       break;
     case FileProcessorWorkerMessage.BUSY:
+      break;
+    case FileProcessorWorkerMessage.ERROR:
+      const errorPayload: ErrorPayload = event.data.payload;
+      handleError(errorPayload);
       break;
     case FileProcessorWorkerMessage.COMPLETE:
       const completePayload: CompletePayload = event.data.payload;
@@ -71,6 +76,12 @@ const handleComplete = (payload: CompletePayload): void => {
   } else {
     notify(message, `Highlight processing complete`);
   }
+};
+
+const handleError = (payload: ErrorPayload): void => {
+  const { message } = payload;
+  dispatcher.tempContainer.setComboFinderProcessing(false);
+  notify(message, "An error occurred during processing");
 };
 
 export const startProcessing = (options: FileProcessorOptions): void => {

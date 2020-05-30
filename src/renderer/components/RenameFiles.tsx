@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { css, jsx } from "@emotion/core";
+import { jsx } from "@emotion/core";
 import * as React from "react";
 
 import insertTextAtCursor from "insert-text-at-cursor";
