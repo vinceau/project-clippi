@@ -18,6 +18,7 @@ import {
   StockType,
   Metadata,
 } from "@vinceau/slp-realtime";
+import { sanitizeFilename } from "./utils";
 
 const exampleFilename = "Game_20190323T111317.slp";
 
@@ -187,8 +188,8 @@ export const generateGlobalContext = (context?: Context, date?: Moment): Context
   const m = date ? date : moment();
   const d = m.toDate();
   const newContext = {
-    date: d.toLocaleDateString(),
-    time: d.toLocaleTimeString(),
+    date: sanitizeFilename(d.toLocaleDateString()),
+    time: sanitizeFilename(d.toLocaleTimeString()),
   };
   for (const snip of momentSnippets) {
     newContext[snip] = m.local().format(snip);
