@@ -38,6 +38,7 @@ jobs:
         run: |
           yarn install
       - name: Lint
+        if: matrix.os != 'windows-latest'
         run: |
           yarn run lint
       - name: Build App
