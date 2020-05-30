@@ -4,6 +4,7 @@ export enum FileProcessorWorkerMessage {
   PROGRESS = "PROGRESS",
   BUSY = "BUSY",
   COMPLETE = "COMPLETE",
+  ERROR = "ERROR",
 }
 
 export interface ProgressingPayload {
@@ -16,6 +17,10 @@ export interface ProgressingPayload {
 export interface CompletePayload {
   result: ProcessOutput;
   options: FileProcessorOptions;
+}
+
+export interface ErrorPayload {
+  message: string;
 }
 
 export enum FileProcessorParentMessage {

@@ -9,6 +9,7 @@ declare module "*.tiff";
 declare module "*.md";
 
 declare module "node-notifier";
+declare module "filename-reserved-regex";
 declare module "insert-text-at-cursor";
 
 declare module "formatter" {

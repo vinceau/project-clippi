@@ -1,6 +1,8 @@
 import fs from "fs-extra";
 import path from "path";
 import trash from "trash";
+import filenamify from "filenamify";
+import filenameReservedRegex from "filename-reserved-regex";
 
 import { EOL } from "os";
 
@@ -120,4 +122,38 @@ export const secondsToFrames = (secs: number): number => {
 
 export const millisToFrames = (ms: number): number => {
   return secondsToFrames(ms / 1000);
+};
+
+export const sanitizeFilename = (name: string): string => {
+  return filenamify(name, {
+    replacement: ".",
+  });
+};
+
+export const invalidFilename = (name: string, options?: { allowPaths?: boolean }): boolean => {
+  if (options && options.allowPaths) {
+    // Check if any parts of the folder path are invalid
+    return path
+      .normalize(name) // Make sure the path separators are correct
+      .split(path.sep) // Split on each path component
+      .filter((p) => p.length > 0) // Make sure we have something to check
+      .some((p) => !validFilename(p)); // Check if any of them are invalid
+  }
+
+  return !validFilename(name);
+};
+
+// Based on code from: https://github.com/sindresorhus/valid-filename
+// Checks for filename validity but without the length check
+const validFilename = (name: string): boolean => {
+  if (!name) {
+    return false;
+  }
+  if (filenameReservedRegex().test(name) || filenameReservedRegex.windowsNames().test(name)) {
+    return false;
+  }
+  if (/^\.\.?$/.test(name)) {
+    return false;
+  }
+  return true;
 };

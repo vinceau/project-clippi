@@ -119,6 +119,11 @@ export class FileProcessor {
     return this.processing;
   }
 
+  public reset(): void {
+    this.processing = false;
+    this.stopRequested = false;
+  }
+
   public stop(): void {
     this.stopRequested = true;
   }

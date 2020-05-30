@@ -11,6 +11,7 @@ import { SlideReveal } from "@/components/ProcessSection";
 import { TemplatePreview } from "@/components/TemplatePreview";
 import { defaultRenameFormat } from "@/store/models/highlights";
 import { Labelled } from "./Labelled";
+import { invalidFilename } from "common/utils";
 
 const FormatLabel = styled.div`
   display: flex;
@@ -28,9 +29,12 @@ const ResetButton = styled.span`
   }
 `;
 
-const PreviewContainer = styled.p`
-  word-break: break-all;
+const PreviewContainer = styled.div`
   margin-top: 1rem;
+`;
+
+const ErrorContainer = styled.div`
+  color: red;
 `;
 
 const metadata = {
@@ -63,6 +67,7 @@ export const RenameFiles: React.FC<{
     const alreadyHasBrackets = leftChars === "{{" && rightChars === "}}";
     insertTextAtCursor(textRef.current, alreadyHasBrackets ? text : `{{${text}}}`);
   };
+  const isInvalid = invalidFilename(renameFormat, { allowPaths: true });
   return (
     <div>
       <div style={{ textAlign: "right", marginBottom: "5px" }}>
@@ -99,8 +104,14 @@ export const RenameFiles: React.FC<{
           onBlur={() => props.onChange(renameFormat)}
         />
         <PreviewContainer>
-          <b>Preview: </b>
-          <TemplatePreview template={renameFormat} metadata={metadata} />
+          {isInvalid ? (
+            <ErrorContainer>Invalid filename format. Please check that there are no invalid characters.</ErrorContainer>
+          ) : (
+            <div>
+              <b>Preview: </b>
+              <TemplatePreview template={renameFormat} metadata={metadata} />
+            </div>
+          )}
         </PreviewContainer>
       </Field>
     </div>
