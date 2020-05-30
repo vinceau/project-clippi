@@ -143,6 +143,8 @@ export const invalidFilename = (name: string, options?: { allowPaths?: boolean }
   return !validFilename(name);
 };
 
+// Based on code from: https://github.com/sindresorhus/valid-filename
+// Checks for filename validity but without the length check
 const validFilename = (name: string): boolean => {
   if (!name) {
     return false;
