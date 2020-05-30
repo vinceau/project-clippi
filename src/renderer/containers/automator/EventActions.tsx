@@ -12,7 +12,6 @@ import { Labelled } from "@/components/Labelled";
 import { actionComponents } from "@/containers/actions";
 import { generateRandomEvent } from "@/lib/events";
 import { ActionEvent, testRunActions } from "@/lib/realtime";
-import { isDevelopment } from "common/utils";
 import { ActionInput, AddActionInput } from "./ActionInputs";
 
 const allEvents: ActionEvent[] = [
@@ -24,10 +23,6 @@ const allEvents: ActionEvent[] = [
   ActionEvent.CONVERSION_OCCURRED,
 ];
 
-if (isDevelopment) {
-  allEvents.push(ActionEvent.TEST_EVENT);
-}
-
 const mapEventToName: { [eventName: string]: string } = {
   [ActionEvent.GAME_START]: "a new game starts",
   [ActionEvent.GAME_END]: "the game ends",
@@ -35,7 +30,6 @@ const mapEventToName: { [eventName: string]: string } = {
   [ActionEvent.PLAYER_SPAWN]: "a player spawns",
   [ActionEvent.COMBO_OCCURRED]: "a combo occurs",
   [ActionEvent.CONVERSION_OCCURRED]: "a conversion occurs",
-  [ActionEvent.TEST_EVENT]: "a test event occurs",
 };
 
 /*

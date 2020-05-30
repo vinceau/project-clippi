@@ -26,7 +26,6 @@ export enum ActionEvent {
   PLAYER_DIED = "player-died",
   COMBO_OCCURRED = "combo-occurred",
   CONVERSION_OCCURRED = "conversion-occurred",
-  TEST_EVENT = "test-event",
 }
 
 const errorHandler = (err: any) => {
