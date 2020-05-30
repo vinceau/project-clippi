@@ -9,6 +9,7 @@ import { startProcessing, stopProcessing } from "@/lib/fileProcessor";
 import { mapConfigurationToFilterSettings } from "@/lib/profile";
 import { ComboFilterSettings, Input } from "@vinceau/slp-realtime";
 import { ButtonInputOptions, ComboOptions, FileProcessorOptions, FindComboOption } from "common/fileProcessor";
+import { invalidFilename } from "common/utils";
 
 const Outer = styled.div`
   display: flex;
@@ -66,7 +67,10 @@ export const ProcessorStatusBar: React.FC = () => {
   const complete = comboFinderPercent === 100;
   const validButtonCombo =
     !findCombos || highlightMethod !== FindComboOption.BUTTON_INPUTS || inputButtonCombo.length > 0;
-  const processBtnDisabled = (!findCombos && !renameFiles) || !combosFilePath || !validButtonCombo;
+
+  // If we're renaming make sure we have a valid rename format
+  const isInvalid = renameFiles && invalidFilename(renameFormat, { allowPaths: true });
+  const processBtnDisabled = (!findCombos && !renameFiles) || !combosFilePath || !validButtonCombo || isInvalid;
 
   const handleProcessClick = () => {
     console.log(
