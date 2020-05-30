@@ -133,19 +133,11 @@ export const sanitizeFilename = (name: string): string => {
 export const invalidFilename = (name: string, options?: { allowPaths?: boolean }): boolean => {
   if (options && options.allowPaths) {
     // Check if any parts of the folder path are invalid
-    console.log(`Checking name: >>>${name}<<<`);
-    const norm = path.normalize(name);
-    console.log(`Normalised name: >>>${norm}<<<`);
-    const parts = norm.split(path.sep);
-    for (const p of parts) {
-      console.log(`Checking part: ${p}`);
-      if (p && !validFilename(p)) {
-        console.log(`${p} is invalid`);
-        return true;
-      }
-    }
-    console.log(`${name} is valid`);
-    return false;
+    return path
+      .normalize(name) // Make sure the path separators are correct
+      .split(path.sep) // Split on each path component
+      .filter((p) => p.length > 0) // Make sure we have something to check
+      .some((p) => !validFilename(p)); // Check if any of them are invalid
   }
 
   return !validFilename(name);
