@@ -1,5 +1,4 @@
-// Worker.ts
-// import fs from "fs-extra";
+// File processor worker
 
 import { FileProcessor, FileProcessorOptions, ProcessOutput, ProcessResult } from "../fileProcessor";
 import {
@@ -10,10 +9,6 @@ import {
 } from "./fileProcessor.worker.types";
 
 const fileProcessor = new FileProcessor();
-
-// const readFiles = async (dir: string) => {
-//     return await fs.readdir(dir);
-// };
 
 const startProcessing = async (options: FileProcessorOptions): Promise<ProcessOutput> => {
   const callback = (index: number, total: number, filename: string, result: ProcessResult): void => {
@@ -32,12 +27,8 @@ const startProcessing = async (options: FileProcessorOptions): Promise<ProcessOu
   return fileProcessor.process(options, callback);
 };
 
-// Worker.ts
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const ctx: Worker = self as any;
-
-// Post data to parent thread
-// ctx.postMessage({ foo: "foo" });
 
 // Respond to message from parent thread
 ctx.addEventListener("message", async (event) => {
@@ -73,12 +64,11 @@ ctx.addEventListener("message", async (event) => {
             message: err.message,
           },
         });
+        fileProcessor.reset();
       }
       break;
     case FileProcessorParentMessage.STOP:
       fileProcessor.stop();
       break;
   }
-  // const res = await readFiles(".");
-  // console.log(res);
 });
