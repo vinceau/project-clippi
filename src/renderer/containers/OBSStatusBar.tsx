@@ -9,7 +9,7 @@ import { useHistory } from "react-router-dom";
 import { Button, Icon } from "semantic-ui-react";
 
 import { Labelled } from "@/components/Labelled";
-import { RecordButton } from "@/components/recorder/RecordButton";
+import { RecordButton } from "@/components/RecordButton";
 import obsLogo from "@/styles/images/obs.png";
 import styled from "@emotion/styled";
 
