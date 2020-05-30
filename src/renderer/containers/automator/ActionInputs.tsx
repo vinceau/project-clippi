@@ -60,7 +60,13 @@ const ActionComponentBlock = (props: any) => {
   );
 };
 
-export const ActionInput = (props: any) => {
+export const ActionInput: React.FC<{
+  selectPrefix: string;
+  value: ActionDefinition;
+  onChange: (a: ActionDefinition) => void;
+  disabledActions: string[];
+  onRemove: () => void;
+}> = (props) => {
   const { value, onChange, onRemove, selectPrefix, disabledActions } = props;
   const onActionChange = (action: string) => {
     const params = actionComponents[action].defaultParams;
@@ -102,7 +108,10 @@ export const ActionInput = (props: any) => {
   );
 };
 
-export const AddActionInput = (props: any) => {
+export const AddActionInput: React.FC<{
+  onChange: (action: string) => void;
+  disabledActions: string[];
+}> = (props) => {
   const { onChange, disabledActions } = props;
   const unusedOptions = allActions.filter((a) => !disabledActions.includes(a));
   const noOtherActions = unusedOptions.length === allActions.length;

@@ -9,8 +9,8 @@ import { useSelector } from "react-redux";
 
 import { Text } from "@/components/Form";
 import { ProgressBar } from "@/components/ProgressBar";
-import { ProcessorStatusBar } from "@/containers/processor/ProcessorStatusBar";
-import { ComboFinder } from "@/containers/settings/ComboFinder";
+import { ProcessorStatusBar } from "@/containers/ProcessorStatusBar";
+import { ComboFinder } from "@/containers/ComboFinder";
 
 const Content = styled.div`
   padding: 20px;

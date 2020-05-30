@@ -5,7 +5,7 @@ import { darken, lighten } from "polished";
 import React from "react";
 import { Icon } from "semantic-ui-react";
 import styled from "@emotion/styled";
-import { Labelled } from "../Labelled";
+import { Labelled } from "./Labelled";
 
 import { DolphinEntry } from "@vinceau/slp-realtime";
 import { Draggable } from "react-beautiful-dnd";

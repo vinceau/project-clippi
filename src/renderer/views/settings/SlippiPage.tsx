@@ -7,7 +7,7 @@ import { ConnectionStatusCard } from "@/components/ConnectionStatusCard";
 import { streamManager } from "@/lib/realtime";
 import { statusToColor, statusToLabel } from "@/lib/status";
 import { Dispatch, iRootState } from "@/store";
-import { SlippiConnectionPlaceholder } from "../SlippiConnectionPlaceholder";
+import { SlippiConnectionPlaceholder } from "../../containers/SlippiConnectionPlaceholder";
 
 import { PageHeader } from "@/components/Form";
 import slippiLogo from "@/styles/images/slippi.png";

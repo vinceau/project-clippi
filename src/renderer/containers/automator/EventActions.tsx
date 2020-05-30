@@ -9,10 +9,9 @@ import styled from "@emotion/styled";
 import { CodeBlock } from "@/components/CodeBlock";
 import { InlineDropdown } from "@/components/InlineInputs";
 import { Labelled } from "@/components/Labelled";
-import { actionComponents } from "@/containers/actions";
+import { actionComponents, EventActionConfig } from "@/containers/actions";
 import { generateRandomEvent } from "@/lib/events";
 import { ActionEvent, testRunActions } from "@/lib/realtime";
-import { isDevelopment } from "common/utils";
 import { ActionInput, AddActionInput } from "./ActionInputs";
 
 const allEvents: ActionEvent[] = [
@@ -24,10 +23,6 @@ const allEvents: ActionEvent[] = [
   ActionEvent.CONVERSION_OCCURRED,
 ];
 
-if (isDevelopment) {
-  allEvents.push(ActionEvent.TEST_EVENT);
-}
-
 const mapEventToName: { [eventName: string]: string } = {
   [ActionEvent.GAME_START]: "a new game starts",
   [ActionEvent.GAME_END]: "the game ends",
@@ -35,7 +30,6 @@ const mapEventToName: { [eventName: string]: string } = {
   [ActionEvent.PLAYER_SPAWN]: "a player spawns",
   [ActionEvent.COMBO_OCCURRED]: "a combo occurs",
   [ActionEvent.CONVERSION_OCCURRED]: "a conversion occurs",
-  [ActionEvent.TEST_EVENT]: "a test event occurs",
 };
 
 /*
@@ -64,23 +58,28 @@ const EventHeaderButtons = styled.div`
   }
 `;
 
-export const EventActions = (props: any) => {
+export const EventActions: React.FC<{
+  disabledOptions: string[];
+  value: EventActionConfig;
+  onChange: (e: EventActionConfig) => void;
+  onRemove: () => void;
+}> = (props) => {
   const { value, onChange, onRemove, disabledOptions } = props;
   // const [notifyValue, setValue] = React.useState({});
   const onEventChange = (newEvent: string) => {
-    const newValue = produce(value, (draft: any) => {
+    const newValue = produce(value, (draft: EventActionConfig) => {
       draft.event = newEvent;
     });
     onChange(newValue);
   };
   const onActionChange = (index: number, newAction: Action) => {
-    const newValue = produce(value, (draft: any) => {
+    const newValue = produce(value, (draft: EventActionConfig) => {
       draft.actions[index] = newAction;
     });
     onChange(newValue);
   };
   const onActionRemove = (index: number) => {
-    const newValue = produce(value, (draft: any) => {
+    const newValue = produce(value, (draft: EventActionConfig) => {
       draft.actions.splice(index, 1);
     });
     onChange(newValue);
@@ -126,7 +125,7 @@ export const EventActions = (props: any) => {
           const prefix = i === 0 ? "Then " : "And ";
           return (
             <ActionInput
-              key={`${value.name}--${a.name}`}
+              key={`${value.event}--${a.name}`}
               selectPrefix={prefix}
               value={a}
               onChange={onInnerActionChange}
@@ -143,7 +142,10 @@ export const EventActions = (props: any) => {
   );
 };
 
-export const AddEventDropdown = (props: any) => {
+export const AddEventDropdown: React.FC<{
+  onChange: any;
+  disabledOptions: any[];
+}> = (props) => {
   const { onChange, disabledOptions } = props;
   const unusedOptions = allEvents.filter((a) => !disabledOptions.includes(a));
   const addText = generateRandomEvent();

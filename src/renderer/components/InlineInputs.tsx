@@ -28,7 +28,7 @@ export const InlineDropdown = (props: any) => {
   }
   return (
     <span>
-      {props.prefix ? `${props.prefix} ` : ""}
+      {prefix ? `${prefix} ` : ""}
       <Dropdown
         scrolling={true}
         inline={true}
