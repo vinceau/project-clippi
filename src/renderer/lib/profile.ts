@@ -1,12 +1,12 @@
 import { Character, ComboFilterSettings, getCharacterName } from "@vinceau/slp-realtime";
 
 interface PerCharPercentObject {
-    [characterId: number]: number;
+  [characterId: number]: number;
 }
 
 export interface CharPercentOption {
-    character: Character;
-    percent: number;
+  character: Character;
+  percent: number;
 }
 
 export interface ComboConfiguration extends Omit<ComboFilterSettings, "perCharacterMinComboPercent"> {
@@ -14,56 +14,62 @@ export interface ComboConfiguration extends Omit<ComboFilterSettings, "perCharac
 }
 
 export const mapConfigurationToFilterSettings = (config: Partial<ComboConfiguration>): Partial<ComboFilterSettings> => {
-    const { perCharMinComboPercents, ...rest } = config;
-    if (!perCharMinComboPercents) {
-        return config;
-    }
+  const { perCharMinComboPercents, ...rest } = config;
+  if (!perCharMinComboPercents) {
+    return config;
+  }
 
-    return {
-        ...rest,
-        perCharacterMinComboPercent: mapCharacterPercentArrayToObject(perCharMinComboPercents),
-    };
+  return {
+    ...rest,
+    perCharacterMinComboPercent: mapCharacterPercentArrayToObject(perCharMinComboPercents),
+  };
 };
 
-export const mapFilterSettingsToConfiguration = (settings: Partial<ComboFilterSettings>): Partial<ComboConfiguration> => {
-    const { perCharacterMinComboPercent, ...rest } = settings;
-    if (!perCharacterMinComboPercent) {
-        return settings;
-    }
+export const mapFilterSettingsToConfiguration = (
+  settings: Partial<ComboFilterSettings>
+): Partial<ComboConfiguration> => {
+  const { perCharacterMinComboPercent, ...rest } = settings;
+  if (!perCharacterMinComboPercent) {
+    return settings;
+  }
 
-    return {
-        ...rest,
-        perCharMinComboPercents: mapObjectToCharacterPercentArray(perCharacterMinComboPercent),
-    };
+  return {
+    ...rest,
+    perCharMinComboPercents: mapObjectToCharacterPercentArray(perCharacterMinComboPercent),
+  };
 };
 
 export const mapCharacterPercentArrayToObject = (percents?: CharPercentOption[]): PerCharPercentObject => {
-    const newValue = {};
-    if (!percents) {
-        percents = [];
+  const newValue = {};
+  if (!percents) {
+    percents = [];
+  }
+  percents.forEach((c: CharPercentOption) => {
+    if (c) {
+      newValue[c.character] = c.percent;
     }
-    percents.forEach((c: CharPercentOption) => {
-        if (c) {
-            newValue[c.character] = c.percent;
-        }
-    });
-    return newValue;
+  });
+  return newValue;
 };
 
 export const mapObjectToCharacterPercentArray = (charPercents: PerCharPercentObject): CharPercentOption[] => {
-    const percentArray: CharPercentOption[] = [];
-    for (const [key, value] of Object.entries(charPercents)) {
-        percentArray.push({
-            character: parseInt(key, 10),
-            percent: value as number,
-        });
-    }
-    percentArray.sort((a, b) => {
-        const aName = getCharacterName(a.character);
-        const bName = getCharacterName(b.character);
-        if (aName < bName) { return -1; }
-        if (aName > bName) { return 1; }
-        return 0;
+  const percentArray: CharPercentOption[] = [];
+  for (const [key, value] of Object.entries(charPercents)) {
+    percentArray.push({
+      character: parseInt(key, 10),
+      percent: value as number,
     });
-    return percentArray;
+  }
+  percentArray.sort((a, b) => {
+    const aName = getCharacterName(a.character);
+    const bName = getCharacterName(b.character);
+    if (aName < bName) {
+      return -1;
+    }
+    if (aName > bName) {
+      return 1;
+    }
+    return 0;
+  });
+  return percentArray;
 };

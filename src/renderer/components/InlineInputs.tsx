@@ -1,9 +1,14 @@
 import * as React from "react";
 
 import { Dropdown, Input } from "semantic-ui-react";
-import styled from "styled-components";
+import styled from "@emotion/styled";
 
-const generateOptions = (events: string[], mapOptionToLabel?: (opt: string) => string, selectedValue?: string, disabledEvents?: string[]): Array<{ key: string; text: string; value: string }> => {
+const generateOptions = (
+  events: string[],
+  mapOptionToLabel?: (opt: string) => string,
+  selectedValue?: string,
+  disabledEvents?: string[]
+): Array<{ key: string; text: string; value: string }> => {
   const disabled = disabledEvents || [];
   return events.map((e) => ({
     key: e,
@@ -23,7 +28,7 @@ export const InlineDropdown = (props: any) => {
   }
   return (
     <span>
-      {props.prefix ? `${props.prefix} ` : ""}
+      {prefix ? `${prefix} ` : ""}
       <Dropdown
         scrolling={true}
         inline={true}
@@ -54,15 +59,7 @@ export const BufferedInput = (props: any) => {
   const newOnChange = (_: any, data: any) => {
     setNewValue(data.value);
   };
-  return (
-    <Input
-      value={newValue}
-      onChange={newOnChange}
-      onKeyDown={onKeyDown}
-      onBlur={submitValue}
-      {...rest}
-    />
-  );
+  return <Input value={newValue} onChange={newOnChange} onKeyDown={onKeyDown} onBlur={submitValue} {...rest} />;
 };
 
 export const SimpleInput = styled.input`
@@ -78,7 +75,7 @@ export const DelayInput: React.FC<{
   value?: string;
   placeholder?: string;
   onChange: (delay: string) => void;
-}> = props => {
+}> = (props) => {
   const [delayAmount, setDelayAmount] = React.useState(props.value || "0");
   return (
     <SimpleInput
@@ -96,23 +93,19 @@ export const NotifyInput: React.FC<{
   onChange: (notify: boolean) => void;
   options?: any;
 }> = (props) => {
-  const options = props.options ? props.options : [
-    {
-      key: "notify-me",
-      value: true,
-      text: "notify",
-    },
-    {
-      key: "dont-notify-me",
-      value: false,
-      text: "don't notify",
-    },
-  ];
-  return (
-    <InlineDropdown
-      value={Boolean(props.value)}
-      onChange={props.onChange}
-      options={options}
-    />
-  );
+  const options = props.options
+    ? props.options
+    : [
+        {
+          key: "notify-me",
+          value: true,
+          text: "notify",
+        },
+        {
+          key: "dont-notify-me",
+          value: false,
+          text: "don't notify",
+        },
+      ];
+  return <InlineDropdown value={Boolean(props.value)} onChange={props.onChange} options={options} />;
 };

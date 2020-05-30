@@ -1,19 +1,19 @@
 import React from "react";
 
-import styled from "styled-components";
+import styled from "@emotion/styled";
 import { Labelled } from "./Labelled";
 
 const Outer = styled.span`
-text-decoration-style: dotted;
-text-decoration-line: underline;
+  text-decoration-style: dotted;
+  text-decoration-line: underline;
 `;
 
 export const Hint: React.FC<{
-    text: string;
+  text: string;
 }> = (props) => {
-    return (
-        <Labelled title={props.text} >
-            <Outer>{props.children}</Outer>
-        </Labelled>
-    );
+  return (
+    <Labelled title={props.text}>
+      <Outer>{props.children}</Outer>
+    </Labelled>
+  );
 };

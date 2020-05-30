@@ -6,12 +6,4 @@ import { slippi } from "./slippi";
 import { tempContainer } from "./tempContainer";
 import { twitch } from "./twitch";
 
-export {
-    appContainer,
-    filesystem,
-    highlights,
-    inputButtons,
-    slippi,
-    tempContainer,
-    twitch,
-};
+export { appContainer, filesystem, highlights, inputButtons, slippi, tempContainer, twitch };

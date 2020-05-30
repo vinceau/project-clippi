@@ -1,15 +1,23 @@
+/** @jsx jsx */
+import { css, jsx } from "@emotion/core";
 import * as React from "react";
 
 import { GameStartType } from "@vinceau/slp-realtime";
 import { parseFileRenameFormat } from "common/context";
 
 export const TemplatePreview: React.FC<{
-    template: string;
-    settings?: GameStartType,
-    metadata?: any,
+  template: string;
+  settings?: GameStartType;
+  metadata?: any;
 }> = (props) => {
-    const parsedTemplate = parseFileRenameFormat(props.template, props.settings, props.metadata);
-    return (
-    <span>{parsedTemplate}</span>
-    );
+  const parsedTemplate = parseFileRenameFormat(props.template, props.settings, props.metadata);
+  return (
+    <span
+      css={css`
+        word-break: break-all;
+      `}
+    >
+      {parsedTemplate}
+    </span>
+  );
 };

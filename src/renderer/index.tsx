@@ -1,7 +1,7 @@
 // Import all the styles first since they will be overwritten
-import "react-tippy/dist/tippy.css";                 // React-tippy styles
-import "react-toastify/dist/ReactToastify.min.css";  // Toast styles
-import "semantic-ui-css/semantic.min.css";           // Semantic UI styles
+import "react-tippy/dist/tippy.css"; // React-tippy styles
+import "react-toastify/dist/ReactToastify.min.css"; // Toast styles
+import "semantic-ui-css/semantic.min.css"; // Semantic UI styles
 
 import "@/styles/index.scss"; // Our custom styles
 
@@ -16,11 +16,12 @@ import App from "./containers/App";
 const rootEl = document.getElementById("app");
 
 const render = (Component: any) =>
+  // eslint-disable-next-line react/no-render-return-value
   ReactDOM.render(
     <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-          <Component />
-        </PersistGate>
+      <PersistGate loading={null} persistor={persistor}>
+        <Component />
+      </PersistGate>
     </Provider>,
     rootEl
   );

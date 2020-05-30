@@ -1,5 +1,5 @@
 import { transparentize } from "polished";
-import { css, keyframes } from "styled-components";
+import { css, keyframes } from "@emotion/core";
 
 const pulse = (size: string, color: string) => keyframes`
     0% {
@@ -17,5 +17,5 @@ const pulse = (size: string, color: string) => keyframes`
 `;
 
 export const pulseAnimation = (size: string, color: string) => css`
-    ${pulse(size, color)} 1.5s infinite;
+  ${pulse(size, color)} 1.5s infinite;
 `;
