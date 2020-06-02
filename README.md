@@ -20,20 +20,19 @@ Everything is open source and fully-customisable. The possibilities are endless.
 
 <div align="center">
 
-*Detect events and execute actions!*
+_Detect events and execute actions!_
 
 ![Project Clippi main screenshot](/docs/images/1-automator.png)
 
-*Built in replay processor helps you find combos and organise your SLP replays!*
+_Built in replay processor helps you find combos and organise your SLP replays!_
 
 ![slp file processor screenshot](/docs/images/2-processor.png)
 
-*Easily load SLP files into Dolphin with just a drag and drop!*
+_Easily load SLP files into Dolphin with just a drag and drop!_
 
 ![Project Clippi playback queue screenshot](/docs/images/3-playback.png)
 
 </div>
-
 
 ## Highlights
 
@@ -46,9 +45,9 @@ Everything is open source and fully-customisable. The possibilities are endless.
 
 Download Project Clippi for your operating system using the links below or check out [the releases page](https://github.com/vinceau/project-clippi/releases/latest) for more information.
 
-* [Project Clippi for Windows](https://github.com/vinceau/project-clippi/releases/latest/download/Project-Clippi-1.3.1.exe)
-* [Project Clippi for MacOS](https://github.com/vinceau/project-clippi/releases/latest/download/Project-Clippi-1.3.1.dmg)
-* [Project Clippi for Linux](https://github.com/vinceau/project-clippi/releases/latest/download/Project-Clippi-1.3.1.AppImage)
+- [Project Clippi for Windows](https://github.com/vinceau/project-clippi/releases/latest/download/Project-Clippi-1.3.3.exe)
+- [Project Clippi for MacOS](https://github.com/vinceau/project-clippi/releases/latest/download/Project-Clippi-1.3.3.dmg)
+- [Project Clippi for Linux](https://github.com/vinceau/project-clippi/releases/latest/download/Project-Clippi-1.3.3.AppImage)
 
 ## Usage
 
@@ -56,16 +55,16 @@ To make combo videos using Project Clippi, check out [this guide](https://medium
 
 To take advantage of real-time game events you will need to connect Project Clippi to a Slippi source. You can connect to a console source using the [Slippi Desktop App](https://slippi.gg/downloads) as a relay, or connect to a folder that has live SLP files being written to it. e.g. Slippi Dolphin. Follow the links below based on what source you are connecting to.
 
-* [Connecting to a Slippi Relay](docs/connect_to_relay/README.md)
-* [Connecting to a folder (Dolphin)](docs/connect_to_folder/README.md)
+- [Connecting to a Slippi Relay](docs/connect_to_relay/README.md)
+- [Connecting to a folder (Dolphin)](docs/connect_to_folder/README.md)
 
 ## Contributing
 
 If you found Project Clippi useful and would like to give back here's how you can:
 
-* [Spread the word!](https://twitter.com/intent/retweet?tweet_id=1215995909915336705) The more people that use it, the more Project Clippi can improve!
-* If you have ideas for new features, or would like to report a bug, please tweet at [@ProjectClippi](https://twitter.com/ProjectClippi).
-* If you are gifted in the way of code, you can help by adding more detectable events and more executable actions. Dive into the docs for the [`slp-realtime` library](https://github.com/vinceau/slp-realtime) which underpins this project and [the source code](https://github.com/vinceau/project-clippi) for the Project Clippi front-end.
+- [Spread the word!](https://twitter.com/intent/retweet?tweet_id=1215995909915336705) The more people that use it, the more Project Clippi can improve!
+- If you have ideas for new features, or would like to report a bug, please tweet at [@ProjectClippi](https://twitter.com/ProjectClippi).
+- If you are gifted in the way of code, you can help by adding more detectable events and more executable actions. Dive into the docs for the [`slp-realtime` library](https://github.com/vinceau/slp-realtime) which underpins this project and [the source code](https://github.com/vinceau/project-clippi) for the Project Clippi front-end.
 
 ## Development
 
