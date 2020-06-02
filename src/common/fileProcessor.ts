@@ -19,12 +19,13 @@ import {
   SlpRealTime,
   SlpStream,
   Metadata,
+  throttleInputButtons,
 } from "@vinceau/slp-realtime";
 import { Observable } from "rxjs";
-import { filter, map, throttleTime } from "rxjs/operators";
+import { filter, map } from "rxjs/operators";
 
 import { parseFileRenameFormat } from "./context";
-import { assertExtension, deleteFile } from "./utils";
+import { assertExtension, deleteFile, millisToFrames } from "./utils";
 
 const SLP_FILE_EXT = ".slp";
 
@@ -241,8 +242,9 @@ export class FileProcessor {
   private _findButtonInputs(filename: string, options: Partial<ButtonInputOptions>): Observable<DolphinPlaybackItem> {
     const inputOptions = Object.assign({}, defaultButtonInputOptions, options);
     const inputs$ = this.realtime.input.buttonCombo(inputOptions.buttonCombo, inputOptions.holdDurationFrames);
+    const lockoutFrames = millisToFrames(inputOptions.captureLockoutMs);
     return inputs$.pipe(
-      throttleTime(inputOptions.captureLockoutMs),
+      throttleInputButtons(lockoutFrames),
       map(({ frame }) => {
         const startFrame = Math.max(Frames.FIRST, frame - inputOptions.preInputFrames);
         const endFrame = frame + inputOptions.postInputFrames;
