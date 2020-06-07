@@ -1,13 +1,14 @@
 import * as React from "react";
 import styled from "@emotion/styled";
 
-import { Icon } from "semantic-ui-react";
+import { Button, Icon } from "semantic-ui-react";
 import { ActionEvent } from "@/lib/realtime";
 import { AddEventDropdown, EventActions } from "./EventActions";
 
 import { EventActionConfig } from "@/containers/actions";
 import { Dispatch, iRootState } from "@/store";
 import { useDispatch, useSelector } from "react-redux";
+import { EventModal } from "./EventModal";
 
 const Header = styled.div`
   font-size: 1.6rem;
@@ -83,6 +84,9 @@ export const Automator: React.FC = () => {
           <Icon name="flag outline" />
         </Header>
         <div>
+          <EventModal>
+            <Button>Add event</Button>
+          </EventModal>
           {val.map((e, i) => {
             return (
               <div key={e.event} onClick={() => setSelected(i)}>
