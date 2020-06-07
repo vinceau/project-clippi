@@ -4,11 +4,13 @@ import styled from "@emotion/styled";
 
 import { Icon } from "semantic-ui-react";
 
-import { FormContainer, Text } from "@/components/Form";
+import { Text } from "@/components/Form";
 import { Automator } from "@/containers/automator/Automator";
 import { StatusBar } from "@/containers/automator/StatusBar";
 
 const Content = styled.div`
+  display: flex;
+  flex-direction: column;
   padding: 20px;
   height: calc(100% - 56px);
   overflow: hidden;
@@ -33,13 +35,11 @@ export const AutomatorView: React.FC = () => {
   return (
     <Outer>
       <Content>
-        <FormContainer>
-          <h1>
-            Automator <Icon name="bolt" />
-          </h1>
-          <Text>Automatically execute commands when an in-game event occurs</Text>
-          <Automator />
-        </FormContainer>
+        <h1>
+          Automator <Icon name="bolt" />
+        </h1>
+        <Text>Automatically execute commands when an in-game event occurs</Text>
+        <Automator />
       </Content>
       <Footer>
         <StatusBar />
