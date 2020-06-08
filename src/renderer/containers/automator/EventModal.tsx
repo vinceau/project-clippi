@@ -23,19 +23,8 @@ const countryOptions = [
   { value: InputEvent.BUTTON_COMBO, text: "Button Input Combination" },
 ];
 
-const options = [
-  {
-    key: "hold",
-    value: true,
-    text: "held",
-  },
-  {
-    key: "press",
-    value: false,
-    text: "pressed",
-  },
-];
-const holdOptions = ["frames", "seconds"].map((o) => ({ key: o, value: o, text: o }));
+const holdOptions = ["held", "pressed"].map((o) => ({ key: o, value: o, text: o }));
+const holdDurationOptions = ["frames", "seconds"].map((o) => ({ key: o, value: o, text: o }));
 
 const ErrorText = styled(Text)`
   color: red;
@@ -46,7 +35,8 @@ export const EventModal: React.FC<{
   value?: string[];
   onChange?: (newButtons: string[]) => void;
 }> = (props) => {
-  const { errors, handleSubmit, control } = useForm();
+  const { watch, errors, handleSubmit, control, getValues } = useForm();
+  const formValues = getValues();
   const theme = useTheme();
   const [eventName, setEventName] = React.useState("");
   const [error, setError] = React.useState("");
@@ -64,6 +54,10 @@ export const EventModal: React.FC<{
   const onSubmit = (d: any) => {
     console.log(d);
   };
+  const watchButtonHold = watch("inputButtonHold", "pressed");
+  const watchEventType = watch("eventType", countryOptions[0].value);
+  const hidePlayerOptions = watchEventType === GameEvent.GAME_START || watchEventType === GameEvent.GAME_END;
+  const hideButtonInputs = watchEventType !== InputEvent.BUTTON_COMBO;
   const onReset = () => {};
   const onSave = () => {
     console.log("save button clicked");
@@ -113,7 +107,7 @@ export const EventModal: React.FC<{
         {errors.eventName && <ErrorText>Events must have a unique name</ErrorText>}
       </Modal.Header>
       <Modal.Content>
-        <Field padding="bottom" border="bottom">
+        <Field padding="bottom">
           <Label>Event Type</Label>
           <Controller
             as={
@@ -136,48 +130,62 @@ export const EventModal: React.FC<{
             defaultValue={countryOptions[0].value}
           />
         </Field>
-        <Field>
-          <Label>Match Player</Label>
-          <Controller
-            as={<PortSelection label="Player" />}
-            control={control}
-            onChange={([v]) => v}
-            defaultValue={[1, 2, 3, 4]}
-            rules={{ validate: (val) => val && val.length > 0 }}
-            name="portFilter"
-          />
-          {errors.portFilter && errors.portFilter.type === "validate" && (
-            <ErrorText>At least one player must be selected</ErrorText>
-          )}
-        </Field>
-
-        <Field>
-          <Label>Button Combination</Label>
-          <div style={{ marginBottom: "10px", lineHeight: "28px" }}>
-            {"Trigger event when the following combination is "}
-            <InlineDropdown value={inputButtonHold} onChange={setInputButtonHold} options={options} />
-            {inputButtonHold && (
-              <span>
-                {" for "}
-                <span style={{ marginRight: "10px" }}>
-                  <DelayInput value={inputButtonHoldAmount.toString()} onChange={setHoldAmount} placeholder={`2`} />
-                </span>
-                <InlineDropdown value={inputButtonHoldUnits} onChange={setHoldUnits} options={holdOptions} />
-              </span>
+        {!hidePlayerOptions && (
+          <Field>
+            <Label>Match Player</Label>
+            <Controller
+              as={<PortSelection label="Player" />}
+              control={control}
+              onChange={([v]) => v}
+              defaultValue={[1, 2, 3, 4]}
+              rules={{ validate: (val) => val && val.length > 0 }}
+              name="portFilter"
+            />
+            {errors.portFilter && errors.portFilter.type === "validate" && (
+              <ErrorText>At least one player must be selected</ErrorText>
             )}
-          </div>
-          <Controller
-            as={<ButtonInput />}
-            control={control}
-            onChange={([v]) => v}
-            defaultValue={[]}
-            rules={{ validate: (val) => val && val.length > 0 }}
-            name="buttonCombo"
-          />
-          {errors.buttonCombo && errors.buttonCombo.type === "validate" && (
-            <ErrorText>Button combination must be specified</ErrorText>
-          )}
-        </Field>
+          </Field>
+        )}
+
+        {!hideButtonInputs && (
+          <Field>
+            <Label>Button Combination</Label>
+            <div style={{ marginBottom: "10px", lineHeight: "28px" }}>
+              {"Trigger event when the following combination is "}
+              <Controller
+                as={<InlineDropdown options={holdOptions} />}
+                defaultValue="pressed"
+                onChange={([x]) => {
+                  console.log("value changed");
+                  console.log(x);
+                  return x;
+                }}
+                control={control}
+                name="inputButtonHold"
+              />
+              {watchButtonHold === "held" && (
+                <span>
+                  {" for "}
+                  <span style={{ marginRight: "10px" }}>
+                    <DelayInput value={inputButtonHoldAmount.toString()} onChange={setHoldAmount} placeholder={`2`} />
+                  </span>
+                  <InlineDropdown value={inputButtonHoldUnits} onChange={setHoldUnits} options={holdDurationOptions} />
+                </span>
+              )}
+            </div>
+            <Controller
+              as={<ButtonInput />}
+              control={control}
+              onChange={([v]) => v}
+              defaultValue={[]}
+              rules={{ validate: (val) => val && val.length > 0 }}
+              name="buttonCombo"
+            />
+            {errors.buttonCombo && errors.buttonCombo.type === "validate" && (
+              <ErrorText>Button combination must be specified</ErrorText>
+            )}
+          </Field>
+        )}
       </Modal.Content>
       <Modal.Actions
         css={css`
