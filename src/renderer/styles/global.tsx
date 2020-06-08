@@ -48,20 +48,6 @@ const makeGlobalStyles = (theme: Theme) => css`
     color: ${theme.foreground};
   }
 
-  .ui.buttons {
-    font-size: 1em;
-    margin: 0;
-  }
-
-  .ui.dropdown .menu > .item,
-  .ui.checkbox,
-  .ui.segment,
-  .ui.button,
-  .ui.buttons .button,
-  .ui.modal,
-  .ui.form {
-    font-size: 1em;
-  }
   .ui.modal.${ThemeMode.DARK}, #app .${ThemeMode.DARK} {
     font-weight: 100;
 
