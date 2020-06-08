@@ -4,6 +4,7 @@ import { Field } from "react-final-form";
 import { Checkbox, Grid, GridColumnProps } from "semantic-ui-react";
 
 export interface PortSelectionProps {
+  label?: string;
   value?: number[];
   onChange?: (value: number[]) => void;
 }
@@ -11,6 +12,7 @@ export interface PortSelectionProps {
 export const PortSelection: React.FC<PortSelectionProps> = (props) => {
   const { onChange } = props;
   const value = props.value || [];
+  const label = props.label || "Port";
   const newOnChange = (port: number) => {
     let newValues: number[] = Array.from(value);
     if (value.includes(port)) {
@@ -34,7 +36,7 @@ export const PortSelection: React.FC<PortSelectionProps> = (props) => {
     <Grid>
       {allPorts.map((p) => (
         <Grid.Column key={`port-selection-${p}`} {...columnProps}>
-          <Checkbox label={`Port ${p}`} checked={value.includes(p)} onChange={() => newOnChange(p)} />
+          <Checkbox label={`${label} ${p}`} checked={value.includes(p)} onChange={() => newOnChange(p)} />
         </Grid.Column>
       ))}
     </Grid>
