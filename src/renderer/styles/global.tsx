@@ -57,6 +57,11 @@ const makeGlobalStyles = (theme: Theme) => css`
       color: ${theme.foreground};
     }
 
+    .ui.default.dropdown:not(.button) > .text,
+    .ui.dropdown:not(.button) > .default.text {
+      color: ${theme.foreground2};
+    }
+
     .ui.accordion .title:not(.ui),
     .ui.form .field > label,
     .ui.checkbox input:focus ~ label,
