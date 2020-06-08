@@ -5,6 +5,8 @@ import styled from "@emotion/styled";
 import { darken, lighten } from "polished";
 
 import { ThemeMode, useTheme } from "@/styles";
+import { ButtonInput } from "@/components/gamecube/ButtonInput";
+import { DelayInput, InlineDropdown } from "@/components/InlineInputs";
 import { Field, Label, Text } from "@/components/Form";
 import { StockEvent, InputEvent, ComboEvent, GameEvent } from "@vinceau/slp-realtime";
 import { useForm, Controller } from "react-hook-form";
@@ -12,14 +14,33 @@ import { Select, Input, Button, Icon, Modal } from "semantic-ui-react";
 import { PortSelection } from "@/components/combos/PortSelection";
 
 const countryOptions = [
-  { value: GameEvent.GAME_START, text: "Game start" },
-  { value: GameEvent.GAME_END, text: "Game end" },
-  { value: StockEvent.PLAYER_SPAWN, text: "Player spawn" },
-  { value: StockEvent.PLAYER_DIED, text: "Player death" },
-  { value: ComboEvent.END, text: "Combo occurs" },
-  { value: ComboEvent.CONVERSION, text: "Conversion occurs" },
-  { value: InputEvent.BUTTON_COMBO, text: "Button combination input" },
+  { value: GameEvent.GAME_START, text: "Game Start" },
+  { value: GameEvent.GAME_END, text: "Game End" },
+  { value: StockEvent.PLAYER_SPAWN, text: "Player Spawn" },
+  { value: StockEvent.PLAYER_DIED, text: "Player Death" },
+  { value: ComboEvent.END, text: "Combo Occurs" },
+  { value: ComboEvent.CONVERSION, text: "Conversion Occurs" },
+  { value: InputEvent.BUTTON_COMBO, text: "Button Input Combination" },
 ];
+
+const options = [
+  {
+    key: "hold",
+    value: true,
+    text: "held",
+  },
+  {
+    key: "press",
+    value: false,
+    text: "pressed",
+  },
+];
+const holdOptions = ["frames", "seconds"].map((o) => ({ key: o, value: o, text: o }));
+
+const ErrorText = styled(Text)`
+  color: red;
+  font-weight: bold;
+`;
 
 export const EventModal: React.FC<{
   value?: string[];
@@ -30,6 +51,10 @@ export const EventModal: React.FC<{
   const [eventName, setEventName] = React.useState("");
   const [error, setError] = React.useState("");
   const [opened, setOpened] = React.useState<boolean>(false);
+  const [inputButtonHold, setInputButtonHold] = React.useState(false);
+  const [inputButtonCombo, setInputButtonCombo] = React.useState<string[]>([]);
+  const [inputButtonHoldUnits, setHoldUnits] = React.useState<string>("seconds");
+  const [inputButtonHoldAmount, setHoldAmount] = React.useState<string>("2");
   const onOpen = () => {
     // props value is the true value so reset the state
     setError("");
@@ -71,12 +96,12 @@ export const EventModal: React.FC<{
               css={css`
                 width: 100%;
               `}
-              defaultValue=""
               placeholder="Event Name"
               transparent={true}
             />
           }
           control={control}
+          defaultValue=""
           onChange={([_, x]) => {
             console.log("value changed:");
             console.log(x.value);
@@ -85,7 +110,7 @@ export const EventModal: React.FC<{
           rules={{ required: true }}
           name="eventName"
         />
-        {errors.eventName && <span>This is a required field</span>}
+        {errors.eventName && <ErrorText>Events must have a unique name</ErrorText>}
       </Modal.Header>
       <Modal.Content>
         <Field padding="bottom" border="bottom">
@@ -110,42 +135,59 @@ export const EventModal: React.FC<{
             name="eventType"
             defaultValue={countryOptions[0].value}
           />
-          <Text>
-            Combo profiles are used to determine the combo and conversion events as well as the combos found by the{" "}
-            <b>Replay Processor</b>. You can create new profiles by typing a new profile name in the dropdown.
-          </Text>
         </Field>
         <Field>
-          <Label>Port Filter</Label>
+          <Label>Match Player</Label>
           <Controller
-            as={<PortSelection />}
+            as={<PortSelection label="Player" />}
             control={control}
-            onChange={([x]) => {
-              console.log("value changed:");
-              console.log(JSON.stringify(x));
-              return x;
-            }}
+            onChange={([v]) => v}
             defaultValue={[1, 2, 3, 4]}
             rules={{ validate: (val) => val && val.length > 0 }}
             name="portFilter"
           />
-          <Text>Only match the event for players using these ports.</Text>
+          {errors.portFilter && errors.portFilter.type === "validate" && (
+            <ErrorText>At least one player must be selected</ErrorText>
+          )}
         </Field>
 
-        {errors.portFilter && errors.portFilter.type === "validate" && (
-          <span>At least one port has to be selected</span>
-        )}
+        <Field>
+          <Label>Button Combination</Label>
+          <div style={{ marginBottom: "10px", lineHeight: "28px" }}>
+            {"Trigger event when the following combination is "}
+            <InlineDropdown value={inputButtonHold} onChange={setInputButtonHold} options={options} />
+            {inputButtonHold && (
+              <span>
+                {" for "}
+                <span style={{ marginRight: "10px" }}>
+                  <DelayInput value={inputButtonHoldAmount.toString()} onChange={setHoldAmount} placeholder={`2`} />
+                </span>
+                <InlineDropdown value={inputButtonHoldUnits} onChange={setHoldUnits} options={holdOptions} />
+              </span>
+            )}
+          </div>
+          <Controller
+            as={<ButtonInput />}
+            control={control}
+            onChange={([v]) => v}
+            defaultValue={[]}
+            rules={{ validate: (val) => val && val.length > 0 }}
+            name="buttonCombo"
+          />
+          {errors.buttonCombo && errors.buttonCombo.type === "validate" && (
+            <ErrorText>Button combination must be specified</ErrorText>
+          )}
+        </Field>
       </Modal.Content>
       <Modal.Actions
         css={css`
           display: flex;
-          justify-content: space-between;
+          justify-content: flex-end;
           & > button {
             margin: 0 !important;
           }
         `}
       >
-        <div>{error && <span>{error}</span>}</div>
         <Button color="green" onClick={onSave}>
           <Icon name="checkmark" /> Save
         </Button>
