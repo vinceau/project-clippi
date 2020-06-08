@@ -53,6 +53,7 @@
     "react-final-form": "^6.3.3",
     "react-final-form-arrays": "^3.1.1",
     "react-gamecube": "^1.0.4",
+    "react-hook-form": "^5.7.2",
     "react-markdown": "^4.3.1",
     "react-redux": "^7.1.0",
     "react-router": "^5.1.2",
