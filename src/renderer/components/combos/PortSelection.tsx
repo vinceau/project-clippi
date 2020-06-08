@@ -4,12 +4,13 @@ import { Field } from "react-final-form";
 import { Checkbox, Grid, GridColumnProps } from "semantic-ui-react";
 
 export interface PortSelectionProps {
-  value: number[];
-  onChange: (value: number[]) => void;
+  value?: number[];
+  onChange?: (value: number[]) => void;
 }
 
 export const PortSelection: React.FC<PortSelectionProps> = (props) => {
-  const { value, onChange } = props;
+  const { onChange } = props;
+  const value = props.value || [];
   const newOnChange = (port: number) => {
     let newValues: number[] = Array.from(value);
     if (value.includes(port)) {
@@ -19,7 +20,9 @@ export const PortSelection: React.FC<PortSelectionProps> = (props) => {
       newValues.push(port);
     }
     newValues.sort();
-    onChange(newValues);
+    if (onChange) {
+      onChange(newValues);
+    }
   };
   const columnProps: GridColumnProps = {
     mobile: 8,
