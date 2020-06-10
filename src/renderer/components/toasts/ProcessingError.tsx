@@ -2,7 +2,7 @@
 import { css, jsx } from "@emotion/core";
 import React from "react";
 
-import { A } from "../ExternalLink";
+import { ExternalLink as A } from "../ExternalLink";
 
 export const ProcessingError: React.FC<{
   errorMessage: string;

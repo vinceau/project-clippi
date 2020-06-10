@@ -7,7 +7,7 @@ import { format } from "timeago.js";
 
 import { device } from "@/styles/device";
 import { TwitchClip } from "common/types";
-import { A } from "../ExternalLink";
+import { ExternalLink as A } from "../ExternalLink";
 import { Labelled } from "../Labelled";
 
 const ClipContainer = styled.div`
