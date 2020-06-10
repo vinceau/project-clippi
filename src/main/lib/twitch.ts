@@ -62,7 +62,14 @@ export class TwitchController {
     return this.currentUser;
   }
 
-  public async clip(channelName?: string, postToChat?: boolean, createAfterDelay?: boolean): Promise<string> {
+  public async clip(
+    channelName?: string,
+    options?: Partial<{
+      postToChat: boolean;
+      chatMessagePrefix: string;
+      createAfterDelay: boolean;
+    }>
+  ): Promise<string> {
     if (!this.client || !this.currentUser) {
       throw new Error("Not logged in to Twitch");
     }
@@ -80,15 +87,16 @@ export class TwitchController {
     // Create Twitch clip
     const clipId = await this.client.helix.clips.createClip({
       channelId,
-      createAfterDelay,
+      createAfterDelay: options && options.createAfterDelay,
     });
 
-    if (postToChat) {
+    if (options && options.postToChat) {
       // Join chat channel and post message
       try {
         const channelToJoin = channelName || this.currentUser.name;
         const url = `https://clips.twitch.tv/${clipId}`;
-        await this.chat(channelToJoin, `Clipped with Project Clippi: ${url}`);
+        const prefix = options.chatMessagePrefix || "";
+        await this.chat(channelToJoin, prefix + url);
       } catch (err) {
         // Catch the error so we can always return the clip ID
         console.error(err);
