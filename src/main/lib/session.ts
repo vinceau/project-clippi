@@ -47,8 +47,8 @@ const fetchCookies = async (filter?: Filter): Promise<Cookie[]> => {
 export const clearAllCookies = async (domain?: string): Promise<void> => {
   const cookies = await fetchCookies();
   for (const cookie of cookies) {
-    // Check if we're only clearing certain cookies
-    if (domain && cookie.domain && !cookie.domain.includes(domain)) {
+    // Skip if we're only clearing certain cookies
+    if (domain && (!cookie.domain || !cookie.domain.includes(domain))) {
       continue;
     }
     await deleteCookie(cookie);
