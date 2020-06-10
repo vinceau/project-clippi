@@ -2,7 +2,7 @@ import TwitchClient, { HelixUser } from "twitch";
 import ChatClient from "twitch-chat-client";
 import ElectronAuthProvider from "twitch-electron-auth-provider";
 
-import { deleteCookie, fetchCookies } from "./session";
+import { clearAllCookies } from "./session";
 
 import Store from "electron-store";
 
@@ -27,17 +27,6 @@ const validScopes = (neededScopes: string[], existingScopes: string[]): boolean 
     }
   }
   return true;
-};
-
-// Authenticate with Twitch reusing existing tokens if available
-
-const clearAllTwitchCookies = async (): Promise<void> => {
-  const cookies = await fetchCookies();
-  for (const cookie of cookies) {
-    if (cookie.domain && cookie.domain.includes("twitch.tv")) {
-      await deleteCookie(cookie);
-    }
-  }
 };
 
 export class TwitchController {
@@ -141,7 +130,7 @@ export class TwitchController {
     // Delete token
     store.delete(TOKEN_STORE_KEY);
     // Clear session store
-    await clearAllTwitchCookies();
+    await clearAllCookies("twitch.tv");
     // Reset current state
     this._resetState();
   }

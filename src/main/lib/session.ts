@@ -1,7 +1,7 @@
 import { Cookie, Filter, session } from "electron";
 
 // Based on: stackoverflow.com/questions/41314826/delete-all-cookies-in-electron-desktop-app
-export const deleteCookie = async (cookie: Cookie): Promise<void> => {
+const deleteCookie = async (cookie: Cookie): Promise<void> => {
   return new Promise((resolve, reject) => {
     const sesh = session.defaultSession;
     if (!sesh) {
@@ -27,12 +27,11 @@ export const deleteCookie = async (cookie: Cookie): Promise<void> => {
   });
 };
 
-export const fetchCookies = async (filter?: Filter): Promise<Cookie[]> => {
+const fetchCookies = async (filter?: Filter): Promise<Cookie[]> => {
   return new Promise((resolve, reject) => {
     const sesh = session.defaultSession;
     if (sesh) {
-      const cookieFilter = filter ? filter : {};
-      sesh.cookies.get(cookieFilter, (err, cookies) => {
+      sesh.cookies.get(filter || {}, (err, cookies) => {
         if (err) {
           reject(err);
         } else {
@@ -43,4 +42,15 @@ export const fetchCookies = async (filter?: Filter): Promise<Cookie[]> => {
       resolve([]);
     }
   });
+};
+
+export const clearAllCookies = async (domain?: string): Promise<void> => {
+  const cookies = await fetchCookies();
+  for (const cookie of cookies) {
+    // Check if we're only clearing certain cookies
+    if (domain && cookie.domain && !cookie.domain.includes(domain)) {
+      continue;
+    }
+    await deleteCookie(cookie);
+  }
 };
