@@ -39,22 +39,13 @@ export const EventModal: React.FC<{
   value?: string[];
   onChange?: (newButtons: string[]) => void;
 }> = (props) => {
+  const { watch, errors, handleSubmit, control } = useForm();
   const { currentProfile, comboProfiles } = useSelector((state: iRootState) => state.slippi);
-  const { watch, errors, handleSubmit, control, getValues } = useForm();
-  const formValues = getValues();
   const theme = useTheme();
-  const [eventName, setEventName] = React.useState("");
-  const [error, setError] = React.useState("");
   const [opened, setOpened] = React.useState<boolean>(false);
-  const [inputButtonHold, setInputButtonHold] = React.useState(false);
-  const [inputButtonCombo, setInputButtonCombo] = React.useState<string[]>([]);
-  const [inputButtonHoldUnits, setHoldUnits] = React.useState<string>("seconds");
-  const [inputButtonHoldAmount, setHoldAmount] = React.useState<string>("2");
   const profileOptions = Object.keys(comboProfiles).map(stringToOptions);
   const onOpen = () => {
     // props value is the true value so reset the state
-    setError("");
-    setEventName("");
     setOpened(true);
   };
   const onSubmit = (d: any) => {
@@ -62,25 +53,12 @@ export const EventModal: React.FC<{
   };
   const watchButtonHold = watch("inputButtonHold", "pressed");
   const watchEventType = watch("eventType", countryOptions[0].value);
-  const hidePlayerOptions = watchEventType === GameEvent.GAME_START || watchEventType === GameEvent.GAME_END;
-  const hideButtonInputs = watchEventType !== InputEvent.BUTTON_COMBO;
+  const showPlayerOptions = ![GameEvent.GAME_START, GameEvent.GAME_END].includes(watchEventType);
+  const showButtonInputs = watchEventType === InputEvent.BUTTON_COMBO;
   const showComboProfileInput = [ComboEvent.CONVERSION, ComboEvent.END].includes(watchEventType);
-  const onReset = () => {};
   const onSave = () => {
     console.log("save button clicked");
     handleSubmit(onSubmit)();
-    /*
-    if (!eventName) {
-      setError("Please give this event a name");
-      return;
-    }
-    console.log("saving...");
-    console.log(`event name is: ${eventName}`);
-    // if (props.onChange) {
-    //   props.onChange(buttons);
-    // }
-    setOpened(false);
-    */
   };
   return (
     <Modal
@@ -137,7 +115,7 @@ export const EventModal: React.FC<{
             defaultValue={countryOptions[0].value}
           />
         </Field>
-        {!hidePlayerOptions && (
+        {showPlayerOptions && (
           <Field>
             <Label>Match Player</Label>
             <Controller
@@ -179,7 +157,7 @@ export const EventModal: React.FC<{
           </Field>
         )}
 
-        {!hideButtonInputs && (
+        {showButtonInputs && (
           <Field>
             <Label>Button Combination</Label>
             <div style={{ marginBottom: "10px", lineHeight: "28px" }}>
