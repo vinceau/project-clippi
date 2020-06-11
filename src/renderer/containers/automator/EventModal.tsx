@@ -199,9 +199,21 @@ export const EventModal: React.FC<{
                 <span>
                   {" for "}
                   <span style={{ marginRight: "10px" }}>
-                    <DelayInput value={inputButtonHoldAmount.toString()} onChange={setHoldAmount} placeholder={`2`} />
+                    <Controller
+                      as={<DelayInput placeholder="2" />}
+                      defaultValue="2"
+                      onChange={([val]) => val}
+                      control={control}
+                      name="inputButtonHoldDelay"
+                    />
                   </span>
-                  <InlineDropdown value={inputButtonHoldUnits} onChange={setHoldUnits} options={holdDurationOptions} />
+                  <Controller
+                    as={<InlineDropdown options={holdDurationOptions} />}
+                    defaultValue="seconds"
+                    onChange={([val]) => val}
+                    control={control}
+                    name="inputButtonHoldUnits"
+                  />
                 </span>
               )}
             </div>
