@@ -3,6 +3,8 @@ import { css, jsx } from "@emotion/core";
 import React from "react";
 import styled from "@emotion/styled";
 import { darken, lighten } from "polished";
+import { useDispatch, useSelector } from "react-redux";
+import { Dispatch, iRootState } from "@/store";
 
 import { ThemeMode, useTheme } from "@/styles";
 import { ButtonInput } from "@/components/gamecube/ButtonInput";
@@ -23,8 +25,10 @@ const countryOptions = [
   { value: InputEvent.BUTTON_COMBO, text: "Button Input Combination" },
 ];
 
-const holdOptions = ["held", "pressed"].map((o) => ({ key: o, value: o, text: o }));
-const holdDurationOptions = ["frames", "seconds"].map((o) => ({ key: o, value: o, text: o }));
+const stringToOptions = (o: string) => ({ key: o, value: o, text: o });
+
+const holdOptions = ["held", "pressed"].map(stringToOptions);
+const holdDurationOptions = ["frames", "seconds"].map(stringToOptions);
 
 const ErrorText = styled(Text)`
   color: red;
@@ -35,6 +39,7 @@ export const EventModal: React.FC<{
   value?: string[];
   onChange?: (newButtons: string[]) => void;
 }> = (props) => {
+  const { currentProfile, comboProfiles } = useSelector((state: iRootState) => state.slippi);
   const { watch, errors, handleSubmit, control, getValues } = useForm();
   const formValues = getValues();
   const theme = useTheme();
@@ -45,6 +50,7 @@ export const EventModal: React.FC<{
   const [inputButtonCombo, setInputButtonCombo] = React.useState<string[]>([]);
   const [inputButtonHoldUnits, setHoldUnits] = React.useState<string>("seconds");
   const [inputButtonHoldAmount, setHoldAmount] = React.useState<string>("2");
+  const profileOptions = Object.keys(comboProfiles).map(stringToOptions);
   const onOpen = () => {
     // props value is the true value so reset the state
     setError("");
@@ -58,6 +64,7 @@ export const EventModal: React.FC<{
   const watchEventType = watch("eventType", countryOptions[0].value);
   const hidePlayerOptions = watchEventType === GameEvent.GAME_START || watchEventType === GameEvent.GAME_END;
   const hideButtonInputs = watchEventType !== InputEvent.BUTTON_COMBO;
+  const showComboProfileInput = [ComboEvent.CONVERSION, ComboEvent.END].includes(watchEventType);
   const onReset = () => {};
   const onSave = () => {
     console.log("save button clicked");
@@ -144,6 +151,31 @@ export const EventModal: React.FC<{
             {errors.portFilter && errors.portFilter.type === "validate" && (
               <ErrorText>At least one player must be selected</ErrorText>
             )}
+          </Field>
+        )}
+
+        {showComboProfileInput && (
+          <Field>
+            <Label>Combo Profile</Label>
+            <Controller
+              as={
+                <Select
+                  css={css`
+                    width: 100%;
+                  `}
+                  placeholder="Combo profile"
+                  options={profileOptions}
+                />
+              }
+              control={control}
+              onChange={([_, x]) => {
+                console.log("value changed:");
+                console.log(x.value);
+                return x.value;
+              }}
+              name="comboProfile"
+              defaultValue={currentProfile}
+            />
           </Field>
         )}
 
