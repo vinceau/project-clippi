@@ -6,11 +6,12 @@ import { Checkbox, Grid, GridColumnProps } from "semantic-ui-react";
 export interface PortSelectionProps {
   label?: string;
   value?: number[];
+  zeroIndex?: boolean;
   onChange?: (value: number[]) => void;
 }
 
 export const PortSelection: React.FC<PortSelectionProps> = (props) => {
-  const { onChange } = props;
+  const { zeroIndex, onChange } = props;
   const value = props.value || [];
   const label = props.label || "Port";
   const newOnChange = (port: number) => {
@@ -31,12 +32,19 @@ export const PortSelection: React.FC<PortSelectionProps> = (props) => {
     tablet: 4,
     computer: 4,
   };
-  const allPorts = [1, 2, 3, 4];
+  let allPorts = [1, 2, 3, 4];
+  if (zeroIndex) {
+    allPorts = allPorts.map((n) => n - 1);
+  }
   return (
     <Grid>
       {allPorts.map((p) => (
         <Grid.Column key={`port-selection-${p}`} {...columnProps}>
-          <Checkbox label={`${label} ${p}`} checked={value.includes(p)} onChange={() => newOnChange(p)} />
+          <Checkbox
+            label={`${label} ${zeroIndex ? p + 1 : p}`}
+            checked={value.includes(p)}
+            onChange={() => newOnChange(p)}
+          />
         </Grid.Column>
       ))}
     </Grid>
