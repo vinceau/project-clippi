@@ -5,5 +5,6 @@ import { inputButtons } from "./inputButtons";
 import { slippi } from "./slippi";
 import { tempContainer } from "./tempContainer";
 import { twitch } from "./twitch";
+import { automator } from "./automator";
 
-export { appContainer, filesystem, highlights, inputButtons, slippi, tempContainer, twitch };
+export { appContainer, automator, filesystem, highlights, inputButtons, slippi, tempContainer, twitch };
