@@ -74,16 +74,21 @@ export const SimpleInput = styled.input`
 export const DelayInput: React.FC<{
   value?: string;
   placeholder?: string;
-  onChange: (delay: string) => void;
+  onChange?: (delay: string) => void;
 }> = (props) => {
   const [delayAmount, setDelayAmount] = React.useState(props.value || "0");
+  const onChange = () => {
+    if (props.onChange) {
+      props.onChange(delayAmount);
+    }
+  };
   return (
     <SimpleInput
       style={{ width: "100px" }}
       value={delayAmount}
-      onBlur={() => props.onChange(delayAmount)}
+      onBlur={onChange}
       onChange={(e) => setDelayAmount(e.target.value)}
-      placeholder={props.placeholder || "2500"}
+      placeholder={props.placeholder}
     />
   );
 };
