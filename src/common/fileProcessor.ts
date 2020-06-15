@@ -147,7 +147,9 @@ export class FileProcessor {
 
     let filesProcessed = 0;
     const entries = await fg(patterns, options);
-    for (const [i, filename] of entries.entries()) {
+    for (const [i, fn] of entries.entries()) {
+      // Coerce slashes to match operating system. By default fast glob returns unix style paths.
+      const filename = path.resolve(fn);
       if (this.stopRequested) {
         break;
       }
