@@ -25,7 +25,7 @@ import { Observable } from "rxjs";
 import { filter, map } from "rxjs/operators";
 
 import { parseFileRenameFormat } from "./context";
-import { assertExtension, deleteFile, millisToFrames } from "./utils";
+import { assertExtension, millisToFrames } from "./utils";
 
 const SLP_FILE_EXT = ".slp";
 
@@ -105,9 +105,8 @@ const renameFile = async (currentFilename: string, newFilename: string): Promise
 };
 
 export interface ProcessResult {
-  numCombos?: number;
-  newFilename?: string;
-  fileDeleted?: boolean;
+  filename: string;
+  numCombos: number;
 }
 
 export class FileProcessor {
@@ -184,7 +183,10 @@ export class FileProcessor {
   private async _processFile(filename: string, options: FileProcessorOptions): Promise<ProcessResult> {
     console.log(`Processing file: ${filename}`);
     console.log(options);
-    const res: ProcessResult = {};
+    const res: ProcessResult = {
+      filename,
+      numCombos: 0,
+    };
 
     const game = new SlippiGame(filename);
     const settings = game.getSettings();
@@ -193,9 +195,9 @@ export class FileProcessor {
     // Handle file renaming
     if (options.renameFiles && options.renameTemplate) {
       const fullFilename = path.basename(filename);
-      res.newFilename = parseFileRenameFormat(options.renameTemplate, settings, metadata, fullFilename);
-      res.newFilename = assertExtension(res.newFilename, SLP_FILE_EXT);
-      filename = await renameFile(filename, res.newFilename);
+      res.filename = parseFileRenameFormat(options.renameTemplate, settings, metadata, fullFilename);
+      res.filename = assertExtension(res.filename, SLP_FILE_EXT);
+      filename = await renameFile(filename, res.filename);
     }
 
     // Handle combo finding
@@ -208,13 +210,6 @@ export class FileProcessor {
         metadata
       ).pipe(map((highlight) => populateHighlightMetadata(highlight, metadata)));
       res.numCombos = await this._findHighlights(filename, highlights$);
-      const config = options.config as ComboOptions;
-      // Delete the file if no combos were found
-      if (config.deleteZeroComboFiles && res.numCombos === 0) {
-        console.log(`No combos found in ${filename}. Deleting...`);
-        await deleteFile(filename);
-        res.fileDeleted = true;
-      }
     }
 
     return res;

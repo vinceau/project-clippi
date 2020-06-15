@@ -3,7 +3,7 @@ import path from "path";
 import Worker from "worker-loader!common/workers/fileProcessor.worker";
 
 import { dispatcher, store } from "@/store";
-import { FileProcessorOptions } from "common/fileProcessor";
+import { FileProcessorOptions, ComboOptions } from "common/fileProcessor";
 import { secondsToString } from "common/utils";
 import {
   CompletePayload,
@@ -15,6 +15,7 @@ import {
 import { openComboInDolphin } from "./dolphin";
 import { notify } from "./utils";
 import { toastProcessingError } from "./toasts";
+import { shell } from "electron";
 
 const worker = new Worker();
 
@@ -44,14 +45,16 @@ const handleProgress = (payload: ProgressingPayload): void => {
   const { result, total, filename, options, index } = payload;
   dispatcher.tempContainer.setPercent(Math.floor(((index + 1) / total) * 100));
   if (options.findComboOption) {
-    const base = path.basename(result.newFilename || filename);
-    if (result.fileDeleted) {
+    const config = payload.options.config as ComboOptions;
+    const base = path.basename(result.filename || filename);
+    if (result.numCombos === 0 && config.deleteZeroComboFiles) {
+      shell.moveItemToTrash(result.filename);
       dispatcher.tempContainer.setComboLog(`Deleted: ${base}`);
     } else {
       dispatcher.tempContainer.setComboLog(`Found ${result.numCombos} highlights in: ${base}`);
     }
-  } else if (options.renameFiles && result.newFilename) {
-    dispatcher.tempContainer.setComboLog(`Renamed ${filename} to ${result.newFilename}`);
+  } else if (options.renameFiles && result.filename) {
+    dispatcher.tempContainer.setComboLog(`Renamed ${filename} to ${result.filename}`);
   }
 };
 
