@@ -48,8 +48,14 @@ const handleProgress = (payload: ProgressingPayload): void => {
     const config = payload.options.config as ComboOptions;
     const base = path.basename(result.filename || filename);
     if (result.numCombos === 0 && config.deleteZeroComboFiles) {
-      shell.moveItemToTrash(result.filename);
-      dispatcher.tempContainer.setComboLog(`Deleted: ${base}`);
+      const deleted = shell.moveItemToTrash(result.filename);
+      if (deleted) {
+        dispatcher.tempContainer.setComboLog(`Deleted: ${base}`);
+      } else {
+        const message = `Failed to delete file: ${result.filename}`;
+        console.error(message);
+        dispatcher.tempContainer.setComboLog(message);
+      }
     } else {
       dispatcher.tempContainer.setComboLog(`Found ${result.numCombos} highlights in: ${base}`);
     }
