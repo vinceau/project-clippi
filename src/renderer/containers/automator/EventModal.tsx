@@ -48,8 +48,13 @@ export const EventModal: React.FC<{
     // props value is the true value so reset the state
     setOpened(true);
   };
-  const onSubmit = (d: any) => {
-    console.log(d);
+  const onSubmit = (data: any) => {
+    const { eventName, eventType, ...filter } = data;
+    console.log({
+      id: eventName,
+      type: eventType,
+      filter,
+    });
   };
   const watchButtonHold = watch("inputButtonHold", "pressed");
   const watchEventType = watch("eventType", countryOptions[0].value);
@@ -119,12 +124,12 @@ export const EventModal: React.FC<{
           <Field>
             <Label>Match Player</Label>
             <Controller
-              as={<PortSelection label="Player" />}
+              as={<PortSelection label="Player" zeroIndex={true} />}
               control={control}
               onChange={([v]) => v}
-              defaultValue={[1, 2, 3, 4]}
+              defaultValue={[0, 1, 2, 3]}
               rules={{ validate: (val) => val && val.length > 0 }}
-              name="portFilter"
+              name="playerIndex"
             />
             {errors.portFilter && errors.portFilter.type === "validate" && (
               <ErrorText>At least one player must be selected</ErrorText>
@@ -146,12 +151,8 @@ export const EventModal: React.FC<{
                 />
               }
               control={control}
-              onChange={([_, x]) => {
-                console.log("value changed:");
-                console.log(x.value);
-                return x.value;
-              }}
-              name="comboProfile"
+              onChange={([_, x]) => x.value}
+              name="comboCriteria"
               defaultValue={currentProfile}
             />
           </Field>
