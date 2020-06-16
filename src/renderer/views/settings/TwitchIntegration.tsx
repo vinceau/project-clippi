@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import { Header, Icon, Loader, Segment } from "semantic-ui-react";
@@ -7,20 +7,13 @@ import { FormContainer, PageHeader } from "@/components/Form";
 import { TwitchClipInfo, TwitchConnectButton, TwitchUserStatus } from "@/components/twitch";
 import { Dispatch, iRootState } from "@/store";
 
-export const TwitchIntegration = () => {
+export const TwitchIntegration: React.FC = () => {
   const { twitchUser, twitchLoading } = useSelector((state: iRootState) => state.tempContainer);
   const dispatch = useDispatch<Dispatch>();
   const { clips } = useSelector((state: iRootState) => state.twitch);
-  const allClips = Object.values(clips);
-  allClips.sort((x, y) => {
-    if (x.timestamp > y.timestamp) {
-      return -1;
-    }
-    if (x.timestamp < y.timestamp) {
-      return 1;
-    }
-    return 0;
-  });
+  const allClips = Object.values(clips).sort((x, y) =>
+    x.timestamp > y.timestamp ? -1 : x.timestamp < y.timestamp ? 1 : 0
+  );
 
   const onSignOut = () => {
     dispatch.tempContainer.logOutTwitch();
