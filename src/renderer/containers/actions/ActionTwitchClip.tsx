@@ -36,6 +36,13 @@ const defaultParams = (): ActionCreateTwitchClipParams => {
 
 const actionCreateClip: ActionTypeGenerator = (params: ActionCreateTwitchClipParams) => {
   return async (ctx: Context): Promise<Context> => {
+    const user = store.getState().tempContainer.twitchUser;
+    if (!user) {
+      console.error("Not authenticated with Twitch");
+      sendNotification("Connect Project Clippi with Twitch to enable auto-clipping.", "Not authenticated with Twitch");
+      return ctx;
+    }
+
     try {
       const seconds = parseSecondsDelayValue(DEFAULT_DELAY_SECONDS, params.delaySeconds);
       if (seconds > 0) {
@@ -51,8 +58,9 @@ const actionCreateClip: ActionTypeGenerator = (params: ActionCreateTwitchClipPar
         clipID: clip.clipID,
       };
     } catch (err) {
+      const channel = params.channel || user.name;
       console.error(err);
-      // sendNotification(`Failed to clip. ${params.channel ? "Is " + params.channel : "Are you"} live?`);
+      sendNotification(`Make sure ${channel}'s channel is live and then try again.`, "Failed to create Twitch clip");
       return ctx;
     }
   };
