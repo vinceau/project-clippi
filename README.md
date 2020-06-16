@@ -45,9 +45,9 @@ _Easily load SLP files into Dolphin with just a drag and drop!_
 
 Download Project Clippi for your operating system using the links below or check out [the releases page](https://github.com/vinceau/project-clippi/releases/latest) for more information.
 
-- [Project Clippi for Windows](https://github.com/vinceau/project-clippi/releases/latest/download/Project-Clippi-1.3.3.exe)
-- [Project Clippi for MacOS](https://github.com/vinceau/project-clippi/releases/latest/download/Project-Clippi-1.3.3.dmg)
-- [Project Clippi for Linux](https://github.com/vinceau/project-clippi/releases/latest/download/Project-Clippi-1.3.3.AppImage)
+- [Project Clippi for Windows](https://github.com/vinceau/project-clippi/releases/latest/download/Project-Clippi-1.3.4.exe)
+- [Project Clippi for MacOS](https://github.com/vinceau/project-clippi/releases/latest/download/Project-Clippi-1.3.4.dmg)
+- [Project Clippi for Linux](https://github.com/vinceau/project-clippi/releases/latest/download/Project-Clippi-1.3.4.AppImage)
 
 ## Usage
 
