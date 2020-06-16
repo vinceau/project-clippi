@@ -1,4 +1,5 @@
 import React from "react";
+import fs from "fs";
 import styled from "@emotion/styled";
 
 import { iRootState } from "@/store";
@@ -10,6 +11,8 @@ import { mapConfigurationToFilterSettings } from "@/lib/profile";
 import { ComboFilterSettings, Input } from "@vinceau/slp-realtime";
 import { ButtonInputOptions, ComboOptions, FileProcessorOptions, FindComboOption } from "common/fileProcessor";
 import { invalidFilename } from "common/utils";
+import { useTheme } from "@/styles";
+import { Confirm } from "@/components/Confirm";
 
 const Outer = styled.div`
   display: flex;
@@ -40,6 +43,8 @@ const StopButton = styled(Button)`
 `;
 
 export const ProcessorStatusBar: React.FC = () => {
+  const theme = useTheme();
+  const [confirmOpened, setConfirmOpened] = React.useState(false);
   const { comboFinderPercent, comboFinderLog, comboFinderProcessing } = useSelector(
     (state: iRootState) => state.tempContainer
   );
@@ -73,6 +78,22 @@ export const ProcessorStatusBar: React.FC = () => {
   const processBtnDisabled = (!findCombos && !renameFiles) || !combosFilePath || !validButtonCombo || isInvalid;
 
   const handleProcessClick = () => {
+    // Check if the output file already exists
+    try {
+      if (findCombos && fs.existsSync(combosFilePath)) {
+        // Show confirmation dialog
+        setConfirmOpened(true);
+        return;
+      }
+    } catch (err) {
+      console.error(err);
+    }
+
+    // Actually start the processing
+    setupOptionsAndProcess();
+  };
+
+  const setupOptionsAndProcess = (): void => {
     console.log(
       `finding highlights from the slp files in ${filesPath} ${
         includeSubFolders && "and all subfolders"
@@ -112,8 +133,22 @@ export const ProcessorStatusBar: React.FC = () => {
     startProcessing(options);
   };
 
+  const onConfirm = (): void => {
+    setConfirmOpened(false);
+    setupOptionsAndProcess();
+  };
+
   return (
     <Outer>
+      <Confirm
+        theme={theme.theme}
+        themeName={theme.themeName}
+        open={confirmOpened}
+        content="Output file already exists and will be overwritten. Continue anyway?"
+        confirmButton="Continue"
+        onCancel={() => setConfirmOpened(false)}
+        onConfirm={onConfirm}
+      />
       <ProcessStatus>
         {(comboFinderProcessing || complete) && (
           <>
