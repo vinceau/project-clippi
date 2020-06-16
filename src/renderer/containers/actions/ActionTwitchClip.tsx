@@ -2,7 +2,9 @@ import * as React from "react";
 
 import { ActionTypeGenerator, Context } from "@vinceau/event-actions";
 import { produce } from "immer";
-import { Icon } from "semantic-ui-react";
+import { Loader, Icon } from "semantic-ui-react";
+import { useDispatch, useSelector } from "react-redux";
+import { Dispatch, iRootState } from "@/store";
 
 import { DelayInput, NotifyInput, SimpleInput } from "@/components/InlineInputs";
 import { notify as sendNotification } from "@/lib/utils";
@@ -10,6 +12,7 @@ import { dispatcher, store } from "@/store";
 import { delay as waitMillis, parseSecondsDelayValue } from "common/utils";
 import { createTwitchClip } from "../../lib/twitch";
 import { ActionComponent } from "./types";
+import { TwitchConnectButton } from "@/components/twitch";
 
 const DEFAULT_DELAY_SECONDS = 10;
 
@@ -66,7 +69,17 @@ interface TwitchClipInputProps extends Record<string, any> {
 
 const TwitchClipInput = (props: TwitchClipInputProps) => {
   const { value, onChange } = props;
+  const { twitchUser, twitchLoading } = useSelector((state: iRootState) => state.tempContainer);
   const [channel, setChannel] = React.useState<string>(value.channel || "");
+  const dispatch = useDispatch<Dispatch>();
+
+  if (!twitchUser) {
+    if (twitchLoading) {
+      return <Loader active={true} inline={true} content="Loading" />;
+    }
+    return <TwitchConnectButton onClick={() => dispatch.tempContainer.authenticateTwitch()} />;
+  }
+
   const onDelayChange = (delay?: string) => {
     const newValue = produce(value, (draft) => {
       draft.delaySeconds = delay;
