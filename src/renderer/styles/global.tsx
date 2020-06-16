@@ -1,9 +1,47 @@
 import React from "react";
 import { withTheme } from "emotion-theming";
-import { css, Global } from "@emotion/core";
+import { css, Global, SerializedStyles } from "@emotion/core";
 import { darken, lighten } from "polished";
 
 import { Theme, ThemeMode } from "./theme";
+
+const buttonStyles = (theme: Theme): SerializedStyles => css`
+  background: ${lighten(0.05, theme.foreground2)} none;
+  color: ${theme.foreground};
+  font-weight: 500;
+  &:hover {
+    background: ${lighten(0.1, theme.foreground2)} none;
+  }
+`;
+
+export const modalTheme = (theme: Theme): SerializedStyles => css`
+  background: ${theme.background};
+
+  & > .header {
+    background: ${theme.background};
+    border-bottom-color: ${theme.background3};
+    color: ${theme.foreground};
+  }
+
+  & > .close {
+    color: ${theme.foreground};
+  }
+
+  & > .content {
+    background: ${theme.background};
+    color: ${theme.foreground};
+  }
+
+  & > .actions {
+    border-top-color: ${theme.background3};
+    background: ${theme.background2};
+    color: ${theme.foreground};
+
+    .ui.button {
+      ${buttonStyles(theme)}
+    }
+  }
+`;
 
 const makeGlobalStyles = (theme: Theme) => css`
   body {
@@ -95,12 +133,7 @@ const makeGlobalStyles = (theme: Theme) => css`
 
     .ui.label,
     .ui.button {
-      background: ${lighten(0.05, theme.foreground2)} none;
-      color: ${theme.foreground};
-      font-weight: 500;
-      &:hover {
-        background: ${lighten(0.1, theme.foreground2)} none;
-      }
+      ${buttonStyles(theme)}
     }
 
     .ui.checkbox input ~ .box:before,
@@ -114,28 +147,7 @@ const makeGlobalStyles = (theme: Theme) => css`
     }
   }
   .ui.modal.${ThemeMode.DARK} {
-    background: ${theme.background};
-
-    & > .header {
-      background: ${theme.background};
-      border-bottom-color: ${theme.background3};
-      color: ${theme.foreground};
-    }
-
-    & > .close {
-      color: ${theme.foreground};
-    }
-
-    & > .content {
-      background: ${theme.background};
-      color: ${theme.foreground};
-    }
-
-    & > .actions {
-      border-top-color: ${theme.background3};
-      background: ${theme.background2};
-      color: ${theme.foreground};
-    }
+    ${modalTheme(theme)}
   }
 `;
 

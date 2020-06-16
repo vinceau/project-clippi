@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { css, jsx } from "@emotion/core";
 import React from "react";
 import fs from "fs";
 import styled from "@emotion/styled";
@@ -11,6 +13,7 @@ import { mapConfigurationToFilterSettings } from "@/lib/profile";
 import { ComboFilterSettings, Input } from "@vinceau/slp-realtime";
 import { ButtonInputOptions, ComboOptions, FileProcessorOptions, FindComboOption } from "common/fileProcessor";
 import { invalidFilename } from "common/utils";
+import { useTheme, modalTheme, ThemeMode } from "@/styles";
 
 const Outer = styled.div`
   display: flex;
@@ -41,6 +44,7 @@ const StopButton = styled(Button)`
 `;
 
 export const ProcessorStatusBar: React.FC = () => {
+  const theme = useTheme();
   const [confirmOpened, setConfirmOpened] = React.useState(false);
   const { comboFinderPercent, comboFinderLog, comboFinderProcessing } = useSelector(
     (state: iRootState) => state.tempContainer
@@ -138,6 +142,18 @@ export const ProcessorStatusBar: React.FC = () => {
   return (
     <Outer>
       <Confirm
+        css={css`
+          &&& {
+            ${theme.themeName === ThemeMode.DARK && modalTheme(theme.theme)}
+            .actions {
+              display: flex;
+              justify-content: space-between;
+              & > button {
+                margin: 0 !important;
+              }
+            }
+          }
+        `}
         open={confirmOpened}
         content="Output file already exists and will be overwritten. Continue anyway?"
         confirmButton="Continue"
@@ -146,10 +162,10 @@ export const ProcessorStatusBar: React.FC = () => {
       />
       <ProcessStatus>
         {(comboFinderProcessing || complete) && (
-          <>
+          <React.Fragment>
             {<PercentDisplay>{comboFinderPercent}%</PercentDisplay>}
             <div>{comboFinderLog}</div>
-          </>
+          </React.Fragment>
         )}
       </ProcessStatus>
       <div>
