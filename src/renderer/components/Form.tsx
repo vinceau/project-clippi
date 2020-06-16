@@ -69,6 +69,7 @@ const ToggleOuter = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 1rem;
 `;
 
 export const Toggle: React.FC<{
@@ -83,7 +84,10 @@ export const Toggle: React.FC<{
   };
   return (
     <ToggleOuter>
-      <Label style={{ cursor: props.onChange ? "pointer" : "auto" }} onClick={() => onChange(!props.value)}>
+      <Label
+        style={{ cursor: props.onChange ? "pointer" : "auto", marginBottom: "0" }}
+        onClick={() => onChange(!props.value)}
+      >
         {props.label}
       </Label>
       <Checkbox checked={props.value} onChange={(_, data) => onChange(Boolean(data.checked))} toggle={true} />

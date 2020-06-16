@@ -1,21 +1,25 @@
 import React from "react";
 
 import { hot } from "react-hot-loader/root";
-import { useDispatch } from "react-redux";
+import { Dispatch, iRootState } from "@/store";
+import { useDispatch, useSelector } from "react-redux";
 import { HashRouter as Router, Redirect, Route, Switch } from "react-router-dom";
 import { ThemeProvider } from "emotion-theming";
 
 import { History } from "@/components/History";
 import { ToastContainer } from "@/components/toasts/ToastContainer";
-import { Dispatch } from "@/store";
 import { darkTheme, GlobalStyle, lightTheme, ThemeManager, ThemeMode, useTheme } from "@/styles";
 import { MainView, SettingsView } from "@/views";
 
 const App: React.FC = () => {
   const dispatch = useDispatch<Dispatch>();
+  const { reconnectTwitch } = useSelector((state: iRootState) => state.twitch);
   const theme = useTheme();
   React.useEffect(() => {
     dispatch.appContainer.checkForUpdates();
+    if (reconnectTwitch) {
+      dispatch.tempContainer.authenticateTwitch();
+    }
   }, []);
   return (
     <div className={theme.themeName}>
