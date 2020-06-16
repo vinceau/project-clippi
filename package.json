@@ -67,7 +67,6 @@
     "semver": "^7.3.2",
     "source-map-support": "^0.5.10",
     "timeago.js": "^4.0.2",
-    "trash": "^6.1.1",
     "twitch": "^4.0.10",
     "twitch-chat-client": "^4.0.10",
     "twitch-electron-auth-provider": "^4.0.10"
