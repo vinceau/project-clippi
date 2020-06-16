@@ -39,7 +39,7 @@ export const TwitchIntegration: React.FC = () => {
       )}
 
       <Field padding="both" border="bottom">
-        <Toggle value={reconnectTwitch} onChange={onReconnectChange} label="Auto-connect Twitch on startup" />
+        <Toggle value={reconnectTwitch} onChange={onReconnectChange} label="Auto-connect with Twitch on startup" />
       </Field>
 
       <h2>Clips</h2>
