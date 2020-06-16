@@ -11,7 +11,6 @@ import { mapConfigurationToFilterSettings } from "@/lib/profile";
 import { ComboFilterSettings, Input } from "@vinceau/slp-realtime";
 import { ButtonInputOptions, ComboOptions, FileProcessorOptions, FindComboOption } from "common/fileProcessor";
 import { invalidFilename } from "common/utils";
-import { useTheme } from "@/styles";
 import { Confirm } from "@/components/Confirm";
 
 const Outer = styled.div`
@@ -43,7 +42,6 @@ const StopButton = styled(Button)`
 `;
 
 export const ProcessorStatusBar: React.FC = () => {
-  const theme = useTheme();
   const [confirmOpened, setConfirmOpened] = React.useState(false);
   const { comboFinderPercent, comboFinderLog, comboFinderProcessing } = useSelector(
     (state: iRootState) => state.tempContainer
@@ -141,8 +139,6 @@ export const ProcessorStatusBar: React.FC = () => {
   return (
     <Outer>
       <Confirm
-        theme={theme.theme}
-        themeName={theme.themeName}
         open={confirmOpened}
         content="Output file already exists and will be overwritten. Continue anyway?"
         confirmButton="Continue"

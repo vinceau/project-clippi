@@ -1,21 +1,28 @@
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/** @jsx jsx */
+import { css, jsx } from "@emotion/core";
+import React from "react";
+import { useTheme } from "@/styles";
 
-import styled from "@emotion/styled";
-import { Confirm as SemanticConfirm } from "semantic-ui-react";
-import { Theme, ThemeMode, modalTheme } from "@/styles";
+import { Confirm as SemanticConfirm, ConfirmProps } from "semantic-ui-react";
+import { ThemeMode, modalTheme } from "@/styles";
 
-export const Confirm = styled(SemanticConfirm)<{
-  themeName: string;
-  theme: Theme;
-}>`
-  &&& {
-    ${({ theme, themeName }) => themeName === ThemeMode.DARK && modalTheme(theme)}
-    .actions {
-      display: flex;
-      justify-content: space-between;
-      & > button {
-        margin: 0 !important;
-      }
-    }
-  }
-`;
+export const Confirm: React.FC<ConfirmProps> = (props) => {
+  const theme = useTheme();
+  return (
+    <SemanticConfirm
+      css={css`
+        &&& {
+          ${theme.themeName === ThemeMode.DARK && modalTheme(theme.theme)}
+          .actions {
+            display: flex;
+            justify-content: space-between;
+            & > button {
+              margin: 0 !important;
+            }
+          }
+        }
+      `}
+      {...props}
+    />
+  );
+};
