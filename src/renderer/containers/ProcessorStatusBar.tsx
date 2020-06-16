@@ -1,9 +1,10 @@
 import React from "react";
+import fs from "fs";
 import styled from "@emotion/styled";
 
 import { iRootState } from "@/store";
 import { useSelector } from "react-redux";
-import { Button, Icon } from "semantic-ui-react";
+import { Confirm, Button, Icon } from "semantic-ui-react";
 
 import { startProcessing, stopProcessing } from "@/lib/fileProcessor";
 import { mapConfigurationToFilterSettings } from "@/lib/profile";
@@ -40,6 +41,7 @@ const StopButton = styled(Button)`
 `;
 
 export const ProcessorStatusBar: React.FC = () => {
+  const [confirmOpened, setConfirmOpened] = React.useState(false);
   const { comboFinderPercent, comboFinderLog, comboFinderProcessing } = useSelector(
     (state: iRootState) => state.tempContainer
   );
@@ -73,6 +75,22 @@ export const ProcessorStatusBar: React.FC = () => {
   const processBtnDisabled = (!findCombos && !renameFiles) || !combosFilePath || !validButtonCombo || isInvalid;
 
   const handleProcessClick = () => {
+    // Check if the output file already exists
+    try {
+      if (findCombos && fs.existsSync(combosFilePath)) {
+        // Show confirmation dialog
+        setConfirmOpened(true);
+        return;
+      }
+    } catch (err) {
+      console.error(err);
+    }
+
+    // Actually start the processing
+    setupOptionsAndProcess();
+  };
+
+  const setupOptionsAndProcess = (): void => {
     console.log(
       `finding highlights from the slp files in ${filesPath} ${
         includeSubFolders && "and all subfolders"
@@ -112,8 +130,20 @@ export const ProcessorStatusBar: React.FC = () => {
     startProcessing(options);
   };
 
+  const onConfirm = (): void => {
+    setConfirmOpened(false);
+    setupOptionsAndProcess();
+  };
+
   return (
     <Outer>
+      <Confirm
+        open={confirmOpened}
+        content="Output file already exists and will be overwritten. Continue anyway?"
+        confirmButton="Continue"
+        onCancel={() => setConfirmOpened(false)}
+        onConfirm={onConfirm}
+      />
       <ProcessStatus>
         {(comboFinderProcessing || complete) && (
           <>
