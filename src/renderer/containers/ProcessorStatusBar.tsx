@@ -1,19 +1,18 @@
-/** @jsx jsx */
-import { css, jsx } from "@emotion/core";
 import React from "react";
 import fs from "fs";
 import styled from "@emotion/styled";
 
 import { iRootState } from "@/store";
 import { useSelector } from "react-redux";
-import { Confirm, Button, Icon } from "semantic-ui-react";
+import { Button, Icon } from "semantic-ui-react";
 
 import { startProcessing, stopProcessing } from "@/lib/fileProcessor";
 import { mapConfigurationToFilterSettings } from "@/lib/profile";
 import { ComboFilterSettings, Input } from "@vinceau/slp-realtime";
 import { ButtonInputOptions, ComboOptions, FileProcessorOptions, FindComboOption } from "common/fileProcessor";
 import { invalidFilename } from "common/utils";
-import { useTheme, modalTheme, ThemeMode } from "@/styles";
+import { useTheme } from "@/styles";
+import { Confirm } from "@/components/Confirm";
 
 const Outer = styled.div`
   display: flex;
@@ -142,18 +141,8 @@ export const ProcessorStatusBar: React.FC = () => {
   return (
     <Outer>
       <Confirm
-        css={css`
-          &&& {
-            ${theme.themeName === ThemeMode.DARK && modalTheme(theme.theme)}
-            .actions {
-              display: flex;
-              justify-content: space-between;
-              & > button {
-                margin: 0 !important;
-              }
-            }
-          }
-        `}
+        theme={theme.theme}
+        themeName={theme.themeName}
         open={confirmOpened}
         content="Output file already exists and will be overwritten. Continue anyway?"
         confirmButton="Continue"
