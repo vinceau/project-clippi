@@ -3,18 +3,22 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Header, Icon, Loader, Segment } from "semantic-ui-react";
 
-import { FormContainer, PageHeader } from "@/components/Form";
+import { FormContainer, PageHeader, Field, Toggle } from "@/components/Form";
 import { TwitchClipInfo, TwitchConnectButton, TwitchUserStatus } from "@/components/twitch";
 import { Dispatch, iRootState } from "@/store";
 
 export const TwitchIntegration: React.FC = () => {
   const { twitchUser, twitchLoading } = useSelector((state: iRootState) => state.tempContainer);
+  const { reconnectTwitch } = useSelector((state: iRootState) => state.twitch);
   const dispatch = useDispatch<Dispatch>();
   const { clips } = useSelector((state: iRootState) => state.twitch);
   const allClips = Object.values(clips).sort((x, y) =>
     x.timestamp > y.timestamp ? -1 : x.timestamp < y.timestamp ? 1 : 0
   );
 
+  const onReconnectChange = (shouldReconnect: boolean) => {
+    dispatch.twitch.setReconnectTwitch(shouldReconnect);
+  };
   const onSignOut = () => {
     dispatch.tempContainer.logOutTwitch();
   };
@@ -33,6 +37,11 @@ export const TwitchIntegration: React.FC = () => {
       ) : (
         <TwitchConnectButton onClick={() => dispatch.tempContainer.authenticateTwitch()} />
       )}
+
+      <Field padding="both" border="bottom">
+        <Toggle value={reconnectTwitch} onChange={onReconnectChange} label="Auto-connect Twitch on startup" />
+      </Field>
+
       <h2>Clips</h2>
       {allClips.length > 0 ? (
         allClips.map((v) => (
