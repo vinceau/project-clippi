@@ -10,7 +10,7 @@ import styled from "@emotion/styled";
 
 import supporters from "raw-loader!../../../../SUPPORTERS.md";
 
-import { A } from "@/components/ExternalLink";
+import { ExternalLink as A } from "@/components/ExternalLink";
 import { FormContainer } from "@/components/Form";
 import { Labelled } from "@/components/Labelled";
 import { needsUpdate } from "@/lib/checkForUpdates";

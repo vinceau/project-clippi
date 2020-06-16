@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { Button, Card, Image } from "semantic-ui-react";
 
-import { A } from "../ExternalLink";
+import { ExternalLink as A } from "../ExternalLink";
 
 import defaultUserImage from "@/styles/images/user.svg";
 

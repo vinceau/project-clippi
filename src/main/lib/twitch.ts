@@ -2,7 +2,7 @@ import TwitchClient, { HelixUser } from "twitch";
 import ChatClient from "twitch-chat-client";
 import ElectronAuthProvider from "twitch-electron-auth-provider";
 
-import { deleteCookie, fetchCookies } from "./session";
+import { clearAllCookies } from "./session";
 
 import Store from "electron-store";
 
@@ -27,17 +27,6 @@ const validScopes = (neededScopes: string[], existingScopes: string[]): boolean 
     }
   }
   return true;
-};
-
-// Authenticate with Twitch reusing existing tokens if available
-
-const clearAllTwitchCookies = async (): Promise<void> => {
-  const cookies = await fetchCookies();
-  for (const cookie of cookies) {
-    if (cookie.domain && cookie.domain.includes("twitch.tv")) {
-      await deleteCookie(cookie);
-    }
-  }
 };
 
 export class TwitchController {
@@ -73,7 +62,14 @@ export class TwitchController {
     return this.currentUser;
   }
 
-  public async clip(channelName?: string, postToChat?: boolean, createAfterDelay?: boolean): Promise<string> {
+  public async clip(
+    channelName?: string,
+    options?: Partial<{
+      postToChat: boolean;
+      chatMessagePrefix: string;
+      createAfterDelay: boolean;
+    }>
+  ): Promise<string> {
     if (!this.client || !this.currentUser) {
       throw new Error("Not logged in to Twitch");
     }
@@ -91,15 +87,16 @@ export class TwitchController {
     // Create Twitch clip
     const clipId = await this.client.helix.clips.createClip({
       channelId,
-      createAfterDelay,
+      createAfterDelay: options && options.createAfterDelay,
     });
 
-    if (postToChat) {
+    if (options && options.postToChat) {
       // Join chat channel and post message
       try {
         const channelToJoin = channelName || this.currentUser.name;
         const url = `https://clips.twitch.tv/${clipId}`;
-        await this.chat(channelToJoin, `Clipped with Project Clippi: ${url}`);
+        const prefix = options.chatMessagePrefix || "";
+        await this.chat(channelToJoin, prefix + url);
       } catch (err) {
         // Catch the error so we can always return the clip ID
         console.error(err);
@@ -141,7 +138,7 @@ export class TwitchController {
     // Delete token
     store.delete(TOKEN_STORE_KEY);
     // Clear session store
-    await clearAllTwitchCookies();
+    await clearAllCookies("twitch.tv");
     // Reset current state
     this._resetState();
   }

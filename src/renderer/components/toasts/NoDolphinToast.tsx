@@ -1,7 +1,7 @@
 import React from "react";
 
 import { isMacOrWindows } from "common/utils";
-import { A } from "../ExternalLink";
+import { ExternalLink as A } from "../ExternalLink";
 
 export const NoDolphinToast: React.FC = () => {
   const url = "https://slippi.gg/downloads";

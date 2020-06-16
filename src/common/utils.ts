@@ -1,6 +1,5 @@
 import fs from "fs-extra";
 import path from "path";
-import trash from "trash";
 import filenamify from "filenamify";
 import filenameReservedRegex from "filename-reserved-regex";
 
@@ -52,13 +51,6 @@ export const millisToString = (millis: number): string => {
 export const timeDifferenceString = (before: Date, after: Date): string => {
   const diff = Math.abs(after.getTime() - before.getTime());
   return millisToString(diff);
-};
-
-export const deleteFile = async (filepath: string, permanent?: boolean): Promise<void> => {
-  if (permanent) {
-    return fs.unlink(filepath);
-  }
-  return trash(filepath);
 };
 
 export const writeFile = async (contents: string, filename: string, append?: boolean): Promise<void> => {

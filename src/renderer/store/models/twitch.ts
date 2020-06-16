@@ -9,15 +9,21 @@ interface TwitchClipMap {
 
 export interface TwitchState {
   clips: TwitchClipMap;
+  reconnectTwitch: boolean;
 }
 
 const initialState: TwitchState = {
   clips: {},
+  reconnectTwitch: false,
 };
 
 export const twitch = createModel({
   state: initialState,
   reducers: {
+    setReconnectTwitch: (state: TwitchState, payload: boolean): TwitchState =>
+      produce(state, (draft) => {
+        draft.reconnectTwitch = payload;
+      }),
     addTwitchClip: (state: TwitchState, payload: TwitchClip): TwitchState => {
       const clips = produce(state.clips, (draft) => {
         draft[payload.clipID] = payload;

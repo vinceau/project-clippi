@@ -30,7 +30,7 @@ export enum ActionEvent {
 
 const errorHandler = (err: any) => {
   console.error(err);
-  notify("Error occurred!");
+  notify("Unexpected error occurred!");
 };
 
 export const comboFilter = new ComboFilter();
@@ -40,38 +40,67 @@ if (isDevelopment) {
 
 const slippiRealtime = new SlpRealTime();
 
-slippiRealtime.game.start$.subscribe((gameStart) => {
-  const ctx = generateGameStartContext(gameStart);
-  eventActionManager.emitEvent(ActionEvent.GAME_START, generateGlobalContext(ctx)).catch(errorHandler);
-});
-slippiRealtime.game.end$.subscribe((gameEnd) => {
-  const ctx = generateGameEndContext(gameEnd);
-  eventActionManager.emitEvent(ActionEvent.GAME_END, generateGlobalContext(ctx)).catch(errorHandler);
-});
-
-slippiRealtime.stock.playerSpawn$.pipe(withLatestFrom(slippiRealtime.game.start$)).subscribe(([stock, settings]) => {
-  const ctx = generateStockContext(stock, settings);
-  eventActionManager.emitEvent(ActionEvent.PLAYER_SPAWN, generateGlobalContext(ctx)).catch(errorHandler);
-});
-
-slippiRealtime.stock.playerDied$.pipe(withLatestFrom(slippiRealtime.game.start$)).subscribe(([stock, settings]) => {
-  const ctx = generateStockContext(stock, settings);
-  eventActionManager.emitEvent(ActionEvent.PLAYER_DIED, generateGlobalContext(ctx)).catch(errorHandler);
-});
-
-slippiRealtime.combo.end$.subscribe((payload) => {
-  const { combo, settings } = payload;
-  if (comboFilter.isCombo(combo, settings)) {
-    const ctx = generateComboContext(combo, settings);
-    eventActionManager.emitEvent(ActionEvent.COMBO_OCCURRED, generateGlobalContext(ctx)).catch(errorHandler);
+slippiRealtime.game.start$.subscribe(async (gameStart) => {
+  try {
+    const ctx = generateGameStartContext(gameStart);
+    await eventActionManager.emitEvent(ActionEvent.GAME_START, generateGlobalContext(ctx));
+  } catch (err) {
+    errorHandler(err);
   }
 });
 
-slippiRealtime.combo.conversion$.subscribe((payload) => {
+slippiRealtime.game.end$.subscribe(async (gameEnd) => {
+  try {
+    const ctx = generateGameEndContext(gameEnd);
+    await eventActionManager.emitEvent(ActionEvent.GAME_END, generateGlobalContext(ctx));
+  } catch (err) {
+    errorHandler(err);
+  }
+});
+
+slippiRealtime.stock.playerSpawn$
+  .pipe(withLatestFrom(slippiRealtime.game.start$))
+  .subscribe(async ([stock, settings]) => {
+    try {
+      const ctx = generateStockContext(stock, settings);
+      await eventActionManager.emitEvent(ActionEvent.PLAYER_SPAWN, generateGlobalContext(ctx));
+    } catch (err) {
+      errorHandler(err);
+    }
+  });
+
+slippiRealtime.stock.playerDied$
+  .pipe(withLatestFrom(slippiRealtime.game.start$))
+  .subscribe(async ([stock, settings]) => {
+    try {
+      const ctx = generateStockContext(stock, settings);
+      await eventActionManager.emitEvent(ActionEvent.PLAYER_DIED, generateGlobalContext(ctx));
+    } catch (err) {
+      errorHandler(err);
+    }
+  });
+
+slippiRealtime.combo.end$.subscribe(async (payload) => {
   const { combo, settings } = payload;
-  if (comboFilter.isCombo(combo, settings)) {
-    const ctx = generateComboContext(combo, settings);
-    eventActionManager.emitEvent(ActionEvent.CONVERSION_OCCURRED, generateGlobalContext(ctx)).catch(errorHandler);
+  try {
+    if (comboFilter.isCombo(combo, settings)) {
+      const ctx = generateComboContext(combo, settings);
+      await eventActionManager.emitEvent(ActionEvent.COMBO_OCCURRED, generateGlobalContext(ctx));
+    }
+  } catch (err) {
+    errorHandler(err);
+  }
+});
+
+slippiRealtime.combo.conversion$.subscribe(async (payload) => {
+  const { combo, settings } = payload;
+  try {
+    if (comboFilter.isCombo(combo, settings)) {
+      const ctx = generateComboContext(combo, settings);
+      await eventActionManager.emitEvent(ActionEvent.CONVERSION_OCCURRED, generateGlobalContext(ctx));
+    }
+  } catch (err) {
+    errorHandler(err);
   }
 });
 
