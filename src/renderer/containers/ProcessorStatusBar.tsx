@@ -151,10 +151,10 @@ export const ProcessorStatusBar: React.FC = () => {
       />
       <ProcessStatus>
         {(comboFinderProcessing || complete) && (
-          <React.Fragment>
+          <>
             {<PercentDisplay>{comboFinderPercent}%</PercentDisplay>}
             <div>{comboFinderLog}</div>
-          </React.Fragment>
+          </>
         )}
       </ProcessStatus>
       <div>
