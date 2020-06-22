@@ -244,14 +244,14 @@ export class FileProcessor {
         );
       case FindComboOption.BUTTON_INPUTS:
         const allFrames = game.getFrames();
-        function* infiniteSequence() {
+        function* framesInOrder() {
           let i = Frames.FIRST;
-          while (!allFrames[i]) {
+          while (allFrames[i]) {
             yield allFrames[i];
             i++;
           }
         }
-        const framesList = Array.from(infiniteSequence());
+        const framesList = Array.from(framesInOrder());
         return this._findButtonInputs(filename, framesList, config as Partial<ButtonInputOptions>);
     }
   }
