@@ -28,7 +28,7 @@
     "@rematch/core": "^1.3.0",
     "@rematch/persist": "^1.1.6",
     "@vinceau/event-actions": "^0.0.4",
-    "@vinceau/slp-realtime": "file:.yalc/@vinceau/slp-realtime",
+    "@vinceau/slp-realtime": "^2.3.9",
     "electron-context-menu": "^0.15.1",
     "electron-store": "^5.1.1",
     "emotion-theming": "^10.0.27",

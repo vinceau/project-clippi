@@ -19,7 +19,7 @@ import {
   throttleInputButtons,
   FrameEntryType,
   forAllPlayerIndices,
-  mapFrameToButtonInputs,
+  mapFramesToButtonInputs,
 } from "@vinceau/slp-realtime";
 import { Observable, from } from "rxjs";
 import { map } from "rxjs/operators";
@@ -268,7 +268,7 @@ export class FileProcessor {
     const frames$ = from(frames);
     // const inputs$ = this.realtime.input.buttonCombo(inputOptions.buttonCombo, inputOptions.holdDurationFrames);
     const inputs$ = forAllPlayerIndices((i) =>
-      frames$.pipe(mapFrameToButtonInputs(i, inputOptions.buttonCombo, inputOptions.holdDurationFrames))
+      frames$.pipe(mapFramesToButtonInputs(i, inputOptions.buttonCombo, inputOptions.holdDurationFrames))
     );
     const lockoutFrames = millisToFrames(inputOptions.captureLockoutMs);
     return inputs$.pipe(
