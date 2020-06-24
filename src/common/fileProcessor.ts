@@ -191,11 +191,11 @@ export class FileProcessor {
     };
 
     const game = new SlippiGame(filename);
-    const settings = game.getSettings();
     const metadata = game.getMetadata();
 
     // Handle file renaming
     if (options.renameFiles && options.renameTemplate) {
+      const settings = game.getSettings();
       const fullFilename = path.basename(filename);
       res.filename = parseFileRenameFormat(options.renameTemplate, settings, metadata, fullFilename);
       res.filename = assertExtension(res.filename, SLP_FILE_EXT);
@@ -219,6 +219,8 @@ export class FileProcessor {
     findComboOption: FindComboOption,
     config: Partial<ButtonInputOptions> | ComboOptions
   ): Observable<DolphinPlaybackItem> {
+    // Redeclare the Slippi game here instead of passing it in as a parameter
+    // Fetching game info breaks if the file was renamed
     const game = new SlippiGame(filename);
     const settings = game.getSettings();
     const stats = game.getStats();
