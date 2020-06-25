@@ -130,7 +130,7 @@ export class FileProcessor {
 
   public async process(
     opts: FileProcessorOptions,
-    callback?: (i: number, total: number, filename: string, data: ProcessResult) => void
+    callback?: (i: number, total: number, filename: string, data: ProcessResult) => Promise<boolean | void>
   ): Promise<ProcessOutput> {
     this.processing = true;
     const before = new Date(); // Use this to track elapsed time
@@ -155,10 +155,13 @@ export class FileProcessor {
       }
 
       const res = await this._processFile(filename, opts);
-      if (callback) {
-        callback(i, entries.length, filename, res);
-      }
       filesProcessed += 1;
+      if (callback) {
+        const shouldStop = await callback(i, entries.length, filename, res);
+        if (shouldStop) {
+          break;
+        }
+      }
     }
 
     // Write out files if we found combos

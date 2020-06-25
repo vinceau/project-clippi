@@ -11,7 +11,7 @@ import {
 const fileProcessor = new FileProcessor();
 
 const startProcessing = async (options: FileProcessorOptions): Promise<ProcessOutput> => {
-  const callback = (index: number, total: number, filename: string, result: ProcessResult): void => {
+  const callback = async (index: number, total: number, filename: string, result: ProcessResult): Promise<void> => {
     const payload: ProgressingPayload = {
       index,
       total,
