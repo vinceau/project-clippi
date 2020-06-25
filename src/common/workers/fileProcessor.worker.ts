@@ -7,6 +7,7 @@ import {
   ProgressingPayload,
   StartProcessingPayload,
 } from "./fileProcessor.worker.types";
+import { delay } from "common/utils";
 
 const fileProcessor = new FileProcessor();
 
@@ -23,6 +24,11 @@ const startProcessing = async (options: FileProcessorOptions): Promise<ProcessOu
       type: FileProcessorWorkerMessage.PROGRESS,
       payload,
     });
+    // We need to introduce some sort of delay otherwise the stop signal doesn't get sent
+    // It seems like the `fileProcessor.process()` command will just block all the messages
+    // from being received. By adding some delay, the worker thread can actually handle
+    // the stop command signal.
+    await delay(10);
   };
   return fileProcessor.process(options, callback);
 };
