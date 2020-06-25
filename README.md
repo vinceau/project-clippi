@@ -51,12 +51,9 @@ Download Project Clippi for your operating system using the links below or check
 
 ## Usage
 
-To make combo videos using Project Clippi, check out [this guide](https://medium.com/@vinceau/how-to-make-combo-videos-using-project-clippi-6bf2758f546e).
+To make combo videos using the Project Clippi, check out [this guide](https://medium.com/@vinceau/how-to-make-combo-videos-using-project-clippi-6bf2758f546e) on using the Replay Processor.
 
-To take advantage of real-time game events you will need to connect Project Clippi to a Slippi source. You can connect to a console source using the [Slippi Desktop App](https://slippi.gg/downloads) as a relay, or connect to a folder that has live SLP files being written to it. e.g. Slippi Dolphin. Follow the links below based on what source you are connecting to.
-
-- [Connecting to a Slippi Relay](docs/connect_to_relay/README.md)
-- [Connecting to a folder (Dolphin)](docs/connect_to_folder/README.md)
+To take advantage of real-time game events you will need to connect Project Clippi to a console source using the [Slippi Desktop App](https://slippi.gg/downloads) as a relay. Check out [this guide](docs/connect_to_relay/README.md) for connecting to a relay.
 
 ## Contributing
 

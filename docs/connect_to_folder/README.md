@@ -1,6 +1,6 @@
 # Connecting to a live SLP folder
 
-> **Disclaimer**: This feature has not been extensively tested. If you encounter issues, tweet at [@ProjectClippi](https://twitter.com/ProjectClippi) so we can get it fixed.
+> **Disclaimer**: This feature does NOT work with Slippi Online! This is because while Slippi Online can handle rollbacks, it is not possible for Project Clippi to rollback firing an event. This only works with legacy versions of Slippi Dolphin.
 
 If you are playing on Slippi Dolphin, you won't have a relay port you can connect to. Instead you will need to know the location where your SLP files are stored.
 
