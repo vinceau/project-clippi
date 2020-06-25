@@ -130,7 +130,7 @@ export class FileProcessor {
 
   public async process(
     opts: FileProcessorOptions,
-    callback?: (i: number, total: number, filename: string, data: ProcessResult) => void
+    callback?: (i: number, total: number, filename: string, data: ProcessResult) => Promise<boolean | void>
   ): Promise<ProcessOutput> {
     this.processing = true;
     const before = new Date(); // Use this to track elapsed time
@@ -155,10 +155,13 @@ export class FileProcessor {
       }
 
       const res = await this._processFile(filename, opts);
-      if (callback) {
-        callback(i, entries.length, filename, res);
-      }
       filesProcessed += 1;
+      if (callback) {
+        const shouldStop = await callback(i, entries.length, filename, res);
+        if (shouldStop) {
+          break;
+        }
+      }
     }
 
     // Write out files if we found combos
@@ -191,11 +194,11 @@ export class FileProcessor {
     };
 
     const game = new SlippiGame(filename);
-    const settings = game.getSettings();
     const metadata = game.getMetadata();
 
     // Handle file renaming
     if (options.renameFiles && options.renameTemplate) {
+      const settings = game.getSettings();
       const fullFilename = path.basename(filename);
       res.filename = parseFileRenameFormat(options.renameTemplate, settings, metadata, fullFilename);
       res.filename = assertExtension(res.filename, SLP_FILE_EXT);
@@ -205,13 +208,9 @@ export class FileProcessor {
     // Handle combo finding
     if (options.findComboOption) {
       console.log("finding combos");
-      const highlights$ = this._generateHighlightObservable(
-        filename,
-        game,
-        options.findComboOption,
-        options.config,
-        metadata
-      ).pipe(map((highlight) => populateHighlightMetadata(highlight, metadata)));
+      const highlights$ = this._generateHighlightObservable(filename, options.findComboOption, options.config).pipe(
+        map((highlight) => populateHighlightMetadata(highlight, metadata))
+      );
       res.numCombos = await this._findHighlights(filename, highlights$);
     }
 
@@ -220,13 +219,15 @@ export class FileProcessor {
 
   private _generateHighlightObservable(
     filename: string,
-    game: SlippiGame,
     findComboOption: FindComboOption,
-    config: Partial<ButtonInputOptions> | ComboOptions,
-    metadata?: Metadata
+    config: Partial<ButtonInputOptions> | ComboOptions
   ): Observable<DolphinPlaybackItem> {
+    // Redeclare the Slippi game here instead of passing it in as a parameter
+    // Fetching game info breaks if the file was renamed
+    const game = new SlippiGame(filename);
     const settings = game.getSettings();
     const stats = game.getStats();
+    const metadata = game.getMetadata();
     switch (findComboOption) {
       case FindComboOption.COMBOS:
         return this._findCombos(

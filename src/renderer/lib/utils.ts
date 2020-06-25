@@ -75,13 +75,27 @@ export const loadDolphinQueue = async (): Promise<DolphinQueueFormat | null> => 
 };
 
 /**
- * Open the specified file in the system file explorer.
+ * Open the specified file or folder in the system file explorer.
+ * If it's a file, open the containing folder.
+ * If it's a folder, open it.
  * If the file doesn't exist, open the parent directory.
  * If the parent directory doesn't exist, try the parent's parent directory etc.
  */
-export const openFileOrParentFolder = (fileName: string) => {
-  let opened = shell.showItemInFolder(fileName);
-  let parentFolder = fileName;
+export const openFileOrParentFolder = (filename: string): void => {
+  let opened = false;
+  try {
+    const stats = fs.statSync(filename);
+    if (stats.isFile()) {
+      opened = shell.showItemInFolder(filename);
+    } else if (stats.isDirectory()) {
+      opened = shell.openItem(filename);
+    }
+  } catch (err) {
+    // Getting the stats failed so the file probably doesn't exist
+    // Instead, we'll just try to open the parent folder
+  }
+
+  let parentFolder = filename;
   while (!opened) {
     parentFolder = path.dirname(parentFolder);
     opened = shell.openItem(parentFolder);
