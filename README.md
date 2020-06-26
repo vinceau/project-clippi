@@ -45,9 +45,9 @@ _Easily load SLP files into Dolphin with just a drag and drop!_
 
 Download Project Clippi for your operating system using the links below or check out [the releases page](https://github.com/vinceau/project-clippi/releases/latest) for more information.
 
-- [Project Clippi for Windows](https://github.com/vinceau/project-clippi/releases/latest/download/Project-Clippi-1.3.5.exe)
-- [Project Clippi for MacOS](https://github.com/vinceau/project-clippi/releases/latest/download/Project-Clippi-1.3.5.dmg)
-- [Project Clippi for Linux](https://github.com/vinceau/project-clippi/releases/latest/download/Project-Clippi-1.3.5.AppImage)
+- [Project Clippi for Windows](https://github.com/vinceau/project-clippi/releases/latest/download/Project-Clippi-1.3.6.exe)
+- [Project Clippi for MacOS](https://github.com/vinceau/project-clippi/releases/latest/download/Project-Clippi-1.3.6.dmg)
+- [Project Clippi for Linux](https://github.com/vinceau/project-clippi/releases/latest/download/Project-Clippi-1.3.6.AppImage)
 
 ## Usage
 
@@ -83,7 +83,7 @@ For more detailed instructions on development and building the project from sour
 
 ## Acknowledgements
 
-Project Clippi wouldn't be here without the work of [Jas Laferriere](https://github.com/JLaferri) and the rest of the [Project Slippi](https://github.com/project-slippi) team, and all the [Project Clippi supporters](SUPPORTERS.md).
+Project Clippi wouldn't be here without the work of [Jas Laferriere](https://github.com/JLaferri), the rest of the [Project Slippi](https://github.com/project-slippi) team, and all the [Project Clippi supporters](SUPPORTERS.md).
 
 ## License
 
