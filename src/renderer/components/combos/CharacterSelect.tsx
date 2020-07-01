@@ -69,9 +69,9 @@ export const CharacterSelect = (props: any) => {
     isDisabled: disabledList.includes(c),
   });
   const parseValue = (val: any) =>
-    val === undefined || val === "" ? undefined : val.map ? val.map(optionToValue) : optionToValue(val);
+    val === undefined || val === "" || val === null ? undefined : val.map ? val.map(optionToValue) : optionToValue(val);
   const formatValue = (val: any) =>
-    val === undefined || val === "" ? undefined : val.map ? val.map(valueToOption) : valueToOption(val);
+    val === undefined || val === "" || val === null ? undefined : val.map ? val.map(valueToOption) : valueToOption(val);
   const newValue = formatValue(value);
   const newOnChange = (v: any) => onChange(parseValue(v));
   const selectOptions = options ? options : sortedCharacterIDs;
