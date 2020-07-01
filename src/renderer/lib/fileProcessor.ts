@@ -77,7 +77,7 @@ const handleComplete = (payload: CompletePayload): void => {
   dispatcher.tempContainer.setComboFinderProcessing(false);
   dispatcher.tempContainer.setPercent(100);
   dispatcher.tempContainer.setComboLog(message);
-  if (openCombosWhenDone && options.outputFile) {
+  if (options.findComboOption && openCombosWhenDone && options.outputFile) {
     // check if we want to open the combo file after generation
     openComboInDolphin(options.outputFile).catch((err) => {
       console.error(err);
