@@ -11,6 +11,7 @@ import { RenameFiles } from "@/components/RenameFiles";
 import { Dispatch, iRootState } from "@/store";
 import { highlightInitialState } from "@/store/models/highlights";
 import { HighlightOptions } from "@/containers/HighlightOptions";
+import { assertExtension } from "common/utils";
 
 export const ComboFinder: React.FC = () => {
   const {
@@ -29,7 +30,11 @@ export const ComboFinder: React.FC = () => {
   const onSubfolder = (checked: boolean) => dispatch.highlights.setIncludeSubFolders(checked);
   const onSetDeleteFiles = (checked: boolean) => dispatch.highlights.setFileDeletion(checked);
   const onSetOpenCombosWhenDone = (checked: boolean) => dispatch.highlights.setOpenCombosWhenDone(checked);
-  const setCombosFilePath = (p: string) => dispatch.filesystem.setCombosFilePath(p);
+  const setCombosFilePath = (p: string) => {
+    const filepath = assertExtension(p, ".json");
+    console.log("setting combos path to: " + filepath);
+    dispatch.filesystem.setCombosFilePath(filepath);
+  };
   const setFilesPath = (p: string) => dispatch.filesystem.setFilesPath(p);
   return (
     <FormContainer>

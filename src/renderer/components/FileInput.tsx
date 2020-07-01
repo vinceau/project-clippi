@@ -32,6 +32,7 @@ export const FileInput: React.FC<FileInputProps> = (props) => {
 
   // Make sure we display the correct value
   React.useEffect(() => {
+    console.log("use effect activated");
     setFilesPath(value);
   }, [value]);
 
