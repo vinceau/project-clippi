@@ -116,9 +116,9 @@ export const millisToFrames = (ms: number): number => {
   return secondsToFrames(ms / 1000);
 };
 
-export const sanitizeFilename = (name: string): string => {
+export const sanitizeFilename = (name: string, replacement = "."): string => {
   return filenamify(name, {
-    replacement: ".",
+    replacement,
   });
 };
 
