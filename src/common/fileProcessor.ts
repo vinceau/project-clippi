@@ -143,6 +143,8 @@ export class FileProcessor {
       cwd: opts.filesPath,
       onlyFiles: true,
       deep: opts.includeSubFolders ? undefined : 1,
+      // We occasionally get EPERM errors when globbing in directories we don't have access to.
+      suppressErrors: true,
     };
 
     let filesProcessed = 0;
