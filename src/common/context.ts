@@ -110,8 +110,11 @@ export const generateComboContext = (combo: ComboType, settings: GameStartType, 
 
 const genPlayerContext = (
   index: number,
-  settings: GameStartType
+  settings: GameStartType,
+  metadata?: Metadata
 ): {
+  netplayName: string | null;
+  netplayCode: string | null;
   tag: string | null;
   port: number;
   char: string;
@@ -124,8 +127,20 @@ const genPlayerContext = (
   }
   const playerCharId = player.characterId;
   const playerCharColor = player.characterColor;
+
+  // Determine netplay names if they exist
+  let netplayName = null;
+  let netplayCode = null;
+  if (metadata && metadata.players && metadata.players[index]) {
+    const names = metadata.players[index].names;
+    netplayName = names.netplay ? sanitizeFilename(names.netplay, "_") : null;
+    netplayCode = names.code ? sanitizeFilename(names.code, "_") : null;
+  }
+
   if (playerCharId !== null && playerCharColor !== null) {
     return {
+      netplayName,
+      netplayCode,
       tag: player.nametag,
       port: player.port,
       char: getCharacterName(playerCharId),
