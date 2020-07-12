@@ -169,6 +169,8 @@ const genPlayerOpponentContext = (gameStart: GameStartType, context?: Context, i
       ctx.playerChar = playerContext.char;
       ctx.playerShortChar = playerContext.shortChar;
       ctx.playerColor = playerContext.color;
+      ctx.playerName = playerContext.netplayName;
+      ctx.playerCode = playerContext.netplayCode;
     }
     if (opponentContext !== null) {
       ctx.opponent = `P${opponentContext.port}`;
@@ -177,6 +179,8 @@ const genPlayerOpponentContext = (gameStart: GameStartType, context?: Context, i
       ctx.opponentChar = opponentContext.char;
       ctx.opponentShortChar = opponentContext.shortChar;
       ctx.opponentColor = opponentContext.color;
+      ctx.opponentName = opponentContext.netplayName;
+      ctx.opponentCode = opponentContext.netplayCode;
     }
   }
   return Object.assign(ctx, context);
