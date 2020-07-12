@@ -101,11 +101,11 @@ export const Automator: React.FC = () => {
           <h2>Actions</h2>
           <Icon name="check square outline" />
         </Header>
-        <div>
+        {/* <div>
           {val[selected].actions.map((a, i) => {
             return <div key={`${val[selected].event}--${a.name}`}>{a.name}</div>;
           })}
-        </div>
+        </div> */}
       </RightColumn>
     </Container>
   );
