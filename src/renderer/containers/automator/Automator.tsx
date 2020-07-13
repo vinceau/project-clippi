@@ -9,6 +9,7 @@ import { EventActionConfig } from "@/containers/actions";
 import { Dispatch, iRootState } from "@/store";
 import { useDispatch, useSelector } from "react-redux";
 import { EventModal } from "./EventModal";
+import { NamedEventConfig } from "@/store/models/automator";
 
 const Header = styled.div`
   font-size: 1.6rem;
@@ -42,11 +43,11 @@ const RightColumn = styled.div`
 
 export const Automator: React.FC = () => {
   const [selected, setSelected] = React.useState<number>(0);
-  const val = useSelector((state: iRootState) => state.slippi.events);
+  const val = useSelector((state: iRootState) => state.automator.events);
   const dispatch = useDispatch<Dispatch>();
-  const disabledEvents = val.map((e) => e.event);
-  const addEvent = (event: ActionEvent) => {
-    dispatch.slippi.addNewEventAction(event);
+  // const disabledEvents = val.map((e) => e.event);
+  const addEvent = (event: NamedEventConfig) => {
+    dispatch.automator.addEvent(event);
   };
   /*
   return (
@@ -84,13 +85,13 @@ export const Automator: React.FC = () => {
           <Icon name="flag outline" />
         </Header>
         <div>
-          <EventModal>
+          <EventModal onSubmit={addEvent}>
             <Button>Add event</Button>
           </EventModal>
           {val.map((e, i) => {
             return (
-              <div key={e.event} onClick={() => setSelected(i)}>
-                {e.event}
+              <div key={e.id} onClick={() => setSelected(i)}>
+                {JSON.stringify(e)}
               </div>
             );
           })}
