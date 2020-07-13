@@ -10,6 +10,7 @@ import { Dispatch, iRootState } from "@/store";
 import { useDispatch, useSelector } from "react-redux";
 import { EventModal } from "./EventModal";
 import { NamedEventConfig } from "@/store/models/automator";
+import { EventItem } from "./EventItem";
 
 const Header = styled.div`
   font-size: 1.6rem;
@@ -89,11 +90,7 @@ export const Automator: React.FC = () => {
             <Button>Add event</Button>
           </EventModal>
           {val.map((e, i) => {
-            return (
-              <div key={e.id} onClick={() => setSelected(i)}>
-                {JSON.stringify(e)}
-              </div>
-            );
+            return <EventItem key={e.id} selected={selected === i} onClick={() => setSelected(i)} event={e} />;
           })}
         </div>
       </LeftColumn>
