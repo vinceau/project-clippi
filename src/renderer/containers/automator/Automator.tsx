@@ -49,7 +49,7 @@ export const Automator: React.FC = () => {
   const val = useSelector((state: iRootState) => state.automator.events);
   const actions = useSelector((state: iRootState) => state.automator.actions);
   const dispatch = useDispatch<Dispatch>();
-  const selectedActions = actions[val[selected].id] || [];
+  const selectedActions = val[selected] ? actions[val[selected].id] : [];
   const disabledActions = selectedActions.map((a) => a.name);
   const addEvent = (event: NamedEventConfig) => {
     dispatch.automator.addEvent(event);

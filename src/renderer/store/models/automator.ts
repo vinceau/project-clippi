@@ -29,7 +29,6 @@ export const automator = createModel({
         draft.events = draft.events.filter((e) => e.id !== payload.id);
         draft.events.push(payload);
       });
-      newState.actions[payload.id] = [];
       return newState;
     },
     updateEvent: (

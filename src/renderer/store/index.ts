@@ -34,9 +34,9 @@ export const Models = models;
 const storeSync = () => {
   const state = store.getState();
 
-  // Restore events
-  const events = state.slippi.events;
-  updateEventActionManager(events);
+  // Restore actions
+  const actions = state.automator.actions;
+  updateEventActionManager(actions);
 
   // Restore sound files
   const soundFiles = state.filesystem.soundFiles;

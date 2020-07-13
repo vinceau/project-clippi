@@ -28,11 +28,11 @@ export interface EventActionConfig {
 
 export const eventActionManager = new EventManager();
 
-export const updateEventActionManager = (actions: EventActionConfig[]): void => {
-  const mapping: EventActions = {};
-  for (const a of actions) {
-    mapping[a.event] = a.actions;
-  }
+export const updateEventActionManager = (mapping: EventActions): void => {
+  // const mapping: EventActions = {};
+  // for (const a of actions) {
+  //   mapping[a.event] = a.actions;
+  // }
   eventActionManager.eventActions = mapping;
 };
 
