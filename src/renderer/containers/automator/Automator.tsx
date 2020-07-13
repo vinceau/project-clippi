@@ -5,12 +5,14 @@ import { Button, Icon } from "semantic-ui-react";
 import { ActionEvent } from "@/lib/realtime";
 import { AddEventDropdown, EventActions } from "./EventActions";
 
-import { EventActionConfig } from "@/containers/actions";
+import { EventActionConfig, actionComponents } from "@/containers/actions";
 import { Dispatch, iRootState } from "@/store";
 import { useDispatch, useSelector } from "react-redux";
 import { EventModal } from "./EventModal";
 import { NamedEventConfig } from "@/store/models/automator";
 import { EventItem } from "./EventItem";
+import { Action } from "@vinceau/event-actions";
+import { ActionInput, AddActionInput } from "./ActionInputs";
 
 const Header = styled.div`
   font-size: 1.6rem;
@@ -51,6 +53,23 @@ export const Automator: React.FC = () => {
   // const disabledEvents = val.map((e) => e.event);
   const addEvent = (event: NamedEventConfig) => {
     dispatch.automator.addEvent(event);
+  };
+  const onActionChange = (index: number, action: Action) => {
+    const eventId = val[selected].id;
+    dispatch.automator.updateActionEvent({ eventId, index, action });
+  };
+  const onActionRemove = (index: number) => {
+    const eventId = val[selected].id;
+    dispatch.automator.removeActionEvent({ eventId, index });
+  };
+  const onActionAdd = (name: string) => {
+    const eventId = val[selected].id;
+    const params = actionComponents[name].defaultParams;
+    const action = {
+      name,
+      args: params ? params() : {},
+    };
+    dispatch.automator.addNewEventAction({ eventId, action });
   };
   /*
   return (
@@ -103,8 +122,22 @@ export const Automator: React.FC = () => {
         </Header>
         <div>
           {selectedActions.map((a, i) => {
-            return <div key={`${val[selected].id}--${a.name}`}>{JSON.stringify(a)}</div>;
+            const onInnerActionChange = (newVal: Action) => {
+              onActionChange(i, newVal);
+            };
+            const prefix = i === 0 ? "Then " : "And ";
+            return (
+              <ActionInput
+                key={`${val[selected].id}--${a.name}`}
+                selectPrefix={prefix}
+                value={a}
+                onChange={onInnerActionChange}
+                disabledActions={[]}
+                onRemove={() => onActionRemove(i)}
+              />
+            );
           })}
+          <AddActionInput onChange={onActionAdd} disabledActions={[]} />
         </div>
       </RightColumn>
     </Container>

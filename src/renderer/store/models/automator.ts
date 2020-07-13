@@ -24,11 +24,14 @@ const initialState: AutomatorState = {
 export const automator = createModel({
   state: initialState,
   reducers: {
-    addEvent: (state: AutomatorState, payload: NamedEventConfig): AutomatorState =>
-      produce(state, (draft) => {
+    addEvent: (state: AutomatorState, payload: NamedEventConfig): AutomatorState => {
+      const newState = produce(state, (draft) => {
         draft.events = draft.events.filter((e) => e.id !== payload.id);
         draft.events.push(payload);
-      }),
+      });
+      newState.actions[payload.id] = [];
+      return newState;
+    },
     updateEvent: (
       state: AutomatorState,
       payload: { index: number; event: Omit<NamedEventConfig, "id"> }
@@ -49,14 +52,13 @@ export const automator = createModel({
       payload: { eventId: string; action: ActionDefinition }
     ): AutomatorState => {
       const { eventId, action } = payload;
-      const newActions = produce(state.actions, (draft) => {
-        if (!draft[eventId]) {
-          draft[eventId] = [];
-        }
-        draft[eventId].push(action);
-      });
+      let newActions: ActionDefinition[] = [];
+      if (state.actions[eventId]) {
+        newActions = state.actions[eventId];
+      }
+
       return produce(state, (draft) => {
-        draft.actions = newActions;
+        draft.actions = { ...draft.actions, [eventId]: [...newActions, action] };
       });
     },
     updateActionEvent: (
