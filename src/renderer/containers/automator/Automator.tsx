@@ -5,6 +5,9 @@ import { Button, Icon } from "semantic-ui-react";
 import { ActionEvent } from "@/lib/realtime";
 import { AddEventDropdown, EventActions } from "./EventActions";
 
+// then you can import the components
+import { ReflexContainer, ReflexSplitter, ReflexElement } from "react-reflex";
+
 import { EventActionConfig, actionComponents } from "@/containers/actions";
 import { Dispatch, iRootState } from "@/store";
 import { useDispatch, useSelector } from "react-redux";
@@ -49,7 +52,7 @@ export const Automator: React.FC = () => {
   const val = useSelector((state: iRootState) => state.automator.events);
   const actions = useSelector((state: iRootState) => state.automator.actions);
   const dispatch = useDispatch<Dispatch>();
-  const selectedActions = val[selected] ? actions[val[selected].id] : [];
+  const selectedActions = val[selected] ? actions[val[selected].id] || [] : [];
   const disabledActions = selectedActions.map((a) => a.name);
   const addEvent = (event: NamedEventConfig) => {
     dispatch.automator.addEvent(event);
@@ -100,12 +103,8 @@ export const Automator: React.FC = () => {
   */
 
   return (
-    <Container>
-      <LeftColumn>
-        <Header>
-          <h2>Events</h2>
-          <Icon name="flag outline" />
-        </Header>
+    <ReflexContainer orientation="vertical">
+      <ReflexElement>
         <div>
           <EventModal onSubmit={addEvent}>
             <Button>Add event</Button>
@@ -114,12 +113,11 @@ export const Automator: React.FC = () => {
             return <EventItem key={e.id} selected={selected === i} onClick={() => setSelected(i)} event={e} />;
           })}
         </div>
-      </LeftColumn>
-      <RightColumn>
-        <Header>
-          <h2>Actions</h2>
-          <Icon name="check square outline" />
-        </Header>
+      </ReflexElement>
+
+      <ReflexSplitter />
+
+      <ReflexElement>
         <div>
           {selectedActions.map((a, i) => {
             const onInnerActionChange = (newVal: Action) => {
@@ -139,7 +137,24 @@ export const Automator: React.FC = () => {
           })}
           <AddActionInput onChange={onActionAdd} disabledActions={disabledActions} />
         </div>
+      </ReflexElement>
+    </ReflexContainer>
+
+    /*
+    <Container>
+      <LeftColumn>
+        <Header>
+          <h2>Events</h2>
+          <Icon name="flag outline" />
+        </Header>
+      </LeftColumn>
+      <RightColumn>
+        <Header>
+          <h2>Actions</h2>
+          <Icon name="check square outline" />
+        </Header>
       </RightColumn>
     </Container>
+    */
   );
 };
