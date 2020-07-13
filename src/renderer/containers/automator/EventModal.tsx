@@ -37,11 +37,13 @@ const ErrorText = styled(Text)`
 `;
 
 export const EventModal: React.FC<{
+  edit?: NamedEventConfig | null;
   opened?: boolean;
   onSubmit?: (event: NamedEventConfig) => void;
   onClose?: () => void;
 }> = (props) => {
-  const { watch, errors, handleSubmit, control } = useForm();
+  const { edit, opened } = props;
+  const { watch, errors, handleSubmit, control, reset } = useForm();
   const { currentProfile, comboProfiles } = useSelector((state: iRootState) => state.slippi);
   const theme = useTheme();
   const profileOptions = Object.keys(comboProfiles).map(stringToOptions);
@@ -50,12 +52,23 @@ export const EventModal: React.FC<{
       props.onClose();
     }
   };
+  React.useLayoutEffect(() => {
+    if (edit) {
+      const { name, type, filter } = edit;
+      reset({
+        ...filter,
+        eventName: name,
+        eventType: type,
+      });
+    } else {
+      reset({});
+    }
+  }, [edit]);
   const onSubmit = (data: any) => {
     const { eventName, eventType, ...filter } = data;
-    const randomCode = Math.random().toString(36).slice(2);
     const event: NamedEventConfig = {
-      id: randomCode,
-      name: eventName || `${eventType}-${randomCode}`,
+      id: edit ? edit.id : "",
+      name: eventName || eventType,
       type: eventType,
       filter,
     };
@@ -74,7 +87,7 @@ export const EventModal: React.FC<{
     handleSubmit(onSubmit)();
   };
   return (
-    <Modal className={theme.themeName} open={props.opened} closeIcon onClose={onClose} closeOnDimmerClick={false}>
+    <Modal className={theme.themeName} open={opened} closeIcon onClose={onClose} closeOnDimmerClick={false}>
       <Modal.Header>
         <Controller
           as={
