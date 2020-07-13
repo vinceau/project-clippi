@@ -12,13 +12,34 @@ import { EventActionLists } from "./EventActionLists";
 export const Automator: React.FC = () => {
   const [opened, setOpened] = React.useState<boolean>(false);
   const [selected, setSelected] = React.useState<number>(0);
+  const [edit, setEdit] = React.useState<NamedEventConfig | null>(null);
   const events = useSelector((state: iRootState) => state.automator.events);
   const dispatch = useDispatch<Dispatch>();
   const addEvent = (event: NamedEventConfig) => {
-    dispatch.automator.addEvent(event);
+    if (event.id) {
+      // This was an edit
+      dispatch.automator.updateEvent({ index: selected, event });
+    } else {
+      // This was a new event
+      const randomCode = Math.random().toString(36).slice(2);
+      dispatch.automator.addEvent({
+        ...event,
+        id: randomCode,
+      });
+      // Select our recently created event
+      setSelected(events.length);
+    }
+    // Reset the form for next time
+    reset();
+  };
+  const editEvent = () => {
+    setEdit(events[selected]);
+    setOpened(true);
+  };
+  const reset = () => {
+    console.log("resetting form");
     setOpened(false);
-    // Select our recently created event
-    setSelected(events.length);
+    setEdit(null);
   };
   return (
     <div
@@ -28,12 +49,12 @@ export const Automator: React.FC = () => {
         flex: 1;
       `}
     >
-      <EventModal onSubmit={addEvent} opened={opened} onClose={() => setOpened(false)} />
+      <EventModal onSubmit={addEvent} opened={opened} onClose={reset} edit={edit} />
       <div>
         <Button onClick={() => setOpened(true)}>
           <Icon name="plus" /> Add event
         </Button>
-        <Button>
+        <Button onClick={editEvent}>
           <Icon name="pencil" /> Edit event
         </Button>
         <Button>
