@@ -45,7 +45,9 @@ const RightColumn = styled.div`
 export const Automator: React.FC = () => {
   const [selected, setSelected] = React.useState<number>(0);
   const val = useSelector((state: iRootState) => state.automator.events);
+  const actions = useSelector((state: iRootState) => state.automator.actions);
   const dispatch = useDispatch<Dispatch>();
+  const selectedActions = actions[val[selected].id] || [];
   // const disabledEvents = val.map((e) => e.event);
   const addEvent = (event: NamedEventConfig) => {
     dispatch.automator.addEvent(event);
@@ -99,11 +101,11 @@ export const Automator: React.FC = () => {
           <h2>Actions</h2>
           <Icon name="check square outline" />
         </Header>
-        {/* <div>
-          {val[selected].actions.map((a, i) => {
-            return <div key={`${val[selected].event}--${a.name}`}>{a.name}</div>;
+        <div>
+          {selectedActions.map((a, i) => {
+            return <div key={`${val[selected].id}--${a.name}`}>{JSON.stringify(a)}</div>;
           })}
-        </div> */}
+        </div>
       </RightColumn>
     </Container>
   );

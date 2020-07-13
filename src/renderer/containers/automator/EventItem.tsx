@@ -26,6 +26,7 @@ const Outer = styled.div<{
   ${(p) => {
     const adjust = p.themeName === ThemeMode.DARK ? lighten : darken;
     return `
+    opacity: ${p.selected ? 1 : 0.8};
     background-color: ${adjust(p.selected ? 0.2 : 0.05, p.theme.background)};
     ${
       p.onClick &&
