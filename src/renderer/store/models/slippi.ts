@@ -2,9 +2,8 @@ import produce from "immer";
 
 import { createModel } from "@rematch/core";
 
-import { EventActionConfig } from "@/containers/actions";
 import { mapFilterSettingsToConfiguration } from "@/lib/profile";
-import { ActionEvent, comboFilter, streamManager } from "@/lib/realtime";
+import { comboFilter, streamManager } from "@/lib/realtime";
 import { notify } from "@/lib/utils";
 
 export const DEFAULT_PROFILE = "default";
@@ -13,7 +12,6 @@ export interface SlippiState {
   port: string;
   currentProfile: string; // profile name
   comboProfiles: { [name: string]: string }; // profile name -> JSON stringified settings
-  events: EventActionConfig[];
   obsAddress: string;
   obsPort: string;
   obsPassword: string;
@@ -27,7 +25,6 @@ const initialState: SlippiState = {
   comboProfiles: {
     [DEFAULT_PROFILE]: defaultSettings,
   },
-  events: [],
   obsAddress: "localhost",
   obsPort: "4444",
   obsPassword: "",
@@ -90,21 +87,6 @@ export const slippi = createModel({
         draft.comboProfiles = newState;
       });
     },
-    addNewEventAction: (state: SlippiState, payload: ActionEvent): SlippiState =>
-      produce(state, (draft) => {
-        draft.events.push({
-          event: payload,
-          actions: [],
-        });
-      }),
-    updateActionEvent: (state: SlippiState, payload: { index: number; event: EventActionConfig }): SlippiState =>
-      produce(state, (draft) => {
-        draft.events[payload.index] = payload.event;
-      }),
-    removeActionEvent: (state: SlippiState, payload: number): SlippiState =>
-      produce(state, (draft) => {
-        draft.events.splice(payload, 1);
-      }),
   },
   effects: (dispatch) => ({
     async connectToSlippi(port: string) {
