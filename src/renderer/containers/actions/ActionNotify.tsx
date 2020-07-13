@@ -33,7 +33,7 @@ const NotifyInput = (props: any) => {
   const defaultValue = value && value.message ? value.message : "";
   const [msg, setMsg] = React.useState(defaultValue);
   return (
-    <div style={{ maxWidth: "500px" }}>
+    <div>
       <Form>
         <TextArea
           onBlur={() => onChange({ message: msg })}

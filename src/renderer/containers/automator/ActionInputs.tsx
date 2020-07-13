@@ -1,4 +1,6 @@
-import * as React from "react";
+/** @jsx jsx */
+import { css, jsx } from "@emotion/core";
+import React from "react";
 
 import styled from "@emotion/styled";
 
@@ -32,30 +34,41 @@ const ActionSelector = (props: any) => {
 */
 
 const ActionComponentBlock = (props: any) => {
-  const { icon, header, children, ...rest } = props;
+  const { hideBorder, icon, header, children, ...rest } = props;
   const Outer = styled.div`
+    margin: 2rem;
+    padding: 2rem;
+    padding-top: 0;
     display: flex;
-    margin-left: 20px;
-    margin-bottom: 10px;
+    flex-direction: column;
+    ${({ theme }) => (hideBorder ? "" : `border-bottom: solid 0.3rem ${theme.foreground3}`)};
   `;
   const Content = styled.div`
-    margin-left: 10px;
     width: 100%;
   `;
   const ActionDetails = styled.div`
-    margin: 1rem 0;
-    padding: 0.5rem 0;
-    padding-left: 2rem;
-    border-left: solid 0.3rem ${({ theme }) => theme.foreground3};
-    line-height: 2rem;
+    line-height: 3rem;
   `;
   return (
     <Outer {...rest}>
-      <div>{icon}</div>
-      <Content>
+      <div
+        css={css`
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          ${!hideBorder && `padding-bottom: 1rem;`}
+        `}
+      >
+        <div
+          css={css`
+            margin-right: 1rem;
+          `}
+        >
+          {icon}
+        </div>
         <div>{header}</div>
-        {children && <ActionDetails>{children}</ActionDetails>}
-      </Content>
+      </div>
+      <Content>{children && <ActionDetails>{children}</ActionDetails>}</Content>
     </Outer>
   );
 };
@@ -118,6 +131,7 @@ export const AddActionInput: React.FC<{
   const addText = noOtherActions ? "Then..." : "And also...";
   return (
     <ActionComponentBlock
+      hideBorder={true}
       style={unusedOptions.length === 0 ? { display: "none" } : undefined}
       icon={<Icon name="add" size="large" />}
       header={<ActionSelector text={addText} selectOnBlur={false} onChange={onChange} options={unusedOptions} />}
