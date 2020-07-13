@@ -3,9 +3,7 @@ import React from "react";
 import { Checkbox } from "semantic-ui-react";
 import styled from "@emotion/styled";
 
-export const FormContainer = styled.div`
-  max-width: 65rem;
-`;
+export const FormContainer = styled.div``;
 
 export const PageHeader = styled.h1`
   font-variant: all-small-caps;
