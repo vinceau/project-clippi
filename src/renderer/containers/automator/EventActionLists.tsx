@@ -24,8 +24,13 @@ const Header = styled.div`
   }
 `;
 
-export const EventActionLists: React.FC = () => {
-  const [selected, setSelected] = React.useState<number>(0);
+export interface EventActionListsProps {
+  selected: number;
+  onSelect: (i: number) => void;
+}
+
+export const EventActionLists: React.FC<EventActionListsProps> = (props) => {
+  const { selected, onSelect } = props;
   const val = useSelector((state: iRootState) => state.automator.events);
   const actions = useSelector((state: iRootState) => state.automator.actions);
   const dispatch = useDispatch<Dispatch>();
@@ -56,7 +61,7 @@ export const EventActionLists: React.FC = () => {
         </Header>
         <div>
           {val.map((e, i) => {
-            return <EventItem key={e.id} selected={selected === i} onClick={() => setSelected(i)} event={e} />;
+            return <EventItem key={e.id} selected={selected === i} onClick={() => onSelect(i)} event={e} />;
           })}
         </div>
       </ReflexElement>

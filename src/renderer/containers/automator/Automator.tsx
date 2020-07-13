@@ -2,19 +2,23 @@
 import { css, jsx } from "@emotion/core";
 import React from "react";
 
+import { Dispatch, iRootState } from "@/store";
+import { useDispatch, useSelector } from "react-redux";
 import { Button, Icon } from "semantic-ui-react";
-import { Dispatch } from "@/store";
-import { useDispatch } from "react-redux";
 import { EventModal } from "./EventModal";
 import { NamedEventConfig } from "@/store/models/automator";
 import { EventActionLists } from "./EventActionLists";
 
 export const Automator: React.FC = () => {
   const [opened, setOpened] = React.useState<boolean>(false);
+  const [selected, setSelected] = React.useState<number>(0);
+  const events = useSelector((state: iRootState) => state.automator.events);
   const dispatch = useDispatch<Dispatch>();
   const addEvent = (event: NamedEventConfig) => {
     dispatch.automator.addEvent(event);
     setOpened(false);
+    // Select our recently created event
+    setSelected(events.length);
   };
   return (
     <div
@@ -43,7 +47,7 @@ export const Automator: React.FC = () => {
           margin-top: 1rem;
         `}
       >
-        <EventActionLists />
+        <EventActionLists selected={selected} onSelect={setSelected} />
       </div>
     </div>
   );
