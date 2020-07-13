@@ -87,7 +87,7 @@ export const EventModal: React.FC<{
               css={css`
                 width: 100%;
               `}
-              placeholder="Event Name"
+              placeholder="Give this event a meaningful name..."
               transparent={true}
             />
           }
