@@ -37,16 +37,18 @@ const ErrorText = styled(Text)`
 `;
 
 export const EventModal: React.FC<{
+  opened?: boolean;
   onSubmit?: (event: NamedEventConfig) => void;
+  onClose?: () => void;
 }> = (props) => {
   const { watch, errors, handleSubmit, control } = useForm();
   const { currentProfile, comboProfiles } = useSelector((state: iRootState) => state.slippi);
   const theme = useTheme();
-  const [opened, setOpened] = React.useState<boolean>(false);
   const profileOptions = Object.keys(comboProfiles).map(stringToOptions);
-  const onOpen = () => {
-    // props value is the true value so reset the state
-    setOpened(true);
+  const onClose = () => {
+    if (props.onClose) {
+      props.onClose();
+    }
   };
   const onSubmit = (data: any) => {
     const { eventName, eventType, ...filter } = data;
@@ -61,7 +63,6 @@ export const EventModal: React.FC<{
       props.onSubmit(event);
     }
     console.log(event);
-    setOpened(false);
   };
   const watchButtonHold = watch("inputButtonHold", "pressed");
   const watchEventType = watch("eventType", countryOptions[0].value);
@@ -73,13 +74,7 @@ export const EventModal: React.FC<{
     handleSubmit(onSubmit)();
   };
   return (
-    <Modal
-      className={theme.themeName}
-      open={opened}
-      onClose={() => setOpened(false)}
-      closeIcon
-      trigger={<div onClick={onOpen}>{props.children}</div>}
-    >
+    <Modal className={theme.themeName} open={props.opened} closeIcon onClose={onClose} closeOnDimmerClick={false}>
       <Modal.Header>
         <Controller
           as={
