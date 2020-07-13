@@ -14,6 +14,7 @@ import { StockEvent, InputEvent, ComboEvent, GameEvent } from "@vinceau/slp-real
 import { useForm, Controller } from "react-hook-form";
 import { Select, Input, Button, Icon, Modal } from "semantic-ui-react";
 import { PortSelection } from "@/components/combos/PortSelection";
+import { NamedEventConfig } from "@/store/models/automator";
 
 const countryOptions = [
   { value: GameEvent.GAME_START, text: "Game Start" },
@@ -36,8 +37,7 @@ const ErrorText = styled(Text)`
 `;
 
 export const EventModal: React.FC<{
-  value?: string[];
-  onChange?: (newButtons: string[]) => void;
+  onSubmit?: (event: NamedEventConfig) => void;
 }> = (props) => {
   const { watch, errors, handleSubmit, control } = useForm();
   const { currentProfile, comboProfiles } = useSelector((state: iRootState) => state.slippi);
@@ -50,11 +50,18 @@ export const EventModal: React.FC<{
   };
   const onSubmit = (data: any) => {
     const { eventName, eventType, ...filter } = data;
-    console.log({
-      id: eventName,
+    const randomCode = Math.random().toString(36).slice(2);
+    const event: NamedEventConfig = {
+      id: randomCode,
+      name: eventName || `${eventType}-${randomCode}`,
       type: eventType,
       filter,
-    });
+    };
+    if (props.onSubmit) {
+      props.onSubmit(event);
+    }
+    console.log(event);
+    setOpened(false);
   };
   const watchButtonHold = watch("inputButtonHold", "pressed");
   const watchEventType = watch("eventType", countryOptions[0].value);
@@ -91,7 +98,6 @@ export const EventModal: React.FC<{
             console.log(x.value);
             return x.value;
           }}
-          rules={{ required: true }}
           name="eventName"
         />
         {errors.eventName && <ErrorText>Events must have a unique name</ErrorText>}
