@@ -76,7 +76,7 @@ const WriteFileInput = (props: WriteFileProps) => {
     onChange(newValue);
   };
   return (
-    <div style={{ maxWidth: "500px" }}>
+    <div>
       <div style={{ paddingBottom: "5px" }}>
         <InlineDropdown
           value={Boolean(value.append)}
