@@ -50,7 +50,7 @@ export const Automator: React.FC = () => {
   const actions = useSelector((state: iRootState) => state.automator.actions);
   const dispatch = useDispatch<Dispatch>();
   const selectedActions = actions[val[selected].id] || [];
-  // const disabledEvents = val.map((e) => e.event);
+  const disabledActions = selectedActions.map((a) => a.name);
   const addEvent = (event: NamedEventConfig) => {
     dispatch.automator.addEvent(event);
   };
@@ -137,7 +137,7 @@ export const Automator: React.FC = () => {
               />
             );
           })}
-          <AddActionInput onChange={onActionAdd} disabledActions={[]} />
+          <AddActionInput onChange={onActionAdd} disabledActions={disabledActions} />
         </div>
       </RightColumn>
     </Container>
