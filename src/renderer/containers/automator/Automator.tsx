@@ -15,6 +15,21 @@ export const Automator: React.FC = () => {
   const [edit, setEdit] = React.useState<NamedEventConfig | null>(null);
   const events = useSelector((state: iRootState) => state.automator.events);
   const dispatch = useDispatch<Dispatch>();
+  const invalidSelection = selected >= events.length || selected < 0;
+  const disableEditButtons = invalidSelection || events.length === 0;
+  const deleteEvent = () => {
+    console.log(`deleting event with id: ${selected}/${events.length}`);
+    // Perform some basic validation of the current selected value
+    if (invalidSelection) {
+      return;
+    }
+
+    dispatch.automator.removeEvent(selected);
+    // Select the previous value if we deleted the last element
+    if (selected === events.length - 1) {
+      setSelected(selected - 1);
+    }
+  };
   const addEvent = (event: NamedEventConfig) => {
     if (event.id) {
       // This was an edit
@@ -54,10 +69,10 @@ export const Automator: React.FC = () => {
         <Button onClick={() => setOpened(true)}>
           <Icon name="plus" /> Add event
         </Button>
-        <Button onClick={editEvent}>
+        <Button onClick={editEvent} disabled={disableEditButtons}>
           <Icon name="pencil" /> Edit event
         </Button>
-        <Button>
+        <Button onClick={deleteEvent} disabled={disableEditButtons}>
           <Icon name="trash" /> Delete event
         </Button>
       </div>
