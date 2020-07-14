@@ -11,6 +11,8 @@ import { mapConfigurationToFilterSettings } from "@/lib/profile";
 import { soundPlayer } from "@/lib/sounds";
 import { transformer } from "./transformer";
 import { streamManager } from "@/lib/realtime";
+import { InputEvent, EventConfig } from "@vinceau/slp-realtime";
+import { mapInputEventConfig } from "@/lib/inputs";
 
 const persistPlugin = createRematchPersist({
   version: 1,
@@ -52,7 +54,20 @@ const storeSync = () => {
   });
   streamManager.updateEventConfig({
     variables: eventConfigVars,
-    events: state.automator.events,
+    events: state.automator.events.map(
+      (event): EventConfig => {
+        const { type, filter } = event;
+        switch (type) {
+          case InputEvent.BUTTON_COMBO:
+            const newButtonConfig = {
+              ...event,
+              filter: mapInputEventConfig(filter as any),
+            };
+            return newButtonConfig;
+        }
+        return event;
+      }
+    ),
   });
 };
 
