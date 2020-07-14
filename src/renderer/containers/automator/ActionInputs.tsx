@@ -80,6 +80,7 @@ export const ActionInput: React.FC<{
   disabledActions: string[];
   onRemove: () => void;
 }> = (props) => {
+  const [hover, setHover] = React.useState<boolean>(false);
   const { value, onChange, onRemove, selectPrefix, disabledActions } = props;
   const onActionChange = (action: string) => {
     const params = actionComponents[action].defaultParams;
@@ -104,7 +105,9 @@ export const ActionInput: React.FC<{
     <ActionComponentBlock
       icon={
         <Labelled title="Click to remove" onClick={onRemove}>
-          <ActionIcon />
+          <div onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
+            {hover ? <Icon name="close" size="large" /> : <ActionIcon />}
+          </div>
         </Labelled>
       }
       header={
