@@ -7,6 +7,7 @@ import { Action as ActionDefinition } from "@vinceau/event-actions";
 
 export interface NamedEventConfig extends EventConfig {
   name: string;
+  disabled?: boolean;
 }
 
 export interface AutomatorState {

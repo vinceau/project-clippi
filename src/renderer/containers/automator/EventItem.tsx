@@ -9,11 +9,13 @@ import { ThemeMode, useTheme } from "@/styles";
 
 export interface EventItemProps {
   event: NamedEventConfig;
+  disabled?: boolean;
   selected?: boolean;
   onClick?: () => void;
 }
 
 const Outer = styled.div<{
+  disabled?: boolean;
   themeName: string;
   selected?: boolean;
   onClick?: () => void;
@@ -28,6 +30,7 @@ const Outer = styled.div<{
   ${(p) => {
     const adjust = p.themeName === ThemeMode.DARK ? lighten : darken;
     return `
+    opacity: ${p.disabled ? "0.4" : "1"};
     background-color: ${p.selected ? adjust(0.2, p.theme.background) : "transparent"};
     border: solid 0.1rem ${transparentize(0.8, p.theme.foreground)};
     ${p.selected ? `border-color: transparent;` : ""}
@@ -45,16 +48,16 @@ const Outer = styled.div<{
   }}
 `;
 
-export const EventItem: React.FC<EventItemProps> = ({ event, onClick, selected }) => {
+export const EventItem: React.FC<EventItemProps> = ({ event, onClick, selected, disabled }) => {
   const theme = useTheme();
   return (
-    <Outer themeName={theme.themeName} onClick={onClick} selected={selected}>
+    <Outer disabled={disabled} themeName={theme.themeName} onClick={onClick} selected={selected}>
       <div
         css={css`
           margin-right: 1rem;
         `}
       >
-        <Icon name="flag outline" />
+        <Icon name={disabled ? "window close" : "flag outline"} />
       </div>
       <div>{event.name}</div>
     </Outer>

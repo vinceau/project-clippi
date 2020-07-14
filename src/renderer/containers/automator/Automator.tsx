@@ -19,6 +19,7 @@ export const Automator: React.FC = () => {
   const events = useSelector((state: iRootState) => state.automator.events);
   const dispatch = useDispatch<Dispatch>();
   const invalidSelection = selected >= events.length || selected < 0;
+  const isDisabled = !invalidSelection && events[selected] && events[selected].disabled;
   const disableEditButtons = invalidSelection || events.length === 0;
   const deleteEvent = () => {
     console.log(`deleting event with id: ${selected}/${events.length}`);
@@ -32,6 +33,10 @@ export const Automator: React.FC = () => {
     if (selected === events.length - 1) {
       setSelected(selected - 1);
     }
+  };
+  const toggleEvent = () => {
+    const event = events[selected];
+    dispatch.automator.updateEvent({ index: selected, event: { ...event, disabled: !event.disabled } });
   };
   const addEvent = (event: NamedEventConfig) => {
     if (event.id) {
@@ -92,11 +97,14 @@ export const Automator: React.FC = () => {
         </div>
         {!disableEditButtons && (
           <div>
+            <Labelled title="Test run event">
+              <Button onClick={testRunEvent} icon="play" />
+            </Labelled>
             <Labelled title="Edit event">
               <Button onClick={editEvent} icon="pencil" />
             </Labelled>
-            <Labelled title="Test run event">
-              <Button onClick={testRunEvent} icon="play" />
+            <Labelled title={isDisabled ? "Enable event" : "Disable event"}>
+              <Button onClick={toggleEvent} icon={isDisabled ? "check circle" : "window close"} />
             </Labelled>
           </div>
         )}
