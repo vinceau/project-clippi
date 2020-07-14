@@ -47,7 +47,7 @@ export const EventModal: React.FC<{
   const { currentProfile, comboProfiles } = useSelector((state: iRootState) => state.slippi);
   const theme = useTheme();
   // Prefix the value with "$" so we can use the object replacement in the event manager
-  const profileOptions = Object.keys(comboProfiles).map((o: string) => ({ key: o, value: `$${o}`, text: o }));
+  const profileOptions = Object.keys(comboProfiles).map((o: string) => ({ key: o, value: "$" + o, text: o }));
   const onClose = () => {
     if (props.onClose) {
       props.onClose();
@@ -168,7 +168,7 @@ export const EventModal: React.FC<{
               control={control}
               onChange={([_, x]) => x.value}
               name="comboCriteria"
-              defaultValue={currentProfile}
+              defaultValue={"$" + currentProfile}
             />
           </Field>
         )}
