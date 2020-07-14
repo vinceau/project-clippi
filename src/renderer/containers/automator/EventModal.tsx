@@ -46,7 +46,8 @@ export const EventModal: React.FC<{
   const { watch, errors, handleSubmit, control, reset } = useForm();
   const { currentProfile, comboProfiles } = useSelector((state: iRootState) => state.slippi);
   const theme = useTheme();
-  const profileOptions = Object.keys(comboProfiles).map(stringToOptions);
+  // Prefix the value with "$" so we can use the object replacement in the event manager
+  const profileOptions = Object.keys(comboProfiles).map((o: string) => ({ key: o, value: `$${o}`, text: o }));
   const onClose = () => {
     if (props.onClose) {
       props.onClose();

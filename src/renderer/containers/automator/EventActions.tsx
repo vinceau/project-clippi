@@ -11,9 +11,9 @@ import { InlineDropdown } from "@/components/InlineInputs";
 import { Labelled } from "@/components/Labelled";
 import { actionComponents, EventActionConfig } from "@/containers/actions";
 import { generateRandomEvent } from "@/lib/events";
-import { ActionEvent, testRunActions } from "@/lib/realtime";
 import { ActionInput, AddActionInput } from "./ActionInputs";
 
+/*
 const allEvents: ActionEvent[] = [
   ActionEvent.GAME_START,
   ActionEvent.GAME_END,
@@ -31,6 +31,7 @@ const mapEventToName: { [eventName: string]: string } = {
   [ActionEvent.COMBO_OCCURRED]: "a combo occurs",
   [ActionEvent.CONVERSION_OCCURRED]: "a conversion occurs",
 };
+*/
 
 /*
   {
