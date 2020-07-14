@@ -10,6 +10,7 @@ import { NamedEventConfig } from "@/store/models/automator";
 import { EventActionLists } from "./EventActionLists";
 import { Labelled } from "@/components/Labelled";
 import { streamManager } from "@/lib/realtime";
+import { AutomatorPlaceholder } from "./AutomatorPlaceholder";
 
 export const Automator: React.FC = () => {
   const [opened, setOpened] = React.useState<boolean>(false);
@@ -106,7 +107,11 @@ export const Automator: React.FC = () => {
           margin-top: 1rem;
         `}
       >
-        <EventActionLists selected={selected} onSelect={setSelected} />
+        {events.length === 0 ? (
+          <AutomatorPlaceholder />
+        ) : (
+          <EventActionLists selected={selected} onSelect={setSelected} />
+        )}
       </div>
     </div>
   );
