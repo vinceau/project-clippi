@@ -71,6 +71,7 @@ export const Automator: React.FC = () => {
         display: flex;
         flex-direction: column;
         flex: 1;
+        padding-top: 2rem;
       `}
     >
       <EventModal onSubmit={addEvent} opened={opened} onClose={reset} edit={edit} />
