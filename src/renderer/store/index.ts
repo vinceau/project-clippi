@@ -54,20 +54,22 @@ const storeSync = () => {
   });
   streamManager.updateEventConfig({
     variables: eventConfigVars,
-    events: state.automator.events.map(
-      (event): EventConfig => {
-        const { type, filter } = event;
-        switch (type) {
-          case InputEvent.BUTTON_COMBO:
-            const newButtonConfig = {
-              ...event,
-              filter: mapInputEventConfig(filter as any),
-            };
-            return newButtonConfig;
+    events: state.automator.events
+      .filter((e) => !e.disabled)
+      .map(
+        (event): EventConfig => {
+          const { type, filter } = event;
+          switch (type) {
+            case InputEvent.BUTTON_COMBO:
+              const newButtonConfig = {
+                ...event,
+                filter: mapInputEventConfig(filter as any),
+              };
+              return newButtonConfig;
+          }
+          return event;
         }
-        return event;
-      }
-    ),
+      ),
   });
 };
 

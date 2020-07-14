@@ -61,7 +61,15 @@ export const EventActionLists: React.FC<EventActionListsProps> = (props) => {
         </Header>
         <div>
           {val.map((e, i) => {
-            return <EventItem key={e.id} selected={selected === i} onClick={() => onSelect(i)} event={e} />;
+            return (
+              <EventItem
+                key={e.id}
+                selected={selected === i}
+                disabled={e.disabled}
+                onClick={() => onSelect(i)}
+                event={e}
+              />
+            );
           })}
         </div>
       </ReflexElement>
