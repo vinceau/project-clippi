@@ -1,5 +1,13 @@
 import { Action, Context } from "@vinceau/event-actions";
-import { ComboFilter, ConnectionStatus, SlpFolderStream, SlpLiveStream, SlpRealTime } from "@vinceau/slp-realtime";
+import {
+  ComboFilter,
+  ConnectionStatus,
+  SlpFolderStream,
+  SlpLiveStream,
+  SlpRealTime,
+  EventManager,
+  EventManagerConfig,
+} from "@vinceau/slp-realtime";
 import { withLatestFrom } from "rxjs/operators";
 
 import { dispatcher } from "@/store";
@@ -19,6 +27,7 @@ import { isDevelopment } from "common/utils";
 import { eventActionManager } from "../containers/actions";
 import { notify } from "./utils";
 
+/*
 export enum ActionEvent {
   GAME_START = "game-start",
   GAME_END = "game-end",
@@ -38,7 +47,7 @@ if (isDevelopment) {
   comboFilter.updateSettings({ excludeCPUs: false, comboMustKill: false, minComboPercent: 40 });
 }
 
-const slippiRealtime = new SlpRealTime();
+// const slippiRealtime = new SlpRealTime();
 
 slippiRealtime.game.start$.subscribe(async (gameStart) => {
   try {
@@ -127,9 +136,26 @@ export const testRunActions = (event: string, actions: Action[]): void => {
   }
   eventActionManager.execute(actions, generateGlobalContext(ctx)).catch(console.error);
 };
+*/
 
 class SlpStreamManager {
   private stream: SlpLiveStream | SlpFolderStream | null = null;
+  private realtime: SlpRealTime;
+  private eventManager: EventManager;
+
+  public constructor() {
+    this.realtime = new SlpRealTime();
+    this.eventManager = new EventManager(this.realtime);
+    this.eventManager.events$.subscribe((event) => {
+      eventActionManager.emitEvent(event.id);
+    });
+  }
+
+  public updateEventConfig(config: EventManagerConfig) {
+    console.log("using config:");
+    console.log(config);
+    this.eventManager.updateConfig(config);
+  }
 
   public async connectToSlippi(port?: number): Promise<void> {
     console.log(`attempt to connect to slippi on port: ${port}`);
@@ -146,7 +172,7 @@ class SlpStreamManager {
     });
     console.log(stream.connection);
     await stream.start(address, slpPort);
-    slippiRealtime.setStream(stream);
+    this.realtime.setStream(stream);
     this.stream = stream;
   }
 
@@ -161,7 +187,7 @@ class SlpStreamManager {
     try {
       const stream = new SlpFolderStream();
       await stream.start(filepath);
-      slippiRealtime.setStream(stream);
+      this.realtime.setStream(stream);
       this.stream = stream;
       dispatcher.tempContainer.setSlpFolderStream(filepath);
     } catch (err) {

@@ -7,9 +7,10 @@ import { updateEventActionManager } from "@/containers/actions";
 import { dolphinRecorder } from "@/lib/dolphin";
 import { obsConnection } from "@/lib/obs";
 import { mapConfigurationToFilterSettings } from "@/lib/profile";
-import { comboFilter } from "@/lib/realtime";
+// import { comboFilter } from "@/lib/realtime";
 import { soundPlayer } from "@/lib/sounds";
 import { transformer } from "./transformer";
+import { streamManager } from "@/lib/realtime";
 
 const persistPlugin = createRematchPersist({
   version: 1,
@@ -43,11 +44,16 @@ const storeSync = () => {
   soundPlayer.sounds = soundFiles;
 
   // Restore combo settings
-  const slippiSettings = state.slippi.comboProfiles[state.slippi.currentProfile];
-  const converted = mapConfigurationToFilterSettings(JSON.parse(slippiSettings));
-  if (slippiSettings) {
-    comboFilter.updateSettings(converted);
-  }
+  const eventConfigVars = {};
+  Object.keys(state.slippi.comboProfiles).map((key) => {
+    const slippiSettings = state.slippi.comboProfiles[key];
+    const converted = mapConfigurationToFilterSettings(JSON.parse(slippiSettings));
+    eventConfigVars[`$${key}`] = converted;
+  });
+  streamManager.updateEventConfig({
+    variables: eventConfigVars,
+    events: state.automator.events,
+  });
 };
 
 store.subscribe(() => {
