@@ -1,6 +1,4 @@
-import { Action, Context } from "@vinceau/event-actions";
 import {
-  ComboFilter,
   ConnectionStatus,
   SlpFolderStream,
   SlpLiveStream,
@@ -8,9 +6,9 @@ import {
   EventManager,
   EventManagerConfig,
 } from "@vinceau/slp-realtime";
-import { withLatestFrom } from "rxjs/operators";
 
 import { dispatcher } from "@/store";
+<<<<<<< HEAD
 import {
   exampleComboType,
   exampleDeathStockType,
@@ -138,6 +136,11 @@ export const testRunActions = (event: string, actions: Action[]): void => {
 };
 */
 
+=======
+import { eventActionManager } from "../containers/actions";
+import { notify } from "./utils";
+
+>>>>>>> 4ba2627... Fix compilation issues
 class SlpStreamManager {
   private stream: SlpLiveStream | SlpFolderStream | null = null;
   private realtime: SlpRealTime;

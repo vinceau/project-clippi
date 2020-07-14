@@ -2,11 +2,10 @@
 import { css, jsx } from "@emotion/core";
 import React from "react";
 import styled from "@emotion/styled";
-import { darken, lighten } from "polished";
-import { useDispatch, useSelector } from "react-redux";
-import { Dispatch, iRootState } from "@/store";
+import { useSelector } from "react-redux";
+import { iRootState } from "@/store";
 
-import { ThemeMode, useTheme } from "@/styles";
+import { useTheme } from "@/styles";
 import { ButtonInput } from "@/components/gamecube/ButtonInput";
 import { DelayInput, InlineDropdown } from "@/components/InlineInputs";
 import { Field, Label, Text } from "@/components/Form";
