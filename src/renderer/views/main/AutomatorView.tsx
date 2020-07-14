@@ -38,7 +38,7 @@ export const AutomatorView: React.FC = () => {
         <h1>
           Automator <Icon name="bolt" />
         </h1>
-        <Text>Automatically execute commands when an in-game event occurs</Text>
+        <Text margin="none">Automatically execute commands when an in-game event occurs</Text>
         <Automator />
       </Content>
       <Footer>
