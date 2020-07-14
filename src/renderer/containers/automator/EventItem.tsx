@@ -21,13 +21,16 @@ const Outer = styled.div<{
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 10px;
-  border-bottom: solid 1px ${(p) => transparentize(0.8, p.theme.foreground)};
+  padding: 1.5rem 2rem;
+  border-radius: 0.5rem;
+  margin: 1.5rem 2rem;
+  margin-left: 1rem;
   ${(p) => {
     const adjust = p.themeName === ThemeMode.DARK ? lighten : darken;
     return `
-    opacity: ${p.selected ? 1 : 0.8};
-    background-color: ${adjust(p.selected ? 0.2 : 0.05, p.theme.background)};
+    background-color: ${p.selected ? adjust(0.2, p.theme.background) : "transparent"};
+    border: solid 0.1rem ${transparentize(0.8, p.theme.foreground)};
+    ${p.selected ? `border-color: transparent;` : ""}
     ${
       p.onClick &&
       !p.selected &&
