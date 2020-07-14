@@ -8,6 +8,8 @@ import { Button, Icon } from "semantic-ui-react";
 import { EventModal } from "./EventModal";
 import { NamedEventConfig } from "@/store/models/automator";
 import { EventActionLists } from "./EventActionLists";
+import { Labelled } from "@/components/Labelled";
+import { streamManager } from "@/lib/realtime";
 
 export const Automator: React.FC = () => {
   const [opened, setOpened] = React.useState<boolean>(false);
@@ -51,6 +53,12 @@ export const Automator: React.FC = () => {
     setEdit(events[selected]);
     setOpened(true);
   };
+  const testRunEvent = () => {
+    if (!invalidSelection) {
+      const eventId = events[selected].id;
+      streamManager.testRunEvent(eventId);
+    }
+  };
   const reset = () => {
     console.log("resetting form");
     setOpened(false);
@@ -65,16 +73,31 @@ export const Automator: React.FC = () => {
       `}
     >
       <EventModal onSubmit={addEvent} opened={opened} onClose={reset} edit={edit} />
-      <div>
-        <Button onClick={() => setOpened(true)}>
-          <Icon name="plus" /> Add event
-        </Button>
-        <Button onClick={editEvent} disabled={disableEditButtons}>
-          <Icon name="pencil" /> Edit event
-        </Button>
-        <Button onClick={deleteEvent} disabled={disableEditButtons}>
-          <Icon name="trash" /> Delete event
-        </Button>
+      <div
+        css={css`
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        `}
+      >
+        <div>
+          <Button onClick={() => setOpened(true)}>
+            <Icon name="plus" /> Add event
+          </Button>
+          <Button onClick={deleteEvent} disabled={disableEditButtons}>
+            <Icon name="trash" /> Delete event
+          </Button>
+        </div>
+        {!disableEditButtons && (
+          <div>
+            <Labelled title="Edit event">
+              <Button onClick={editEvent} icon="pencil" />
+            </Labelled>
+            <Labelled title="Test run event">
+              <Button onClick={testRunEvent} icon="play" />
+            </Labelled>
+          </div>
+        )}
       </div>
       <div
         css={css`
