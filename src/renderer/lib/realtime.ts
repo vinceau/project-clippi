@@ -151,6 +151,10 @@ class SlpStreamManager {
     });
   }
 
+  public testRunEvent(eventId: string) {
+    eventActionManager.emitEvent(eventId);
+  }
+
   public updateEventConfig(config: EventManagerConfig) {
     console.log("using config:");
     console.log(config);
