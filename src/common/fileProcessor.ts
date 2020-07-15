@@ -111,6 +111,7 @@ const renameFile = async (currentFilename: string, newFilename: string): Promise
 export interface ProcessResult {
   filename: string;
   numCombos: number;
+  totalCombosFound: number;
 }
 
 export class FileProcessor {
@@ -197,6 +198,7 @@ export class FileProcessor {
     const res: ProcessResult = {
       filename,
       numCombos: 0,
+      totalCombosFound: 0, // Set this value after we're done processing
     };
 
     const game = new SlippiGame(filename);
@@ -220,6 +222,8 @@ export class FileProcessor {
       res.numCombos = await this._findHighlights(filename, highlights$);
     }
 
+    // Update the total combos found
+    res.totalCombosFound = this.queue.length;
     return res;
   }
 

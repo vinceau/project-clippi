@@ -57,7 +57,9 @@ const handleProgress = (payload: ProgressingPayload): void => {
         dispatcher.tempContainer.setComboLog(message);
       }
     } else {
-      dispatcher.tempContainer.setComboLog(`Found ${result.numCombos} highlights in: ${base}`);
+      dispatcher.tempContainer.setComboLog(
+        `Found ${result.numCombos} highlights in ${base}. Total: ${result.totalCombosFound} highlights.`
+      );
     }
   } else if (options.renameFiles && result.filename) {
     dispatcher.tempContainer.setComboLog(`Renamed ${filename} to ${result.filename}`);
