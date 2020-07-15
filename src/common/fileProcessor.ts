@@ -22,6 +22,8 @@ import {
   forAllPlayerIndices,
   mapFramesToButtonInputs,
   namesMatch,
+  GameStartType,
+  Character,
 } from "@vinceau/slp-realtime";
 import { Observable, from, empty } from "rxjs";
 import { map } from "rxjs/operators";
@@ -198,11 +200,11 @@ export class FileProcessor {
     };
 
     const game = new SlippiGame(filename);
+    const settings = game.getSettings();
     const metadata = game.getMetadata();
 
     // Handle file renaming
     if (options.renameFiles && options.renameTemplate) {
-      const settings = game.getSettings();
       const fullFilename = path.basename(filename);
       res.filename = parseFileRenameFormat(options.renameTemplate, settings, metadata, fullFilename);
       res.filename = assertExtension(res.filename, SLP_FILE_EXT);
@@ -210,7 +212,7 @@ export class FileProcessor {
     }
 
     // Handle combo finding
-    if (options.findComboOption) {
+    if (options.findComboOption && !canShortCircuit(options, settings, metadata)) {
       console.log("finding combos");
       const highlights$ = this._generateHighlightObservable(filename, options.findComboOption, options.config).pipe(
         map((highlight) => populateHighlightMetadata(highlight, metadata))
@@ -231,22 +233,6 @@ export class FileProcessor {
     const game = new SlippiGame(filename);
     const settings = game.getSettings();
     const metadata = game.getMetadata();
-
-    // Try to short-circuit here
-    // If we're finding combos or conversions against player characters or player names short circuit
-    // if neither the player names or the player characters match
-    if (findComboOption === FindComboOption.COMBOS || findComboOption === FindComboOption.CONVERSIONS) {
-      const criteria = (config as ComboOptions).findComboCriteria;
-      // Check if we're searching for name tags
-      if (criteria.nameTags && criteria.nameTags.length > 0) {
-        const matchableNames = extractPlayerNames(settings, metadata);
-        if (matchableNames.length === 0 || !namesMatch(criteria.nameTags, matchableNames)) {
-          // We can short circuit here
-          return empty();
-        }
-      }
-    }
-
     const stats = game.getStats();
     switch (findComboOption) {
       case FindComboOption.COMBOS:
@@ -358,3 +344,36 @@ const populateHighlightMetadata = (highlight: DolphinPlaybackItem, metadata?: Me
   }
   return highlight;
 };
+
+/***
+ * Returns true if we already know that combos will not match
+ */
+function canShortCircuit(options: FileProcessorOptions, settings: GameStartType, metadata?: any): boolean {
+  // Can't short circuit button inputs for now
+  if (options.findComboOption === FindComboOption.BUTTON_INPUTS) {
+    return false;
+  }
+
+  const criteria = (options.config as ComboOptions).findComboCriteria;
+  // Check if we're searching for name tags
+  if (criteria.nameTags && criteria.nameTags.length > 0) {
+    const matchableNames = extractPlayerNames(settings, metadata);
+    if (matchableNames.length === 0 || !namesMatch(criteria.nameTags, matchableNames)) {
+      // We can short circuit here
+      return true;
+    }
+  }
+
+  // Check if we're searching for characters
+  if (criteria.characterFilter && criteria.characterFilter.length > 0) {
+    const charsToFind = criteria.characterFilter as Character[];
+    const inGameCharacters = settings.players
+      .map((p) => p.characterId)
+      .filter((char) => char !== null && char !== undefined) as Character[];
+    if (inGameCharacters.some((c) => charsToFind.includes(c))) {
+      return true;
+    }
+  }
+
+  return false;
+}
