@@ -12,6 +12,7 @@ import {
   defaultComboFilterSettings,
   DolphinPlaybackItem,
   Frames,
+  extractPlayerNames,
   generateDolphinQueuePayload,
   Input,
   SlippiGame,
@@ -20,8 +21,9 @@ import {
   FrameEntryType,
   forAllPlayerIndices,
   mapFramesToButtonInputs,
+  namesMatch,
 } from "@vinceau/slp-realtime";
-import { Observable, from } from "rxjs";
+import { Observable, from, empty } from "rxjs";
 import { map } from "rxjs/operators";
 
 import { parseFileRenameFormat } from "./context";
@@ -228,8 +230,24 @@ export class FileProcessor {
     // Fetching game info breaks if the file was renamed
     const game = new SlippiGame(filename);
     const settings = game.getSettings();
-    const stats = game.getStats();
     const metadata = game.getMetadata();
+
+    // Try to short-circuit here
+    // If we're finding combos or conversions against player characters or player names short circuit
+    // if neither the player names or the player characters match
+    if (findComboOption === FindComboOption.COMBOS || findComboOption === FindComboOption.CONVERSIONS) {
+      const criteria = (config as ComboOptions).findComboCriteria;
+      // Check if we're searching for name tags
+      if (criteria.nameTags && criteria.nameTags.length > 0) {
+        const matchableNames = extractPlayerNames(settings, metadata);
+        if (matchableNames.length === 0 || !namesMatch(criteria.nameTags, matchableNames)) {
+          // We can short circuit here
+          return empty();
+        }
+      }
+    }
+
+    const stats = game.getStats();
     switch (findComboOption) {
       case FindComboOption.COMBOS:
         return this._findCombos(
