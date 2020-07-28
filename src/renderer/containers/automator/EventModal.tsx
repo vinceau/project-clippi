@@ -15,7 +15,33 @@ import { Select, Input, Button, Icon, Modal } from "semantic-ui-react";
 import { PortSelection } from "@/components/combos/PortSelection";
 import { NamedEventConfig } from "@/store/models/automator";
 
-const countryOptions = [
+interface FilterValues {
+  playerIndex: number[];
+  inputButtonHold: string;
+  buttonCombo: string[];
+  inputButtonHoldDelay: string;
+  inputButtonHoldUnits: string;
+}
+
+interface FormValues {
+  name: string;
+  type: string;
+  filter: FilterValues;
+}
+
+const DEFAULT_FORM_VALUES: FormValues = {
+  name: "",
+  type: GameEvent.GAME_START,
+  filter: {
+    playerIndex: [0, 1, 2, 3],
+    inputButtonHold: "pressed",
+    buttonCombo: [],
+    inputButtonHoldDelay: "2",
+    inputButtonHoldUnits: "seconds",
+  },
+};
+
+const eventOptions = [
   { value: GameEvent.GAME_START, text: "Game Start" },
   { value: GameEvent.GAME_END, text: "Game End" },
   { value: StockEvent.PLAYER_SPAWN, text: "Player Spawn" },
@@ -40,54 +66,51 @@ export const EventModal: React.FC<{
   opened?: boolean;
   onSubmit?: (event: NamedEventConfig) => void;
   onClose?: () => void;
-}> = (props) => {
-  const { edit, opened } = props;
-  const { watch, errors, handleSubmit, control, reset } = useForm();
+}> = ({ edit, opened, onClose, onSubmit }) => {
+  const defaultValues = Object.assign({}, DEFAULT_FORM_VALUES, edit);
+  const { watch, errors, handleSubmit, control, reset } = useForm<FormValues>({ defaultValues });
   const { currentProfile, comboProfiles } = useSelector((state: iRootState) => state.slippi);
   const theme = useTheme();
+
+  // Set current values to be the default values
+  React.useLayoutEffect(() => {
+    reset(defaultValues);
+  }, [edit]);
+
   // Prefix the value with "$" so we can use the object replacement in the event manager
   const profileOptions = Object.keys(comboProfiles).map((o: string) => ({ key: o, value: "$" + o, text: o }));
-  const onClose = () => {
-    if (props.onClose) {
-      props.onClose();
+
+  const closeAction = () => {
+    if (onClose) {
+      onClose();
     }
   };
-  React.useLayoutEffect(() => {
-    if (edit) {
-      const { name, type, filter } = edit;
-      reset({
-        ...filter,
-        eventName: name,
-        eventType: type,
-      });
-    } else {
-      reset({});
-    }
-  }, [edit]);
-  const onSubmit = (data: any) => {
-    const { eventName, eventType, ...filter } = data;
+
+  const submitAction = (data: FormValues) => {
     const event: NamedEventConfig = {
+      ...data,
       id: edit ? edit.id : "",
-      name: eventName || eventType,
-      type: eventType,
-      filter,
+      name: data.name || data.type,
     };
-    if (props.onSubmit) {
-      props.onSubmit(event);
+    if (onSubmit) {
+      onSubmit(event);
     }
     console.log(event);
   };
-  const watchButtonHold = watch("inputButtonHold", "pressed");
-  const watchEventType = watch("eventType", countryOptions[0].value);
-  const showPlayerOptions = ![GameEvent.GAME_START, GameEvent.GAME_END].includes(watchEventType);
-  const showButtonInputs = watchEventType === InputEvent.BUTTON_COMBO;
-  const showComboProfileInput = [ComboEvent.CONVERSION, ComboEvent.END].includes(watchEventType);
-  const onSave = () => {
+
+  const saveAction = () => {
     console.log("save button clicked");
-    handleSubmit(onSubmit)();
+    handleSubmit(submitAction)();
   };
+
+  const eventType = watch("type");
+  const filter = watch("filter");
+  const showPlayerOptions = eventType !== GameEvent.GAME_START && eventType !== GameEvent.GAME_END;
+  const showButtonInputs = eventType === InputEvent.BUTTON_COMBO;
+  const showComboProfileInput = eventType === ComboEvent.CONVERSION || eventType === ComboEvent.END;
+
   return (
-    <Modal className={theme.themeName} open={opened} closeIcon onClose={onClose} closeOnDimmerClick={false}>
+    <Modal className={theme.themeName} open={opened} closeIcon onClose={closeAction} closeOnDimmerClick={false}>
       <Modal.Header>
         <Controller
           as={
@@ -100,15 +123,14 @@ export const EventModal: React.FC<{
             />
           }
           control={control}
-          defaultValue=""
           onChange={([_, x]) => {
             console.log("value changed:");
             console.log(x.value);
             return x.value;
           }}
-          name="eventName"
+          name="name"
         />
-        {errors.eventName && <ErrorText>Events must have a unique name</ErrorText>}
+        {errors.name && <ErrorText>Events must have a unique name</ErrorText>}
       </Modal.Header>
       <Modal.Content>
         <Field padding="bottom">
@@ -120,7 +142,7 @@ export const EventModal: React.FC<{
                   width: 100%;
                 `}
                 placeholder="Choose an event"
-                options={countryOptions.map((o) => ({ ...o, key: o.value }))}
+                options={eventOptions.map((o) => ({ ...o, key: o.value }))}
               />
             }
             control={control}
@@ -130,8 +152,8 @@ export const EventModal: React.FC<{
               return x.value;
             }}
             rules={{ required: true }}
-            name="eventType"
-            defaultValue={countryOptions[0].value}
+            name="type"
+            defaultValue={eventOptions[0].value}
           />
         </Field>
         {showPlayerOptions && (
@@ -143,9 +165,9 @@ export const EventModal: React.FC<{
               onChange={([v]) => v}
               defaultValue={[0, 1, 2, 3]}
               rules={{ validate: (val) => val && val.length > 0 }}
-              name="playerIndex"
+              name="filter.playerIndex"
             />
-            {errors.portFilter && errors.portFilter.type === "validate" && (
+            {errors.filter && errors.filter.playerIndex && (errors.filter.playerIndex as any).type === "validate" && (
               <ErrorText>At least one player must be selected</ErrorText>
             )}
           </Field>
@@ -166,7 +188,7 @@ export const EventModal: React.FC<{
               }
               control={control}
               onChange={([_, x]) => x.value}
-              name="comboCriteria"
+              name="filter.comboCriteria"
               defaultValue={"$" + currentProfile}
             />
           </Field>
@@ -179,33 +201,30 @@ export const EventModal: React.FC<{
               {"Trigger event when the following combination is "}
               <Controller
                 as={<InlineDropdown options={holdOptions} />}
-                defaultValue="pressed"
                 onChange={([x]) => {
                   console.log("value changed");
                   console.log(x);
                   return x;
                 }}
                 control={control}
-                name="inputButtonHold"
+                name="filter.inputButtonHold"
               />
-              {watchButtonHold === "held" && (
+              {filter.inputButtonHold === "held" && (
                 <span>
                   {" for "}
                   <span style={{ marginRight: "10px" }}>
                     <Controller
                       as={<DelayInput placeholder="2" />}
-                      defaultValue="2"
                       onChange={([val]) => val}
                       control={control}
-                      name="inputButtonHoldDelay"
+                      name="filter.inputButtonHoldDelay"
                     />
                   </span>
                   <Controller
                     as={<InlineDropdown options={holdDurationOptions} />}
-                    defaultValue="seconds"
                     onChange={([val]) => val}
                     control={control}
-                    name="inputButtonHoldUnits"
+                    name="filter.inputButtonHoldUnits"
                   />
                 </span>
               )}
@@ -214,11 +233,10 @@ export const EventModal: React.FC<{
               as={<ButtonInput />}
               control={control}
               onChange={([v]) => v}
-              defaultValue={[]}
               rules={{ validate: (val) => val && val.length > 0 }}
-              name="buttonCombo"
+              name="filter.buttonCombo"
             />
-            {errors.buttonCombo && errors.buttonCombo.type === "validate" && (
+            {errors.filter && errors.filter.buttonCombo && (errors.filter.buttonCombo as any).type === "validate" && (
               <ErrorText>Button combination must be specified</ErrorText>
             )}
           </Field>
@@ -233,7 +251,7 @@ export const EventModal: React.FC<{
           }
         `}
       >
-        <Button color="green" onClick={onSave}>
+        <Button color="green" onClick={saveAction}>
           <Icon name="checkmark" /> Save
         </Button>
       </Modal.Actions>
