@@ -1,47 +1,23 @@
-import { Cookie, Filter, session } from "electron";
+import { Cookie, session, CookiesGetFilter } from "electron";
 
 // Based on: stackoverflow.com/questions/41314826/delete-all-cookies-in-electron-desktop-app
 const deleteCookie = async (cookie: Cookie): Promise<void> => {
-  return new Promise((resolve, reject) => {
-    const sesh = session.defaultSession;
-    if (!sesh) {
-      reject(new Error("No default session exists"));
-    } else {
-      let url = "";
-      // get prefix, like https://www.
-      url += cookie.secure ? "https://" : "http://";
-      url += cookie.domain && cookie.domain.charAt(0) === "." ? "www" : "";
-      // append domain and path
-      url += cookie.domain;
-      url += cookie.path;
+  const sesh = session.defaultSession;
+  let url = "";
+  // get prefix, like https://www.
+  url += cookie.secure ? "https://" : "http://";
+  url += cookie.domain && cookie.domain.charAt(0) === "." ? "www" : "";
+  // append domain and path
+  url += cookie.domain;
+  url += cookie.path;
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      sesh.cookies.remove(url, cookie.name, (err: any) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve();
-        }
-      });
-    }
-  });
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return sesh.cookies.remove(url, cookie.name);
 };
 
-const fetchCookies = async (filter?: Filter): Promise<Cookie[]> => {
-  return new Promise((resolve, reject) => {
-    const sesh = session.defaultSession;
-    if (sesh) {
-      sesh.cookies.get(filter || {}, (err, cookies) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(cookies);
-        }
-      });
-    } else {
-      resolve([]);
-    }
-  });
+const fetchCookies = async (filter?: CookiesGetFilter): Promise<Cookie[]> => {
+  const sesh = session.defaultSession;
+  return sesh.cookies.get(filter || ({} as CookiesGetFilter));
 };
 
 export const clearAllCookies = async (domain?: string): Promise<void> => {
