@@ -25,7 +25,7 @@ import {
   GameStartType,
   Character,
 } from "@vinceau/slp-realtime";
-import { Observable, from, empty } from "rxjs";
+import { Observable, from } from "rxjs";
 import { map } from "rxjs/operators";
 
 import { parseFileRenameFormat } from "./context";
