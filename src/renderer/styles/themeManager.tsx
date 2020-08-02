@@ -43,7 +43,6 @@ export const ThemeManager: React.FC = ({ children }) => {
 
   const toggle = (mode?: string): void => {
     let newMode: "light" | "dark" = themeState.themeName === ThemeMode.LIGHT ? ThemeMode.DARK : ThemeMode.LIGHT;
-    remote.nativeTheme.themeSource = newMode;
     if (mode && (mode === ThemeMode.LIGHT || mode === ThemeMode.DARK)) {
       newMode = mode;
     }
