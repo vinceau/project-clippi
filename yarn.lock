@@ -7981,10 +7981,10 @@ react-final-form@^6.3.3:
     "@babel/runtime" "^7.4.5"
     ts-essentials "^3.0.2"
 
-react-gamecube@^0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/react-gamecube/-/react-gamecube-0.0.1.tgz#460f10a16f35657212707b4d78e4b9a1e35f6772"
-  integrity sha512-PXGW5VsSBQuxQb3RyvjBoZ2w28Ge07y/mgbHZpOVr2jbkq3n2dX1AgPIKSLNkPBVROCIqidBBwqSYZJEamDhYw==
+react-gamecube@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/react-gamecube/-/react-gamecube-1.0.4.tgz#fedafd78661296b010050ef793a031fc15f6305d"
+  integrity sha512-Q96/P5V0TUL7YjksC0ggR6ASvaNin4NQUxV18SlJ+RLJQJfpoXbYLnVZ/Ul6xCuf5uJ9wznEaSOEiBUD3kcX3Q==
   dependencies:
     react-svg-unique-id "^1.3.3"
 
