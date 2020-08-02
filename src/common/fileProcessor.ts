@@ -374,7 +374,7 @@ function canShortCircuit(options: FileProcessorOptions, settings: GameStartType,
     const inGameCharacters = settings.players
       .map((p) => p.characterId)
       .filter((char) => char !== null && char !== undefined) as Character[];
-    if (inGameCharacters.some((c) => charsToFind.includes(c))) {
+    if (!inGameCharacters.some((c) => charsToFind.includes(c))) {
       return true;
     }
   }
