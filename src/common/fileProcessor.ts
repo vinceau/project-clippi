@@ -359,14 +359,6 @@ function canShortCircuit(options: FileProcessorOptions, settings: GameStartType,
   }
 
   const criteria = (options.config as ComboOptions).findComboCriteria;
-  // Check if we're searching for name tags
-  if (criteria.nameTags && criteria.nameTags.length > 0) {
-    const matchableNames = extractPlayerNames(settings, metadata);
-    if (matchableNames.length === 0 || !namesMatch(criteria.nameTags, matchableNames)) {
-      // We can short circuit here
-      return true;
-    }
-  }
 
   // Check if we're searching for characters
   if (criteria.characterFilter && criteria.characterFilter.length > 0) {
@@ -375,6 +367,16 @@ function canShortCircuit(options: FileProcessorOptions, settings: GameStartType,
       .map((p) => p.characterId)
       .filter((char) => char !== null && char !== undefined) as Character[];
     if (!inGameCharacters.some((c) => charsToFind.includes(c))) {
+      // Short circuit since characters don't match
+      return true;
+    }
+  }
+
+  // Check if we're searching for name tags
+  if (criteria.nameTags && criteria.nameTags.length > 0) {
+    const matchableNames = extractPlayerNames(settings, metadata);
+    if (matchableNames.length === 0 || !namesMatch(criteria.nameTags, matchableNames)) {
+      // We can short circuit since none of the names match
       return true;
     }
   }
