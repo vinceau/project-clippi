@@ -5,9 +5,11 @@ import { format as formatUrl } from "url";
 import { setupListeners } from "./listeners";
 import { setupIPC } from "./mainIpc";
 
-import { isDevelopment } from "common/utils";
+import { lightTheme, darkTheme } from "../common/theme";
+import { isDevelopment } from "../common/utils";
 import contextMenu from "electron-context-menu";
 import { getMenuTemplate } from "./menu";
+import { getCurrentTheme } from "./lib/toggleTheme";
 
 contextMenu();
 
@@ -15,12 +17,18 @@ contextMenu();
 let mainWindow: BrowserWindow | null;
 
 function createMainWindow() {
+  const currentTheme = getCurrentTheme();
   const window = new BrowserWindow({
+    backgroundColor: currentTheme === "dark" ? darkTheme.background : lightTheme.background,
     webPreferences: {
       nodeIntegration: true, // <--- flag
       nodeIntegrationInWorker: true, // <---  for web workers
     },
   });
+
+  // A bit of a hack to allow the renderer window to synchronously get the current theme
+  // without waiting for an IPC message
+  (window as any).getCurrentTheme = getCurrentTheme;
 
   window.webContents.on("did-frame-finish-load", () => {
     if (isDevelopment) {

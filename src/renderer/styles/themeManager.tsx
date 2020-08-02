@@ -1,10 +1,9 @@
 import React from "react";
 
+import { remote } from "electron";
 import { darkTheme, lightTheme, Theme, ThemeMode } from "./theme";
-
-const THEME_STORAGE_KEY = "theme";
-
-const defaultMode = ThemeMode.DARK;
+import { ipc } from "@/lib/rendererIpc";
+import { Message } from "common/types";
 
 interface ThemeContext {
   themeName: string;
@@ -12,11 +11,12 @@ interface ThemeContext {
   toggle: (mode?: string) => void;
 }
 
-const currentTheme = localStorage.getItem(THEME_STORAGE_KEY) || defaultMode;
+// Get the theme synchronously
+const initialTheme = (remote.getCurrentWindow() as any).getCurrentTheme();
 
 export const ManageThemeContext: React.Context<ThemeContext> = React.createContext({
-  themeName: currentTheme,
-  theme: currentTheme === ThemeMode.DARK ? darkTheme : lightTheme,
+  themeName: initialTheme,
+  theme: initialTheme === ThemeMode.DARK ? darkTheme : lightTheme,
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   toggle: () => {},
 });
@@ -24,23 +24,31 @@ export const ManageThemeContext: React.Context<ThemeContext> = React.createConte
 export const useTheme = (): ThemeContext => React.useContext(ManageThemeContext);
 
 export const ThemeManager: React.FC = ({ children }) => {
+  const currentTheme = (remote.getCurrentWindow() as any).getCurrentTheme();
+
   const [themeState, setThemeState] = React.useState({
     themeName: currentTheme,
     theme: currentTheme === ThemeMode.DARK ? darkTheme : lightTheme,
   });
 
+  React.useEffect(() => {
+    remote.nativeTheme.on("updated", () => {
+      const useDarkMode = remote.nativeTheme.shouldUseDarkColors;
+      setThemeState({
+        themeName: useDarkMode ? ThemeMode.DARK : ThemeMode.LIGHT,
+        theme: useDarkMode ? darkTheme : lightTheme,
+      });
+    });
+  }, []);
+
   const toggle = (mode?: string): void => {
-    // Invert the theme
-    let newMode = themeState.themeName === ThemeMode.LIGHT ? ThemeMode.DARK : ThemeMode.LIGHT;
+    let newMode: "light" | "dark" = themeState.themeName === ThemeMode.LIGHT ? ThemeMode.DARK : ThemeMode.LIGHT;
     if (mode && (mode === ThemeMode.LIGHT || mode === ThemeMode.DARK)) {
       newMode = mode;
     }
-    setThemeState({
-      themeName: newMode,
-      theme: newMode === ThemeMode.DARK ? darkTheme : lightTheme,
-    });
-    // Save preference
-    localStorage.setItem(THEME_STORAGE_KEY, newMode);
+
+    // Tell the main process we want to change themes
+    ipc.sendMessage(Message.ToggleTheme, { theme: newMode });
   };
 
   return (

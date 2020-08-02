@@ -4,6 +4,7 @@ import { Message } from "common/types";
 import { openFileSystemDialog } from "./lib/fileSystem";
 import { showNotification } from "./lib/notifications";
 import { twitchController } from "./lib/twitch";
+import { toggleTheme } from "./lib/toggleTheme";
 
 export const setupListeners = (ipc: IPC): void => {
   ipc.on(Message.AuthenticateTwitch, async (value, _error?: Error) => {
@@ -93,5 +94,14 @@ export const setupListeners = (ipc: IPC): void => {
 
     const { title, message } = value;
     showNotification(message, title);
+  });
+
+  ipc.on(Message.ToggleTheme, (value, _error?: Error) => {
+    if (_error) {
+      throw new Error("Should not have received error");
+    }
+
+    const { theme } = value;
+    toggleTheme(theme);
   });
 };
