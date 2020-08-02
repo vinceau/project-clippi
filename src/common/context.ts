@@ -55,7 +55,6 @@ export const generateGameStartContext = (
 };
 
 export const generateGameEndContext = (gameEnd: GameEndType, context?: Context): Context => {
-  console.log(gameEnd);
   const ctx: Context = {};
   if (gameEnd.lrasInitiatorIndex !== null) {
     ctx.quitterPort = getQuitterPort(gameEnd.lrasInitiatorIndex);
@@ -87,7 +86,6 @@ const getGameEndMethod = (method: GameEndMethod): string => {
 };
 
 export const generateStockContext = (stock: StockType, settings: GameStartType, context?: Context): Context => {
-  console.log(stock);
   const ctx: Context = generateGameStartContext(settings, {}, stock.playerIndex);
   ctx.count = stock.count;
   ctx.startFrame = stock.startFrame;
@@ -98,15 +96,11 @@ export const generateStockContext = (stock: StockType, settings: GameStartType, 
 };
 
 export const generateComboContext = (combo: ComboType, settings: GameStartType, context?: Context): Context => {
-  console.log(combo);
   const ctx: Context = generateGameStartContext(settings, {}, combo.playerIndex);
   ctx.comboMovesTotal = combo.moves.length;
   ctx.comboDidKill = combo.didKill ? "killed" : "did not kill";
-  console.log(combo.endPercent);
-  console.log(combo.startPercent);
   if (combo.endPercent !== null && combo.endPercent !== undefined) {
     ctx.comboPercent = Math.round(combo.endPercent - combo.startPercent);
-    console.log(ctx.comboPercent);
   } else {
     console.error("Could not calculate combo percent");
   }
