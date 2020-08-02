@@ -18,6 +18,7 @@ export enum Message {
   CreateTwitchClip = "createTwitchClip",
   Notify = "notify",
   SelectDirectory = "selectDirectory",
+  ToggleTheme = "toggleTheme",
 }
 
 export type ResponseType<X extends Message> =
@@ -30,6 +31,8 @@ export type ResponseType<X extends Message> =
     ? any
     : X extends Message.Notify
     ? void
+    : X extends Message.ToggleTheme
+    ? void // Return nothing to renderer
     : X extends Message.SelectDirectory
     ? string[] // main to renderer
     : never;
@@ -45,5 +48,7 @@ export type RequestType<X extends Message> =
     : X extends Message.Notify
     ? { message: string; title?: string }
     : X extends Message.SelectDirectory
-    ? { options: any; save?: boolean } // main to renderer
+    ? { options: any; save?: boolean }
+    : X extends Message.ToggleTheme
+    ? { theme: "light" | "dark" } // Tell the main process which theme we want to apply
     : never;

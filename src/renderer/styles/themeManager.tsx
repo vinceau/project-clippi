@@ -2,10 +2,11 @@ import React from "react";
 
 import { remote } from "electron";
 import { darkTheme, lightTheme, Theme, ThemeMode } from "./theme";
+import { ipc } from "@/lib/rendererIpc";
+import { Message } from "common/types";
+import Store from "electron-store";
 
-const THEME_STORAGE_KEY = "theme";
-
-const defaultMode = remote.nativeTheme.shouldUseDarkColors ? ThemeMode.DARK : ThemeMode.LIGHT;
+const store = new Store();
 
 interface ThemeContext {
   themeName: string;
@@ -13,7 +14,8 @@ interface ThemeContext {
   toggle: (mode?: string) => void;
 }
 
-const currentTheme = localStorage.getItem(THEME_STORAGE_KEY) || defaultMode;
+const currentTheme = store.get("theme");
+console.log(`current theme is: ${currentTheme}`);
 
 export const ManageThemeContext: React.Context<ThemeContext> = React.createContext({
   themeName: currentTheme,
@@ -30,18 +32,25 @@ export const ThemeManager: React.FC = ({ children }) => {
     theme: currentTheme === ThemeMode.DARK ? darkTheme : lightTheme,
   });
 
+  React.useEffect(() => {
+    remote.nativeTheme.on("updated", () => {
+      const useDarkMode = remote.nativeTheme.shouldUseDarkColors;
+      setThemeState({
+        themeName: useDarkMode ? ThemeMode.DARK : ThemeMode.LIGHT,
+        theme: useDarkMode ? darkTheme : lightTheme,
+      });
+    });
+  }, []);
+
   const toggle = (mode?: string): void => {
-    // Invert the theme
-    let newMode = themeState.themeName === ThemeMode.LIGHT ? ThemeMode.DARK : ThemeMode.LIGHT;
+    let newMode: "light" | "dark" = themeState.themeName === ThemeMode.LIGHT ? ThemeMode.DARK : ThemeMode.LIGHT;
+    remote.nativeTheme.themeSource = newMode;
     if (mode && (mode === ThemeMode.LIGHT || mode === ThemeMode.DARK)) {
       newMode = mode;
     }
-    setThemeState({
-      themeName: newMode,
-      theme: newMode === ThemeMode.DARK ? darkTheme : lightTheme,
-    });
-    // Save preference
-    localStorage.setItem(THEME_STORAGE_KEY, newMode);
+
+    // Tell the main process we want to change themes
+    ipc.sendMessage(Message.ToggleTheme, { theme: newMode });
   };
 
   return (

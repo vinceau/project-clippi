@@ -5,10 +5,11 @@ import { format as formatUrl } from "url";
 import { setupListeners } from "./listeners";
 import { setupIPC } from "./mainIpc";
 
-import { lightTheme, darkTheme } from "common/theme";
-import { isDevelopment } from "common/utils";
+import { lightTheme, darkTheme } from "../common/theme";
+import { isDevelopment } from "../common/utils";
 import contextMenu from "electron-context-menu";
 import { getMenuTemplate } from "./menu";
+import { getCurrentTheme } from "./lib/toggleTheme";
 
 contextMenu();
 
@@ -16,8 +17,9 @@ contextMenu();
 let mainWindow: BrowserWindow | null;
 
 function createMainWindow() {
+  const currentTheme = getCurrentTheme();
   const window = new BrowserWindow({
-    backgroundColor: nativeTheme.shouldUseDarkColors ? darkTheme.background : lightTheme.background,
+    backgroundColor: currentTheme === "dark" ? darkTheme.background : lightTheme.background,
     webPreferences: {
       nodeIntegration: true, // <--- flag
       nodeIntegrationInWorker: true, // <---  for web workers
