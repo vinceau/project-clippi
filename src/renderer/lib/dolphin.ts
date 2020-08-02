@@ -233,6 +233,11 @@ export const openComboInDolphin = async (
 
 export const loadQueueIntoDolphin = async (options?: Partial<DolphinRecorderOptions>): Promise<void> => {
   const { dolphinQueue, dolphinQueueOptions } = store.getState().tempContainer;
+  // Don't even bother continuing if the queue is empty
+  if (dolphinQueue.length === 0) {
+    return;
+  }
+
   const queue: DolphinQueueFormat = {
     ...dolphinQueueOptions,
     queue: dolphinQueue,
