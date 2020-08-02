@@ -4,9 +4,6 @@ import { remote } from "electron";
 import { darkTheme, lightTheme, Theme, ThemeMode } from "./theme";
 import { ipc } from "@/lib/rendererIpc";
 import { Message } from "common/types";
-import Store from "electron-store";
-
-const store = new Store();
 
 interface ThemeContext {
   themeName: string;
@@ -14,8 +11,7 @@ interface ThemeContext {
   toggle: (mode?: string) => void;
 }
 
-const currentTheme = store.get("theme");
-console.log(`current theme is: ${currentTheme}`);
+const currentTheme = (remote.getCurrentWindow() as any).getCurrentTheme();
 
 export const ManageThemeContext: React.Context<ThemeContext> = React.createContext({
   themeName: currentTheme,

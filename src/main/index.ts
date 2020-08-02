@@ -26,6 +26,10 @@ function createMainWindow() {
     },
   });
 
+  // A bit of a hack to allow the renderer window to synchronously get the current theme
+  // without waiting for an IPC message
+  (window as any).getCurrentTheme = getCurrentTheme;
+
   window.webContents.on("did-frame-finish-load", () => {
     if (isDevelopment) {
       window.webContents.openDevTools();
