@@ -11,11 +11,12 @@ interface ThemeContext {
   toggle: (mode?: string) => void;
 }
 
-const currentTheme = (remote.getCurrentWindow() as any).getCurrentTheme();
+// Get the theme synchronously
+const initialTheme = (remote.getCurrentWindow() as any).getCurrentTheme();
 
 export const ManageThemeContext: React.Context<ThemeContext> = React.createContext({
-  themeName: currentTheme,
-  theme: currentTheme === ThemeMode.DARK ? darkTheme : lightTheme,
+  themeName: initialTheme,
+  theme: initialTheme === ThemeMode.DARK ? darkTheme : lightTheme,
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   toggle: () => {},
 });
@@ -23,6 +24,8 @@ export const ManageThemeContext: React.Context<ThemeContext> = React.createConte
 export const useTheme = (): ThemeContext => React.useContext(ManageThemeContext);
 
 export const ThemeManager: React.FC = ({ children }) => {
+  const currentTheme = (remote.getCurrentWindow() as any).getCurrentTheme();
+
   const [themeState, setThemeState] = React.useState({
     themeName: currentTheme,
     theme: currentTheme === ThemeMode.DARK ? darkTheme : lightTheme,
