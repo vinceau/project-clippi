@@ -66,4 +66,13 @@ export const contextDescriptions: ContextDescriptions[] = [
       { contextName: "opponentColor", description: "Color of opponent character e.g. Default" },
     ],
   },
+  {
+    category: "Netplay Player Info (2P)",
+    descriptions: [
+      { contextName: "playerName", description: "Netplay name of player e.g. Bort" },
+      { contextName: "playerCode", description: "Slippi Online connect code of player e.g. BORT#123" },
+      { contextName: "opponentName", description: "Netplay name of opponent e.g. Yort" },
+      { contextName: "opponentCode", description: "Slippi Online connect code of opponent e.g. YORT#456" },
+    ],
+  },
 ];

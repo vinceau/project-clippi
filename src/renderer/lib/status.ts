@@ -8,7 +8,7 @@ export const statusToLabel = (status: ConnectionStatus): string => {
       return "connecting";
     case ConnectionStatus.CONNECTED:
       return "connected";
-    case ConnectionStatus.RECONNECTING:
+    case ConnectionStatus.RECONNECT_WAIT:
       return "reconnecting";
     default:
       return "unknown";
@@ -20,7 +20,7 @@ export const statusToColor = (status: ConnectionStatus): string => {
     case ConnectionStatus.DISCONNECTED:
       return "#888888";
     case ConnectionStatus.CONNECTING:
-    case ConnectionStatus.RECONNECTING:
+    case ConnectionStatus.RECONNECT_WAIT:
       return "#FFB424";
     default:
       return "#00E461";

@@ -35,7 +35,12 @@ export const exampleDeathStockType: StockType = JSON.parse(deathString);
 const comboString = `{"playerIndex":0,"opponentIndex":2,"startFrame":7146,"endFrame":7739,"startPercent":0,"currentPercent":95.0999984741211,"endPercent":95.0999984741211,"moves":[{"frame":7146,"moveId":13,"hitCount":1,"damage":12},{"frame":7169,"moveId":21,"hitCount":1,"damage":8},{"frame":7222,"moveId":21,"hitCount":1,"damage":7.279998779296875},{"frame":7326,"moveId":13,"hitCount":1,"damage":11.15999984741211},{"frame":7380,"moveId":17,"hitCount":1,"damage":11.520000457763672},{"frame":7407,"moveId":8,"hitCount":1,"damage":9},{"frame":7451,"moveId":21,"hitCount":1,"damage":7.120002746582031},{"frame":7554,"moveId":16,"hitCount":1,"damage":10},{"frame":7625,"moveId":17,"hitCount":1,"damage":11.279998779296875},{"frame":7714,"moveId":17,"hitCount":1,"damage":7.739997863769531}],"didKill":true}`;
 export const exampleComboType: ComboType = JSON.parse(comboString);
 
-export const generateGameStartContext = (gameStart: GameStartType, context?: Context, index?: number): Context => {
+export const generateGameStartContext = (
+  gameStart: GameStartType,
+  context?: Context,
+  index?: number,
+  metadata?: Metadata
+): Context => {
   const numPlayers = gameStart.players.length;
   let ctx: Context = {
     numPlayers,
@@ -45,12 +50,11 @@ export const generateGameStartContext = (gameStart: GameStartType, context?: Con
     ctx.stage = getStageName(stageId);
     ctx.shortStage = getStageShortName(stageId);
   }
-  ctx = genPlayerOpponentContext(gameStart, ctx, index);
+  ctx = genPlayerOpponentContext(gameStart, ctx, index, metadata);
   return Object.assign(ctx, context);
 };
 
 export const generateGameEndContext = (gameEnd: GameEndType, context?: Context): Context => {
-  console.log(gameEnd);
   const ctx: Context = {};
   if (gameEnd.lrasInitiatorIndex !== null) {
     ctx.quitterPort = getQuitterPort(gameEnd.lrasInitiatorIndex);
@@ -82,7 +86,6 @@ const getGameEndMethod = (method: GameEndMethod): string => {
 };
 
 export const generateStockContext = (stock: StockType, settings: GameStartType, context?: Context): Context => {
-  console.log(stock);
   const ctx: Context = generateGameStartContext(settings, {}, stock.playerIndex);
   ctx.count = stock.count;
   ctx.startFrame = stock.startFrame;
@@ -93,15 +96,11 @@ export const generateStockContext = (stock: StockType, settings: GameStartType, 
 };
 
 export const generateComboContext = (combo: ComboType, settings: GameStartType, context?: Context): Context => {
-  console.log(combo);
   const ctx: Context = generateGameStartContext(settings, {}, combo.playerIndex);
   ctx.comboMovesTotal = combo.moves.length;
   ctx.comboDidKill = combo.didKill ? "killed" : "did not kill";
-  console.log(combo.endPercent);
-  console.log(combo.startPercent);
   if (combo.endPercent !== null && combo.endPercent !== undefined) {
     ctx.comboPercent = Math.round(combo.endPercent - combo.startPercent);
-    console.log(ctx.comboPercent);
   } else {
     console.error("Could not calculate combo percent");
   }
@@ -110,8 +109,11 @@ export const generateComboContext = (combo: ComboType, settings: GameStartType, 
 
 const genPlayerContext = (
   index: number,
-  settings: GameStartType
+  settings: GameStartType,
+  metadata?: Metadata
 ): {
+  netplayName: string | null;
+  netplayCode: string | null;
   tag: string | null;
   port: number;
   char: string;
@@ -124,8 +126,20 @@ const genPlayerContext = (
   }
   const playerCharId = player.characterId;
   const playerCharColor = player.characterColor;
+
+  // Determine netplay names if they exist
+  let netplayName = null;
+  let netplayCode = null;
+  if (metadata && metadata.players && metadata.players[index]) {
+    const names = metadata.players[index].names;
+    netplayName = names.netplay ? sanitizeFilename(names.netplay, "_") : null;
+    netplayCode = names.code ? sanitizeFilename(names.code, "_") : null;
+  }
+
   if (playerCharId !== null && playerCharColor !== null) {
     return {
+      netplayName,
+      netplayCode,
       tag: player.nametag,
       port: player.port,
       char: getCharacterName(playerCharId),
@@ -136,7 +150,12 @@ const genPlayerContext = (
   return null;
 };
 
-const genPlayerOpponentContext = (gameStart: GameStartType, context?: Context, index?: number): Context => {
+const genPlayerOpponentContext = (
+  gameStart: GameStartType,
+  context?: Context,
+  index?: number,
+  metadata?: Metadata
+): Context => {
   const numPlayers = gameStart.players.length;
   const ctx: Context = {};
   if (numPlayers === 2) {
@@ -145,8 +164,8 @@ const genPlayerOpponentContext = (gameStart: GameStartType, context?: Context, i
     if (opponentIndex === undefined) {
       opponentIndex = gameStart.players[1].playerIndex;
     }
-    const playerContext = genPlayerContext(playerIndex, gameStart);
-    const opponentContext = genPlayerContext(opponentIndex, gameStart);
+    const playerContext = genPlayerContext(playerIndex, gameStart, metadata);
+    const opponentContext = genPlayerContext(opponentIndex, gameStart, metadata);
     if (playerContext !== null) {
       ctx.player = `P${playerContext.port}`;
       ctx.playerTag = playerContext.tag;
@@ -154,6 +173,8 @@ const genPlayerOpponentContext = (gameStart: GameStartType, context?: Context, i
       ctx.playerChar = playerContext.char;
       ctx.playerShortChar = playerContext.shortChar;
       ctx.playerColor = playerContext.color;
+      ctx.playerName = playerContext.netplayName;
+      ctx.playerCode = playerContext.netplayCode;
     }
     if (opponentContext !== null) {
       ctx.opponent = `P${opponentContext.port}`;
@@ -162,6 +183,8 @@ const genPlayerOpponentContext = (gameStart: GameStartType, context?: Context, i
       ctx.opponentChar = opponentContext.char;
       ctx.opponentShortChar = opponentContext.shortChar;
       ctx.opponentColor = opponentContext.color;
+      ctx.opponentName = opponentContext.netplayName;
+      ctx.opponentCode = opponentContext.netplayCode;
     }
   }
   return Object.assign(ctx, context);
@@ -216,7 +239,7 @@ export const generateFileRenameContext = (
   filename?: string
 ): Context => {
   const gameStart = settings ? settings : exampleGameStart;
-  let ctx = generateGameStartContext(gameStart);
+  let ctx = generateGameStartContext(gameStart, undefined, undefined, metadata);
   const gameStartTime = metadata && metadata.startAt ? metadata.startAt : undefined;
   ctx = generateGlobalContext(ctx, moment(gameStartTime));
   ctx = addFilenameContext(ctx, filename);

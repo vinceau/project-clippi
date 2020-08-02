@@ -86,8 +86,9 @@ export const openFileOrParentFolder = (filename: string): void => {
   try {
     const stats = fs.statSync(filename);
     if (stats.isFile()) {
-      opened = shell.showItemInFolder(filename);
-    } else if (stats.isDirectory()) {
+      return shell.showItemInFolder(filename);
+    }
+    if (stats.isDirectory()) {
       opened = shell.openItem(filename);
     }
   } catch (err) {

@@ -28,6 +28,13 @@ module.exports = {
     // e.g. "@typescript-eslint/explicit-function-return-type": "off",
     "react/prop-types": "off",
     "react/no-unescaped-entities": "warn",
-    "@typescript-eslint/no-unused-vars": "error",
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        argsIgnorePattern: "^_",
+        varsIgnorePattern: "^_",
+      },
+    ],
+    "@typescript-eslint/explicit-module-boundary-types": "off",
   },
 };
