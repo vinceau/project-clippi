@@ -1,10 +1,11 @@
 import * as path from "path";
 
-import { app, BrowserWindow, Menu, shell, Event } from "electron";
+import { nativeTheme, app, BrowserWindow, Menu, shell, Event } from "electron";
 import { format as formatUrl } from "url";
 import { setupListeners } from "./listeners";
 import { setupIPC } from "./mainIpc";
 
+import { lightTheme, darkTheme } from "common/theme";
 import { isDevelopment } from "common/utils";
 import contextMenu from "electron-context-menu";
 import { getMenuTemplate } from "./menu";
@@ -16,6 +17,7 @@ let mainWindow: BrowserWindow | null;
 
 function createMainWindow() {
   const window = new BrowserWindow({
+    backgroundColor: nativeTheme.shouldUseDarkColors ? darkTheme.background : lightTheme.background,
     webPreferences: {
       nodeIntegration: true, // <--- flag
       nodeIntegrationInWorker: true, // <---  for web workers
