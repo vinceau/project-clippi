@@ -23,6 +23,7 @@ import {
   DolphinPlaybackPayload,
   DolphinPlaybackStatus,
   DolphinQueueFormat,
+  DolphinLauncherOptions,
 } from "@vinceau/slp-realtime";
 import { delay, isMacOrWindows } from "common/utils";
 import { onlyFilename } from "common/utils";
@@ -220,7 +221,7 @@ export const openComboInDolphin = async (
   const dolphinExec = await validDolphinExecutable();
 
   const meleeIsoExists = await fs.pathExists(meleeIsoPath);
-  const dolphinSettings = {
+  const dolphinSettings: Partial<DolphinLauncherOptions> = {
     meleeIsoPath: meleeIsoExists ? meleeIsoPath : "",
     dolphinPath: dolphinExec,
     batch: meleeIsoExists,
