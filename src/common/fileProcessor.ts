@@ -12,6 +12,7 @@ import {
   defaultComboFilterSettings,
   DolphinPlaybackItem,
   Frames,
+  extractPlayerNames,
   generateDolphinQueuePayload,
   Input,
   SlippiGame,
@@ -20,6 +21,9 @@ import {
   FrameEntryType,
   forAllPlayerIndices,
   mapFramesToButtonInputs,
+  namesMatch,
+  GameStartType,
+  Character,
 } from "@vinceau/slp-realtime";
 import { Observable, from } from "rxjs";
 import { map } from "rxjs/operators";
@@ -107,6 +111,7 @@ const renameFile = async (currentFilename: string, newFilename: string): Promise
 export interface ProcessResult {
   filename: string;
   numCombos: number;
+  totalCombosFound: number;
 }
 
 export class FileProcessor {
@@ -193,14 +198,15 @@ export class FileProcessor {
     const res: ProcessResult = {
       filename,
       numCombos: 0,
+      totalCombosFound: 0, // Set this value after we're done processing
     };
 
     const game = new SlippiGame(filename);
+    const settings = game.getSettings();
     const metadata = game.getMetadata();
 
     // Handle file renaming
     if (options.renameFiles && options.renameTemplate) {
-      const settings = game.getSettings();
       const fullFilename = path.basename(filename);
       res.filename = parseFileRenameFormat(options.renameTemplate, settings, metadata, fullFilename);
       res.filename = assertExtension(res.filename, SLP_FILE_EXT);
@@ -208,7 +214,7 @@ export class FileProcessor {
     }
 
     // Handle combo finding
-    if (options.findComboOption) {
+    if (options.findComboOption && !canShortCircuit(options, settings, metadata)) {
       console.log("finding combos");
       const highlights$ = this._generateHighlightObservable(filename, options.findComboOption, options.config).pipe(
         map((highlight) => populateHighlightMetadata(highlight, metadata))
@@ -216,6 +222,8 @@ export class FileProcessor {
       res.numCombos = await this._findHighlights(filename, highlights$);
     }
 
+    // Update the total combos found
+    res.totalCombosFound = this.queue.length;
     return res;
   }
 
@@ -228,8 +236,8 @@ export class FileProcessor {
     // Fetching game info breaks if the file was renamed
     const game = new SlippiGame(filename);
     const settings = game.getSettings();
-    const stats = game.getStats();
     const metadata = game.getMetadata();
+    const stats = game.getStats();
     switch (findComboOption) {
       case FindComboOption.COMBOS:
         return this._findCombos(
@@ -340,3 +348,36 @@ const populateHighlightMetadata = (highlight: DolphinPlaybackItem, metadata?: Me
   }
   return highlight;
 };
+
+/***
+ * Returns true if we already know that combos will not match
+ */
+function canShortCircuit(options: FileProcessorOptions, settings: GameStartType, metadata?: any): boolean {
+  // Can't short circuit button inputs for now
+  if (options.findComboOption === FindComboOption.BUTTON_INPUTS) {
+    return false;
+  }
+
+  const criteria = (options.config as ComboOptions).findComboCriteria;
+  // Check if we're searching for name tags
+  if (criteria.nameTags && criteria.nameTags.length > 0) {
+    const matchableNames = extractPlayerNames(settings, metadata);
+    if (matchableNames.length === 0 || !namesMatch(criteria.nameTags, matchableNames)) {
+      // We can short circuit here
+      return true;
+    }
+  }
+
+  // Check if we're searching for characters
+  if (criteria.characterFilter && criteria.characterFilter.length > 0) {
+    const charsToFind = criteria.characterFilter as Character[];
+    const inGameCharacters = settings.players
+      .map((p) => p.characterId)
+      .filter((char) => char !== null && char !== undefined) as Character[];
+    if (!inGameCharacters.some((c) => charsToFind.includes(c))) {
+      return true;
+    }
+  }
+
+  return false;
+}
