@@ -1,6 +1,6 @@
 import * as path from "path";
 
-import { nativeTheme, app, BrowserWindow, Menu, shell, Event } from "electron";
+import { app, BrowserWindow, Menu, shell, Event } from "electron";
 import { format as formatUrl } from "url";
 import { setupListeners } from "./listeners";
 import { setupIPC } from "./mainIpc";
