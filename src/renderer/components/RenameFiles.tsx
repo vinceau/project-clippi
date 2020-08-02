@@ -12,6 +12,7 @@ import { TemplatePreview } from "@/components/TemplatePreview";
 import { defaultRenameFormat } from "@/store/models/highlights";
 import { Labelled } from "./Labelled";
 import { invalidFilename } from "common/utils";
+import { GameStartType } from "@vinceau/slp-realtime";
 
 const FormatLabel = styled.div`
   display: flex;
@@ -39,7 +40,24 @@ const ErrorContainer = styled.div`
 
 const metadata = {
   startAt: "2001-11-21T17:33:54.000Z",
+  players: {
+    [0]: {
+      names: {
+        netplay: "Bort",
+        code: "BORT#123",
+      },
+    },
+    [2]: {
+      names: {
+        netplay: "Yort",
+        code: "YORT#456",
+      },
+    },
+  },
 };
+
+const gameStartString = `{"slpVersion":"2.0.1","isTeams":false,"isPAL":false,"stageId":2,"players":[{"playerIndex":0,"port":1,"characterId":0,"characterColor":3,"startStocks":4,"type":0,"teamId":0,"controllerFix":"UCF","nametag":"BORT"},{"playerIndex":2,"port":3,"characterId":25,"characterColor":0,"startStocks":4,"type":1,"teamId":0,"controllerFix":"None","nametag":"YORT"}]}`;
+const exampleGameStart: GameStartType = JSON.parse(gameStartString);
 
 export const RenameFiles: React.FC<{
   value: string;
@@ -109,7 +127,7 @@ export const RenameFiles: React.FC<{
           ) : (
             <div>
               <b>Preview: </b>
-              <TemplatePreview template={renameFormat} metadata={metadata} />
+              <TemplatePreview template={renameFormat} metadata={metadata} settings={exampleGameStart} />
             </div>
           )}
         </PreviewContainer>
