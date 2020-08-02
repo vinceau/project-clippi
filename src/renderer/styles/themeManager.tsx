@@ -1,10 +1,11 @@
 import React from "react";
 
+import { remote } from "electron";
 import { darkTheme, lightTheme, Theme, ThemeMode } from "./theme";
 
 const THEME_STORAGE_KEY = "theme";
 
-const defaultMode = ThemeMode.DARK;
+const defaultMode = remote.nativeTheme.shouldUseDarkColors ? ThemeMode.DARK : ThemeMode.LIGHT;
 
 interface ThemeContext {
   themeName: string;
