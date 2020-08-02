@@ -224,6 +224,7 @@ export const openComboInDolphin = async (
     meleeIsoPath: meleeIsoExists ? meleeIsoPath : "",
     dolphinPath: dolphinExec,
     batch: meleeIsoExists,
+    disableSeekBar: true,
   };
   dolphinRecorder.updateSettings(dolphinSettings);
   await dolphinRecorder.recordJSON(filePath, options);
