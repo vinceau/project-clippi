@@ -76,8 +76,7 @@ app.on("activate", () => {
   }
 });
 
-// create main BrowserWindow when electron is ready
-app.on("ready", () => {
+const startUp = () => {
   // Create the Application's main menu
   const template = getMenuTemplate(app, process.platform);
   Menu.setApplicationMenu(Menu.buildFromTemplate(template));
@@ -88,4 +87,14 @@ app.on("ready", () => {
     event.preventDefault();
     shell.openExternal(url);
   });
-});
+};
+
+if (isDevelopment) {
+  // There's an issue with Windows 10 dark mode where the ready event doesn't fire
+  // when running in dev mode. Use the prepend listener to work around this.
+  // See https://github.com/electron/electron/issues/19468#issuecomment-623529556 for more info.
+  app.prependOnceListener("ready", startUp);
+} else {
+  // Otherwise create main BrowserWindow when electron is ready normally
+  app.on("ready", startUp);
+}
