@@ -92,12 +92,17 @@ export const ComboForm: React.FC<{
               <Field border="top">
                 <Label>Character Filter</Label>
                 <CharacterSelectAdapter name="characterFilter" isMulti={true} />
-                <Text>Only match combos performed by these characters.</Text>
+                <Text>
+                  Only match combos performed by these characters. Leave this empty to find combos for all characters.
+                </Text>
               </Field>
               <Field>
                 <Label>Name Tag Filter</Label>
                 <NameTagForm name="nameTags" pop={pop} push={push} values={values} />
-                <Text>Only match combos performed by players using these name tags.</Text>
+                <Text>
+                  Only match combos performed by players using these name tags. These can be in-game tags or Slippi
+                  Online nicknames and connect codes.
+                </Text>
               </Field>
               <Field border="bottom">
                 <Label>Port Filter</Label>
