@@ -202,6 +202,10 @@ export class FileProcessor {
 
     const game = new SlippiGame(filename);
     const settings = game.getSettings();
+    if (!settings) {
+      console.warn(`${filename} is an invalid SLP file. Skipping file...`);
+      return res;
+    }
     const metadata = game.getMetadata();
 
     // Handle file renaming
