@@ -79,8 +79,9 @@ const handleComplete = (payload: CompletePayload): void => {
   dispatcher.tempContainer.setComboFinderProcessing(false);
   dispatcher.tempContainer.setPercent(100);
   dispatcher.tempContainer.setComboLog(message);
-  if (options.findComboOption && openCombosWhenDone && options.outputFile) {
-    // check if we want to open the combo file after generation
+
+  // Check if we need to load the combo file into Dolphin after generation
+  if (options.findComboOption && numCombos > 0 && openCombosWhenDone && options.outputFile) {
     openComboInDolphin(options.outputFile).catch((err) => {
       console.error(err);
       notify("Error loading Dolphin. Ensure you have the Slippi Desktop app installed and try again.");
