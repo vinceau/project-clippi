@@ -194,7 +194,6 @@ export class FileProcessor {
 
   private async _processFile(filename: string, options: FileProcessorOptions): Promise<ProcessResult> {
     console.log(`Processing file: ${filename}`);
-    console.log(options);
     const res: ProcessResult = {
       filename,
       numCombos: 0,
