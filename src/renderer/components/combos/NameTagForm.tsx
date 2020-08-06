@@ -1,4 +1,6 @@
-import * as React from "react";
+/** @jsx jsx */
+import { css, jsx } from "@emotion/core";
+import React from "react";
 
 import { FieldArray } from "react-final-form-arrays";
 import { Icon, Label } from "semantic-ui-react";
@@ -52,10 +54,21 @@ export const NameTagForm: React.FC<{ name: string; values: any; push: any; pop: 
       <FieldArray name={name}>
         {({ fields }) => {
           if (fields.length === 0) {
-            return null;
+            return (
+              <div
+                css={css`
+                  padding-top: 1rem;
+                  font-size: 0.9em;
+                  font-style: italic;
+                  opacity: 0.5;
+                `}
+              >
+                No tags specified
+              </div>
+            );
           }
           return (
-            <div style={{ paddingTop: "10px" }}>
+            <div style={{ paddingTop: "1rem" }}>
               {fields.map((n, index) => (
                 <NameTagLabel
                   key={`fields--${n}--${index}--${fields[index]}`}
