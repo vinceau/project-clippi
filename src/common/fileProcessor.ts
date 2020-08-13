@@ -377,6 +377,11 @@ function canShortCircuit(options: FileProcessorOptions, settings: GameStartType,
     return false;
   }
 
+  // Skip processing if it's doubles
+  if (settings.players.length !== 2) {
+    return true;
+  }
+
   const criteria = (options.config as ComboOptions).findComboCriteria;
 
   // Check if we're searching for characters
