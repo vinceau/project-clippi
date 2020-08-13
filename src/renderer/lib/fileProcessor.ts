@@ -44,6 +44,11 @@ worker.onmessage = (event) => {
 const handleProgress = (payload: ProgressingPayload): void => {
   const { result, total, filename, options, index } = payload;
   dispatcher.tempContainer.setPercent(Math.floor(((index + 1) / total) * 100));
+  if (result.hasError) {
+    dispatcher.tempContainer.setComboLog(`Error processing: ${result.filename}`);
+    return;
+  }
+
   if (options.findComboOption) {
     const config = payload.options.config as ComboOptions;
     const base = path.basename(result.filename || filename);
@@ -71,11 +76,15 @@ const handleComplete = (payload: CompletePayload): void => {
   const timeTakenStr = secondsToString(result.timeTaken);
   const numCombos = result.combosFound;
   const { openCombosWhenDone } = store.getState().highlights;
-  console.log(`finished generating ${numCombos} highlights in ${timeTakenStr}`);
+  console.log(`Finished generating ${numCombos} highlights in ${timeTakenStr}`);
   let message = `Processed ${result.filesProcessed} files in ${timeTakenStr}`;
   if (options.findComboOption) {
     message += ` and found ${numCombos} highlights`;
   }
+  if (result.totalErrors > 0) {
+    message += `. ${result.totalErrors} files had errors.`;
+  }
+
   dispatcher.tempContainer.setComboFinderProcessing(false);
   dispatcher.tempContainer.setPercent(100);
   dispatcher.tempContainer.setComboLog(message);
