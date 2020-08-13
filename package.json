@@ -99,7 +99,7 @@
     "sass-loader": "^7.1.0",
     "ts-unused-exports": "^6.1.2",
     "typescript": "^3.3.3333",
-    "webpack": "4.43.0",
+    "webpack": "4.44.1",
     "webpack-build-notifier": "^0.1.30",
     "worker-loader": "^2.0.0"
   },
