@@ -43,11 +43,9 @@ export const FileInput: React.FC<FileInputProps> = (props) => {
       p = await getFolderPath();
     } else {
       // Handle file selection
-      let options: any;
+      const options = {};
       if (fileTypeFilters) {
-        options = {
-          filters: fileTypeFilters,
-        };
+        options["filters"] = fileTypeFilters;
       }
       const filePaths = await getFilePath(options, saveFile);
       if (filePaths && filePaths.length > 0) {
@@ -67,6 +65,56 @@ export const FileInput: React.FC<FileInputProps> = (props) => {
         style={{ width: "100%" }}
         label={
           <Button onClick={() => openFileOrParentFolder(filesPath)} disabled={!Boolean(filesPath)}>
+            <Labelled title="Open location">
+              <NoMarginIcon name="folder open outline" />
+            </Labelled>
+          </Button>
+        }
+        value={filesPath}
+        onChange={(_: any, { value }: any) => setFilesPath(value)}
+        onBlur={() => onChange(filesPath)}
+        action={<Button onClick={() => selectFromFileSystem().catch(console.error)}>{actionLabel}</Button>}
+        placeholder={placeholder}
+      />
+    </Outer>
+  );
+};
+
+interface MultiFileInputProps extends Record<string, any> {
+  value: string[];
+  onChange: (value: string[]) => void;
+  fileTypeFilters?: Array<{ name: string; extensions: string[] }>;
+}
+
+export const MultiFileInput: React.FC<MultiFileInputProps> = (props) => {
+  const { value, onChange, fileTypeFilters, placeholder } = props;
+  const [filesPath, setFilesPath] = React.useState<string[]>(value);
+
+  React.useEffect(() => {
+    setFilesPath(value);
+  }, [value]);
+
+  const selectFromFileSystem = async () => {
+    const options = {};
+    if (fileTypeFilters) {
+      options["filters"] = fileTypeFilters;
+    }
+
+    options["properties"] = ["multiSelections", "openFile"];
+
+    const filePaths = await getFilePath(options, false);
+    if (filePaths) {
+      setFilesPath(filePaths);
+      onChange(filePaths);
+    }
+  };
+  const actionLabel = "Choose";
+  return (
+    <Outer>
+      <Input
+        style={{ width: "100%" }}
+        label={
+          <Button onClick={() => openFileOrParentFolder(filesPath[0])} disabled={filesPath.length != 1}>
             <Labelled title="Open location">
               <NoMarginIcon name="folder open outline" />
             </Labelled>

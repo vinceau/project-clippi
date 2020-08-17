@@ -20,7 +20,7 @@ const fileOptions = {
   properties: ["openFile"],
 };
 
-export const getFolderPath = async (options?: any): Promise<string | null> => {
+export const getFolderPath = async (options?: Record<string, unknown>): Promise<string | null> => {
   const dialogOptions = options ? options : folderOptions;
   const paths = await getFilePath(dialogOptions);
   if (paths && paths.length > 0) {
@@ -29,7 +29,7 @@ export const getFolderPath = async (options?: any): Promise<string | null> => {
   return null;
 };
 
-export const getFilePath = async (options?: any, save?: boolean): Promise<string[] | null> => {
+export const getFilePath = async (options?: Record<string, unknown>, save?: boolean): Promise<string[] | null> => {
   const dialogOptions = options ? options : fileOptions;
   try {
     const p = await ipc.sendSyncWithTimeout(

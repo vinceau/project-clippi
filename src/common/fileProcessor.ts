@@ -61,7 +61,7 @@ export interface ComboOptions {
 }
 
 export interface FileProcessorOptions {
-  filesPath: string;
+  filesPath: string | string[];
   renameFiles: boolean;
   findComboOption?: FindComboOption;
   includeSubFolders?: boolean;
@@ -145,15 +145,21 @@ export class FileProcessor {
     const patterns = [`**/*${SLP_FILE_EXT}`];
     const options = {
       absolute: true,
-      cwd: opts.filesPath,
+      cwd: "",
       onlyFiles: true,
       deep: opts.includeSubFolders ? undefined : 1,
       // We occasionally get EPERM errors when globbing in directories we don't have access to.
       suppressErrors: true,
     };
+    let entries = [];
+    if (typeof opts.filesPath !== "string") {
+      entries = opts.filesPath;
+    } else {
+      options.cwd = opts.filesPath;
+      entries = await fg(patterns, options);
+    }
 
     let filesProcessed = 0;
-    const entries = await fg(patterns, options);
     for (const [i, fn] of entries.entries()) {
       // Coerce slashes to match operating system. By default fast glob returns unix style paths.
       const filename = path.resolve(fn);
