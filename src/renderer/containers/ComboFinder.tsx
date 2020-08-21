@@ -1,9 +1,9 @@
 import * as React from "react";
 
 import { useDispatch, useSelector } from "react-redux";
-import { Checkbox, Form } from "semantic-ui-react";
+import { Checkbox, Form, Radio } from "semantic-ui-react";
 
-import { FileInput } from "@/components/FileInput";
+import { FileInput, MultiFileInput } from "@/components/FileInput";
 import { ProcessSection } from "@/components/ProcessSection";
 
 import { Field, FormContainer, Label } from "@/components/Form";
@@ -21,6 +21,7 @@ export const ComboFinder: React.FC = () => {
     renameFiles,
     findCombos,
     renameFormat,
+    processDirectory,
   } = useSelector((state: iRootState) => state.highlights);
   const { filesPath, combosFilePath } = useSelector((state: iRootState) => state.filesystem);
   const dispatch = useDispatch<Dispatch>();
@@ -35,20 +36,45 @@ export const ComboFinder: React.FC = () => {
     console.log("setting combos path to: " + filepath);
     dispatch.filesystem.setCombosFilePath(filepath);
   };
-  const setFilesPath = (p: string) => dispatch.filesystem.setFilesPath(p);
+  const setFilesPath = (p: string[] | string) => dispatch.filesystem.setFilesPath(p);
+  const setProcessDirectory = (checked: boolean) => dispatch.highlights.setProcessDirectory(checked);
+  const fileFilters = [{ name: "Slippi Replays", extensions: ["slp"] }];
+  const fileSelector = processDirectory ? (
+    <FileInput
+      value={filesPath as string}
+      onChange={setFilesPath}
+      directory={processDirectory}
+      fileTypeFilters={fileFilters}
+    />
+  ) : (
+    <MultiFileInput value={filesPath as string[]} onChange={setFilesPath} fileTypeFilters={fileFilters} />
+  );
   return (
     <FormContainer>
       <Form>
         <Field>
-          <Label>SLP Replay Directory</Label>
-          <div style={{ marginBottom: "10px" }}>
-            <FileInput value={filesPath} onChange={setFilesPath} directory={true} />
-          </div>
+          <Label>SLP Replay(s)</Label>
+          <div style={{ marginBottom: "10px" }}>{fileSelector}</div>
+          <Form.Field>
+            <Radio
+              label="Select entire directory"
+              checked={processDirectory}
+              onChange={(_, data) => setProcessDirectory(Boolean(data.checked))}
+            />
+          </Form.Field>
+          <Form.Field>
+            <Radio
+              label="Select by individual files"
+              checked={!processDirectory}
+              onChange={(_, data) => setProcessDirectory(!Boolean(data.checked))}
+            />
+          </Form.Field>
           <Form.Field>
             <Checkbox
               label="Include subfolders"
               checked={includeSubFolders}
               onChange={(_, data) => onSubfolder(Boolean(data.checked))}
+              disabled={!processDirectory}
             />
           </Form.Field>
         </Field>

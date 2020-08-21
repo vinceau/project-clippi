@@ -11,7 +11,7 @@ import { getFilePath } from "@/lib/utils";
 const homeDirectory = remote.app.getPath("home");
 
 export interface FileSystemState {
-  filesPath: string;
+  filesPath: string | string[];
   liveSlpFilesPath: string;
   combosFilePath: string;
   meleeIsoPath: string;
@@ -53,7 +53,7 @@ export const filesystem = createModel({
       produce(state, (draft) => {
         draft.liveSlpFilesPath = payload;
       }),
-    setFilesPath: (state: FileSystemState, payload: string): FileSystemState =>
+    setFilesPath: (state: FileSystemState, payload: string | string[]): FileSystemState =>
       produce(state, (draft) => {
         draft.filesPath = payload;
       }),

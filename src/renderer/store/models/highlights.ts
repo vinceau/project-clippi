@@ -15,6 +15,7 @@ export interface HighlightState {
   renameFiles: boolean;
   renameFormat: string;
   openCombosWhenDone: boolean;
+  processDirectory: boolean;
 }
 
 export const highlightInitialState: HighlightState = {
@@ -26,6 +27,7 @@ export const highlightInitialState: HighlightState = {
   renameFiles: false,
   renameFormat: defaultRenameFormat,
   openCombosWhenDone: false,
+  processDirectory: true,
 };
 
 export const highlights = createModel({
@@ -62,6 +64,10 @@ export const highlights = createModel({
     setOpenCombosWhenDone: (state: HighlightState, payload: boolean): HighlightState =>
       produce(state, (draft) => {
         draft.openCombosWhenDone = payload;
+      }),
+    setProcessDirectory: (state: HighlightState, payload: boolean): HighlightState =>
+      produce(state, (draft) => {
+        draft.processDirectory = payload;
       }),
   },
 });
