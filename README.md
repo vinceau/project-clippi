@@ -22,15 +22,15 @@ Everything is open source and fully-customisable. The possibilities are endless.
 
 _Detect events and execute actions!_
 
-![Project Clippi main screenshot](/docs/images/1-automator.png)
+![Project Clippi main screenshot](docs/images/1-automator.png)
 
 _Built in replay processor helps you find combos and organise your SLP replays!_
 
-![slp file processor screenshot](/docs/images/2-processor.png)
+![slp file processor screenshot](docs/images/2-processor.png)
 
 _Easily load SLP files into Dolphin with just a drag and drop!_
 
-![Project Clippi playback queue screenshot](/docs/images/3-playback.png)
+![Project Clippi playback queue screenshot](docs/images/3-playback.png)
 
 </div>
 
@@ -62,6 +62,7 @@ If you found Project Clippi useful and would like to give back here's how you ca
 - [Spread the word!](https://twitter.com/intent/retweet?tweet_id=1215995909915336705) The more people that use it, the more Project Clippi can improve!
 - If you have ideas for new features, or would like to report a bug, please tweet at [@ProjectClippi](https://twitter.com/ProjectClippi).
 - If you are gifted in the way of code, you can help by adding more detectable events and more executable actions. Dive into the docs for the [`slp-realtime` library](https://github.com/vinceau/slp-realtime) which underpins this project and [the source code](https://github.com/vinceau/project-clippi) for the Project Clippi front-end.
+- PRs are welcome and encouraged! Do make sure to read through [the development guidelines](CONTRIBUTING.md#development-guidelines) though.
 
 ## Development
 

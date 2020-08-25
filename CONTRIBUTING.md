@@ -2,10 +2,10 @@
 
 If you found Project Clippi useful and would like to give back here's how you can:
 
-* [Spread the word!](https://twitter.com/intent/retweet?tweet_id=1215995909915336705) The more people that use it, the more Project Clippi can improve!
-* If you have ideas for new features, or would like to report a bug, please tweet at [@ProjectClippi](https://twitter.com/ProjectClippi).
-* If you are gifted in the way of code, you can help by adding more detectable events and more executable actions. Dive into the docs for the [`slp-realtime` library](https://github.com/vinceau/slp-realtime) which underpins this project and [the source code](https://github.com/vinceau/project-clippi) for the Project Clippi front-end.
-
+- [Spread the word!](https://twitter.com/intent/retweet?tweet_id=1215995909915336705) The more people that use it, the more Project Clippi can improve!
+- If you have ideas for new features, or would like to report a bug, please tweet at [@ProjectClippi](https://twitter.com/ProjectClippi).
+- If you are gifted in the way of code, you can help by adding more detectable events and more executable actions. Dive into the docs for the [`slp-realtime` library](https://github.com/vinceau/slp-realtime) which underpins this project and [the source code](https://github.com/vinceau/project-clippi) for the Project Clippi front-end.
+- PRs are welcome and encouraged! Do make sure to read through [the development guidelines](#development-guidelines) though.
 
 ## Development Guidelines
 
@@ -17,12 +17,19 @@ Run `yarn run lint --fix` to automatically convert single-quoted strings to use 
 
 ### Components should fit into one of 3 categories
 
-1. *Dumb components* which contain only the logic necessary for rendering and hooking up actions like click events etc. Such components which encourage reusability and are kept in `src/renderer/components`. There should be no domain specific logic in these components but should purely be visual. They should not directly import from the Redux store or dispatch actions.
+1. _Dumb components_ which contain only the logic necessary for rendering and hooking up actions like click events etc. Such components which encourage reusability and are kept in `src/renderer/components`. There should be no domain specific logic in these components but should purely be visual. They should not directly import from the Redux store or dispatch actions.
 
-2. *Containers* are components which bridge the gap between the application logic and the reusable *dumb components*. These are kept in `src/renderer/containers`. These components can hook up complicated logic often from `src/renderer/lib` and can import from the Redux store.
+2. _Containers_ are components which bridge the gap between the application logic and the reusable _dumb components_. These are kept in `src/renderer/containers`. These components can hook up complicated logic often from `src/renderer/lib` and can import from the Redux store.
 
-3. *Views* are *containers* which represent a single page of the app. Each page of the app should be in its own view component located in `src/renderer/views`.
+3. _Views_ are _containers_ which represent a single page of the app. Each page of the app should be in its own view component located in `src/renderer/views`.
 
+### Keep it simple, stupid (KISS)
+
+Try to avoid overcomplicating the user interface. If there are lots of disabled buttons then that's generally a bad sign. Hide components which aren't relevant in a given screen rather than disabling a button. The less a user has to worry about the better.
+
+### Buttons must have labels
+
+Buttons must have a label in the button text itself or shown when the user hovers over the button. A combination can also be used, where an already labelled button might have more comprehensive information on hover, detailing what clicking the button actually does.
 
 ## Build Process
 
@@ -30,9 +37,9 @@ Run `yarn run lint --fix` to automatically convert single-quoted strings to use 
 
 You'll need the following tools installed:
 
-* [Git](https://git-scm.com/)
-* [Node.JS](https://nodejs.org/en/) (version `10.x`)
-* [Yarn](https://yarnpkg.com/en/docs/install)
+- [Git](https://git-scm.com/)
+- [Node.JS](https://nodejs.org/en/) (version `10.x`)
+- [Yarn](https://yarnpkg.com/en/docs/install)
 
 ### Setup
 
