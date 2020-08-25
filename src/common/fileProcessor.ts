@@ -73,6 +73,7 @@ export interface FileProcessorOptions {
 export interface ProcessOutput {
   combosFound: number;
   filesProcessed: number;
+  totalErrors: number;
   timeTaken: number; // in seconds
   stopRequested: boolean;
 }
@@ -109,6 +110,7 @@ const renameFile = async (currentFilename: string, newFilename: string): Promise
 };
 
 export interface ProcessResult {
+  hasError?: boolean;
   filename: string;
   numCombos: number;
   totalCombosFound: number;
@@ -119,6 +121,7 @@ export class FileProcessor {
   private stopRequested = false;
   // private readonly realtime = new SlpRealTime();
   private processing = false;
+  private result: ProcessResult | null = null;
 
   public isProcessing(): boolean {
     return this.processing;
@@ -153,6 +156,7 @@ export class FileProcessor {
     };
 
     let filesProcessed = 0;
+    let totalErrors = 0;
     const entries = await fg(patterns, options);
     for (const [i, fn] of entries.entries()) {
       // Coerce slashes to match operating system. By default fast glob returns unix style paths.
@@ -161,10 +165,26 @@ export class FileProcessor {
         break;
       }
 
-      const res = await this._processFile(filename, opts);
-      filesProcessed += 1;
+      // Keep track of the results
+      this.result = {
+        filename,
+        numCombos: 0,
+        totalCombosFound: this.queue.length,
+      };
+
+      try {
+        await this._processFile(filename, opts);
+        // Increment only if we successfully processed the file
+        filesProcessed += 1;
+      } catch (err) {
+        console.error(err);
+        // Keep track of how many files errored
+        totalErrors += 1;
+        this.result.hasError = true;
+      }
+
       if (callback) {
-        const shouldStop = await callback(i, entries.length, filename, res);
+        const shouldStop = await callback(i, entries.length, filename, this.result);
         if (shouldStop) {
           break;
         }
@@ -184,30 +204,31 @@ export class FileProcessor {
     const after = new Date();
     const millisElapsed = Math.abs(after.getTime() - before.getTime());
     this.processing = false;
+    this.result = null;
     return {
       timeTaken: millisElapsed / 1000,
       filesProcessed,
+      totalErrors,
       combosFound: totalCombos,
       stopRequested: this.stopRequested,
     };
   }
 
-  private async _processFile(filename: string, options: FileProcessorOptions): Promise<ProcessResult> {
+  private async _processFile(filename: string, options: FileProcessorOptions): Promise<void> {
     console.log(`Processing file: ${filename}`);
-    console.log(options);
-    const res: ProcessResult = {
-      filename,
-      numCombos: 0,
-      totalCombosFound: 0, // Set this value after we're done processing
-    };
+    const res = this.result as ProcessResult;
 
     const game = new SlippiGame(filename);
     const settings = game.getSettings();
+    if (!settings) {
+      throw new Error(`Could not process ${filename}. Invalid SLP file`);
+    }
     const metadata = game.getMetadata();
 
     // Handle file renaming
     if (options.renameFiles && options.renameTemplate) {
       const fullFilename = path.basename(filename);
+      // Update the filename
       res.filename = parseFileRenameFormat(options.renameTemplate, settings, metadata, fullFilename);
       res.filename = assertExtension(res.filename, SLP_FILE_EXT);
       filename = await renameFile(filename, res.filename);
@@ -215,7 +236,6 @@ export class FileProcessor {
 
     // Handle combo finding
     if (options.findComboOption && !canShortCircuit(options, settings, metadata)) {
-      console.log("finding combos");
       const highlights$ = this._generateHighlightObservable(filename, options.findComboOption, options.config).pipe(
         map((highlight) => populateHighlightMetadata(highlight, metadata))
       );
@@ -224,7 +244,6 @@ export class FileProcessor {
 
     // Update the total combos found
     res.totalCombosFound = this.queue.length;
-    return res;
   }
 
   private _generateHighlightObservable(
@@ -356,6 +375,11 @@ function canShortCircuit(options: FileProcessorOptions, settings: GameStartType,
   // Can't short circuit button inputs for now
   if (options.findComboOption === FindComboOption.BUTTON_INPUTS) {
     return false;
+  }
+
+  // Skip processing if it's doubles
+  if (settings.players.length !== 2) {
+    return true;
   }
 
   const criteria = (options.config as ComboOptions).findComboCriteria;

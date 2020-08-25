@@ -132,8 +132,8 @@ const InfoLabel = styled.div`
 export const SettingsView: React.FC = () => {
   const history = useHistory();
   const { path } = useRouteMatch();
-  const { latestVersion } = useSelector((state: iRootState) => state.appContainer);
-  const { latestPath } = useSelector((state: iRootState) => state.tempContainer);
+  const latestVersion = useSelector((state: iRootState) => state.appContainer.latestVersion);
+  const latestPath = useSelector((state: iRootState) => state.tempContainer.latestPath);
 
   const mainPage = latestPath.main || "/";
 

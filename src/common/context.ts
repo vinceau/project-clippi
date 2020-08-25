@@ -130,10 +130,13 @@ const genPlayerContext = (
   // Determine netplay names if they exist
   let netplayName = null;
   let netplayCode = null;
-  if (metadata && metadata.players && metadata.players[index]) {
-    const names = metadata.players[index].names;
-    netplayName = names.netplay ? sanitizeFilename(names.netplay, "_") : null;
-    netplayCode = names.code ? sanitizeFilename(names.code, "_") : null;
+  if (metadata && metadata.players) {
+    const playerInfo = metadata.players[index];
+    if (playerInfo && playerInfo.names) {
+      const names = playerInfo.names;
+      netplayName = names.netplay ? sanitizeFilename(playerInfo.names.netplay, "_") : null;
+      netplayCode = names.code ? sanitizeFilename(playerInfo.names.code, "_") : null;
+    }
   }
 
   if (playerCharId !== null && playerCharColor !== null) {
