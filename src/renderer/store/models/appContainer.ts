@@ -61,7 +61,10 @@ export const appContainer = createModel({
 
           // Notify if necessary
           if (needsUpdate(latest)) {
-            notify(`An update to Project Clippi ${latest} is available!`);
+            notify(
+              "Visit the Github page to download the latest version.",
+              `An update to Project Clippi ${latest} is available`
+            );
           }
         }
       } catch (err) {
