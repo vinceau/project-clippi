@@ -44,12 +44,13 @@ class SlpStreamManager {
     const stream = new SlpLiveStream(type);
     stream.connection.once(ConnectionEvent.CONNECT, () => {
       dispatcher.tempContainer.setSlippiConnectionType(type);
+      const connType = type === "dolphin" ? "Slippi Dolphin" : "Slippi relay";
       stream.connection.on(ConnectionEvent.STATUS_CHANGE, (status: ConnectionStatus) => {
         dispatcher.tempContainer.setSlippiConnectionStatus(status);
         if (status === ConnectionStatus.CONNECTED) {
-          notify("Connected to Slippi relay");
+          notify(`Connected to ${connType}`);
         } else if (status === ConnectionStatus.DISCONNECTED) {
-          notify("Disconnected from Slippi relay");
+          notify(`Disconnected from ${connType}`);
         }
       });
     });
