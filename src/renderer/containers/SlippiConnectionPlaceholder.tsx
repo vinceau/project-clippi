@@ -14,6 +14,7 @@ import { device } from "@/styles/device";
 
 import { SlippiIcon } from "@/components/SlippiIcon";
 import dolphinLogoSVG from "@/styles/images/dolphin.svg";
+import { Ports } from "@slippi/slippi-js";
 
 export const SlippiConnectionPlaceholder: React.FC<{
   port: string;
@@ -100,26 +101,11 @@ export const SlippiConnectionPlaceholder: React.FC<{
           <Grid.Column>
             <VerticalHeader icon>
               <CustomIcon image={dolphinLogoSVG} size={54} />
-              Monitor for SLP file changes
+              Connect to Slippi Dolphin
             </VerticalHeader>
-            <FolderInput>
-              <BufferedInput
-                style={{ width: "100%" }}
-                placeholder="Choose a folder..."
-                value={liveSlpFilesPath}
-                onChange={setSlpFilePath}
-              />
-              <ButtonContainer>
-                <Button onClick={() => selectPath().catch(console.error)}>Choose</Button>
-              </ButtonContainer>
-            </FolderInput>
             <div style={{ padding: "10px 0" }}>
-              <Button
-                primary={true}
-                disabled={!liveSlpFilesPath}
-                onClick={() => streamManager.monitorSlpFolder(liveSlpFilesPath)}
-              >
-                Start monitoring
+              <Button primary={true} onClick={() => dispatcher.slippi.connectToDolphin()}>
+                Find Dolphin Instance
               </Button>
             </div>
           </Grid.Column>

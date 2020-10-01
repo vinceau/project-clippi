@@ -13,15 +13,15 @@ import slippiLogo from "@/styles/images/slippi.png";
 export const StatusBar: React.FC = () => {
   const history = useHistory();
 
-  const { port } = useSelector((state: iRootState) => state.slippi);
-  const { currentSlpFolderStream, slippiConnectionStatus } = useSelector((state: iRootState) => state.tempContainer);
+  const port = useSelector((state: iRootState) => state.slippi.port);
+  const slippiConnectionStatus = useSelector((state: iRootState) => state.tempContainer.slippiConnectionStatus);
+  const slippiConnectionType = useSelector((state: iRootState) => state.tempContainer.slippiConnectionType);
 
-  const isFolderStream = Boolean(currentSlpFolderStream);
-  const relayIsConnected = slippiConnectionStatus === ConnectionStatus.CONNECTED;
-  const headerText = isFolderStream ? "Monitoring" : statusToLabel(slippiConnectionStatus);
-  const innerText = isFolderStream ? <>{currentSlpFolderStream}</> : <>Relay Port: {port}</>;
-  const connected = isFolderStream || relayIsConnected;
-  const color = statusToColor(isFolderStream ? ConnectionStatus.CONNECTED : slippiConnectionStatus);
+  const connected = slippiConnectionStatus === ConnectionStatus.CONNECTED;
+  const isDolphinConnection = connected && slippiConnectionType === "dolphin";
+  const headerText = statusToLabel(slippiConnectionStatus);
+  const innerText = isDolphinConnection ? "Slippi Dolphin" : `Relay Port: ${port}`;
+  const color = statusToColor(slippiConnectionStatus);
   return (
     <div>
       <ConnectionStatusDisplay
