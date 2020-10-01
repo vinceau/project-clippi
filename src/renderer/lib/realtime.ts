@@ -1,4 +1,5 @@
 import {
+  ConnectionEvent,
   ConnectionStatus,
   SlpFolderStream,
   SlpLiveStream,
@@ -34,18 +35,23 @@ class SlpStreamManager {
     this.eventManager.updateConfig(config);
   }
 
-  public async connectToSlippi(port?: number): Promise<void> {
-    console.log(`attempt to connect to slippi on port: ${port}`);
-    const address = "0.0.0.0";
-    const slpPort = port ? port : 1667;
-    const stream = new SlpLiveStream();
-    stream.connection.on("statusChange", (status) => {
-      dispatcher.tempContainer.setSlippiConnectionStatus(status);
-      if (status === ConnectionStatus.CONNECTED) {
-        notify("Connected to Slippi relay");
-      } else if (status === ConnectionStatus.DISCONNECTED) {
-        notify("Disconnected from Slippi relay");
-      }
+  public async connectToSlippi(
+    address = "0.0.0.0",
+    slpPort = 1667,
+    type: "dolphin" | "console" = "console"
+  ): Promise<void> {
+    console.log(`attempt to connect to slippi on port: ${slpPort}`);
+    const stream = new SlpLiveStream(type);
+    stream.connection.once(ConnectionEvent.CONNECT, () => {
+      dispatcher.tempContainer.setSlippiConnectionType(type);
+      stream.connection.on(ConnectionEvent.STATUS_CHANGE, (status: ConnectionStatus) => {
+        dispatcher.tempContainer.setSlippiConnectionStatus(status);
+        if (status === ConnectionStatus.CONNECTED) {
+          notify("Connected to Slippi relay");
+        } else if (status === ConnectionStatus.DISCONNECTED) {
+          notify("Disconnected from Slippi relay");
+        }
+      });
     });
     console.log(stream.connection);
     await stream.start(address, slpPort);

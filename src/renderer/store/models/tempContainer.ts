@@ -12,6 +12,7 @@ import { TwitchUser } from "common/types";
 import { shuffle } from "common/utils";
 
 export interface TempContainerState {
+  slippiConnectionType: "console" | "dolphin";
   slippiConnectionStatus: ConnectionStatus;
   obsConnectionStatus: OBSConnectionStatus;
   obsRecordingStatus: OBSRecordingStatus;
@@ -38,6 +39,7 @@ const initialDolphinQueueOptions = {
 };
 
 const initialState: TempContainerState = {
+  slippiConnectionType: "console",
   slippiConnectionStatus: ConnectionStatus.DISCONNECTED,
   obsConnectionStatus: OBSConnectionStatus.DISCONNECTED,
   obsRecordingStatus: OBSRecordingStatus.RECORDING,
@@ -65,6 +67,10 @@ export const tempContainer = createModel({
     setSlippiConnectionStatus: (state: TempContainerState, payload: ConnectionStatus): TempContainerState =>
       produce(state, (draft) => {
         draft.slippiConnectionStatus = payload;
+      }),
+    setSlippiConnectionType: (state: TempContainerState, payload: "console" | "dolphin"): TempContainerState =>
+      produce(state, (draft) => {
+        draft.slippiConnectionType = payload;
       }),
     setOBSConnectionStatus: (state: TempContainerState, payload: OBSConnectionStatus): TempContainerState =>
       produce(state, (draft) => {

@@ -13,24 +13,19 @@ import { PageHeader } from "@/components/Form";
 import slippiLogo from "@/styles/images/slippi.png";
 
 export const SlippiPage: React.FC = () => {
-  const { port } = useSelector((state: iRootState) => state.slippi);
-  const { slippiConnectionStatus, currentSlpFolderStream } = useSelector((state: iRootState) => state.tempContainer);
+  const port = useSelector((state: iRootState) => state.slippi.port);
+  const slippiConnectionType = useSelector((state: iRootState) => state.tempContainer.slippiConnectionType);
+  const status = useSelector((state: iRootState) => state.tempContainer.slippiConnectionStatus);
   const dispatch = useDispatch<Dispatch>();
-  const relayConnected = slippiConnectionStatus === ConnectionStatus.CONNECTED;
-  const isFolderStream = currentSlpFolderStream !== "";
-  const connected = relayConnected || isFolderStream;
-  const buttonText = isFolderStream ? "Stop monitoring" : "Disconnect";
+  const connected = status === ConnectionStatus.CONNECTED;
+  const isDolphinConnection = connected && slippiConnectionType === "dolphin";
 
   const onDisconnect = () => {
-    if (relayConnected) {
-      streamManager.disconnectFromSlippi();
-      return;
-    }
-    streamManager.stopMonitoringSlpFolder();
+    streamManager.disconnectFromSlippi();
   };
-  const status = isFolderStream ? ConnectionStatus.CONNECTED : slippiConnectionStatus;
-  const header = isFolderStream ? "Monitoring" : statusToLabel(status);
-  const subHeader = isFolderStream ? currentSlpFolderStream : `Relay Port: ${port}`;
+
+  const header = statusToLabel(status);
+  const subHeader = isDolphinConnection ? "Slippi Dolphin" : `Relay Port: ${port}`;
   const statusColor = statusToColor(status);
   return (
     <div>
@@ -43,7 +38,7 @@ export const SlippiPage: React.FC = () => {
           statusColor={statusColor}
           shouldPulse={connected}
           onDisconnect={onDisconnect}
-          buttonText={buttonText}
+          buttonText="Disconnect"
         />
       ) : (
         <SlippiConnectionPlaceholder port={port} onClick={dispatch.slippi.connectToSlippi} />

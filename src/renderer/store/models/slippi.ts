@@ -6,6 +6,7 @@ import { mapFilterSettingsToConfiguration } from "@/lib/profile";
 import { streamManager } from "@/lib/realtime";
 import { notify } from "@/lib/utils";
 import { defaultComboFilterSettings } from "@vinceau/slp-realtime";
+import { Ports } from "@slippi/slippi-js";
 
 export const DEFAULT_PROFILE = "default";
 
@@ -93,12 +94,20 @@ export const slippi = createModel({
     async connectToSlippi(port: string) {
       try {
         console.log(`connecting on port: ${port}`);
-        await streamManager.connectToSlippi(parseInt(port, 10));
+        await streamManager.connectToSlippi("0.0.0.0", parseInt(port, 10));
       } catch (err) {
         console.error(err);
         notify(`Failed to connect to port ${port}! Is the relay running?`);
       }
       dispatch.slippi.setPort(port);
+    },
+    async connectToDolphin() {
+      try {
+        await streamManager.connectToSlippi("127.0.0.1", Ports.DEFAULT, "dolphin");
+      } catch (err) {
+        console.error(err);
+        notify(`Failed to connect to Dolphin! Is Slippi Dolphin running?`);
+      }
     },
   }),
 });
