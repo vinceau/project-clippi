@@ -93,19 +93,19 @@ const generateButtonComboEventName = (event: EventConfig): string => {
 
   let holdInfo = "";
   if (filter.inputButtonHold === "held") {
-    holdInfo = `for ${filter.inputButtonHoldDelay} ${filter.inputButtonHoldUnits}`;
+    holdInfo = ` for ${filter.inputButtonHoldDelay} ${filter.inputButtonHoldUnits}`;
     if (numPlayers !== 4 && numPlayers > 1) {
       holdText = "holds";
     }
   } else {
-    if (numPlayers > 1) {
+    if (numPlayers !== 4 && numPlayers > 1) {
       holdText = "presses";
     }
   }
 
   if (numPlayers === 4) {
-    return `When ${buttons} ${isOrAre} ${holdText} ${holdInfo}`;
+    return `When ${buttons} ${isOrAre} ${holdText}${holdInfo}`;
   }
 
-  return `When ${playerText} ${holdText} ${buttons} ${holdInfo}`;
+  return `When ${playerText} ${holdText} ${buttons}${holdInfo}`;
 };
