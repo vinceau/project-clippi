@@ -57,9 +57,7 @@ export const SlippiConnectionPlaceholder: React.FC<{
               onBlur={() => dispatcher.slippi.setPort(port)}
             />
             <div style={{ padding: "10px 0" }}>
-              <Button primary onClick={() => props.onClick(port)}>
-                Connect
-              </Button>
+              <Button onClick={() => props.onClick(port)}>Connect</Button>
             </div>
           </Grid.Column>
           <HorizontalDivider horizontal>Or</HorizontalDivider>
@@ -69,9 +67,7 @@ export const SlippiConnectionPlaceholder: React.FC<{
               Connect to Slippi Dolphin
             </VerticalHeader>
             <div style={{ padding: "10px 0" }}>
-              <Button primary={true} onClick={() => dispatcher.slippi.connectToDolphin()}>
-                Find Dolphin Instance
-              </Button>
+              <Button onClick={() => dispatcher.slippi.connectToDolphin()}>Find Dolphin Instance</Button>
             </div>
           </Grid.Column>
         </Grid.Row>
