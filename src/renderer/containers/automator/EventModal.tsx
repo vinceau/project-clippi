@@ -201,12 +201,9 @@ export const EventModal: React.FC<{
               {"Trigger event when the following combination is "}
               <Controller
                 as={<InlineDropdown options={holdOptions} />}
-                onChange={([x]) => {
-                  console.log("value changed");
-                  console.log(x);
-                  return x;
-                }}
+                onChange={([val]) => val}
                 control={control}
+                defaultValue={DEFAULT_FORM_VALUES.filter.inputButtonHold}
                 name="filter.inputButtonHold"
               />
               {filter.inputButtonHold === "held" && (
@@ -217,6 +214,7 @@ export const EventModal: React.FC<{
                       as={<DelayInput placeholder="2" />}
                       onChange={([val]) => val}
                       control={control}
+                      defaultValue={DEFAULT_FORM_VALUES.filter.inputButtonHoldDelay}
                       name="filter.inputButtonHoldDelay"
                     />
                   </span>
@@ -224,6 +222,7 @@ export const EventModal: React.FC<{
                     as={<InlineDropdown options={holdDurationOptions} />}
                     onChange={([val]) => val}
                     control={control}
+                    defaultValue={DEFAULT_FORM_VALUES.filter.inputButtonHoldUnits}
                     name="filter.inputButtonHoldUnits"
                   />
                 </span>
@@ -233,7 +232,9 @@ export const EventModal: React.FC<{
               as={<ButtonInput />}
               control={control}
               onChange={([v]) => v}
-              rules={{ validate: (val) => val && val.length > 0 }}
+              rules={{
+                validate: (val) => (val ? val.length > 0 : false),
+              }}
               name="filter.buttonCombo"
             />
             {errors.filter && errors.filter.buttonCombo && (errors.filter.buttonCombo as any).type === "validate" && (
