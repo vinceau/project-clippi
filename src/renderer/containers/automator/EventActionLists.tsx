@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { EventItem } from "./EventItem";
 import { Action } from "@vinceau/event-actions";
 import { ActionInput, AddActionInput } from "./ActionInputs";
+import { generateEventName } from "@/lib/events";
 
 const Header = styled.div`
   position: sticky;
@@ -24,6 +25,12 @@ const Header = styled.div`
   }
 `;
 
+const EventName = styled.div`
+  margin: 2.5rem;
+  font-size: 1.8rem;
+  font-weight: 600;
+`;
+
 export interface EventActionListsProps {
   selected: number;
   onSelect: (i: number) => void;
@@ -34,18 +41,20 @@ export const EventActionLists: React.FC<EventActionListsProps> = (props) => {
   const val = useSelector((state: iRootState) => state.automator.events);
   const actions = useSelector((state: iRootState) => state.automator.actions);
   const dispatch = useDispatch<Dispatch>();
-  const selectedActions = val[selected] ? actions[val[selected].id] || [] : [];
+  const selectedEvent = val[selected];
+  const selectedEventName = selectedEvent.name ? selectedEvent.name : generateEventName(selectedEvent) + "...";
+  const selectedActions = selectedEvent ? actions[selectedEvent.id] || [] : [];
   const disabledActions = selectedActions.map((a) => a.name);
   const onActionChange = (index: number, action: Action) => {
-    const eventId = val[selected].id;
+    const eventId = selectedEvent.id;
     dispatch.automator.updateActionEvent({ eventId, index, action });
   };
   const onActionRemove = (index: number) => {
-    const eventId = val[selected].id;
+    const eventId = selectedEvent.id;
     dispatch.automator.removeActionEvent({ eventId, index });
   };
   const onActionAdd = (name: string) => {
-    const eventId = val[selected].id;
+    const eventId = selectedEvent.id;
     const params = actionComponents[name].defaultParams;
     const action = {
       name,
@@ -80,6 +89,7 @@ export const EventActionLists: React.FC<EventActionListsProps> = (props) => {
         <Header>
           <h2>Actions</h2>
         </Header>
+        <EventName>{selectedEventName}</EventName>
         <div>
           {selectedActions.map((a, i) => {
             const onInnerActionChange = (newVal: Action) => {
@@ -88,7 +98,7 @@ export const EventActionLists: React.FC<EventActionListsProps> = (props) => {
             const prefix = i === 0 ? "Then " : "And ";
             return (
               <ActionInput
-                key={`${val[selected].id}--${a.name}`}
+                key={`${selectedEvent.id}--${a.name}`}
                 selectPrefix={prefix}
                 value={a}
                 onChange={onInnerActionChange}
