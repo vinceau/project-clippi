@@ -6,7 +6,7 @@ import { EventConfig } from "@vinceau/slp-realtime";
 import { Action as ActionDefinition } from "@vinceau/event-actions";
 
 export interface NamedEventConfig extends EventConfig {
-  name: string;
+  name?: string;
   disabled?: boolean;
 }
 
