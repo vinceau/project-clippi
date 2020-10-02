@@ -6,6 +6,7 @@ import { Icon } from "semantic-ui-react";
 import styled from "@emotion/styled";
 import { transparentize, lighten, darken } from "polished";
 import { ThemeMode, useTheme } from "@/styles";
+import { generateEventName } from "@/lib/events";
 
 export interface EventItemProps {
   event: NamedEventConfig;
@@ -50,6 +51,7 @@ const Outer = styled.div<{
 
 export const EventItem: React.FC<EventItemProps> = ({ event, onClick, selected, disabled }) => {
   const theme = useTheme();
+  const eventName = generateEventName(event);
   return (
     <Outer disabled={disabled} themeName={theme.themeName} onClick={onClick} selected={selected}>
       <div
@@ -67,7 +69,7 @@ export const EventItem: React.FC<EventItemProps> = ({ event, onClick, selected, 
           `
         }
       >
-        {event.name}
+        {eventName}
       </div>
     </Outer>
   );
