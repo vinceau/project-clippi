@@ -17,10 +17,13 @@ export const Automator: React.FC = () => {
   const [selected, setSelected] = React.useState<number>(0);
   const [edit, setEdit] = React.useState<NamedEventConfig | null>(null);
   const events = useSelector((state: iRootState) => state.automator.events);
+  const actions = useSelector((state: iRootState) => state.automator.actions);
   const dispatch = useDispatch<Dispatch>();
   const invalidSelection = selected >= events.length || selected < 0;
   const isDisabled = !invalidSelection && events[selected] && events[selected].disabled;
   const disableEditButtons = invalidSelection || events.length === 0;
+  const selectedActions = events[selected] ? actions[events[selected].id] || [] : [];
+  const disabledTestButton = selectedActions.length === 0;
   const deleteEvent = () => {
     console.log(`deleting event with id: ${selected}/${events.length}`);
     // Perform some basic validation of the current selected value
@@ -98,7 +101,7 @@ export const Automator: React.FC = () => {
         {!disableEditButtons && (
           <div>
             <Labelled title="Test run event">
-              <Button onClick={testRunEvent} icon="play" />
+              <Button disabled={disabledTestButton} onClick={testRunEvent} icon="play" />
             </Labelled>
             <Labelled title="Edit event">
               <Button onClick={editEvent} icon="pencil" />
