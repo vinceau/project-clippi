@@ -11,7 +11,7 @@ import { DelayInput, InlineDropdown } from "@/components/InlineInputs";
 import { Field, Label, Text } from "@/components/Form";
 import { StockEvent, InputEvent, ComboEvent, GameEvent } from "@vinceau/slp-realtime";
 import { useForm, Controller } from "react-hook-form";
-import { Select, Input, Button, Icon, Modal } from "semantic-ui-react";
+import { Select, Button, Icon, Modal } from "semantic-ui-react";
 import { PortSelection } from "@/components/combos/PortSelection";
 import { NamedEventConfig } from "@/store/models/automator";
 
