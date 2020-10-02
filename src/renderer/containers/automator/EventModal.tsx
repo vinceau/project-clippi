@@ -42,13 +42,13 @@ const DEFAULT_FORM_VALUES: FormValues = {
 };
 
 const eventOptions = [
-  { value: GameEvent.GAME_START, text: "Game Start" },
-  { value: GameEvent.GAME_END, text: "Game End" },
-  { value: StockEvent.PLAYER_SPAWN, text: "Player Spawn" },
-  { value: StockEvent.PLAYER_DIED, text: "Player Death" },
-  { value: ComboEvent.END, text: "Combo Occurs" },
-  { value: ComboEvent.CONVERSION, text: "Conversion Occurs" },
-  { value: InputEvent.BUTTON_COMBO, text: "Button Input Combination" },
+  { value: GameEvent.GAME_START, text: "Game start" },
+  { value: GameEvent.GAME_END, text: "Game end" },
+  { value: StockEvent.PLAYER_SPAWN, text: "Player spawn" },
+  { value: StockEvent.PLAYER_DIED, text: "Player death" },
+  { value: ComboEvent.END, text: "Combo occurs" },
+  { value: ComboEvent.CONVERSION, text: "Conversion occurs" },
+  { value: InputEvent.BUTTON_COMBO, text: "Button input combination" },
 ];
 
 const stringToOptions = (o: string) => ({ key: o, value: o, text: o });
