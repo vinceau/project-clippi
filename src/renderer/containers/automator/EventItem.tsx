@@ -51,7 +51,7 @@ const Outer = styled.div<{
 
 export const EventItem: React.FC<EventItemProps> = ({ event, onClick, selected, disabled }) => {
   const theme = useTheme();
-  const eventName = generateEventName(event);
+  const eventName = event.name ? event.name : generateEventName(event);
   return (
     <Outer disabled={disabled} themeName={theme.themeName} onClick={onClick} selected={selected}>
       <div
