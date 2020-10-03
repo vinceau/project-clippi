@@ -1169,7 +1169,7 @@
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-0.14.0.tgz#9fb3a3cf3132328151f353de4632e01e52102bea"
   integrity sha512-9NET910DNaIPngYnLLPeg+Ogzqsi9uM4mSboU5y6p8S5DzMTVEsJZrawi+BoDNUVBa2DhJqQYUFvMDfgU062LQ==
 
-"@slippi/slippi-js@next":
+"@slippi/slippi-js@^5.1.0-beta.0", "@slippi/slippi-js@next":
   version "5.1.0-beta.0"
   resolved "https://registry.yarnpkg.com/@slippi/slippi-js/-/slippi-js-5.1.0-beta.0.tgz#69ba00212866e0e45cdd71be68d5ebada2b7aa5e"
   integrity sha512-Jcw0EzL+swzLqxQdt4XqUNczru7d1/pENkeCCo0/bwy1XTaKNWAptCO3rMqdY7tmRkAdu8+1H4svkEq6MD4lgQ==
@@ -1520,10 +1520,12 @@
   resolved "https://registry.yarnpkg.com/@vinceau/event-actions/-/event-actions-0.0.4.tgz#b773d36293bdfd1468f36815fb0a5ad77b7a087f"
   integrity sha512-Hhayt7S4GZg5ebmR52WKZ3xuUMwZHJYKunNVQTFoNzEKOieEnzokWttRGep5sD9EUUQ0Iw+1B69SrZYJO7JS/A==
 
-"@vinceau/slp-realtime@file:.yalc/@vinceau/slp-realtime":
-  version "3.0.2"
+"@vinceau/slp-realtime@^3.1.0-beta.0":
+  version "3.1.0-beta.0"
+  resolved "https://registry.yarnpkg.com/@vinceau/slp-realtime/-/slp-realtime-3.1.0-beta.0.tgz#c7ed52463998e44831620d52b0f11fedc1453789"
+  integrity sha512-TPTcXryxcMa7uAiJ+iVmhOwHkxTT9JbyeaLwenKTOtzd5H2OuwYV1ATvqtiIrrqm4hNabwyoYc+kSVsVn6Jfhg==
   dependencies:
-    "@slippi/slippi-js" next
+    "@slippi/slippi-js" "^5.1.0-beta.0"
     chokidar "^3.3.1"
     fs-extra "^8.1.0"
     lodash "^4.17.19"
