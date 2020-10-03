@@ -31,6 +31,20 @@ const EventName = styled.div`
   font-weight: 600;
 `;
 
+const ColumnContent = styled.div`
+  overflow: hidden;
+  overflow-y: auto;
+  position: relative;
+  height: 100%;
+  width: 100%;
+`;
+
+const ColumnInner = styled.div`
+  position: absolute;
+  height: 100%;
+  width: 100%;
+`;
+
 export interface EventActionListsProps {
   selected: number;
   onSelect: (i: number) => void;
@@ -65,50 +79,58 @@ export const EventActionLists: React.FC<EventActionListsProps> = (props) => {
   return (
     <ReflexContainer orientation="vertical">
       <ReflexElement>
-        <Header>
-          <h2>Events</h2>
-        </Header>
-        <div>
-          {val.map((e, i) => {
-            return (
-              <EventItem
-                key={e.id}
-                selected={selected === i}
-                disabled={e.disabled}
-                onClick={() => onSelect(i)}
-                event={e}
-              />
-            );
-          })}
-        </div>
+        <ColumnContent>
+          <ColumnInner>
+            <Header>
+              <h2>Events</h2>
+            </Header>
+            <div>
+              {val.map((e, i) => {
+                return (
+                  <EventItem
+                    key={e.id}
+                    selected={selected === i}
+                    disabled={e.disabled}
+                    onClick={() => onSelect(i)}
+                    event={e}
+                  />
+                );
+              })}
+            </div>
+          </ColumnInner>
+        </ColumnContent>
       </ReflexElement>
 
       <ReflexSplitter />
 
       <ReflexElement>
-        <Header>
-          <h2>Actions</h2>
-        </Header>
-        <EventName>{selectedEventName}</EventName>
-        <div>
-          {selectedActions.map((a, i) => {
-            const onInnerActionChange = (newVal: Action) => {
-              onActionChange(i, newVal);
-            };
-            const prefix = i === 0 ? "Then " : "And ";
-            return (
-              <ActionInput
-                key={`${selectedEvent.id}--${a.name}`}
-                selectPrefix={prefix}
-                value={a}
-                onChange={onInnerActionChange}
-                disabledActions={[]}
-                onRemove={() => onActionRemove(i)}
-              />
-            );
-          })}
-          <AddActionInput onChange={onActionAdd} disabledActions={disabledActions} />
-        </div>
+        <ColumnContent>
+          <ColumnInner>
+            <Header>
+              <h2>Actions</h2>
+            </Header>
+            <EventName>{selectedEventName}</EventName>
+            <div>
+              {selectedActions.map((a, i) => {
+                const onInnerActionChange = (newVal: Action) => {
+                  onActionChange(i, newVal);
+                };
+                const prefix = i === 0 ? "Then " : "And ";
+                return (
+                  <ActionInput
+                    key={`${selectedEvent.id}--${a.name}`}
+                    selectPrefix={prefix}
+                    value={a}
+                    onChange={onInnerActionChange}
+                    disabledActions={[]}
+                    onRemove={() => onActionRemove(i)}
+                  />
+                );
+              })}
+              <AddActionInput onChange={onActionAdd} disabledActions={disabledActions} />
+            </div>
+          </ColumnInner>
+        </ColumnContent>
       </ReflexElement>
     </ReflexContainer>
   );
