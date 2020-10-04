@@ -25,6 +25,7 @@ function createMainWindow() {
       nodeIntegrationInWorker: true, // <---  for web workers
     },
   });
+  window.removeMenu();
 
   // A bit of a hack to allow the renderer window to synchronously get the current theme
   // without waiting for an IPC message
