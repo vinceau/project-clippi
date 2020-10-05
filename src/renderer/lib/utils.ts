@@ -54,6 +54,10 @@ export const notify = (message: string, title?: string) => {
   });
 };
 
+export const installUpdateAndRestart = () => {
+  ipc.sendMessage(Message.InstallUpdateAndRestart);
+};
+
 // see https://github.com/electron-userland/electron-webpack/issues/99#issuecomment-459251702
 export const getStatic = (val: string): string => {
   if (isDevelopment) {
@@ -101,4 +105,8 @@ export const openFileOrParentFolder = (filename: string): void => {
     parentFolder = path.dirname(parentFolder);
     opened = shell.openItem(parentFolder);
   }
+};
+
+export const openUrl = (url: string) => {
+  shell.openExternal(url);
 };

@@ -16,7 +16,7 @@ const App: React.FC = () => {
   const { reconnectTwitch } = useSelector((state: iRootState) => state.twitch);
   const theme = useTheme();
   React.useEffect(() => {
-    dispatch.appContainer.checkForUpdates();
+    // dispatch.appContainer.checkForUpdates();
     if (reconnectTwitch) {
       dispatch.tempContainer.authenticateTwitch();
     }

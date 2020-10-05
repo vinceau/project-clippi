@@ -19,10 +19,13 @@ export enum Message {
   Notify = "notify",
   SelectDirectory = "selectDirectory",
   ToggleTheme = "toggleTheme",
+  SetLatestVersion = "latestVersion",
+  SetUpdateDownloadComplete = "updateDownloadComplete",
+  InstallUpdateAndRestart = "installUpdateAndRestart",
 }
 
 export type ResponseType<X extends Message> =
-  // renderer to main
+  // main to renderer
   X extends Message.AuthenticateTwitch
     ? TwitchUser | null // Respond with an error message if necessary
     : X extends Message.CreateTwitchClip

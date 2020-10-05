@@ -2,8 +2,8 @@ import produce from "immer";
 
 import { createModel } from "@rematch/core";
 
-import { getLatestVersion, needsUpdate } from "@/lib/checkForUpdates";
-import { notify } from "@/lib/utils";
+// import { getLatestVersion, needsUpdate } from "common/checkForUpdates";
+// import { notify } from "@/lib/utils";
 
 export interface AppContainerState {
   latestVersion: string;
@@ -36,40 +36,40 @@ export const appContainer = createModel({
       });
     },
   },
-  effects: (dispatch) => ({
-    async checkForUpdates(_, rootState) {
-      // If the last check was within the last day then return
-      const nextUpdateAt = new Date(rootState.appContainer.nextUpdateCheckTime);
-      if (nextUpdateAt > new Date()) {
-        console.log(`Next update check: ${nextUpdateAt}`);
-        return;
-      }
+  // effects: (dispatch) => ({
+  //   async checkForUpdates(_, rootState) {
+  //     // If the last check was within the last day then return
+  //     const nextUpdateAt = new Date(rootState.appContainer.nextUpdateCheckTime);
+  //     if (nextUpdateAt > new Date()) {
+  //       console.log(`Next update check: ${nextUpdateAt}`);
+  //       return;
+  //     }
 
-      console.log("Checking for updates...");
-      try {
-        const lastKnownVersion = rootState.appContainer.latestVersion;
-        const latest = await getLatestVersion("vinceau", "project-clippi");
+  //     console.log("Checking for updates...");
+  //     try {
+  //       const lastKnownVersion = rootState.appContainer.latestVersion;
+  //       const latest = await getLatestVersion("vinceau", "project-clippi");
 
-        const newUpdateTime = new Date();
-        newUpdateTime.setDate(newUpdateTime.getDate() + 1);
-        console.log("Setting new update time to: " + newUpdateTime);
-        dispatch.appContainer.setNextUpdateCheckTime(newUpdateTime);
+  //       const newUpdateTime = new Date();
+  //       newUpdateTime.setDate(newUpdateTime.getDate() + 1);
+  //       console.log("Setting new update time to: " + newUpdateTime);
+  //       dispatch.appContainer.setNextUpdateCheckTime(newUpdateTime);
 
-        if (latest !== lastKnownVersion) {
-          console.log(`Current version: ${__VERSION__}. Latest version: ${latest}`);
-          dispatch.appContainer.setLatestVersion(latest);
+  //       if (latest !== lastKnownVersion) {
+  //         console.log(`Current version: ${__VERSION__}. Latest version: ${latest}`);
+  //         dispatch.appContainer.setLatestVersion(latest);
 
-          // Notify if necessary
-          if (needsUpdate(latest)) {
-            notify(
-              "Visit the Github page to download the latest version.",
-              `An update to Project Clippi ${latest} is available`
-            );
-          }
-        }
-      } catch (err) {
-        console.error(err);
-      }
-    },
-  }),
+  //         // Notify if necessary
+  //         if (needsUpdate(latest)) {
+  //           notify(
+  //             "Visit the Github page to download the latest version.",
+  //             `An update to Project Clippi ${latest} is available`
+  //           );
+  //         }
+  //       }
+  //     } catch (err) {
+  //       console.error(err);
+  //     }
+  //   },
+  // }),
 });

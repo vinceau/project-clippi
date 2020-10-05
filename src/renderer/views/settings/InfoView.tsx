@@ -1,10 +1,12 @@
+/** @jsx jsx */
+import { css, jsx } from "@emotion/core";
 import React from "react";
 
 import ReactMarkdown from "react-markdown";
 
 import { Dispatch, iRootState } from "@/store";
 import { useDispatch, useSelector } from "react-redux";
-import { Icon } from "semantic-ui-react";
+import { Button, Icon } from "semantic-ui-react";
 
 import styled from "@emotion/styled";
 
@@ -12,9 +14,9 @@ import supporters from "raw-loader!../../../../SUPPORTERS.md";
 
 import { ExternalLink as A } from "@/components/ExternalLink";
 import { FormContainer } from "@/components/Form";
-import { Labelled } from "@/components/Labelled";
-import { needsUpdate } from "@/lib/checkForUpdates";
+import { needsUpdate } from "common/checkForUpdates";
 import clippiLogo from "../../../../build/icon.png";
+import { installUpdateAndRestart, openUrl } from "@/lib/utils";
 
 const Container = styled(FormContainer)`
   text-align: center;
@@ -56,18 +58,17 @@ const Logo = styled.img<{
 `;
 
 const UpdateInfo = styled.h3`
-  a {
-    color: red;
-    font-size: 1.2em;
-  }
-  padding: 1rem 0;
+  padding: 2rem 0;
 `;
 
 const DEV_THRESHOLD = 7;
 
 export const InfoView: React.FC = () => {
   const [clickCount, setClickCount] = React.useState(0);
-  const { isDev, latestVersion } = useSelector((state: iRootState) => state.appContainer);
+  const isDev = useSelector((state: iRootState) => state.appContainer.isDev);
+  const latestVersion = useSelector((state: iRootState) => state.appContainer.latestVersion);
+  const updateDownloaded = useSelector((state: iRootState) => state.tempContainer.updateDownloaded);
+
   const dispatch = useDispatch<Dispatch>();
   const updateAvailable = needsUpdate(latestVersion);
   const handleLogoClick = () => {
@@ -78,6 +79,14 @@ export const InfoView: React.FC = () => {
       setClickCount(0);
     }
   };
+  const handleUpdateAction = () => {
+    if (updateDownloaded) {
+      installUpdateAndRestart();
+    } else {
+      openUrl("https://github.com/vinceau/project-clippi/releases/latest");
+    }
+  };
+  const updateMessage = updateDownloaded ? "ready to be installed" : "available";
   return (
     <Container>
       <Logo isDev={isDev} src={clippiLogo} onClick={handleLogoClick} />
@@ -85,11 +94,21 @@ export const InfoView: React.FC = () => {
       <Content>
         {updateAvailable && (
           <UpdateInfo>
-            <A href="https://github.com/vinceau/project-clippi/releases/latest">
-              <Labelled title="Open releases page">
-                <Icon name="exclamation triangle" /> New update available!
-              </Labelled>
-            </A>
+            <div
+              css={css`
+                color: red;
+                font-size: 1.2em;
+              `}
+            >
+              <Icon name="exclamation triangle" /> An update to v{latestVersion} {updateMessage}!
+            </div>
+            <div
+              css={css`
+                padding-top: 1rem;
+              `}
+            >
+              <Button onClick={handleUpdateAction}>{updateDownloaded ? "Restart now" : "Open releases page"}</Button>
+            </div>
           </UpdateInfo>
         )}
         <p>
