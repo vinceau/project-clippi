@@ -1,5 +1,5 @@
 import { App } from "electron";
-import { checkForUpdates } from "./updater";
+import { checkForUpdatesFromMenu } from "./updater";
 
 export const getMenuTemplate = (app: App, platform: string): Electron.MenuItemConstructorOptions[] => {
   const menuItems: Electron.MenuItemConstructorOptions[] = [];
@@ -9,7 +9,7 @@ export const getMenuTemplate = (app: App, platform: string): Electron.MenuItemCo
     submenu: [
       {
         label: "Check for Updates...",
-        click: checkForUpdates,
+        click: checkForUpdatesFromMenu,
       },
       {
         label: "Quit",

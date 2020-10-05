@@ -7,6 +7,7 @@ import ReactMarkdown from "react-markdown";
 import { Dispatch, iRootState } from "@/store";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Icon } from "semantic-ui-react";
+import { darken, lighten } from "polished";
 
 import styled from "@emotion/styled";
 
@@ -16,7 +17,8 @@ import { ExternalLink as A } from "@/components/ExternalLink";
 import { FormContainer } from "@/components/Form";
 import { needsUpdate } from "common/checkForUpdates";
 import clippiLogo from "../../../../build/icon.png";
-import { installUpdateAndRestart, openUrl } from "@/lib/utils";
+import { checkForNewUpdates, installUpdateAndRestart, openUrl } from "@/lib/utils";
+import { ThemeMode, useTheme } from "@/styles";
 
 const Container = styled(FormContainer)`
   text-align: center;
@@ -57,13 +59,24 @@ const Logo = styled.img<{
 `}
 `;
 
-const UpdateInfo = styled.h3`
-  padding: 2rem 0;
+const UpdateInfo = styled.div<{
+  themeName: string;
+}>`
+  max-width: 50rem;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  background-color: ${(p) => {
+    const adjust = p.themeName === ThemeMode.DARK ? lighten : darken;
+    return adjust(0.05, p.theme.background);
+  }};
+  margin-left: auto;
+  margin-right: auto;
 `;
 
 const DEV_THRESHOLD = 7;
 
 export const InfoView: React.FC = () => {
+  const theme = useTheme();
   const [clickCount, setClickCount] = React.useState(0);
   const isDev = useSelector((state: iRootState) => state.appContainer.isDev);
   const latestVersion = useSelector((state: iRootState) => state.appContainer.latestVersion);
@@ -92,8 +105,13 @@ export const InfoView: React.FC = () => {
       <Logo isDev={isDev} src={clippiLogo} onClick={handleLogoClick} />
       <h1>Project Clippi v{__VERSION__}</h1>
       <Content>
-        {updateAvailable && (
-          <UpdateInfo>
+        <p>
+          Commit {__BUILD__}
+          <br />
+          {__DATE__}
+        </p>
+        {updateAvailable ? (
+          <UpdateInfo themeName={theme.themeName}>
             <div
               css={css`
                 color: red;
@@ -110,12 +128,11 @@ export const InfoView: React.FC = () => {
               <Button onClick={handleUpdateAction}>{updateDownloaded ? "Restart now" : "Open releases page"}</Button>
             </div>
           </UpdateInfo>
+        ) : (
+          <div>
+            <Button onClick={checkForNewUpdates}>Check for updates</Button>
+          </div>
         )}
-        <p>
-          Commit {__BUILD__}
-          <br />
-          {__DATE__}
-        </p>
         <div style={{ paddingTop: "2rem" }}>
           <p>
             Made with love by <A href="https://twitter.com/_vinceau">Vincent Au</A> and{" "}

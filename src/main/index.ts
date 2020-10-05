@@ -1,5 +1,6 @@
 import * as path from "path";
 
+import log from "electron-log";
 import { app, BrowserWindow, Menu, shell, Event } from "electron";
 import { format as formatUrl } from "url";
 import { setupListeners } from "./listeners";
@@ -10,6 +11,7 @@ import { isDevelopment } from "../common/utils";
 import contextMenu from "electron-context-menu";
 import { getMenuTemplate } from "./menu";
 import { getCurrentTheme } from "./lib/toggleTheme";
+import { checkForUpdates } from "./updater";
 
 contextMenu();
 
@@ -87,6 +89,9 @@ const startUp = () => {
     event.preventDefault();
     shell.openExternal(url);
   });
+
+  // Check for updates
+  checkForUpdates(true).catch((err) => log.error(err));
 };
 
 if (isDevelopment) {

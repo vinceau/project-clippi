@@ -5,6 +5,7 @@ import { openFileSystemDialog } from "./lib/fileSystem";
 import { showNotification } from "./lib/notifications";
 import { twitchController } from "./lib/twitch";
 import { toggleTheme } from "./lib/toggleTheme";
+import { checkForUpdates } from "./updater";
 
 export const setupListeners = (ipc: IPC): void => {
   ipc.on(Message.AuthenticateTwitch, async (value, _error?: Error) => {
@@ -94,6 +95,14 @@ export const setupListeners = (ipc: IPC): void => {
 
     const { title, message } = value;
     showNotification(message, title);
+  });
+
+  ipc.on(Message.CheckForUpdates, async (_, _error?: Error) => {
+    if (_error) {
+      throw new Error("Should not have received error");
+    }
+
+    await checkForUpdates(true);
   });
 
   ipc.on(Message.ToggleTheme, (value, _error?: Error) => {

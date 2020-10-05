@@ -20,6 +20,7 @@ export enum Message {
   SelectDirectory = "selectDirectory",
   ToggleTheme = "toggleTheme",
   SetLatestVersion = "latestVersion",
+  CheckForUpdates = "checkForUpdates",
   SetUpdateDownloadComplete = "updateDownloadComplete",
   InstallUpdateAndRestart = "installUpdateAndRestart",
 }
@@ -35,6 +36,8 @@ export type ResponseType<X extends Message> =
     : X extends Message.Notify
     ? void
     : X extends Message.ToggleTheme
+    ? void // Return nothing to renderer
+    : X extends Message.CheckForUpdates
     ? void // Return nothing to renderer
     : X extends Message.SelectDirectory
     ? string[] // main to renderer

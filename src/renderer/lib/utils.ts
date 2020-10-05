@@ -58,6 +58,10 @@ export const installUpdateAndRestart = () => {
   ipc.sendMessage(Message.InstallUpdateAndRestart);
 };
 
+export const checkForNewUpdates = () => {
+  ipc.sendMessage(Message.CheckForUpdates);
+};
+
 // see https://github.com/electron-userland/electron-webpack/issues/99#issuecomment-459251702
 export const getStatic = (val: string): string => {
   if (isDevelopment) {

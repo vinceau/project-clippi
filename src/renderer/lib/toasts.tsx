@@ -18,3 +18,19 @@ export const toastProcessingError = (errorMessage: string): void => {
     closeOnClick: false,
   });
 };
+
+export const toastDownloadComplete = (version: string): void => {
+  toast.error(<div>Update to version {version} available. Restart?</div>, {
+    autoClose: false,
+    toastId: "update-download-complete",
+    closeOnClick: false,
+  });
+};
+
+export const toastNewUpdateAvailable = (version: string): void => {
+  toast.error(<div>New update to v{version} is available!</div>, {
+    autoClose: false,
+    toastId: "new-update-available",
+    closeOnClick: false,
+  });
+};

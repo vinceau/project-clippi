@@ -8,7 +8,7 @@ const octokit = new Octokit();
 /**
  * Returns the latest version on Github.
  *
- * The version string is v prefixed. e.g. v1.2.3
+ * The version string without a v prefix. e.g. 1.2.3
  * @export
  * @param {string} owner The owner of the repo
  * @param {string} repo The repo name
@@ -16,7 +16,8 @@ const octokit = new Octokit();
  */
 export async function getLatestVersion(owner: string, repo: string): Promise<string> {
   const release = await octokit.repos.getLatestRelease({ owner, repo });
-  return release.data.tag_name;
+  const version = release.data.tag_name;
+  return semver.clean(version) as string;
 }
 
 export async function updateAvailable(owner: string, repo: string): Promise<boolean> {
