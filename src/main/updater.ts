@@ -13,6 +13,7 @@ import { getLatestVersion, needsUpdate } from "common/checkForUpdates";
 
 // import Store from "electron-store";
 import { Message } from "common/types";
+import { isDevelopment } from "common/utils";
 
 // const store = new Store();
 
@@ -43,6 +44,7 @@ function updateDownloadComplete() {
 
 class UpdateChecker {
   private giveFeedback = false;
+  private autoUpdatesEnabled = process.platform === "win32" && !isDevelopment;
 
   public async checkForUpdates(giveFeedback?: boolean): Promise<void> {
     console.log("checking for updates...");
@@ -50,7 +52,7 @@ class UpdateChecker {
 
     let latest: string;
     // Only auto updates are supported in Windows
-    if (process.platform === "win32") {
+    if (this.autoUpdatesEnabled) {
       console.log("on windows so using built in auto updater...");
       latest = await checkAutoUpdateAvailable();
     } else {
@@ -68,7 +70,7 @@ class UpdateChecker {
     }
 
     // We need to update
-    if (process.platform === "win32") {
+    if (this.autoUpdatesEnabled) {
       // Only auto-download if it's a patch version
       const versionChangeType = diff(pkg.version, latest);
       if (versionChangeType === "patch") {
