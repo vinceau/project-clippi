@@ -168,8 +168,8 @@ export const tempContainer = createModel({
     setDolphinQueueFromJson: (state: TempContainerState, payload: DolphinQueueFormat): TempContainerState => {
       const { queue, ...rest } = payload;
       return produce(state, (draft) => {
-        draft.dolphinQueueOptions = rest;
-        draft.dolphinQueue = queue;
+        draft.dolphinQueueOptions = Object.assign({}, state.dolphinQueueOptions, rest);
+        draft.dolphinQueue = queue || [];
       });
     },
     resetDolphinQueue: (state: TempContainerState): TempContainerState =>
