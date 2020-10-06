@@ -120,10 +120,10 @@
       "category": "public.app-category.lifestyle"
     },
     "win": {
-      "icon": "build/icon.ico",
       "target": [
         "nsis"
-      ]
+      ],
+      "icon": "build/icon.ico"
     },
     "linux": {
       "target": [
