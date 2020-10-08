@@ -30,7 +30,7 @@ export const AutomatorPlaceholder: React.FC = () => {
   const theme = useTheme();
   return (
     <Outer themeName={theme.themeName}>
-      <Icon size="huge" name="flag outline" />
+      <Icon size="huge" name="flag" />
       <Notice>
         <h2>No events added</h2>
         <p>Add an event to get started</p>
