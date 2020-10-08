@@ -42,7 +42,6 @@ export const getFilePath = async (options?: any, save?: boolean): Promise<string
     );
     return p;
   } catch (err) {
-    console.error(err);
     return null;
   }
 };

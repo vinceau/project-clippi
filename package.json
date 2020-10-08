@@ -31,6 +31,7 @@
     "@vinceau/event-actions": "^0.0.4",
     "@vinceau/slp-realtime": "^3.1.0-beta.1",
     "electron-context-menu": "^0.15.1",
+    "electron-log": "^4.2.4",
     "electron-store": "^5.1.1",
     "emotion-theming": "^10.0.27",
     "fast-glob": "^3.1.1",

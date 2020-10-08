@@ -1,3 +1,4 @@
+import log from "electron-log";
 import path from "path";
 
 import Worker from "worker-loader!common/workers/fileProcessor.worker";
@@ -92,7 +93,7 @@ const handleComplete = (payload: CompletePayload): void => {
   // Check if we need to load the combo file into Dolphin after generation
   if (options.findComboOption && numCombos > 0 && openCombosWhenDone && options.outputFile) {
     openComboInDolphin(options.outputFile).catch((err) => {
-      console.error(err);
+      log.error(err);
       notify("Error loading Dolphin. Ensure you have the Slippi Desktop app installed and try again.");
     });
   } else {

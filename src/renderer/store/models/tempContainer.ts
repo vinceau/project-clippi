@@ -195,11 +195,9 @@ export const tempContainer = createModel({
   effects: (dispatch) => ({
     async loadDolphinQueue() {
       const dolphinQueue = await loadDolphinQueue();
-      if (!dolphinQueue) {
-        console.error("Couldn't load dolphin queue");
-        return;
+      if (dolphinQueue) {
+        dispatch.tempContainer.setDolphinQueueFromJson(dolphinQueue);
       }
-      dispatch.tempContainer.setDolphinQueueFromJson(dolphinQueue);
     },
     async addFileToDolphinQueue() {
       const p = await getFilePath(
