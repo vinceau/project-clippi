@@ -1,3 +1,4 @@
+import log from "electron-log";
 import produce from "immer";
 
 import { createModel } from "@rematch/core";
@@ -96,7 +97,7 @@ export const slippi = createModel({
         console.log(`connecting on port: ${port}`);
         await streamManager.connectToSlippi("0.0.0.0", parseInt(port, 10));
       } catch (err) {
-        console.error(err);
+        log.error(err);
         notify(`Failed to connect to port ${port}! Is the relay running?`);
       }
       dispatch.slippi.setPort(port);
@@ -105,7 +106,7 @@ export const slippi = createModel({
       try {
         await streamManager.connectToSlippi("127.0.0.1", Ports.DEFAULT, "dolphin");
       } catch (err) {
-        console.error(err);
+        log.error(err);
         notify(`Failed to connect to Dolphin! Is Slippi Dolphin running?`);
       }
     },

@@ -8,6 +8,7 @@ import {
   EventManagerConfig,
 } from "@vinceau/slp-realtime";
 
+import log from "electron-log";
 import { dispatcher } from "@/store";
 <<<<<<< HEAD
 import {
@@ -172,6 +173,9 @@ class SlpStreamManager {
   ): Promise<void> {
     console.log(`attempt to connect to slippi on port: ${slpPort}`);
     const stream = new SlpLiveStream(type);
+    stream.connection.on(ConnectionEvent.ERROR, (err) => {
+      log.error(err);
+    });
     stream.connection.once(ConnectionEvent.CONNECT, () => {
       dispatcher.tempContainer.setSlippiConnectionType(type);
       const connType = type === "dolphin" ? "Slippi Dolphin" : "Slippi relay";
