@@ -17,6 +17,7 @@ export const ComboFinder: React.FC = () => {
   const {
     openCombosWhenDone,
     includeSubFolders,
+    makeItPortable,
     deleteFilesWithNoCombos,
     renameFiles,
     findCombos,
@@ -28,6 +29,7 @@ export const ComboFinder: React.FC = () => {
   const setRenameFiles = (checked: boolean) => dispatch.highlights.setRenameFiles(checked);
   const setFindCombos = (checked: boolean) => dispatch.highlights.setFindCombos(checked);
   const onSubfolder = (checked: boolean) => dispatch.highlights.setIncludeSubFolders(checked);
+  const onSetPortable = (checked: boolean) => dispatch.highlights.setPortable(checked);
   const onSetDeleteFiles = (checked: boolean) => dispatch.highlights.setFileDeletion(checked);
   const onSetOpenCombosWhenDone = (checked: boolean) => dispatch.highlights.setOpenCombosWhenDone(checked);
   const setCombosFilePath = (p: string) => {
@@ -64,6 +66,13 @@ export const ComboFinder: React.FC = () => {
                 fileTypeFilters={[{ name: "JSON files", extensions: ["json"] }]}
               />
             </div>
+            <Form.Field>
+              <Checkbox
+                label="Make it portable for distributability"
+                checked={makeItPortable}
+                onChange={(_, data) => onSetPortable(Boolean(data.checked))}
+              />
+            </Form.Field>
             <Form.Field>
               <Checkbox
                 label="Delete files with no highlights"

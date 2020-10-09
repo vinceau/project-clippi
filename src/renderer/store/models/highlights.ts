@@ -7,6 +7,7 @@ export const defaultRenameFormat =
   "{{YY}}{{MM}}{{DD}}_{{HH}}{{mm}}_{{playerShortChar}}_v_{{opponentShortChar}}_({{shortStage}}).slp";
 
 export interface HighlightState {
+  makeItPortable: boolean;
   includeSubFolders: boolean;
   deleteFilesWithNoCombos: boolean;
   findCombos: boolean;
@@ -18,6 +19,7 @@ export interface HighlightState {
 }
 
 export const highlightInitialState: HighlightState = {
+  makeItPortable: false,
   includeSubFolders: false,
   deleteFilesWithNoCombos: false,
   findCombos: true,
@@ -38,6 +40,10 @@ export const highlights = createModel({
     setHighlightMethod: (state: HighlightState, payload: FindComboOption): HighlightState =>
       produce(state, (draft) => {
         draft.highlightMethod = payload;
+      }),
+    setPortable: (state: HighlightState, payload: boolean): HighlightState =>
+      produce(state, (draft) => {
+        draft.makeItPortable = payload;
       }),
     setIncludeSubFolders: (state: HighlightState, payload: boolean): HighlightState =>
       produce(state, (draft) => {
