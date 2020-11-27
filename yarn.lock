@@ -2881,6 +2881,21 @@ combined-stream@^1.0.6, combined-stream@~1.0.6:
   dependencies:
     delayed-stream "~1.0.0"
 
+comlink-loader@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/comlink-loader/-/comlink-loader-2.0.0.tgz#a1f4b59a6bdb9b774f4d51dd90324d3844a0ee62"
+  integrity sha512-106/k0JSssSCo2QO4ucbgbyWsb2zAEOSXFAVH2A+EO8kOz3n2BkvmkToxsoo+SWKUIKy8qubhAOLCS5mpFUvHw==
+  dependencies:
+    comlink "^4.2.0"
+    loader-utils "^1.1.0"
+    slash "^3.0.0"
+    worker-loader "^2.0.0"
+
+comlink@^4.2.0:
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/comlink/-/comlink-4.3.0.tgz#80b3366baccd87897dab3638ebfcfae28b2f87c7"
+  integrity sha512-mu4KKKNuW8TvkfpW/H88HBPeILubBS6T94BdD1VWBXNXfiyqVtwUCVNO1GeNOBTsIswzsMjWlycYr+77F5b84g==
+
 commander@^2.20.0:
   version "2.20.3"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.20.3.tgz#fd485e84c03eb4881c20722ba48035e8531aeb33"
