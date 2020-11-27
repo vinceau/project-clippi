@@ -30,6 +30,7 @@
     "@slippi/slippi-js": "^5.1.1",
     "@vinceau/event-actions": "^0.0.4",
     "@vinceau/slp-realtime": "^3.1.0-beta.3",
+    "comlink": "^4.2.0",
     "electron-context-menu": "^0.15.1",
     "electron-log": "^4.2.4",
     "electron-store": "^5.1.1",
@@ -87,6 +88,7 @@
     "@types/semver": "^7.1.0",
     "@typescript-eslint/eslint-plugin": "^3.0.0",
     "@typescript-eslint/parser": "^3.0.0",
+    "comlink-loader": "^2.0.0",
     "electron": "7.3.3",
     "electron-builder": "22.5.1",
     "electron-webpack": "^2.8.2",
@@ -105,8 +107,7 @@
     "ts-unused-exports": "^6.1.2",
     "typescript": "^3.3.3333",
     "webpack": "4.44.1",
-    "webpack-build-notifier": "^0.1.30",
-    "worker-loader": "^2.0.0"
+    "webpack-build-notifier": "^0.1.30"
   },
   "electronWebpack": {
     "renderer": {

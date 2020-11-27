@@ -1,46 +1,23 @@
 import log from "electron-log";
 import path from "path";
 
-import Worker from "worker-loader!common/workers/fileProcessor.worker";
+import * as Comlink from "comlink";
 
-import { dispatcher, store } from "@/store";
-import { FileProcessorOptions, ComboOptions } from "common/fileProcessor";
-import { secondsToString } from "common/utils";
 import {
   CompletePayload,
-  FileProcessorParentMessage,
-  FileProcessorWorkerMessage,
+  fileProcessorIsBusy,
   ProgressingPayload,
-  ErrorPayload,
-} from "common/workers/fileProcessor.worker.types";
+  startFileProcessor,
+  stopFileProcessor,
+} from "@/workers/fileProcessor.worker";
+
+import { dispatcher, store } from "@/store";
+import { secondsToString } from "common/utils";
 import { openComboInDolphin } from "./dolphin";
 import { notify } from "./utils";
 import { toastProcessingError } from "./toasts";
 import { shell } from "electron";
-
-const worker = new Worker();
-
-worker.onmessage = (event) => {
-  console.log(`got message from worker! payload:`);
-  console.log(event.data);
-  const eventType = event.data.type as FileProcessorWorkerMessage;
-  switch (eventType) {
-    case FileProcessorWorkerMessage.PROGRESS:
-      const progressPayload: ProgressingPayload = event.data.payload;
-      handleProgress(progressPayload);
-      break;
-    case FileProcessorWorkerMessage.BUSY:
-      break;
-    case FileProcessorWorkerMessage.ERROR:
-      const errorPayload: ErrorPayload = event.data.payload;
-      handleError(errorPayload);
-      break;
-    case FileProcessorWorkerMessage.COMPLETE:
-      const completePayload: CompletePayload = event.data.payload;
-      handleComplete(completePayload);
-      break;
-  }
-};
+import { ComboOptions, FileProcessorOptions } from "common/fileProcessor";
 
 const handleProgress = (payload: ProgressingPayload): void => {
   const { result, total, filename, options, index } = payload;
@@ -101,27 +78,35 @@ const handleComplete = (payload: CompletePayload): void => {
   }
 };
 
-const handleError = (payload: ErrorPayload): void => {
-  const { message } = payload;
+const handleError = (message: string): void => {
   dispatcher.tempContainer.setComboFinderProcessing(false);
   notify(message, "An error occurred during processing");
   toastProcessingError(message);
 };
 
-export const startProcessing = (options: FileProcessorOptions): void => {
-  console.log(options);
+export const startProcessing = async (options: FileProcessorOptions): Promise<void> => {
+  // Ensure we're not already in the middle of processing
+  const isBusy = await fileProcessorIsBusy();
+  if (isBusy) {
+    return;
+  }
+
+  console.log("Starting file processing with these options: ", options);
+
   // Reset processing state
   dispatcher.tempContainer.setPercent(0);
   dispatcher.tempContainer.setComboLog("");
   dispatcher.tempContainer.setComboFinderProcessing(true);
-  worker.postMessage({
-    type: FileProcessorParentMessage.START,
-    payload: { options },
-  });
+
+  try {
+    const result = await startFileProcessor(options, Comlink.proxy(handleProgress));
+    handleComplete(result);
+  } catch (err) {
+    console.error(err);
+    handleError(err.message);
+  }
 };
 
-export const stopProcessing = (): void => {
-  worker.postMessage({
-    type: FileProcessorParentMessage.STOP,
-  });
+export const stopProcessing = async (): Promise<void> => {
+  await stopFileProcessor();
 };
