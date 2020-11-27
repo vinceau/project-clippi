@@ -61,16 +61,7 @@ export const EventItem: React.FC<EventItemProps> = ({ event, onClick, selected, 
       >
         <Icon name={disabled ? "window close" : "flag"} />
       </div>
-      <div
-        css={
-          disabled &&
-          css`
-            text-decoration: line-through;
-          `
-        }
-      >
-        {eventName}
-      </div>
+      <div>{eventName}</div>
     </Outer>
   );
 };
