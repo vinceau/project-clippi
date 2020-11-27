@@ -31,13 +31,11 @@ const recordingOptions = {
   },
 };
 
-const Outer = styled.div<{
-  isDev: boolean;
-}>`
+const Outer = styled.div`
   display: flex;
   flex-grow: 1;
   flex-direction: row;
-  justify-content: ${({ isDev }) => (isDev ? "space-between" : "flex-end")};
+  justify-content: space-between;
   align-items: center;
 `;
 
@@ -51,7 +49,6 @@ const StopButton = styled(Button)`
 export const OBSStatusBar: React.FC = () => {
   const history = useHistory();
   const { recordSeparateClips } = useSelector((state: iRootState) => state.filesystem);
-  const { showDevOptions } = useSelector((state: iRootState) => state.appContainer);
   const { obsConnectionStatus, obsRecordingStatus, dolphinQueue, dolphinPlaybackFile, dolphinRunning } = useSelector(
     (state: iRootState) => state.tempContainer
   );
@@ -99,19 +96,17 @@ export const OBSStatusBar: React.FC = () => {
     : "Record all items together as a single video";
   const options = Object.entries(recordingOptions).map(([key, val]) => ({ ...val, value: key }));
   return (
-    <Outer isDev={showDevOptions}>
-      {showDevOptions && (
-        <ConnectionStatusDisplay
-          icon={obsLogo}
-          iconHoverText="Open OBS settings"
-          onIconClick={() => history.push("/settings/obs-settings")}
-          headerText={headerText}
-          shouldPulse={obsIsRecording}
-          color={color}
-        >
-          {innerText}
-        </ConnectionStatusDisplay>
-      )}
+    <Outer>
+      <ConnectionStatusDisplay
+        icon={obsLogo}
+        iconHoverText="Open OBS settings"
+        onIconClick={() => history.push("/settings/obs-settings")}
+        headerText={headerText}
+        shouldPulse={obsIsRecording}
+        color={color}
+      >
+        {innerText}
+      </ConnectionStatusDisplay>
       <div>
         {dolphinRunning ? (
           <StopButton type="button" onClick={onStop}>
@@ -120,20 +115,18 @@ export const OBSStatusBar: React.FC = () => {
           </StopButton>
         ) : (
           <>
-            {showDevOptions && (
-              <Labelled title={recordingButtonTitle} disabled={!recordButtonDisabled}>
-                <RecordButton
-                  onClick={onRecord}
-                  disabled={recordButtonDisabled}
-                  onChange={onRecordChange}
-                  value={recordValue}
-                  options={options}
-                >
-                  <Icon name="circle" />
-                  {recordButtonText}
-                </RecordButton>
-              </Labelled>
-            )}
+            <Labelled title={recordingButtonTitle} disabled={!recordButtonDisabled}>
+              <RecordButton
+                onClick={onRecord}
+                disabled={recordButtonDisabled}
+                onChange={onRecordChange}
+                value={recordValue}
+                options={options}
+              >
+                <Icon name="circle" />
+                {recordButtonText}
+              </RecordButton>
+            </Labelled>
             <Button primary={true} onClick={onPlay} disabled={dolphinQueue.length === 0}>
               <Icon name="play" />
               Play
