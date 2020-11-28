@@ -89,7 +89,7 @@ export class DolphinRecorder extends DolphinLauncher {
 
   public currentBasename$: Observable<string>;
 
-  public constructor(options?: any) {
+  public constructor(options?: Partial<DolphinLauncherOptions>) {
     super(options);
     this.recordOptions = Object.assign({}, defaultDolphinRecorderOptions);
 
