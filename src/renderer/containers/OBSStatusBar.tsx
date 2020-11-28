@@ -83,7 +83,7 @@ export const OBSStatusBar: React.FC = () => {
     color = obsRecordingStatus === OBSRecordingStatus.STOPPED ? "#00E461" : "#F30807";
   }
   const headerText = displayOBSStatus(obsConnectionStatus, obsRecordingStatus);
-  const innerText = dolphinPlaybackFile ? dolphinPlaybackFile : "No file playing";
+  const innerText = dolphinPlaybackFile ? `Playing: ${dolphinPlaybackFile}` : "No file playing";
 
   const obsIsRecording = obsRecordingStatus === OBSRecordingStatus.RECORDING;
   const recordButtonDisabled = !obsIsConnected || obsIsRecording;
