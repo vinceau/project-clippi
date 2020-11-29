@@ -213,7 +213,8 @@ const validDolphinExecutable = async (): Promise<string> => {
   const dolphinParentPath = isDev || !isMacOrWindows ? dolphinPath : undefined;
 
   try {
-    return getDolphinExecutablePath(dolphinParentPath);
+    const dolpinExec = await getDolphinExecutablePath(dolphinParentPath);
+    return dolpinExec;
   } catch (err) {
     toastNoDolphin();
     throw new Error(`Dolphin executables not found at path: ${dolphinParentPath}`);
