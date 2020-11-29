@@ -49,24 +49,33 @@ export const getDolphinPath = (): string => {
   return "";
 };
 
-export const getDolphinExecutableName = (): string => {
+export const getDolphinExecutableNames = (): string[] => {
   switch (process.platform) {
     case "win32":
-      return "Dolphin.exe";
+      return ["Dolphin.exe"];
     case "darwin":
-      return "Dolphin.app";
+      return ["Slippi Dolphin.app", "Dolphin.app"];
+    case "linux":
+      return ["Slippi_Playback-x86_64.AppImage", "dolphin-emu"];
     default:
-      return "dolphin-emu";
+      return [];
   }
 };
 
-const getDolphinExecutablePath = (parent?: string): string => {
+const getDolphinExecutablePath = async (parent?: string): Promise<string> => {
   const dolphinPath = parent ? parent : getDolphinPath();
-  const dolphinExec = path.join(dolphinPath, getDolphinExecutableName());
-  if (process.platform === "darwin") {
-    return path.join(dolphinExec, "Contents", "MacOS", "Dolphin");
+  const execNames = getDolphinExecutableNames();
+  for (const name of execNames) {
+    let dolphinExec = path.join(dolphinPath, name);
+    if (process.platform === "darwin") {
+      dolphinExec = path.join(dolphinExec, "Contents", "MacOS", "Dolphin");
+    }
+    const dolphinExists = await fs.pathExists(dolphinExec);
+    if (dolphinExists) {
+      return dolphinExec;
+    }
   }
-  return dolphinExec;
+  throw new Error("Could not find executable Dolphin");
 };
 
 export class DolphinRecorder extends DolphinLauncher {
@@ -202,14 +211,13 @@ const validDolphinExecutable = async (): Promise<string> => {
   const { dolphinPath } = store.getState().filesystem;
   const { isDev } = store.getState().appContainer;
   const dolphinParentPath = isDev || !isMacOrWindows ? dolphinPath : undefined;
-  const dolphinExec = getDolphinExecutablePath(dolphinParentPath);
-  const dolphinExists = await fs.pathExists(dolphinExec);
 
-  if (!dolphinExists) {
+  try {
+    return getDolphinExecutablePath(dolphinParentPath);
+  } catch (err) {
     toastNoDolphin();
-    throw new Error(`Dolphin executable doesn't exist at path: ${dolphinExec}`);
+    throw new Error(`Dolphin executables not found at path: ${dolphinParentPath}`);
   }
-  return dolphinExec;
 };
 
 export const openComboInDolphin = async (

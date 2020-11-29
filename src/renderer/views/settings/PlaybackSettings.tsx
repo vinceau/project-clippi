@@ -3,7 +3,7 @@ import React from "react";
 import { FileInput } from "@/components/FileInput";
 
 import { Field, FormContainer, Label, PageHeader, Text } from "@/components/Form";
-import { getDolphinExecutableName, getDolphinPath } from "@/lib/dolphin";
+import { getDolphinExecutableNames, getDolphinPath } from "@/lib/dolphin";
 import { Dispatch, iRootState } from "@/store";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -28,6 +28,23 @@ const ResetButton = styled.span`
 `;
 
 const defaultDolphinPath = getDolphinPath();
+const dolphinExecNames = getDolphinExecutableNames();
+
+const PlaybackExecutableNames: React.FC = () => {
+  const elements: React.ReactNode[] = [];
+  dolphinExecNames.forEach((el, i) => {
+    if (i > 0 && i === dolphinExecNames.length - 1) {
+      // This is the last element
+      elements.push(<> or </>);
+    }
+    elements.push(<i>{el}</i>);
+    if (i < dolphinExecNames.length - 2) {
+      // If have more than one element left to come
+      elements.push(<>, </>);
+    }
+  });
+  return React.createElement(React.Fragment, null, ...elements);
+};
 
 export const PlaybackSettings: React.FC = () => {
   const dispatch = useDispatch<Dispatch>();
@@ -61,9 +78,9 @@ export const PlaybackSettings: React.FC = () => {
           </DolphinPathLabel>
           <FileInput value={dolphinPath} directory={true} onChange={setDolphinPath} />
           <Text>
-            The folder containing the <b>{getDolphinExecutableName()}</b> playback executable. Do NOT modify this unless
-            you're using Linux or you <i>really</i> know what you're doing. This path should match the Playback Dolphin
-            Path in the Slippi Desktop App.
+            The folder containing the <PlaybackExecutableNames /> playback executable. Do NOT modify this unless you're
+            using Linux or you <i>really</i> know what you're doing. This path should match the Playback Dolphin Path in
+            the Slippi Desktop App.
           </Text>
         </Field>
       )}
