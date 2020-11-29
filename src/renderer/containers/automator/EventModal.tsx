@@ -104,7 +104,7 @@ export const EventModal: React.FC<{
 
   const eventType = watch("type");
   const filter = watch("filter");
-  const showPlayerOptions = eventType !== GameEvent.GAME_START && eventType !== GameEvent.GAME_END;
+  const showPlayerOptions = false; // eventType !== GameEvent.GAME_START && eventType !== GameEvent.GAME_END;
   const showButtonInputs = eventType === InputEvent.BUTTON_COMBO;
   const showComboProfileInput = eventType === ComboEvent.CONVERSION || eventType === ComboEvent.END;
   const headerText = edit === null ? "Create new event" : "Edit event";
