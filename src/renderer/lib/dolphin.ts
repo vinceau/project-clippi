@@ -68,7 +68,7 @@ const getDolphinExecutablePath = async (parent?: string): Promise<string> => {
   for (const name of execNames) {
     let dolphinExec = path.join(dolphinPath, name);
     if (process.platform === "darwin") {
-      dolphinExec = path.join(dolphinExec, "Contents", "MacOS", "Dolphin");
+      dolphinExec = path.join(dolphinExec, "Contents", "MacOS", onlyFilename(dolphinExec));
     }
     const dolphinExists = await fs.pathExists(dolphinExec);
     if (dolphinExists) {
