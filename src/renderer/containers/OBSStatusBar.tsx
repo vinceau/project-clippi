@@ -51,7 +51,7 @@ const StopButton = styled(Button)`
 export const OBSStatusBar: React.FC = () => {
   const history = useHistory();
   const { recordSeparateClips } = useSelector((state: iRootState) => state.filesystem);
-  const { isDev } = useSelector((state: iRootState) => state.appContainer);
+  const { showDevOptions } = useSelector((state: iRootState) => state.appContainer);
   const { obsConnectionStatus, obsRecordingStatus, dolphinQueue, dolphinPlaybackFile, dolphinRunning } = useSelector(
     (state: iRootState) => state.tempContainer
   );
@@ -99,8 +99,8 @@ export const OBSStatusBar: React.FC = () => {
     : "Record all items together as a single video";
   const options = Object.entries(recordingOptions).map(([key, val]) => ({ ...val, value: key }));
   return (
-    <Outer isDev={isDev}>
-      {isDev && (
+    <Outer isDev={showDevOptions}>
+      {showDevOptions && (
         <ConnectionStatusDisplay
           icon={obsLogo}
           iconHoverText="Open OBS settings"
@@ -120,7 +120,7 @@ export const OBSStatusBar: React.FC = () => {
           </StopButton>
         ) : (
           <>
-            {isDev && (
+            {showDevOptions && (
               <Labelled title={recordingButtonTitle} disabled={!recordButtonDisabled}>
                 <RecordButton
                   onClick={onRecord}

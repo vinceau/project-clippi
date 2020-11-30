@@ -13,7 +13,7 @@ const initialState: AppContainerState = {
 export const appContainer = createModel({
   state: initialState,
   reducers: {
-    setIsDev: (state: AppContainerState, payload: boolean): AppContainerState => {
+    setShowDevOptions: (state: AppContainerState, payload: boolean): AppContainerState => {
       return produce(state, (draft) => {
         draft.showDevOptions = payload;
       });

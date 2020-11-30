@@ -209,8 +209,8 @@ export const dolphinRecorder = new DolphinRecorder();
 
 const validDolphinExecutable = async (): Promise<string> => {
   const { dolphinPath } = store.getState().filesystem;
-  const { isDev } = store.getState().appContainer;
-  const dolphinParentPath = isDev || !IS_MAC_OR_WIN ? dolphinPath : undefined;
+  const { showDevOptions } = store.getState().appContainer;
+  const dolphinParentPath = showDevOptions || !IS_MAC_OR_WIN ? dolphinPath : undefined;
 
   try {
     const dolpinExec = await getDolphinExecutablePath(dolphinParentPath);

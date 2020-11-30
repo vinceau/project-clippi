@@ -80,7 +80,7 @@ export const InfoView: React.FC = () => {
     setClickCount(clickCount + 1);
     if (clickCount === DEV_THRESHOLD - 1) {
       console.log(showDevOptions ? "Disabling dev" : "Enabling dev");
-      dispatch.appContainer.setIsDev(!showDevOptions);
+      dispatch.appContainer.setShowDevOptions(!showDevOptions);
       setClickCount(0);
     }
   };
