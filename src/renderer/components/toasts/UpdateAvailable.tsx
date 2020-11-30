@@ -1,16 +1,22 @@
 import React from "react";
 
 import { autoUpdatesEnabled } from "common/utils";
-import { ExternalLink as A } from "../ExternalLink";
 import { downloadLatestUpdate } from "@/lib/utils";
+import { shell } from "electron";
 
 const LATEST_RELEASE_PAGE = "https://github.com/vinceau/project-clippi/releases/latest";
 
 export const UpdateAvailable: React.FC<{
   version: string;
+  dismiss: () => void;
 }> = (props) => {
   const startDownload = () => {
     downloadLatestUpdate();
+    props.dismiss();
+  };
+  const openReleases = () => {
+    shell.openExternal(LATEST_RELEASE_PAGE);
+    props.dismiss();
   };
   return (
     <div>
@@ -23,7 +29,7 @@ export const UpdateAvailable: React.FC<{
         {autoUpdatesEnabled ? (
           <button onClick={startDownload}>Download now</button>
         ) : (
-          <A href={LATEST_RELEASE_PAGE}>Show release</A>
+          <button onClick={openReleases}>Show release</button>
         )}
       </div>
     </div>

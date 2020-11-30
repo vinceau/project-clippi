@@ -29,9 +29,10 @@ export const toastDownloadComplete = (version: string): void => {
 };
 
 export const toastNewUpdateAvailable = (version: string): void => {
-  toast.info(<UpdateAvailable version={version} />, {
+  const toastId = "new-update-available";
+  toast.info(<UpdateAvailable version={version} dismiss={() => toast.dismiss(toastId)} />, {
     autoClose: false,
-    toastId: "new-update-available",
+    toastId,
     closeOnClick: false,
   });
 };
