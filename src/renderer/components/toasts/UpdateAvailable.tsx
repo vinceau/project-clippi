@@ -9,8 +9,7 @@ const LATEST_RELEASE_PAGE = "https://github.com/vinceau/project-clippi/releases/
 export const UpdateAvailable: React.FC<{
   version: string;
 }> = (props) => {
-  const startDownload = (e: any) => {
-    e.preventDefault();
+  const startDownload = () => {
     downloadLatestUpdate();
   };
   return (
@@ -18,17 +17,15 @@ export const UpdateAvailable: React.FC<{
       <h3>New update available</h3>
       <p>
         Project Clippi v{props.version} is now available.
-        {autoUpdatesEnabled ? (
-          <>
-            Would you like to download and install the update? <A onClick={startDownload}>(Download now)</A>
-          </>
-        ) : (
-          <>
-            Visit the releases page to download the latest update.{" "}
-            <A href={LATEST_RELEASE_PAGE}>(Show latest release)</A>
-          </>
-        )}
+        {autoUpdatesEnabled ? <> Download and install the update?</> : <> Visit the releases page to download.</>}
       </p>
+      <div className="buttons">
+        {autoUpdatesEnabled ? (
+          <button onClick={startDownload}>Download now</button>
+        ) : (
+          <A href={LATEST_RELEASE_PAGE}>Show release</A>
+        )}
+      </div>
     </div>
   );
 };

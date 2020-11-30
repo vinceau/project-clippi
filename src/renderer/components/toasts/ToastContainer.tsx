@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { css, jsx } from "@emotion/core";
 import React from "react";
 import { Slide, ToastContainer as TC } from "react-toastify";
 import styled from "@emotion/styled";
@@ -9,7 +11,7 @@ import successIcon from "@/styles/images/icons/success.svg";
 const CloseButton: React.FC<{
   closeToast?: () => void;
 }> = ({ closeToast }) => (
-  <span role="button" onClick={closeToast}>
+  <span role="button" className="close-button" onClick={closeToast}>
     ✕
   </span>
 );
@@ -17,27 +19,52 @@ const CloseButton: React.FC<{
 interface ToastTheme {
   primary: string;
   secondary: string;
+  icon: any;
 }
 
-const warnTheme: ToastTheme = {
-  primary: "rgb(191, 38, 0)",
-  secondary: "rgb(255, 235, 230)",
+const toastThemes: { [theme: string]: ToastTheme } = {
+  error: {
+    primary: "rgb(191, 38, 0)",
+    secondary: "rgb(255, 235, 230)",
+    icon: alertIcon,
+  },
+  info: {
+    primary: "rgb(38, 132, 255)",
+    secondary: "#daecff",
+    icon: infoIcon,
+  },
+  success: {
+    primary: "rgb(0, 102, 68)",
+    secondary: "#e3fcef",
+    icon: successIcon,
+  },
 };
 
-const infoTheme: ToastTheme = {
-  primary: "rgb(38, 132, 255)",
-  secondary: "#daecff",
-};
-
-const successTheme: ToastTheme = {
-  primary: "rgb(0, 102, 68)",
-  secondary: "#e3fcef",
+const getToastStyles = (themeName: string) => {
+  const { primary, secondary, icon } = toastThemes[themeName];
+  return css`
+    color: ${primary};
+    background: ${secondary};
+    &::before {
+      background-color: ${primary};
+    }
+    &::after {
+      background-color: ${secondary};
+      mask-image: url("${icon}");
+    }
+    .buttons a,
+    .buttons button {
+      background: ${primary};
+      color: ${secondary};
+    }
+    `;
 };
 
 const StyledToastContainer = styled(TC)`
   .Toastify__toast-container {
   }
   .Toastify__toast {
+    cursor: initial;
     min-height: 50px;
     border-radius: 4px;
     padding-left: 30px;
@@ -67,37 +94,13 @@ const StyledToastContainer = styled(TC)`
     }
   }
   .Toastify__toast--error {
-    color: ${warnTheme.primary};
-    background: ${warnTheme.secondary};
-    &::before {
-      background-color: ${warnTheme.primary};
-    }
-    &::after {
-      background-color: ${warnTheme.secondary};
-      mask-image: url("${alertIcon}");
-    }
+    ${getToastStyles("error")}
   }
   .Toastify__toast--info {
-    color: ${infoTheme.primary};
-    background: ${infoTheme.secondary};
-    &::before {
-      background-color: ${infoTheme.primary};
-    }
-    &::after {
-      background-color: ${infoTheme.secondary};
-      mask-image: url("${infoIcon}");
-    }
+    ${getToastStyles("info")}
   }
   .Toastify__toast--success {
-    color: ${successTheme.primary};
-    background: ${successTheme.secondary};
-    &::before {
-      background-color: ${successTheme.primary};
-    }
-    &::after {
-      background-color: ${successTheme.secondary};
-      mask-image: url("${successIcon}");
-    }
+    ${getToastStyles("success")}
   }
   .Toastify__toast-body {
     max-width: 100%;
@@ -112,6 +115,24 @@ const StyledToastContainer = styled(TC)`
   }
   a {
     text-decoration: underline;
+  }
+  .buttons {
+    text-align: right;
+    a,
+    button {
+      display: inline-block;
+      text-decoration: none;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 3px;
+      &:hover {
+        opacity: 0.8;
+      }
+      transition: opacity 0.2s ease-in-out;
+    }
+  }
+  .close-button {
+    cursor: pointer;
   }
 `;
 
