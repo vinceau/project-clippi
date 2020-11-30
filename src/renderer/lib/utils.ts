@@ -114,7 +114,3 @@ export const openFileOrParentFolder = (filename: string): void => {
     opened = shell.openItem(parentFolder);
   }
 };
-
-export const openUrl = (url: string) => {
-  shell.openExternal(url);
-};

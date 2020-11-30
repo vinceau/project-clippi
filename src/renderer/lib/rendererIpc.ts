@@ -9,11 +9,6 @@ export type IPCResponse<T> = [T, Error];
 
 export const ipc = new IPC(ipcRenderer, () => ipcRenderer);
 
-export async function getStoreValue(key: string): Promise<any> {
-  const val = await ipcRenderer.invoke("getStoreValue", key);
-  return val;
-}
-
 ipcRenderer.on(Message.VersionUpdateStatus, (_, payload: VersionUpdatePayload) => {
   dispatcher.tempContainer.setUpdateStatus(payload);
 
