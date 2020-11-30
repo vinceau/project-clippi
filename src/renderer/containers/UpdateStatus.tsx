@@ -34,16 +34,7 @@ export const UpdateStatusInfo: React.FC = () => {
         }
       `}
     >
-      {!updateAvailable && (
-        <Button
-          css={css`
-            margin: none;
-          `}
-          onClick={onUpdateCheckClick}
-        >
-          Check for updates
-        </Button>
-      )}
+      {!updateAvailable && <Button onClick={onUpdateCheckClick}>Check for updates</Button>}
       <div
         css={css`
           margin-top: 1rem;
@@ -69,14 +60,7 @@ export const UpdateStatusInfo: React.FC = () => {
             margin-top: 2rem;
           `}
         >
-          <Button
-            css={css`
-              margin: none;
-            `}
-            onClick={() => installUpdateAndRestart()}
-          >
-            Restart now
-          </Button>
+          <Button onClick={() => installUpdateAndRestart()}>Restart now</Button>
         </div>
       )}
     </div>
