@@ -32,6 +32,7 @@ import { parseFileRenameFormat } from "./context";
 import { assertExtension, millisToFrames } from "./utils";
 
 const SLP_FILE_EXT = ".slp";
+const REPLAYS_FOLDER_NAME = "replays";
 
 export enum FindComboOption {
   COMBOS = "COMBOS",
@@ -64,6 +65,7 @@ export interface FileProcessorOptions {
   filesPath: string;
   renameFiles: boolean;
   findComboOption?: FindComboOption;
+  portable: boolean;
   includeSubFolders?: boolean;
   outputFile?: string;
   renameTemplate?: string;
@@ -157,6 +159,7 @@ export class FileProcessor {
 
     let filesProcessed = 0;
     let totalErrors = 0;
+
     const entries = await fg(patterns, options);
     for (const [i, fn] of entries.entries()) {
       // Coerce slashes to match operating system. By default fast glob returns unix style paths.
@@ -195,6 +198,21 @@ export class FileProcessor {
     let totalCombos = 0;
     if (opts.findComboOption && opts.outputFile) {
       totalCombos = this.queue.length;
+
+      if (opts.portable && totalCombos > 0) {
+        // Create new directory for replays
+        const slpFolder = path.join(path.dirname(opts.outputFile as string), REPLAYS_FOLDER_NAME);
+        fs.mkdirSync(slpFolder);
+
+        // Copy file to replays folder and reassign path of payload
+        for (const item of this.queue) {
+          const replayName = path.basename(item.path);
+          const newPath = path.join(slpFolder, replayName);
+          fs.copyFileSync(item.path, newPath);
+          item.path = path.join(REPLAYS_FOLDER_NAME, path.basename(item.path));
+        }
+      }
+
       const payload = generateDolphinQueuePayload(this.queue);
       await fs.writeFile(opts.outputFile, payload);
       console.log(`Wrote ${totalCombos} out to ${opts.outputFile}`);

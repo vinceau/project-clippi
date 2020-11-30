@@ -1,5 +1,6 @@
 import React from "react";
 import fs from "fs";
+import path from "path";
 import styled from "@emotion/styled";
 
 import { iRootState } from "@/store";
@@ -43,11 +44,13 @@ const StopButton = styled(Button)`
 
 export const ProcessorStatusBar: React.FC = () => {
   const [confirmOpened, setConfirmOpened] = React.useState(false);
+  const [folderNotEmptyPortable, setFolderNotEmptyPortable] = React.useState(false);
   const { comboFinderPercent, comboFinderLog, comboFinderProcessing } = useSelector(
     (state: iRootState) => state.tempContainer
   );
   const { comboProfiles } = useSelector((state: iRootState) => state.slippi);
   const {
+    makeItPortable,
     includeSubFolders,
     deleteFilesWithNoCombos,
     renameFiles,
@@ -75,7 +78,22 @@ export const ProcessorStatusBar: React.FC = () => {
   const isInvalid = renameFiles && invalidFilename(renameFormat, { allowPaths: true });
   const processBtnDisabled = (!findCombos && !renameFiles) || !combosFilePath || !validButtonCombo || isInvalid;
 
+  const isDirEmpty = (dirname: string) => {
+    const files = fs.readdirSync(dirname);
+    return files.length === 0;
+  };
+
   const handleProcessClick = () => {
+    // Check if folder is empty and portable mode is on
+    try {
+      if (makeItPortable && !isDirEmpty(path.dirname(combosFilePath))) {
+        setFolderNotEmptyPortable(true);
+        return;
+      }
+    } catch (err) {
+      console.error(err);
+    }
+
     // Check if the output file already exists
     try {
       if (findCombos && fs.existsSync(combosFilePath)) {
@@ -123,6 +141,7 @@ export const ProcessorStatusBar: React.FC = () => {
       filesPath,
       renameFiles,
       findComboOption: findCombos ? highlightMethod : undefined,
+      portable: makeItPortable,
       includeSubFolders,
       outputFile: combosFilePath,
       renameTemplate: renameFormat,
@@ -136,6 +155,10 @@ export const ProcessorStatusBar: React.FC = () => {
     setupOptionsAndProcess();
   };
 
+  const onFolderNotEmptyPortableConfirm = (): void => {
+    setFolderNotEmptyPortable(false);
+  };
+
   return (
     <Outer>
       <Confirm
@@ -144,6 +167,12 @@ export const ProcessorStatusBar: React.FC = () => {
         confirmButton="Continue"
         onCancel={() => setConfirmOpened(false)}
         onConfirm={onConfirm}
+      />
+      <Confirm
+        open={folderNotEmptyPortable}
+        content="The output file has to be in an empty folder in portable mode."
+        onCancel={() => setFolderNotEmptyPortable(false)}
+        onConfirm={onFolderNotEmptyPortableConfirm}
       />
       <ProcessStatus>
         {(comboFinderProcessing || complete) && (
