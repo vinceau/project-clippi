@@ -17,6 +17,7 @@ autoUpdater.autoDownload = false;
 
 autoUpdater.on("error", (error) => {
   log.error(error);
+  sendUpdateError(error.message || error);
 });
 
 autoUpdater.on("update-downloaded", async () => {

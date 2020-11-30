@@ -87,8 +87,6 @@ const startUp = () => {
     event.preventDefault();
     shell.openExternal(url);
   });
-
-  // Check for updates
 };
 
 if (IS_DEV) {
