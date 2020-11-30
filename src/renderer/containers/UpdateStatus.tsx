@@ -103,7 +103,7 @@ const ShowUpdateMessage: React.FC<{
     case UpdateStatus.NO_UPDATE:
       return <span>No update available</span>;
     case UpdateStatus.UPDATE_ERROR:
-      return <span>Update error: {payload}</span>;
+      return <span>Failed to check for updates. {payload}</span>;
     case UpdateStatus.UPDATE_AVAILABLE:
       return (
         <div>
