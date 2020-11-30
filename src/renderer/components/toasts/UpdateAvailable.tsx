@@ -1,9 +1,8 @@
 import React from "react";
 
-import { AUTO_UPDATES_ENABLED } from "common/constants";
+import { AUTO_UPDATES_ENABLED, GITHUB_RELEASES_PAGE } from "common/constants";
 import { downloadLatestUpdate } from "@/lib/utils";
 import { shell } from "electron";
-import { GITHUB_RELEASES_PAGE } from "common/constants";
 
 export const UpdateAvailable: React.FC<{
   version: string;
