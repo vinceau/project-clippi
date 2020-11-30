@@ -33,7 +33,7 @@ export const Automator: React.FC = () => {
 
     dispatch.automator.removeEvent(selected);
     // Select the previous value if we deleted the last element
-    if (selected === events.length - 1) {
+    if (selected > 0 && selected === events.length - 1) {
       setSelected(selected - 1);
     }
   };
