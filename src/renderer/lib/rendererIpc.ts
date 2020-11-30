@@ -15,20 +15,17 @@ export async function getStoreValue(key: string): Promise<any> {
 }
 
 // Automatically update the latest version into store
-ipcRenderer.on(Message.VersionUpdateStatus, (_, { status, payload }: VersionUpdatePayload) => {
-  switch (status) {
+ipcRenderer.on(Message.VersionUpdateStatus, (_, payload: VersionUpdatePayload) => {
+  dispatcher.tempContainer.setUpdateStatus(payload);
+
+  switch (payload.status) {
     case UpdateStatus.UPDATE_AVAILABLE: {
-      dispatcher.appContainer.setLatestVersion(payload);
-      toastNewUpdateAvailable(payload);
+      dispatcher.appContainer.setLatestVersion(payload.payload);
+      toastNewUpdateAvailable(payload.payload);
       break;
     }
     case UpdateStatus.NO_UPDATE: {
-      break;
-    }
-    case UpdateStatus.DOWNLOAD_COMPLETE: {
-      break;
-    }
-    case UpdateStatus.UPDATE_ERROR: {
+      dispatcher.appContainer.setLatestVersion(payload.payload);
       break;
     }
   }

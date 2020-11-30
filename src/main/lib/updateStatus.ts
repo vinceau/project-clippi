@@ -15,7 +15,7 @@ export function sendLatestVersion(version: string) {
   if (needsUpdate(versionString)) {
     sendVersionUpdateStatus(UpdateStatus.UPDATE_AVAILABLE, versionString);
   } else {
-    sendVersionUpdateStatus(UpdateStatus.NO_UPDATE);
+    sendVersionUpdateStatus(UpdateStatus.NO_UPDATE, versionString);
   }
 }
 

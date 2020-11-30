@@ -19,6 +19,7 @@ import { needsUpdate } from "common/githubReleaseVersions";
 import clippiLogo from "../../../../build/icon.png";
 import { checkForNewUpdates, installUpdateAndRestart, openUrl } from "@/lib/utils";
 import { ThemeMode, useTheme } from "@/styles";
+import { UpdateStatusInfo } from "@/containers/UpdateStatus";
 import { GITHUB_PAGE } from "common/constants";
 
 const Container = styled(FormContainer)`
@@ -62,14 +63,12 @@ const Logo = styled.img<{
 
 const UpdateInfo = styled.div<{
   themeName: string;
+  updateAvailable?: boolean;
 }>`
+  ${(p) => `border: solid 0.2rem ${p.updateAvailable ? "#db2828" : "transparent"};`}
   max-width: 50rem;
   padding: 2rem;
   border-radius: 0.5rem;
-  background-color: ${(p) => {
-    const adjust = p.themeName === ThemeMode.DARK ? lighten : darken;
-    return adjust(0.05, p.theme.background);
-  }};
   margin-left: auto;
   margin-right: auto;
 `;
@@ -81,7 +80,6 @@ export const InfoView: React.FC = () => {
   const [clickCount, setClickCount] = React.useState(0);
   const isDev = useSelector((state: iRootState) => state.appContainer.isDev);
   const latestVersion = useSelector((state: iRootState) => state.appContainer.latestVersion);
-  const updateDownloaded = useSelector((state: iRootState) => state.tempContainer.updateDownloaded);
 
   const dispatch = useDispatch<Dispatch>();
   const updateAvailable = needsUpdate(latestVersion);
@@ -93,14 +91,11 @@ export const InfoView: React.FC = () => {
       setClickCount(0);
     }
   };
-  const handleUpdateAction = () => {
-    if (updateDownloaded) {
-      installUpdateAndRestart();
-    } else {
-      openUrl("https://github.com/vinceau/project-clippi/releases/latest");
-    }
+  const onUpdateCheckClick = () => {
+    // Clear the update status first
+    dispatch.tempContainer.setUpdateStatus(null);
+    checkForNewUpdates();
   };
-  const updateMessage = updateDownloaded ? "ready to be installed" : "available";
   return (
     <Container>
       <Logo isDev={isDev} src={clippiLogo} onClick={handleLogoClick} />
@@ -111,29 +106,9 @@ export const InfoView: React.FC = () => {
           <br />
           {__DATE__}
         </p>
-        {updateAvailable ? (
-          <UpdateInfo themeName={theme.themeName}>
-            <div
-              css={css`
-                color: red;
-                font-size: 1.2em;
-              `}
-            >
-              <Icon name="exclamation triangle" /> An update to v{latestVersion} {updateMessage}!
-            </div>
-            <div
-              css={css`
-                padding-top: 1rem;
-              `}
-            >
-              <Button onClick={handleUpdateAction}>{updateDownloaded ? "Restart now" : "Open releases page"}</Button>
-            </div>
-          </UpdateInfo>
-        ) : (
-          <div>
-            <Button onClick={checkForNewUpdates}>Check for updates</Button>
-          </div>
-        )}
+        <UpdateInfo themeName={theme.themeName} updateAvailable={updateAvailable}>
+          <UpdateStatusInfo />
+        </UpdateInfo>
         <div style={{ paddingTop: "2rem" }}>
           <p>
             Made with love by <A href="https://twitter.com/_vinceau">Vince Au</A> and{" "}
