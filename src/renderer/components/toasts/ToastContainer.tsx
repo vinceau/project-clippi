@@ -2,6 +2,10 @@ import React from "react";
 import { Slide, ToastContainer as TC } from "react-toastify";
 import styled from "@emotion/styled";
 
+import alertIcon from "@/styles/images/icons/alert.svg";
+import infoIcon from "@/styles/images/icons/info.svg";
+import successIcon from "@/styles/images/icons/success.svg";
+
 const CloseButton: React.FC<{
   closeToast?: () => void;
 }> = ({ closeToast }) => (
@@ -9,6 +13,26 @@ const CloseButton: React.FC<{
     ✕
   </span>
 );
+
+interface ToastTheme {
+  primary: string;
+  secondary: string;
+}
+
+const warnTheme: ToastTheme = {
+  primary: "rgb(191, 38, 0)",
+  secondary: "rgb(255, 235, 230)",
+};
+
+const infoTheme: ToastTheme = {
+  primary: "rgb(38, 132, 255)",
+  secondary: "#daecff",
+};
+
+const successTheme: ToastTheme = {
+  primary: "rgb(0, 102, 68)",
+  secondary: "#e3fcef",
+};
 
 const StyledToastContainer = styled(TC)`
   .Toastify__toast-container {
@@ -18,16 +42,24 @@ const StyledToastContainer = styled(TC)`
     border-radius: 4px;
     padding-left: 30px;
     &::before {
-      font-size: 16px;
+      content: "";
       color: rgba(255, 255, 255, 0.8);
-      display: flex;
-      padding-top: 5px;
-      justify-content: center;
       position: absolute;
       left: 0;
       top: 0;
       width: 30px;
       height: 100%;
+    }
+    &::after {
+      content: "";
+      position: absolute;
+      left: 5px;
+      top: 0;
+      width: 20px;
+      height: 100%;
+      mask-repeat: no-repeat;
+      mask-size: contain;
+      mask-position-y: 5px;
     }
     .Toastify__close-button {
       color: currentColor;
@@ -35,27 +67,36 @@ const StyledToastContainer = styled(TC)`
     }
   }
   .Toastify__toast--error {
-    color: rgb(191, 38, 0);
-    background: rgb(255, 235, 230);
+    color: ${warnTheme.primary};
+    background: ${warnTheme.secondary};
     &::before {
-      content: "⚠";
-      background-color: rgb(191, 38, 0);
+      background-color: ${warnTheme.primary};
+    }
+    &::after {
+      background-color: ${warnTheme.secondary};
+      mask-image: url("${alertIcon}");
     }
   }
   .Toastify__toast--info {
-    color: rgb(38, 132, 255);
-    background: #daecff;
+    color: ${infoTheme.primary};
+    background: ${infoTheme.secondary};
     &::before {
-      content: "ⓘ";
-      background-color: rgb(38, 132, 255);
+      background-color: ${infoTheme.primary};
+    }
+    &::after {
+      background-color: ${infoTheme.secondary};
+      mask-image: url("${infoIcon}");
     }
   }
   .Toastify__toast--success {
-    color: rgb(0, 102, 68);
-    background: #e3fcef;
+    color: ${successTheme.primary};
+    background: ${successTheme.secondary};
     &::before {
-      content: "✓";
-      background-color: rgb(54, 179, 126);
+      background-color: ${successTheme.primary};
+    }
+    &::after {
+      background-color: ${successTheme.secondary};
+      mask-image: url("${successIcon}");
     }
   }
   .Toastify__toast-body {
