@@ -3,8 +3,7 @@ import React from "react";
 import { autoUpdatesEnabled } from "common/utils";
 import { downloadLatestUpdate } from "@/lib/utils";
 import { shell } from "electron";
-
-const LATEST_RELEASE_PAGE = "https://github.com/vinceau/project-clippi/releases/latest";
+import { GITHUB_RELEASES_PAGE } from "common/constants";
 
 export const UpdateAvailable: React.FC<{
   version: string;
@@ -15,7 +14,7 @@ export const UpdateAvailable: React.FC<{
     props.dismiss();
   };
   const openReleases = () => {
-    shell.openExternal(LATEST_RELEASE_PAGE);
+    shell.openExternal(GITHUB_RELEASES_PAGE);
     props.dismiss();
   };
   return (

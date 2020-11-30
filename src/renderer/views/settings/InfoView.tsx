@@ -19,6 +19,7 @@ import { needsUpdate } from "common/githubReleaseVersions";
 import clippiLogo from "../../../../build/icon.png";
 import { checkForNewUpdates, installUpdateAndRestart, openUrl } from "@/lib/utils";
 import { ThemeMode, useTheme } from "@/styles";
+import { GITHUB_PAGE } from "common/constants";
 
 const Container = styled(FormContainer)`
   text-align: center;
@@ -135,11 +136,11 @@ export const InfoView: React.FC = () => {
         )}
         <div style={{ paddingTop: "2rem" }}>
           <p>
-            Made with love by <A href="https://twitter.com/_vinceau">Vincent Au</A> and{" "}
-            <A href="https://github.com/vinceau/project-clippi/graphs/contributors">contributors</A>.
+            Made with love by <A href="https://twitter.com/_vinceau">Vince Au</A> and{" "}
+            <A href={`${GITHUB_PAGE}/graphs/contributors`}>contributors</A>.
           </p>
           <p>
-            Source code available on <A href="https://github.com/vinceau/project-clippi">Github</A>
+            Source code available on <A href={GITHUB_PAGE}>Github</A>
             .<br />
             Please report bugs by tweeting at <A href="https://twitter.com/ProjectClippi">@ProjectClippi</A>.
           </p>

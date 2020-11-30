@@ -9,6 +9,7 @@ import pkg from "../../../package.json";
 import { getLatestVersion } from "common/githubReleaseVersions";
 import { autoUpdatesEnabled } from "common/utils";
 import { sendDownloadComplete, sendLatestVersion, sendUpdateError } from "./updateStatus";
+import { GITHUB_AUTHOR } from "common/constants";
 
 autoUpdater.logger = log;
 // We want users to choose if they want to download and install
@@ -34,7 +35,7 @@ async function fetchLatestUpdateVersion(): Promise<string> {
     return info.updateInfo.version;
   } else {
     // Check via Github
-    const latest = await getLatestVersion("vinceau", pkg.name);
+    const latest = await getLatestVersion(GITHUB_AUTHOR, pkg.name);
     return latest;
   }
 }
