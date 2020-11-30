@@ -51,8 +51,6 @@ export type ResponseType<X extends Message> =
     ? void
     : X extends Message.ToggleTheme
     ? void // Return any payload to renderer
-    : X extends Message.VersionUpdateStatus
-    ? any // Return nothing to renderer
     : X extends Message.SelectDirectory
     ? string[]
     : X extends Message.CheckForUpdates
