@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { useSelector } from "react-redux";
 
-import { needsUpdate } from "common/checkForUpdates";
+import { needsUpdate } from "common/githubReleaseVersions";
 import { iRootState } from "@/store";
 
 import { transparentize } from "polished";

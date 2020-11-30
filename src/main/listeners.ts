@@ -5,7 +5,7 @@ import { openFileSystemDialog } from "./lib/fileSystem";
 import { showNotification } from "./lib/notifications";
 import { twitchController } from "./lib/twitch";
 import { toggleTheme } from "./lib/toggleTheme";
-import { checkForUpdates, downloadUpdates, installUpdatesAndRestart } from "./updater";
+import { checkForUpdates, downloadUpdates, installUpdatesAndRestart } from "./lib/checkForUpdates";
 
 export const setupListeners = (ipc: IPC): void => {
   ipc.on(Message.AuthenticateTwitch, async (value, _error?: Error) => {

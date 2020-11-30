@@ -11,7 +11,7 @@ import { isDevelopment } from "../common/utils";
 import contextMenu from "electron-context-menu";
 import { getMenuTemplate } from "./menu";
 import { getCurrentTheme } from "./lib/toggleTheme";
-import { checkForUpdates } from "./updater";
+import { checkForUpdates } from "./lib/checkForUpdates";
 
 contextMenu();
 
