@@ -14,9 +14,9 @@ import { ExternalLink as A } from "@/components/ExternalLink";
 
 export const UpdateStatusInfo: React.FC = () => {
   const updateStatus = useSelector((state: iRootState) => state.tempContainer.updateStatus);
+  const updateAvailable = useSelector((state: iRootState) => state.tempContainer.updateAvailable);
 
   const dispatch = useDispatch<Dispatch>();
-  // const updateAvailable = needsUpdate(latestVersion);
   const onUpdateCheckClick = () => {
     // Clear the update status first
     dispatch.tempContainer.setUpdateStatus(null);
@@ -26,18 +26,11 @@ export const UpdateStatusInfo: React.FC = () => {
   React.useEffect(() => {
     // On unmount, we should reset the update status if it was an error or if no update was available
     return () => {
-      if (updateStatus !== null) {
-        if (updateStatus.status === UpdateStatus.NO_UPDATE || updateStatus.status === UpdateStatus.UPDATE_ERROR) {
-          dispatch.tempContainer.setUpdateStatus(null);
-        }
+      if (!updateAvailable) {
+        dispatch.tempContainer.setUpdateStatus(null);
       }
     };
   });
-
-  // Hide the check for updates button if we already know there's an update available or if an update is ready to be installed
-  const updateAvailable =
-    updateStatus &&
-    (updateStatus.status === UpdateStatus.UPDATE_AVAILABLE || updateStatus.status === UpdateStatus.DOWNLOAD_COMPLETE);
 
   return (
     <div

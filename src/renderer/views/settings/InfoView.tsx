@@ -1,13 +1,9 @@
-/** @jsx jsx */
-import { css, jsx } from "@emotion/core";
 import React from "react";
 
 import ReactMarkdown from "react-markdown";
 
 import { Dispatch, iRootState } from "@/store";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Icon } from "semantic-ui-react";
-import { darken, lighten } from "polished";
 
 import styled from "@emotion/styled";
 
@@ -15,10 +11,8 @@ import supporters from "raw-loader!../../../../SUPPORTERS.md";
 
 import { ExternalLink as A } from "@/components/ExternalLink";
 import { FormContainer } from "@/components/Form";
-import { needsUpdate } from "common/githubReleaseVersions";
 import clippiLogo from "../../../../build/icon.png";
-import { checkForNewUpdates, installUpdateAndRestart, openUrl } from "@/lib/utils";
-import { ThemeMode, useTheme } from "@/styles";
+import { useTheme } from "@/styles";
 import { UpdateStatusInfo } from "@/containers/UpdateStatus";
 import { GITHUB_PAGE } from "common/constants";
 
@@ -50,12 +44,12 @@ const Footer = styled.div`
 `;
 
 const Logo = styled.img<{
-  isDev: boolean;
+  flip: boolean;
 }>`
   height: 6.4rem;
   width: 6.4rem;
-  ${({ isDev }) =>
-    isDev &&
+  ${({ flip }) =>
+    flip &&
     `
     transform: scaleX(-1);
 `}
@@ -78,27 +72,21 @@ const DEV_THRESHOLD = 7;
 export const InfoView: React.FC = () => {
   const theme = useTheme();
   const [clickCount, setClickCount] = React.useState(0);
-  const isDev = useSelector((state: iRootState) => state.appContainer.isDev);
-  const latestVersion = useSelector((state: iRootState) => state.appContainer.latestVersion);
+  const showDevOptions = useSelector((state: iRootState) => state.appContainer.showDevOptions);
+  const updateAvailable = useSelector((state: iRootState) => state.tempContainer.updateAvailable);
 
   const dispatch = useDispatch<Dispatch>();
-  const updateAvailable = needsUpdate(latestVersion);
   const handleLogoClick = () => {
     setClickCount(clickCount + 1);
     if (clickCount === DEV_THRESHOLD - 1) {
-      console.log(isDev ? "Disabling dev" : "Enabling dev");
-      dispatch.appContainer.setIsDev(!isDev);
+      console.log(showDevOptions ? "Disabling dev" : "Enabling dev");
+      dispatch.appContainer.setIsDev(!showDevOptions);
       setClickCount(0);
     }
   };
-  const onUpdateCheckClick = () => {
-    // Clear the update status first
-    dispatch.tempContainer.setUpdateStatus(null);
-    checkForNewUpdates();
-  };
   return (
     <Container>
-      <Logo isDev={isDev} src={clippiLogo} onClick={handleLogoClick} />
+      <Logo flip={showDevOptions} src={clippiLogo} onClick={handleLogoClick} />
       <h1>Project Clippi v{__VERSION__}</h1>
       <Content>
         <p>

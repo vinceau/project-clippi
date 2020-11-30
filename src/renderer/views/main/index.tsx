@@ -10,7 +10,6 @@ import { Menu } from "@/components/layout/Menu";
 import { AutomatorView } from "./AutomatorView";
 import { RecorderView } from "./RecorderView";
 import { ReplayProcessorView } from "./ReplayProcessorView";
-import { needsUpdate } from "common/githubReleaseVersions";
 
 const SettingsContainer = styled.div`
   position: absolute;
@@ -39,8 +38,7 @@ const ContentColumn = styled.div`
 export const MainView: React.FC = () => {
   const match = useRouteMatch();
   const latestPath = useSelector((state: iRootState) => state.tempContainer.latestPath);
-  const latestVersion = useSelector((state: iRootState) => state.appContainer.latestVersion);
-  const updateAvailable = needsUpdate(latestVersion);
+  const updateAvailable = useSelector((state: iRootState) => state.tempContainer.updateAvailable);
   const settingsPage = latestPath.settings || "/settings";
   return (
     <SettingsContainer>

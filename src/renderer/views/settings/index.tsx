@@ -2,7 +2,6 @@ import * as React from "react";
 
 import { useSelector } from "react-redux";
 
-import { needsUpdate } from "common/githubReleaseVersions";
 import { iRootState } from "@/store";
 
 import { transparentize } from "polished";
@@ -132,12 +131,10 @@ const InfoLabel = styled.div`
 export const SettingsView: React.FC = () => {
   const history = useHistory();
   const { path } = useRouteMatch();
-  const latestVersion = useSelector((state: iRootState) => state.appContainer.latestVersion);
   const latestPath = useSelector((state: iRootState) => state.tempContainer.latestPath);
+  const updateAvailable = useSelector((state: iRootState) => state.tempContainer.updateAvailable);
 
   const mainPage = latestPath.main || "/";
-
-  const updateAvailable = needsUpdate(latestVersion);
 
   const onClose = () => history.push(mainPage);
 

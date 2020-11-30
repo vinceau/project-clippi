@@ -8,7 +8,7 @@ import { authenticateTwitch, signOutTwitch } from "../../lib/twitch";
 import { OBSConnectionStatus, OBSRecordingStatus } from "@/lib/obs";
 import { getFilePath, loadDolphinQueue } from "@/lib/utils";
 import { ConnectionStatus, DolphinEntry, DolphinQueueFormat, DolphinQueueOptions } from "@vinceau/slp-realtime";
-import { TwitchUser, VersionUpdatePayload } from "common/types";
+import { TwitchUser, UpdateStatus, VersionUpdatePayload } from "common/types";
 import { shuffle } from "common/utils";
 
 export interface TempContainerState {
@@ -29,6 +29,7 @@ export interface TempContainerState {
   dolphinPlaybackFile: string;
   dolphinRunning: boolean;
   updateStatus: VersionUpdatePayload | null;
+  updateAvailable: boolean;
 }
 
 const initialDolphinQueueOptions = {
@@ -59,6 +60,7 @@ const initialState: TempContainerState = {
   dolphinPlaybackFile: "",
   dolphinRunning: false,
   updateStatus: null,
+  updateAvailable: false,
 };
 
 export const tempContainer = createModel({
@@ -190,6 +192,9 @@ export const tempContainer = createModel({
     setUpdateStatus: (state: TempContainerState, payload: VersionUpdatePayload | null): TempContainerState =>
       produce(state, (draft) => {
         draft.updateStatus = payload;
+        draft.updateAvailable =
+          payload !== null &&
+          (payload.status === UpdateStatus.UPDATE_AVAILABLE || payload.status === UpdateStatus.DOWNLOAD_COMPLETE);
       }),
   },
   effects: (dispatch) => ({
