@@ -62,6 +62,10 @@ export const checkForNewUpdates = () => {
   ipc.sendMessage(Message.CheckForUpdates);
 };
 
+export const downloadLatestUpdate = () => {
+  ipc.sendMessage(Message.DownloadUpdate);
+};
+
 // see https://github.com/electron-userland/electron-webpack/issues/99#issuecomment-459251702
 export const getStatic = (val: string): string => {
   if (isDevelopment) {

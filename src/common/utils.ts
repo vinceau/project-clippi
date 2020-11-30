@@ -7,6 +7,8 @@ import { EOL } from "os";
 
 export const isDevelopment = process.env.NODE_ENV !== "production";
 
+export const autoUpdatesEnabled = process.platform === "win32" && !isDevelopment;
+
 export const isMacOrWindows = process.platform === "darwin" || process.platform === "win32";
 
 export const delay = async (ms: number): Promise<void> => {

@@ -1,7 +1,7 @@
 import { Message, UpdateStatus } from "common/types";
 import { sendMessage } from "./sendMessage";
 import clean from "semver/functions/clean";
-import { needsUpdate } from "common/checkForUpdates";
+import { needsUpdate } from "common/githubReleaseVersions";
 
 function sendVersionUpdateStatus(status: UpdateStatus, payload?: any) {
   sendMessage(Message.VersionUpdateStatus, {

@@ -15,7 +15,7 @@ import supporters from "raw-loader!../../../../SUPPORTERS.md";
 
 import { ExternalLink as A } from "@/components/ExternalLink";
 import { FormContainer } from "@/components/Form";
-import { needsUpdate } from "common/checkForUpdates";
+import { needsUpdate } from "common/githubReleaseVersions";
 import clippiLogo from "../../../../build/icon.png";
 import { checkForNewUpdates, installUpdateAndRestart, openUrl } from "@/lib/utils";
 import { ThemeMode, useTheme } from "@/styles";

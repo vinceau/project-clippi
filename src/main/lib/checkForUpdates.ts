@@ -4,14 +4,11 @@
 
 import log from "electron-log";
 import { autoUpdater } from "electron-updater";
-import pkg from "../../package.json";
+import pkg from "../../../package.json";
 
-import { getLatestVersion } from "common/checkForUpdates";
-
-import { isDevelopment } from "common/utils";
-import { sendDownloadComplete, sendLatestVersion, sendUpdateError } from "./lib/updateStatus";
-
-const autoUpdatesEnabled = process.platform === "win32" && !isDevelopment;
+import { getLatestVersion } from "common/githubReleaseVersions";
+import { autoUpdatesEnabled } from "common/utils";
+import { sendDownloadComplete, sendLatestVersion, sendUpdateError } from "./updateStatus";
 
 autoUpdater.logger = log;
 // We want users to choose if they want to download and install
