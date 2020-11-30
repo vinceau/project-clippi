@@ -91,7 +91,6 @@ const startUp = () => {
   });
 
   // Check for updates
-  checkForUpdates().catch((err) => log.error(err));
 };
 
 if (isDevelopment) {
