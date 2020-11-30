@@ -2,6 +2,7 @@ import * as path from "path";
 
 import { app, BrowserWindow, Notification, NotificationConstructorOptions } from "electron";
 import notifier from "node-notifier";
+import { IS_DEV } from "common/constants";
 
 export const showNotification = (message: string, title?: string): void => {
   const notificationTitle = title ? title : "Project Clippi";
@@ -48,10 +49,8 @@ const showElectronNotification = (message: string, title: string): void => {
   n.show();
 };
 
-const isDevelopment = process.env.NODE_ENV !== "production";
-
 const getStatic = (val: string): string => {
-  if (isDevelopment) {
+  if (IS_DEV) {
     return path.join(__dirname, "../../../static", val);
   }
   const appPath = app.getAppPath();

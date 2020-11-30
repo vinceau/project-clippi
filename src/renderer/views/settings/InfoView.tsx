@@ -4,7 +4,6 @@ import ReactMarkdown from "react-markdown";
 
 import { Dispatch, iRootState } from "@/store";
 import { useDispatch, useSelector } from "react-redux";
-import { Icon } from "semantic-ui-react";
 
 import styled from "@emotion/styled";
 
@@ -12,9 +11,10 @@ import supporters from "raw-loader!../../../../SUPPORTERS.md";
 
 import { ExternalLink as A } from "@/components/ExternalLink";
 import { FormContainer } from "@/components/Form";
-import { Labelled } from "@/components/Labelled";
-import { needsUpdate } from "@/lib/checkForUpdates";
 import clippiLogo from "../../../../build/icon.png";
+import { useTheme } from "@/styles";
+import { UpdateStatusInfo } from "@/containers/UpdateStatus";
+import { GITHUB_PAGE } from "common/constants";
 
 const Container = styled(FormContainer)`
   text-align: center;
@@ -44,66 +44,66 @@ const Footer = styled.div`
 `;
 
 const Logo = styled.img<{
-  isDev: boolean;
+  flip: boolean;
 }>`
   height: 6.4rem;
   width: 6.4rem;
-  ${({ isDev }) =>
-    isDev &&
+  ${({ flip }) =>
+    flip &&
     `
     transform: scaleX(-1);
 `}
 `;
 
-const UpdateInfo = styled.h3`
-  a {
-    color: red;
-    font-size: 1.2em;
-  }
-  padding: 1rem 0;
+const UpdateInfo = styled.div<{
+  themeName: string;
+  updateAvailable?: boolean;
+}>`
+  ${(p) => `border: solid 0.2rem ${p.updateAvailable ? "#db2828" : "transparent"};`}
+  max-width: 50rem;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  margin-left: auto;
+  margin-right: auto;
 `;
 
 const DEV_THRESHOLD = 7;
 
 export const InfoView: React.FC = () => {
+  const theme = useTheme();
   const [clickCount, setClickCount] = React.useState(0);
-  const { isDev, latestVersion } = useSelector((state: iRootState) => state.appContainer);
+  const showDevOptions = useSelector((state: iRootState) => state.appContainer.showDevOptions);
+  const updateAvailable = useSelector((state: iRootState) => state.tempContainer.updateAvailable);
+
   const dispatch = useDispatch<Dispatch>();
-  const updateAvailable = needsUpdate(latestVersion);
   const handleLogoClick = () => {
     setClickCount(clickCount + 1);
     if (clickCount === DEV_THRESHOLD - 1) {
-      console.log(isDev ? "Disabling dev" : "Enabling dev");
-      dispatch.appContainer.setIsDev(!isDev);
+      console.log(showDevOptions ? "Disabling dev" : "Enabling dev");
+      dispatch.appContainer.setShowDevOptions(!showDevOptions);
       setClickCount(0);
     }
   };
   return (
     <Container>
-      <Logo isDev={isDev} src={clippiLogo} onClick={handleLogoClick} />
+      <Logo flip={showDevOptions} src={clippiLogo} onClick={handleLogoClick} />
       <h1>Project Clippi v{__VERSION__}</h1>
       <Content>
-        {updateAvailable && (
-          <UpdateInfo>
-            <A href="https://github.com/vinceau/project-clippi/releases/latest">
-              <Labelled title="Open releases page">
-                <Icon name="exclamation triangle" /> New update available!
-              </Labelled>
-            </A>
-          </UpdateInfo>
-        )}
         <p>
           Commit {__BUILD__}
           <br />
           {__DATE__}
         </p>
+        <UpdateInfo themeName={theme.themeName} updateAvailable={updateAvailable}>
+          <UpdateStatusInfo />
+        </UpdateInfo>
         <div style={{ paddingTop: "2rem" }}>
           <p>
-            Made with love by <A href="https://twitter.com/_vinceau">Vincent Au</A> and{" "}
-            <A href="https://github.com/vinceau/project-clippi/graphs/contributors">contributors</A>.
+            Made with love by <A href="https://twitter.com/_vinceau">Vince Au</A> and{" "}
+            <A href={`${GITHUB_PAGE}/graphs/contributors`}>contributors</A>.
           </p>
           <p>
-            Source code available on <A href="https://github.com/vinceau/project-clippi">Github</A>
+            Source code available on <A href={GITHUB_PAGE}>Github</A>
             .<br />
             Please report bugs by tweeting at <A href="https://twitter.com/ProjectClippi">@ProjectClippi</A>.
           </p>

@@ -10,13 +10,14 @@ import { History } from "@/components/History";
 import { ToastContainer } from "@/components/toasts/ToastContainer";
 import { darkTheme, GlobalStyle, lightTheme, ThemeManager, ThemeMode, useTheme } from "@/styles";
 import { MainView, SettingsView } from "@/views";
+import { checkForNewUpdates } from "@/lib/utils";
 
 const App: React.FC = () => {
   const dispatch = useDispatch<Dispatch>();
   const { reconnectTwitch } = useSelector((state: iRootState) => state.twitch);
   const theme = useTheme();
   React.useEffect(() => {
-    dispatch.appContainer.checkForUpdates();
+    checkForNewUpdates();
     if (reconnectTwitch) {
       dispatch.tempContainer.authenticateTwitch();
     }
