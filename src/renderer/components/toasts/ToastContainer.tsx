@@ -69,6 +69,9 @@ const StyledToastContainer = styled(TC)`
   }
   .Toastify__progress-bar {
   }
+  a {
+    text-decoration: underline;
+  }
 `;
 
 export const ToastContainer = (): JSX.Element => (
