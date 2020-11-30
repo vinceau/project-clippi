@@ -34,8 +34,9 @@ import { toastNoDolphin } from "./toasts";
 const defaultDolphinRecorderOptions = {
   record: false,
   recordAsOneFile: true,
+  renameOutput: false,
   outputFilename: "",
-  outputFolder: "ProjectClippi",
+  outputFolder: "",
   gameEndDelayMs: 1000,
 };
 
@@ -162,8 +163,8 @@ export class DolphinRecorder extends DolphinLauncher {
   }
 
   private async _handleSetOBSFilename(filename: string): Promise<void> {
-    // Return if recording is off, or if recording has already started
-    if (!this.recordOptions.record || obsConnection.isRecording()) {
+    // Return if recording is off, or if recording has already started, or if we're not changing output names
+    if (!this.recordOptions.record || obsConnection.isRecording() || !this.recordOptions.renameOutput) {
       return;
     }
 
@@ -196,8 +197,11 @@ export class DolphinRecorder extends DolphinLauncher {
     if (obsConnection.isRecording()) {
       await obsConnection.setRecordingState(OBSRecordingAction.STOP);
     }
-    // Restore the original user filename format
-    await obsConnection.setFilenameFormat(this.userFilenameFormat);
+
+    // Restore the original user filename format if we changed it
+    if (this.recordOptions.renameOutput) {
+      await obsConnection.setFilenameFormat(this.userFilenameFormat);
+    }
 
     if (killDolphin) {
       this.killDolphin();

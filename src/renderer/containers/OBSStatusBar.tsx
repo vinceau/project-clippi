@@ -48,10 +48,14 @@ const StopButton = styled(Button)`
 
 export const OBSStatusBar: React.FC = () => {
   const history = useHistory();
-  const { recordSeparateClips } = useSelector((state: iRootState) => state.filesystem);
-  const { obsConnectionStatus, obsRecordingStatus, dolphinQueue, dolphinPlaybackFile, dolphinRunning } = useSelector(
-    (state: iRootState) => state.tempContainer
-  );
+  const autoNameRecordedFiles = useSelector((state: iRootState) => state.appContainer.autoNameRecordedFiles);
+  const recordSeparateClips = useSelector((state: iRootState) => state.filesystem.recordSeparateClips);
+  const obsConnectionStatus = useSelector((state: iRootState) => state.tempContainer.obsConnectionStatus);
+  const obsRecordingStatus = useSelector((state: iRootState) => state.tempContainer.obsRecordingStatus);
+  const dolphinQueue = useSelector((state: iRootState) => state.tempContainer.dolphinQueue);
+  const dolphinPlaybackFile = useSelector((state: iRootState) => state.tempContainer.dolphinPlaybackFile);
+  const dolphinRunning = useSelector((state: iRootState) => state.tempContainer.dolphinRunning);
+
   const dispatch = useDispatch<Dispatch>();
 
   const recordValue = recordSeparateClips ? RecordingMethod.SEPARATE : RecordingMethod.TOGETHER;
@@ -71,6 +75,7 @@ export const OBSStatusBar: React.FC = () => {
     loadQueueIntoDolphin({
       record: true,
       recordAsOneFile: !recordSeparateClips,
+      renameOutput: autoNameRecordedFiles,
     }).catch(console.error);
   };
 
