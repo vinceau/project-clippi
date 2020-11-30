@@ -11,6 +11,18 @@ export interface TwitchClip {
   timestamp: Date;
 }
 
+export interface VersionUpdatePayload {
+  status: UpdateStatus;
+  payload: any;
+}
+
+export enum UpdateStatus {
+  NO_UPDATE = "NO_UPDATE",
+  UPDATE_AVAILABLE = "UPDATE_AVAILABLE",
+  DOWNLOAD_COMPLETE = "DOWNLOAD_COMPLETE",
+  UPDATE_ERROR = "UPDATE_ERROR",
+}
+
 export enum Message {
   // renderer to main
   AuthenticateTwitch = "authenticateTwitch",
@@ -19,10 +31,12 @@ export enum Message {
   Notify = "notify",
   SelectDirectory = "selectDirectory",
   ToggleTheme = "toggleTheme",
-  SetLatestVersion = "latestVersion",
   CheckForUpdates = "checkForUpdates",
-  SetUpdateDownloadComplete = "updateDownloadComplete",
+  DownloadUpdate = "downloadUpdate",
   InstallUpdateAndRestart = "installUpdateAndRestart",
+
+  // main to renderer
+  VersionUpdateStatus = "versionUpdateStatus",
 }
 
 export type ResponseType<X extends Message> =
@@ -36,11 +50,19 @@ export type ResponseType<X extends Message> =
     : X extends Message.Notify
     ? void
     : X extends Message.ToggleTheme
-    ? void // Return nothing to renderer
-    : X extends Message.CheckForUpdates
-    ? void // Return nothing to renderer
+    ? void // Return any payload to renderer
+    : X extends Message.VersionUpdateStatus
+    ? any // Return nothing to renderer
     : X extends Message.SelectDirectory
-    ? string[] // main to renderer
+    ? string[]
+    : X extends Message.CheckForUpdates
+    ? void
+    : X extends Message.InstallUpdateAndRestart
+    ? void
+    : X extends Message.DownloadUpdate
+    ? void
+    : X extends Message.VersionUpdateStatus
+    ? VersionUpdatePayload
     : never;
 
 export type RequestType<X extends Message> =
@@ -57,4 +79,6 @@ export type RequestType<X extends Message> =
     ? { options: any; save?: boolean }
     : X extends Message.ToggleTheme
     ? { theme: "light" | "dark" } // Tell the main process which theme we want to apply
+    : X extends Message.CheckForUpdates
+    ? void
     : never;
