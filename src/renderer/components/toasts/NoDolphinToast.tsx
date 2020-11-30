@@ -1,6 +1,6 @@
 import React from "react";
 
-import { isMacOrWindows } from "common/utils";
+import { IS_MAC_OR_WIN } from "common/constants";
 import { ExternalLink as A } from "../ExternalLink";
 
 export const NoDolphinToast: React.FC = () => {
@@ -9,7 +9,7 @@ export const NoDolphinToast: React.FC = () => {
   return (
     <div>
       <h3>No Dolphin Found</h3>
-      {isMacOrWindows ? (
+      {IS_MAC_OR_WIN ? (
         <p>
           Please download and install the Slippi Desktop App and try again. <A href={url}>Download now.</A>
         </p>

@@ -15,7 +15,7 @@ import {
   generateGlobalContext,
   generateStockContext,
 } from "common/context";
-import { isDevelopment } from "common/utils";
+import { IS_DEV } from "common/constants";
 import { eventActionManager } from "../containers/actions";
 import { notify } from "./utils";
 
@@ -34,7 +34,7 @@ const errorHandler = (err: any) => {
 };
 
 export const comboFilter = new ComboFilter();
-if (isDevelopment) {
+if (IS_DEV) {
   comboFilter.updateSettings({ excludeCPUs: false, comboMustKill: false, minComboPercent: 40 });
 }
 

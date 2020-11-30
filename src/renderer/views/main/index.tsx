@@ -37,13 +37,14 @@ const ContentColumn = styled.div`
 
 export const MainView: React.FC = () => {
   const match = useRouteMatch();
-  const { latestPath } = useSelector((state: iRootState) => state.tempContainer);
+  const latestPath = useSelector((state: iRootState) => state.tempContainer.latestPath);
+  const updateAvailable = useSelector((state: iRootState) => state.tempContainer.updateAvailable);
   const settingsPage = latestPath.settings || "/settings";
   return (
     <SettingsContainer>
       <div style={{ display: "flex" }}>
         <MenuColumn>
-          <Menu settingsPage={settingsPage} />
+          <Menu settingsPage={settingsPage} updateAvailable={updateAvailable} />
         </MenuColumn>
         <ContentColumn>
           <Switch>

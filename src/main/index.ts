@@ -6,7 +6,7 @@ import { setupListeners } from "./listeners";
 import { setupIPC } from "./mainIpc";
 
 import { lightTheme, darkTheme } from "../common/theme";
-import { isDevelopment } from "../common/utils";
+import { IS_DEV } from "../common/constants";
 import contextMenu from "electron-context-menu";
 import { getMenuTemplate } from "./menu";
 import { getCurrentTheme } from "./lib/toggleTheme";
@@ -31,7 +31,7 @@ function createMainWindow() {
   (window as any).getCurrentTheme = getCurrentTheme;
 
   window.webContents.on("did-frame-finish-load", () => {
-    if (isDevelopment) {
+    if (IS_DEV) {
       window.webContents.openDevTools();
       window.webContents.on("devtools-opened", () => {
         window.focus();
@@ -39,7 +39,7 @@ function createMainWindow() {
     }
   });
 
-  if (isDevelopment) {
+  if (IS_DEV) {
     window.loadURL(`http://localhost:${process.env.ELECTRON_WEBPACK_WDS_PORT}`);
   } else {
     window.loadURL(
@@ -87,9 +87,11 @@ const startUp = () => {
     event.preventDefault();
     shell.openExternal(url);
   });
+
+  // Check for updates
 };
 
-if (isDevelopment) {
+if (IS_DEV) {
   // There's an issue with Windows 10 dark mode where the ready event doesn't fire
   // when running in dev mode. Use the prepend listener to work around this.
   // See https://github.com/electron/electron/issues/19468#issuecomment-623529556 for more info.

@@ -8,7 +8,7 @@ import { Dispatch, iRootState } from "@/store";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Labelled } from "@/components/Labelled";
-import { isMacOrWindows } from "common/utils";
+import { IS_MAC_OR_WIN } from "common/constants";
 import styled from "@emotion/styled";
 
 const DolphinPathLabel = styled.div`
@@ -49,11 +49,11 @@ const PlaybackExecutableNames: React.FC = () => {
 export const PlaybackSettings: React.FC = () => {
   const dispatch = useDispatch<Dispatch>();
   const { meleeIsoPath, dolphinPath } = useSelector((state: iRootState) => state.filesystem);
-  const { isDev } = useSelector((state: iRootState) => state.appContainer);
+  const { showDevOptions } = useSelector((state: iRootState) => state.appContainer);
   const setMeleeIsoPath = (filePath: string) => dispatch.filesystem.setMeleeIsoPath(filePath);
   const setDolphinPath = (filePath: string) => dispatch.filesystem.setDolphinPath(filePath);
   const resetDolphinPath = () => dispatch.filesystem.setDolphinPath(defaultDolphinPath);
-  const showDolphinPathField = isDev || !isMacOrWindows;
+  const showDolphinPathField = showDevOptions || !IS_MAC_OR_WIN;
   const showResetButton = showDolphinPathField && dolphinPath !== defaultDolphinPath;
   return (
     <FormContainer>

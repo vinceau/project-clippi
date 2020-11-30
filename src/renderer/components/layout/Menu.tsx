@@ -3,7 +3,7 @@ import * as React from "react";
 import styled from "@emotion/styled";
 
 import { Link, useRouteMatch } from "react-router-dom";
-import { Icon } from "semantic-ui-react";
+import { Icon, Label } from "semantic-ui-react";
 
 import { MenuIcon, MenuIconLink } from "@/components/layout/MenuIcon";
 
@@ -14,8 +14,16 @@ const Outer = styled.div`
   justify-content: space-between;
 `;
 
+const updateNotificationStyles = {
+  position: "absolute",
+  maxHeight: "0.5em",
+  top: "2rem",
+  right: "2rem",
+};
+
 export const Menu: React.FC<{
   settingsPage: string;
+  updateAvailable?: boolean;
 }> = (props) => {
   const match = useRouteMatch();
   const { settingsPage } = props;
@@ -37,6 +45,7 @@ export const Menu: React.FC<{
         <Link to={settingsPage}>
           <MenuIcon label="Settings">
             <Icon name="cog" />
+            {props.updateAvailable && <Label circular color="red" empty style={updateNotificationStyles} />}
           </MenuIcon>
         </Link>
       </div>
