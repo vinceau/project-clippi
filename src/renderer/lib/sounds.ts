@@ -1,8 +1,9 @@
-import { isDevelopment, readFile } from "common/utils";
+import { readFile } from "common/utils";
+import { IS_DEV } from "common/constants";
 import { Howl } from "howler";
 
 const generateHowlOptions = async (soundPath: string): Promise<any> => {
-  if (isDevelopment) {
+  if (IS_DEV) {
     // If we're in a development server we need to read the data from the filesystem
     // since we can't access the files from the server.
     const soundData = await readFile(soundPath);

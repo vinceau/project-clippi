@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Button } from "semantic-ui-react";
 import { UpdateStatus, VersionUpdatePayload } from "common/types";
 import { checkForNewUpdates, downloadLatestUpdate, installUpdateAndRestart } from "@/lib/utils";
-import { autoUpdatesEnabled } from "common/utils";
+import { AUTO_UPDATES_ENABLED } from "common/constants";
 import { shell } from "electron";
 import { GITHUB_RELEASES_PAGE } from "common/constants";
 import { ExternalLink as A } from "@/components/ExternalLink";
@@ -133,7 +133,7 @@ const ShowUpdateMessage: React.FC<{
 };
 
 const UpdateAvailableMessage: React.FC = () => {
-  if (!autoUpdatesEnabled) {
+  if (!AUTO_UPDATES_ENABLED) {
     return <Button onClick={() => shell.openExternal(GITHUB_RELEASES_PAGE)}>Open releases page</Button>;
   }
   return <Button onClick={() => downloadLatestUpdate()}>Download now</Button>;

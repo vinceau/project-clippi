@@ -1,6 +1,6 @@
 import React from "react";
 
-import { autoUpdatesEnabled } from "common/utils";
+import { AUTO_UPDATES_ENABLED } from "common/constants";
 import { downloadLatestUpdate } from "@/lib/utils";
 import { shell } from "electron";
 import { GITHUB_RELEASES_PAGE } from "common/constants";
@@ -22,10 +22,10 @@ export const UpdateAvailable: React.FC<{
       <h3>New update available</h3>
       <p>
         Project Clippi v{props.version} is now available.
-        {autoUpdatesEnabled ? <> Download and install the update?</> : <> Visit the releases page to download.</>}
+        {AUTO_UPDATES_ENABLED ? <> Download and install the update?</> : <> Visit the releases page to download.</>}
       </p>
       <div className="buttons">
-        {autoUpdatesEnabled ? (
+        {AUTO_UPDATES_ENABLED ? (
           <button onClick={startDownload}>Download now</button>
         ) : (
           <button onClick={openReleases}>Show release</button>

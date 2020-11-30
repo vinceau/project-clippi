@@ -7,9 +7,8 @@ import { autoUpdater } from "electron-updater";
 import pkg from "../../../package.json";
 
 import { getLatestVersion } from "common/githubReleaseVersions";
-import { autoUpdatesEnabled } from "common/utils";
+import { AUTO_UPDATES_ENABLED, GITHUB_AUTHOR } from "common/constants";
 import { sendDownloadComplete, sendLatestVersion, sendUpdateError } from "./updateStatus";
-import { GITHUB_AUTHOR } from "common/constants";
 
 autoUpdater.logger = log;
 // We want users to choose if they want to download and install
@@ -29,7 +28,7 @@ autoUpdater.on("update-downloaded", () => {
 });
 
 async function fetchLatestUpdateVersion(): Promise<string> {
-  if (autoUpdatesEnabled) {
+  if (AUTO_UPDATES_ENABLED) {
     // Check using the auto updater
     const info = await autoUpdater.checkForUpdates();
     return info.updateInfo.version;

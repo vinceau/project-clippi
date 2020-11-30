@@ -9,7 +9,7 @@ import { Message } from "common/types";
 import { ipc } from "./rendererIpc";
 
 import { DolphinQueueFormat } from "@vinceau/slp-realtime";
-import { isDevelopment } from "common/utils";
+import { IS_DEV } from "common/constants";
 
 const folderOptions = {
   properties: ["openDirectory"],
@@ -68,7 +68,7 @@ export const downloadLatestUpdate = () => {
 
 // see https://github.com/electron-userland/electron-webpack/issues/99#issuecomment-459251702
 export const getStatic = (val: string): string => {
-  if (isDevelopment) {
+  if (IS_DEV) {
     return url.resolve(window.location.origin, val);
   }
   const appPath = remote.app.getAppPath();

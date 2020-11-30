@@ -25,8 +25,8 @@ import {
   DolphinQueueFormat,
   DolphinLauncherOptions,
 } from "@vinceau/slp-realtime";
-import { delay, isMacOrWindows } from "common/utils";
-import { onlyFilename } from "common/utils";
+import { delay, onlyFilename } from "common/utils";
+import { IS_MAC_OR_WIN } from "common/constants";
 import { BehaviorSubject, from } from "rxjs";
 import { concatMap, filter } from "rxjs/operators";
 import { toastNoDolphin } from "./toasts";
@@ -42,7 +42,7 @@ const defaultDolphinRecorderOptions = {
 export type DolphinRecorderOptions = typeof defaultDolphinRecorderOptions;
 
 export const getDolphinPath = (): string => {
-  if (isMacOrWindows) {
+  if (IS_MAC_OR_WIN) {
     const appData = remote.app.getPath("appData");
     return path.join(appData, "Slippi Desktop App", "dolphin");
   }
@@ -210,7 +210,7 @@ export const dolphinRecorder = new DolphinRecorder();
 const validDolphinExecutable = async (): Promise<string> => {
   const { dolphinPath } = store.getState().filesystem;
   const { isDev } = store.getState().appContainer;
-  const dolphinParentPath = isDev || !isMacOrWindows ? dolphinPath : undefined;
+  const dolphinParentPath = isDev || !IS_MAC_OR_WIN ? dolphinPath : undefined;
 
   try {
     const dolpinExec = await getDolphinExecutablePath(dolphinParentPath);
