@@ -53,6 +53,7 @@ export const Automator: React.FC = () => {
         id: randomCode,
       });
       // Select our recently created event
+      // The length of the old value would correctly select the newly added value
       setSelected(events.length);
     }
     // Reset the form for next time

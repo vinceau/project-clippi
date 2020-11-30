@@ -1,3 +1,4 @@
+import log from "electron-log";
 import {
   ComboEvent,
   ComboEventFilter,
@@ -39,46 +40,61 @@ export const generateRandomEvent = () => {
 };
 
 export const generateEventName = (event: EventConfig): string => {
-  switch (event.type) {
-    case GameEvent.GAME_START:
-      return "When the game starts";
-    case GameEvent.GAME_END:
-      return "When the game ends";
-    case ComboEvent.END:
-      return generateComboEventName("combo", event);
-    case ComboEvent.CONVERSION:
-      return generateComboEventName("conversion", event);
-    case InputEvent.BUTTON_COMBO:
-      return generateButtonComboEventName(event);
-    case StockEvent.PLAYER_SPAWN:
-      return generateStockEventName("spawns", event);
-    case StockEvent.PLAYER_DIED:
-      return generateStockEventName("dies", event);
-    default:
-      return "";
+  try {
+    switch (event.type) {
+      case GameEvent.GAME_START:
+        return "When the game starts";
+      case GameEvent.GAME_END:
+        return "When the game ends";
+      case ComboEvent.END:
+        return generateComboEventName("combo", event);
+      case ComboEvent.CONVERSION:
+        return generateComboEventName("conversion", event);
+      case InputEvent.BUTTON_COMBO:
+        return generateButtonComboEventName(event);
+      case StockEvent.PLAYER_SPAWN:
+        return generateStockEventName("spawns", event);
+      case StockEvent.PLAYER_DIED:
+        return generateStockEventName("dies", event);
+    }
+  } catch (err) {
+    log.error(err);
   }
+  return event.type;
+};
+
+const generatePlayerText = (players?: string | number | number[]): [string, number] => {
+  if (!players) {
+    return ["a player", 4];
+  }
+  if (typeof players === "string") {
+    return [players, 1];
+  }
+  if (typeof players === "number") {
+    return [`P${players + 1}`, 1];
+  }
+
+  return [players.map((i) => `P${i + 1}`).join(", "), players.length];
 };
 
 const generateComboEventName = (comboOrConversion: string, event: EventConfig) => {
   const filter = event.filter as ComboEventFilter;
-  const players = filter.playerIndex as number[];
-  const numPlayers = players.length;
+  const players = filter ? filter.playerIndex : undefined;
+  const [playerText, numPlayers] = generatePlayerText(players);
   const profileName = (filter.comboCriteria as string).substring(1);
   const profileText = profileName === "default" ? comboOrConversion : `${profileName} ${comboOrConversion}`;
   if (numPlayers === 4) {
     return `When a ${profileText} occurs`;
   }
-  const playerText = players.map((i) => `P${i + 1}`).join(", ");
   return `When ${playerText} does a ${profileText}`;
 };
 
 const generateStockEventName = (spawnOrDies: string, event: EventConfig): string => {
-  const players = (event.filter as StockEventFilter).playerIndex as number[];
-  const numPlayers = players.length;
+  const players = event.filter ? (event.filter as StockEventFilter).playerIndex : undefined;
+  const [playerText, numPlayers] = generatePlayerText(players);
   if (numPlayers === 4) {
     return `When a player ${spawnOrDies}`;
   }
-  const playerText = players.map((i) => `P${i + 1}`).join(", ");
   return `When ${playerText} ${spawnOrDies}`;
 };
 
@@ -88,8 +104,7 @@ const generateButtonComboEventName = (event: EventConfig): string => {
   const isOrAre = filter.buttonCombo.length > 1 ? "are" : "is";
 
   let holdText: string = filter.inputButtonHold;
-  const numPlayers = filter.playerIndex.length;
-  const playerText = filter.playerIndex.map((i) => `P${i + 1}`).join(", ");
+  const [playerText, numPlayers] = generatePlayerText(filter.playerIndex);
 
   let holdInfo = "";
   if (filter.inputButtonHold === "held") {
