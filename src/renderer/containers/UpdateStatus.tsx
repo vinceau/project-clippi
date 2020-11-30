@@ -11,6 +11,7 @@ import { AUTO_UPDATES_ENABLED } from "common/constants";
 import { shell } from "electron";
 import { GITHUB_RELEASES_PAGE } from "common/constants";
 import { ExternalLink as A } from "@/components/ExternalLink";
+import { format } from "timeago.js";
 
 export const UpdateStatusInfo: React.FC = () => {
   const updateStatus = useSelector((state: iRootState) => state.tempContainer.updateStatus);
@@ -22,15 +23,6 @@ export const UpdateStatusInfo: React.FC = () => {
     dispatch.tempContainer.setUpdateStatus(null);
     checkForNewUpdates();
   };
-
-  React.useEffect(() => {
-    // On unmount, we should reset the update status if it was an error or if no update was available
-    return () => {
-      if (!updateAvailable) {
-        dispatch.tempContainer.setUpdateStatus(null);
-      }
-    };
-  });
 
   return (
     <div
@@ -55,7 +47,7 @@ export const UpdateStatusInfo: React.FC = () => {
       <div
         css={css`
           margin-top: 1rem;
-          white-space: pre-wrap;
+          font-size: 1.3rem;
           min-height: 1.25em;
           line-height: 1.25em;
         `}
@@ -101,7 +93,7 @@ const ShowUpdateMessage: React.FC<{
   const { status, payload } = props.versionPayload;
   switch (status) {
     case UpdateStatus.NO_UPDATE:
-      return <span>No update available</span>;
+      return <span>No update available. Last checked {format(new Date(payload.lastChecked))}.</span>;
     case UpdateStatus.UPDATE_ERROR:
       return <span>Failed to check for updates. {payload}</span>;
     case UpdateStatus.UPDATE_AVAILABLE:

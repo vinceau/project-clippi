@@ -12,10 +12,14 @@ function sendVersionUpdateStatus(status: UpdateStatus, payload?: any) {
 
 export function sendLatestVersion(version: string) {
   const versionString = clean(version) || version;
+  const payload = {
+    version: versionString,
+    lastChecked: new Date().toISOString(),
+  };
   if (needsUpdate(versionString)) {
-    sendVersionUpdateStatus(UpdateStatus.UPDATE_AVAILABLE, versionString);
+    sendVersionUpdateStatus(UpdateStatus.UPDATE_AVAILABLE, payload);
   } else {
-    sendVersionUpdateStatus(UpdateStatus.NO_UPDATE, versionString);
+    sendVersionUpdateStatus(UpdateStatus.NO_UPDATE, payload);
   }
 }
 
