@@ -10,6 +10,7 @@ import { History } from "@/components/History";
 import { ToastContainer } from "@/components/toasts/ToastContainer";
 import { darkTheme, GlobalStyle, lightTheme, ThemeManager, ThemeMode, useTheme } from "@/styles";
 import { MainView, SettingsView } from "@/views";
+import { toastNewUpdateAvailable } from "@/lib/toasts";
 
 const App: React.FC = () => {
   const dispatch = useDispatch<Dispatch>();

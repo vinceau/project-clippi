@@ -3,6 +3,7 @@ import React from "react";
 import { NoDolphinToast } from "@/components/toasts/NoDolphinToast";
 import { ProcessingError } from "@/components/toasts/ProcessingError";
 import { toast } from "react-toastify";
+import { UpdateAvailable } from "@/components/toasts/UpdateAvailable";
 
 export const toastNoDolphin = (): void => {
   toast.error(<NoDolphinToast />, {
@@ -28,7 +29,7 @@ export const toastDownloadComplete = (version: string): void => {
 };
 
 export const toastNewUpdateAvailable = (version: string): void => {
-  toast.error(<div>New update to v{version} is available!</div>, {
+  toast.info(<UpdateAvailable version={version} />, {
     autoClose: false,
     toastId: "new-update-available",
     closeOnClick: false,
