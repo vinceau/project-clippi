@@ -250,7 +250,7 @@ export const openComboInDolphin = async (
     meleeIsoPath: meleeIsoExists ? meleeIsoPath : "",
     dolphinPath: dolphinExec,
     batch: meleeIsoExists,
-    readEvents: true,
+    readEvents: Boolean(options && options.record),
     // Seekbar currently only exists on Windows. Using this flag on Mac and Linux
     // will cause Dolphin to not run at all.
     disableSeekBar: process.platform === "win32",
