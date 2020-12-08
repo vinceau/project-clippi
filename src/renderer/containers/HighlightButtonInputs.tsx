@@ -7,6 +7,7 @@ import { framesToSeconds, secondsToFrames } from "common/utils";
 import { useDispatch, useSelector } from "react-redux";
 import { Accordion, Icon } from "semantic-ui-react";
 import styled from "@emotion/styled";
+import { inputButtonInitialState as defaults } from "@/store/models/inputButtons";
 
 export const HighlightButtonInputs: React.FC = () => {
   const [showAdvanced, setShowAdvanced] = React.useState(false);
@@ -77,7 +78,11 @@ export const HighlightButtonInputs: React.FC = () => {
           <>
             {" for "}
             <span style={{ marginRight: "10px" }}>
-              <DelayInput value={inputButtonHoldAmount.toString()} onChange={setHoldAmount} placeholder={`2`} />
+              <DelayInput
+                value={inputButtonHoldAmount.toString()}
+                onChange={setHoldAmount}
+                placeholder={defaults.inputButtonHoldAmount.toString()}
+              />
             </span>
             <InlineDropdown value={inputButtonHoldUnits} onChange={setHoldUnits} options={holdOptions} />
           </>
@@ -95,9 +100,17 @@ export const HighlightButtonInputs: React.FC = () => {
           <AdvancedOptions>
             <li>
               {"Capture the previous "}{" "}
-              <DelayInput value={preInputSeconds.toString()} onChange={setPreInputSeconds} placeholder={`25`} />
+              <DelayInput
+                value={preInputSeconds.toString()}
+                onChange={setPreInputSeconds}
+                placeholder={framesToSeconds(defaults.inputButtonPreInputFrames).toString()}
+              />
               {" seconds and the following "}
-              <DelayInput value={postInputSeconds.toString()} onChange={setPostInputSeconds} placeholder={`5`} />
+              <DelayInput
+                value={postInputSeconds.toString()}
+                onChange={setPostInputSeconds}
+                placeholder={framesToSeconds(defaults.inputButtonPostInputFrames).toString()}
+              />
               {" seconds"}
             </li>
             <li>
@@ -105,7 +118,7 @@ export const HighlightButtonInputs: React.FC = () => {
               <DelayInput
                 value={inputButtonLockoutSecs.toString()}
                 onChange={setInputButtonLockoutSecs}
-                placeholder={`5`}
+                placeholder={defaults.inputButtonLockoutSecs.toString()}
               />
               {" seconds between moments"}
             </li>
