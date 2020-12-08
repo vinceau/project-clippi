@@ -52,7 +52,7 @@ export const getDolphinPath = (): string => {
 export const getDolphinExecutableNames = (): string[] => {
   switch (process.platform) {
     case "win32":
-      return ["Dolphin.exe"];
+      return ["Slippi Dolphin.exe", "Dolphin.exe"];
     case "darwin":
       return ["Slippi Dolphin.app", "Dolphin.app"];
     case "linux":
