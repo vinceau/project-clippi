@@ -14,7 +14,7 @@ export interface InputButtonState {
 export const inputButtonInitialState: InputButtonState = {
   inputButtonCombo: [],
   inputButtonPreInputFrames: 1500, // 25 seconds
-  inputButtonPostInputFrames: 300, // 5 seconds
+  inputButtonPostInputFrames: 60, // 1 second
   inputButtonHoldAmount: 2,
   inputButtonHoldUnits: "seconds",
   inputButtonLockoutSecs: 5,
