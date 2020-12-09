@@ -14,7 +14,8 @@ ipcRenderer.on(Message.VersionUpdateStatus, (_, payload: VersionUpdatePayload) =
 
   switch (payload.status) {
     case UpdateStatus.UPDATE_AVAILABLE: {
-      toastNewUpdateAvailable(payload.payload);
+      const { version } = payload.payload;
+      toastNewUpdateAvailable(version);
       break;
     }
     case UpdateStatus.DOWNLOAD_COMPLETE: {

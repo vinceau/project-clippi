@@ -13,7 +13,10 @@ export interface TwitchClip {
 
 export interface VersionUpdatePayload {
   status: UpdateStatus;
-  payload: any;
+  payload: {
+    version: string;
+    lastChecked: string;
+  };
 }
 
 export enum UpdateStatus {
