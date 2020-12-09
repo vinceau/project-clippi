@@ -1,13 +1,10 @@
-import { Message, UpdateStatus } from "common/types";
+import { Message, UpdateStatus, VersionUpdatePayload } from "common/types";
 import { sendMessage } from "./sendMessage";
 import clean from "semver/functions/clean";
 import { needsUpdate } from "common/githubReleaseVersions";
 
-function sendVersionUpdateStatus(status: UpdateStatus, payload?: any) {
-  sendMessage(Message.VersionUpdateStatus, {
-    status,
-    payload,
-  });
+function sendVersionUpdateStatus(payload: VersionUpdatePayload) {
+  sendMessage(Message.VersionUpdateStatus, payload);
 }
 
 export function sendLatestVersion(version: string) {
@@ -17,16 +14,16 @@ export function sendLatestVersion(version: string) {
     lastChecked: new Date().toISOString(),
   };
   if (needsUpdate(versionString)) {
-    sendVersionUpdateStatus(UpdateStatus.UPDATE_AVAILABLE, payload);
+    sendVersionUpdateStatus({ status: UpdateStatus.UPDATE_AVAILABLE, payload });
   } else {
-    sendVersionUpdateStatus(UpdateStatus.NO_UPDATE, payload);
+    sendVersionUpdateStatus({ status: UpdateStatus.NO_UPDATE, payload });
   }
 }
 
 export function sendDownloadComplete() {
-  sendVersionUpdateStatus(UpdateStatus.DOWNLOAD_COMPLETE);
+  sendVersionUpdateStatus({ status: UpdateStatus.DOWNLOAD_COMPLETE });
 }
 
 export function sendUpdateError(message: string) {
-  sendVersionUpdateStatus(UpdateStatus.UPDATE_ERROR, message);
+  sendVersionUpdateStatus({ status: UpdateStatus.UPDATE_ERROR, payload: message });
 }

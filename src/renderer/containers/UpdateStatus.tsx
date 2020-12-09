@@ -69,17 +69,16 @@ export const UpdateStatusInfo: React.FC = () => {
 
 const ShowUpdateMessage: React.FC<{
   versionPayload: VersionUpdatePayload | null;
-}> = (props) => {
-  if (!props.versionPayload) {
+}> = ({ versionPayload }) => {
+  if (!versionPayload) {
     return null;
   }
 
-  const { status, payload } = props.versionPayload;
-  switch (status) {
+  switch (versionPayload.status) {
     case UpdateStatus.NO_UPDATE:
-      return <span>No update available. Last checked {format(new Date(payload.lastChecked))}.</span>;
+      return <span>No update available. Last checked {format(new Date(versionPayload.payload.lastChecked))}.</span>;
     case UpdateStatus.UPDATE_ERROR:
-      return <span>Failed to check for updates. {payload}</span>;
+      return <span>Failed to check for updates. {versionPayload.payload}</span>;
     case UpdateStatus.UPDATE_AVAILABLE:
       return (
         <div>
@@ -89,7 +88,7 @@ const ShowUpdateMessage: React.FC<{
               margin-bottom: 0.5rem;
             `}
           >
-            New update v{payload} is now available!
+            New update v{versionPayload.payload.version} is now available!
           </div>
           <div>
             <A href={GITHUB_RELEASES_PAGE}>View changelog</A>
