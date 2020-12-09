@@ -103,11 +103,11 @@ export const ActionInput: React.FC<{
   const ActionArgsInput = actionComponents[value.name].Component;
   return (
     <ActionComponentBlock
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
       icon={
         <Labelled title="Click to remove" onClick={onRemove}>
-          <div onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
-            {hover ? <Icon name="close" size="large" /> : <ActionIcon />}
-          </div>
+          <div>{hover ? <Icon name="close" size="large" /> : <ActionIcon />}</div>
         </Labelled>
       }
       header={
