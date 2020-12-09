@@ -11,20 +11,40 @@ export interface TwitchClip {
   timestamp: Date;
 }
 
-export interface VersionUpdatePayload {
-  status: UpdateStatus;
-  payload: {
-    version: string;
-    lastChecked: string;
-  };
-}
-
+// Types to bind update status and payload type
 export enum UpdateStatus {
   NO_UPDATE = "NO_UPDATE",
   UPDATE_AVAILABLE = "UPDATE_AVAILABLE",
   DOWNLOAD_COMPLETE = "DOWNLOAD_COMPLETE",
   UPDATE_ERROR = "UPDATE_ERROR",
 }
+
+type UpdateTypeMap<M extends { [index: string]: any }> = {
+  [Key in keyof M]: M[Key] extends undefined
+    ? {
+        status: Key;
+      }
+    : {
+        status: Key;
+        payload: M[Key];
+      };
+};
+
+type UpdateTypePayload = {
+  // main to renderer
+  [UpdateStatus.DOWNLOAD_COMPLETE]: never;
+  [UpdateStatus.UPDATE_ERROR]: string;
+  [UpdateStatus.UPDATE_AVAILABLE]: {
+    version: string;
+    lastChecked: string;
+  };
+  [UpdateStatus.NO_UPDATE]: {
+    version: string;
+    lastChecked: string;
+  };
+};
+
+export type VersionUpdatePayload = UpdateTypeMap<UpdateTypePayload>[keyof UpdateTypeMap<UpdateTypePayload>];
 
 export enum Message {
   // renderer to main
