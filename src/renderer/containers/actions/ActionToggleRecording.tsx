@@ -96,7 +96,7 @@ const actionToggleRecording: ActionTypeGenerator = (params: ActionToggleRecordin
 };
 
 const ActionIcon = () => {
-  return <CustomIcon size={20} image={obsIcon} />;
+  return <CustomIcon image={obsIcon} size="large" />;
 };
 
 const RecordingNameInput = (props: { value: ActionToggleRecordingParams; onChange: any }) => {

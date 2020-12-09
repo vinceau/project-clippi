@@ -46,7 +46,7 @@ export const SlippiConnectionPlaceholder: React.FC<{
         <Grid.Row verticalAlign="middle">
           <Grid.Column>
             <VerticalHeader icon>
-              <SlippiIcon size={54} />
+              <SlippiIcon />
               Connect to a Slippi Relay
             </VerticalHeader>
             <Input
@@ -63,7 +63,7 @@ export const SlippiConnectionPlaceholder: React.FC<{
           <HorizontalDivider horizontal>Or</HorizontalDivider>
           <Grid.Column>
             <VerticalHeader icon>
-              <CustomIcon image={dolphinLogoSVG} size={54} />
+              <CustomIcon image={dolphinLogoSVG} />
               Connect to Slippi Dolphin
             </VerticalHeader>
             <div style={{ padding: "10px 0" }}>
