@@ -38,6 +38,7 @@ _Easily load SLP files into Dolphin with just a drag and drop!_
 
 - Detect in game events and execute arbitrary actions
 - Customisable profiles for easy combo curation and combo video generation
+- Automatically record Dolphin gameplay footage without black frames
 - One-click sort and rename your SLP files with ease
 - Twitch and OBS integration
 
@@ -52,6 +53,8 @@ Download Project Clippi for your operating system using the links below or check
 ## Usage
 
 To make combo videos using the Project Clippi, check out [this guide](https://medium.com/@vinceau/how-to-make-combo-videos-using-project-clippi-6bf2758f546e) on using the Replay Processor.
+
+To turn SLP files into video using the Project Clippi, check out [this guide](https://vinceau.medium.com/how-to-turn-slp-files-into-video-using-obs-and-project-clippi-23fe0598de29) on using the Playback Queue.
 
 To take advantage of real-time game events you will need to connect Project Clippi to a console source using the [Slippi Desktop App](https://slippi.gg/downloads) as a relay. Check out [this guide](docs/connect_to_relay/README.md) for connecting to a relay.
 
