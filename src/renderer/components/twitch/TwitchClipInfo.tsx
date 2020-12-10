@@ -67,7 +67,7 @@ export const TwitchClipInfo: React.FC<{
             <h2>{props.clip.clipID}</h2>
           </A>
         </Labelled>
-        <div>
+        <div style={{ opacity: "0.7" }}>
           {props.clip.channel && (
             <span>
               <Labelled title="Go to Twitch channel">
@@ -86,7 +86,7 @@ export const TwitchClipInfo: React.FC<{
           </A>
         </Labelled>
         <Labelled title="Remove">
-          <Icon name="trash" onClick={onRemove} />
+          <Icon name="trash" onClick={onRemove} style={{ cursor: "pointer" }} />
         </Labelled>
       </ButtonsContainer>
     </ClipContainer>
