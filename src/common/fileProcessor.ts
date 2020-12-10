@@ -195,9 +195,7 @@ export class FileProcessor {
     let totalCombos = 0;
     if (opts.findComboOption && opts.outputFile) {
       totalCombos = this.queue.length;
-      const payload = generateDolphinQueuePayload(this.queue, {
-        endBuffer: 30, // Additional frames to capture after the combo ends
-      });
+      const payload = generateDolphinQueuePayload(this.queue);
       await fs.writeFile(opts.outputFile, payload);
       console.log(`Wrote ${totalCombos} out to ${opts.outputFile}`);
     }
