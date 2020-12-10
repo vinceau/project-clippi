@@ -24,6 +24,7 @@ function createMainWindow() {
       nodeIntegration: true, // <--- flag
       nodeIntegrationInWorker: true, // <---  for web workers
     },
+    autoHideMenuBar: true, // Toggle menu bar with Alt
   });
 
   // A bit of a hack to allow the renderer window to synchronously get the current theme

@@ -12,6 +12,7 @@ import { TwitchUser, UpdateStatus, VersionUpdatePayload } from "common/types";
 import { shuffle } from "common/utils";
 
 export interface TempContainerState {
+  slippiConnectionType: "console" | "dolphin";
   slippiConnectionStatus: ConnectionStatus;
   obsConnectionStatus: OBSConnectionStatus;
   obsRecordingStatus: OBSRecordingStatus;
@@ -40,6 +41,7 @@ const initialDolphinQueueOptions = {
 };
 
 const initialState: TempContainerState = {
+  slippiConnectionType: "console",
   slippiConnectionStatus: ConnectionStatus.DISCONNECTED,
   obsConnectionStatus: OBSConnectionStatus.DISCONNECTED,
   obsRecordingStatus: OBSRecordingStatus.RECORDING,
@@ -69,6 +71,10 @@ export const tempContainer = createModel({
     setSlippiConnectionStatus: (state: TempContainerState, payload: ConnectionStatus): TempContainerState =>
       produce(state, (draft) => {
         draft.slippiConnectionStatus = payload;
+      }),
+    setSlippiConnectionType: (state: TempContainerState, payload: "console" | "dolphin"): TempContainerState =>
+      produce(state, (draft) => {
+        draft.slippiConnectionType = payload;
       }),
     setOBSConnectionStatus: (state: TempContainerState, payload: OBSConnectionStatus): TempContainerState =>
       produce(state, (draft) => {
@@ -172,8 +178,8 @@ export const tempContainer = createModel({
     setDolphinQueueFromJson: (state: TempContainerState, payload: DolphinQueueFormat): TempContainerState => {
       const { queue, ...rest } = payload;
       return produce(state, (draft) => {
-        draft.dolphinQueueOptions = rest;
-        draft.dolphinQueue = queue;
+        draft.dolphinQueueOptions = Object.assign({}, state.dolphinQueueOptions, rest);
+        draft.dolphinQueue = queue || [];
       });
     },
     resetDolphinQueue: (state: TempContainerState): TempContainerState =>
@@ -200,11 +206,9 @@ export const tempContainer = createModel({
   effects: (dispatch) => ({
     async loadDolphinQueue() {
       const dolphinQueue = await loadDolphinQueue();
-      if (!dolphinQueue) {
-        console.error("Couldn't load dolphin queue");
-        return;
+      if (dolphinQueue) {
+        dispatch.tempContainer.setDolphinQueueFromJson(dolphinQueue);
       }
-      dispatch.tempContainer.setDolphinQueueFromJson(dolphinQueue);
     },
     async addFileToDolphinQueue() {
       const p = await getFilePath(

@@ -48,20 +48,6 @@ const makeGlobalStyles = (theme: Theme) => css`
     color: ${theme.foreground};
   }
 
-  .ui.buttons {
-    font-size: 1em;
-    margin: 0;
-  }
-
-  .ui.dropdown .menu > .item,
-  .ui.checkbox,
-  .ui.segment,
-  .ui.button,
-  .ui.buttons .button,
-  .ui.modal,
-  .ui.form {
-    font-size: 1em;
-  }
   .ui.modal.${ThemeMode.DARK}, #app .${ThemeMode.DARK} {
     font-weight: 100;
 
@@ -69,6 +55,11 @@ const makeGlobalStyles = (theme: Theme) => css`
     .ui.divider,
     .ui.header {
       color: ${theme.foreground};
+    }
+
+    .ui.default.dropdown:not(.button) > .text,
+    .ui.dropdown:not(.button) > .default.text {
+      color: ${theme.foreground2};
     }
 
     .ui.accordion .title:not(.ui),

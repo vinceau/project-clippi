@@ -7,9 +7,12 @@ import { updateEventActionManager } from "@/containers/actions";
 import { dolphinRecorder } from "@/lib/dolphin";
 import { obsConnection } from "@/lib/obs";
 import { mapConfigurationToFilterSettings } from "@/lib/profile";
-import { comboFilter } from "@/lib/realtime";
+// import { comboFilter } from "@/lib/realtime";
 import { soundPlayer } from "@/lib/sounds";
 import { transformer } from "./transformer";
+import { streamManager } from "@/lib/realtime";
+import { InputEvent, EventConfig } from "@vinceau/slp-realtime";
+import { mapInputEventConfig } from "@/lib/inputs";
 
 const persistPlugin = createRematchPersist({
   version: 1,
@@ -34,20 +37,40 @@ export const Models = models;
 const storeSync = () => {
   const state = store.getState();
 
-  // Restore events
-  const events = state.slippi.events;
-  updateEventActionManager(events);
+  // Restore actions
+  const actions = state.automator.actions;
+  updateEventActionManager(actions);
 
   // Restore sound files
   const soundFiles = state.filesystem.soundFiles;
   soundPlayer.sounds = soundFiles;
 
   // Restore combo settings
-  const slippiSettings = state.slippi.comboProfiles[state.slippi.currentProfile];
-  const converted = mapConfigurationToFilterSettings(JSON.parse(slippiSettings));
-  if (slippiSettings) {
-    comboFilter.updateSettings(converted);
-  }
+  const eventConfigVars = {};
+  Object.keys(state.slippi.comboProfiles).map((key) => {
+    const slippiSettings = state.slippi.comboProfiles[key];
+    const converted = mapConfigurationToFilterSettings(JSON.parse(slippiSettings));
+    eventConfigVars[`$${key}`] = converted;
+  });
+  streamManager.updateEventConfig({
+    variables: eventConfigVars,
+    events: state.automator.events
+      .filter((e) => !e.disabled)
+      .map(
+        (event): EventConfig => {
+          const { type, filter } = event;
+          switch (type) {
+            case InputEvent.BUTTON_COMBO:
+              const newButtonConfig = {
+                ...event,
+                filter: mapInputEventConfig(filter as any),
+              };
+              return newButtonConfig;
+          }
+          return event;
+        }
+      ),
+  });
 };
 
 store.subscribe(() => {

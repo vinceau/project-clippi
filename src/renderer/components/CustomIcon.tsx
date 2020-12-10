@@ -1,30 +1,36 @@
-import * as React from "react";
+import React from "react";
 
-import { css } from "@emotion/core";
 import styled from "@emotion/styled";
+import { IconSizeProp } from "semantic-ui-react/dist/commonjs/elements/Icon/Icon";
 
-export const CustomIcon: React.FC<{
-  image: string;
+const Outer = styled.i<{
+  image: any;
   color?: string;
-  size?: number;
-}> = (props) => {
-  const size = (s: number) => css`
-    height: ${s}px !important;
-    width: ${s}px !important;
-  `;
-  const Outer = styled.i`
-    &&& {
-        ${props.size && size(props.size)}
-        &::before {
-            content: "";
-            mask: url("${props.image}") no-repeat 100% 100%;
-            mask-size: contain;
-            background-color: ${(p) => (props.color ? props.color : p.theme.foreground)} !important;
-            height: 100%;
-            width: 100%;
-            display: block;
-        }
+}>`
+  &&& {
+    .ui.icon.header & {
+      width: 1.18em;
+      height: 1em;
     }
-    `;
-  return <Outer aria-hidden="true" className="icon" />;
+
+    &:before {
+      content: "";
+      mask: url("${(p) => p.image}") no-repeat 100% 100%;
+      mask-size: contain;
+      background-color: ${(p) => (p.color ? p.color : p.theme.foreground)} !important;
+      height: 100%;
+      width: 100%;
+      display: block;
+    }
+  }
+`;
+
+export interface CustomIconProps {
+  image: any;
+  color?: string;
+  size?: IconSizeProp;
+}
+
+export const CustomIcon: React.FC<CustomIconProps> = (props) => {
+  return <Outer image={props.image} color={props.color} aria-hidden="true" className={`icon ${props.size}`} />;
 };

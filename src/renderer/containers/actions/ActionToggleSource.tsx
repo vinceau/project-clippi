@@ -38,7 +38,7 @@ const actionToggleSource: ActionTypeGenerator = (params: ActionToggleSourceParam
 };
 
 const ActionIcon = () => {
-  return <CustomIcon size={20} image={obsIcon} />;
+  return <CustomIcon image={obsIcon} size="large" />;
 };
 
 const SourceNameInput = (props: { value: ActionToggleSourceParams; onChange: any }) => {

@@ -1,11 +1,13 @@
+import log from "electron-log";
 import produce from "immer";
 
 import { createModel } from "@rematch/core";
 
-import { EventActionConfig } from "@/containers/actions";
 import { mapFilterSettingsToConfiguration } from "@/lib/profile";
-import { ActionEvent, comboFilter, streamManager } from "@/lib/realtime";
+import { streamManager } from "@/lib/realtime";
 import { notify } from "@/lib/utils";
+import { defaultComboFilterSettings } from "@vinceau/slp-realtime";
+import { Ports } from "@slippi/slippi-js";
 
 export const DEFAULT_PROFILE = "default";
 
@@ -13,13 +15,12 @@ export interface SlippiState {
   port: string;
   currentProfile: string; // profile name
   comboProfiles: { [name: string]: string }; // profile name -> JSON stringified settings
-  events: EventActionConfig[];
   obsAddress: string;
   obsPort: string;
   obsPassword: string;
 }
 
-const defaultSettings = JSON.stringify(mapFilterSettingsToConfiguration(comboFilter.getSettings()));
+const defaultSettings = JSON.stringify(mapFilterSettingsToConfiguration(defaultComboFilterSettings));
 
 const initialState: SlippiState = {
   port: "1667",
@@ -27,7 +28,6 @@ const initialState: SlippiState = {
   comboProfiles: {
     [DEFAULT_PROFILE]: defaultSettings,
   },
-  events: [],
   obsAddress: "localhost",
   obsPort: "4444",
   obsPassword: "",
@@ -90,32 +90,25 @@ export const slippi = createModel({
         draft.comboProfiles = newState;
       });
     },
-    addNewEventAction: (state: SlippiState, payload: ActionEvent): SlippiState =>
-      produce(state, (draft) => {
-        draft.events.push({
-          event: payload,
-          actions: [],
-        });
-      }),
-    updateActionEvent: (state: SlippiState, payload: { index: number; event: EventActionConfig }): SlippiState =>
-      produce(state, (draft) => {
-        draft.events[payload.index] = payload.event;
-      }),
-    removeActionEvent: (state: SlippiState, payload: number): SlippiState =>
-      produce(state, (draft) => {
-        draft.events.splice(payload, 1);
-      }),
   },
   effects: (dispatch) => ({
     async connectToSlippi(port: string) {
       try {
         console.log(`connecting on port: ${port}`);
-        await streamManager.connectToSlippi(parseInt(port, 10));
+        await streamManager.connectToSlippi("0.0.0.0", parseInt(port, 10));
       } catch (err) {
-        console.error(err);
+        log.error(err);
         notify(`Failed to connect to port ${port}! Is the relay running?`);
       }
       dispatch.slippi.setPort(port);
+    },
+    async connectToDolphin() {
+      try {
+        await streamManager.connectToSlippi("127.0.0.1", Ports.DEFAULT, "dolphin");
+      } catch (err) {
+        log.error(err);
+        notify(`Failed to connect to Dolphin! Is Slippi Dolphin running?`);
+      }
     },
   }),
 });

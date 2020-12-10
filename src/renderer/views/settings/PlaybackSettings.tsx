@@ -2,7 +2,7 @@ import React from "react";
 
 import { FileInput } from "@/components/FileInput";
 
-import { Field, FormContainer, Label, PageHeader, Text } from "@/components/Form";
+import { Field, FormContainer, Label, PageHeader, Text, Toggle } from "@/components/Form";
 import { getDolphinExecutableNames, getDolphinPath } from "@/lib/dolphin";
 import { Dispatch, iRootState } from "@/store";
 import { useDispatch, useSelector } from "react-redux";
@@ -49,10 +49,12 @@ const PlaybackExecutableNames: React.FC = () => {
 export const PlaybackSettings: React.FC = () => {
   const dispatch = useDispatch<Dispatch>();
   const { meleeIsoPath, dolphinPath } = useSelector((state: iRootState) => state.filesystem);
-  const { showDevOptions } = useSelector((state: iRootState) => state.appContainer);
+  const showDevOptions = useSelector((state: iRootState) => state.appContainer.showDevOptions);
+  const autoNameRecordedFiles = useSelector((state: iRootState) => state.appContainer.autoNameRecordedFiles);
   const setMeleeIsoPath = (filePath: string) => dispatch.filesystem.setMeleeIsoPath(filePath);
   const setDolphinPath = (filePath: string) => dispatch.filesystem.setDolphinPath(filePath);
   const resetDolphinPath = () => dispatch.filesystem.setDolphinPath(defaultDolphinPath);
+  const setAutoNameRecordedFiles = () => dispatch.appContainer.setAutoNameRecordedFiles(!autoNameRecordedFiles);
   const showDolphinPathField = showDevOptions || !IS_MAC_OR_WIN;
   const showResetButton = showDolphinPathField && dolphinPath !== defaultDolphinPath;
   return (
@@ -66,8 +68,9 @@ export const PlaybackSettings: React.FC = () => {
           should match the Melee ISO File in the Slippi Desktop App.
         </Text>
       </Field>
+
       {showDolphinPathField && (
-        <Field border="top">
+        <Field padding="bottom">
           <DolphinPathLabel>
             <Label>Playback Dolphin Path</Label>
             {showResetButton && (
@@ -84,6 +87,18 @@ export const PlaybackSettings: React.FC = () => {
           </Text>
         </Field>
       )}
+
+      <Field border="top">
+        <Toggle
+          value={autoNameRecordedFiles}
+          onChange={setAutoNameRecordedFiles}
+          label="Auto-name Recorded Files (experimental)"
+        />
+        <Text>
+          If enabled, games that are recorded separately will have their video file named to match the SLP filename.
+          Restoration of the original OBS filename format is NOT guaranteed. Use at own risk.
+        </Text>
+      </Field>
     </FormContainer>
   );
 };

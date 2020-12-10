@@ -3,9 +3,7 @@ import React from "react";
 import { Checkbox } from "semantic-ui-react";
 import styled from "@emotion/styled";
 
-export const FormContainer = styled.div`
-  max-width: 65rem;
-`;
+export const FormContainer = styled.div``;
 
 export const PageHeader = styled.h1`
   font-variant: all-small-caps;
@@ -64,7 +62,7 @@ Field.defaultProps = {
   padding: "both",
 };
 
-const ToggleOuter = styled.div`
+const ToggleOuter = styled(Label)`
   display: flex;
   flex-direction: row;
   justify-content: space-between;

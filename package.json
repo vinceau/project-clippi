@@ -1,7 +1,7 @@
 {
   "productName": "Project Clippi",
   "name": "project-clippi",
-  "version": "1.4.7",
+  "version": "1.5.0",
   "description": "A Melee Automation Framework",
   "license": "MIT",
   "author": {
@@ -27,8 +27,10 @@
     "@octokit/rest": "^17.6.0",
     "@rematch/core": "^1.3.0",
     "@rematch/persist": "^1.1.6",
+    "@slippi/slippi-js": "^5.1.1",
     "@vinceau/event-actions": "^0.0.4",
-    "@vinceau/slp-realtime": "^3.0.2",
+    "@vinceau/slp-realtime": "^3.1.0",
+    "comlink": "^4.2.0",
     "electron-context-menu": "^0.15.1",
     "electron-log": "^4.2.4",
     "electron-store": "^5.1.1",
@@ -55,8 +57,10 @@
     "react-final-form": "^6.3.3",
     "react-final-form-arrays": "^3.1.1",
     "react-gamecube": "^1.0.4",
+    "react-hook-form": "^5.7.2",
     "react-markdown": "^4.3.1",
     "react-redux": "^7.1.0",
+    "react-reflex": "^3.1.0",
     "react-router": "^5.1.2",
     "react-router-dom": "^5.1.2",
     "react-select": "^3.0.8",
@@ -84,6 +88,7 @@
     "@types/semver": "^7.1.0",
     "@typescript-eslint/eslint-plugin": "^3.0.0",
     "@typescript-eslint/parser": "^3.0.0",
+    "comlink-loader": "^2.0.0",
     "electron": "7.3.3",
     "electron-builder": "22.5.1",
     "electron-webpack": "^2.8.2",
@@ -102,8 +107,7 @@
     "ts-unused-exports": "^6.1.2",
     "typescript": "^3.3.3333",
     "webpack": "4.44.1",
-    "webpack-build-notifier": "^0.1.30",
-    "worker-loader": "^2.0.0"
+    "webpack-build-notifier": "^0.1.30"
   },
   "electronWebpack": {
     "renderer": {

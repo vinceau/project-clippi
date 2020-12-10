@@ -43,6 +43,7 @@ const StopButton = styled(Button)`
 
 export const ProcessorStatusBar: React.FC = () => {
   const [confirmOpened, setConfirmOpened] = React.useState(false);
+  const [stopping, setStopping] = React.useState(false);
   const { comboFinderPercent, comboFinderLog, comboFinderProcessing } = useSelector(
     (state: iRootState) => state.tempContainer
   );
@@ -136,6 +137,15 @@ export const ProcessorStatusBar: React.FC = () => {
     setupOptionsAndProcess();
   };
 
+  const onStop = async (): Promise<void> => {
+    setStopping(true);
+    try {
+      await stopProcessing();
+    } finally {
+      setStopping(false);
+    }
+  };
+
   return (
     <Outer>
       <Confirm
@@ -155,7 +165,7 @@ export const ProcessorStatusBar: React.FC = () => {
       </ProcessStatus>
       <div>
         {comboFinderProcessing ? (
-          <StopButton type="button" onClick={() => stopProcessing()}>
+          <StopButton type="button" onClick={onStop} disabled={stopping}>
             <Icon name="stop" />
             Stop processing
           </StopButton>

@@ -27,15 +27,16 @@ import {
 } from "@vinceau/slp-realtime";
 import { delay, onlyFilename } from "common/utils";
 import { IS_MAC_OR_WIN } from "common/constants";
-import { BehaviorSubject, from } from "rxjs";
-import { concatMap, filter } from "rxjs/operators";
+import { BehaviorSubject, from, merge, Observable } from "rxjs";
+import { concatMap, filter, map, mapTo, startWith } from "rxjs/operators";
 import { toastNoDolphin } from "./toasts";
 
 const defaultDolphinRecorderOptions = {
   record: false,
   recordAsOneFile: true,
+  renameOutput: false,
   outputFilename: "",
-  outputFolder: "ProjectClippi",
+  outputFolder: "",
   gameEndDelayMs: 1000,
 };
 
@@ -87,12 +88,26 @@ export class DolphinRecorder extends DolphinLauncher {
   private readonly currentJSONFileSource = new BehaviorSubject<string>("");
   public currentJSONFile$ = this.currentJSONFileSource.asObservable();
 
-  private readonly currentBasenameSource = new BehaviorSubject<string>("");
-  public currentBasename$ = this.currentBasenameSource.asObservable();
+  public currentBasename$: Observable<string>;
 
-  public constructor(options?: any) {
+  public constructor(options?: Partial<DolphinLauncherOptions>) {
     super(options);
     this.recordOptions = Object.assign({}, defaultDolphinRecorderOptions);
+
+    // Observable with every new file basename
+    const newBasename$ = this.output.playbackStatus$.pipe(
+      filter((payload) => payload.status === DolphinPlaybackStatus.FILE_LOADED),
+      map((payload) => path.basename(payload.data.path))
+    );
+
+    // Observable for when we should clear the basename
+    const clearBasename$ = merge(
+      this.output.playbackStatus$.pipe(filter((payload) => payload.status === DolphinPlaybackStatus.PLAYBACK_END)),
+      this.dolphinRunning$.pipe(filter((isRunning) => !isRunning))
+    ).pipe(mapTo(""));
+
+    this.currentBasename$ = merge(newBasename$, clearBasename$).pipe(startWith(""));
+
     this.output.playbackStatus$
       .pipe(
         // Only process if recording is enabled and OBS is connected
@@ -126,7 +141,6 @@ export class DolphinRecorder extends DolphinLauncher {
       case DolphinPlaybackStatus.FILE_LOADED:
         const basename = path.basename(payload.data.path);
         await this._handleSetOBSFilename(basename);
-        this.currentBasenameSource.next(basename);
         break;
       case DolphinPlaybackStatus.PLAYBACK_START:
         await this._startRecording();
@@ -149,8 +163,8 @@ export class DolphinRecorder extends DolphinLauncher {
   }
 
   private async _handleSetOBSFilename(filename: string): Promise<void> {
-    // Return if recording is off, or if recording has already started
-    if (!this.recordOptions.record || obsConnection.isRecording()) {
+    // Return if recording is off, or if recording has already started, or if we're not changing output names
+    if (!this.recordOptions.record || obsConnection.isRecording() || !this.recordOptions.renameOutput) {
       return;
     }
 
@@ -180,12 +194,14 @@ export class DolphinRecorder extends DolphinLauncher {
   }
 
   private async _stopRecording(killDolphin?: boolean) {
-    this.currentBasenameSource.next("");
     if (obsConnection.isRecording()) {
       await obsConnection.setRecordingState(OBSRecordingAction.STOP);
     }
-    // Restore the original user filename format
-    await obsConnection.setFilenameFormat(this.userFilenameFormat);
+
+    // Restore the original user filename format if we changed it
+    if (this.recordOptions.renameOutput) {
+      await obsConnection.setFilenameFormat(this.userFilenameFormat);
+    }
 
     if (killDolphin) {
       this.killDolphin();
@@ -234,6 +250,7 @@ export const openComboInDolphin = async (
     meleeIsoPath: meleeIsoExists ? meleeIsoPath : "",
     dolphinPath: dolphinExec,
     batch: meleeIsoExists,
+    readEvents: true,
     // Seekbar currently only exists on Windows. Using this flag on Mac and Linux
     // will cause Dolphin to not run at all.
     disableSeekBar: process.platform === "win32",

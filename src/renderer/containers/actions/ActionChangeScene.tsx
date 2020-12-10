@@ -37,7 +37,7 @@ const actionChangeScene: ActionTypeGenerator = (params: ActionChangeSceneParams)
 };
 
 const ActionIcon = () => {
-  return <CustomIcon size={20} image={obsIcon} />;
+  return <CustomIcon image={obsIcon} size="large" />;
 };
 
 const SceneNameInput = (props: any) => {

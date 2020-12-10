@@ -24,7 +24,7 @@ export const PlaybackQueueEmpty: React.FC<{
 }> = (props) => {
   return (
     <Outer>
-      <SlippiIcon size={75} />
+      <SlippiIcon size="huge" />
       <Notice>
         <h2>No files added</h2>
         <p>Drag and drop SLP files here to add them to the queue</p>
