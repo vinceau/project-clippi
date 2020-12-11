@@ -20,10 +20,6 @@ autoUpdater.on("error", (error) => {
   sendUpdateError(error.message || error);
 });
 
-autoUpdater.on("update-downloaded", async () => {
-  sendDownloadComplete();
-});
-
 autoUpdater.on("update-downloaded", () => {
   sendDownloadComplete();
 });
