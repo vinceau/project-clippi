@@ -1,3 +1,4 @@
+import log from "electron-log";
 import TwitchClient, { HelixUser } from "twitch";
 import ChatClient from "twitch-chat-client";
 import ElectronAuthProvider from "twitch-electron-auth-provider";
@@ -52,7 +53,7 @@ export class TwitchController {
     // Connect the chat client so we're ready to post clip links
     this.chatClient = ChatClient.forTwitchClient(this.client);
     this.chatClient.onRegister(() => {
-      console.log("Successfully connected to the Twitch chat server.");
+      log.log("Successfully connected to the Twitch chat server.");
       this.isChatConnected = true;
     });
     await this.chatClient.connect();
@@ -99,7 +100,7 @@ export class TwitchController {
         await this.chat(channelToJoin, prefix + url);
       } catch (err) {
         // Catch the error so we can always return the clip ID
-        console.error(err);
+        log.error(err);
       }
     }
 
@@ -110,7 +111,7 @@ export class TwitchController {
   public async chat(channel: string, message: string): Promise<void> {
     if (this.isChatConnected && this.chatClient) {
       await this.chatClient.join(channel);
-      console.log(`Joined Twitch chat for channel: ${channel}`);
+      log.log(`Joined Twitch chat for channel: ${channel}`);
       this.chatClient.say(channel, message);
     }
   }
@@ -130,7 +131,7 @@ export class TwitchController {
       return false;
     }
     const s = await user.getStream();
-    console.log(s);
+    log.log(s);
     return s !== null;
   }
 
