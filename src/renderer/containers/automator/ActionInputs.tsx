@@ -11,6 +11,7 @@ import { Icon } from "semantic-ui-react";
 import { InlineDropdown } from "@/components/InlineInputs";
 import { Labelled } from "@/components/Labelled";
 import { actionComponents } from "@/containers/actions";
+import { ActionIcon } from "./ActionIcon";
 
 const allActions = Object.keys(actionComponents);
 
@@ -80,7 +81,7 @@ export const ActionInput: React.FC<{
   disabledActions: string[];
   onRemove: () => void;
 }> = (props) => {
-  const [hover, setHover] = React.useState<boolean>(false);
+  const outerRef = React.createRef<HTMLDivElement>();
   const { value, onChange, onRemove, selectPrefix, disabledActions } = props;
   const onActionChange = (action: string) => {
     const params = actionComponents[action].defaultParams;
@@ -99,28 +100,27 @@ export const ActionInput: React.FC<{
   if (!actionComponents[value.name]) {
     return null;
   }
-  const ActionIcon = actionComponents[value.name].Icon;
   const ActionArgsInput = actionComponents[value.name].Component;
   return (
-    <ActionComponentBlock
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
-      icon={
-        <Labelled title="Remove" onClick={onRemove}>
-          <div>{hover ? <Icon name="close" size="large" /> : <ActionIcon />}</div>
-        </Labelled>
-      }
-      header={
-        <ActionSelector
-          prefix={selectPrefix}
-          value={value.name}
-          onChange={onActionChange}
-          disabledOptions={disabledActions}
-        />
-      }
-    >
-      <ActionArgsInput value={value.args} onChange={onArgsChange} />
-    </ActionComponentBlock>
+    <div ref={outerRef}>
+      <ActionComponentBlock
+        icon={
+          <Labelled title="Remove" onClick={onRemove}>
+            <ActionIcon name={value.name} outer={outerRef} />
+          </Labelled>
+        }
+        header={
+          <ActionSelector
+            prefix={selectPrefix}
+            value={value.name}
+            onChange={onActionChange}
+            disabledOptions={disabledActions}
+          />
+        }
+      >
+        <ActionArgsInput value={value.args} onChange={onArgsChange} />
+      </ActionComponentBlock>
+    </div>
   );
 };
 
