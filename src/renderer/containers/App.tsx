@@ -1,11 +1,18 @@
-import React from "react";
+// Import all the styles first since they will be overwritten
+import "react-tippy/dist/tippy.css"; // React-tippy styles
+import "react-toastify/dist/ReactToastify.min.css"; // Toast styles
+import "semantic-ui-css/semantic.min.css"; // Semantic UI styles
+import "react-reflex/styles.css";
 
+import "@/styles/index.scss"; // Our custom styles
+
+import React from "react";
+import { PersistGate } from "redux-persist/integration/react";
 import { hot } from "react-hot-loader/root";
-import { Dispatch, iRootState } from "@/store";
-import { useDispatch, useSelector } from "react-redux";
+import { persistor, store, Dispatch, iRootState } from "@/store";
+import { Provider, useDispatch, useSelector } from "react-redux";
 import { HashRouter as Router, Redirect, Route, Switch } from "react-router-dom";
 import { ThemeProvider } from "emotion-theming";
-
 import { History } from "@/components/History";
 import { ToastContainer } from "@/components/toasts/ToastContainer";
 import { darkTheme, GlobalStyle, lightTheme, ThemeManager, ThemeMode, useTheme } from "@/styles";
@@ -40,15 +47,19 @@ const App: React.FC = () => {
   );
 };
 
-const ThemedApp: React.FC = () => {
+const AppWithProviders: React.FC = () => {
   // ThemedManager must be declared and instantiated before useTheme() is called
   return (
-    <ThemeManager>
-      <Router>
-        <App />
-      </Router>
-    </ThemeManager>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <ThemeManager>
+          <Router>
+            <App />
+          </Router>
+        </ThemeManager>
+      </PersistGate>
+    </Provider>
   );
 };
 
-export default hot(ThemedApp);
+export default hot(AppWithProviders);
