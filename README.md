@@ -28,7 +28,7 @@ _Built in replay processor helps you find combos and organise your SLP replays!_
 
 ![slp file processor screenshot](docs/images/2-processor.png)
 
-_Easily load SLP files into Dolphin with just a drag and drop!_
+_Easily play and record SLP files with a single click!_
 
 ![Project Clippi playback queue screenshot](docs/images/3-playback.png)
 
@@ -52,7 +52,15 @@ To make combo videos using the Project Clippi, check out [this guide](https://me
 
 To turn SLP files into video using the Project Clippi, check out [this guide](https://vinceau.medium.com/how-to-turn-slp-files-into-video-using-obs-and-project-clippi-23fe0598de29) on using the Playback Queue.
 
-To take advantage of real-time game events you will need to connect Project Clippi to a console source using the [Slippi Desktop App](https://slippi.gg/downloads) as a relay. Check out [this guide](docs/connect_to_relay/README.md) for connecting to a relay.
+To take advantage of real-time game events using the Automator, you will need to connect Project Clippi to one of the following console sources:
+
+- Slippi Dolphin
+
+  - Ensure Melee is running in Slippi Dolphin.
+  - Click _Find Dolphin Instance_ under the Slippi Connection settings.
+
+- Wii Console relay via [Slippi Desktop App](https://slippi.gg/downloads)
+  - Check out [this guide](docs/connect_to_relay/README.md) for connecting to a relay.
 
 ## Contributing
 

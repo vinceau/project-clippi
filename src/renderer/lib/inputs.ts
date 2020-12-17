@@ -1,5 +1,20 @@
-import { InputEventFilter } from "@vinceau/slp-realtime";
+import { Input, InputEventFilter } from "@vinceau/slp-realtime";
 import { secondsToFrames } from "common/utils";
+
+const ORDERED_INPUTS = [
+  Input.Z,
+  Input.L,
+  Input.R,
+  Input.A,
+  Input.B,
+  Input.X,
+  Input.Y,
+  Input.START,
+  Input.D_UP,
+  Input.D_DOWN,
+  Input.D_LEFT,
+  Input.D_RIGHT,
+];
 
 export interface CustomInputEventFilter {
   playerIndex: number[];
@@ -32,4 +47,8 @@ export const mapInputEventConfig = (data: CustomInputEventFilter): InputEventFil
     playerIndex: data.playerIndex,
     duration,
   };
+};
+
+export const generateButtonComboPreview = (value: string[], separator = " + "): string => {
+  return ORDERED_INPUTS.filter((i) => value.includes(i)).join(separator);
 };

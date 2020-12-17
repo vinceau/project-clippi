@@ -9,6 +9,36 @@ import { Accordion, Icon } from "semantic-ui-react";
 import styled from "@emotion/styled";
 import { inputButtonInitialState as defaults } from "@/store/models/inputButtons";
 
+const Outer = styled.div`
+  input {
+    padding: 3px !important;
+  }
+`;
+const AdvancedOptions = styled.ul`
+  margin: 0;
+  margin-left: 20px;
+  padding: 0 1em;
+
+  li {
+    line-height: 25px;
+    margin-bottom: 5px;
+  }
+`;
+
+const options = [
+  {
+    key: "hold",
+    value: true,
+    text: "holds",
+  },
+  {
+    key: "press",
+    value: false,
+    text: "presses",
+  },
+];
+const holdOptions = ["frames", "seconds"].map((o) => ({ key: o, value: o, text: o }));
+
 export const HighlightButtonInputs: React.FC = () => {
   const [showAdvanced, setShowAdvanced] = React.useState(false);
   const dispatch = useDispatch<Dispatch>();
@@ -40,35 +70,7 @@ export const HighlightButtonInputs: React.FC = () => {
     const frames = secondsToFrames(+secs);
     dispatch.inputButtons.setInputButtonPostInputFrames(frames);
   };
-  const options = [
-    {
-      key: "hold",
-      value: true,
-      text: "holds",
-    },
-    {
-      key: "press",
-      value: false,
-      text: "presses",
-    },
-  ];
-  const holdOptions = ["frames", "seconds"].map((o) => ({ key: o, value: o, text: o }));
 
-  const Outer = styled.div`
-    input {
-      padding: 3px !important;
-    }
-  `;
-  const AdvancedOptions = styled.ul`
-    margin: 0;
-    margin-left: 20px;
-    padding: 0 1em;
-
-    li {
-      line-height: 25px;
-      margin-bottom: 5px;
-    }
-  `;
   return (
     <Outer>
       <div style={{ marginBottom: "10px", lineHeight: "28px" }}>

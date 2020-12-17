@@ -17,9 +17,18 @@ export const PercentageSlider: React.FC<{
   const max = props.max || "100";
   return (
     <Outer>
-      <Field parse={(v) => parseFloat(v)} name={props.name} min={min} max={max} component="input" type="text" />
       <Field
-        parse={(v) => parseFloat(v)}
+        format={parseFloat}
+        formatOnBlur={true}
+        name={props.name}
+        min={min}
+        max={max}
+        component="input"
+        type="text"
+      />
+      <Field
+        format={parseFloat}
+        formatOnBlur={true}
         name={props.name}
         component="input"
         type="range"

@@ -1,6 +1,7 @@
 const webpack = require("webpack");
 const pkg = require("./package.json");
 const moment = require("moment");
+const Dotenv = require("dotenv-webpack");
 
 const commitHash = require("child_process").execSync("git rev-parse --short HEAD").toString();
 
@@ -30,6 +31,9 @@ module.exports = function (context) {
 
   // Fix web workers not working with HMR
   context.output.globalObject = "this";
+
+  // Expose dotenv variables
+  context.plugins.push(new Dotenv());
 
   // Add globals
   context.plugins.push(

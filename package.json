@@ -89,6 +89,7 @@
     "@typescript-eslint/eslint-plugin": "^3.0.0",
     "@typescript-eslint/parser": "^3.0.0",
     "comlink-loader": "^2.0.0",
+    "dotenv-webpack": "^6.0.0",
     "electron": "7.3.3",
     "electron-builder": "22.5.1",
     "electron-webpack": "^2.8.2",

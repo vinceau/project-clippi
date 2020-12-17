@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 
 import styled from "@emotion/styled";
 
@@ -11,34 +11,35 @@ import { SlippiIcon } from "@/components/SlippiIcon";
 
 import dolphinLogoSVG from "@/styles/images/dolphin.svg";
 
+const VerticalHeader = styled(Header)`
+  &&& {
+    display: flex;
+    flex-direction: column;
+  }
+`;
+const VerticalDivider = styled(Divider)`
+  &&& {
+    display: none !important;
+    @media ${device.laptop} {
+      display: block !important;
+    }
+  }
+`;
+const HorizontalDivider = styled(Divider)`
+  &&& {
+    width: 100%;
+    display: block !important;
+    @media ${device.laptop} {
+      display: none !important;
+    }
+  }
+`;
+
 export const SlippiConnectionPlaceholder: React.FC<{
   port: string;
   onClick: (port: string) => void;
 }> = (props) => {
   const [port, setPort] = React.useState(props.port);
-  const VerticalHeader = styled(Header)`
-    &&& {
-      display: flex;
-      flex-direction: column;
-    }
-  `;
-  const VerticalDivider = styled(Divider)`
-    &&& {
-      display: none !important;
-      @media ${device.laptop} {
-        display: block !important;
-      }
-    }
-  `;
-  const HorizontalDivider = styled(Divider)`
-    &&& {
-      width: 100%;
-      display: block !important;
-      @media ${device.laptop} {
-        display: none !important;
-      }
-    }
-  `;
   return (
     <Segment placeholder>
       <Grid columns={2} stackable textAlign="center">

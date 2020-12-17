@@ -7,8 +7,7 @@ import { Button, Icon, Modal } from "semantic-ui-react";
 import { ControllerLayout } from "./ControllerLayout";
 
 import { useTheme } from "@/styles";
-import styled from "@emotion/styled";
-import { ButtonTextPreview } from "./ButtonPreview";
+import { generateButtonComboPreview } from "@/lib/inputs";
 
 export const ButtonPicker: React.FC<{
   value?: string[];
@@ -32,11 +31,6 @@ export const ButtonPicker: React.FC<{
     }
     setOpened(false);
   };
-  const ButtonTextContainer = styled.div`
-    font-size: 2em;
-    text-align: center;
-    margin-bottom: 2em;
-  `;
   return (
     <Modal
       className={theme.themeName}
@@ -48,9 +42,15 @@ export const ButtonPicker: React.FC<{
       <Modal.Header>Choose a button combination</Modal.Header>
       <Modal.Content>
         <div>
-          <ButtonTextContainer>
-            {buttons.length > 0 ? <ButtonTextPreview value={buttons} /> : "No buttons selected"}
-          </ButtonTextContainer>
+          <div
+            css={css`
+              font-size: 2em;
+              text-align: center;
+              margin-bottom: 2em;
+            `}
+          >
+            {buttons.length > 0 ? generateButtonComboPreview(buttons) : "No buttons selected"}
+          </div>
           <ControllerLayout value={buttons} onChange={setButtons} />
         </div>
       </Modal.Content>

@@ -1,6 +1,6 @@
-import * as React from "react";
-
-import styled from "@emotion/styled";
+/** @jsx jsx */
+import { css, jsx } from "@emotion/core";
+import React from "react";
 
 import { Button, Card, Image } from "semantic-ui-react";
 
@@ -21,17 +21,20 @@ export const ConnectionStatusCard: React.FC<{
     }
   };
   const color = props.statusColor || "red";
-  const StatusSpan = styled.span`
-    text-transform: capitalize;
-    margin-right: 10px;
-  `;
   return (
     <div style={{ padding: "3px" }}>
       <Card>
         <Card.Content>
           <Image floated="right" size="mini" src={props.userImage} />
           <Card.Header>
-            <StatusSpan>{props.header}</StatusSpan>
+            <span
+              css={css`
+                text-transform: capitalize;
+                margin-right: 10px;
+              `}
+            >
+              {props.header}
+            </span>
             <ScanningDot color={color} shouldPulse={props.shouldPulse} />
           </Card.Header>
           <Card.Meta>

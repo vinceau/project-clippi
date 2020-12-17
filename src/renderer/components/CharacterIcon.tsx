@@ -1,5 +1,6 @@
-import * as React from "react";
-import styled from "@emotion/styled";
+/** @jsx jsx */
+import { css, jsx } from "@emotion/core";
+import React from "react";
 
 import { getStatic } from "@/lib/utils";
 import { Character, getCharacterShortName } from "@vinceau/slp-realtime";
@@ -10,14 +11,18 @@ export const CharacterIcon: React.FC<{
   grayscale?: boolean;
 }> = (props) => {
   const imgSize = props.size || 24;
-  const Img = styled.img`
-    height: ${imgSize}px;
-    width: ${imgSize}px;
-    ${props.grayscale && `filter: grayscale(1)`};
-  `;
   const filename = characterToFilename(props.character);
   const imgSrc = getStatic(`/images/character-icons/${filename}`);
-  return <Img src={imgSrc} />;
+  return (
+    <img
+      src={imgSrc}
+      css={css`
+        height: ${imgSize}px;
+        width: ${imgSize}px;
+        ${props.grayscale && `filter: grayscale(1)`};
+      `}
+    />
+  );
 };
 
 const characterToFilename = (character: Character): string => {

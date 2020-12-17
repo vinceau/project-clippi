@@ -1,3 +1,4 @@
+import log from "electron-log";
 import { IPC } from "common/ipc";
 import { Message } from "common/types";
 
@@ -26,7 +27,7 @@ export const setupListeners = (ipc: IPC): void => {
         name: user.name,
       };
     } catch (err) {
-      console.error(err);
+      log.error(err);
       showNotification("Error authenticating with Twitch");
       return null;
     }
@@ -39,7 +40,7 @@ export const setupListeners = (ipc: IPC): void => {
 
     const currentUser = twitchController.getCurrentUser();
     if (!currentUser) {
-      console.error("Error creating clip: not authenticated with Twitch");
+      log.error("Error creating clip: not authenticated with Twitch");
       return null;
     }
 
@@ -50,7 +51,7 @@ export const setupListeners = (ipc: IPC): void => {
         postToChat,
         chatMessagePrefix: "Clipped with Project Clippi: ",
       });
-      console.log(`Created a clip: ${clipID}`);
+      log.log(`Created a clip: ${clipID}`);
       const clip = {
         channel: channel ? channel : currentUser.name,
         clipID,
@@ -58,7 +59,7 @@ export const setupListeners = (ipc: IPC): void => {
       };
       return clip;
     } catch (err) {
-      console.error(err);
+      log.error(err);
       showNotification("Error creating Twitch clip");
       return null;
     }
@@ -72,7 +73,7 @@ export const setupListeners = (ipc: IPC): void => {
     try {
       await twitchController.signOut();
     } catch (err) {
-      console.error(err);
+      log.error(err);
       showNotification("Error signing out of Twitch");
       return err;
     }

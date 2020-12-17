@@ -36,26 +36,28 @@ const MultiValueRemove: React.ComponentType<MultiValueProps<OptionTypeBase>> = (
   );
 };
 
-const Option: React.ComponentType<OptionProps<OptionTypeBase>> = (props) => {
+const OuterOption = styled.div<{
+  themeName: string;
+}>`
+  padding: 5px 10px;
+  ${({ theme, themeName }) => `
+  &:hover {
+    background-color: ${themeName === ThemeMode.DARK ? theme.foreground2 : "#F8F8F8"};
+    ${
+      themeName === ThemeMode.DARK &&
+      `
+      color: ${theme.foreground};
+    `
+    }
+  }`}
+`;
+const CustomOption: React.ComponentType<OptionProps<OptionTypeBase>> = (props) => {
   const { themeName } = useTheme();
   const { innerProps, innerRef } = props;
-  const Outer = styled.div`
-    padding: 5px 10px;
-    ${({ theme }) => `
-    &:hover {
-      background-color: ${themeName === ThemeMode.DARK ? theme.foreground2 : "#F8F8F8"};
-      ${
-        themeName === ThemeMode.DARK &&
-        `
-        color: ${theme.foreground};
-      `
-      }
-    }`}
-  `;
   return (
-    <Outer ref={innerRef} {...innerProps}>
+    <OuterOption {...innerProps} ref={innerRef} themeName={themeName}>
       <CharacterLabel characterId={props.data.value} name={props.data.label} disabled={props.data.isDisabled} />
-    </Outer>
+    </OuterOption>
   );
 };
 
@@ -127,7 +129,7 @@ export const CharacterSelect = (props: any) => {
       onChange={newOnChange}
       options={selectOptions.map(valueToOption)}
       searchable={true}
-      components={{ ...components, MultiValueRemove, Option, SingleValue }}
+      components={{ ...components, MultiValueRemove, Option: CustomOption, SingleValue }}
       menuColor={mainTheme.theme.background}
       styles={customStyles}
       placeholder={`Choose your character${props.isMulti ? "s" : ""}...`}
