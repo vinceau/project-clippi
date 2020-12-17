@@ -112,7 +112,13 @@ export const ComboForm: React.FC<{
               </Field>
               <Field>
                 <Label>Minimum Combo Length</Label>
-                <FinalField name="minComboLength" component="input" type="number" parse={(v: any) => parseInt(v, 10)} />
+                <FinalField
+                  name="minComboLength"
+                  component="input"
+                  type="number"
+                  format={(val) => parseInt(val)}
+                  formatOnBlur={true}
+                />
                 <Text>Only match combos which contain at least this many moves.</Text>
               </Field>
               <Field>
@@ -121,7 +127,8 @@ export const ComboForm: React.FC<{
                   name="minComboPercent"
                   component="input"
                   type="number"
-                  parse={(v: any) => parseInt(v, 10)}
+                  format={(val) => parseInt(val)}
+                  formatOnBlur={true}
                 />
                 <Text>Only match combos which do at least this much percent damage.</Text>
               </Field>
@@ -200,7 +207,8 @@ export const ComboForm: React.FC<{
                         name="wobbleThreshold"
                         component="input"
                         type="number"
-                        parse={(v: any) => parseInt(v, 10)}
+                        format={(val) => parseInt(val)}
+                        formatOnBlur={true}
                       />
                       <Text>
                         When excluding Wobbles, the Ice Climbers must pummel at least this many times in a Wobble for it
