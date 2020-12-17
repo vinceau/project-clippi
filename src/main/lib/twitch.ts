@@ -161,12 +161,16 @@ export class TwitchController {
       const now = new Date();
       if (!expiryDate || expiryDate > now) {
         try {
+          log.log(`Instantiating Twitch client using old token: ${this.accessToken.token}`);
           const client = TwitchClient.withCredentials(TWITCH_CLIENT_ID, this.accessToken.token);
+          log.log("Testing valid Twitch client");
+          await client.helix.users.getUserById(this.accessToken.userId);
           return client;
         } catch (err) {
           log.error(`Error creating Twitch client with token: ${this.accessToken.token}. ${err}`);
 
           // Our token probably expired so clear it.
+          log.log("Clearing old token...");
           await this.signOut();
         }
       }
