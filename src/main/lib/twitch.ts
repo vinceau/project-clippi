@@ -160,7 +160,15 @@ export class TwitchController {
       const expiryDate = this.accessToken.expiryDate ? new Date(this.accessToken.expiryDate) : null;
       const now = new Date();
       if (!expiryDate || expiryDate > now) {
-        return TwitchClient.withCredentials(TWITCH_CLIENT_ID, this.accessToken.token);
+        try {
+          const client = TwitchClient.withCredentials(TWITCH_CLIENT_ID, this.accessToken.token);
+          return client;
+        } catch (err) {
+          log.error(`Error creating Twitch client with token: ${this.accessToken.token}. ${err}`);
+
+          // Our token probably expired so clear it.
+          await this.signOut();
+        }
       }
     }
 
