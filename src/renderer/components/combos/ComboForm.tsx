@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 
 import styled from "@emotion/styled";
 
@@ -19,23 +19,24 @@ import { PortSelectAdapter } from "./PortSelection";
 
 type Values = Partial<ComboConfiguration>;
 
+const OuterContainer = styled.div`
+  padding: 2rem 0;
+  display: flex;
+  justify-content: space-between;
+  & > button {
+    margin-bottom: 3px !important;
+  }
+  .delete-button:hover {
+    background-color: #d01919;
+    color: white;
+  }
+`;
+
 const ButtonContainer: React.FC<{
   submitting: boolean;
   currentProfile?: string;
   onDelete?: () => void;
 }> = ({ submitting, currentProfile, onDelete }) => {
-  const OuterContainer = styled.div`
-    padding: 2rem 0;
-    display: flex;
-    justify-content: space-between;
-    & > button {
-      margin-bottom: 3px !important;
-    }
-    .delete-button:hover {
-      background-color: #d01919;
-      color: white;
-    }
-  `;
   return (
     <OuterContainer>
       <Button primary type="submit" disabled={submitting}>
