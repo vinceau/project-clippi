@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 
 import { useSelector } from "react-redux";
 
@@ -128,6 +128,17 @@ const InfoLabel = styled.div`
   align-items: center;
 `;
 
+const SettingsContainer = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  visibility: visible;
+  overflow: auto;
+  background-color: ${({ theme }) => theme.background2};
+  z-index: 1;
+`;
+
 export const SettingsView: React.FC = () => {
   const history = useHistory();
   const { path } = useRouteMatch();
@@ -157,16 +168,6 @@ export const SettingsView: React.FC = () => {
   const handleItemClick = (_: any, { name }: any) => {
     history.push(`${path}/${name}`);
   };
-  const SettingsContainer = styled.div`
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    visibility: visible;
-    overflow: auto;
-    background-color: ${({ theme }) => theme.background2};
-    z-index: 1;
-  `;
   return (
     <SettingsContainer>
       <CloseButton>
