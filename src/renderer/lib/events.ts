@@ -8,7 +8,7 @@ import {
   StockEvent,
   StockEventFilter,
 } from "@vinceau/slp-realtime";
-import { CustomInputEventFilter } from "./inputs";
+import { CustomInputEventFilter, generateButtonComboPreview } from "./inputs";
 
 const randomEvents: string[] = [
   "Wizzrobe lands a grab",
@@ -100,26 +100,13 @@ const generateStockEventName = (spawnOrDies: string, event: EventConfig): string
 
 const generateButtonComboEventName = (event: EventConfig): string => {
   const filter = event.filter as CustomInputEventFilter;
-  const buttons = filter.buttonCombo.join(", ");
-  const isOrAre = filter.buttonCombo.length > 1 ? "are" : "is";
-
-  let holdText: string = filter.inputButtonHold;
-  const [playerText, numPlayers] = generatePlayerText(filter.playerIndex);
+  const buttons = generateButtonComboPreview(filter.buttonCombo, ", ");
+  const holdText = filter.inputButtonHold === "held" ? "holds" : "presses";
+  const [playerText] = generatePlayerText(filter.playerIndex);
 
   let holdInfo = "";
   if (filter.inputButtonHold === "held") {
     holdInfo = ` for ${filter.inputButtonHoldDelay} ${filter.inputButtonHoldUnits}`;
-    if (numPlayers !== 4 && numPlayers > 1) {
-      holdText = "holds";
-    }
-  } else {
-    if (numPlayers !== 4 && numPlayers > 1) {
-      holdText = "presses";
-    }
-  }
-
-  if (numPlayers === 4) {
-    return `When ${buttons} ${isOrAre} ${holdText}${holdInfo}`;
   }
 
   return `When ${playerText} ${holdText} ${buttons}${holdInfo}`;

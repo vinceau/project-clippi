@@ -81,26 +81,3 @@ export const ButtonPreview: React.FC<{
     </div>
   );
 };
-
-const orderedInputs = [
-  Input.Z,
-  Input.L,
-  Input.R,
-  Input.A,
-  Input.B,
-  Input.X,
-  Input.Y,
-  Input.START,
-  Input.D_UP,
-  Input.D_DOWN,
-  Input.D_LEFT,
-  Input.D_RIGHT,
-];
-
-export const ButtonTextPreview: React.FC<{
-  value: string[];
-  separator?: string;
-}> = (props) => {
-  const separator = props.separator || " + ";
-  return <span>{orderedInputs.filter((i) => props.value.includes(i)).join(separator)}</span>;
-};
