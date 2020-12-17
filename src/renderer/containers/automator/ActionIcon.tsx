@@ -7,7 +7,7 @@ import { actionComponents } from "@/containers/actions";
  * Otherwise returns the specified action icon. We define it like this instead of having a hover state
  * in the parent because it causes the entire tree to re-render when the hover state in the parent changes.
  */
-export const ActionIcon = React.memo<{ name: string; outer: React.RefObject<HTMLElement> }>(({ name, outer }) => {
+export const ActionIcon: React.FC<{ name: string; outer: React.RefObject<HTMLElement> }> = ({ name, outer }) => {
   const [hover, setHover] = React.useState(false);
   const onMouseEnter = React.useCallback(() => setHover(true), [setHover]);
   const onMouseLeave = React.useCallback(() => setHover(false), [setHover]);
@@ -37,4 +37,4 @@ export const ActionIcon = React.memo<{ name: string; outer: React.RefObject<HTML
 
   const CompIcon = actionComponents[name].Icon;
   return <CompIcon />;
-});
+};
