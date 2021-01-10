@@ -91,7 +91,7 @@
     "comlink-loader": "^2.0.0",
     "dotenv-webpack": "^6.0.0",
     "electron": "7.3.3",
-    "electron-builder": "22.9.1",
+    "electron-builder": "^22.9.1",
     "electron-webpack": "^2.8.2",
     "electron-webpack-ts": "^3.2.0",
     "eslint": "^7.1.0",
