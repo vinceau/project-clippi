@@ -107,11 +107,7 @@ export const generateComboContext = (combo: ComboType, settings: GameStartType, 
   return Object.assign(ctx, context);
 };
 
-const genPlayerContext = (
-  index: number,
-  settings: GameStartType,
-  metadata?: Metadata
-): {
+interface PlayerContext {
   netplayName: string | null;
   netplayCode: string | null;
   tag: string | null;
@@ -119,7 +115,9 @@ const genPlayerContext = (
   char: string;
   shortChar: string;
   color: string;
-} | null => {
+}
+
+const genPlayerContext = (index: number, settings: GameStartType, metadata?: Metadata): PlayerContext | null => {
   const player = settings.players.find((p) => p.playerIndex === index);
   if (!player) {
     throw new Error(`Could not find player with index: ${index}`);
@@ -148,7 +146,7 @@ const genPlayerContext = (
       char: getCharacterName(playerCharId),
       shortChar: getCharacterShortName(playerCharId),
       color: getCharacterColorName(playerCharId, playerCharColor),
-    };
+    } as PlayerContext;
   }
   return null;
 };
