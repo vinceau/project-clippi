@@ -1525,10 +1525,10 @@
   resolved "https://registry.yarnpkg.com/@vinceau/event-actions/-/event-actions-0.0.4.tgz#b773d36293bdfd1468f36815fb0a5ad77b7a087f"
   integrity sha512-Hhayt7S4GZg5ebmR52WKZ3xuUMwZHJYKunNVQTFoNzEKOieEnzokWttRGep5sD9EUUQ0Iw+1B69SrZYJO7JS/A==
 
-"@vinceau/slp-realtime@^3.1.0":
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/@vinceau/slp-realtime/-/slp-realtime-3.1.0.tgz#3d33d8c1890e0ccd88da395adde2bf606c3bff06"
-  integrity sha512-f4ZgFVlCUVvrFX1GCtsHwVkO30uiNcYVbA1dNOkCeEk5f0zQIRZ9+8Brxxm0j3lw3HLEDf22ASQ8Q4KVCIQy2g==
+"@vinceau/slp-realtime@^3.1.1":
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/@vinceau/slp-realtime/-/slp-realtime-3.1.1.tgz#565d98d2ba6061e6b011bae3f235843bfd48f819"
+  integrity sha512-tndPHG2T/RZbvD55wKjIuG/xegsgPswAweObkOaeQaxVtIGLsArv/9g/M1590qTAQ7xyycrPCNGY8SGUXNqkmA==
   dependencies:
     "@slippi/slippi-js" "^5.1.1"
     chokidar "^3.3.1"
