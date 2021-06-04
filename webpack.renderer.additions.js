@@ -44,6 +44,16 @@ module.exports = function (context) {
     })
   );
 
+  // Fix issues with importing unsupported fsevents module in Windows and Linux
+  // For more info, see: https://github.com/vinceau/project-clippi/issues/48
+  if (process.platform !== "darwin") {
+    context.plugins.push(
+      new webpack.IgnorePlugin({
+        resourceRegExp: /^fsevents$/,
+      })
+    );
+  }
+
   // Fix dependencies
   context.externals = [...Object.keys(pkg.dependencies || {})];
   return context;
