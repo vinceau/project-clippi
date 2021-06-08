@@ -223,7 +223,11 @@ export const CustomCharacterList: React.FC<CustomCharacterListProps> = ({ value,
           display: flex;
         `}
       >
-        <input value={text} onChange={(e) => setText(e.target.value)} />
+        <input
+          placeholder="Enter a character ID and press Add"
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+        />
         <Button
           onClick={() => {
             const val = parseInt(text);
