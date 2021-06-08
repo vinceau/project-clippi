@@ -1,9 +1,10 @@
 # Supporters
 
-Huge thanks to the following people for supporting Project Clippi:
+Huge thanks to the following people for supporting Project Clippi!
 
-* Daniel Jong
-* Randy F. Smash
-* Zhu
-* John Fio
-* Andrew (codename_geek)
+- Andrew (codename_geek)
+- John Fio
+- Zhu
+- Randy F. Smash
+- Daniel Jong
+- Uncle Punch
