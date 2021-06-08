@@ -11,8 +11,13 @@ export const CharacterIcon: React.FC<{
   grayscale?: boolean;
 }> = (props) => {
   const imgSize = props.size || 24;
-  const filename = characterToFilename(props.character);
-  const imgSrc = getStatic(`/images/character-icons/${filename}`);
+  let imgSrc: string;
+  try {
+    const filename = characterToFilename(props.character);
+    imgSrc = getStatic(`/images/character-icons/${filename}`);
+  } catch (err) {
+    imgSrc = getStatic(`/images/unknown.png`);
+  }
   return (
     <img
       src={imgSrc}

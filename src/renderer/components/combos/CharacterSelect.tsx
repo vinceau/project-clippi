@@ -65,11 +65,19 @@ export const CharacterSelect = (props: any) => {
   const { value, onChange, options, disabledOptions, components, ...rest } = props;
   const disabledList = disabledOptions ? disabledOptions : [];
   const optionToValue = (o: any): Character => o.value;
-  const valueToOption = (c: Character) => ({
-    value: c,
-    label: getCharacterName(c),
-    isDisabled: disabledList.includes(c),
-  });
+  const valueToOption = (c: Character) => {
+    let label: string;
+    try {
+      label = getCharacterName(c);
+    } catch (err) {
+      label = `Unknown: ${c}`;
+    }
+    return {
+      value: c,
+      label,
+      isDisabled: disabledList.includes(c),
+    };
+  };
   const parseValue = (val: any) =>
     val === undefined || val === "" || val === null ? undefined : val.map ? val.map(optionToValue) : optionToValue(val);
   const formatValue = (val: any) =>
