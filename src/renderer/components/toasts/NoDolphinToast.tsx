@@ -8,7 +8,7 @@ export const NoDolphinToast: React.FC = () => {
     <div>
       <h3>No Dolphin Found</h3>
       <p>
-        Please download and install the Slippi Desktop App and try again. <A href={url}>Download now.</A>
+        Please download and install the Slippi Launcher and try again. <A href={url}>Download now.</A>
       </p>
     </div>
   );

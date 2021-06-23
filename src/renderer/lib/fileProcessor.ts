@@ -71,7 +71,7 @@ const handleComplete = (payload: CompletePayload): void => {
   if (options.findComboOption && numCombos > 0 && openCombosWhenDone && options.outputFile) {
     openComboInDolphin(options.outputFile).catch((err) => {
       log.error(err);
-      notify("Error loading Dolphin. Ensure you have the Slippi Desktop app installed and try again.");
+      notify("Error loading Dolphin. Ensure you have the Slippi Launcher installed and try again.");
     });
   } else {
     notify(message, `Highlight processing complete`);

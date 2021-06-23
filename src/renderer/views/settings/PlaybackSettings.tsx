@@ -65,7 +65,7 @@ export const PlaybackSettings: React.FC = () => {
         <FileInput value={meleeIsoPath} onChange={setMeleeIsoPath} />
         <Text>
           The path to an NTSC Melee 1.02 ISO. Dolphin will auto-launch this title when playing back replays. This file
-          should match the Melee ISO File in the Slippi Desktop App.
+          should match the Melee ISO File in the Slippi Launcher.
         </Text>
       </Field>
 
@@ -83,7 +83,7 @@ export const PlaybackSettings: React.FC = () => {
           <Text>
             The folder containing the <PlaybackExecutableNames /> playback executable. Do NOT modify this unless you're
             using Linux or you <i>really</i> know what you're doing. This path should match the Playback Dolphin Path in
-            the Slippi Desktop App.
+            the Slippi Launcher.
           </Text>
         </Field>
       )}

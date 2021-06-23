@@ -55,7 +55,7 @@ To turn SLP files into video using the Project Clippi, check out [this guide](ht
 To take advantage of real-time game events using the Automator, you will need to connect Project Clippi to one of the following console sources:
 
 - Slippi Dolphin ([guide](docs/connect_to_dolphin/README.md))
-- Wii Console Relay via [Slippi Desktop App](https://slippi.gg/downloads) ([guide](docs/connect_to_relay/README.md))
+- Wii Console Relay via [Slippi Launcher](https://slippi.gg/downloads) ([guide](docs/connect_to_relay/README.md))
 
 ## Contributing
 
