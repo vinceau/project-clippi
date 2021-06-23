@@ -45,7 +45,7 @@ export type DolphinRecorderOptions = typeof defaultDolphinRecorderOptions;
 export const getDolphinPath = (): string => {
   if (IS_MAC_OR_WIN) {
     const appData = remote.app.getPath("appData");
-    return path.join(appData, "Slippi Desktop App", "dolphin");
+    return path.join(appData, "Slippi Launcher", "playback");
   }
   return "";
 };
