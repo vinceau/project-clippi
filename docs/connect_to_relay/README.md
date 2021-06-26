@@ -6,21 +6,21 @@ This tutorial assumes that you have Slippi mirroring already set up. If you have
 
 Make sure you have the [Slippi Launcher](https://slippi.gg/downloads) installed.
 
-At the main screen, click on "Stream from Console".
+Go to the Console Mirror page. Add a connection, or edit an existing connection.
 
-![Desktop app screenshot](images/1-1-desktop-app.png)
+![Launcher screenshot](images/1-1-launcher.png)
 
-Next click, "Edit".
+Click the 'Show advanced options' button.
 
-![Console before](images/1-2-console-before.png)
+![Enable advanced options](images/1-2-show-advanced.png)
 
-Switch to the "Advanced" tab, then enable "Wii Relay", and then click "Submit" at the bottom to save changes.
+Scroll down and toggle on the 'Enable Console Relay' option. Then click "Submit" at the bottom to save changes.
 
-![Enable Wii Relay setting](images/1-3-wii-relay.png)
+![Enable Wii Relay setting](images/1-3-enable-relay.png)
 
 You should now see "Relay Port" section next to your Wii connection. Remember this number since it will be important for later.
 
-![Console after](images/1-4-console-after.png)
+![Console after](images/1-4-get-port.png)
 
 ## 2. Setup Project Clippi
 
