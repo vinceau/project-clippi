@@ -18,12 +18,12 @@ export const TippyLabel = (props: any) => {
 };
 
 export const Labelled = (props: any) => {
-  const { onClick, children, ...rest } = props;
+  const { className, onClick, children, ...rest } = props;
   const pointerStyle = {
     cursor: "pointer",
   };
   return (
-    <span style={onClick ? pointerStyle : undefined} onClick={onClick}>
+    <span style={onClick ? pointerStyle : undefined} onClick={onClick} className={className}>
       <TippyLabel size="big" arrow={true} duration={200} position="bottom" {...rest}>
         {children}
       </TippyLabel>

@@ -1,12 +1,16 @@
+/** @jsx jsx */
 import { Character, CharacterInfo, getAllCharacters, getCharacterName } from "@vinceau/slp-realtime";
 import * as React from "react";
 import { Field } from "react-final-form";
 import Select, { components, MultiValueProps, OptionProps, OptionTypeBase, SingleValueProps } from "react-select";
 import styled from "@emotion/styled";
+import { jsx, css } from "@emotion/core";
 
 import { ThemeMode, useTheme } from "@/styles";
 import { CharacterIcon } from "../CharacterIcon";
 import { CharacterLabel } from "./CharacterLabel";
+import { Button } from "semantic-ui-react";
+import { Labelled } from "../Labelled";
 
 export const sortedCharacterInfos: CharacterInfo[] = getAllCharacters().sort((a, b) => {
   if (a.name < b.name) {
@@ -65,11 +69,19 @@ export const CharacterSelect = (props: any) => {
   const { value, onChange, options, disabledOptions, components, ...rest } = props;
   const disabledList = disabledOptions ? disabledOptions : [];
   const optionToValue = (o: any): Character => o.value;
-  const valueToOption = (c: Character) => ({
-    value: c,
-    label: getCharacterName(c),
-    isDisabled: disabledList.includes(c),
-  });
+  const valueToOption = (c: Character) => {
+    let label: string;
+    try {
+      label = getCharacterName(c);
+    } catch (err) {
+      label = `Unknown: ${c}`;
+    }
+    return {
+      value: c,
+      label,
+      isDisabled: disabledList.includes(c),
+    };
+  };
   const parseValue = (val: any) =>
     val === undefined || val === "" || val === null ? undefined : val.map ? val.map(optionToValue) : optionToValue(val);
   const formatValue = (val: any) =>
@@ -144,6 +156,100 @@ export const CharacterSelectAdapter = (props: any) => {
       {(fprops) => {
         const { input, ...frest } = fprops;
         return <CharacterSelect {...rest} {...frest} {...input} />;
+      }}
+    </Field>
+  );
+};
+
+export interface CustomCharacterListProps {
+  value?: Character[];
+  onChange?: (value: Character[]) => void;
+}
+
+export const CustomCharacterList: React.FC<CustomCharacterListProps> = ({ value, onChange }) => {
+  const [text, setText] = React.useState("");
+  const deleteChar = (c: Character) => {
+    if (!value || !onChange) {
+      return;
+    }
+    const newValue = value.filter((v) => v !== c);
+    onChange(newValue);
+  };
+  const addChar = (c: Character) => {
+    const newValue = Array.from(value ?? []);
+    if (!newValue.includes(c) && onChange) {
+      newValue.push(c);
+      onChange(newValue);
+    }
+  };
+  return (
+    <div>
+      <div
+        css={css`
+          display: flex;
+          margin-bottom: 0.5rem;
+        `}
+      >
+        {(value ?? []).map((c, i) => (
+          <Labelled title={`Delete ${c}`} key={`item-${i}-${c}`} onClick={() => deleteChar(c)}>
+            <div
+              css={css`
+                border-radius: 0.3rem;
+                padding: 0.3rem 0.6rem;
+                margin: 0.2rem;
+                background-color: rgba(255, 255, 255, 0.1);
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                font-size: 1.8rem;
+                cursor: pointer;
+                &:hover {
+                  color: black;
+                  background-color: #fbbfae;
+                }
+                & > span {
+                  margin-right: 0.3rem;
+                }
+              `}
+            >
+              <span>{c}</span>
+              <CharacterIcon character={c} />
+            </div>
+          </Labelled>
+        ))}
+      </div>
+      <div
+        css={css`
+          display: flex;
+        `}
+      >
+        <input
+          placeholder="Enter a character ID and press Add"
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+        />
+        <Button
+          onClick={() => {
+            const val = parseInt(text);
+            if (!isNaN(val)) {
+              addChar(val as Character);
+            }
+            setText("");
+          }}
+          content="Add"
+        />
+      </div>
+    </div>
+  );
+};
+
+export const CustomCharacterListAdapter: React.FC<any> = (props) => {
+  const { name, ...rest } = props;
+  return (
+    <Field name={name}>
+      {(fprops) => {
+        const { input, ...frest } = fprops;
+        return <CustomCharacterList {...rest} {...frest} {...input} />;
       }}
     </Field>
   );

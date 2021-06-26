@@ -10,12 +10,14 @@ import { CodeBlock } from "@/components/CodeBlock";
 import { Field, Label, Text } from "@/components/Form";
 import { ComboConfiguration } from "@/lib/profile";
 import { DEFAULT_PROFILE } from "@/store/models/slippi";
-import { CharacterSelectAdapter } from "./CharacterSelect";
+import { CharacterSelectAdapter, CustomCharacterListAdapter } from "./CharacterSelect";
 import { ToggleAdapter } from "./FormAdapters";
 import { NameTagForm } from "./NameTagForm";
 import { PercentageSlider } from "./PercentageSlider";
 import { PerCharPercent } from "./PerCharPercent";
 import { PortSelectAdapter } from "./PortSelection";
+import { useSelector } from "react-redux";
+import { iRootState } from "@/store";
 
 type Values = Partial<ComboConfiguration>;
 
@@ -67,6 +69,7 @@ export const ComboForm: React.FC<{
   onSubmit: (values: Values) => void;
 }> = (props) => {
   const [showAdvanced, setShowAdvanced] = React.useState(false);
+  const showDevOptions = useSelector((state: iRootState) => state.appContainer.showDevOptions);
   return (
     <div>
       <FinalForm
@@ -92,7 +95,11 @@ export const ComboForm: React.FC<{
               />
               <Field border="top">
                 <Label>Character Filter</Label>
-                <CharacterSelectAdapter name="characterFilter" isMulti={true} />
+                {showDevOptions ? (
+                  <CustomCharacterListAdapter name="characterFilter" />
+                ) : (
+                  <CharacterSelectAdapter name="characterFilter" isMulti={true} />
+                )}
                 <Text>
                   Only match combos performed by these characters. Leave this empty to find combos for all characters.
                 </Text>
