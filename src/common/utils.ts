@@ -4,7 +4,6 @@ import filenamify from "filenamify";
 import filenameReservedRegex from "filename-reserved-regex";
 
 import { EOL } from "os";
-import { ipc } from "@/lib/rendererIpc";
 
 export const delay = async (ms: number): Promise<void> => {
   await new Promise((resolve) => setTimeout(resolve, ms));
