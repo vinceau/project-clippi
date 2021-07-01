@@ -4,6 +4,7 @@ import filenamify from "filenamify";
 import filenameReservedRegex from "filename-reserved-regex";
 
 import { EOL } from "os";
+import { ipc } from "@/lib/rendererIpc";
 
 export const delay = async (ms: number): Promise<void> => {
   await new Promise((resolve) => setTimeout(resolve, ms));
@@ -52,6 +53,21 @@ export const timeDifferenceString = (before: Date, after: Date): string => {
 export const writeFile = async (contents: string, filename: string, append?: boolean): Promise<void> => {
   await fs.outputFile(filename, contents + EOL, { flag: append ? "a" : "w" });
 };
+
+export const runCommand = async (command: string) => {
+  const { exec } = require("child_process");
+  exec(command, (error: Error, stdout: string, stderr: string) => {
+    if (error) {
+        console.error(`error: ${error.message}`);
+        return;
+    }
+    if (stderr) {
+        console.warn(`stderr: ${stderr}`);
+        return;
+    }
+    console.log(`stdout: ${stdout}`);
+  });
+}
 
 /**
  * Shuffles array in place. ES6 version
