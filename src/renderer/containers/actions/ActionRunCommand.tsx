@@ -30,8 +30,10 @@ const RunCommandInput = (props: any) => {
   const [cmd, setMsg] = React.useState(defaultValue);
   return (
     <div>
+      <div style={{ padding: "5px 0" }}>Only enter commands you understand!</div>
       <Form>
         <TextArea
+          style={{ fontFamily: "monospace" }}
           onBlur={() => onChange({ command: cmd })}
           value={cmd}
           onChange={(_: any, { value }: any) => setMsg(value)}
