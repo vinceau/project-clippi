@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 import React from "react";
-
 import { Button, Card, Image } from "semantic-ui-react";
 
 import { ScanningDot } from "@/components/ScanningDot";

@@ -1,17 +1,17 @@
-import React from "react";
-import fs from "fs";
 import styled from "@emotion/styled";
-
-import { iRootState } from "@/store";
+import type { ComboFilterSettings, Input } from "@vinceau/slp-realtime";
+import type { ButtonInputOptions, ComboOptions, FileProcessorOptions } from "common/fileProcessor";
+import { FindComboOption } from "common/fileProcessor";
+import { invalidFilename } from "common/utils";
+import fs from "fs";
+import React from "react";
 import { useSelector } from "react-redux";
 import { Button, Icon } from "semantic-ui-react";
 
+import { Confirm } from "@/components/Confirm";
 import { startProcessing, stopProcessing } from "@/lib/fileProcessor";
 import { mapConfigurationToFilterSettings } from "@/lib/profile";
-import { ComboFilterSettings, Input } from "@vinceau/slp-realtime";
-import { ButtonInputOptions, ComboOptions, FileProcessorOptions, FindComboOption } from "common/fileProcessor";
-import { invalidFilename } from "common/utils";
-import { Confirm } from "@/components/Confirm";
+import type { iRootState } from "@/store";
 
 const Outer = styled.div`
   display: flex;

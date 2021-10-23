@@ -1,15 +1,15 @@
-import React from "react";
 import styled from "@emotion/styled";
-
-import { ReflexContainer, ReflexSplitter, ReflexElement } from "react-reflex";
+import type { Action } from "@vinceau/event-actions";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { ReflexContainer, ReflexElement, ReflexSplitter } from "react-reflex";
 
 import { actionComponents } from "@/containers/actions";
-import { Dispatch, iRootState } from "@/store";
-import { useDispatch, useSelector } from "react-redux";
-import { EventItem } from "./EventItem";
-import { Action } from "@vinceau/event-actions";
-import { ActionInput, AddActionInput } from "./ActionInputs";
 import { generateEventName } from "@/lib/events";
+import type { Dispatch, iRootState } from "@/store";
+
+import { ActionInput, AddActionInput } from "./ActionInputs";
+import { EventItem } from "./EventItem";
 
 const Header = styled.div`
   position: sticky;

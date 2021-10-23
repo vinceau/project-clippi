@@ -1,15 +1,15 @@
+import type { Event } from "electron";
+import { app, BrowserWindow, Menu, shell } from "electron";
+import contextMenu from "electron-context-menu";
 import * as path from "path";
-
-import { app, BrowserWindow, Menu, shell, Event } from "electron";
 import { format as formatUrl } from "url";
+
+import { IS_DEV } from "../common/constants";
+import { darkTheme, lightTheme } from "../common/theme";
+import { getCurrentTheme } from "./lib/toggleTheme";
 import { setupListeners } from "./listeners";
 import { setupIPC } from "./mainIpc";
-
-import { lightTheme, darkTheme } from "../common/theme";
-import { IS_DEV } from "../common/constants";
-import contextMenu from "electron-context-menu";
 import { getMenuTemplate } from "./menu";
-import { getCurrentTheme } from "./lib/toggleTheme";
 
 contextMenu();
 

@@ -1,11 +1,12 @@
-import * as React from "react";
-
 import styled from "@emotion/styled";
+import { darken, lighten } from "polished";
+import * as React from "react";
+import { toast } from "react-toastify";
+import type { DropdownProps } from "semantic-ui-react";
+import { Dropdown } from "semantic-ui-react";
 
 import { ThemeMode, useTheme } from "@/styles";
-import { darken, lighten } from "polished";
-import { toast } from "react-toastify";
-import { Dropdown, DropdownProps } from "semantic-ui-react";
+
 import { Field, Label, Text } from "../Form";
 
 const generateOptions = (opts: string[]) => {

@@ -1,10 +1,11 @@
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 import React from "react";
-import { useTheme } from "@/styles";
+import type { ConfirmProps } from "semantic-ui-react";
+import { Confirm as SemanticConfirm } from "semantic-ui-react";
 
-import { Confirm as SemanticConfirm, ConfirmProps } from "semantic-ui-react";
-import { ThemeMode, modalTheme } from "@/styles";
+import { useTheme } from "@/styles";
+import { modalTheme, ThemeMode } from "@/styles";
 
 export const Confirm: React.FC<ConfirmProps> = (props) => {
   const theme = useTheme();

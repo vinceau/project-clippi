@@ -1,14 +1,14 @@
-import * as React from "react";
-
-import { ActionTypeGenerator, Context } from "@vinceau/event-actions";
+import type { ActionTypeGenerator, Context } from "@vinceau/event-actions";
 import { produce } from "immer";
+import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Icon } from "semantic-ui-react";
 
 import { InlineDropdown } from "@/components/InlineInputs";
 import { soundPlayer } from "@/lib/sounds";
-import { Dispatch, iRootState } from "@/store";
-import { ActionComponent } from "./types";
+import type { Dispatch, iRootState } from "@/store";
+
+import type { ActionComponent } from "./types";
 
 interface ActionPlaySoundParams {
   sound: string;

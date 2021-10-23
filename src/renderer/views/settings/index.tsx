@@ -1,28 +1,25 @@
-import React from "react";
-
-import { useSelector } from "react-redux";
-
-import { iRootState } from "@/store";
-
+import styled from "@emotion/styled";
 import { transparentize } from "polished";
+import React from "react";
+import { useSelector } from "react-redux";
 import { Redirect, Route, Switch, useHistory, useRouteMatch } from "react-router-dom";
 import { Icon, Label, Menu } from "semantic-ui-react";
-import styled from "@emotion/styled";
 
 import { CustomIcon } from "@/components/CustomIcon";
 import { Labelled } from "@/components/Labelled";
+import { SlippiIcon } from "@/components/SlippiIcon";
+import type { iRootState } from "@/store";
 import { device } from "@/styles/device";
+import OBSLogo from "@/styles/images/obs.svg";
 import { Appearance } from "@/views/settings/Appearance";
 import { InfoView } from "@/views/settings/InfoView";
+
 import { FilterOptions } from "./FilterOptions";
 import { OBSSettings } from "./OBSSettings";
 import { PlaybackSettings } from "./PlaybackSettings";
 import { SlippiPage } from "./SlippiPage";
 import { SoundSettings } from "./SoundSettings";
 import { TwitchIntegration } from "./TwitchIntegration";
-
-import { SlippiIcon } from "@/components/SlippiIcon";
-import OBSLogo from "@/styles/images/obs.svg";
 
 const StyledMenuItem = styled(Menu.Item)<{
   header?: boolean;

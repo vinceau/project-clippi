@@ -1,16 +1,19 @@
 /** @jsx jsx */
-import { Character, CharacterInfo, getAllCharacters, getCharacterName } from "@vinceau/slp-realtime";
+import { css, jsx } from "@emotion/core";
+import styled from "@emotion/styled";
+import type { Character, CharacterInfo } from "@vinceau/slp-realtime";
+import { getAllCharacters, getCharacterName } from "@vinceau/slp-realtime";
 import * as React from "react";
 import { Field } from "react-final-form";
-import Select, { components, MultiValueProps, OptionProps, OptionTypeBase, SingleValueProps } from "react-select";
-import styled from "@emotion/styled";
-import { jsx, css } from "@emotion/core";
+import type { MultiValueProps, OptionProps, OptionTypeBase, SingleValueProps } from "react-select";
+import Select, { components } from "react-select";
+import { Button } from "semantic-ui-react";
 
 import { ThemeMode, useTheme } from "@/styles";
+
 import { CharacterIcon } from "../CharacterIcon";
-import { CharacterLabel } from "./CharacterLabel";
-import { Button } from "semantic-ui-react";
 import { Labelled } from "../Labelled";
+import { CharacterLabel } from "./CharacterLabel";
 
 export const sortedCharacterInfos: CharacterInfo[] = getAllCharacters().sort((a, b) => {
   if (a.name < b.name) {

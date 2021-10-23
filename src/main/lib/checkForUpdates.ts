@@ -2,12 +2,12 @@
  * Based off: https://github.com/electron-userland/electron-builder/blob/docs/encapsulated%20manual%20update%20via%20menu.js
  */
 
+import { AUTO_UPDATES_ENABLED, GITHUB_AUTHOR } from "common/constants";
+import { getLatestVersion } from "common/githubReleaseVersions";
 import log from "electron-log";
 import { autoUpdater } from "electron-updater";
-import pkg from "../../../package.json";
 
-import { getLatestVersion } from "common/githubReleaseVersions";
-import { AUTO_UPDATES_ENABLED, GITHUB_AUTHOR } from "common/constants";
+import pkg from "../../../package.json";
 import { sendDownloadComplete, sendLatestVersion, sendUpdateError } from "./updateStatus";
 
 autoUpdater.logger = log;

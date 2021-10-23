@@ -1,15 +1,16 @@
+import type { EventManagerConfig } from "@vinceau/slp-realtime";
 import {
   ConnectionEvent,
   ConnectionStatus,
+  EventManager,
   SlpFolderStream,
   SlpLiveStream,
   SlpRealTime,
-  EventManager,
-  EventManagerConfig,
 } from "@vinceau/slp-realtime";
-
 import log from "electron-log";
+
 import { dispatcher } from "@/store";
+
 import { eventActionManager } from "../containers/actions";
 import { notify } from "./utils";
 

@@ -1,19 +1,19 @@
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
-import React from "react";
 import styled from "@emotion/styled";
+import { ComboEvent, GameEvent, InputEvent, StockEvent } from "@vinceau/slp-realtime";
+import React from "react";
+import { Controller, useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
-import { iRootState } from "@/store";
+import { Button, Icon, Modal, Select } from "semantic-ui-react";
 
-import { useTheme } from "@/styles";
+import { PortSelection } from "@/components/combos/PortSelection";
+import { Field, Label, Text } from "@/components/Form";
 import { ButtonInput } from "@/components/gamecube/ButtonInput";
 import { DelayInput, InlineDropdown } from "@/components/InlineInputs";
-import { Field, Label, Text } from "@/components/Form";
-import { StockEvent, InputEvent, ComboEvent, GameEvent } from "@vinceau/slp-realtime";
-import { useForm, Controller } from "react-hook-form";
-import { Select, Button, Icon, Modal } from "semantic-ui-react";
-import { PortSelection } from "@/components/combos/PortSelection";
-import { NamedEventConfig } from "@/store/models/automator";
+import type { iRootState } from "@/store";
+import type { NamedEventConfig } from "@/store/models/automator";
+import { useTheme } from "@/styles";
 
 interface FilterValues {
   playerIndex: number[];

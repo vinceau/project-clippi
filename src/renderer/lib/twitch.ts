@@ -1,4 +1,6 @@
-import { Message, TwitchClip, TwitchUser } from "common/types";
+import type { TwitchClip, TwitchUser } from "common/types";
+import { Message } from "common/types";
+
 import { ipc } from "./rendererIpc";
 
 export const authenticateTwitch = async (scopes: string[]): Promise<TwitchUser | null> => {

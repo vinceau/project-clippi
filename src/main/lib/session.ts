@@ -1,4 +1,5 @@
-import { Cookie, session, CookiesGetFilter } from "electron";
+import type { Cookie, CookiesGetFilter } from "electron";
+import { session } from "electron";
 
 // Based on: stackoverflow.com/questions/41314826/delete-all-cookies-in-electron-desktop-app
 const deleteCookie = async (cookie: Cookie): Promise<void> => {

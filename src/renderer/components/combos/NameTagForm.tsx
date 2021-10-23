@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 import React from "react";
-
 import { FieldArray } from "react-final-form-arrays";
 import { Icon, Label } from "semantic-ui-react";
 

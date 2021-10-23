@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { IpcMain, IpcRenderer, WebContents } from "electron";
-
-import { Message, RequestType, ResponseType } from "common/types";
+import type { Message, RequestType, ResponseType } from "common/types";
+import type { IpcMain, IpcRenderer, WebContents } from "electron";
 
 export type IPCResponse<T> = [T, Error];
 declare global {
@@ -16,7 +15,7 @@ export class IPC {
   private readonly self: IpcRenderer | IpcMain;
   private readonly other: () => IpcRenderer | WebContents;
 
-  constructor(self: IpcRenderer | IpcMain, other: () => IpcRenderer | WebContents) {
+  public constructor(self: IpcRenderer | IpcMain, other: () => IpcRenderer | WebContents) {
     this.self = self;
     this.other = other;
   }
@@ -26,11 +25,7 @@ export class IPC {
     this.other().send(route, value, null);
   };
 
-  public replyToMessage = <T extends Message>(
-    route: string,
-    value?: ResponseType<T> | null,
-    error?: Error | null
-  ): void => {
+  public replyToMessage = <T extends Message>(route: string, value?: ResponseType<T> | null, error?: unknown): void => {
     // log(`sendMessage ${route} ${JSON.stringify(value)} ${error}`);
     this.other().send(route, value, error);
   };
@@ -99,7 +94,7 @@ export class IPC {
 
   public once = <T extends Message>(
     route: T,
-    callback: (params: RequestType<T> | null, error?: Error) => void | Promise<void>
+    callback: (params: RequestType<T> | null, error?: unknown) => void | Promise<void>
   ): void => {
     this.self.once(route, async (_event: any, ...args: IPCResponse<RequestType<T>>) => {
       try {

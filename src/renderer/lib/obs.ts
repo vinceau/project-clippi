@@ -1,10 +1,11 @@
-import OBSWebSocket, { Scene } from "obs-websocket-js";
-
-import { store } from "@/store";
-import { notify } from "./utils";
-
+import type { Scene } from "obs-websocket-js";
+import OBSWebSocket from "obs-websocket-js";
 import { BehaviorSubject, from, Subject } from "rxjs";
 import { map, skip, switchMap, take } from "rxjs/operators";
+
+import { store } from "@/store";
+
+import { notify } from "./utils";
 
 export enum OBSRecordingAction {
   TOGGLE = "StartStopRecording",

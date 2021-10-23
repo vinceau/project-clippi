@@ -1,6 +1,6 @@
-import { App, BrowserWindow, ipcMain } from "electron";
-
 import { IPC } from "common/ipc";
+import type { App, BrowserWindow } from "electron";
+import { ipcMain } from "electron";
 
 export const reset = "\x1b[0m";
 export const dim = "\x1b[2m";

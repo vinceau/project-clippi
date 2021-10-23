@@ -1,7 +1,7 @@
-import * as React from "react";
-
-import { ActionTypeGenerator, Context } from "@vinceau/event-actions";
+import type { ActionTypeGenerator, Context } from "@vinceau/event-actions";
+import { delay as waitMillis } from "common/utils";
 import { produce } from "immer";
+import * as React from "react";
 import { useSelector } from "react-redux";
 import { Button } from "semantic-ui-react";
 
@@ -9,11 +9,10 @@ import { CustomIcon } from "@/components/CustomIcon";
 import { DelayInput, InlineDropdown } from "@/components/InlineInputs";
 import { connectToOBSAndNotify, getAllScenes, obsConnection, OBSConnectionStatus } from "@/lib/obs";
 import { notify } from "@/lib/utils";
-import { iRootState } from "@/store";
-import { delay as waitMillis } from "common/utils";
-import { ActionComponent } from "./types";
-
+import type { iRootState } from "@/store";
 import obsIcon from "@/styles/images/obs.svg";
+
+import type { ActionComponent } from "./types";
 
 interface ActionChangeSceneParams {
   scene: string;

@@ -1,13 +1,12 @@
 import * as React from "react";
-
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
 import { ComboForm } from "@/components/combos/ComboForm";
 import { ProfileSelector } from "@/components/combos/ProfileSelection";
 import { FormContainer, PageHeader } from "@/components/Form";
-import { ComboConfiguration } from "@/lib/profile";
-import { Dispatch, iRootState } from "@/store";
+import type { ComboConfiguration } from "@/lib/profile";
+import type { Dispatch, iRootState } from "@/store";
 import { DEFAULT_PROFILE } from "@/store/models/slippi";
 
 export const FilterOptions: React.FC = () => {

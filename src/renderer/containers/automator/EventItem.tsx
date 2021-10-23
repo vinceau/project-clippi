@@ -1,12 +1,13 @@
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
-import React from "react";
-import { NamedEventConfig } from "@/store/models/automator";
-import { Icon } from "semantic-ui-react";
 import styled from "@emotion/styled";
-import { transparentize, lighten, darken } from "polished";
-import { ThemeMode, useTheme } from "@/styles";
+import { darken, lighten, transparentize } from "polished";
+import React from "react";
+import { Icon } from "semantic-ui-react";
+
 import { generateEventName } from "@/lib/events";
+import type { NamedEventConfig } from "@/store/models/automator";
+import { ThemeMode, useTheme } from "@/styles";
 
 export interface EventItemProps {
   event: NamedEventConfig;

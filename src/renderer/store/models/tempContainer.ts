@@ -1,15 +1,16 @@
 import { createModel } from "@rematch/core";
+import type { DolphinEntry, DolphinQueueFormat, DolphinQueueOptions } from "@vinceau/slp-realtime";
+import { ConnectionStatus } from "@vinceau/slp-realtime";
+import type { TwitchUser, VersionUpdatePayload } from "common/types";
+import { UpdateStatus } from "common/types";
+import { shuffle } from "common/utils";
 import produce from "immer";
-
-import { Scene } from "obs-websocket-js";
-
-import { authenticateTwitch, signOutTwitch } from "../../lib/twitch";
+import type { Scene } from "obs-websocket-js";
 
 import { OBSConnectionStatus, OBSRecordingStatus } from "@/lib/obs";
 import { getFilePath, loadDolphinQueue } from "@/lib/utils";
-import { ConnectionStatus, DolphinEntry, DolphinQueueFormat, DolphinQueueOptions } from "@vinceau/slp-realtime";
-import { TwitchUser, UpdateStatus, VersionUpdatePayload } from "common/types";
-import { shuffle } from "common/utils";
+
+import { authenticateTwitch, signOutTwitch } from "../../lib/twitch";
 
 export interface TempContainerState {
   slippiConnectionType: "console" | "dolphin";

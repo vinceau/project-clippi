@@ -1,8 +1,10 @@
-import { dispatcher } from "@/store";
+import { IPC } from "common/ipc";
+import type { VersionUpdatePayload } from "common/types";
+import { Message, UpdateStatus } from "common/types";
 import { ipcRenderer } from "electron";
 
-import { IPC } from "common/ipc";
-import { Message, UpdateStatus, VersionUpdatePayload } from "common/types";
+import { dispatcher } from "@/store";
+
 import { toastDownloadComplete, toastNewUpdateAvailable } from "./toasts";
 
 export type IPCResponse<T> = [T, Error];

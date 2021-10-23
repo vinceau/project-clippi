@@ -1,23 +1,22 @@
-import React from "react";
-
 import styled from "@emotion/styled";
-
 import arrayMutators from "final-form-arrays";
+import React from "react";
 import { Field as FinalField, Form as FinalForm } from "react-final-form";
+import { useSelector } from "react-redux";
 import { Accordion, Button, Form as SemanticForm, Icon } from "semantic-ui-react";
 
 import { CodeBlock } from "@/components/CodeBlock";
 import { Field, Label, Text } from "@/components/Form";
-import { ComboConfiguration } from "@/lib/profile";
+import type { ComboConfiguration } from "@/lib/profile";
+import type { iRootState } from "@/store";
 import { DEFAULT_PROFILE } from "@/store/models/slippi";
+
 import { CharacterSelectAdapter, CustomCharacterListAdapter } from "./CharacterSelect";
 import { ToggleAdapter } from "./FormAdapters";
 import { NameTagForm } from "./NameTagForm";
 import { PercentageSlider } from "./PercentageSlider";
 import { PerCharPercent } from "./PerCharPercent";
 import { PortSelectAdapter } from "./PortSelection";
-import { useSelector } from "react-redux";
-import { iRootState } from "@/store";
 
 type Values = Partial<ComboConfiguration>;
 

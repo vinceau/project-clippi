@@ -1,4 +1,5 @@
-import { Action as ActionDefinition, EventActions, EventManager } from "@vinceau/event-actions";
+import type { Action as ActionDefinition, EventActions } from "@vinceau/event-actions";
+import { EventManager } from "@vinceau/event-actions";
 
 import { ActionChangeScene } from "./ActionChangeScene";
 import { ActionNotify } from "./ActionNotify";
@@ -8,7 +9,7 @@ import { ActionToggleRecording } from "./ActionToggleRecording";
 import { ActionToggleSource } from "./ActionToggleSource";
 import { ActionTwitchClip } from "./ActionTwitchClip";
 import { ActionWriteFile } from "./ActionWriteFile";
-import { ActionComponent } from "./types";
+import type { ActionComponent } from "./types";
 
 export enum Action {
   CREATE_TWITCH_CLIP = "twitch-clip",

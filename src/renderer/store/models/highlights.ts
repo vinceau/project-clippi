@@ -1,7 +1,6 @@
 import { createModel } from "@rematch/core";
-import produce from "immer";
-
 import { FindComboOption } from "common/fileProcessor";
+import produce from "immer";
 
 export const defaultRenameFormat =
   "{{YY}}{{MM}}{{DD}}_{{HH}}{{mm}}_{{playerShortChar}}_v_{{opponentShortChar}}_({{shortStage}}).slp";

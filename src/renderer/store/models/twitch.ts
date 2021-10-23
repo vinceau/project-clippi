@@ -1,6 +1,5 @@
-import { TwitchClip } from "common/types";
-
 import { createModel } from "@rematch/core";
+import type { TwitchClip } from "common/types";
 import { produce } from "immer";
 
 interface TwitchClipMap {

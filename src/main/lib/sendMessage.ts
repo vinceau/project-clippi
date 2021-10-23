@@ -1,4 +1,4 @@
-import { Message } from "common/types";
+import type { Message } from "common/types";
 import { BrowserWindow } from "electron";
 
 export function sendMessage(messageType: Message, ...args: any[]): void {

@@ -1,6 +1,6 @@
 import React from "react";
-
-import { ButtonInput, ControllerInputState, Controller } from "react-gamecube";
+import type { ControllerInputState } from "react-gamecube";
+import { ButtonInput, Controller } from "react-gamecube";
 
 export const ControllerLayout: React.FC<{
   value?: string[];

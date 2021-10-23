@@ -1,18 +1,18 @@
-import * as React from "react";
-
-import { ActionTypeGenerator, Context } from "@vinceau/event-actions";
+import type { ActionTypeGenerator, Context } from "@vinceau/event-actions";
+import { delay as waitMillis, parseSecondsDelayValue } from "common/utils";
 import { produce } from "immer";
-import { Loader, Icon } from "semantic-ui-react";
+import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Dispatch, iRootState } from "@/store";
+import { Icon, Loader } from "semantic-ui-react";
 
 import { DelayInput, NotifyInput, SimpleInput } from "@/components/InlineInputs";
-import { notify as sendNotification } from "@/lib/utils";
-import { dispatcher, store } from "@/store";
-import { delay as waitMillis, parseSecondsDelayValue } from "common/utils";
-import { createTwitchClip } from "../../lib/twitch";
-import { ActionComponent } from "./types";
 import { TwitchConnectButton } from "@/components/twitch";
+import { notify as sendNotification } from "@/lib/utils";
+import type { Dispatch, iRootState } from "@/store";
+import { dispatcher, store } from "@/store";
+
+import { createTwitchClip } from "../../lib/twitch";
+import type { ActionComponent } from "./types";
 
 const DEFAULT_DELAY_SECONDS = 10;
 

@@ -1,5 +1,4 @@
 import React from "react";
-
 import { Button, Dropdown } from "semantic-ui-react";
 
 export const RecordButton: React.FC<{

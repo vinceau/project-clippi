@@ -1,7 +1,7 @@
 import * as React from "react";
+import { Tooltip } from "react-tippy";
 
 import { ThemeMode, useTheme } from "@/styles";
-import { Tooltip } from "react-tippy";
 
 export const TippyLabel = (props: any) => {
   const { children, style, ...rest } = props;

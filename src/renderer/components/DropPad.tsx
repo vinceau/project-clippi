@@ -1,12 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import styled from "@emotion/styled";
 import React, { useCallback } from "react";
+import { DragDropContext } from "react-beautiful-dnd";
 import { useDropzone } from "react-dropzone";
 
-import styled from "@emotion/styled";
 import { PlaybackQueue } from "./PlaybackQueue";
 import { PlaybackQueueEmpty } from "./PlaybackQueueEmpty";
-
-import { DragDropContext } from "react-beautiful-dnd";
 
 const Outer = styled.div`
   height: 100%;

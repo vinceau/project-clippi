@@ -1,9 +1,9 @@
-import * as React from "react";
-
 import styled from "@emotion/styled";
+import * as React from "react";
+import { Button, Icon, Input } from "semantic-ui-react";
 
 import { getFilePath, getFolderPath, openFileOrParentFolder } from "@/lib/utils";
-import { Button, Icon, Input } from "semantic-ui-react";
+
 import { Labelled } from "./Labelled";
 
 const NoMarginIcon = styled(Icon)`

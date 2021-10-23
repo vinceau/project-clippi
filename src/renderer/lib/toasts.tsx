@@ -1,10 +1,10 @@
 import React from "react";
+import { toast } from "react-toastify";
 
+import { DownloadComplete } from "@/components/toasts/DownloadComplete";
 import { NoDolphinToast } from "@/components/toasts/NoDolphinToast";
 import { ProcessingError } from "@/components/toasts/ProcessingError";
-import { toast } from "react-toastify";
 import { UpdateAvailable } from "@/components/toasts/UpdateAvailable";
-import { DownloadComplete } from "@/components/toasts/DownloadComplete";
 
 export const toastNoDolphin = (): void => {
   toast.error(<NoDolphinToast />, {

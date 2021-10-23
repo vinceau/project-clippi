@@ -1,15 +1,13 @@
+import styled from "@emotion/styled";
+import { IS_MAC_OR_WIN } from "common/constants";
 import React from "react";
-
-import { FileInput } from "@/components/FileInput";
-
-import { Field, FormContainer, Label, PageHeader, Text, Toggle } from "@/components/Form";
-import { getDolphinExecutableNames, getDolphinPath } from "@/lib/dolphin";
-import { Dispatch, iRootState } from "@/store";
 import { useDispatch, useSelector } from "react-redux";
 
+import { FileInput } from "@/components/FileInput";
+import { Field, FormContainer, Label, PageHeader, Text, Toggle } from "@/components/Form";
 import { Labelled } from "@/components/Labelled";
-import { IS_MAC_OR_WIN } from "common/constants";
-import styled from "@emotion/styled";
+import { getDolphinExecutableNames, getDolphinPath } from "@/lib/dolphin";
+import type { Dispatch, iRootState } from "@/store";
 
 const DolphinPathLabel = styled.div`
   display: flex;

@@ -1,17 +1,15 @@
+import type { ActionTypeGenerator, Context } from "@vinceau/event-actions";
+import { delay as waitMillis, parseSecondsDelayValue } from "common/utils";
+import { produce } from "immer";
 import * as React from "react";
 
-import { ActionTypeGenerator, Context } from "@vinceau/event-actions";
-import { produce } from "immer";
-
-import { DelayInput, NotifyInput } from "@/components/InlineInputs";
-import { notify as sendNotification } from "@/lib/utils";
-import { delay as waitMillis, parseSecondsDelayValue } from "common/utils";
-import { ActionComponent } from "./types";
-
 import { CustomIcon } from "@/components/CustomIcon";
+import { DelayInput, NotifyInput } from "@/components/InlineInputs";
 import { obsConnection } from "@/lib/obs";
-
+import { notify as sendNotification } from "@/lib/utils";
 import obsIcon from "@/styles/images/obs.svg";
+
+import type { ActionComponent } from "./types";
 
 const DEFAULT_DELAY_SECONDS = 10;
 

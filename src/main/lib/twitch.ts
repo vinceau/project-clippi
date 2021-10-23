@@ -1,11 +1,11 @@
 import log from "electron-log";
-import TwitchClient, { HelixUser } from "twitch";
+import Store from "electron-store";
+import type { HelixUser } from "twitch";
+import TwitchClient from "twitch";
 import ChatClient from "twitch-chat-client";
 import ElectronAuthProvider from "twitch-electron-auth-provider";
 
 import { clearAllCookies } from "./session";
-
-import Store from "electron-store";
 
 const store = new Store();
 

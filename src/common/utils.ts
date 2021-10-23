@@ -1,9 +1,8 @@
-import fs from "fs-extra";
-import path from "path";
-import filenamify from "filenamify";
 import filenameReservedRegex from "filename-reserved-regex";
-
+import filenamify from "filenamify";
+import fs from "fs-extra";
 import { EOL } from "os";
+import path from "path";
 
 export const delay = async (ms: number): Promise<void> => {
   await new Promise((resolve) => setTimeout(resolve, ms));
@@ -145,3 +144,7 @@ const validFilename = (name: string): boolean => {
   }
   return true;
 };
+
+export function exists<T>(t: T | null | undefined): t is T {
+  return t !== null && t !== undefined;
+}

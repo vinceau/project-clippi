@@ -1,7 +1,5 @@
-import * as React from "react";
-
 import styled from "@emotion/styled";
-
+import * as React from "react";
 import { Link, useRouteMatch } from "react-router-dom";
 import { Icon, Label } from "semantic-ui-react";
 

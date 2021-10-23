@@ -1,16 +1,17 @@
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
+import type { Character } from "@vinceau/slp-realtime";
+import { getCharacterShortName } from "@vinceau/slp-realtime";
 import React from "react";
 
 import { getStatic } from "@/lib/utils";
-import { Character, getCharacterShortName } from "@vinceau/slp-realtime";
 
 export const CharacterIcon: React.FC<{
   character: Character;
   size?: number;
   grayscale?: boolean;
 }> = (props) => {
-  const imgSize = props.size || 24;
+  const imgSize = props.size ?? 24;
   let imgSrc: string;
   try {
     const filename = characterToFilename(props.character);

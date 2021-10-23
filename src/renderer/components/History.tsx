@@ -1,8 +1,8 @@
 import React from "react";
-
-import { Dispatch } from "@/store";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+
+import type { Dispatch } from "@/store";
 
 export const History: React.FC = () => {
   const dispatch = useDispatch<Dispatch>();

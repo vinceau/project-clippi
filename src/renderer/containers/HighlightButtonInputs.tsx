@@ -1,12 +1,12 @@
+import styled from "@emotion/styled";
+import { framesToSeconds, secondsToFrames } from "common/utils";
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Accordion, Icon } from "semantic-ui-react";
 
 import { ButtonInput } from "@/components/gamecube/ButtonInput";
 import { DelayInput, InlineDropdown } from "@/components/InlineInputs";
-import { Dispatch, iRootState } from "@/store";
-import { framesToSeconds, secondsToFrames } from "common/utils";
-import { useDispatch, useSelector } from "react-redux";
-import { Accordion, Icon } from "semantic-ui-react";
-import styled from "@emotion/styled";
+import type { Dispatch, iRootState } from "@/store";
 import { inputButtonInitialState as defaults } from "@/store/models/inputButtons";
 
 const Outer = styled.div`

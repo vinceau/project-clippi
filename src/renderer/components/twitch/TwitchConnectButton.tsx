@@ -1,7 +1,6 @@
-import React from "react";
-
-import { Icon } from "semantic-ui-react";
 import styled from "@emotion/styled";
+import React from "react";
+import { Icon } from "semantic-ui-react";
 
 const ButtonText = styled.span`
   margin-left: 5px;

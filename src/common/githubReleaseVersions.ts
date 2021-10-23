@@ -1,7 +1,7 @@
 import { Octokit } from "@octokit/rest";
+import semver from "semver";
 
 import pkg from "../../package.json";
-import semver from "semver";
 
 const octokit = new Octokit();
 

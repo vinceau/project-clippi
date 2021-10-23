@@ -1,12 +1,12 @@
-import React from "react";
-
-import { transparentize } from "polished";
-import { Icon } from "semantic-ui-react";
 import styled from "@emotion/styled";
+import type { TwitchClip } from "common/types";
+import { transparentize } from "polished";
+import React from "react";
+import { Icon } from "semantic-ui-react";
 import { format } from "timeago.js";
 
 import { device } from "@/styles/device";
-import { TwitchClip } from "common/types";
+
 import { ExternalLink as A } from "../ExternalLink";
 import { Labelled } from "../Labelled";
 

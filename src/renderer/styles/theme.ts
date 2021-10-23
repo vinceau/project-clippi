@@ -1,5 +1,5 @@
-import { lightTheme as light, darkTheme as dark } from "common/theme";
-import { Theme } from "@emotion/styled";
+import type { Theme } from "@emotion/styled";
+import { darkTheme as dark, lightTheme as light } from "common/theme";
 
 // Re-export the theme
 export { Theme } from "@emotion/styled";

@@ -1,7 +1,6 @@
-import React from "react";
-
 import styled from "@emotion/styled";
-import { IconSizeProp } from "semantic-ui-react/dist/commonjs/elements/Icon/Icon";
+import React from "react";
+import type { IconSizeProp } from "semantic-ui-react/dist/commonjs/elements/Icon/Icon";
 
 const Outer = styled.i<{
   image: any;

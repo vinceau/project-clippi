@@ -1,16 +1,15 @@
-import * as React from "react";
-
+import type { ActionTypeGenerator, Context } from "@vinceau/event-actions";
+import { writeFile } from "common/utils";
 import formatter from "formatter";
-
-import { ActionTypeGenerator, Context } from "@vinceau/event-actions";
 import { produce } from "immer";
+import * as React from "react";
 import { Form, Icon, TextArea } from "semantic-ui-react";
 
 import { FileInput } from "@/components/FileInput";
 import { InlineDropdown } from "@/components/InlineInputs";
 import { notify as sendNotification } from "@/lib/utils";
-import { writeFile } from "common/utils";
-import { ActionComponent } from "./types";
+
+import type { ActionComponent } from "./types";
 
 interface ActionWriteFileParams {
   content: string;

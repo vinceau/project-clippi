@@ -10,25 +10,21 @@
  * [NO_GAME] no more files in the queue
  */
 
+import type { DolphinLauncherOptions, DolphinPlaybackPayload, DolphinQueueFormat } from "@vinceau/slp-realtime";
+import { DolphinLauncher, DolphinPlaybackStatus } from "@vinceau/slp-realtime";
+import { IS_MAC_OR_WIN } from "common/constants";
+import { delay, onlyFilename } from "common/utils";
+import { remote } from "electron";
 import fs from "fs-extra";
 import path from "path";
-
-import { remote } from "electron";
+import type { Observable } from "rxjs";
+import { BehaviorSubject, from, merge } from "rxjs";
+import { concatMap, filter, map, mapTo, startWith } from "rxjs/operators";
 
 import { obsConnection, OBSRecordingAction } from "@/lib/obs";
 import { getFilePath } from "@/lib/utils";
 import { store } from "@/store";
-import {
-  DolphinLauncher,
-  DolphinPlaybackPayload,
-  DolphinPlaybackStatus,
-  DolphinQueueFormat,
-  DolphinLauncherOptions,
-} from "@vinceau/slp-realtime";
-import { delay, onlyFilename } from "common/utils";
-import { IS_MAC_OR_WIN } from "common/constants";
-import { BehaviorSubject, from, merge, Observable } from "rxjs";
-import { concatMap, filter, map, mapTo, startWith } from "rxjs/operators";
+
 import { toastNoDolphin } from "./toasts";
 
 const defaultDolphinRecorderOptions = {

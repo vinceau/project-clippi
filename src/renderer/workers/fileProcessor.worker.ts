@@ -1,6 +1,7 @@
 // File processor worker
 
-import { ProcessOutput, ProcessResult, FileProcessor, FileProcessorOptions } from "common/fileProcessor";
+import type { FileProcessorOptions, ProcessOutput, ProcessResult } from "common/fileProcessor";
+import { FileProcessor } from "common/fileProcessor";
 import { delay } from "common/utils";
 
 export interface ProgressingPayload {

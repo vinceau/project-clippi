@@ -1,8 +1,8 @@
-import React from "react";
 import styled from "@emotion/styled";
-
 import { transparentize } from "polished";
+import React from "react";
 import { Link, Route } from "react-router-dom";
+
 import { TippyLabel } from "../Labelled";
 
 const OuterMenuIcon = styled.div<{

@@ -1,5 +1,5 @@
 declare module "@emotion/styled" {
-  import { CreateStyled } from "@emotion/styled/types/index";
+  import type { CreateStyled } from "@emotion/styled/types/index";
 
   export interface Theme {
     primary: string;

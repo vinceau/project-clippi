@@ -1,18 +1,20 @@
-import { init, RematchRootState } from "@rematch/core";
+import type { RematchRootState } from "@rematch/core";
+import { init } from "@rematch/core";
 import createRematchPersist, { getPersistor } from "@rematch/persist";
-
-import * as models from "./models";
+import type { EventConfig } from "@vinceau/slp-realtime";
+import { InputEvent } from "@vinceau/slp-realtime";
 
 import { updateEventActionManager } from "@/containers/actions";
 import { dolphinRecorder } from "@/lib/dolphin";
+import { mapInputEventConfig } from "@/lib/inputs";
 import { obsConnection } from "@/lib/obs";
 import { mapConfigurationToFilterSettings } from "@/lib/profile";
+import { streamManager } from "@/lib/realtime";
 // import { comboFilter } from "@/lib/realtime";
 import { soundPlayer } from "@/lib/sounds";
+
+import * as models from "./models";
 import { transformer } from "./transformer";
-import { streamManager } from "@/lib/realtime";
-import { InputEvent, EventConfig } from "@vinceau/slp-realtime";
-import { mapInputEventConfig } from "@/lib/inputs";
 
 const persistPlugin = createRematchPersist({
   version: 1,
