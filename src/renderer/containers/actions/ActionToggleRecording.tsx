@@ -88,7 +88,7 @@ const actionToggleRecording: ActionTypeGenerator = (params: ActionToggleRecordin
       }
     } catch (err) {
       console.error(err);
-      notify(`Failed to ${obsRecordingLabel(params.recordAction)} OBS recording: ${err.error}`);
+      notify(`Failed to ${obsRecordingLabel(params.recordAction)} OBS recording: ${(err as Error).message}`);
     }
     return ctx;
   };

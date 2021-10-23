@@ -50,7 +50,7 @@ export async function startFileProcessor(
     };
   } catch (err) {
     fileProcessor.reset();
-    throw new Error(err);
+    throw err;
   }
 }
 

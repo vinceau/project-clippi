@@ -42,7 +42,7 @@ export async function checkForUpdates() {
     sendLatestVersion(latest);
   } catch (err) {
     log.error("Error checking for updates: ", err);
-    sendUpdateError(err.message);
+    sendUpdateError((err as Error).message);
   }
 }
 

@@ -97,7 +97,7 @@ export const startProcessing = async (options: FileProcessorOptions): Promise<vo
     handleComplete(result);
   } catch (err) {
     console.error(err);
-    handleError(err.message);
+    handleError((err as Error).message);
   }
 };
 
