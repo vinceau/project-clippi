@@ -1,12 +1,11 @@
-import * as React from "react";
-
+import type { ActionTypeGenerator, Context } from "@vinceau/event-actions";
 import formatter from "formatter";
-
-import { ActionTypeGenerator, Context } from "@vinceau/event-actions";
+import * as React from "react";
 import { Form, Icon, TextArea } from "semantic-ui-react";
 
 import { notify } from "@/lib/utils";
-import { ActionComponent } from "./types";
+
+import type { ActionComponent } from "./types";
 
 interface ActionNotifyParams {
   message: string;

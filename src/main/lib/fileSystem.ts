@@ -1,4 +1,5 @@
-import { BrowserWindow, dialog, SaveDialogOptions, OpenDialogOptions } from "electron";
+import type { OpenDialogOptions, SaveDialogOptions } from "electron";
+import { BrowserWindow, dialog } from "electron";
 
 export type FileSystemDialogOptions = SaveDialogOptions | OpenDialogOptions;
 

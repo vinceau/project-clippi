@@ -1,7 +1,6 @@
-import React from "react";
-
-import { Checkbox } from "semantic-ui-react";
 import styled from "@emotion/styled";
+import React from "react";
+import { Checkbox } from "semantic-ui-react";
 
 export const FormContainer = styled.div``;
 

@@ -1,14 +1,11 @@
-import React from "react";
-
 import styled from "@emotion/styled";
-
+import React from "react";
 import { Button, Divider, Grid, Header, Input, Segment } from "semantic-ui-react";
 
 import { CustomIcon } from "@/components/CustomIcon";
+import { SlippiIcon } from "@/components/SlippiIcon";
 import { dispatcher } from "@/store";
 import { device } from "@/styles/device";
-import { SlippiIcon } from "@/components/SlippiIcon";
-
 import dolphinLogoSVG from "@/styles/images/dolphin.svg";
 
 const VerticalHeader = styled(Header)`

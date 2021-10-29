@@ -1,8 +1,8 @@
-import * as React from "react";
-
-import insertTextAtCursor from "insert-text-at-cursor";
 import styled from "@emotion/styled";
-
+import type { GameStartType } from "@vinceau/slp-realtime";
+import { invalidFilename } from "common/utils";
+import insertTextAtCursor from "insert-text-at-cursor";
+import * as React from "react";
 import { TextArea } from "semantic-ui-react";
 
 import { ContextOptions } from "@/components/ContextOptions";
@@ -10,9 +10,8 @@ import { Field, Label } from "@/components/Form";
 import { SlideReveal } from "@/components/ProcessSection";
 import { TemplatePreview } from "@/components/TemplatePreview";
 import { defaultRenameFormat } from "@/store/models/highlights";
+
 import { Labelled } from "./Labelled";
-import { invalidFilename } from "common/utils";
-import { GameStartType } from "@vinceau/slp-realtime";
 
 const FormatLabel = styled.div`
   display: flex;

@@ -1,12 +1,13 @@
-import fs from "fs-extra";
-
-import { mapConfigurationToFilterSettings, mapFilterSettingsToConfiguration } from "@/lib/profile";
 import { defaultComboFilterSettings } from "@vinceau/slp-realtime";
+import fs from "fs-extra";
 import { produce } from "immer";
 import { createTransform } from "redux-persist";
-import { FileSystemState } from "./models/filesystem";
-import { SlippiState } from "./models/slippi";
-import { TwitchState } from "./models/twitch";
+
+import { mapConfigurationToFilterSettings, mapFilterSettingsToConfiguration } from "@/lib/profile";
+
+import type { FileSystemState } from "./models/filesystem";
+import type { SlippiState } from "./models/slippi";
+import type { TwitchState } from "./models/twitch";
 
 export const transformer = createTransform(
   (state) => state,

@@ -1,14 +1,12 @@
+import styled from "@emotion/styled";
 import * as React from "react";
-
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Form, Icon } from "semantic-ui-react";
-import styled from "@emotion/styled";
 
 import { ConnectionStatusCard } from "@/components/ConnectionStatusCard";
-import { connectToOBSAndNotify, obsConnection, OBSConnectionStatus } from "@/lib/obs";
-import { Dispatch, iRootState } from "@/store";
-
 import { Field, FormContainer, Label, PageHeader } from "@/components/Form";
+import { connectToOBSAndNotify, obsConnection, OBSConnectionStatus } from "@/lib/obs";
+import type { Dispatch, iRootState } from "@/store";
 import OBSLogo from "@/styles/images/obs.png";
 
 const CustomField = styled(Field)`

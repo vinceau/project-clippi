@@ -1,16 +1,13 @@
-import React from "react";
-
 import styled from "@emotion/styled";
-
-import { Icon } from "semantic-ui-react";
-
-import { iRootState } from "@/store";
+import React from "react";
 import { useSelector } from "react-redux";
+import { Icon } from "semantic-ui-react";
 
 import { Text } from "@/components/Form";
 import { ProgressBar } from "@/components/ProgressBar";
-import { ProcessorStatusBar } from "@/containers/ProcessorStatusBar";
 import { ComboFinder } from "@/containers/ComboFinder";
+import { ProcessorStatusBar } from "@/containers/ProcessorStatusBar";
+import type { iRootState } from "@/store";
 
 const Content = styled.div`
   padding: 20px;

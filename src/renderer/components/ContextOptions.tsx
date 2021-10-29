@@ -1,10 +1,10 @@
+import type { Context } from "@vinceau/event-actions";
+import { generateFileRenameContext } from "common/context";
 import * as React from "react";
-
-import { Context } from "@vinceau/event-actions";
 import { Label } from "semantic-ui-react";
 
 import { contextDescriptions } from "@/lib/contextDescriptions";
-import { generateFileRenameContext } from "common/context";
+
 import { TippyLabel } from "./Labelled";
 
 export const ContextOptions: React.FC<{

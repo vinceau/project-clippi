@@ -1,5 +1,5 @@
-import Store from "electron-store";
 import { nativeTheme } from "electron";
+import Store from "electron-store";
 
 const store = new Store();
 

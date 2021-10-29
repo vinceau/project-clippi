@@ -1,12 +1,11 @@
-import * as React from "react";
-
-import { iRootState } from "@/store";
-import { useSelector } from "react-redux";
 import styled from "@emotion/styled";
-
+import * as React from "react";
+import { useSelector } from "react-redux";
 import { Redirect, Route, Switch, useRouteMatch } from "react-router-dom";
 
 import { Menu } from "@/components/layout/Menu";
+import type { iRootState } from "@/store";
+
 import { AutomatorView } from "./AutomatorView";
 import { RecorderView } from "./RecorderView";
 import { ReplayProcessorView } from "./ReplayProcessorView";

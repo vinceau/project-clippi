@@ -1,31 +1,31 @@
-import path from "path";
-
-import moment from "moment";
-
-import fg from "fast-glob";
-import fs from "fs-extra";
-
-import {
-  checkCombo,
+import type {
+  Character,
   ComboEventPayload,
   ComboFilterSettings,
-  defaultComboFilterSettings,
   DolphinPlaybackItem,
-  Frames,
+  FrameEntryType,
+  GameStartType,
+  Metadata,
+} from "@vinceau/slp-realtime";
+import {
+  checkCombo,
+  defaultComboFilterSettings,
   extractPlayerNames,
+  forAllPlayerIndices,
+  Frames,
   generateDolphinQueuePayload,
   Input,
-  SlippiGame,
-  Metadata,
-  throttleInputButtons,
-  FrameEntryType,
-  forAllPlayerIndices,
   mapFramesToButtonInputs,
   namesMatch,
-  GameStartType,
-  Character,
+  SlippiGame,
+  throttleInputButtons,
 } from "@vinceau/slp-realtime";
-import { Observable, from } from "rxjs";
+import fg from "fast-glob";
+import fs from "fs-extra";
+import moment from "moment";
+import path from "path";
+import type { Observable } from "rxjs";
+import { from } from "rxjs";
 import { map } from "rxjs/operators";
 
 import { parseFileRenameFormat } from "./context";

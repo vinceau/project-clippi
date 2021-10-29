@@ -1,15 +1,12 @@
+import type { DolphinQueueFormat } from "@vinceau/slp-realtime";
+import { IS_DEV } from "common/constants";
+import { Message } from "common/types";
+import { remote, shell } from "electron";
+import fs from "fs-extra";
 import * as path from "path";
 import * as url from "url";
 
-import fs from "fs-extra";
-
-import { remote, shell } from "electron";
-
-import { Message } from "common/types";
 import { ipc } from "./rendererIpc";
-
-import { DolphinQueueFormat } from "@vinceau/slp-realtime";
-import { IS_DEV } from "common/constants";
 
 const folderOptions = {
   properties: ["openDirectory"],

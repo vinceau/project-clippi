@@ -1,20 +1,17 @@
-import React from "react";
-
-import ReactMarkdown from "react-markdown";
-
-import { Dispatch, iRootState } from "@/store";
-import { useDispatch, useSelector } from "react-redux";
-
 import styled from "@emotion/styled";
-
+import { GITHUB_PAGE } from "common/constants";
 import supporters from "raw-loader!../../../../SUPPORTERS.md";
+import React from "react";
+import ReactMarkdown from "react-markdown";
+import { useDispatch, useSelector } from "react-redux";
 
 import { ExternalLink as A } from "@/components/ExternalLink";
 import { FormContainer } from "@/components/Form";
-import clippiLogo from "../../../../build/icon.png";
-import { useTheme } from "@/styles";
 import { UpdateStatusInfo } from "@/containers/UpdateStatus";
-import { GITHUB_PAGE } from "common/constants";
+import type { Dispatch, iRootState } from "@/store";
+import { useTheme } from "@/styles";
+
+import clippiLogo from "../../../../build/icon.png";
 
 const Container = styled(FormContainer)`
   text-align: center;

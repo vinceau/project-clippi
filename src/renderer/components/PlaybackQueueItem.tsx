@@ -1,14 +1,16 @@
-import { ThemeMode, useTheme } from "@/styles";
+import styled from "@emotion/styled";
+import type { DolphinEntry } from "@vinceau/slp-realtime";
+import { exists } from "common/utils";
 import path from "path";
 import { transparentize } from "polished";
 import { darken, lighten } from "polished";
 import React from "react";
-import { Icon } from "semantic-ui-react";
-import styled from "@emotion/styled";
-import { Labelled } from "./Labelled";
-
-import { DolphinEntry } from "@vinceau/slp-realtime";
 import { Draggable } from "react-beautiful-dnd";
+import { Icon } from "semantic-ui-react";
+
+import { ThemeMode, useTheme } from "@/styles";
+
+import { Labelled } from "./Labelled";
 
 const Outer = styled.div<{
   themeName: string;
@@ -93,7 +95,7 @@ export const PlaybackQueueItem: React.FC<{
           isDragging={snapshot.isDragging}
         >
           <Details>
-            <Labelled title={`${index + 1}${total && ` of ${total}`}`}>
+            <Labelled title={`${index + 1}${exists(total) && ` of ${total}`}`}>
               <Icon size="big" name="file outline" />
             </Labelled>
             <DetailsContent>

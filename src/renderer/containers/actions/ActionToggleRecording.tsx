@@ -1,16 +1,15 @@
-import * as React from "react";
-
-import { ActionTypeGenerator, Context } from "@vinceau/event-actions";
+import type { ActionTypeGenerator, Context } from "@vinceau/event-actions";
+import { capitalize, delay as waitMillis, parseSecondsDelayValue } from "common/utils";
 import { produce } from "immer";
+import * as React from "react";
 
 import { CustomIcon } from "@/components/CustomIcon";
 import { DelayInput, InlineDropdown, NotifyInput } from "@/components/InlineInputs";
 import { obsConnection, OBSRecordingAction } from "@/lib/obs";
 import { notify } from "@/lib/utils";
-import { capitalize, delay as waitMillis, parseSecondsDelayValue } from "common/utils";
-import { ActionComponent } from "./types";
-
 import obsIcon from "@/styles/images/obs.svg";
+
+import type { ActionComponent } from "./types";
 
 const DEFAULT_DELAY_SECONDS = 10;
 
@@ -89,7 +88,7 @@ const actionToggleRecording: ActionTypeGenerator = (params: ActionToggleRecordin
       }
     } catch (err) {
       console.error(err);
-      notify(`Failed to ${obsRecordingLabel(params.recordAction)} OBS recording: ${err.error}`);
+      notify(`Failed to ${obsRecordingLabel(params.recordAction)} OBS recording: ${(err as Error).message}`);
     }
     return ctx;
   };

@@ -1,9 +1,8 @@
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
-import * as React from "react";
-
-import { GameStartType } from "@vinceau/slp-realtime";
+import type { GameStartType } from "@vinceau/slp-realtime";
 import { parseFileRenameFormat } from "common/context";
+import * as React from "react";
 
 export const TemplatePreview: React.FC<{
   template: string;

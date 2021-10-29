@@ -1,17 +1,15 @@
+import { assertExtension } from "common/utils";
 import * as React from "react";
-
 import { useDispatch, useSelector } from "react-redux";
 import { Checkbox, Form } from "semantic-ui-react";
 
 import { FileInput } from "@/components/FileInput";
-import { ProcessSection } from "@/components/ProcessSection";
-
 import { Field, FormContainer, Label } from "@/components/Form";
+import { ProcessSection } from "@/components/ProcessSection";
 import { RenameFiles } from "@/components/RenameFiles";
-import { Dispatch, iRootState } from "@/store";
-import { highlightInitialState } from "@/store/models/highlights";
 import { HighlightOptions } from "@/containers/HighlightOptions";
-import { assertExtension } from "common/utils";
+import type { Dispatch, iRootState } from "@/store";
+import { highlightInitialState } from "@/store/models/highlights";
 
 export const ComboFinder: React.FC = () => {
   const {

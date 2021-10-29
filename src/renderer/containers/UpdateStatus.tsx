@@ -1,17 +1,18 @@
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
+import { AUTO_UPDATES_ENABLED } from "common/constants";
+import { GITHUB_RELEASES_PAGE } from "common/constants";
+import type { VersionUpdatePayload } from "common/types";
+import { UpdateStatus } from "common/types";
+import { shell } from "electron";
 import React from "react";
-
-import { Dispatch, iRootState } from "@/store";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "semantic-ui-react";
-import { UpdateStatus, VersionUpdatePayload } from "common/types";
-import { checkForNewUpdates, downloadLatestUpdate, installUpdateAndRestart } from "@/lib/utils";
-import { AUTO_UPDATES_ENABLED } from "common/constants";
-import { shell } from "electron";
-import { GITHUB_RELEASES_PAGE } from "common/constants";
-import { ExternalLink as A } from "@/components/ExternalLink";
 import { format } from "timeago.js";
+
+import { ExternalLink as A } from "@/components/ExternalLink";
+import { checkForNewUpdates, downloadLatestUpdate, installUpdateAndRestart } from "@/lib/utils";
+import type { Dispatch, iRootState } from "@/store";
 
 export const UpdateStatusInfo: React.FC = () => {
   const updateStatus = useSelector((state: iRootState) => state.tempContainer.updateStatus);

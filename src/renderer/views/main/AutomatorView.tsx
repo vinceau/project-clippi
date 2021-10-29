@@ -1,7 +1,5 @@
-import React from "react";
-
 import styled from "@emotion/styled";
-
+import React from "react";
 import { Icon } from "semantic-ui-react";
 
 import { Text } from "@/components/Form";

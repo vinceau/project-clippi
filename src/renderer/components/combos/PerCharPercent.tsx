@@ -1,11 +1,11 @@
-import * as React from "react";
 import styled from "@emotion/styled";
-
+import * as React from "react";
 import { Field } from "react-final-form";
 import { FieldArray } from "react-final-form-arrays";
 import { Button, Icon } from "semantic-ui-react";
 
-import { CharPercentOption } from "@/lib/profile";
+import type { CharPercentOption } from "@/lib/profile";
+
 import { CharacterSelectAdapter } from "./CharacterSelect";
 import { SemanticInput } from "./FormAdapters";
 

@@ -1,6 +1,6 @@
-import { Character } from "@vinceau/slp-realtime";
-import * as React from "react";
 import styled from "@emotion/styled";
+import type { Character } from "@vinceau/slp-realtime";
+import * as React from "react";
 
 import { CharacterIcon } from "../CharacterIcon";
 

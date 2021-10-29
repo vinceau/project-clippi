@@ -1,13 +1,12 @@
+import { createModel } from "@rematch/core";
+import { Ports } from "@slippi/slippi-js";
+import { defaultComboFilterSettings } from "@vinceau/slp-realtime";
 import log from "electron-log";
 import produce from "immer";
-
-import { createModel } from "@rematch/core";
 
 import { mapFilterSettingsToConfiguration } from "@/lib/profile";
 import { streamManager } from "@/lib/realtime";
 import { notify } from "@/lib/utils";
-import { defaultComboFilterSettings } from "@vinceau/slp-realtime";
-import { Ports } from "@slippi/slippi-js";
 
 export const DEFAULT_PROFILE = "default";
 

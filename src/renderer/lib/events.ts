@@ -1,14 +1,9 @@
+import type { ComboEventFilter, EventConfig, StockEventFilter } from "@vinceau/slp-realtime";
+import { ComboEvent, GameEvent, InputEvent, StockEvent } from "@vinceau/slp-realtime";
 import log from "electron-log";
-import {
-  ComboEvent,
-  ComboEventFilter,
-  EventConfig,
-  GameEvent,
-  InputEvent,
-  StockEvent,
-  StockEventFilter,
-} from "@vinceau/slp-realtime";
-import { CustomInputEventFilter, generateButtonComboPreview } from "./inputs";
+
+import type { CustomInputEventFilter } from "./inputs";
+import { generateButtonComboPreview } from "./inputs";
 
 export const generateEventName = (event: EventConfig): string => {
   try {

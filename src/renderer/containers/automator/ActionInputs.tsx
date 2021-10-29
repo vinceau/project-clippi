@@ -1,14 +1,14 @@
-import React from "react";
-
-import { Action as ActionDefinition } from "@vinceau/event-actions";
+import type { Action as ActionDefinition } from "@vinceau/event-actions";
 import { produce } from "immer";
+import React from "react";
 import { Icon } from "semantic-ui-react";
 
 import { InlineDropdown } from "@/components/InlineInputs";
 import { Labelled } from "@/components/Labelled";
 import { actionComponents } from "@/containers/actions";
-import { ActionIcon } from "./ActionIcon";
+
 import { ActionComponentBlock } from "./ActionComponentBlock";
+import { ActionIcon } from "./ActionIcon";
 
 const allActions = Object.keys(actionComponents);
 

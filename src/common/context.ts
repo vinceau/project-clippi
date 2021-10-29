@@ -1,24 +1,19 @@
-import * as path from "path";
-
-import formatter from "formatter";
-import moment, { Moment } from "moment";
-
-import { Context } from "@vinceau/event-actions";
-
+import type { Context } from "@vinceau/event-actions";
+import type { ComboType, GameEndType, GameStartType, Metadata, StockType } from "@vinceau/slp-realtime";
 import {
-  ComboType,
   GameEndMethod,
-  GameEndType,
-  GameStartType,
   getCharacterColorName,
   getCharacterName,
   getCharacterShortName,
   getStageName,
   getStageShortName,
-  StockType,
-  Metadata,
 } from "@vinceau/slp-realtime";
-import { sanitizeFilename } from "./utils";
+import formatter from "formatter";
+import type { Moment } from "moment";
+import moment from "moment";
+import * as path from "path";
+
+import { exists, sanitizeFilename } from "./utils";
 
 const exampleFilename = "Game_20190323T111317.slp";
 
@@ -46,7 +41,7 @@ export const generateGameStartContext = (
     numPlayers,
   };
   const stageId = gameStart.stageId;
-  if (stageId) {
+  if (exists(stageId)) {
     ctx.stage = getStageName(stageId);
     ctx.shortStage = getStageShortName(stageId);
   }

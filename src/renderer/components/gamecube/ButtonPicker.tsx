@@ -1,13 +1,12 @@
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 import React from "react";
-
 import { Button, Icon, Modal } from "semantic-ui-react";
 
-import { ControllerLayout } from "./ControllerLayout";
-
-import { useTheme } from "@/styles";
 import { generateButtonComboPreview } from "@/lib/inputs";
+import { useTheme } from "@/styles";
+
+import { ControllerLayout } from "./ControllerLayout";
 
 export const ButtonPicker: React.FC<{
   value?: string[];

@@ -1,23 +1,17 @@
+import * as Comlink from "comlink";
+import type { ComboOptions, FileProcessorOptions } from "common/fileProcessor";
+import { secondsToString } from "common/utils";
+import { shell } from "electron";
 import log from "electron-log";
 import path from "path";
 
-import * as Comlink from "comlink";
-
-import {
-  CompletePayload,
-  fileProcessorIsBusy,
-  ProgressingPayload,
-  startFileProcessor,
-  stopFileProcessor,
-} from "@/workers/fileProcessor.worker";
-
 import { dispatcher, store } from "@/store";
-import { secondsToString } from "common/utils";
+import type { CompletePayload, ProgressingPayload } from "@/workers/fileProcessor.worker";
+import { fileProcessorIsBusy, startFileProcessor, stopFileProcessor } from "@/workers/fileProcessor.worker";
+
 import { openComboInDolphin } from "./dolphin";
-import { notify } from "./utils";
 import { toastProcessingError } from "./toasts";
-import { shell } from "electron";
-import { ComboOptions, FileProcessorOptions } from "common/fileProcessor";
+import { notify } from "./utils";
 
 const handleProgress = (payload: ProgressingPayload): void => {
   const { result, total, filename, options, index } = payload;
@@ -103,7 +97,7 @@ export const startProcessing = async (options: FileProcessorOptions): Promise<vo
     handleComplete(result);
   } catch (err) {
     console.error(err);
-    handleError(err.message);
+    handleError((err as Error).message);
   }
 };
 

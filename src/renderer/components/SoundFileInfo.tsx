@@ -1,9 +1,8 @@
-import React from "react";
-
+import styled from "@emotion/styled";
 import { transparentize } from "polished";
+import React from "react";
 import { Icon } from "semantic-ui-react";
 
-import styled from "@emotion/styled";
 import { Labelled } from "./Labelled";
 
 const Container = styled.div`

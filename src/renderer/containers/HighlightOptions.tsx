@@ -1,10 +1,11 @@
+import { FindComboOption } from "common/fileProcessor";
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import { Hint } from "@/components/Hint";
 import { InlineDropdown } from "@/components/InlineInputs";
-import { Dispatch, iRootState } from "@/store";
-import { FindComboOption } from "common/fileProcessor";
-import { useDispatch, useSelector } from "react-redux";
+import type { Dispatch, iRootState } from "@/store";
+
 import { HighlightButtonInputs } from "./HighlightButtonInputs";
 
 const highlightLabels = {

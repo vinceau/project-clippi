@@ -1,11 +1,11 @@
 import React from "react";
 
 import { ThemeMode, useTheme } from "@/styles";
-
-import { CustomIcon, CustomIconProps } from "./CustomIcon";
-
-import invertedSlippiLogoSVG from "@/styles/images/slippi-logo-invert.svg";
 import slippiLogoSVG from "@/styles/images/slippi-logo.svg";
+import invertedSlippiLogoSVG from "@/styles/images/slippi-logo-invert.svg";
+
+import type { CustomIconProps } from "./CustomIcon";
+import { CustomIcon } from "./CustomIcon";
 
 export const SlippiIcon: React.FC<Omit<CustomIconProps, "image">> = (props) => {
   const { themeName } = useTheme();

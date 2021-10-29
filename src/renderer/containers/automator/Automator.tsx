@@ -1,16 +1,17 @@
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 import React from "react";
-
-import { Dispatch, iRootState } from "@/store";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Icon } from "semantic-ui-react";
-import { EventModal } from "./EventModal";
-import { NamedEventConfig } from "@/store/models/automator";
-import { EventActionLists } from "./EventActionLists";
+
 import { Labelled } from "@/components/Labelled";
 import { streamManager } from "@/lib/realtime";
+import type { Dispatch, iRootState } from "@/store";
+import type { NamedEventConfig } from "@/store/models/automator";
+
 import { AutomatorPlaceholder } from "./AutomatorPlaceholder";
+import { EventActionLists } from "./EventActionLists";
+import { EventModal } from "./EventModal";
 
 export const Automator: React.FC = () => {
   const [opened, setOpened] = React.useState<boolean>(false);

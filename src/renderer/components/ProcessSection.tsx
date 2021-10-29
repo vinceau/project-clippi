@@ -1,6 +1,5 @@
-import * as React from "react";
 import styled from "@emotion/styled";
-
+import * as React from "react";
 import { Checkbox } from "semantic-ui-react";
 
 export const SlideReveal = styled.div<{

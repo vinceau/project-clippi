@@ -1,6 +1,5 @@
-import produce from "immer";
-
 import { createModel } from "@rematch/core";
+import produce from "immer";
 
 export interface AppContainerState {
   showDevOptions: boolean;

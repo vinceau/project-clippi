@@ -1,11 +1,10 @@
-import * as path from "path";
-
 import { createModel } from "@rematch/core";
 import { remote } from "electron";
 import produce from "immer";
+import * as path from "path";
 
 import { getDolphinPath } from "@/lib/dolphin";
-import { SoundMap } from "@/lib/sounds";
+import type { SoundMap } from "@/lib/sounds";
 import { getFilePath } from "@/lib/utils";
 
 const homeDirectory = remote.app.getPath("home");

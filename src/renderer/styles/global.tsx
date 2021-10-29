@@ -1,9 +1,11 @@
-import React from "react";
+import type { SerializedStyles } from "@emotion/core";
+import { css, Global } from "@emotion/core";
 import { withTheme } from "emotion-theming";
-import { css, Global, SerializedStyles } from "@emotion/core";
 import { darken, lighten } from "polished";
+import React from "react";
 
-import { Theme, ThemeMode } from "./theme";
+import type { Theme } from "./theme";
+import { ThemeMode } from "./theme";
 
 const buttonStyles = (theme: Theme): SerializedStyles => css`
   background: ${lighten(0.05, theme.foreground2)} none;

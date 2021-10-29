@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import * as React from "react";
-
 import { IS_DEV } from "common/constants";
+import * as React from "react";
 
 export const CodeBlock: React.FC<{
   values: Record<string, any>;

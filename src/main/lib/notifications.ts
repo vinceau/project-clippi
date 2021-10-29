@@ -1,8 +1,8 @@
-import * as path from "path";
-
-import { app, BrowserWindow, Notification, NotificationConstructorOptions } from "electron";
-import notifier from "node-notifier";
 import { IS_DEV } from "common/constants";
+import type { NotificationConstructorOptions } from "electron";
+import { app, BrowserWindow, Notification } from "electron";
+import notifier from "node-notifier";
+import * as path from "path";
 
 export const showNotification = (message: string, title?: string): void => {
   const notificationTitle = title ? title : "Project Clippi";

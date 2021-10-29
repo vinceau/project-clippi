@@ -1,13 +1,11 @@
-import * as React from "react";
-
 import { ConnectionStatus } from "@vinceau/slp-realtime";
+import * as React from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 import { ConnectionStatusDisplay } from "@/components/ConnectionStatusDisplay";
 import { statusToColor, statusToLabel } from "@/lib/status";
-import { iRootState } from "@/store";
-
+import type { iRootState } from "@/store";
 import slippiLogo from "@/styles/images/slippi.png";
 
 export const StatusBar: React.FC = () => {

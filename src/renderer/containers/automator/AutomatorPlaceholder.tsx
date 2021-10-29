@@ -1,10 +1,9 @@
+import styled from "@emotion/styled";
+import { darken, lighten } from "polished";
 import React from "react";
+import { Icon } from "semantic-ui-react";
 
 import { ThemeMode, useTheme } from "@/styles";
-import styled from "@emotion/styled";
-
-import { Icon } from "semantic-ui-react";
-import { lighten, darken } from "polished";
 
 const Outer = styled.div<{
   themeName: string;

@@ -1,18 +1,16 @@
-import React from "react";
-
-import { darken, lighten } from "polished";
 import styled from "@emotion/styled";
-
-import { Text } from "@/components/Form";
-import { Labelled } from "@/components/Labelled";
-import { Dispatch, iRootState } from "@/store";
-import { ThemeMode, useTheme } from "@/styles";
+import { darken, lighten } from "polished";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Icon } from "semantic-ui-react";
 
 import { DropPad } from "@/components/DropPad";
+import { Text } from "@/components/Form";
+import { Labelled } from "@/components/Labelled";
 import { OBSStatusBar } from "@/containers/OBSStatusBar";
 import { saveQueueToFile } from "@/lib/dolphin";
+import type { Dispatch, iRootState } from "@/store";
+import { ThemeMode, useTheme } from "@/styles";
 
 const Content = styled.div`
   display: flex;

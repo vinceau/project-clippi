@@ -1,4 +1,4 @@
-import { App } from "electron";
+import type { App } from "electron";
 
 export const getMenuTemplate = (app: App, platform: string): Electron.MenuItemConstructorOptions[] => {
   const menuItems: Electron.MenuItemConstructorOptions[] = [];

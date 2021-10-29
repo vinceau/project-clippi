@@ -1,9 +1,8 @@
-import * as React from "react";
-
 import styled from "@emotion/styled";
+import * as React from "react";
+import { Checkbox, Form as SemanticForm, Input } from "semantic-ui-react";
 
 import { Toggle } from "@/components/Form";
-import { Checkbox, Form as SemanticForm, Input } from "semantic-ui-react";
 
 export const ToggleAdapter = (props: any) => {
   const { input, label } = props;

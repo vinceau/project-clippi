@@ -1,4 +1,5 @@
-import { Input, InputEventFilter } from "@vinceau/slp-realtime";
+import type { InputEventFilter } from "@vinceau/slp-realtime";
+import { Input } from "@vinceau/slp-realtime";
 import { secondsToFrames } from "common/utils";
 
 const ORDERED_INPUTS = [

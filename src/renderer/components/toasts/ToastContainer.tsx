@@ -1,8 +1,8 @@
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
+import styled from "@emotion/styled";
 import React from "react";
 import { Slide, ToastContainer as TC } from "react-toastify";
-import styled from "@emotion/styled";
 
 import alertIcon from "@/styles/images/icons/alert.svg";
 import infoIcon from "@/styles/images/icons/info.svg";

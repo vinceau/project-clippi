@@ -1,6 +1,7 @@
 module.exports = {
   parser: "@typescript-eslint/parser", // Specifies the ESLint parser
   parserOptions: {
+    project: "tsconfig.json",
     ecmaVersion: 2020, // Allows for the parsing of modern ECMAScript features
     sourceType: "module", // Allows for the use of imports
     ecmaFeatures: {
@@ -23,11 +24,13 @@ module.exports = {
     // Make sure this is always the last configuration in the extends array.
     "plugin:prettier/recommended",
   ],
+  plugins: ["import", "simple-import-sort", "strict-booleans"],
   rules: {
     // Place to specify ESLint rules. Can be used to overwrite rules specified from the extended configs
     // e.g. "@typescript-eslint/explicit-function-return-type": "off",
     "react/prop-types": "off",
     "react/no-unescaped-entities": "warn",
+    "@typescript-eslint/consistent-type-imports": "warn",
     "@typescript-eslint/no-unused-vars": [
       "error",
       {
@@ -36,5 +39,18 @@ module.exports = {
       },
     ],
     "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/no-use-before-define": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/explicit-member-accessibility": "error",
+    "@typescript-eslint/consistent-type-imports": "warn",
+    "import/no-default-export": "error",
+    "import/no-named-as-default-member": "off",
+    "simple-import-sort/imports": "warn",
+    "simple-import-sort/exports": "warn",
+    "strict-booleans/no-nullable-numbers": "error",
+    "no-undef": "off",
+    "new-cap": "error",
+    curly: "error",
   },
+  ignorePatterns: ["/*.js", "*.d.ts"],
 };

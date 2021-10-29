@@ -1,9 +1,11 @@
+import { Message } from "common/types";
+import { remote } from "electron";
 import React from "react";
 
-import { remote } from "electron";
-import { darkTheme, lightTheme, Theme, ThemeMode } from "./theme";
 import { ipc } from "@/lib/rendererIpc";
-import { Message } from "common/types";
+
+import type { Theme } from "./theme";
+import { darkTheme, lightTheme, ThemeMode } from "./theme";
 
 interface ThemeContext {
   themeName: string;

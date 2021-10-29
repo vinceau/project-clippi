@@ -1,16 +1,13 @@
-import * as React from "react";
-
 import styled from "@emotion/styled";
-
+import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Header, Icon, Segment } from "semantic-ui-react";
 
-import { soundPlayer } from "@/lib/sounds";
-
 import { FormContainer, PageHeader } from "@/components/Form";
 import { SoundFileInfo } from "@/components/SoundFileInfo";
+import { soundPlayer } from "@/lib/sounds";
 import { openFileOrParentFolder } from "@/lib/utils";
-import { Dispatch, iRootState } from "@/store";
+import type { Dispatch, iRootState } from "@/store";
 import { device } from "@/styles/device";
 
 const AddSoundButton = (props: any) => {
