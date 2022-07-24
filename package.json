@@ -75,7 +75,8 @@
     "timeago.js": "^4.0.2",
     "twitch": "^4.0.10",
     "twitch-chat-client": "^4.0.10",
-    "twitch-electron-auth-provider": "^4.0.10"
+    "twitch-electron-auth-provider": "^4.0.10",
+    "vm2": "^3.9.10"
   },
   "devDependencies": {
     "@types/fs-extra": "^8.0.1",
