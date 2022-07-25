@@ -30,3 +30,6 @@ yarn-error.log*
 # yalc
 .yalc
 yalc.lock
+
+# Intellij
+.idea

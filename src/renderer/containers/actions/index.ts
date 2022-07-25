@@ -9,6 +9,7 @@ import { ActionToggleRecording } from "./ActionToggleRecording";
 import { ActionToggleSource } from "./ActionToggleSource";
 import { ActionTwitchClip } from "./ActionTwitchClip";
 import { ActionWriteFile } from "./ActionWriteFile";
+import { ActionRunCommand } from "./ActionRunCommand";
 import type { ActionComponent } from "./types";
 
 export enum Action {
@@ -20,6 +21,7 @@ export enum Action {
   WRITE_FILE = "write-file",
   SAVE_REPLAY_BUFFER = "save-replay-buffer",
   TOGGLE_RECORDING = "toggle-recording",
+  RUN_COMMAND = "run-command",
 }
 
 export interface EventActionConfig {
@@ -46,6 +48,7 @@ export const actionComponents: { [name: string]: ActionComponent } = {
   [Action.TOGGLE_SOURCE]: ActionToggleSource,
   [Action.SAVE_REPLAY_BUFFER]: ActionSaveReplayBuffer,
   [Action.TOGGLE_RECORDING]: ActionToggleRecording,
+  [Action.RUN_COMMAND]: ActionRunCommand,
 };
 
 for (const [key, value] of Object.entries(actionComponents)) {
