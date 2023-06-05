@@ -399,7 +399,7 @@ function canShortCircuit(options: FileProcessorOptions, settings: GameStartType,
   // Check if we're searching for name tags
   if (criteria.nameTags && criteria.nameTags.length > 0) {
     const matchableNames = extractPlayerNames(settings, metadata);
-    if (matchableNames.length === 0 || !namesMatch(criteria.nameTags, matchableNames)) {
+    if (matchableNames.length === 0 || !namesMatch(criteria.nameTags, matchableNames, criteria.fuzzyNameTagMatching)) {
       // We can short circuit since none of the names match
       return true;
     }
