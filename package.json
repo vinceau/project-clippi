@@ -19,7 +19,8 @@
     "dist:mac": "yarn run dist -m",
     "dist:linux": "yarn run dist -l",
     "lint": "eslint \"src/**/*.{ts,tsx}\"",
-    "lint:fix": "yarn run lint --fix"
+    "lint:fix": "yarn run lint --fix",
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "@emotion/core": "^10.0.28",
@@ -103,6 +104,8 @@
     "eslint-plugin-simple-import-sort": "^7.0.0",
     "eslint-plugin-strict-booleans": "^1.0.1",
     "husky": "^4.2.5",
+    "patch-package": "^7.0.0",
+    "postinstall-postinstall": "^2.1.0",
     "prettier": "2.0.5",
     "pretty-quick": "^2.0.1",
     "raw-loader": "^4.0.1",
