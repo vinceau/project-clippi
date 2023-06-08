@@ -1,0 +1,29 @@
+diff --git a/node_modules/twitch-electron-auth-provider/lib/index.js b/node_modules/twitch-electron-auth-provider/lib/index.js
+index a215064..331de88 100644
+--- a/node_modules/twitch-electron-auth-provider/lib/index.js
++++ b/node_modules/twitch-electron-auth-provider/lib/index.js
+@@ -10,6 +10,7 @@ var defaultOptions = {
+     escapeToClose: true,
+     closeOnLogin: true
+ };
++var userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101 Firefox/102.0";
+ var ElectronAuthProvider = /** @class */ (function () {
+     function ElectronAuthProvider(_clientCredentials, options) {
+         this._clientCredentials = _clientCredentials;
+@@ -59,6 +60,7 @@ var ElectronAuthProvider = /** @class */ (function () {
+                         var done = false;
+                         var authWindow = _this._options.window ||
+                             new electron_1.BrowserWindow(Object.assign(defaultBrowserWindowOptions, _this._options.windowOptions));
++                        authWindow.webContents.userAgent = userAgent;
+                         authWindow.webContents.once('did-finish-load', function () { return authWindow.show(); });
+                         authWindow.on('closed', function () {
+                             if (!done) {
+@@ -125,7 +127,7 @@ var ElectronAuthProvider = /** @class */ (function () {
+                             callback({ cancel: true });
+                         });
+                         // do this last so there is no race condition
+-                        authWindow.loadURL(authUrl);
++                        authWindow.loadURL(authUrl, { userAgent });
+                     })];
+             });
+         });
