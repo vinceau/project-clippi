@@ -6,6 +6,8 @@ import { Field, FormContainer, PageHeader, Toggle } from "@/components/Form";
 import { TwitchClipList, TwitchConnectButton, TwitchUserStatus } from "@/components/twitch";
 import type { Dispatch, iRootState } from "@/store";
 
+const TWITCH_CLIPS_PER_PAGE = 10;
+
 export const TwitchIntegration: React.FC = () => {
   const { twitchUser, twitchLoading } = useSelector((state: iRootState) => state.tempContainer);
   const { reconnectTwitch } = useSelector((state: iRootState) => state.twitch);
