@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Header, Icon, Loader, Segment } from "semantic-ui-react";
 
 import { Field, FormContainer, PageHeader, Toggle } from "@/components/Form";
-import { TwitchClipInfo, TwitchConnectButton, TwitchUserStatus } from "@/components/twitch";
+import { TwitchClipList, TwitchConnectButton, TwitchUserStatus } from "@/components/twitch";
 import type { Dispatch, iRootState } from "@/store";
 
 export const TwitchIntegration: React.FC = () => {
@@ -43,9 +43,11 @@ export const TwitchIntegration: React.FC = () => {
 
       <h2>Clips</h2>
       {allClips.length > 0 ? (
-        allClips.map((v) => (
-          <TwitchClipInfo key={v.clipID} clip={v} onRemove={(key) => dispatch.twitch.removeTwitchClip(key)} />
-        ))
+        <TwitchClipList
+          clips={allClips}
+          clipsPerPage={TWITCH_CLIPS_PER_PAGE}
+          onRemove={(key) => dispatch.twitch.removeTwitchClip(key)}
+        />
       ) : (
         <Segment placeholder>
           <Header icon>
