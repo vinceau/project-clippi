@@ -39,5 +39,10 @@ export const twitch = createModel({
         draft.clips = clips;
       });
     },
+    clearAllTwitchClips: (state: TwitchState): TwitchState => {
+      return produce(state, (draft) => {
+        draft.clips = {};
+      });
+    },
   },
 });

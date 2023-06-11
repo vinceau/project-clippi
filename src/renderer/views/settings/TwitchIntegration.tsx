@@ -1,9 +1,12 @@
+/** @jsx jsx */
+import { css, jsx } from "@emotion/core";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Header, Icon, Loader, Segment } from "semantic-ui-react";
 
 import { Field, FormContainer, PageHeader, Toggle } from "@/components/Form";
 import { TwitchClipList, TwitchConnectButton, TwitchUserStatus } from "@/components/twitch";
+import { TwitchClipClearDialog } from "@/components/twitch/TwitchClipClearDialog";
 import type { Dispatch, iRootState } from "@/store";
 
 const TWITCH_CLIPS_PER_PAGE = 10;
@@ -43,21 +46,40 @@ export const TwitchIntegration: React.FC = () => {
         <Toggle value={reconnectTwitch} onChange={onReconnectChange} label="Auto-connect with Twitch on startup" />
       </Field>
 
-      <h2>Clips</h2>
-      {allClips.length > 0 ? (
-        <TwitchClipList
-          clips={allClips}
-          clipsPerPage={TWITCH_CLIPS_PER_PAGE}
-          onRemove={(key) => dispatch.twitch.removeTwitchClip(key)}
-        />
-      ) : (
-        <Segment placeholder>
-          <Header icon>
-            <Icon name="twitch" />
-            You have not created any Twitch clips
-          </Header>
-        </Segment>
-      )}
+      <div style={{ marginTop: "20px" }}>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <h2>Clips</h2>
+          <TwitchClipClearDialog
+            trigger={
+              <div
+                css={css`
+                  cursor: pointer;
+                  &:hover {
+                    text-decoration: underline;
+                  }
+                `}
+              >
+                Clear all
+              </div>
+            }
+            onClear={dispatch.twitch.clearAllTwitchClips}
+          />
+        </div>
+        {allClips.length > 0 ? (
+          <TwitchClipList
+            clips={allClips}
+            clipsPerPage={TWITCH_CLIPS_PER_PAGE}
+            onRemove={dispatch.twitch.removeTwitchClip}
+          />
+        ) : (
+          <Segment placeholder>
+            <Header icon>
+              <Icon name="twitch" />
+              You have not created any Twitch clips
+            </Header>
+          </Segment>
+        )}
+      </div>
     </FormContainer>
   );
 };
