@@ -1,6 +1,6 @@
 import type { TwitchClip } from "common/types";
 import React from "react";
-import { Grid, Input, Pagination, Segment } from "semantic-ui-react";
+import { Pagination } from "semantic-ui-react";
 
 import { TwitchClipInfo } from "./TwitchClipInfo";
 
