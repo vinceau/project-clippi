@@ -12,7 +12,7 @@ export const TwitchClipClearDialog = ({ trigger, onClear }: { trigger: React.Rea
     <Modal closeIcon open={open} trigger={trigger} onClose={() => setOpen(false)} onOpen={() => setOpen(true)}>
       <Header icon="trash" content="Delete all Twitch clips" />
       <Modal.Content>
-        <p>You are about to delete all saved Twitch clips. This cannot be undone.</p>
+        <p style={{ color: "#333" }}>You are about to delete all saved Twitch clips. This cannot be undone.</p>
       </Modal.Content>
       <Modal.Actions>
         <Button onClick={() => setOpen(false)}>
