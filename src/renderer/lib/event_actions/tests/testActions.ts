@@ -1,5 +1,8 @@
 import type { ActionTypeGenerator, Context } from "../action";
-import { delay } from "../utils";
+
+const delay = async (ms: number): Promise<void> => {
+  await new Promise((resolve) => setTimeout(resolve, ms));
+};
 
 /*
 A transforming action. Takes the result of the last action
