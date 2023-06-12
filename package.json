@@ -13,6 +13,7 @@
     "start": "electron-webpack dev",
     "build": "electron-webpack",
     "test": "jest --verbose",
+    "typecheck": "yarn tsc --noEmit",
     "dist": "yarn build && electron-builder",
     "dist:dir": "yarn dist --dir -c.compression=store -c.mac.identity=null",
     "dist:all": "yarn run dist --x64 -wml",
