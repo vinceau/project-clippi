@@ -1665,11 +1665,6 @@
     "@typescript-eslint/types" "5.1.0"
     eslint-visitor-keys "^3.0.0"
 
-"@vinceau/event-actions@^0.0.4":
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/@vinceau/event-actions/-/event-actions-0.0.4.tgz#b773d36293bdfd1468f36815fb0a5ad77b7a087f"
-  integrity sha512-Hhayt7S4GZg5ebmR52WKZ3xuUMwZHJYKunNVQTFoNzEKOieEnzokWttRGep5sD9EUUQ0Iw+1B69SrZYJO7JS/A==
-
 "@vinceau/slp-realtime@^3.1.1":
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/@vinceau/slp-realtime/-/slp-realtime-3.1.1.tgz#565d98d2ba6061e6b011bae3f235843bfd48f819"
