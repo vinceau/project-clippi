@@ -123,8 +123,8 @@ const genPlayerContext = (index: number, settings: GameStartType, metadata?: Met
 
   // Determine netplay names if they exist
   const { name, code } = extractPlayerNames(index, settings, metadata);
-  const netplayName = name ? sanitizeFilename(name) : null;
-  const netplayCode = code ? sanitizeFilename(code) : null;
+  const netplayName = name ? sanitizeFilename(name, "_") : null;
+  const netplayCode = code ? sanitizeFilename(code, "_") : null;
 
   if (playerCharId !== null && playerCharColor !== null) {
     return {
