@@ -1,4 +1,3 @@
-import type { ActionTypeGenerator, Context } from "@vinceau/event-actions";
 import { delay as waitMillis } from "common/utils";
 import { produce } from "immer";
 import * as React from "react";
@@ -7,6 +6,7 @@ import { Button } from "semantic-ui-react";
 
 import { CustomIcon } from "@/components/CustomIcon";
 import { DelayInput, InlineDropdown } from "@/components/InlineInputs";
+import type { ActionTypeGenerator, Context } from "@/lib/event_actions";
 import { connectToOBSAndNotify, getAllScenes, obsConnection, OBSConnectionStatus } from "@/lib/obs";
 import { notify } from "@/lib/utils";
 import type { iRootState } from "@/store";

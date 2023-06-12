@@ -1,5 +1,5 @@
-import type { Action as ActionDefinition, EventActions } from "@vinceau/event-actions";
-import { EventManager } from "@vinceau/event-actions";
+import type { Action as ActionDefinition, EventActions } from "@/lib/event_actions";
+import { EventManager } from "@/lib/event_actions";
 
 import { ActionChangeScene } from "./ActionChangeScene";
 import { ActionNotify } from "./ActionNotify";

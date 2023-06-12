@@ -1,4 +1,3 @@
-import type { ActionTypeGenerator, Context } from "@vinceau/event-actions";
 import { writeFile } from "common/utils";
 import formatter from "formatter";
 import { produce } from "immer";
@@ -7,6 +6,7 @@ import { Form, Icon, TextArea } from "semantic-ui-react";
 
 import { FileInput } from "@/components/FileInput";
 import { InlineDropdown } from "@/components/InlineInputs";
+import type { ActionTypeGenerator, Context } from "@/lib/event_actions";
 import { notify as sendNotification } from "@/lib/utils";
 
 import type { ActionComponent } from "./types";

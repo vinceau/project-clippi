@@ -1,10 +1,10 @@
 import styled from "@emotion/styled";
-import type { Action } from "@vinceau/event-actions";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ReflexContainer, ReflexElement, ReflexSplitter } from "react-reflex";
 
 import { actionComponents } from "@/containers/actions";
+import type { Action } from "@/lib/event_actions";
 import { generateEventName } from "@/lib/events";
 import type { Dispatch, iRootState } from "@/store";
 

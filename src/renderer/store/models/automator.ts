@@ -1,7 +1,8 @@
 import { createModel } from "@rematch/core";
-import type { Action as ActionDefinition } from "@vinceau/event-actions";
 import type { EventConfig } from "@vinceau/slp-realtime";
 import produce from "immer";
+
+import type { Action as ActionDefinition } from "@/lib/event_actions";
 
 export interface NamedEventConfig extends EventConfig {
   name?: string;

@@ -1,10 +1,10 @@
-import type { ActionTypeGenerator, Context } from "@vinceau/event-actions";
 import { capitalize, delay as waitMillis, parseSecondsDelayValue } from "common/utils";
 import { produce } from "immer";
 import * as React from "react";
 
 import { CustomIcon } from "@/components/CustomIcon";
 import { DelayInput, InlineDropdown, NotifyInput } from "@/components/InlineInputs";
+import type { ActionTypeGenerator, Context } from "@/lib/event_actions";
 import { obsConnection, OBSRecordingAction } from "@/lib/obs";
 import { notify } from "@/lib/utils";
 import obsIcon from "@/styles/images/obs.svg";

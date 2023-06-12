@@ -1,9 +1,9 @@
-import type { Context } from "@vinceau/event-actions";
 import { generateFileRenameContext } from "common/context";
 import * as React from "react";
 import { Label } from "semantic-ui-react";
 
 import { contextDescriptions } from "@/lib/contextDescriptions";
+import type { Context } from "@/lib/event_actions";
 
 import { TippyLabel } from "./Labelled";
 

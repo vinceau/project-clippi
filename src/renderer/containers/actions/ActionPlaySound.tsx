@@ -1,10 +1,10 @@
-import type { ActionTypeGenerator, Context } from "@vinceau/event-actions";
 import { produce } from "immer";
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Icon } from "semantic-ui-react";
 
 import { InlineDropdown } from "@/components/InlineInputs";
+import type { ActionTypeGenerator, Context } from "@/lib/event_actions";
 import { soundPlayer } from "@/lib/sounds";
 import type { Dispatch, iRootState } from "@/store";
 
