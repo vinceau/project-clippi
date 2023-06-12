@@ -1,4 +1,3 @@
-import type { ActionTypeGenerator, Context } from "@vinceau/event-actions";
 import { delay as waitMillis, parseSecondsDelayValue } from "common/utils";
 import { produce } from "immer";
 import * as React from "react";
@@ -7,6 +6,7 @@ import { Icon, Loader } from "semantic-ui-react";
 
 import { DelayInput, NotifyInput, SimpleInput } from "@/components/InlineInputs";
 import { TwitchConnectButton } from "@/components/twitch";
+import type { ActionTypeGenerator, Context } from "@/lib/event_actions";
 import { notify as sendNotification } from "@/lib/utils";
 import type { Dispatch, iRootState } from "@/store";
 import { dispatcher, store } from "@/store";

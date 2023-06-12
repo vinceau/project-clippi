@@ -1,5 +1,6 @@
-import type { ActionTypeGenerator } from "@vinceau/event-actions";
 import type { FC } from "react";
+
+import type { ActionTypeGenerator } from "@/lib/event_actions";
 
 export interface ActionComponent {
   label: string;

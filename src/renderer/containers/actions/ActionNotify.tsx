@@ -1,8 +1,8 @@
-import type { ActionTypeGenerator, Context } from "@vinceau/event-actions";
 import formatter from "formatter";
 import * as React from "react";
 import { Form, Icon, TextArea } from "semantic-ui-react";
 
+import type { ActionTypeGenerator, Context } from "@/lib/event_actions";
 import { notify } from "@/lib/utils";
 
 import type { ActionComponent } from "./types";
