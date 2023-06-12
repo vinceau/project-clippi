@@ -1,3 +1,4 @@
+import { SlippiGame } from "@slippi/slippi-js";
 import type {
   Character,
   ComboEventPayload,
@@ -5,7 +6,7 @@ import type {
   DolphinPlaybackItem,
   FrameEntryType,
   GameStartType,
-  Metadata,
+  MetadataType as Metadata,
 } from "@vinceau/slp-realtime";
 import {
   checkCombo,
@@ -17,14 +18,13 @@ import {
   Input,
   mapFramesToButtonInputs,
   namesMatch,
-  SlippiGame,
   throttleInputButtons,
 } from "@vinceau/slp-realtime";
 import fg from "fast-glob";
 import fs from "fs-extra";
 import moment from "moment";
 import path from "path";
-import type { Observable } from "rxjs";
+import { Observable } from "rxjs";
 import { from } from "rxjs";
 import { map } from "rxjs/operators";
 
@@ -223,7 +223,7 @@ export class FileProcessor {
     if (!settings) {
       throw new Error(`Could not process ${filename}. Invalid SLP file`);
     }
-    const metadata = game.getMetadata();
+    const metadata = game.getMetadata() ?? undefined;
 
     // Handle file renaming
     if (options.renameFiles && options.renameTemplate) {
@@ -255,8 +255,12 @@ export class FileProcessor {
     // Fetching game info breaks if the file was renamed
     const game = new SlippiGame(filename);
     const settings = game.getSettings();
-    const metadata = game.getMetadata();
+    const metadata = game.getMetadata() ?? undefined;
     const stats = game.getStats();
+    if (!settings || !stats) {
+      return new Observable<never>();
+    }
+
     switch (findComboOption) {
       case FindComboOption.COMBOS:
         return this._findCombos(

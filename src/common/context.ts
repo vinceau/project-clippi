@@ -1,4 +1,4 @@
-import type { ComboType, GameEndType, GameStartType, Metadata, StockType } from "@vinceau/slp-realtime";
+import type { ComboType, GameEndType, GameStartType, MetadataType as Metadata, StockType } from "@vinceau/slp-realtime";
 import {
   GameEndMethod,
   getCharacterColorName,
@@ -122,16 +122,9 @@ const genPlayerContext = (index: number, settings: GameStartType, metadata?: Met
   const playerCharColor = player.characterColor;
 
   // Determine netplay names if they exist
-  let netplayName = null;
-  let netplayCode = null;
-  if (metadata && metadata.players) {
-    const playerInfo = metadata.players[index];
-    if (playerInfo && playerInfo.names) {
-      const names = playerInfo.names;
-      netplayName = names.netplay ? sanitizeFilename(playerInfo.names.netplay, "_") : null;
-      netplayCode = names.code ? sanitizeFilename(playerInfo.names.code, "_") : null;
-    }
-  }
+  const { name, code } = extractPlayerNames(index, settings, metadata);
+  const netplayName = name ? sanitizeFilename(name) : null;
+  const netplayCode = code ? sanitizeFilename(code) : null;
 
   if (playerCharId !== null && playerCharColor !== null) {
     return {
@@ -253,3 +246,24 @@ export const parseFileRenameFormat = (
   const msgFormatter = formatter(format);
   return msgFormatter(ctx);
 };
+
+export type PlayerNames = {
+  name: string;
+  code: string;
+  tag: string;
+};
+
+function extractPlayerNames(index: number, settings: GameStartType, metadata?: Metadata | null): PlayerNames {
+  const result: PlayerNames = {
+    name: "",
+    code: "",
+    tag: "",
+  };
+
+  const player = settings.players.find((player) => player.playerIndex === index);
+  result.tag = player?.nametag ?? "";
+  result.name = player?.displayName || metadata?.players?.[index]?.names?.netplay || "";
+  result.code = player?.connectCode || metadata?.players?.[index]?.names?.code || "";
+
+  return result;
+}
