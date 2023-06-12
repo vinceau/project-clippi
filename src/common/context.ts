@@ -247,7 +247,7 @@ export const parseFileRenameFormat = (
   return msgFormatter(ctx);
 };
 
-export type PlayerNames = {
+type PlayerNames = {
   name: string;
   code: string;
   tag: string;
