@@ -1,10 +1,10 @@
 import type { RematchRootState } from "@rematch/core";
 import { init } from "@rematch/core";
 import createRematchPersist, { getPersistor } from "@rematch/persist";
-import type { EventConfig } from "@vinceau/slp-realtime";
-import { InputEvent } from "@vinceau/slp-realtime";
 
 import { updateEventActionManager } from "@/containers/actions";
+import type { EventConfig } from "@/lib/automator_manager";
+import { InputEvent } from "@/lib/automator_manager";
 import { dolphinRecorder } from "@/lib/dolphin";
 import { mapInputEventConfig } from "@/lib/inputs";
 import { obsConnection } from "@/lib/obs";

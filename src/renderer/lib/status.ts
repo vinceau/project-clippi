@@ -1,4 +1,4 @@
-import { ConnectionStatus } from "@vinceau/slp-realtime";
+import { ConnectionStatus } from "@slippi/slippi-js";
 
 export const statusToLabel = (status: ConnectionStatus): string => {
   switch (status) {

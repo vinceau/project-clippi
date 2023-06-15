@@ -1,7 +1,7 @@
-import type { ComboEventFilter, EventConfig, StockEventFilter } from "@vinceau/slp-realtime";
-import { ComboEvent, GameEvent, InputEvent, StockEvent } from "@vinceau/slp-realtime";
 import log from "electron-log";
 
+import type { ComboEventFilter, EventConfig, StockEventFilter } from "./automator_manager";
+import { ComboEvent, GameEvent, InputEvent, StockEvent } from "./automator_manager";
 import type { CustomInputEventFilter } from "./inputs";
 import { generateButtonComboPreview } from "./inputs";
 

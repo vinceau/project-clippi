@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
-import type { Character } from "@vinceau/slp-realtime";
+import type { Character } from "@slippi/slippi-js";
 import { getCharacterShortName } from "@vinceau/slp-realtime";
 import React from "react";
 

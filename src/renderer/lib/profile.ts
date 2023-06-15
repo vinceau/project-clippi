@@ -1,4 +1,5 @@
-import type { Character, ComboFilterSettings } from "@vinceau/slp-realtime";
+import type { Character } from "@slippi/slippi-js";
+import type { ComboFilterSettings } from "@vinceau/slp-realtime";
 import { getCharacterName } from "@vinceau/slp-realtime";
 
 interface PerCharPercentObject {

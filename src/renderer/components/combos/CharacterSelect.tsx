@@ -1,7 +1,8 @@
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 import styled from "@emotion/styled";
-import type { Character, CharacterInfo } from "@vinceau/slp-realtime";
+import type { Character } from "@slippi/slippi-js";
+import type { CharacterInfo } from "@vinceau/slp-realtime";
 import { getAllCharacters, getCharacterName } from "@vinceau/slp-realtime";
 import * as React from "react";
 import { Field } from "react-final-form";

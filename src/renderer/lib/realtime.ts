@@ -1,17 +1,12 @@
-import type { EventManagerConfig } from "@vinceau/slp-realtime";
-import {
-  ConnectionEvent,
-  ConnectionStatus,
-  EventManager,
-  SlpFolderStream,
-  SlpLiveStream,
-  SlpRealTime,
-} from "@vinceau/slp-realtime";
+import { ConnectionEvent, ConnectionStatus } from "@slippi/slippi-js";
+import { SlpFolderStream, SlpLiveStream, SlpRealTime } from "@vinceau/slp-realtime";
 import log from "electron-log";
 
 import { dispatcher } from "@/store";
 
 import { eventActionManager } from "../containers/actions";
+import type { EventManagerConfig } from "./automator_manager";
+import { EventManager } from "./automator_manager";
 import { notify } from "./utils";
 
 class SlpStreamManager {

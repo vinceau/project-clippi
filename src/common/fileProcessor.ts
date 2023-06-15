@@ -1,6 +1,6 @@
+import type { Character } from "@slippi/slippi-js";
 import { SlippiGame } from "@slippi/slippi-js";
 import type {
-  Character,
   ComboEventPayload,
   ComboFilterSettings,
   DolphinPlaybackItem,

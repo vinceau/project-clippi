@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 import styled from "@emotion/styled";
-import { ComboEvent, GameEvent, InputEvent, StockEvent } from "@vinceau/slp-realtime";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
@@ -11,6 +10,7 @@ import { PortSelection } from "@/components/combos/PortSelection";
 import { Field, Label, Text } from "@/components/Form";
 import { ButtonInput } from "@/components/gamecube/ButtonInput";
 import { DelayInput, InlineDropdown } from "@/components/InlineInputs";
+import { ComboEvent, GameEvent, InputEvent, StockEvent } from "@/lib/automator_manager";
 import type { iRootState } from "@/store";
 import type { NamedEventConfig } from "@/store/models/automator";
 import { useTheme } from "@/styles";

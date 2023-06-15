@@ -1,15 +1,14 @@
-import { ConnectionStatus } from "@vinceau/slp-realtime";
+import { ConnectionStatus } from "@slippi/slippi-js";
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { ConnectionStatusCard } from "@/components/ConnectionStatusCard";
 import { PageHeader } from "@/components/Form";
+import { SlippiConnectionPlaceholder } from "@/containers/SlippiConnectionPlaceholder";
 import { streamManager } from "@/lib/realtime";
 import { statusToColor, statusToLabel } from "@/lib/status";
 import type { Dispatch, iRootState } from "@/store";
 import slippiLogo from "@/styles/images/slippi.png";
-
-import { SlippiConnectionPlaceholder } from "../../containers/SlippiConnectionPlaceholder";
 
 export const SlippiPage: React.FC = () => {
   const port = useSelector((state: iRootState) => state.slippi.port);
