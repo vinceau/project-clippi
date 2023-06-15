@@ -31,7 +31,7 @@
     "@rematch/core": "^1.3.0",
     "@rematch/persist": "^1.1.6",
     "@slippi/slippi-js": "^6.7.0",
-    "@vinceau/slp-realtime": "^3.3.0",
+    "@vinceau/slp-realtime": "^4.0.0-alpha.1",
     "comlink": "^4.2.0",
     "electron-context-menu": "^0.15.1",
     "electron-log": "^4.2.4",

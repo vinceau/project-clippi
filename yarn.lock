@@ -2262,10 +2262,10 @@
     "@typescript-eslint/types" "5.1.0"
     eslint-visitor-keys "^3.0.0"
 
-"@vinceau/slp-realtime@^3.3.0":
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/@vinceau/slp-realtime/-/slp-realtime-3.3.0.tgz#bc0851d7026587d18a8af09c75fdf24b546f9542"
-  integrity sha512-Ohz7N921637jS+O2yXST7OlTqw8zVhWKewC2m9UkV9QE0fcQUSm4CnV7nJAzT1cYzK0hXiz9sgLuS4A8c2nV7A==
+"@vinceau/slp-realtime@^4.0.0-alpha.1":
+  version "4.0.0-alpha.1"
+  resolved "https://registry.yarnpkg.com/@vinceau/slp-realtime/-/slp-realtime-4.0.0-alpha.1.tgz#1b33ea505e97f3071dfce2caf70f65714731ed32"
+  integrity sha512-j6a1dOwWktmdDmcee9Ea34wAXmM0UUaAbelRMT3GBu/asJ7DJHwTyoAtz8o/KNXlsPsyk2GNEVOCxyuGfUt4UQ==
   dependencies:
     chokidar "^3.3.1"
     fs-extra "^8.1.0"
