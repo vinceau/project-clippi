@@ -165,7 +165,7 @@ export const EventModal: React.FC<{
         </Field>
 
         {showComboProfileInput && (
-          <Field>
+          <Field padding="bottom">
             <Label>Combo Profile</Label>
             <Controller
               as={
@@ -186,7 +186,7 @@ export const EventModal: React.FC<{
         )}
 
         {showButtonInputs && (
-          <Field>
+          <Field padding="bottom">
             <Label>Button Combination</Label>
             <div style={{ marginBottom: "10px", lineHeight: "28px" }}>
               {"Trigger event when the following combination is "}
@@ -251,6 +251,10 @@ export const EventModal: React.FC<{
                   rules={{ validate: (val) => val && val.length > 0 }}
                   name="filter.playerNames"
                 />
+                <Text>
+                  Only track inputs by players using these name tags. These can be in-game tags, Slippi display names,
+                  or connect codes.
+                </Text>
                 {errors.filter &&
                   errors.filter.playerNames &&
                   (errors.filter.playerNames as any).type === "validate" && (
