@@ -12,19 +12,12 @@ import { ButtonInput } from "@/components/gamecube/ButtonInput";
 import { DelayInput, InlineDropdown } from "@/components/InlineInputs";
 import { KeywordsInput } from "@/components/KeywordsInput";
 import { ComboEvent, GameEvent, InputEvent, StockEvent } from "@/lib/automator_manager";
+import type { CustomInputEventFilter } from "@/lib/inputs";
 import type { iRootState } from "@/store";
 import type { NamedEventConfig } from "@/store/models/automator";
 import { useTheme } from "@/styles";
 
-interface FilterValues {
-  playerIndex: number[];
-  playerNames: string[];
-  playerSelectionOption: "port" | "name";
-  inputButtonHold: string;
-  buttonCombo: string[];
-  inputButtonHoldDelay: string;
-  inputButtonHoldUnits: string;
-}
+type FilterValues = Required<CustomInputEventFilter>;
 
 interface FormValues {
   name: string;
