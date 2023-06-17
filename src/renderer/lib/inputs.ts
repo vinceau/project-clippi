@@ -20,6 +20,8 @@ const ORDERED_INPUTS = [
 
 export interface CustomInputEventFilter {
   playerIndex: number[];
+  playerNames: string[];
+  playerSelectionOption: "port" | "name";
   inputButtonHold: "pressed" | "held";
   buttonCombo: string[];
   inputButtonHoldDelay?: number | string;
@@ -46,8 +48,10 @@ export const mapInputEventConfig = (data: CustomInputEventFilter): InputEventFil
   }
   return {
     combo: data.buttonCombo,
-    playerIndex: data.playerIndex,
+    playerIndex: data.playerSelectionOption === "port" ? data.playerIndex : undefined,
+    playerNames: data.playerSelectionOption === "name" ? data.playerNames : undefined,
     duration,
+    fuzzyNameMatch: true,
   };
 };
 

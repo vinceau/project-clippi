@@ -10,18 +10,14 @@ import { PortSelection } from "@/components/combos/PortSelection";
 import { Field, Label, Text } from "@/components/Form";
 import { ButtonInput } from "@/components/gamecube/ButtonInput";
 import { DelayInput, InlineDropdown } from "@/components/InlineInputs";
+import { KeywordsInput } from "@/components/KeywordsInput";
 import { ComboEvent, GameEvent, InputEvent, StockEvent } from "@/lib/automator_manager";
+import type { CustomInputEventFilter } from "@/lib/inputs";
 import type { iRootState } from "@/store";
 import type { NamedEventConfig } from "@/store/models/automator";
 import { useTheme } from "@/styles";
 
-interface FilterValues {
-  playerIndex: number[];
-  inputButtonHold: string;
-  buttonCombo: string[];
-  inputButtonHoldDelay: string;
-  inputButtonHoldUnits: string;
-}
+type FilterValues = Required<CustomInputEventFilter>;
 
 interface FormValues {
   name: string;
@@ -31,9 +27,11 @@ interface FormValues {
 
 const DEFAULT_FORM_VALUES: FormValues = {
   name: "",
-  type: GameEvent.GAME_START,
+  type: InputEvent.BUTTON_COMBO,
   filter: {
+    playerNames: [],
     playerIndex: [0, 1, 2, 3],
+    playerSelectionOption: "name",
     inputButtonHold: "pressed",
     buttonCombo: [],
     inputButtonHoldDelay: "2",
@@ -42,19 +40,20 @@ const DEFAULT_FORM_VALUES: FormValues = {
 };
 
 const eventOptions = [
+  { value: InputEvent.BUTTON_COMBO, text: "Button input combination" },
   { value: GameEvent.GAME_START, text: "Game start" },
   { value: GameEvent.GAME_END, text: "Game end" },
   { value: StockEvent.PLAYER_SPAWN, text: "Player spawn" },
   { value: StockEvent.PLAYER_DIED, text: "Player death" },
   { value: ComboEvent.END, text: "Combo occurs" },
   { value: ComboEvent.CONVERSION, text: "Conversion occurs" },
-  { value: InputEvent.BUTTON_COMBO, text: "Button input combination" },
 ];
 
 const stringToOptions = (o: string) => ({ key: o, value: o, text: o });
 
 const holdOptions = ["held", "pressed"].map(stringToOptions);
 const holdDurationOptions = ["frames", "seconds"].map(stringToOptions);
+const playerSelectionOptions = ["name", "port"].map(stringToOptions);
 
 const ErrorText = styled(Text)`
   color: red;
@@ -104,7 +103,7 @@ export const EventModal: React.FC<{
 
   const eventType = watch("type");
   const filter = watch("filter");
-  const showPlayerOptions = false; // eventType !== GameEvent.GAME_START && eventType !== GameEvent.GAME_END;
+  console.log({ filter });
   const showButtonInputs = eventType === InputEvent.BUTTON_COMBO;
   const showComboProfileInput = eventType === ComboEvent.CONVERSION || eventType === ComboEvent.END;
   const headerText = edit === null ? "Create new event" : "Edit event";
@@ -157,25 +156,9 @@ export const EventModal: React.FC<{
             defaultValue={eventOptions[0].value}
           />
         </Field>
-        {showPlayerOptions && (
-          <Field>
-            <Label>Match Player</Label>
-            <Controller
-              as={<PortSelection label="Player" zeroIndex={true} />}
-              control={control}
-              onChange={([v]) => v}
-              defaultValue={[0, 1, 2, 3]}
-              rules={{ validate: (val) => val && val.length > 0 }}
-              name="filter.playerIndex"
-            />
-            {errors.filter && errors.filter.playerIndex && (errors.filter.playerIndex as any).type === "validate" && (
-              <ErrorText>At least one player must be selected</ErrorText>
-            )}
-          </Field>
-        )}
 
         {showComboProfileInput && (
-          <Field>
+          <Field padding="bottom">
             <Label>Combo Profile</Label>
             <Controller
               as={
@@ -196,7 +179,7 @@ export const EventModal: React.FC<{
         )}
 
         {showButtonInputs && (
-          <Field>
+          <Field padding="bottom">
             <Label>Button Combination</Label>
             <div style={{ marginBottom: "10px", lineHeight: "28px" }}>
               {"Trigger event when the following combination is "}
@@ -240,6 +223,54 @@ export const EventModal: React.FC<{
             />
             {errors.filter && errors.filter.buttonCombo && (errors.filter.buttonCombo as any).type === "validate" && (
               <ErrorText>Button combination must be specified</ErrorText>
+            )}
+
+            <div style={{ marginTop: 10 }}>
+              {"Match player by "}
+              <Controller
+                as={<InlineDropdown options={playerSelectionOptions} />}
+                onChange={([val]) => val}
+                control={control}
+                defaultValue={DEFAULT_FORM_VALUES.filter.playerSelectionOption}
+                name="filter.playerSelectionOption"
+              />
+            </div>
+            {filter.playerSelectionOption === "name" && (
+              <div style={{ marginTop: 10 }}>
+                <Controller
+                  as={<KeywordsInput />}
+                  control={control}
+                  onChange={([v]) => v}
+                  rules={{ validate: (val) => val && val.length > 0 }}
+                  name="filter.playerNames"
+                />
+                <Text>
+                  Only track inputs by players using these name tags. These can be in-game tags, Slippi display names,
+                  or connect codes.
+                </Text>
+                {errors.filter &&
+                  errors.filter.playerNames &&
+                  (errors.filter.playerNames as any).type === "validate" && (
+                    <ErrorText>Please enter at least one name tag</ErrorText>
+                  )}
+              </div>
+            )}
+            {filter.playerSelectionOption === "port" && (
+              <div style={{ marginTop: 10 }}>
+                <Controller
+                  as={<PortSelection label="Player" zeroIndex={true} />}
+                  control={control}
+                  onChange={([v]) => v}
+                  defaultValue={[0, 1, 2, 3]}
+                  rules={{ validate: (val) => val && val.length > 0 }}
+                  name="filter.playerIndex"
+                />
+                {errors.filter &&
+                  errors.filter.playerIndex &&
+                  (errors.filter.playerIndex as any).type === "validate" && (
+                    <ErrorText>At least one player must be selected</ErrorText>
+                  )}
+              </div>
             )}
           </Field>
         )}

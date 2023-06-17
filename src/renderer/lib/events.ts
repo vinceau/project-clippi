@@ -43,6 +43,15 @@ const generatePlayerText = (players?: string | number | number[]): [string, numb
   return [players.map((i) => `P${i + 1}`).join(", "), players.length];
 };
 
+const generatePlayerNameFilterText = (players: string[]): string => {
+  const playersList = [...players];
+  if (playersList.length === 1) {
+    return playersList[0];
+  }
+  const lastPlayer = playersList.pop();
+  return playersList.join(", ") + (lastPlayer ? ` or ${lastPlayer}` : "");
+};
+
 const generateComboEventName = (comboOrConversion: string, event: EventConfig) => {
   const filter = event.filter as ComboEventFilter;
   const players = filter ? filter.playerIndex : undefined;
@@ -66,9 +75,15 @@ const generateStockEventName = (spawnOrDies: string, event: EventConfig): string
 
 const generateButtonComboEventName = (event: EventConfig): string => {
   const filter = event.filter as CustomInputEventFilter;
-  const buttons = generateButtonComboPreview(filter.buttonCombo, ", ");
+  console.log({ buttoncombonfilter: filter });
+  const buttons = generateButtonComboPreview(filter.buttonCombo);
   const holdText = filter.inputButtonHold === "held" ? "holds" : "presses";
-  const [playerText] = generatePlayerText(filter.playerIndex);
+  let playerText = "";
+  if (filter.playerSelectionOption === "name" && filter.playerNames.length > 0) {
+    playerText = generatePlayerNameFilterText(filter.playerNames);
+  } else {
+    playerText = generatePlayerText(filter.playerIndex)[0];
+  }
 
   let holdInfo = "";
   if (filter.inputButtonHold === "held") {
