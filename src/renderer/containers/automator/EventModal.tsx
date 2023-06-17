@@ -27,7 +27,7 @@ interface FormValues {
 
 const DEFAULT_FORM_VALUES: FormValues = {
   name: "",
-  type: GameEvent.GAME_START,
+  type: InputEvent.BUTTON_COMBO,
   filter: {
     playerNames: [],
     playerIndex: [0, 1, 2, 3],
@@ -40,13 +40,13 @@ const DEFAULT_FORM_VALUES: FormValues = {
 };
 
 const eventOptions = [
+  { value: InputEvent.BUTTON_COMBO, text: "Button input combination" },
   { value: GameEvent.GAME_START, text: "Game start" },
   { value: GameEvent.GAME_END, text: "Game end" },
   { value: StockEvent.PLAYER_SPAWN, text: "Player spawn" },
   { value: StockEvent.PLAYER_DIED, text: "Player death" },
   { value: ComboEvent.END, text: "Combo occurs" },
   { value: ComboEvent.CONVERSION, text: "Conversion occurs" },
-  { value: InputEvent.BUTTON_COMBO, text: "Button input combination" },
 ];
 
 const stringToOptions = (o: string) => ({ key: o, value: o, text: o });
