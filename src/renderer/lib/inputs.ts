@@ -1,6 +1,7 @@
-import type { InputEventFilter } from "@vinceau/slp-realtime";
 import { Input } from "@vinceau/slp-realtime";
 import { secondsToFrames } from "common/utils";
+
+import type { InputEventFilter } from "./automator_manager";
 
 const ORDERED_INPUTS = [
   Input.Z,

@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import type { Character } from "@vinceau/slp-realtime";
+import type { Character } from "@slippi/slippi-js";
 import * as React from "react";
 
 import { CharacterIcon } from "../CharacterIcon";

@@ -1,7 +1,7 @@
 import { createModel } from "@rematch/core";
-import type { EventConfig } from "@vinceau/slp-realtime";
 import produce from "immer";
 
+import type { EventConfig } from "@/lib/automator_manager";
 import type { Action as ActionDefinition } from "@/lib/event_actions";
 
 export interface NamedEventConfig extends EventConfig {

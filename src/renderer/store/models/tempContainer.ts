@@ -1,6 +1,6 @@
 import { createModel } from "@rematch/core";
+import { ConnectionStatus } from "@slippi/slippi-js";
 import type { DolphinEntry, DolphinQueueFormat, DolphinQueueOptions } from "@vinceau/slp-realtime";
-import { ConnectionStatus } from "@vinceau/slp-realtime";
 import type { TwitchUser, VersionUpdatePayload } from "common/types";
 import { UpdateStatus } from "common/types";
 import { shuffle } from "common/utils";
