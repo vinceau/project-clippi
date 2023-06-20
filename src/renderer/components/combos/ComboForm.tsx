@@ -13,6 +13,7 @@ import { DEFAULT_PROFILE } from "@/store/models/slippi";
 
 import { CharacterSelectAdapter, CustomCharacterListAdapter } from "./CharacterSelect";
 import { ToggleAdapter } from "./FormAdapters";
+import { MoveSequenceFormAdapter } from "./MoveSequenceForm";
 import { NameTagForm } from "./NameTagForm";
 import { PercentageSlider } from "./PercentageSlider";
 import { PerCharPercent } from "./PerCharPercent";
@@ -144,6 +145,13 @@ export const ComboForm: React.FC<{
                 <Text>
                   Only match combos if the character performing the combo does at least this much percent damage.
                 </Text>
+              </Field>
+              <Field border="top">
+                <Label>Move Sequence</Label>
+                <div style={{ marginBottom: 20 }}>
+                  <MoveSequenceFormAdapter name="includesComboSequence.sequence" />
+                </div>
+                <Text margin="none">Only match combos that follow this sequence of moves.</Text>
               </Field>
               <Field border="top">
                 <FinalField name="comboMustKill" label="Combo Must Kill" component={ToggleAdapter} />
