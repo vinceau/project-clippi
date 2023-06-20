@@ -1,5 +1,6 @@
 import { getMoveName, MoveId } from "@vinceau/slp-realtime";
 import React from "react";
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { Field } from "react-final-form";
 import { Button, Dropdown, Icon } from "semantic-ui-react";
 
@@ -73,7 +74,10 @@ const MoveInput = ({
     [onChange]
   );
   return (
-    <div style={{ display: "flex", marginBottom: 10, alignItems: "center" }}>
+    <div style={{ display: "flex", paddingBottom: 10, alignItems: "center" }}>
+      <div style={{ paddingLeft: 5, paddingRight: 10 }}>
+        <Icon name="sort" />
+      </div>
       <Dropdown
         value={value}
         onBlur={onBlur}
@@ -130,20 +134,52 @@ export const MoveSequenceForm = ({ value, onBlur, onChange }: MoveSequenceFormPr
     [onChange, movesList]
   );
 
+  const onDragEnd = React.useCallback(
+    ({ destination, source }: any) => {
+      if (!destination) {
+        return;
+      }
+      if (destination.droppableId === source.droppableId && destination.index === source.index) {
+        return;
+      }
+      const newMoveValues = Array.from(movesList);
+      move(newMoveValues, source.index, destination.index);
+      onChange(newMoveValues);
+    },
+    [onChange, movesList]
+  );
+
   return (
     <div>
-      {movesList.map((moveId, i) => (
-        <MoveInput
-          key={`index-${i}-move${moveId}`}
-          value={moveId}
-          onChange={(num) => updateValues(i, num)}
-          onRemove={() => removeMove(i)}
-          onBlur={onBlur}
-        />
-      ))}
-      <Button type="button" onClick={addNewMove}>
-        <Icon name="plus" /> Add move
-      </Button>
+      <DragDropContext onDragEnd={onDragEnd}>
+        <Droppable droppableId="move-sequence-form">
+          {(provided) => (
+            <div ref={provided.innerRef} {...provided.droppableProps}>
+              {movesList.map((moveId, i) => {
+                const id = `index-${i}-move${moveId}`;
+                return (
+                  <Draggable key={id} draggableId={id} index={i}>
+                    {(provided, _snapshot) => (
+                      <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
+                        <MoveInput
+                          value={moveId}
+                          onChange={(num) => updateValues(i, num)}
+                          onRemove={() => removeMove(i)}
+                          onBlur={onBlur}
+                        />
+                      </div>
+                    )}
+                  </Draggable>
+                );
+              })}
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
+        <Button type="button" onClick={addNewMove}>
+          <Icon name="plus" /> Add move
+        </Button>
+      </DragDropContext>
     </div>
   );
 };
@@ -159,3 +195,10 @@ export const MoveSequenceFormAdapter = (props: any) => {
     </Field>
   );
 };
+
+function move<T>(input: T[], from: number, to: number) {
+  let numberOfDeletedElm = 1;
+  const elm = input.splice(from, numberOfDeletedElm)[0];
+  numberOfDeletedElm = 0;
+  input.splice(to, numberOfDeletedElm, elm);
+}
