@@ -24,7 +24,7 @@ module.exports = {
     // Make sure this is always the last configuration in the extends array.
     "plugin:prettier/recommended",
   ],
-  plugins: ["import", "simple-import-sort", "strict-booleans"],
+  plugins: ["import", "simple-import-sort", "strict-booleans", "react-hooks"],
   rules: {
     // Place to specify ESLint rules. Can be used to overwrite rules specified from the extended configs
     // e.g. "@typescript-eslint/explicit-function-return-type": "off",
@@ -47,6 +47,8 @@ module.exports = {
     "import/no-named-as-default-member": "off",
     "simple-import-sort/imports": "warn",
     "simple-import-sort/exports": "warn",
+    "react-hooks/rules-of-hooks": "error", // Checks rules of Hooks
+    "react-hooks/exhaustive-deps": "warn", // Checks effect dependencies
     "strict-booleans/no-nullable-numbers": "error",
     "no-undef": "off",
     "new-cap": "error",
