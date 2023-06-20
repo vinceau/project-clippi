@@ -57,12 +57,14 @@ function getCustomMoveName(id: number) {
 
 const MoveInput = ({
   value,
+  onBlur,
   onChange,
   onRemove,
 }: {
   value: number | undefined;
   onChange: (val: number) => void;
   onRemove: () => void;
+  onBlur?: () => void;
 }) => {
   const handleChange = React.useCallback(
     (_e, { value }) => {
@@ -74,6 +76,7 @@ const MoveInput = ({
     <div style={{ display: "flex", marginBottom: 10, alignItems: "center" }}>
       <Dropdown
         value={value}
+        onBlur={onBlur}
         onChange={handleChange}
         placeholder="Select move"
         fluid={true}
@@ -95,9 +98,10 @@ const MoveInput = ({
 type MoveSequenceFormProps = {
   value?: (number | undefined)[];
   onChange: (values: (number | undefined)[]) => void;
+  onBlur?: () => void;
 };
 
-export const MoveSequenceForm = ({ value, onChange }: MoveSequenceFormProps) => {
+export const MoveSequenceForm = ({ value, onBlur, onChange }: MoveSequenceFormProps) => {
   const movesList = React.useMemo(() => {
     return value && value.length > 0 ? value : [undefined];
   }, [value]);
@@ -129,7 +133,13 @@ export const MoveSequenceForm = ({ value, onChange }: MoveSequenceFormProps) => 
   return (
     <div>
       {movesList.map((moveId, i) => (
-        <MoveInput key={i} value={moveId} onChange={(num) => updateValues(i, num)} onRemove={() => removeMove(i)} />
+        <MoveInput
+          key={`index-${i}-move${moveId}`}
+          value={moveId}
+          onChange={(num) => updateValues(i, num)}
+          onRemove={() => removeMove(i)}
+          onBlur={onBlur}
+        />
       ))}
       <Button type="button" onClick={addNewMove}>
         <Icon name="plus" /> Add move
