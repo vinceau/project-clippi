@@ -83,7 +83,7 @@ const MoveInput = ({
       />
       <div style={{ marginLeft: 5 }}>
         <Labelled title="Remove">
-          <Button icon={true} onClick={onRemove}>
+          <Button type="button" icon={true} onClick={onRemove}>
             <Icon name="close" />
           </Button>
         </Labelled>
@@ -131,7 +131,7 @@ export const MoveSequenceForm = ({ value, onChange }: MoveSequenceFormProps) => 
       {movesList.map((moveId, i) => (
         <MoveInput key={i} value={moveId} onChange={(num) => updateValues(i, num)} onRemove={() => removeMove(i)} />
       ))}
-      <Button onClick={addNewMove}>
+      <Button type="button" onClick={addNewMove}>
         <Icon name="plus" /> Add move
       </Button>
     </div>
