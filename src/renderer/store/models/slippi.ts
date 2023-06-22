@@ -11,6 +11,7 @@ import { notify } from "@/lib/utils";
 export const DEFAULT_PROFILE = "default";
 
 export interface SlippiState {
+  relayAddress: string;
   port: string;
   currentProfile: string; // profile name
   comboProfiles: { [name: string]: string }; // profile name -> JSON stringified settings
@@ -22,6 +23,7 @@ export interface SlippiState {
 const defaultSettings = JSON.stringify(mapFilterSettingsToConfiguration(defaultComboFilterSettings));
 
 const initialState: SlippiState = {
+  relayAddress: "localhost",
   port: "1667",
   currentProfile: DEFAULT_PROFILE,
   comboProfiles: {
@@ -48,6 +50,12 @@ export const slippi = createModel({
     setOBSPassword: (state: SlippiState, payload: string): SlippiState => {
       return produce(state, (draft) => {
         draft.obsPassword = payload;
+      });
+    },
+    setRelayAddress: (state: SlippiState, payload: string): SlippiState => {
+      console.log(`setting relay address to ${payload}`);
+      return produce(state, (draft) => {
+        draft.relayAddress = payload;
       });
     },
     setPort: (state: SlippiState, payload: string): SlippiState => {
@@ -91,10 +99,10 @@ export const slippi = createModel({
     },
   },
   effects: (dispatch) => ({
-    async connectToSlippi(port: string) {
+    async connectToSlippi({ port, address }: { address: string; port: string }) {
       try {
         console.log(`connecting on port: ${port}`);
-        await streamManager.connectToSlippi("0.0.0.0", parseInt(port, 10));
+        await streamManager.connectToSlippi(address, parseInt(port, 10));
       } catch (err) {
         log.error(err);
         notify(`Failed to connect to port ${port}! Is the relay running?`);

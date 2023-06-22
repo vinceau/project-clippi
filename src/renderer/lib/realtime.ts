@@ -37,7 +37,7 @@ class SlpStreamManager {
     slpPort = 1667,
     type: "dolphin" | "console" = "console"
   ): Promise<void> {
-    console.log(`attempt to connect to slippi on port: ${slpPort}`);
+    console.log(`attempt to connect to slippi on ${address}:${slpPort}`);
     const stream = new SlpLiveStream(type);
     stream.connection.on(ConnectionEvent.ERROR, (err) => {
       log.error(err);
