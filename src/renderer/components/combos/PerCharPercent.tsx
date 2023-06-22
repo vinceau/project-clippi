@@ -33,7 +33,7 @@ export const PerCharPercent: React.FC<{ name: string; values: any; push: any; po
                   component={SemanticInput}
                   type="number"
                   parse={(v: string) => parseInt(v, 10)}
-                  action={<Button onClick={() => fields.remove(index)} content="Remove" />}
+                  action={<Button type="button" onClick={() => fields.remove(index)} content="Remove" />}
                 />
               </CharacterSelectContainer>
             );
@@ -41,7 +41,7 @@ export const PerCharPercent: React.FC<{ name: string; values: any; push: any; po
         }}
       </FieldArray>
       <div style={{ padding: "10px 0" }}>
-        <Button onClick={() => push(name, undefined)}>
+        <Button type="button" onClick={() => push(name, undefined)}>
           <Icon name="add user" /> Add character
         </Button>
       </div>

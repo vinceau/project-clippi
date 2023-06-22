@@ -13,6 +13,8 @@ import { DEFAULT_PROFILE } from "@/store/models/slippi";
 
 import { CharacterSelectAdapter, CustomCharacterListAdapter } from "./CharacterSelect";
 import { ToggleAdapter } from "./FormAdapters";
+import { MoveSequenceFormAdapter } from "./MoveSequenceForm";
+import { MoveSequenceModeFormAdapter } from "./MoveSequenceModeForm";
 import { NameTagForm } from "./NameTagForm";
 import { PercentageSlider } from "./PercentageSlider";
 import { PerCharPercent } from "./PerCharPercent";
@@ -146,6 +148,19 @@ export const ComboForm: React.FC<{
                 </Text>
               </Field>
               <Field border="top">
+                <Label>Move Sequence</Label>
+                <div style={{ marginBottom: 20 }}>
+                  <MoveSequenceModeFormAdapter name="includesComboSequence.mode" />
+                </div>
+                <div style={{ marginBottom: 20 }}>
+                  <MoveSequenceFormAdapter name="includesComboSequence.sequence" />
+                </div>
+                <Text margin="none">
+                  Only match combos that {getComboSequenceText(values.includesComboSequence?.mode)} this sequence of
+                  moves.
+                </Text>
+              </Field>
+              <Field border="top">
                 <FinalField name="comboMustKill" label="Combo Must Kill" component={ToggleAdapter} />
                 <Text margin="none">Only match combos which take the opponent's stock.</Text>
               </Field>
@@ -236,4 +251,17 @@ export const ComboForm: React.FC<{
       />
     </div>
   );
+};
+
+const getComboSequenceText = (mode: "include" | "start" | "end" | "exact" = "include") => {
+  switch (mode) {
+    case "include":
+      return "includes";
+    case "start":
+      return "start with";
+    case "end":
+      return "ends in";
+    case "exact":
+      return "are exactly";
+  }
 };

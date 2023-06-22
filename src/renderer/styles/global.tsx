@@ -8,11 +8,13 @@ import type { Theme } from "./theme";
 import { ThemeMode } from "./theme";
 
 const buttonStyles = (theme: Theme): SerializedStyles => css`
-  background: ${lighten(0.05, theme.foreground2)} none;
-  color: ${theme.foreground};
-  font-weight: 500;
-  &:hover {
-    background: ${lighten(0.1, theme.foreground2)} none;
+  &:not(.inverted) {
+    background: ${lighten(0.05, theme.foreground2)} none;
+    color: ${theme.foreground};
+    font-weight: 500;
+    &:hover {
+      background: ${lighten(0.1, theme.foreground2)} none;
+    }
   }
 `;
 
