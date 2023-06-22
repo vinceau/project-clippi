@@ -99,7 +99,7 @@ export const slippi = createModel({
     },
   },
   effects: (dispatch) => ({
-    async connectToSlippi({ port, address }: { address: string; port: string }) {
+    async connectToSlippi({ address, port }: { address: string; port: string }) {
       try {
         console.log(`connecting on port: ${port}`);
         await streamManager.connectToSlippi(address, parseInt(port, 10));
