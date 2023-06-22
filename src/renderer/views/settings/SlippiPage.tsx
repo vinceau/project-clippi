@@ -11,6 +11,7 @@ import type { Dispatch, iRootState } from "@/store";
 import slippiLogo from "@/styles/images/slippi.png";
 
 export const SlippiPage: React.FC = () => {
+  const relayAddress = useSelector((state: iRootState) => state.slippi.relayAddress);
   const port = useSelector((state: iRootState) => state.slippi.port);
   const slippiConnectionType = useSelector((state: iRootState) => state.tempContainer.slippiConnectionType);
   const status = useSelector((state: iRootState) => state.tempContainer.slippiConnectionStatus);
@@ -39,7 +40,11 @@ export const SlippiPage: React.FC = () => {
           buttonText="Disconnect"
         />
       ) : (
-        <SlippiConnectionPlaceholder port={port} onClick={dispatch.slippi.connectToSlippi} />
+        <SlippiConnectionPlaceholder
+          address={relayAddress}
+          port={port}
+          onClick={({ address, port }) => dispatch.slippi.connectToSlippi({ address, port })}
+        />
       )}
     </div>
   );

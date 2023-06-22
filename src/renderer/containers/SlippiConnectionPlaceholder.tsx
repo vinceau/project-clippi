@@ -33,9 +33,11 @@ const HorizontalDivider = styled(Divider)`
 `;
 
 export const SlippiConnectionPlaceholder: React.FC<{
+  address: string;
   port: string;
-  onClick: (port: string) => void;
+  onClick: (value: { address: string; port: string }) => void;
 }> = (props) => {
+  const [address, setAddress] = React.useState(props.address);
   const [port, setPort] = React.useState(props.port);
   return (
     <Segment placeholder>
@@ -47,15 +49,37 @@ export const SlippiConnectionPlaceholder: React.FC<{
               <SlippiIcon />
               Connect to a Slippi Relay
             </VerticalHeader>
-            <Input
-              style={{ maxWidth: "150px", width: "100%" }}
-              placeholder="Port"
-              value={port}
-              onChange={(_: any, { value }: any) => setPort(value)}
-              onBlur={() => dispatcher.slippi.setPort(port)}
-            />
-            <div style={{ padding: "10px 0" }}>
-              <Button onClick={() => props.onClick(port)}>Connect</Button>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                maxWidth: 300,
+                marginLeft: "auto",
+                marginRight: "auto",
+                marginTop: 20,
+              }}
+            >
+              <div style={{ marginBottom: 5 }}>
+                <Input
+                  label="Address"
+                  placeholder="localhost"
+                  fluid={true}
+                  value={address}
+                  onChange={(_: any, { value }: any) => setAddress(value)}
+                  onBlur={() => dispatcher.slippi.setRelayAddress(address)}
+                />
+              </div>
+              <Input
+                label="Port"
+                placeholder="1667"
+                fluid={true}
+                value={port}
+                onChange={(_: any, { value }: any) => setPort(value)}
+                onBlur={() => dispatcher.slippi.setPort(port)}
+              />
+              <div style={{ padding: "10px 0" }}>
+                <Button onClick={() => props.onClick({ address, port })}>Connect</Button>
+              </div>
             </div>
           </Grid.Column>
           <HorizontalDivider horizontal>Or</HorizontalDivider>
