@@ -61,7 +61,7 @@ export const SlippiConnectionPlaceholder: React.FC<{
             >
               <div style={{ marginBottom: 5 }}>
                 <Input
-                  label="Host address"
+                  label="Address"
                   placeholder="localhost"
                   fluid={true}
                   value={address}
