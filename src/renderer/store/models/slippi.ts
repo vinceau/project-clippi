@@ -107,6 +107,7 @@ export const slippi = createModel({
         log.error(err);
         notify(`Failed to connect to port ${port}! Is the relay running?`);
       }
+      dispatch.slippi.setRelayAddress(address);
       dispatch.slippi.setPort(port);
     },
     async connectToDolphin() {
