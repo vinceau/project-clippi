@@ -21,7 +21,7 @@ export enum Action {
   WRITE_FILE = "write-file",
   SAVE_REPLAY_BUFFER = "save-replay-buffer",
   TOGGLE_RECORDING = "toggle-recording",
-  RUN_COMMAND = "run-command",
+  RUN_SHELL_COMMAND = "run-shell-command",
 }
 
 export interface EventActionConfig {
@@ -48,7 +48,7 @@ export const actionComponents: { [name: string]: ActionComponent } = {
   [Action.TOGGLE_SOURCE]: ActionToggleSource,
   [Action.SAVE_REPLAY_BUFFER]: ActionSaveReplayBuffer,
   [Action.TOGGLE_RECORDING]: ActionToggleRecording,
-  [Action.RUN_COMMAND]: ActionRunShellCommand,
+  [Action.RUN_SHELL_COMMAND]: ActionRunShellCommand,
 };
 
 for (const [key, value] of Object.entries(actionComponents)) {
