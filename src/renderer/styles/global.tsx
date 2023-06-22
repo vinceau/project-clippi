@@ -144,6 +144,10 @@ const makeGlobalStyles = (theme: Theme) => css`
   .ui.modal.${ThemeMode.DARK} {
     ${modalTheme(theme)}
   }
+
+  .ui.message {
+    border-radius: 0.5rem;
+  }
 `;
 
 export const GlobalStyle = withTheme(({ theme }) => <Global styles={makeGlobalStyles(theme)} />);

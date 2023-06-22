@@ -1,14 +1,15 @@
-import * as React from "react";
-
-import { ActionTypeGenerator, Context } from "@vinceau/event-actions";
-import { Form, Icon, TextArea } from "semantic-ui-react";
-
-import { ActionComponent } from "./types";
 import { runCommand } from "common/utils";
+import * as React from "react";
+import { Form, Icon, Message, TextArea } from "semantic-ui-react";
 
-interface ActionRunCommandParams {
+import { Text } from "@/components/Form";
+import type { ActionTypeGenerator, Context } from "@/lib/event_actions";
+
+import type { ActionComponent } from "./types";
+
+type ActionRunCommandParams = {
   command: string;
-}
+};
 
 const ActionRunCommandFunc: ActionTypeGenerator = (params: ActionRunCommandParams) => {
   return async (ctx: Context): Promise<Context> => {
@@ -28,28 +29,38 @@ const ActionIcon = () => {
   return <Icon name="terminal" size="large" />;
 };
 
-const RunCommandInput = (props: any) => {
-  const { value, onChange } = props;
+const RunCommandInput = ({
+  value,
+  onChange,
+}: {
+  value: ActionRunCommandParams;
+  onChange: (val: ActionRunCommandParams) => void;
+}) => {
   const defaultValue = value && value.command ? value.command : "";
   const [cmd, setMsg] = React.useState(defaultValue);
   return (
     <div>
-      <div style={{ padding: "5px 0" }}>Only enter commands you understand!</div>
+      <Message warning={true}>
+        <Icon name="warning sign" />
+        Running unknown commands can be very dangerous! Only run commands that you fully understand!
+      </Message>
+      <div style={{ padding: "5px 0" }}></div>
       <Form>
         <TextArea
-          style={{ fontFamily: "monospace" }}
+          style={{ fontFamily: "monospace", fontSize: 16 }}
           onBlur={() => onChange({ command: cmd })}
           value={cmd}
           onChange={(_: any, { value }: any) => setMsg(value)}
-          placeholder="Use {event} to get the event data as a JSON string."
+          placeholder="Enter a shell command to run..."
         />
       </Form>
+      <Text>Pro tip: Use &#123;event&#125; to get the event data as a JSON string.</Text>
     </div>
   );
 };
 
 export const ActionRunCommand: ActionComponent = {
-  label: "run a command",
+  label: "run a shell command",
   action: ActionRunCommandFunc,
   Icon: ActionIcon,
   Component: RunCommandInput,
