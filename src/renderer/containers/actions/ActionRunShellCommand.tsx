@@ -39,12 +39,11 @@ const RunShellCommandInput = ({
   const defaultValue = value && value.command ? value.command : "";
   const [cmd, setMsg] = React.useState(defaultValue);
   return (
-    <div>
+    <div style={{ marginTop: 10 }}>
       <Message warning={true}>
         <Icon name="warning sign" />
         Running unknown commands can be very dangerous! Only run commands that you fully understand!
       </Message>
-      <div style={{ padding: "5px 0" }}></div>
       <Form>
         <TextArea
           style={{ fontFamily: "monospace", fontSize: 16 }}
