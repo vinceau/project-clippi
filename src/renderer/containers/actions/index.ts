@@ -4,6 +4,7 @@ import { EventManager } from "@/lib/event_actions";
 import { ActionChangeScene } from "./ActionChangeScene";
 import { ActionNotify } from "./ActionNotify";
 import { ActionPlaySound } from "./ActionPlaySound";
+import { ActionRunShellCommand } from "./ActionRunShellCommand";
 import { ActionSaveReplayBuffer } from "./ActionSaveReplayBuffer";
 import { ActionToggleRecording } from "./ActionToggleRecording";
 import { ActionToggleSource } from "./ActionToggleSource";
@@ -20,6 +21,7 @@ export enum Action {
   WRITE_FILE = "write-file",
   SAVE_REPLAY_BUFFER = "save-replay-buffer",
   TOGGLE_RECORDING = "toggle-recording",
+  RUN_SHELL_COMMAND = "run-shell-command",
 }
 
 export interface EventActionConfig {
@@ -46,6 +48,7 @@ export const actionComponents: { [name: string]: ActionComponent } = {
   [Action.TOGGLE_SOURCE]: ActionToggleSource,
   [Action.SAVE_REPLAY_BUFFER]: ActionSaveReplayBuffer,
   [Action.TOGGLE_RECORDING]: ActionToggleRecording,
+  [Action.RUN_SHELL_COMMAND]: ActionRunShellCommand,
 };
 
 for (const [key, value] of Object.entries(actionComponents)) {

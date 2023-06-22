@@ -18,7 +18,7 @@ class SlpStreamManager {
     this.realtime = new SlpRealTime();
     this.eventManager = new EventManager(this.realtime);
     this.eventManager.events$.subscribe((event) => {
-      eventActionManager.emitEvent(event.id);
+      eventActionManager.emitEvent(event.id, event);
     });
   }
 
