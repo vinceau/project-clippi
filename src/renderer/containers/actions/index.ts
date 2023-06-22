@@ -4,12 +4,12 @@ import { EventManager } from "@/lib/event_actions";
 import { ActionChangeScene } from "./ActionChangeScene";
 import { ActionNotify } from "./ActionNotify";
 import { ActionPlaySound } from "./ActionPlaySound";
+import { ActionRunShellCommand } from "./ActionRunShellCommand";
 import { ActionSaveReplayBuffer } from "./ActionSaveReplayBuffer";
 import { ActionToggleRecording } from "./ActionToggleRecording";
 import { ActionToggleSource } from "./ActionToggleSource";
 import { ActionTwitchClip } from "./ActionTwitchClip";
 import { ActionWriteFile } from "./ActionWriteFile";
-import { ActionRunCommand } from "./ActionRunCommand";
 import type { ActionComponent } from "./types";
 
 export enum Action {
@@ -48,7 +48,7 @@ export const actionComponents: { [name: string]: ActionComponent } = {
   [Action.TOGGLE_SOURCE]: ActionToggleSource,
   [Action.SAVE_REPLAY_BUFFER]: ActionSaveReplayBuffer,
   [Action.TOGGLE_RECORDING]: ActionToggleRecording,
-  [Action.RUN_COMMAND]: ActionRunCommand,
+  [Action.RUN_COMMAND]: ActionRunShellCommand,
 };
 
 for (const [key, value] of Object.entries(actionComponents)) {

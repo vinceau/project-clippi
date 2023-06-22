@@ -1,4 +1,4 @@
-import { runCommand } from "common/utils";
+import { exec } from "child_process";
 import * as React from "react";
 import { Form, Icon, Message, TextArea } from "semantic-ui-react";
 
@@ -7,18 +7,18 @@ import type { ActionTypeGenerator, Context } from "@/lib/event_actions";
 
 import type { ActionComponent } from "./types";
 
-type ActionRunCommandParams = {
+type ActionRunShellCommandParams = {
   command: string;
 };
 
-const ActionRunCommandFunc: ActionTypeGenerator = (params: ActionRunCommandParams) => {
+const ActionRunShellCommandFunc: ActionTypeGenerator = (params: ActionRunShellCommandParams) => {
   return async (ctx: Context): Promise<Context> => {
     // Make sure we actually have a command to run
     if (params.command) {
       const ctxJson = JSON.stringify(ctx).replace(/"/gm, '\\"');
       const command = ctx ? params.command.replace(/{event}/gm, ctxJson) : params.command;
 
-      runCommand(command);
+      runShellCommand(command);
     }
 
     return ctx;
@@ -29,12 +29,12 @@ const ActionIcon = () => {
   return <Icon name="terminal" size="large" />;
 };
 
-const RunCommandInput = ({
+const RunShellCommandInput = ({
   value,
   onChange,
 }: {
-  value: ActionRunCommandParams;
-  onChange: (val: ActionRunCommandParams) => void;
+  value: ActionRunShellCommandParams;
+  onChange: (val: ActionRunShellCommandParams) => void;
 }) => {
   const defaultValue = value && value.command ? value.command : "";
   const [cmd, setMsg] = React.useState(defaultValue);
@@ -59,9 +59,23 @@ const RunCommandInput = ({
   );
 };
 
-export const ActionRunCommand: ActionComponent = {
+export const ActionRunShellCommand: ActionComponent = {
   label: "run a shell command",
-  action: ActionRunCommandFunc,
+  action: ActionRunShellCommandFunc,
   Icon: ActionIcon,
-  Component: RunCommandInput,
+  Component: RunShellCommandInput,
 };
+
+async function runShellCommand(command: string) {
+  exec(command, (error: Error | null, stdout: string, stderr: string) => {
+    if (error) {
+      console.error(`error: ${error.message}`);
+      return;
+    }
+    if (stderr) {
+      console.warn(`stderr: ${stderr}`);
+      return;
+    }
+    console.log(`stdout: ${stdout}`);
+  });
+}

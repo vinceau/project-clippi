@@ -2,7 +2,6 @@ import filenameReservedRegex from "filename-reserved-regex";
 import filenamify from "filenamify";
 import fs from "fs-extra";
 import { EOL } from "os";
-import { exec } from "child_process";
 import path from "path";
 
 export const delay = async (ms: number): Promise<void> => {
@@ -51,20 +50,6 @@ export const timeDifferenceString = (before: Date, after: Date): string => {
 
 export const writeFile = async (contents: string, filename: string, append?: boolean): Promise<void> => {
   await fs.outputFile(filename, contents + EOL, { flag: append ? "a" : "w" });
-};
-
-export const runCommand = async (command: string) => {
-  exec(command, (error: Error | null, stdout: string, stderr: string) => {
-    if (error) {
-      console.error(`error: ${error.message}`);
-      return;
-    }
-    if (stderr) {
-      console.warn(`stderr: ${stderr}`);
-      return;
-    }
-    console.log(`stdout: ${stdout}`);
-  });
 };
 
 /**
