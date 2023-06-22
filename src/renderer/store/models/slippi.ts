@@ -101,11 +101,11 @@ export const slippi = createModel({
   effects: (dispatch) => ({
     async connectToSlippi({ address, port }: { address: string; port: string }) {
       try {
-        console.log(`connecting on port: ${port}`);
+        console.log(`connecting to ${address}:${port}`);
         await streamManager.connectToSlippi(address, parseInt(port, 10));
       } catch (err) {
         log.error(err);
-        notify(`Failed to connect to port ${port}! Is the relay running?`);
+        notify(`Failed to connect to ${address}:${port}! Is the relay running and the address and port correct?`);
       }
       dispatch.slippi.setRelayAddress(address);
       dispatch.slippi.setPort(port);
