@@ -1,10 +1,14 @@
 import * as React from "react";
+import type { TooltipProps } from "react-tippy";
 import { Tooltip } from "react-tippy";
 
 import { ThemeMode, useTheme } from "@/styles";
 
-export const TippyLabel = (props: any) => {
-  const { children, style, ...rest } = props;
+type TippyLabelProps = {
+  style?: React.CSSProperties;
+} & TooltipProps;
+
+export const TippyLabel = ({ children, style, ...rest }: React.PropsWithChildren<TippyLabelProps>) => {
   const { themeName } = useTheme();
   return (
     <Tooltip
@@ -17,13 +21,17 @@ export const TippyLabel = (props: any) => {
   );
 };
 
-export const Labelled = (props: any) => {
-  const { className, onClick, children, ...rest } = props;
+type LabelledProps = {
+  onClick?: () => void;
+  style?: React.CSSProperties;
+} & Pick<TippyLabelProps, "position" | "title" | "disabled">;
+
+export const Labelled = ({ onClick, children, ...rest }: React.PropsWithChildren<LabelledProps>) => {
   const pointerStyle = {
     cursor: "pointer",
   };
   return (
-    <span style={onClick ? pointerStyle : undefined} onClick={onClick} className={className}>
+    <span style={onClick ? pointerStyle : undefined} onClick={onClick}>
       <TippyLabel size="big" arrow={true} duration={200} position="bottom" {...rest}>
         {children}
       </TippyLabel>
