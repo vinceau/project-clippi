@@ -22,9 +22,14 @@ export const ProfileExportContainer = ({ currentProfileData }: { currentProfileD
   const onProfileImport = React.useCallback(
     (name: string, settings: string) => {
       dispatch.slippi.importProfile({ name, settings });
-      toast.info(`${name} profile imported`, {
-        toastId: `${name}-profile-imported`,
-      });
+      toast.info(
+        <>
+          <b>{name}</b> profile imported
+        </>,
+        {
+          toastId: `${name}-profile-imported`,
+        }
+      );
     },
     [dispatch.slippi]
   );
