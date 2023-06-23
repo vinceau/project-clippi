@@ -26,6 +26,7 @@ export const ImportProfileModal = React.memo(function ImportProfileModal({
   const theme = useTheme();
 
   const handleSubmit = React.useCallback(() => {
+    setShouldConfirm(false);
     onSubmit(profileName, profileData);
     onDismiss();
   }, [onDismiss, onSubmit, profileData, profileName]);
