@@ -11,6 +11,7 @@ import type { ComboConfiguration } from "@/lib/profile";
 import type { iRootState } from "@/store";
 import { DEFAULT_PROFILE } from "@/store/models/slippi";
 
+import { Confirm } from "../Confirm";
 import { CharacterSelectAdapter, CustomCharacterListAdapter } from "./CharacterSelect";
 import { ToggleAdapter } from "./FormAdapters";
 import { MoveSequenceFormAdapter } from "./MoveSequenceForm";
@@ -79,6 +80,7 @@ export const ComboForm: React.FC<{
   onDelete: () => void;
   onSubmit: (values: Values) => void;
 }> = (props) => {
+  const [shouldConfirm, setShouldConfirm] = React.useState(false);
   const [showAdvanced, setShowAdvanced] = React.useState(false);
   const showDevOptions = useSelector((state: iRootState) => state.appContainer.showDevOptions);
   return (
@@ -102,7 +104,7 @@ export const ComboForm: React.FC<{
               <ButtonContainer
                 submitting={submitting}
                 currentProfile={props.currentProfile}
-                onDelete={props.onDelete}
+                onDelete={() => setShouldConfirm(true)}
                 currentProfileData={JSON.stringify(values)}
               />
               <Field border="top">
@@ -254,12 +256,22 @@ export const ComboForm: React.FC<{
                 submitting={submitting}
                 currentProfile={props.currentProfile}
                 currentProfileData={JSON.stringify(values)}
-                onDelete={props.onDelete}
+                onDelete={() => setShouldConfirm(true)}
               />
               <CodeBlock values={values} />
             </SemanticForm>
           </div>
         )}
+      />
+      <Confirm
+        open={shouldConfirm}
+        content="Are you sure you want to delete this profile? This cannot be undone."
+        confirmButton="Delete"
+        onCancel={() => setShouldConfirm(false)}
+        onConfirm={() => {
+          props.onDelete();
+          setShouldConfirm(false);
+        }}
       />
     </div>
   );
