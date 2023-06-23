@@ -10,7 +10,11 @@ import { ProfileExport } from "./ProfileExport";
 
 type ModalOptions = "import" | "export";
 
-export const ProfileExportContainer = ({ currentProfileData }: { currentProfileData: string }) => {
+export const ProfileExportContainer = React.memo(function ProfileExportContainer({
+  currentProfileData,
+}: {
+  currentProfileData: string;
+}) {
   const { comboProfiles } = useSelector((state: iRootState) => state.slippi);
   const [modal, setModal] = React.useState<ModalOptions | undefined>();
   const profileNames = React.useMemo(() => {
@@ -18,6 +22,8 @@ export const ProfileExportContainer = ({ currentProfileData }: { currentProfileD
   }, [comboProfiles]);
 
   const dispatch = useDispatch<Dispatch>();
+
+  const onDismiss = React.useCallback(() => setModal(undefined), []);
 
   const onProfileImport = React.useCallback(
     (name: string, settings: string) => {
@@ -39,15 +45,11 @@ export const ProfileExportContainer = ({ currentProfileData }: { currentProfileD
       <ProfileExport onImport={() => setModal("import")} onExport={() => setModal("export")} />
       <ImportProfileModal
         open={modal === "import"}
-        onDismiss={() => setModal(undefined)}
         existingProfileNames={profileNames}
+        onDismiss={onDismiss}
         onSubmit={onProfileImport}
       />
-      <ExportProfileModal
-        profileData={currentProfileData}
-        open={modal === "export"}
-        onDismiss={() => setModal(undefined)}
-      />
+      <ExportProfileModal open={modal === "export"} profileData={currentProfileData} onDismiss={onDismiss} />
     </>
   );
-};
+});
