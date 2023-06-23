@@ -74,12 +74,12 @@ const ButtonContainer = ({
   );
 };
 
-export const ComboForm: React.FC<{
+export const ComboForm = (props: {
   initialValues: Values;
   currentProfile?: string;
   onDelete: () => void;
   onSubmit: (values: Values) => void;
-}> = (props) => {
+}) => {
   const [shouldConfirm, setShouldConfirm] = React.useState(false);
   const [showAdvanced, setShowAdvanced] = React.useState(false);
   const showDevOptions = useSelector((state: iRootState) => state.appContainer.showDevOptions);
