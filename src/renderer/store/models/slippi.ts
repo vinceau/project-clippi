@@ -84,6 +84,15 @@ export const slippi = createModel({
         draft.comboProfiles = newState;
       });
     },
+    importProfile: (state: SlippiState, payload: { name: string; settings: string }): SlippiState => {
+      const newState = produce(state.comboProfiles, (draft) => {
+        draft[payload.name] = payload.settings;
+      });
+      return produce(state, (draft) => {
+        draft.comboProfiles = newState;
+        draft.currentProfile = payload.name;
+      });
+    },
     deleteProfile: (state: SlippiState, payload: string): SlippiState => {
       const newState = produce(state.comboProfiles, (draft) => {
         if (payload !== DEFAULT_PROFILE) {

@@ -19,6 +19,7 @@ import { NameTagForm } from "./NameTagForm";
 import { PercentageSlider } from "./PercentageSlider";
 import { PerCharPercent } from "./PerCharPercent";
 import { PortSelectAdapter } from "./PortSelection";
+import { ProfileExportContainer } from "./ProfileExport/ProfileExport.container";
 
 type Values = Partial<ComboConfiguration>;
 
@@ -35,30 +36,39 @@ const OuterContainer = styled.div`
   }
 `;
 
-const ButtonContainer: React.FC<{
+const ButtonContainer = ({
+  submitting,
+  currentProfile,
+  currentProfileData,
+  onDelete,
+}: {
   submitting: boolean;
   currentProfile?: string;
+  currentProfileData: string;
   onDelete?: () => void;
-}> = ({ submitting, currentProfile, onDelete }) => {
+}) => {
   return (
     <OuterContainer>
       <Button primary type="submit" disabled={submitting}>
         <Icon name="save" />
         Save profile
       </Button>
-      <Button className="delete-button" type="button" onClick={onDelete}>
-        {currentProfile === DEFAULT_PROFILE ? (
-          <>
-            <Icon name="undo" />
-            Reset profile
-          </>
-        ) : (
-          <>
-            <Icon name="trash" />
-            Delete profile
-          </>
-        )}
-      </Button>
+      <div>
+        <Button className="delete-button" type="button" onClick={onDelete}>
+          {currentProfile === DEFAULT_PROFILE ? (
+            <>
+              <Icon name="undo" />
+              Reset profile
+            </>
+          ) : (
+            <>
+              <Icon name="trash" />
+              Delete profile
+            </>
+          )}
+        </Button>
+        <ProfileExportContainer currentProfileData={currentProfileData} />
+      </div>
     </OuterContainer>
   );
 };
@@ -93,6 +103,7 @@ export const ComboForm: React.FC<{
                 submitting={submitting}
                 currentProfile={props.currentProfile}
                 onDelete={props.onDelete}
+                currentProfileData={JSON.stringify(values)}
               />
               <Field border="top">
                 <Label>Character Filter</Label>
@@ -242,6 +253,7 @@ export const ComboForm: React.FC<{
               <ButtonContainer
                 submitting={submitting}
                 currentProfile={props.currentProfile}
+                currentProfileData={JSON.stringify(values)}
                 onDelete={props.onDelete}
               />
               <CodeBlock values={values} />
