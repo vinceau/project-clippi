@@ -11,6 +11,7 @@ import type { ComboConfiguration } from "@/lib/profile";
 import type { iRootState } from "@/store";
 import { DEFAULT_PROFILE } from "@/store/models/slippi";
 
+import { Confirm } from "../Confirm";
 import { CharacterSelectAdapter, CustomCharacterListAdapter } from "./CharacterSelect";
 import { ToggleAdapter } from "./FormAdapters";
 import { MoveSequenceFormAdapter } from "./MoveSequenceForm";
@@ -19,6 +20,7 @@ import { NameTagForm } from "./NameTagForm";
 import { PercentageSlider } from "./PercentageSlider";
 import { PerCharPercent } from "./PerCharPercent";
 import { PortSelectAdapter } from "./PortSelection";
+import { ProfileExportContainer } from "./ProfileExport/ProfileExport.container";
 
 type Values = Partial<ComboConfiguration>;
 
@@ -35,40 +37,50 @@ const OuterContainer = styled.div`
   }
 `;
 
-const ButtonContainer: React.FC<{
+const ButtonContainer = ({
+  submitting,
+  currentProfile,
+  currentProfileData,
+  onDelete,
+}: {
   submitting: boolean;
   currentProfile?: string;
+  currentProfileData: string;
   onDelete?: () => void;
-}> = ({ submitting, currentProfile, onDelete }) => {
+}) => {
   return (
     <OuterContainer>
       <Button primary type="submit" disabled={submitting}>
         <Icon name="save" />
         Save profile
       </Button>
-      <Button className="delete-button" type="button" onClick={onDelete}>
-        {currentProfile === DEFAULT_PROFILE ? (
-          <>
-            <Icon name="undo" />
-            Reset profile
-          </>
-        ) : (
-          <>
-            <Icon name="trash" />
-            Delete profile
-          </>
-        )}
-      </Button>
+      <div>
+        <Button className="delete-button" type="button" onClick={onDelete}>
+          {currentProfile === DEFAULT_PROFILE ? (
+            <>
+              <Icon name="undo" />
+              Reset profile
+            </>
+          ) : (
+            <>
+              <Icon name="trash" />
+              Delete profile
+            </>
+          )}
+        </Button>
+        <ProfileExportContainer currentProfileData={currentProfileData} />
+      </div>
     </OuterContainer>
   );
 };
 
-export const ComboForm: React.FC<{
+export const ComboForm = (props: {
   initialValues: Values;
   currentProfile?: string;
   onDelete: () => void;
   onSubmit: (values: Values) => void;
-}> = (props) => {
+}) => {
+  const [shouldConfirm, setShouldConfirm] = React.useState(false);
   const [showAdvanced, setShowAdvanced] = React.useState(false);
   const showDevOptions = useSelector((state: iRootState) => state.appContainer.showDevOptions);
   return (
@@ -92,7 +104,8 @@ export const ComboForm: React.FC<{
               <ButtonContainer
                 submitting={submitting}
                 currentProfile={props.currentProfile}
-                onDelete={props.onDelete}
+                onDelete={() => setShouldConfirm(true)}
+                currentProfileData={JSON.stringify(values)}
               />
               <Field border="top">
                 <Label>Character Filter</Label>
@@ -242,12 +255,23 @@ export const ComboForm: React.FC<{
               <ButtonContainer
                 submitting={submitting}
                 currentProfile={props.currentProfile}
-                onDelete={props.onDelete}
+                currentProfileData={JSON.stringify(values)}
+                onDelete={() => setShouldConfirm(true)}
               />
               <CodeBlock values={values} />
             </SemanticForm>
           </div>
         )}
+      />
+      <Confirm
+        open={shouldConfirm}
+        content="Are you sure you want to delete this profile? This cannot be undone."
+        confirmButton="Delete"
+        onCancel={() => setShouldConfirm(false)}
+        onConfirm={() => {
+          props.onDelete();
+          setShouldConfirm(false);
+        }}
       />
     </div>
   );
