@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
-import type { GameStartType } from "@vinceau/slp-realtime";
+import type { GameStartType } from "@slippi/slippi-js";
 import { parseFileRenameFormat } from "common/context";
 import * as React from "react";
 

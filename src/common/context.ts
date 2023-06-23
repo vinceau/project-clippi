@@ -1,4 +1,4 @@
-import type { ComboType, GameEndType, GameStartType, MetadataType as Metadata, StockType } from "@vinceau/slp-realtime";
+import type { ComboType, GameEndType, GameStartType, MetadataType as Metadata, StockType } from "@slippi/slippi-js";
 import {
   GameEndMethod,
   getCharacterColorName,

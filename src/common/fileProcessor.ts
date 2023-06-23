@@ -1,19 +1,11 @@
-import type { Character } from "@slippi/slippi-js";
-import { SlippiGame } from "@slippi/slippi-js";
-import type {
-  ComboEventPayload,
-  ComboFilterSettings,
-  DolphinPlaybackItem,
-  FrameEntryType,
-  GameStartType,
-  MetadataType as Metadata,
-} from "@vinceau/slp-realtime";
+import type { Character, FrameEntryType, GameStartType, MetadataType as Metadata } from "@slippi/slippi-js";
+import { Frames, SlippiGame } from "@slippi/slippi-js";
+import type { ComboEventPayload, ComboFilterSettings, DolphinPlaybackItem } from "@vinceau/slp-realtime";
 import {
   checkCombo,
   defaultComboFilterSettings,
   extractPlayerNames,
   forAllPlayerIndices,
-  Frames,
   generateDolphinQueuePayload,
   Input,
   mapFramesToButtonInputs,

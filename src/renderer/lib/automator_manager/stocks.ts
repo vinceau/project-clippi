@@ -1,4 +1,5 @@
-import type { RealTimeStockEvents, StockType } from "@vinceau/slp-realtime";
+import type { StockType } from "@slippi/slippi-js";
+import type { RealTimeStockEvents } from "@vinceau/slp-realtime";
 import { exists } from "common/utils";
 import type { Observable } from "rxjs";
 import { merge } from "rxjs";

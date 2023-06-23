@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import type { GameStartType } from "@vinceau/slp-realtime";
+import type { GameStartType } from "@slippi/slippi-js";
 import { invalidFilename } from "common/utils";
 import insertTextAtCursor from "insert-text-at-cursor";
 import * as React from "react";
