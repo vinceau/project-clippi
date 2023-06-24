@@ -49,21 +49,23 @@ export const TwitchIntegration: React.FC = () => {
       <div style={{ marginTop: "20px" }}>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <h2>Clips</h2>
-          <TwitchClipClearDialog
-            trigger={
-              <div
-                css={css`
-                  cursor: pointer;
-                  &:hover {
-                    text-decoration: underline;
-                  }
-                `}
-              >
-                Clear all
-              </div>
-            }
-            onClear={dispatch.twitch.clearAllTwitchClips}
-          />
+          {allClips.length > 0 && (
+            <TwitchClipClearDialog
+              trigger={
+                <div
+                  css={css`
+                    cursor: pointer;
+                    &:hover {
+                      text-decoration: underline;
+                    }
+                  `}
+                >
+                  Clear all
+                </div>
+              }
+              onClear={dispatch.twitch.clearAllTwitchClips}
+            />
+          )}
         </div>
         {allClips.length > 0 ? (
           <TwitchClipList
