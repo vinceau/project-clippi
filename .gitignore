@@ -29,5 +29,3 @@ npm-debug.log.*
 *.scss.d.ts
 
 .opencode
-
-release
