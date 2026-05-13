@@ -14,7 +14,7 @@ import type { DolphinLauncherOptions, DolphinPlaybackPayload, DolphinQueueFormat
 import { DolphinLauncher, DolphinPlaybackStatus } from "@vinceau/slp-realtime";
 import { IS_MAC_OR_WIN } from "common/constants";
 import { delay, onlyFilename } from "common/utils";
-import { remote } from "electron";
+import * as remote from "@electron/remote";
 import fs from "fs-extra";
 import path from "path";
 import type { Observable } from "rxjs";

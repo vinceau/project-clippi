@@ -1,35 +1,33 @@
+# Logs
+logs
+*.log
 
-# dependencies
+# Runtime data
+pids
+*.pid
+*.seed
+
+# Coverage directory used by tools like istanbul
+coverage
+.eslintcache
+
+# Dependency directory
+# https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git
 node_modules
 
-# testing
-/coverage
-
-# production
-/dist
-/release
-
-# misc
+# OSX
 .DS_Store
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
 
-# error logs
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+release/app/dist
+release/build
+.erb/dll
 
-# environment variables
-.env
-
-# prebuild scripts
-/packaging/*.js
-
-# yalc
-.yalc
-yalc.lock
-
-# Intellij
 .idea
+npm-debug.log.*
+*.css.d.ts
+*.sass.d.ts
+*.scss.d.ts
+
+.opencode
+
+release

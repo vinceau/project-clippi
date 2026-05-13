@@ -7,7 +7,6 @@ import "@/styles/index.scss"; // Our custom styles
 
 import { ThemeProvider } from "emotion-theming";
 import React from "react";
-import { hot } from "react-hot-loader/root";
 import { Provider, useDispatch, useSelector } from "react-redux";
 import { HashRouter as Router, Redirect, Route, Switch } from "react-router-dom";
 import { PersistGate } from "redux-persist/integration/react";
@@ -64,4 +63,4 @@ const AppWithProviders: React.FC = () => {
 };
 
 // eslint-disable-next-line import/no-default-export
-export default hot(AppWithProviders);
+export default AppWithProviders;

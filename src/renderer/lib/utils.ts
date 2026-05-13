@@ -1,7 +1,8 @@
 import type { DolphinQueueFormat } from "@vinceau/slp-realtime";
 import { IS_DEV } from "common/constants";
 import { Message } from "common/types";
-import { remote, shell } from "electron";
+import { shell } from "electron";
+import * as remote from "@electron/remote";
 import fs from "fs-extra";
 import * as path from "path";
 import * as url from "url";
