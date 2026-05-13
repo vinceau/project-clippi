@@ -71,6 +71,7 @@
     "@twurple/api": "^8.1.4",
     "@twurple/auth": "^8.1.4",
     "@twurple/auth-electron": "^6.2.1",
-    "@twurple/chat": "^8.1.4"
+    "@twurple/chat": "^8.1.4",
+    "ws": "^8.20.1"
   }
 }

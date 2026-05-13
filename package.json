@@ -158,7 +158,8 @@
     "semantic-ui-react": "^0.88.2",
     "semver": "^7.5.2",
     "source-map-support": "^0.5.10",
-    "timeago.js": "^4.0.2"
+    "timeago.js": "^4.0.2",
+    "ws": "^8.20.1"
   },
   "devDependencies": {
     "@electron/rebuild": "^3.7.1",
