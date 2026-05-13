@@ -1,9 +1,10 @@
 import log from "electron-log";
 import Store from "electron-store";
-import type { HelixUser } from "twitch";
-import TwitchClient from "twitch";
-import ChatClient from "twitch-chat-client";
-import ElectronAuthProvider from "twitch-electron-auth-provider";
+import { ApiClient } from "@twurple/api";
+import type { HelixUser } from "@twurple/api";
+import { ChatClient } from "@twurple/chat";
+import { StaticAuthProvider, getTokenInfo, accessTokenIsExpired } from "@twurple/auth";
+import { ElectronAuthProvider } from "@twurple/auth-electron";
 
 import { clearAllCookies } from "./session";
 
@@ -13,14 +14,15 @@ const TWITCH_CLIENT_ID = process.env.ELECTRON_WEBPACK_APP_TWITCH_CLIENT_ID || ""
 const TWITCH_REDIRECT_URI = "http://localhost:3000/auth/twitch/callback";
 const TOKEN_STORE_KEY = "twitch-access-token";
 
-interface TwitchAccessToken {
+interface StoredToken {
+  accessToken: string;
+  refreshToken: string | null;
+  expiresIn: number | null;
+  obtainmentTimestamp: number;
   userId: string;
-  token: string;
-  expiryDate: Date | null;
   scopes: string[];
 }
 
-// Ensure we hae sufficient scopes
 const validScopes = (neededScopes: string[], existingScopes: string[]): boolean => {
   for (const s of neededScopes) {
     if (!existingScopes.includes(s)) {
@@ -32,9 +34,10 @@ const validScopes = (neededScopes: string[], existingScopes: string[]): boolean 
 
 export class TwitchController {
   private currentUser: HelixUser | null = null;
-  private client: TwitchClient | null = null;
+  private client: ApiClient | null = null;
+  private authProvider: StaticAuthProvider | ElectronAuthProvider | null = null;
   private chatClient: ChatClient | null = null;
-  private accessToken: TwitchAccessToken | null = null;
+  private accessToken: StoredToken | null = null;
   private isChatConnected = false;
 
   public getCurrentUser(): HelixUser | null {
@@ -42,24 +45,22 @@ export class TwitchController {
   }
 
   public async authenticate(scopes: string[]): Promise<HelixUser | null> {
-    // Connect to Twitch chat server
-    this.client = await this._authenticateTwitch(scopes);
+    const { apiClient, authProvider } = await this._authenticateTwitch(scopes);
+    this.client = apiClient;
+    this.authProvider = authProvider;
 
-    // Ensure a valid access token
     if (!this.accessToken) {
       return null;
     }
 
-    // Connect the chat client so we're ready to post clip links
-    this.chatClient = ChatClient.forTwitchClient(this.client);
-    this.chatClient.onRegister(() => {
+    this.chatClient = new ChatClient({ authProvider });
+    this.chatClient.onConnect(() => {
       log.log("Successfully connected to the Twitch chat server.");
       this.isChatConnected = true;
     });
-    await this.chatClient.connect();
+    this.chatClient.connect();
 
-    // Store the current user
-    this.currentUser = await this.client.helix.users.getUserById(this.accessToken.userId);
+    this.currentUser = await this.client.users.getUserById(this.accessToken.userId);
     return this.currentUser;
   }
 
@@ -75,36 +76,31 @@ export class TwitchController {
       throw new Error("Not logged in to Twitch");
     }
 
-    // The id of the channel we want to clip
-    let channelId = this.currentUser.id; // Default to our own channel
+    let channelId = this.currentUser.id;
     if (channelName) {
-      const user = await this.client.helix.users.getUserByName(channelName);
+      const user = await this.client.users.getUserByName(channelName);
       if (!user) {
         throw new Error(`Invalid Twitch user: ${channelName}`);
       }
       channelId = user.id;
     }
 
-    // Create Twitch clip
-    const clipId = await this.client.helix.clips.createClip({
-      channelId,
+    const clipId = await this.client.clips.createClip({
+      channel: channelId,
       createAfterDelay: options && options.createAfterDelay,
     });
 
     if (options && options.postToChat) {
-      // Join chat channel and post message
       try {
         const channelToJoin = channelName || this.currentUser.name;
         const url = `https://clips.twitch.tv/${clipId}`;
         const prefix = options.chatMessagePrefix || "";
         await this.chat(channelToJoin, prefix + url);
       } catch (err) {
-        // Catch the error so we can always return the clip ID
         log.error(err);
       }
     }
 
-    // Return the Twitch clip
     return clipId;
   }
 
@@ -123,81 +119,80 @@ export class TwitchController {
 
     let user: HelixUser | null;
     if (channelName) {
-      user = await this.client.helix.users.getUserByName(channelName);
+      user = await this.client.users.getUserByName(channelName);
     } else {
       user = this.currentUser;
     }
     if (!user) {
       return false;
     }
-    const s = await user.getStream();
+    const s = await this.client.streams.getStreamByUserId(user.id);
     log.log(s);
     return s !== null;
   }
 
   public async signOut(): Promise<void> {
-    // Delete token
     store.delete(TOKEN_STORE_KEY);
-    // Clear session store
     await clearAllCookies("twitch.tv");
-    // Reset current state
     this._resetState();
   }
 
   private _resetState() {
     this.currentUser = null;
     this.client = null;
+    this.authProvider = null;
     this.chatClient = null;
     this.accessToken = null;
     this.isChatConnected = false;
   }
 
-  private async _authenticateTwitch(scopes: string[]): Promise<TwitchClient> {
-    // Try to reuse stored token
-    this.accessToken = store.get(TOKEN_STORE_KEY, null);
-    if (this.accessToken && validScopes(scopes, this.accessToken.scopes)) {
-      // Validate the expiry date
-      const expiryDate = this.accessToken.expiryDate ? new Date(this.accessToken.expiryDate) : null;
-      const now = new Date();
-      if (!expiryDate || expiryDate > now) {
-        try {
-          log.log(`Instantiating Twitch client using old token: ${this.accessToken.token}`);
-          const client = TwitchClient.withCredentials(TWITCH_CLIENT_ID, this.accessToken.token);
-          log.log("Testing valid Twitch client");
-          await client.helix.users.getUserById(this.accessToken.userId);
-          return client;
-        } catch (err) {
-          log.error(`Error creating Twitch client with token: ${this.accessToken.token}. ${err}`);
+  private async _authenticateTwitch(scopes: string[]): Promise<{ apiClient: ApiClient; authProvider: StaticAuthProvider | ElectronAuthProvider }> {
+    const stored = store.get(TOKEN_STORE_KEY, null) as StoredToken | null;
 
-          // Our token probably expired so clear it.
+    if (stored && validScopes(scopes, stored.scopes)) {
+      const { expiresIn, obtainmentTimestamp } = stored;
+      if (!expiresIn || !accessTokenIsExpired({ expiresIn, obtainmentTimestamp })) {
+        try {
+          log.log("Instantiating Twitch client using stored token");
+          const authProvider = new StaticAuthProvider(TWITCH_CLIENT_ID, stored.accessToken);
+          const apiClient = new ApiClient({ authProvider });
+          log.log("Testing valid Twitch client");
+          await apiClient.users.getUserById(stored.userId);
+          this.accessToken = stored;
+          return { apiClient, authProvider };
+        } catch (err) {
+          log.error(`Error creating Twitch client with token: ${err}`);
           log.log("Clearing old token...");
           await this.signOut();
         }
       }
     }
 
-    // We haven't authenticated yet
-    const client = new TwitchClient({
-      authProvider: new ElectronAuthProvider({
-        clientId: TWITCH_CLIENT_ID,
-        redirectURI: TWITCH_REDIRECT_URI,
-      }),
+    log.log("Opening Twitch OAuth dialog...");
+    const authProvider = new ElectronAuthProvider({
+      clientId: TWITCH_CLIENT_ID,
+      redirectUri: TWITCH_REDIRECT_URI,
     });
 
-    const accessToken = await client.getAccessToken(scopes);
-    if (!accessToken) {
+    const token = await authProvider.getAccessTokenForUser("0", scopes);
+    if (!token) {
       throw new Error("Could not authenticate with Twitch");
     }
-    const tokenInfo = await client.getTokenInfo();
+
+    const info = await getTokenInfo(token.accessToken, TWITCH_CLIENT_ID);
     this.accessToken = {
-      userId: tokenInfo.userId,
-      token: accessToken.accessToken,
-      expiryDate: accessToken.expiryDate,
-      scopes: accessToken.scope,
+      accessToken: token.accessToken,
+      refreshToken: token.refreshToken,
+      expiresIn: token.expiresIn,
+      obtainmentTimestamp: token.obtainmentTimestamp,
+      userId: info.userId || "",
+      scopes: info.scopes,
     };
-    // Persist the data
+
     store.set(TOKEN_STORE_KEY, this.accessToken);
-    return client;
+
+    const apiClient = new ApiClient({ authProvider });
+    return { apiClient, authProvider };
   }
 }
 
