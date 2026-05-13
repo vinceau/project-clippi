@@ -46,7 +46,7 @@ const isDebug =
   process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true';
 
 if (isDebug) {
-  require('electron-debug').default();
+  require('electron-debug')();
   // allow agents to access the debugging logs
   app.commandLine.appendSwitch("remote-debugging-port", "9222");
 }
