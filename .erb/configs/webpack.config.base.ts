@@ -2,6 +2,8 @@
  * Base webpack config used across other specific configs
  */
 
+import path from "path";
+import Dotenv from "dotenv-webpack";
 import webpack from 'webpack';
 import TsconfigPathsPlugins from 'tsconfig-paths-webpack-plugin';
 import webpackPaths from './webpack.paths';
@@ -48,7 +50,15 @@ const configuration: webpack.Configuration = {
     plugins: [new TsconfigPathsPlugins()],
   },
 
-  plugins: [new webpack.EnvironmentPlugin({ NODE_ENV: 'production' })],
+  plugins: [
+    new webpack.EnvironmentPlugin({ NODE_ENV: 'production' }),
+
+    new Dotenv({
+      path: path.join(webpackPaths.rootPath, ".env"),
+      silent: true,
+    }),
+
+  ],
 };
 
 export default configuration;
