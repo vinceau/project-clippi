@@ -60,8 +60,8 @@ const configuration: webpack.Configuration = {
 
   plugins: [
     new webpack.DefinePlugin({
-      __VERSION__: version,
-      __DATE__: dateString,
+      __VERSION__: JSON.stringify(version),
+      __DATE__: JSON.stringify(dateString),
       __BUILD__: JSON.stringify(commitHash),
     }),
 
