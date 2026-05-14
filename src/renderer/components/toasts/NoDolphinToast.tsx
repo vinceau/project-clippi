@@ -2,7 +2,7 @@ import React from "react";
 
 import { ExternalLink as A } from "../ExternalLink";
 
-export const NoDolphinToast: React.FC = () => {
+export const NoDolphinToast = () => {
   const url = "https://slippi.gg/downloads";
   return (
     <div>

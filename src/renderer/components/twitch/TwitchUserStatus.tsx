@@ -7,26 +7,31 @@ import defaultUserImage from "@/styles/images/user.svg";
 
 import { ExternalLink as A } from "../ExternalLink";
 
-export const TwitchUserStatus: React.FC<{
+export const TwitchUserStatus = ({
+  displayName,
+  channel,
+  image,
+  onSignOut,
+}: {
   displayName: string;
   channel: string;
   image?: any;
   onSignOut: () => void;
-}> = (props) => {
-  const userImage = props.image ? props.image : defaultUserImage;
-  const url = `twitch.tv/${props.channel}`;
+}) => {
+  const userImage = image ? image : defaultUserImage;
+  const url = `twitch.tv/${channel}`;
   return (
     <div style={{ padding: "3px" }}>
       <Card>
         <Card.Content>
           <Image floated="right" size="mini" src={userImage} />
-          <Card.Header>{props.displayName}</Card.Header>
+          <Card.Header>{displayName}</Card.Header>
           <Card.Meta>
             <A href={`https://${url}`}>{url}</A>
           </Card.Meta>
         </Card.Content>
         <Card.Content extra>
-          <Button basic fluid color="red" onClick={props.onSignOut}>
+          <Button basic fluid color="red" onClick={onSignOut}>
             Sign out
           </Button>
         </Card.Content>

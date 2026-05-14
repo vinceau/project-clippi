@@ -50,8 +50,7 @@ export interface EventActionListsProps {
   onSelect: (i: number) => void;
 }
 
-export const EventActionLists: React.FC<EventActionListsProps> = (props) => {
-  const { selected, onSelect } = props;
+export const EventActionLists = ({ selected, onSelect }: EventActionListsProps) => {
   const val = useSelector((state: iRootState) => state.automator.events);
   const actions = useSelector((state: iRootState) => state.automator.actions);
   const dispatch = useDispatch<Dispatch>();

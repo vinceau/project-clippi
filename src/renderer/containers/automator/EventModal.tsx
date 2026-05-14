@@ -63,12 +63,17 @@ const ErrorText = styled(Text)`
   font-weight: bold;
 `;
 
-export const EventModal: React.FC<{
+export const EventModal = ({
+  edit,
+  opened,
+  onClose,
+  onSubmit,
+}: {
   edit?: NamedEventConfig | null;
   opened?: boolean;
   onSubmit?: (event: NamedEventConfig) => void;
   onClose?: () => void;
-}> = ({ edit, opened, onClose, onSubmit }) => {
+}) => {
   const defaultValues = Object.assign({}, DEFAULT_FORM_VALUES, edit);
   const { watch, errors, handleSubmit, control, reset } = useForm<FormValues>({ defaultValues });
   const { currentProfile, comboProfiles } = useSelector((state: iRootState) => state.slippi);

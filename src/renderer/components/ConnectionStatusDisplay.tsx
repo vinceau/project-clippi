@@ -16,7 +16,17 @@ const ConnectInfo = styled.div`
   justify-content: center;
 `;
 
-export const ConnectionStatusDisplay: React.FC<{
+export const ConnectionStatusDisplay = ({
+  icon,
+  iconHoverText,
+  onIconClick,
+  headerText,
+  headerHoverTitle,
+  onHeaderClick,
+  color,
+  shouldPulse,
+  children,
+}: {
   icon?: string;
   iconHoverText?: string;
   onIconClick?: () => void;
@@ -25,34 +35,35 @@ export const ConnectionStatusDisplay: React.FC<{
   onHeaderClick?: () => void;
   color?: string;
   shouldPulse?: boolean;
-}> = (props) => {
+  children?: React.ReactNode;
+}) => {
   return (
     <Outer>
-      {props.icon && (
-        <Labelled disabled={!props.iconHoverText} title={props.iconHoverText}>
+      {icon && (
+        <Labelled disabled={!iconHoverText} title={iconHoverText}>
           <img
-            src={props.icon}
-            onClick={props.onIconClick}
+            src={icon}
+            onClick={onIconClick}
             style={{
               height: "35px",
               width: "35px",
-              cursor: props.onIconClick ? "pointer" : "auto",
+              cursor: onIconClick ? "pointer" : "auto",
             }}
           />
         </Labelled>
       )}
       <ConnectInfo>
         <Labelled
-          disabled={!Boolean(props.headerHoverTitle)}
-          title={props.headerHoverTitle}
-          onClick={props.onHeaderClick}
+          disabled={!Boolean(headerHoverTitle)}
+          title={headerHoverTitle}
+          onClick={onHeaderClick}
           position="right"
         >
           <Header sub>
-            <ScanningDot shouldPulse={props.shouldPulse} color={props.color || "red"} /> {props.headerText}
+            <ScanningDot shouldPulse={shouldPulse} color={color || "red"} /> {headerText}
           </Header>
         </Labelled>
-        {props.children && <span>{props.children}</span>}
+        {children && <span>{children}</span>}
       </ConnectInfo>
     </Outer>
   );

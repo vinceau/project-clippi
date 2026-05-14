@@ -8,7 +8,7 @@ import { statusToColor, statusToLabel } from "@/lib/status";
 import type { iRootState } from "@/store";
 import slippiLogo from "@/styles/images/slippi.png";
 
-export const StatusBar: React.FC = () => {
+export const StatusBar = () => {
   const history = useHistory();
 
   const port = useSelector((state: iRootState) => state.slippi.port);

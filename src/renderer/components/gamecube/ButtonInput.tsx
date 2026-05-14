@@ -16,11 +16,7 @@ const SelectButton = styled.div`
   text-align: center;
 `;
 
-export const ButtonInput: React.FC<{
-  value?: string[];
-  onChange?: (newButtons: string[]) => void;
-}> = (props) => {
-  const { value, onChange } = props;
+export const ButtonInput = ({ value, onChange }: { value?: string[]; onChange?: (newButtons: string[]) => void }) => {
   return (
     <div>
       <ButtonPicker value={value} onChange={onChange}>

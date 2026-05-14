@@ -28,8 +28,7 @@ interface FileInputProps extends Record<string, any> {
   saveFile?: boolean;
 }
 
-export const FileInput: React.FC<FileInputProps> = (props) => {
-  const { value, directory, onChange, fileTypeFilters, saveFile, placeholder } = props;
+export const FileInput = ({ value, directory, onChange, fileTypeFilters, saveFile, placeholder }: FileInputProps) => {
   const [filesPath, setFilesPath] = React.useState<string>(value);
 
   // Make sure we display the correct value

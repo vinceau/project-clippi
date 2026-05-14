@@ -50,7 +50,7 @@ const Outer = styled.div<{
   }}
 `;
 
-export const EventItem: React.FC<EventItemProps> = ({ event, onClick, selected, disabled }) => {
+export const EventItem = ({ event, onClick, selected, disabled }: EventItemProps) => {
   const theme = useTheme();
   const eventName = event.name ? event.name : generateEventName(event) + "...";
   return (

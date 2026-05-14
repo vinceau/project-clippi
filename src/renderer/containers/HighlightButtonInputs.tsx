@@ -40,7 +40,7 @@ const options = [
 ];
 const holdOptions = ["frames", "seconds"].map((o) => ({ key: o, value: o, text: o }));
 
-export const HighlightButtonInputs: React.FC = () => {
+export const HighlightButtonInputs = () => {
   const [showAdvanced, setShowAdvanced] = React.useState(false);
   const dispatch = useDispatch<Dispatch>();
   const {

@@ -62,13 +62,9 @@ const characterIconMap: Record<string, string> = {
   zelda: zeldaImg,
 };
 
-export const CharacterIcon: React.FC<{
-  character: Character;
-  size?: number;
-  grayscale?: boolean;
-}> = (props) => {
-  const imgSize = props.size ?? 24;
-  const shortName = getCharacterShortName(props.character).toLowerCase();
+export const CharacterIcon = ({ character, size, grayscale }: { character: Character; size?: number; grayscale?: boolean }) => {
+  const imgSize = size ?? 24;
+  const shortName = getCharacterShortName(character).toLowerCase();
   const imgSrc = characterIconMap[shortName] ?? unknownImg;
   return (
     <img
@@ -76,7 +72,7 @@ export const CharacterIcon: React.FC<{
       css={css`
         height: ${imgSize}px;
         width: ${imgSize}px;
-        ${props.grayscale && `filter: grayscale(1)`};
+        ${grayscale && `filter: grayscale(1)`};
       `}
     />
   );

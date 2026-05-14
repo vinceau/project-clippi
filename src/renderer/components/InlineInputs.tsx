@@ -71,15 +71,19 @@ export const SimpleInput = styled.input`
   margin: 0 0.5rem;
 `;
 
-export const DelayInput: React.FC<{
+export const DelayInput = ({
+  value,
+  placeholder,
+  onChange: onChangeProp,
+}: {
   value?: string;
   placeholder?: string;
   onChange?: (delay: string) => void;
-}> = (props) => {
-  const [delayAmount, setDelayAmount] = React.useState(props.value || "0");
+}) => {
+  const [delayAmount, setDelayAmount] = React.useState(value || "0");
   const onChange = () => {
-    if (props.onChange) {
-      props.onChange(delayAmount);
+    if (onChangeProp) {
+      onChangeProp(delayAmount);
     }
   };
   return (
@@ -88,18 +92,22 @@ export const DelayInput: React.FC<{
       value={delayAmount}
       onBlur={onChange}
       onChange={(e) => setDelayAmount(e.target.value)}
-      placeholder={props.placeholder}
+      placeholder={placeholder}
     />
   );
 };
 
-export const NotifyInput: React.FC<{
+export const NotifyInput = ({
+  value,
+  onChange,
+  options: optionsProp,
+}: {
   value?: boolean;
   onChange: (notify: boolean) => void;
   options?: any;
-}> = (props) => {
-  const options = props.options
-    ? props.options
+}) => {
+  const options = optionsProp
+    ? optionsProp
     : [
         {
           key: "notify-me",
@@ -112,5 +120,5 @@ export const NotifyInput: React.FC<{
           text: "don't notify",
         },
       ];
-  return <InlineDropdown value={Boolean(props.value)} onChange={props.onChange} options={options} />;
+  return <InlineDropdown value={Boolean(value)} onChange={onChange} options={options} />;
 };

@@ -14,7 +14,7 @@ import { ExternalLink as A } from "@/components/ExternalLink";
 import { checkForNewUpdates, downloadLatestUpdate, installUpdateAndRestart } from "@/lib/utils";
 import type { Dispatch, iRootState } from "@/store";
 
-export const UpdateStatusInfo: React.FC = () => {
+export const UpdateStatusInfo = () => {
   const updateStatus = useSelector((state: iRootState) => state.tempContainer.updateStatus);
   const updateAvailable = useSelector((state: iRootState) => state.tempContainer.updateAvailable);
 
@@ -68,9 +68,7 @@ export const UpdateStatusInfo: React.FC = () => {
   );
 };
 
-const ShowUpdateMessage: React.FC<{
-  versionPayload: VersionUpdatePayload | null;
-}> = ({ versionPayload }) => {
+const ShowUpdateMessage = ({ versionPayload }: { versionPayload: VersionUpdatePayload | null }) => {
   if (!versionPayload) {
     return null;
   }
@@ -101,7 +99,7 @@ const ShowUpdateMessage: React.FC<{
   }
 };
 
-const UpdateAvailableMessage: React.FC = () => {
+const UpdateAvailableMessage = () => {
   if (!AUTO_UPDATES_ENABLED) {
     return <Button onClick={() => shell.openExternal(GITHUB_RELEASES_PAGE)}>Open releases page</Button>;
   }

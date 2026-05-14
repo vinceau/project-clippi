@@ -5,21 +5,17 @@ import { FieldArray } from "react-final-form-arrays";
 import { Icon } from "@/ui/Icon/Icon";
 import { Label } from "@/ui/Label/Label";
 
-const NameTagLabel: React.FC<{
-  name: string;
-  onClick: () => void;
-}> = (props) => {
+const NameTagLabel = ({ name, onClick }: { name: string; onClick: () => void }) => {
   return (
     <Label style={{ fontSize: "0.8em" }}>
-      {props.name}
-      <Icon name="delete" link onClick={props.onClick} />
+      {name}
+      <Icon name="delete" link onClick={onClick} />
     </Label>
   );
 };
 
-export const NameTagForm: React.FC<{ name: string; values: any; push: any; pop: any }> = (props) => {
+export const NameTagForm = ({ name, values, push }: { name: string; values: any; push: any; pop: any }) => {
   const [tag, setTag] = React.useState("");
-  const { name, push, values } = props;
   const currentTags: string[] = values[name] || [];
   const submit = () => {
     if (tag && !currentTags.includes(tag)) {

@@ -8,9 +8,7 @@ import alertIcon from "@/styles/images/icons/alert.svg";
 import infoIcon from "@/styles/images/icons/info.svg";
 import successIcon from "@/styles/images/icons/success.svg";
 
-const CloseButton: React.FC<{
-  closeToast?: () => void;
-}> = ({ closeToast }) => (
+const CloseButton = ({ closeToast }: { closeToast?: () => void }) => (
   <span role="button" className="close-button" onClick={closeToast}>
     ✕
   </span>

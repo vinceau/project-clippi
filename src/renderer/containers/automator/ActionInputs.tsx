@@ -24,15 +24,20 @@ const ActionSelector = (props: any) => {
   );
 };
 
-export const ActionInput: React.FC<{
+export const ActionInput = ({
+  selectPrefix,
+  value,
+  onChange,
+  disabledActions,
+  onRemove,
+}: {
   selectPrefix: string;
   value: ActionDefinition;
   onChange: (a: ActionDefinition) => void;
   disabledActions: string[];
   onRemove: () => void;
-}> = (props) => {
+}) => {
   const outerRef = React.createRef<HTMLDivElement>();
-  const { value, onChange, onRemove, selectPrefix, disabledActions } = props;
   const onActionChange = (action: string) => {
     const params = actionComponents[action].defaultParams;
     const newValue = produce(value, (draft: ActionDefinition) => {
@@ -73,11 +78,7 @@ export const ActionInput: React.FC<{
   );
 };
 
-export const AddActionInput: React.FC<{
-  onChange: (action: string) => void;
-  disabledActions: string[];
-}> = (props) => {
-  const { onChange, disabledActions } = props;
+export const AddActionInput = ({ onChange, disabledActions }: { onChange: (action: string) => void; disabledActions: string[] }) => {
   const unusedOptions = allActions.filter((a) => !disabledActions.includes(a));
   const noOtherActions = unusedOptions.length === allActions.length;
   const addText = noOtherActions ? "Then..." : "And also...";

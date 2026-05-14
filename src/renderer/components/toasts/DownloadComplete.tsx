@@ -2,7 +2,7 @@ import React from "react";
 
 import { installUpdateAndRestart } from "@/lib/utils";
 
-export const DownloadComplete: React.FC = () => {
+export const DownloadComplete = () => {
   const onClick = () => {
     installUpdateAndRestart();
   };

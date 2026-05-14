@@ -7,16 +7,19 @@ import type { Context } from "@/lib/event_actions";
 
 import { TippyLabel } from "./Labelled";
 
-export const ContextOptions: React.FC<{
+export const ContextOptions = ({
+  onLabelClick,
+  context: contextProp,
+}: {
   onLabelClick?: (name: string) => void;
   context?: Context;
-}> = (props) => {
-  const context = props.context ? props.context : generateFileRenameContext();
+}) => {
+  const context = contextProp ? contextProp : generateFileRenameContext();
   const allDescriptions = contextDescriptions;
   const keys = Object.keys(context);
   const clickHandler = (name: string) => {
-    if (props.onLabelClick) {
-      props.onLabelClick(name);
+    if (onLabelClick) {
+      onLabelClick(name);
     }
   };
   const descriptions = allDescriptions.map((cat) => (

@@ -37,13 +37,17 @@ const HorizontalDivider = styled(Divider)`
   }
 `;
 
-export const SlippiConnectionPlaceholder: React.FC<{
+export const SlippiConnectionPlaceholder = ({
+  address,
+  port,
+  onClick,
+}: {
   address: string;
   port: string;
   onClick: (value: { address: string; port: string }) => void;
-}> = (props) => {
-  const [address, setAddress] = React.useState(props.address);
-  const [port, setPort] = React.useState(props.port);
+}) => {
+  const [address_, setAddress] = React.useState(address);
+  const [port_, setPort] = React.useState(port);
   return (
     <Segment placeholder>
       <Grid columns={2} stackable textAlign="center">
@@ -69,21 +73,21 @@ export const SlippiConnectionPlaceholder: React.FC<{
                   label="Address"
                   placeholder="localhost"
                   fluid={true}
-                  value={address}
+                  value={address_}
                   onChange={(_: any, { value }: any) => setAddress(value)}
-                  onBlur={() => dispatcher.slippi.setRelayAddress(address)}
+                  onBlur={() => dispatcher.slippi.setRelayAddress(address_)}
                 />
               </div>
               <Input
                 label="Port"
                 placeholder="1667"
                 fluid={true}
-                value={port}
+                value={port_}
                 onChange={(_: any, { value }: any) => setPort(value)}
-                onBlur={() => dispatcher.slippi.setPort(port)}
+                onBlur={() => dispatcher.slippi.setPort(port_)}
               />
               <div style={{ padding: "10px 0" }}>
-                <Button onClick={() => props.onClick({ address, port })}>Connect</Button>
+                <Button onClick={() => onClick({ address_, port_ })}>Connect</Button>
               </div>
             </div>
           </Grid.Column>

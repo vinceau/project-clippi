@@ -138,7 +138,7 @@ const SettingsContainer = styled.div`
   z-index: 1;
 `;
 
-export const SettingsView: React.FC = () => {
+export const SettingsView = () => {
   const history = useHistory();
   const { path } = useRouteMatch();
   const latestPath = useSelector((state: iRootState) => state.tempContainer.latestPath);

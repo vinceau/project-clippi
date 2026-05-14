@@ -4,27 +4,23 @@ import { Droppable } from "react-beautiful-dnd";
 
 import { PlaybackQueueItem } from "./PlaybackQueueItem";
 
-export const PlaybackQueue: React.FC<{
-  id: string;
-  files: DolphinEntry[];
-  removeFile?: (index: number) => void;
-}> = (props) => {
+export const PlaybackQueue = ({ id, files, removeFile: removeFileProp }: { id: string; files: DolphinEntry[]; removeFile?: (index: number) => void }) => {
   const removeFile = (index: number, path: string) => {
     console.log(`Removing file at index ${index} with path: ${path}`);
-    if (props.removeFile) {
-      props.removeFile(index);
+    if (removeFileProp) {
+      removeFileProp(index);
     }
   };
   return (
-    <Droppable droppableId={props.id}>
+    <Droppable droppableId={id}>
       {(provided) => (
         <div ref={provided.innerRef} {...provided.droppableProps}>
-          {props.files.map((file, i) => (
+          {files.map((file, i) => (
             <PlaybackQueueItem
               key={JSON.stringify(file)}
               file={file}
               index={i}
-              total={props.files.length}
+              total={files.length}
               onRemove={() => removeFile(i, file.path)}
             />
           ))}

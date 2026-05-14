@@ -10,16 +10,20 @@ import { useTheme } from "@/styles";
 
 import { ControllerLayout } from "./ControllerLayout";
 
-export const ButtonPicker: React.FC<{
+export const ButtonPicker = ({
+  value,
+  onChange,
+  children,
+}: {
   value?: string[];
   onChange?: (newButtons: string[]) => void;
-}> = (props) => {
+  children?: React.ReactNode;
+}) => {
   const theme = useTheme();
   const [opened, setOpened] = React.useState<boolean>(false);
-  const [buttons, setButtons] = React.useState<string[]>(props.value || []);
+  const [buttons, setButtons] = React.useState<string[]>(value || []);
   const onOpen = () => {
-    // props value is the true value so reset the state
-    setButtons(props.value || []);
+    setButtons(value || []);
     setOpened(true);
   };
   const onReset = () => {
@@ -27,8 +31,8 @@ export const ButtonPicker: React.FC<{
   };
   const onSave = () => {
     console.log("saving...");
-    if (props.onChange) {
-      props.onChange(buttons);
+    if (onChange) {
+      onChange(buttons);
     }
     setOpened(false);
   };
@@ -38,7 +42,7 @@ export const ButtonPicker: React.FC<{
       open={opened}
       onClose={() => setOpened(false)}
       closeIcon
-      trigger={<div onClick={onOpen}>{props.children}</div>}
+      trigger={<div onClick={onOpen}>{children}</div>}
     >
       <Modal.Header>Choose a button combination</Modal.Header>
       <Modal.Content>

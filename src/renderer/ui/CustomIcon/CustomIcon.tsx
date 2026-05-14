@@ -29,6 +29,6 @@ export interface CustomIconProps {
   color?: string;
 }
 
-export const CustomIcon: React.FC<CustomIconProps> = (props) => {
-  return <Outer image={props.image} color={props.color} className={`icon ${props.size || ""}`} />;
+export const CustomIcon = ({ image, color, size }: CustomIconProps) => {
+  return <Outer image={image} color={color} className={`icon ${size || ""}`} />;
 };

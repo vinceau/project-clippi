@@ -20,12 +20,14 @@ const updateNotificationStyles = {
   right: "2rem",
 };
 
-export const Menu: React.FC<{
+export const Menu = ({
+  settingsPage,
+  updateAvailable,
+}: {
   settingsPage: string;
   updateAvailable?: boolean;
-}> = (props) => {
+}) => {
   const match = useRouteMatch();
-  const { settingsPage } = props;
   return (
     <Outer>
       <div>
@@ -44,7 +46,7 @@ export const Menu: React.FC<{
         <Link to={settingsPage}>
           <MenuIcon label="Settings">
             <Icon name="cog" />
-            {props.updateAvailable && <Label circular color="red" empty style={updateNotificationStyles} />}
+            {updateAvailable && <Label circular color="red" empty style={updateNotificationStyles} />}
           </MenuIcon>
         </Link>
       </div>

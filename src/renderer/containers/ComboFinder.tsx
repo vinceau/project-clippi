@@ -12,7 +12,7 @@ import { HighlightOptions } from "@/containers/HighlightOptions";
 import type { Dispatch, iRootState } from "@/store";
 import { highlightInitialState } from "@/store/models/highlights";
 
-export const ComboFinder: React.FC = () => {
+export const ComboFinder = () => {
   const {
     openCombosWhenDone,
     includeSubFolders,

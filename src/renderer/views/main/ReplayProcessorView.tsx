@@ -32,7 +32,7 @@ const Outer = styled.div`
   flex-direction: column;
 `;
 
-export const ReplayProcessorView: React.FC = () => {
+export const ReplayProcessorView = () => {
   const { comboFinderPercent } = useSelector((state: iRootState) => state.tempContainer);
   return (
     <Outer>

@@ -4,7 +4,7 @@ import { Field, FormContainer, PageHeader } from "@/components/Form";
 import { Toggle } from "@/ui/Toggle/Toggle";
 import { ThemeMode, useTheme } from "@/styles";
 
-export const Appearance: React.FC = () => {
+export const Appearance = () => {
   const { themeName, toggle } = useTheme();
   const onOpenChange = (darkModeChecked: boolean) => {
     toggle(darkModeChecked ? ThemeMode.DARK : ThemeMode.LIGHT);

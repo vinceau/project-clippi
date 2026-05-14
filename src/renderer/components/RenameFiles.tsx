@@ -58,18 +58,22 @@ const metadata = {
 const gameStartString = `{"slpVersion":"2.0.1","isTeams":false,"isPAL":false,"stageId":2,"players":[{"playerIndex":0,"port":1,"characterId":0,"characterColor":3,"startStocks":4,"type":0,"teamId":0,"controllerFix":"UCF","nametag":"BORT"},{"playerIndex":2,"port":3,"characterId":25,"characterColor":0,"startStocks":4,"type":1,"teamId":0,"controllerFix":"None","nametag":"YORT"}]}`;
 const exampleGameStart: GameStartType = JSON.parse(gameStartString);
 
-export const RenameFiles: React.FC<{
+export const RenameFiles = ({
+  value,
+  onChange,
+  placeholder,
+}: {
   value: string;
   onChange: (value: string) => void;
   placeholder?: string;
-}> = (props) => {
+}) => {
   const [showOptions, setShowOptions] = React.useState(false);
-  const [renameFormat, setRenameFormat] = React.useState(props.value);
+  const [renameFormat, setRenameFormat] = React.useState(value);
   const textRef: any = React.useRef();
   const showResetButton = renameFormat !== defaultRenameFormat;
   const resetFormat = () => {
     setRenameFormat(defaultRenameFormat);
-    props.onChange(defaultRenameFormat);
+    onChange(defaultRenameFormat);
   };
   const insertText = (text: string) => {
     const el = textRef.current;
@@ -113,12 +117,12 @@ export const RenameFiles: React.FC<{
         </FormatLabel>
         <TextArea
           ref={textRef}
-          placeholder={props.placeholder}
+          placeholder={placeholder}
           value={renameFormat}
           onChange={(_, { value }) => {
             setRenameFormat(`${value || ""}`);
           }}
-          onBlur={() => props.onChange(renameFormat)}
+          onBlur={() => onChange(renameFormat)}
         />
         <PreviewContainer>
           {isInvalid ? (

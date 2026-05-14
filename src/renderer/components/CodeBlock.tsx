@@ -2,11 +2,9 @@
 import { IS_DEV } from "common/constants";
 import * as React from "react";
 
-export const CodeBlock: React.FC<{
-  values: Record<string, any>;
-}> = (props) => {
+export const CodeBlock = ({ values }: { values: Record<string, any> }) => {
   if (IS_DEV) {
-    return <pre style={{ overflowX: "auto" }}>{(JSON as any).stringify(props.values, 0, 2)}</pre>;
+    return <pre style={{ overflowX: "auto" }}>{(JSON as any).stringify(values, 0, 2)}</pre>;
   }
   return null;
 };

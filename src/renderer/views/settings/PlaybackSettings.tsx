@@ -29,7 +29,7 @@ const ResetButton = styled.span`
 const defaultDolphinPath = getDolphinPath();
 const dolphinExecNames = getDolphinExecutableNames();
 
-const PlaybackExecutableNames: React.FC = () => {
+const PlaybackExecutableNames = () => {
   const elements: React.ReactNode[] = [];
   dolphinExecNames.forEach((el, i) => {
     if (i > 0 && i === dolphinExecNames.length - 1) {
@@ -45,7 +45,7 @@ const PlaybackExecutableNames: React.FC = () => {
   return React.createElement(React.Fragment, null, ...elements);
 };
 
-export const PlaybackSettings: React.FC = () => {
+export const PlaybackSettings = () => {
   const dispatch = useDispatch<Dispatch>();
   const { meleeIsoPath, dolphinPath } = useSelector((state: iRootState) => state.filesystem);
   const showDevOptions = useSelector((state: iRootState) => state.appContainer.showDevOptions);

@@ -29,7 +29,7 @@ const Outer = styled.div`
   flex-direction: column;
 `;
 
-export const AutomatorView: React.FC = () => {
+export const AutomatorView = () => {
   return (
     <Outer>
       <Content>

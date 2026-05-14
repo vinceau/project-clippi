@@ -74,14 +74,18 @@ const DetailsContent = styled.div`
   }
 `;
 
-export const PlaybackQueueItem: React.FC<{
+export const PlaybackQueueItem = ({
+  index,
+  file,
+  onRemove,
+  total,
+}: {
   index: number;
   total?: number;
   file: DolphinEntry;
   onRemove?: () => void;
-}> = (props) => {
+}) => {
   const theme = useTheme();
-  const { index, file, onRemove, total } = props;
   const basename = path.basename(file.path);
   const dirname = path.dirname(file.path);
   return (

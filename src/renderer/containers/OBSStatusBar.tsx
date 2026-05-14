@@ -46,7 +46,7 @@ const StopButton = styled(Button)`
   }
 `;
 
-export const OBSStatusBar: React.FC = () => {
+export const OBSStatusBar = () => {
   const history = useHistory();
   const autoNameRecordedFiles = useSelector((state: iRootState) => state.appContainer.autoNameRecordedFiles);
   const recordSeparateClips = useSelector((state: iRootState) => state.filesystem.recordSeparateClips);

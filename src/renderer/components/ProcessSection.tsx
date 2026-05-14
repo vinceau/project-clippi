@@ -20,12 +20,17 @@ const SectionLabel = styled.h2`
   margin-bottom: 0;
 `;
 
-export const ProcessSection: React.FC<{
+export const ProcessSection = ({
+  open,
+  onOpenChange,
+  label,
+  children,
+}: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   label: string;
-}> = (props) => {
-  const { open, onOpenChange, label } = props;
+  children?: React.ReactNode;
+}) => {
   return (
     <Outer>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -33,7 +38,7 @@ export const ProcessSection: React.FC<{
         <Checkbox toggle={true} checked={open} onChange={(_, data) => onOpenChange(Boolean(data.checked))} />
       </div>
       <SlideReveal open={open}>
-        <div style={{ marginTop: "10px" }}>{props.children}</div>
+        <div style={{ marginTop: "10px" }}>{children}</div>
       </SlideReveal>
     </Outer>
   );

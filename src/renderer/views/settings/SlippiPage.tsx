@@ -10,7 +10,7 @@ import { statusToColor, statusToLabel } from "@/lib/status";
 import type { Dispatch, iRootState } from "@/store";
 import slippiLogo from "@/styles/images/slippi.png";
 
-export const SlippiPage: React.FC = () => {
+export const SlippiPage = () => {
   const relayAddress = useSelector((state: iRootState) => state.slippi.relayAddress);
   const port = useSelector((state: iRootState) => state.slippi.port);
   const slippiConnectionType = useSelector((state: iRootState) => state.tempContainer.slippiConnectionType);

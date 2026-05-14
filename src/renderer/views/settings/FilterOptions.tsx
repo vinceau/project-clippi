@@ -9,7 +9,7 @@ import type { ComboConfiguration } from "@/lib/profile";
 import type { Dispatch, iRootState } from "@/store";
 import { DEFAULT_PROFILE } from "@/store/models/slippi";
 
-export const FilterOptions: React.FC = () => {
+export const FilterOptions = () => {
   const { currentProfile, comboProfiles } = useSelector((state: iRootState) => state.slippi);
   const profileOptions = Object.keys(comboProfiles);
   const initial: ComboConfiguration = JSON.parse(comboProfiles[currentProfile]);

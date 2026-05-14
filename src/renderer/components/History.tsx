@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 
 import type { Dispatch } from "@/store";
 
-export const History: React.FC = () => {
+export const History = () => {
   const dispatch = useDispatch<Dispatch>();
   const history = useHistory();
 

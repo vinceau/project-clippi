@@ -7,7 +7,15 @@ import { Image } from "@/ui/Image/Image";
 
 import { ScanningDot } from "@/components/ScanningDot";
 
-export const ConnectionStatusCard: React.FC<{
+export const ConnectionStatusCard = ({
+  userImage,
+  header,
+  subHeader,
+  statusColor,
+  shouldPulse,
+  onDisconnect,
+  buttonText,
+}: {
   userImage: string;
   header: string;
   subHeader: string;
@@ -15,18 +23,18 @@ export const ConnectionStatusCard: React.FC<{
   shouldPulse?: boolean;
   onDisconnect?: () => void;
   buttonText?: string;
-}> = (props) => {
+}) => {
   const handleButtonClick = () => {
-    if (props.onDisconnect) {
-      props.onDisconnect();
+    if (onDisconnect) {
+      onDisconnect();
     }
   };
-  const color = props.statusColor || "red";
+  const color = statusColor || "red";
   return (
     <div style={{ padding: "3px" }}>
       <Card>
         <Card.Content>
-          <Image floated="right" size="mini" src={props.userImage} />
+          <Image floated="right" size="mini" src={userImage} />
           <Card.Header>
             <span
               css={css`
@@ -34,17 +42,17 @@ export const ConnectionStatusCard: React.FC<{
                 margin-right: 10px;
               `}
             >
-              {props.header}
+              {header}
             </span>
-            <ScanningDot color={color} shouldPulse={props.shouldPulse} />
+            <ScanningDot color={color} shouldPulse={shouldPulse} />
           </Card.Header>
           <Card.Meta>
-            <span>{props.subHeader}</span>
+            <span>{subHeader}</span>
           </Card.Meta>
         </Card.Content>
         <Card.Content extra>
           <Button basic fluid color="red" onClick={handleButtonClick}>
-            {props.buttonText || "Disconnect"}
+            {buttonText || "Disconnect"}
           </Button>
         </Card.Content>
       </Card>

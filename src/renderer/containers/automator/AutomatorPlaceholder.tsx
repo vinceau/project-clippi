@@ -25,7 +25,7 @@ const Notice = styled.div`
   text-align: center;
 `;
 
-export const AutomatorPlaceholder: React.FC = () => {
+export const AutomatorPlaceholder = () => {
   const theme = useTheme();
   return (
     <Outer themeName={theme.themeName}>

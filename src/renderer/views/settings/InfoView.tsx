@@ -66,7 +66,7 @@ const UpdateInfo = styled.div<{
 
 const DEV_THRESHOLD = 7;
 
-export const InfoView: React.FC = () => {
+export const InfoView = () => {
   const theme = useTheme();
   const [clickCount, setClickCount] = React.useState(0);
   const showDevOptions = useSelector((state: iRootState) => state.appContainer.showDevOptions);

@@ -47,31 +47,34 @@ const ButtonsContainer = styled.div`
   }
 `;
 
-export const TwitchClipInfo: React.FC<{
+export const TwitchClipInfo = ({
+  clip,
+  onRemove: onRemoveProp,
+}: {
   clip: TwitchClip;
   onRemove?: (clipID: string) => void;
-}> = (props) => {
-  const timestamp = format(props.clip.timestamp);
-  const url = `https://clips.twitch.tv/${props.clip.clipID}`;
+}) => {
+  const timestamp = format(clip.timestamp);
+  const url = `https://clips.twitch.tv/${clip.clipID}`;
   const onRemove = () => {
-    if (props.onRemove) {
-      props.onRemove(props.clip.clipID);
+    if (onRemoveProp) {
+      onRemoveProp(clip.clipID);
     }
   };
-  const channelUrl = props.clip.channel ? `https://twitch.tv/${props.clip.channel}` : undefined;
+  const channelUrl = clip.channel ? `https://twitch.tv/${clip.channel}` : undefined;
   return (
     <ClipContainer>
       <div>
         <Labelled title="Show clip in browser">
           <A href={url}>
-            <h2>{props.clip.clipID}</h2>
+            <h2>{clip.clipID}</h2>
           </A>
         </Labelled>
         <div style={{ opacity: "0.7" }}>
-          {props.clip.channel && (
+          {clip.channel && (
             <span>
               <Labelled title="Go to Twitch channel">
-                <A href={channelUrl}>{props.clip.channel}</A>
+                <A href={channelUrl}>{clip.channel}</A>
               </Labelled>{" "}
               {" | "}
             </span>

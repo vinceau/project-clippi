@@ -7,7 +7,7 @@ import { Confirm as SemanticConfirm } from "semantic-ui-react";
 import { useTheme } from "@/styles";
 import { modalTheme, ThemeMode } from "@/styles";
 
-export const Confirm: React.FC<ConfirmProps> = (props) => {
+export const Confirm = (props: ConfirmProps) => {
   const theme = useTheme();
   return (
     <SemanticConfirm

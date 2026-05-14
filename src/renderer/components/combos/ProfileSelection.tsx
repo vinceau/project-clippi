@@ -33,9 +33,8 @@ export interface ProfileSelectorProps extends DropdownProps {
   onChange: (value: any) => void;
 }
 
-export const ProfileSelector: React.FC<ProfileSelectorProps> = (props) => {
+export const ProfileSelector = ({ initialOptions, value, onChange, ...rest }: ProfileSelectorProps) => {
   const theme = useTheme();
-  const { initialOptions, value, onChange, ...rest } = props;
   const options = generateOptions(initialOptions);
   const handleNewItem = (_: any, data: any) => {
     const notification = (

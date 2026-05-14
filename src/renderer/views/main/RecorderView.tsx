@@ -60,7 +60,7 @@ const Toolbar = styled.div`
   margin-bottom: 1rem;
 `;
 
-export const RecorderView: React.FC = () => {
+export const RecorderView = () => {
   const theme = useTheme();
   const { dolphinQueue } = useSelector((state: iRootState) => state.tempContainer);
   const dispatch = useDispatch<Dispatch>();

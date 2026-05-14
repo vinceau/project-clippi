@@ -11,10 +11,7 @@ export interface PortSelectionProps {
   onChange?: (value: number[]) => void;
 }
 
-export const PortSelection: React.FC<PortSelectionProps> = (props) => {
-  const { zeroIndex, onChange } = props;
-  const value = props.value || [];
-  const label = props.label || "Port";
+export const PortSelection = ({ zeroIndex, onChange, value = [], label = "Port" }: PortSelectionProps) => {
   const newOnChange = (port: number) => {
     let newValues: number[] = Array.from(value);
     if (value.includes(port)) {
@@ -53,7 +50,7 @@ export const PortSelection: React.FC<PortSelectionProps> = (props) => {
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const PortSelectAdapter: React.FC<any> = (props) => {
+export const PortSelectAdapter = (props: any) => {
   const { name, ...rest } = props;
   return (
     <Field name={name}>

@@ -2,7 +2,14 @@ import React from "react";
 import { Button } from "@/ui/Button/Button";
 import { Dropdown } from "@/ui/Dropdown/Dropdown";
 
-export const RecordButton: React.FC<{
+export const RecordButton = ({
+  onClick: onClickProp,
+  onChange: onChangeProp,
+  disabled,
+  value,
+  options: optionsProp,
+  children,
+}: {
   onClick?: () => void;
   onChange?: (value: string) => void;
   disabled?: boolean;
@@ -12,27 +19,28 @@ export const RecordButton: React.FC<{
     text: string;
     value: string;
   }>;
-}> = (props) => {
+  children?: React.ReactNode;
+}) => {
   const onChange = (value: any) => {
-    if (props.onChange) {
-      props.onChange(value);
+    if (onChangeProp) {
+      onChangeProp(value);
     }
   };
   const onClick = () => {
-    if (props.onClick) {
-      props.onClick();
+    if (onClickProp) {
+      onClickProp();
     }
   };
-  const options = props.options ? props.options.map((v) => ({ ...v, key: v.value })) : [];
+  const options = optionsProp ? optionsProp.map((v) => ({ ...v, key: v.value })) : [];
   return (
     <Button.Group>
-      <Button disabled={props.disabled} onClick={onClick}>
-        {props.children}
+      <Button disabled={disabled} onClick={onClick}>
+        {children}
       </Button>
       {options.length > 0 && (
         <Dropdown
-          value={props.value}
-          disabled={props.disabled}
+          value={value}
+          disabled={disabled}
           className="button icon"
           floating
           onChange={(_: any, { value }) => onChange(value)}

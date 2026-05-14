@@ -4,10 +4,7 @@ import React from "react";
 
 import { ExternalLink as A } from "../ExternalLink";
 
-export const ProcessingError: React.FC<{
-  errorMessage: string;
-}> = (props) => {
-  const { errorMessage } = props;
+export const ProcessingError = ({ errorMessage }: { errorMessage: string }) => {
   const url = `https://twitter.com/ProjectClippi`;
   return (
     <div>

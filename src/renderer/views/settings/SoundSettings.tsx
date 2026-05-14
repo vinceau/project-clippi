@@ -34,7 +34,7 @@ const ButtonContainer = styled.div`
   }
 `;
 
-export const SoundSettings: React.FC = () => {
+export const SoundSettings = () => {
   const soundFiles = useSelector((state: iRootState) => state.filesystem.soundFiles);
   const soundsExist = Object.keys(soundFiles).length > 0;
   const dispatch = useDispatch<Dispatch>();
@@ -76,24 +76,28 @@ export const SoundSettings: React.FC = () => {
   );
 };
 
-const SoundTable: React.FC<{
+const SoundTable = ({
+  sounds,
+  onPathClick,
+  onRemove,
+}: {
   sounds: { [name: string]: string };
   onPathClick: (name: string) => void;
   onRemove: (name: string) => void;
-}> = (props) => {
-  const allSounds = Object.keys(props.sounds);
+}) => {
+  const allSounds = Object.keys(sounds);
   allSounds.sort();
   return (
     <div>
       {allSounds.map((key) => {
-        const value = props.sounds[key];
+        const value = sounds[key];
         return (
           <SoundFileInfo
             key={`${value}--${key}`}
             name={key}
             path={value}
-            onPathClick={() => props.onPathClick(key)}
-            onRemove={() => props.onRemove(key)}
+            onPathClick={() => onPathClick(key)}
+            onRemove={() => onRemove(key)}
           />
         );
       })}

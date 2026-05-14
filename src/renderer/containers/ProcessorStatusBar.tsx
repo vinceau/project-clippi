@@ -42,7 +42,7 @@ const StopButton = styled(Button)`
   }
 `;
 
-export const ProcessorStatusBar: React.FC = () => {
+export const ProcessorStatusBar = () => {
   const [confirmOpened, setConfirmOpened] = React.useState(false);
   const [stopping, setStopping] = React.useState(false);
   const { comboFinderPercent, comboFinderLog, comboFinderProcessing } = useSelector(

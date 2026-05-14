@@ -17,9 +17,7 @@ const Notice = styled.div`
   text-align: center;
 `;
 
-export const PlaybackQueueEmpty: React.FC<{
-  onOpen?: () => void;
-}> = (props) => {
+export const PlaybackQueueEmpty = ({ onOpen }: { onOpen?: () => void }) => {
   return (
     <Outer>
       <SlippiIcon size="huge" />
@@ -27,7 +25,7 @@ export const PlaybackQueueEmpty: React.FC<{
         <h2>No files added</h2>
         <p>Drag and drop SLP files here to add them to the queue</p>
       </Notice>
-      <Button onClick={props.onOpen}>Select files</Button>
+      <Button onClick={onOpen}>Select files</Button>
     </Outer>
   );
 };

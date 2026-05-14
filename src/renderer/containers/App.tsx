@@ -19,7 +19,7 @@ import { persistor, store } from "@/store";
 import { darkTheme, GlobalStyle, lightTheme, ThemeManager, ThemeMode, useTheme } from "@/styles";
 import { MainView, SettingsView } from "@/views";
 
-const App: React.FC = () => {
+const App = () => {
   const dispatch = useDispatch<Dispatch>();
   const { reconnectTwitch } = useSelector((state: iRootState) => state.twitch);
   const theme = useTheme();
@@ -47,7 +47,7 @@ const App: React.FC = () => {
   );
 };
 
-const AppWithProviders: React.FC = () => {
+const AppWithProviders = () => {
   // ThemedManager must be declared and instantiated before useTheme() is called
   return (
     <Provider store={store}>

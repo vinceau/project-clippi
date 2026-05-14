@@ -12,25 +12,21 @@ const ToggleOuter = styled(Label)`
   margin-bottom: 1rem;
 `;
 
-export const Toggle: React.FC<{
-  label: string;
-  value: boolean;
-  onChange?: (checked: boolean) => void;
-}> = (props) => {
+export const Toggle = ({ label, value, onChange: onChangeProp }: { label: string; value: boolean; onChange?: (checked: boolean) => void }) => {
   const onChange = (value: boolean) => {
-    if (props.onChange) {
-      props.onChange(value);
+    if (onChangeProp) {
+      onChangeProp(value);
     }
   };
   return (
     <ToggleOuter>
       <Label
-        style={{ cursor: props.onChange ? "pointer" : "auto", marginBottom: "0" }}
-        onClick={() => onChange(!props.value)}
+        style={{ cursor: onChangeProp ? "pointer" : "auto", marginBottom: "0" }}
+        onClick={() => onChange(!value)}
       >
-        {props.label}
+        {label}
       </Label>
-      <Checkbox checked={props.value} onChange={(_, data) => onChange(Boolean(data.checked))} toggle={true} />
+      <Checkbox checked={value} onChange={(_, data) => onChange(Boolean(data.checked))} toggle={true} />
     </ToggleOuter>
   );
 };

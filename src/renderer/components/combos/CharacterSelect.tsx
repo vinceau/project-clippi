@@ -170,7 +170,7 @@ export interface CustomCharacterListProps {
   onChange?: (value: Character[]) => void;
 }
 
-export const CustomCharacterList: React.FC<CustomCharacterListProps> = ({ value, onChange }) => {
+export const CustomCharacterList = ({ value, onChange }: CustomCharacterListProps) => {
   const [text, setText] = React.useState("");
   const deleteChar = (c: Character) => {
     if (!value || !onChange) {
@@ -247,7 +247,7 @@ export const CustomCharacterList: React.FC<CustomCharacterListProps> = ({ value,
   );
 };
 
-export const CustomCharacterListAdapter: React.FC<any> = (props) => {
+export const CustomCharacterListAdapter = (props: any) => {
   const { name, ...rest } = props;
   return (
     <Field name={name}>

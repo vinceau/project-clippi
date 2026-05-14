@@ -15,7 +15,7 @@ import type { Dispatch, iRootState } from "@/store";
 
 const TWITCH_CLIPS_PER_PAGE = 10;
 
-export const TwitchIntegration: React.FC = () => {
+export const TwitchIntegration = () => {
   const { twitchUser, twitchLoading } = useSelector((state: iRootState) => state.tempContainer);
   const { reconnectTwitch } = useSelector((state: iRootState) => state.twitch);
   const dispatch = useDispatch<Dispatch>();
