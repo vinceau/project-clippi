@@ -26,14 +26,17 @@
 
 .indicator {
   display: none;
-  width: 0.6em;
-  height: 0.6em;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
   background: var(--color-foreground);
-  border-radius: 0.1em;
+  border-radius: 0.15em;
+  color: var(--color-background);
 }
 
 .root[data-checked] .indicator {
-  display: block;
+  display: flex;
 }
 
 .toggleRoot {
@@ -71,4 +74,9 @@
   color: var(--color-foreground);
   font-size: 1em;
   cursor: pointer;
+}
+
+.icon {
+  width: 0.75rem;
+  height: 0.75rem;
 }

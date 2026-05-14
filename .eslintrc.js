@@ -23,6 +23,7 @@ module.exports = {
     "import/prefer-default-export": "off",
     "no-underscore-dangle": "off",
     "no-undef": "off",
+    "no-use-before-define": "off",
   },
   parserOptions: {
     ecmaVersion: 2022,
