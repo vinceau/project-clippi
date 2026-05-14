@@ -85,6 +85,12 @@
 }
 
 .styledMenu a:global(.item) > i:global(.icon) {
+  float: left !important;
+  margin-right: 1rem !important;
+  margin-left: 0 !important;
+}
+
+.styledMenu a:global(.item) > i:global(.icon) {
   float: left;
   margin-right: 1rem;
   margin-left: 0;
