@@ -11,7 +11,7 @@
   padding: 5px 0;
 }
 
-.button i.icon {
+.button :global(i.icon) {
   font-size: 25px;
   margin: 5px 0;
 }

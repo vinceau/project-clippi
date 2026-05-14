@@ -1,11 +1,11 @@
-.toastContainer .Toastify__toast {
+.toastContainer :global(.Toastify__toast) {
   cursor: initial;
   min-height: 50px;
   border-radius: 4px;
   padding-left: 30px;
 }
 
-.toastContainer .Toastify__toast::before {
+.toastContainer :global(.Toastify__toast)::before {
   content: "";
   color: rgba(255, 255, 255, 0.8);
   position: absolute;
@@ -15,7 +15,7 @@
   height: 100%;
 }
 
-.toastContainer .Toastify__toast::after {
+.toastContainer :global(.Toastify__toast)::after {
   content: "";
   position: absolute;
   left: 5px;
@@ -27,79 +27,79 @@
   mask-position-y: 5px;
 }
 
-.toastContainer .Toastify__close-button {
+.toastContainer :global(.Toastify__close-button) {
   color: currentColor;
   opacity: 0.5;
 }
 
-.toastContainer .Toastify__toast--error {
+.toastContainer :global(.Toastify__toast--error) {
   color: rgb(191, 38, 0);
   background: rgb(255, 235, 230);
 }
 
-.toastContainer .Toastify__toast--error::before {
+.toastContainer :global(.Toastify__toast--error)::before {
   background-color: rgb(191, 38, 0);
 }
 
-.toastContainer .Toastify__toast--error::after {
+.toastContainer :global(.Toastify__toast--error)::after {
   background-color: rgb(255, 235, 230);
   mask-image: url("@/styles/images/icons/alert.svg");
 }
 
-.toastContainer .Toastify__toast--error .buttons a,
-.toastContainer .Toastify__toast--error .buttons button {
+.toastContainer :global(.Toastify__toast--error) :global(.buttons) a,
+.toastContainer :global(.Toastify__toast--error) :global(.buttons) button {
   background: rgb(191, 38, 0);
   color: rgb(255, 235, 230);
 }
 
-.toastContainer .Toastify__toast--info {
+.toastContainer :global(.Toastify__toast--info) {
   color: rgb(38, 132, 255);
   background: #daecff;
 }
 
-.toastContainer .Toastify__toast--info::before {
+.toastContainer :global(.Toastify__toast--info)::before {
   background-color: rgb(38, 132, 255);
 }
 
-.toastContainer .Toastify__toast--info::after {
+.toastContainer :global(.Toastify__toast--info)::after {
   background-color: #daecff;
   mask-image: url("@/styles/images/icons/info.svg");
 }
 
-.toastContainer .Toastify__toast--info .buttons a,
-.toastContainer .Toastify__toast--info .buttons button {
+.toastContainer :global(.Toastify__toast--info) :global(.buttons) a,
+.toastContainer :global(.Toastify__toast--info) :global(.buttons) button {
   background: rgb(38, 132, 255);
   color: #daecff;
 }
 
-.toastContainer .Toastify__toast--success {
+.toastContainer :global(.Toastify__toast--success) {
   color: rgb(0, 102, 68);
   background: #e3fcef;
 }
 
-.toastContainer .Toastify__toast--success::before {
+.toastContainer :global(.Toastify__toast--success)::before {
   background-color: rgb(0, 102, 68);
 }
 
-.toastContainer .Toastify__toast--success::after {
+.toastContainer :global(.Toastify__toast--success)::after {
   background-color: #e3fcef;
   mask-image: url("@/styles/images/icons/success.svg");
 }
 
-.toastContainer .Toastify__toast--success .buttons a,
-.toastContainer .Toastify__toast--success .buttons button {
+.toastContainer :global(.Toastify__toast--success) :global(.buttons) a,
+.toastContainer :global(.Toastify__toast--success) :global(.buttons) button {
   background: rgb(0, 102, 68);
   color: #e3fcef;
 }
 
-.toastContainer .Toastify__toast-body {
+.toastContainer :global(.Toastify__toast-body) {
   max-width: 100%;
   margin-left: 10px;
   font-size: 13px;
   font-weight: normal;
 }
 
-.toastContainer .Toastify__toast-body h3 {
+.toastContainer :global(.Toastify__toast-body) h3 {
   font-size: 15px;
 }
 
@@ -107,12 +107,12 @@
   text-decoration: underline;
 }
 
-.toastContainer .buttons {
+.toastContainer :global(.buttons) {
   text-align: right;
 }
 
-.toastContainer .buttons a,
-.toastContainer .buttons button {
+.toastContainer :global(.buttons) a,
+.toastContainer :global(.buttons) button {
   display: inline-block;
   text-decoration: none;
   border: none;
@@ -121,8 +121,8 @@
   transition: opacity 0.2s ease-in-out;
 }
 
-.toastContainer .buttons a:hover,
-.toastContainer .buttons button:hover {
+.toastContainer :global(.buttons) a:hover,
+.toastContainer :global(.buttons) button:hover {
   opacity: 0.8;
 }
 
