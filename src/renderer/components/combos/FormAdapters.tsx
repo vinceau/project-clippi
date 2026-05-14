@@ -1,9 +1,9 @@
-import styled from "@emotion/styled";
 import * as React from "react";
 import { Checkbox } from "@/ui/Checkbox/Checkbox";
 import { Form as SemanticForm } from "@/ui/Form/Form";
 import { Input } from "@/ui/Input/Input";
 
+import styles from "./FormAdapters.module.css";
 import { Toggle } from "@/ui/Toggle/Toggle";
 
 export function ToggleAdapter(props: any) {
@@ -20,19 +20,13 @@ export function SemanticCheckboxInput(props: any) {
   );
 }
 
-const StyledInput = styled(Input)`
-  &&& input {
-    width: 20px !important;
-  }
-`;
-
 export function SemanticInput(props: any) {
   const { inputLabel, input, meta, ...rest } = props;
   return (
     <SemanticForm.Field error={meta.error && meta.touched}>
       {/* <RenderCount /> */}
       {inputLabel && <label>{inputLabel}</label>}
-      <StyledInput {...input} {...rest} />
+      <Input className={styles.styledInput} {...input} {...rest} />
       {meta.error && meta.touched && <span style={{ color: "red" }}>{meta.error}</span>}
     </SemanticForm.Field>
   );

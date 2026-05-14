@@ -1,16 +1,9 @@
-import styled from "@emotion/styled";
 import React from "react";
 import { Checkbox } from "semantic-ui-react";
 
 import { Label } from "@/components/Form";
 
-const ToggleOuter = styled(Label)`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
-`;
+import styles from "./Toggle.module.css";
 
 export function Toggle({
   label,
@@ -27,11 +20,11 @@ export function Toggle({
     }
   };
   return (
-    <ToggleOuter>
+    <div className={styles.toggleOuter}>
       <Label style={{ cursor: onChangeProp ? "pointer" : "auto", marginBottom: "0" }} onClick={() => onChange(!value)}>
         {label}
       </Label>
       <Checkbox checked={value} onChange={(_, data) => onChange(Boolean(data.checked))} toggle />
-    </ToggleOuter>
+    </div>
   );
 }

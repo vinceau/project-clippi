@@ -1,4 +1,3 @@
-import styled from "@emotion/styled";
 import * as React from "react";
 import { Button } from "@/ui/Button/Button";
 import { Icon } from "@/ui/Icon/Icon";
@@ -6,19 +5,8 @@ import { Input } from "@/ui/Input/Input";
 
 import { getFilePath, getFolderPath, openFileOrParentFolder } from "@/lib/utils";
 
+import styles from "./FileInput.module.css";
 import { Labelled } from "./Labelled";
-
-const NoMarginIcon = styled(Icon)`
-  &&& {
-    margin: 0 !important;
-  }
-`;
-
-const Outer = styled.div`
-  input[type="text"] {
-    width: auto !important;
-  }
-`;
 
 interface FileInputProps extends Record<string, any> {
   value: string;
@@ -62,13 +50,13 @@ export function FileInput({ value, directory, onChange, fileTypeFilters, saveFil
   };
   const actionLabel = saveFile ? "Save as" : "Choose";
   return (
-    <Outer>
+    <div className={styles.outer}>
       <Input
         style={{ width: "100%" }}
         label={
           <Button onClick={() => openFileOrParentFolder(filesPath)} disabled={!filesPath}>
             <Labelled title="Open location">
-              <NoMarginIcon name="folder open outline" />
+              <Icon className={styles.noMarginIcon} name="folder open outline" />
             </Labelled>
           </Button>
         }
@@ -78,6 +66,6 @@ export function FileInput({ value, directory, onChange, fileTypeFilters, saveFil
         action={<Button onClick={() => selectFromFileSystem().catch(console.error)}>{actionLabel}</Button>}
         placeholder={placeholder}
       />
-    </Outer>
+    </div>
   );
 }

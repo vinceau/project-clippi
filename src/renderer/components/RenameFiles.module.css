@@ -1,0 +1,24 @@
+.formatLabel {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.resetButton {
+  font-size: 1.2rem;
+  opacity: 0.8;
+}
+
+.resetButton:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.previewContainer {
+  margin-top: 1rem;
+}
+
+.errorContainer {
+  color: red;
+}

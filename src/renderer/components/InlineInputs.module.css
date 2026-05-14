@@ -1,0 +1,8 @@
+.simpleInput {
+  padding: 0.3rem;
+  text-align: center;
+  border-radius: 0.3rem;
+  border: solid 0.1rem #d4d4d5;
+  font-weight: bold;
+  margin: 0 0.5rem;
+}

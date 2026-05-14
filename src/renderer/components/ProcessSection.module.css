@@ -1,0 +1,20 @@
+.outer {
+  padding: 20px 0;
+  border-top: solid 1px var(--color-foreground3);
+}
+
+.sectionLabel {
+  cursor: pointer;
+  margin-bottom: 0;
+}
+
+.slideReveal {
+  overflow-y: hidden;
+  max-height: 0;
+  transition: all 0.3s ease-in-out;
+}
+
+.slideRevealOpen {
+  overflow-y: visible;
+  max-height: 1000px;
+}

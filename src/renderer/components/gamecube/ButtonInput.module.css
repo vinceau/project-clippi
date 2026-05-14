@@ -1,0 +1,11 @@
+.target {
+  padding: 10px;
+  border: solid 2px var(--color-foreground3);
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.selectButton {
+  margin: 10px 0;
+  text-align: center;
+}

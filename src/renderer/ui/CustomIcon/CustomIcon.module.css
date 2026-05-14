@@ -1,0 +1,12 @@
+.outer {
+  display: inline-block;
+}
+
+.outer:before {
+  content: "";
+  mask: var(--custom-icon-mask) no-repeat 100% 100%;
+  mask-size: contain;
+  background-color: var(--custom-icon-color, var(--color-foreground));
+  height: 100%;
+  width: 100%;
+}
