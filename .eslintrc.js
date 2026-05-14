@@ -21,6 +21,8 @@ module.exports = {
     "@typescript-eslint/no-shadow": "error",
     "no-unused-vars": "off",
     "import/prefer-default-export": "off",
+    "no-underscore-dangle": "off",
+    "no-undef": "off",
   },
   parserOptions: {
     ecmaVersion: 2022,
