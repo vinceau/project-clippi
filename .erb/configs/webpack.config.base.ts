@@ -6,8 +6,16 @@ import path from "path";
 import Dotenv from "dotenv-webpack";
 import webpack from "webpack";
 import TsconfigPathsPlugins from "tsconfig-paths-webpack-plugin";
+import { execSync } from "child_process";
 import webpackPaths from "./webpack.paths";
-import { dependencies as externals } from "../../release/app/package.json";
+import { version, dependencies as externals } from "../../release/app/package.json";
+
+const commitHash = execSync("git rev-parse --short HEAD").toString();
+
+const dateString = new Date().toLocaleString(undefined, {
+  dateStyle: "long",
+  timeStyle: "short",
+});
 
 const configuration: webpack.Configuration = {
   externals: [...Object.keys(externals || {})],
@@ -51,6 +59,12 @@ const configuration: webpack.Configuration = {
   },
 
   plugins: [
+    new webpack.DefinePlugin({
+      __VERSION__: version,
+      __DATE__: dateString,
+      __BUILD__: JSON.stringify(commitHash),
+    }),
+
     new webpack.EnvironmentPlugin({ NODE_ENV: "production" }),
 
     new Dotenv({
