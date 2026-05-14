@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { css, jsx } from "@emotion/core";
 import type { Character } from "@slippi/slippi-js";
 import { getCharacterShortName } from "@vinceau/slp-realtime";
 import React from "react";
@@ -77,11 +75,7 @@ export function CharacterIcon({
   return (
     <img
       src={imgSrc}
-      css={css`
-        height: ${imgSize}px;
-        width: ${imgSize}px;
-        ${grayscale && `filter: grayscale(1)`};
-      `}
+      style={{ height: imgSize, width: imgSize, filter: grayscale ? "grayscale(1)" : undefined }}
     />
   );
 }

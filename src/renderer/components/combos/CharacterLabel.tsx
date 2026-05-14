@@ -1,22 +1,9 @@
-import styled from "@emotion/styled";
+import { clsx } from "clsx";
 import type { Character } from "@slippi/slippi-js";
 import * as React from "react";
 
+import styles from "./CharacterLabel.module.css";
 import { CharacterIcon } from "../CharacterIcon";
-
-const LabelContainer = styled.div<{
-  isDisabled?: boolean;
-}>`
-  display: flex;
-  align-items: center;
-  ${(props) =>
-    props.isDisabled
-      ? `
-    opacity: 0.5;
-    cursor: not-allowed;
-  `
-      : ""}
-`;
 
 export function CharacterLabel({
   characterId,
@@ -27,11 +14,10 @@ export function CharacterLabel({
   name: string;
   disabled?: boolean;
 }) {
-  const isDisabled = disabled;
   return (
-    <LabelContainer isDisabled={isDisabled}>
-      <CharacterIcon character={characterId} grayscale={isDisabled} />
+    <div className={clsx(styles.container, disabled && styles.disabled)}>
+      <CharacterIcon character={characterId} grayscale={disabled} />
       <span style={{ marginLeft: "10px" }}>{name}</span>
-    </LabelContainer>
+    </div>
   );
 }
