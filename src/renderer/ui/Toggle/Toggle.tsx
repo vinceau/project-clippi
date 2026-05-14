@@ -3,7 +3,7 @@ import React from "react";
 import styles from "./Toggle.module.css";
 
 interface ToggleProps {
-  label: string;
+  label?: string;
   value: boolean;
   onChange?: (checked: boolean) => void;
 }
@@ -16,7 +16,7 @@ export function Toggle({ label, value, onChange: onChangeProp }: ToggleProps) {
   };
   return (
     <div className={styles.toggleOuter}>
-      <span>{label}</span>
+      {label && <span>{label}</span>}
       <Switch.Root
         checked={value}
         onCheckedChange={(c) => onChange(c)}

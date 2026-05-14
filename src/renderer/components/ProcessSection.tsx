@@ -1,6 +1,6 @@
 import { clsx } from "clsx";
 import * as React from "react";
-import { Checkbox } from "@/ui/Checkbox/Checkbox";
+import { Toggle } from "@/ui/Toggle/Toggle";
 
 import styles from "./ProcessSection.module.css";
 
@@ -25,7 +25,7 @@ export function ProcessSection({
         <h2 className={styles.sectionLabel} onClick={() => onOpenChange(!open)}>
           {label}
         </h2>
-        <Checkbox toggle checked={open} onChange={(checked) => onOpenChange(Boolean(checked))} />
+        <Toggle value={open} onChange={(checked) => onOpenChange(Boolean(checked))} />
       </div>
       <SlideReveal open={open}>
         <div className={styles.content}>{children}</div>

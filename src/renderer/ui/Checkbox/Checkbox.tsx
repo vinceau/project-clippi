@@ -1,5 +1,4 @@
 import { Checkbox as BaseCheckbox } from "@base-ui/react";
-import { clsx } from "clsx";
 import React from "react";
 import styles from "./Checkbox.module.css";
 
@@ -7,24 +6,10 @@ interface CheckboxProps {
   checked?: boolean;
   label?: string;
   disabled?: boolean;
-  toggle?: boolean;
   onChange?: (checked: boolean) => void;
 }
 
-export function Checkbox({ checked, label, disabled, toggle, onChange }: CheckboxProps) {
-  if (toggle) {
-    return (
-      <BaseCheckbox.Root
-        checked={checked}
-        disabled={disabled}
-        onCheckedChange={(c) => onChange?.(c)}
-        className={styles.toggleRoot}
-      >
-        <span className={styles.toggleIndicator} />
-      </BaseCheckbox.Root>
-    );
-  }
-
+export function Checkbox({ checked, label, disabled, onChange }: CheckboxProps) {
   return (
     <label className={styles.wrapper}>
       <BaseCheckbox.Root
