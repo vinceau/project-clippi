@@ -73,7 +73,7 @@ export const filesystem = createModel({
         draft.dolphinPath = payload;
       }),
   },
-  effects: (dispatch) => ({
+  effects: (dispatch: any) => ({
     async addSound() {
       const p = await getFilePath(
         {

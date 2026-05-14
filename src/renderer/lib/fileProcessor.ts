@@ -13,7 +13,7 @@ import { openComboInDolphin } from "./dolphin";
 import { toastProcessingError } from "./toasts";
 import { notify } from "./utils";
 
-const handleProgress = (payload: ProgressingPayload): void => {
+const handleProgress = async (payload: ProgressingPayload): Promise<void> => {
   const { result, total, filename, options, index } = payload;
   dispatcher.tempContainer.setPercent(Math.floor(((index + 1) / total) * 100));
   if (result.hasError) {
@@ -25,10 +25,10 @@ const handleProgress = (payload: ProgressingPayload): void => {
     const config = payload.options.config as ComboOptions;
     const base = path.basename(result.filename || filename);
     if (result.numCombos === 0 && config.deleteZeroComboFiles) {
-      const deleted = shell.moveItemToTrash(result.filename);
-      if (deleted) {
+      try {
+        await shell.trashItem(result.filename);
         dispatcher.tempContainer.setComboLog(`Deleted: ${base}`);
-      } else {
+      } catch {
         const message = `Failed to delete file: ${result.filename}`;
         console.error(message);
         dispatcher.tempContainer.setComboLog(message);

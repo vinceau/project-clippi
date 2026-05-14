@@ -12,6 +12,8 @@ declare module "*.module.css";
 declare module "node-notifier";
 declare module "filename-reserved-regex";
 declare module "insert-text-at-cursor";
+declare module "react-beautiful-dnd";
+declare module "sinon";
 
 declare module "raw-loader!*.md" {
   const content: string;

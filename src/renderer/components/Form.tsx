@@ -8,14 +8,30 @@ export function FormContainer({ children, ...rest }: { children?: React.ReactNod
 }
 
 export function PageHeader({ children, ...rest }: { children?: React.ReactNode; [key: string]: any }) {
-  return <h1 className={styles.pageHeader} {...rest}>{children}</h1>;
+  return (
+    <h1 className={styles.pageHeader} {...rest}>
+      {children}
+    </h1>
+  );
 }
 
 export function Label({ children, ...rest }: { children?: React.ReactNode; [key: string]: any }) {
-  return <div className={styles.label} {...rest}>{children}</div>;
+  return (
+    <div className={styles.label} {...rest}>
+      {children}
+    </div>
+  );
 }
 
-export function Text({ margin, children, ...rest }: { margin?: string; children?: React.ReactNode; [key: string]: any }) {
+export function Text({
+  margin,
+  children,
+  ...rest
+}: {
+  margin?: string;
+  children?: React.ReactNode;
+  [key: string]: any;
+}) {
   return (
     <p className={clsx(styles.text, margin !== "none" && styles.textMargin)} {...rest}>
       {children}
@@ -34,15 +50,38 @@ export function Field({
   children?: React.ReactNode;
   [key: string]: any;
 }) {
-  const borderClass = border === "top" || border === "both" ? (border === "both" ? styles.borderBoth : border === "top" ? styles.borderTop : styles.borderBottom) : border === "bottom" ? styles.borderBottom : undefined;
-  const borderBottomClass = border === "bottom" || border === "both" ? (border === "both" ? styles.borderBoth : border === "bottom" ? styles.borderBottom : undefined) : undefined;
-  const paddingClass = padding === "both" ? styles.field : padding === "top" ? styles.fieldPaddingTop : padding === "bottom" ? styles.fieldPaddingBottom : styles.fieldPaddingNone;
+  const borderClass =
+    border === "top" || border === "both"
+      ? border === "both"
+        ? styles.borderBoth
+        : border === "top"
+          ? styles.borderTop
+          : styles.borderBottom
+      : border === "bottom"
+        ? styles.borderBottom
+        : undefined;
+  const borderBottomClass =
+    border === "bottom" || border === "both"
+      ? border === "both"
+        ? styles.borderBoth
+        : border === "bottom"
+          ? styles.borderBottom
+          : undefined
+      : undefined;
+  const paddingClass =
+    padding === "both"
+      ? styles.field
+      : padding === "top"
+        ? styles.fieldPaddingTop
+        : padding === "bottom"
+          ? styles.fieldPaddingBottom
+          : styles.fieldPaddingNone;
   return (
     <div
       className={clsx(
         paddingClass,
         (border === "top" || border === "both") && styles.borderTop,
-        (border === "bottom" || border === "both") && styles.borderBottom,
+        (border === "bottom" || border === "both") && styles.borderBottom
       )}
       {...rest}
     >

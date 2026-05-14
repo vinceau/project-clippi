@@ -55,11 +55,7 @@ export function TwitchIntegration() {
           <h2>Clips</h2>
           {allClips.length > 0 && (
             <TwitchClipClearDialog
-              trigger={
-                <div className={styles.clearTrigger}>
-                  Clear all
-                </div>
-              }
+              trigger={<div className={styles.clearTrigger}>Clear all</div>}
               onClear={dispatch.twitch.clearAllTwitchClips}
             />
           )}

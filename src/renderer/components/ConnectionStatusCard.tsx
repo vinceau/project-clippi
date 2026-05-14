@@ -36,9 +36,7 @@ export function ConnectionStatusCard({
         <Card.Content>
           <Image floated="right" size="mini" src={userImage} />
           <Card.Header>
-            <span className={styles.header}>
-              {header}
-            </span>
+            <span className={styles.header}>{header}</span>
             <ScanningDot color={color} shouldPulse={shouldPulse} />
           </Card.Header>
           <Card.Meta>

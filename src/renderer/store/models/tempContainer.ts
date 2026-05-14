@@ -204,7 +204,7 @@ export const tempContainer = createModel({
           (payload.status === UpdateStatus.UPDATE_AVAILABLE || payload.status === UpdateStatus.DOWNLOAD_COMPLETE);
       }),
   },
-  effects: (dispatch) => ({
+  effects: (dispatch: any) => ({
     async loadDolphinQueue() {
       const dolphinQueue = await loadDolphinQueue();
       if (dolphinQueue) {

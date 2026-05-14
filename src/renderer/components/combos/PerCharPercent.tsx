@@ -1,12 +1,12 @@
 import * as React from "react";
 
-import styles from "./PerCharPercent.module.css";
 import { Field } from "react-final-form";
 import { FieldArray } from "react-final-form-arrays";
 import { Button } from "@/ui/Button/Button";
 import { Icon } from "@/ui/Icon/Icon";
 
 import type { CharPercentOption } from "@/lib/profile";
+import styles from "./PerCharPercent.module.css";
 
 import { CharacterSelectAdapter } from "./CharacterSelect";
 import { SemanticInput } from "./FormAdapters";

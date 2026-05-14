@@ -42,7 +42,7 @@ export const mapFilterSettingsToConfiguration = (
 };
 
 export const mapCharacterPercentArrayToObject = (percents?: CharPercentOption[]): PerCharPercentObject => {
-  const newValue = {};
+  const newValue: Record<string, number> = {};
   if (!percents) {
     percents = [];
   }

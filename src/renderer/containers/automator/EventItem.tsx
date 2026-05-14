@@ -23,7 +23,7 @@ export function EventItem({ event, onClick, selected, disabled }: EventItemProps
         styles.outer,
         selected && styles.selected,
         disabled && styles.disabled,
-        isClickable && styles.clickable,
+        isClickable && styles.clickable
       )}
       onClick={isClickable ? onClick : undefined}
     >

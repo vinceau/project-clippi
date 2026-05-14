@@ -1,6 +1,9 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ReflexContainer, ReflexElement, ReflexSplitter } from "react-reflex";
+import { ReflexContainer as ReflexContainerBase, ReflexElement as ReflexElementBase, ReflexSplitter } from "react-reflex";
+
+const ReflexContainer = ReflexContainerBase as unknown as React.ComponentType<{ orientation?: string; children?: React.ReactNode }>;
+const ReflexElement = ReflexElementBase as unknown as React.ComponentType<{ style?: React.CSSProperties; children?: React.ReactNode }>;
 
 import { actionComponents } from "@/containers/actions";
 import type { Action } from "@/lib/event_actions";
@@ -44,7 +47,7 @@ export function EventActionLists({ selected, onSelect }: EventActionListsProps) 
   };
   return (
     <ReflexContainer orientation="vertical">
-      <ReflexElement>
+      <ReflexElement style={{ display: "flex" }}>
         <div className={styles.columnContent}>
           <div className={styles.columnInner}>
             <div className={styles.header}>
@@ -69,7 +72,7 @@ export function EventActionLists({ selected, onSelect }: EventActionListsProps) 
 
       <ReflexSplitter />
 
-      <ReflexElement>
+      <ReflexElement style={{ display: "flex" }}>
         <div className={styles.columnContent}>
           <div className={styles.columnInner}>
             <div className={styles.header}>

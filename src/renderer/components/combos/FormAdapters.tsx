@@ -3,8 +3,8 @@ import { Checkbox } from "@/ui/Checkbox/Checkbox";
 import { Form as SemanticForm } from "@/ui/Form/Form";
 import { Input } from "@/ui/Input/Input";
 
-import styles from "./FormAdapters.module.css";
 import { Toggle } from "@/ui/Toggle/Toggle";
+import styles from "./FormAdapters.module.css";
 
 export function ToggleAdapter(props: any) {
   const { input, label } = props;

@@ -43,7 +43,7 @@ const MultiValueRemove: React.ComponentType<MultiValueProps<OptionTypeBase>> = (
   );
 };
 
-const CustomOption: React.ComponentType<OptionProps<OptionTypeBase>> = (props) => {
+const CustomOption: React.ComponentType<OptionProps<OptionTypeBase, false>> = (props) => {
   const { innerProps, innerRef } = props;
   return (
     <div className={styles.outerOption} ref={innerRef} {...innerProps}>

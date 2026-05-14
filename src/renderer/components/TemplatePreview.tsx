@@ -14,9 +14,5 @@ export function TemplatePreview({
   metadata?: any;
 }) {
   const parsedTemplate = parseFileRenameFormat(template, settings, metadata);
-  return (
-    <span className={styles.preview}>
-      {parsedTemplate}
-    </span>
-  );
+  return <span className={styles.preview}>{parsedTemplate}</span>;
 }

@@ -107,7 +107,7 @@ export const slippi = createModel({
       });
     },
   },
-  effects: (dispatch) => ({
+  effects: (dispatch: any) => ({
     async connectToSlippi({ address, port }: { address: string; port: string }) {
       try {
         console.log(`connecting to ${address}:${port}`);

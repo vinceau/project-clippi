@@ -49,15 +49,13 @@ export function NameTagForm({ name, values, push }: { name: string; values: any;
       <FieldArray name={name}>
         {({ fields }) => {
           if (fields.length === 0) {
-            return (
-              <div className={styles.placeholder}>No tags specified</div>
-            );
+            return <div className={styles.placeholder}>No tags specified</div>;
           }
           return (
             <div style={{ paddingTop: "1rem" }}>
               {fields.map((n, index) => (
                 <NameTagLabel
-                  key={`fields--${n}--${index}--${fields[index]}`}
+                  key={`fields--${n}--${index}--${fields.value[index]}`}
                   name={fields.value[index]}
                   onClick={() => fields.remove(index)}
                 />

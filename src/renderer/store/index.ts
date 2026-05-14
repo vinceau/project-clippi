@@ -48,7 +48,7 @@ const storeSync = () => {
   soundPlayer.sounds = soundFiles;
 
   // Restore combo settings
-  const eventConfigVars = {};
+  const eventConfigVars: Record<string, any> = {};
   Object.keys(state.slippi.comboProfiles).map((key) => {
     const slippiSettings = state.slippi.comboProfiles[key];
     const converted = mapConfigurationToFilterSettings(JSON.parse(slippiSettings));

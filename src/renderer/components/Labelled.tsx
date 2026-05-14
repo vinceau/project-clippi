@@ -1,6 +1,6 @@
 import * as React from "react";
 import type { TooltipProps } from "react-tippy";
-import { Tooltip } from "react-tippy";
+import { Tooltip as TippyTooltip } from "react-tippy";
 
 import { ThemeMode, useTheme } from "@/styles";
 
@@ -8,16 +8,18 @@ type TippyLabelProps = {
   style?: React.CSSProperties;
 } & TooltipProps;
 
+const TooltipAny = TippyTooltip as unknown as React.ComponentType<{ children?: React.ReactNode; [key: string]: any }>;
+
 export function TippyLabel({ children, style, ...rest }: React.PropsWithChildren<TippyLabelProps>) {
   const { themeName } = useTheme();
   return (
-    <Tooltip
+    <TooltipAny
       theme={themeName === ThemeMode.LIGHT ? "dark" : "light"}
       style={{ display: "inline-block", ...style }}
       {...rest}
     >
       {children}
-    </Tooltip>
+    </TooltipAny>
   );
 }
 

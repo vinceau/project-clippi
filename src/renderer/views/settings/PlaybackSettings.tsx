@@ -57,7 +57,9 @@ export function PlaybackSettings() {
             <Label>Playback Dolphin Path</Label>
             {showResetButton && (
               <Labelled title="Restore default value">
-                <span className={styles.resetButton} onClick={resetDolphinPath}>Reset</span>
+                <span className={styles.resetButton} onClick={resetDolphinPath}>
+                  Reset
+                </span>
               </Labelled>
             )}
           </div>

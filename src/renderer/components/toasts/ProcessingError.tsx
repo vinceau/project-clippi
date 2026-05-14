@@ -12,9 +12,7 @@ export function ProcessingError({ errorMessage }: { errorMessage: string }) {
       <p>
         Please tweet this error to <A href={url}>@ProjectClippi</A> for assistance.
       </p>
-      <pre className={styles.errorBlock}>
-        {errorMessage}
-      </pre>
+      <pre className={styles.errorBlock}>{errorMessage}</pre>
     </div>
   );
 }

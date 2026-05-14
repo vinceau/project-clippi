@@ -16,16 +16,10 @@ export const ActionComponentBlock = React.forwardRef<HTMLDivElement, ActionCompo
     <div className={clsx(styles.outer, !hideBorder && styles.outerBorder)}>
       <div className={styles.inner} ref={ref}>
         <div className={clsx(styles.headerRow, !hideBorder && styles.headerRowBorder)}>
-          <div className={styles.iconCell}>
-            {icon}
-          </div>
+          <div className={styles.iconCell}>{icon}</div>
           <div>{header}</div>
         </div>
-        {children && (
-          <div className={styles.children}>
-            {children}
-          </div>
-        )}
+        {children && <div className={styles.children}>{children}</div>}
       </div>
     </div>
   );

@@ -56,9 +56,7 @@ function ShowUpdateMessage({ versionPayload }: { versionPayload: VersionUpdatePa
     case UpdateStatus.UPDATE_AVAILABLE:
       return (
         <div>
-          <div className={styles.bold}>
-            New update v{versionPayload.payload.version} is now available!
-          </div>
+          <div className={styles.bold}>New update v{versionPayload.payload.version} is now available!</div>
           <div>
             <A href={GITHUB_RELEASES_PAGE}>View changelog</A>
           </div>

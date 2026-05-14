@@ -21,7 +21,7 @@ export function PlaybackQueue({
   };
   return (
     <Droppable droppableId={id}>
-      {(provided) => (
+      {(provided: any) => (
         <div ref={provided.innerRef} {...provided.droppableProps}>
           {files.map((file, i) => (
             <PlaybackQueueItem

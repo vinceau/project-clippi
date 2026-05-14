@@ -27,7 +27,7 @@ export async function updateAvailable(owner: string, repo: string): Promise<bool
 
 export function needsUpdate(latestVersion: string): boolean {
   try {
-    return semver.lt(pkg.version, latestVersion);
+    return semver.lt((pkg as any).version, latestVersion);
   } catch (err) {
     console.error(err);
     return false;

@@ -17,7 +17,7 @@ autoUpdater.autoDownload = false;
 
 autoUpdater.on("error", (error) => {
   log.error(error);
-  sendUpdateError(error.message || error);
+  sendUpdateError(typeof error === "string" ? error : error.message);
 });
 
 autoUpdater.on("update-downloaded", () => {
@@ -28,6 +28,9 @@ async function fetchLatestUpdateVersion(): Promise<string> {
   if (AUTO_UPDATES_ENABLED) {
     // Check using the auto updater
     const info = await autoUpdater.checkForUpdates();
+    if (!info) {
+      throw new Error("Failed to check for updates");
+    }
     return info.updateInfo.version;
   }
   // Check via Github

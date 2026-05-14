@@ -114,7 +114,7 @@ function TwitchClipInput(props: TwitchClipInputProps) {
         <SimpleInput
           style={{ width: "100px" }}
           value={channel}
-          onChange={(e) => setChannel(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setChannel(e.target.value)}
           onBlur={onChannelChange}
         />
         {" channel after a "}

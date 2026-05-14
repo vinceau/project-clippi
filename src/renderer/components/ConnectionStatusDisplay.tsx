@@ -1,9 +1,9 @@
 import React from "react";
 import { Header } from "@/ui/Header/Header";
 
-import styles from "./ConnectionStatusDisplay.module.css";
 import { Labelled } from "@/components/Labelled";
 import { ScanningDot } from "@/components/ScanningDot";
+import styles from "./ConnectionStatusDisplay.module.css";
 
 export function ConnectionStatusDisplay({
   icon,

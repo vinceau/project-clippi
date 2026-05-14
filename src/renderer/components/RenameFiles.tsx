@@ -4,12 +4,12 @@ import insertTextAtCursor from "insert-text-at-cursor";
 import * as React from "react";
 import { TextArea } from "@/ui/TextArea/TextArea";
 
-import styles from "./RenameFiles.module.css";
 import { ContextOptions } from "@/components/ContextOptions";
 import { Field, Label } from "@/components/Form";
 import { SlideReveal } from "@/components/ProcessSection";
 import { TemplatePreview } from "@/components/TemplatePreview";
 import { defaultRenameFormat } from "@/store/models/highlights";
+import styles from "./RenameFiles.module.css";
 
 import { Labelled } from "./Labelled";
 
@@ -45,7 +45,7 @@ export function RenameFiles({
 }) {
   const [showOptions, setShowOptions] = React.useState(false);
   const [renameFormat, setRenameFormat] = React.useState(value);
-  const textRef: any = React.useRef();
+  const textRef: any = React.useRef(null);
   const showResetButton = renameFormat !== defaultRenameFormat;
   const resetFormat = () => {
     setRenameFormat(defaultRenameFormat);
@@ -87,7 +87,9 @@ export function RenameFiles({
           <Label>Format</Label>
           {showResetButton && (
             <Labelled title="Restore default value">
-              <span className={styles.resetButton} onClick={resetFormat}>Reset</span>
+              <span className={styles.resetButton} onClick={resetFormat}>
+                Reset
+              </span>
             </Labelled>
           )}
         </div>
@@ -102,7 +104,9 @@ export function RenameFiles({
         />
         <div className={styles.previewContainer}>
           {isInvalid ? (
-            <div className={styles.errorContainer}>Invalid filename format. Please check that there are no invalid characters.</div>
+            <div className={styles.errorContainer}>
+              Invalid filename format. Please check that there are no invalid characters.
+            </div>
           ) : (
             <div>
               <b>Preview: </b>

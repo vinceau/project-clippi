@@ -95,10 +95,13 @@ export const openFileOrParentFolder = (filename: string): void => {
   try {
     const stats = fs.statSync(filename);
     if (stats.isFile()) {
-      return shell.showItemInFolder(filename);
+      shell.showItemInFolder(filename);
+      return;
     }
     if (stats.isDirectory()) {
-      opened = shell.openItem(filename);
+      opened = true;
+      shell.openPath(filename);
+      return;
     }
   } catch (err) {
     // Getting the stats failed so the file probably doesn't exist
@@ -108,6 +111,7 @@ export const openFileOrParentFolder = (filename: string): void => {
   let parentFolder = filename;
   while (!opened) {
     parentFolder = path.dirname(parentFolder);
-    opened = shell.openItem(parentFolder);
+    opened = true;
+    shell.openPath(parentFolder);
   }
 };

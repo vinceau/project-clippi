@@ -73,7 +73,7 @@ export function EventModal({
   onSubmit?: (event: NamedEventConfig) => void;
   onClose?: () => void;
 }) {
-  const defaultValues = { ...DEFAULT_FORM_VALUES, ...edit };
+  const defaultValues = { ...DEFAULT_FORM_VALUES, ...edit as Partial<FormValues> };
   const { watch, errors, handleSubmit, control, reset } = useForm<FormValues>({ defaultValues });
   const { currentProfile, comboProfiles } = useSelector((state: iRootState) => state.slippi);
   const theme = useTheme();
@@ -115,9 +115,7 @@ export function EventModal({
 
   return (
     <Modal className={theme.themeName} open={opened} closeIcon onClose={closeAction} closeOnDimmerClick={false}>
-      <Modal.Header>
-        {headerText}
-      </Modal.Header>
+      <Modal.Header>{headerText}</Modal.Header>
       <Modal.Content>
         <Field padding="bottom">
           <Label>Event Type</Label>
@@ -145,13 +143,7 @@ export function EventModal({
           <Field padding="bottom">
             <Label>Combo Profile</Label>
             <Controller
-              as={
-                <Select
-                  className={styles.fullWidth}
-                  placeholder="Combo profile"
-                  options={profileOptions}
-                />
-              }
+              as={<Select className={styles.fullWidth} placeholder="Combo profile" options={profileOptions} />}
               control={control}
               onChange={([_, x]) => x.value}
               name="filter.comboCriteria"

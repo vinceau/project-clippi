@@ -37,7 +37,7 @@ export function ActionInput({
   disabledActions: string[];
   onRemove: () => void;
 }) {
-  const outerRef = React.createRef<HTMLDivElement>();
+  const outerRef = React.createRef<HTMLDivElement>() as any;
   const onActionChange = (action: string) => {
     const params = actionComponents[action].defaultParams;
     const newValue = produce(value, (draft: ActionDefinition) => {

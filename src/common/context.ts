@@ -200,7 +200,7 @@ const momentSnippets = [
 export const generateGlobalContext = (context?: Context, date?: Moment): Context => {
   const m = date || moment();
   const d = m.toDate();
-  const newContext = {
+  const newContext: Record<string, string> = {
     date: sanitizeFilename(d.toLocaleDateString()),
     time: sanitizeFilename(d.toLocaleTimeString()),
   };

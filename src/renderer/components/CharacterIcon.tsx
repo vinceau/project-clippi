@@ -73,9 +73,6 @@ export function CharacterIcon({
   const shortName = getCharacterShortName(character).toLowerCase();
   const imgSrc = characterIconMap[shortName] ?? unknownImg;
   return (
-    <img
-      src={imgSrc}
-      style={{ height: imgSize, width: imgSize, filter: grayscale ? "grayscale(1)" : undefined }}
-    />
+    <img src={imgSrc} style={{ height: imgSize, width: imgSize, filter: grayscale ? "grayscale(1)" : undefined }} />
   );
 }

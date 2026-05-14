@@ -70,8 +70,8 @@ function MoveInput({
   onBlur?: () => void;
 }) {
   const handleChange = React.useCallback(
-    (_e, { value }) => {
-      onChange(value);
+    (_e: any, data: any) => {
+      onChange(data.value);
     },
     [onChange]
   );
@@ -137,7 +137,7 @@ export function MoveSequenceForm({ value, onBlur, onChange }: MoveSequenceFormPr
   );
 
   const onDragEnd = React.useCallback(
-    ({ destination, source }: any) => {
+    ({ destination, source }: { destination?: { index: number; droppableId: string }; source: { index: number; droppableId: string } }) => {
       if (!destination) {
         return;
       }
@@ -155,13 +155,13 @@ export function MoveSequenceForm({ value, onBlur, onChange }: MoveSequenceFormPr
     <div>
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="move-sequence-form">
-          {(provided) => (
+          {(provided: any) => (
             <div ref={provided.innerRef} {...provided.droppableProps}>
               {movesList.map((moveId, i) => {
                 const id = `index-${i}-move${moveId}`;
                 return (
                   <Draggable key={id} draggableId={id} index={i}>
-                    {(provided, _snapshot) => (
+                    {(provided: any, _snapshot: any) => (
                       <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
                         <MoveInput
                           value={moveId}

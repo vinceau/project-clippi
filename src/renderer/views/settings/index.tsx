@@ -37,7 +37,7 @@ export function SettingsView() {
     return history.location.pathname.includes(name);
   };
 
-  const escFunction = React.useCallback((event) => {
+  const escFunction = React.useCallback((event: KeyboardEvent) => {
     if (event.keyCode === 27) {
       onClose();
     }

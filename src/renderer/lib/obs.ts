@@ -128,18 +128,18 @@ class OBSConnection {
         .subscribe(() => {
           resolve();
         });
-      this.socket.send(OBSRecordingAction.TOGGLE).catch(reject);
+      (this.socket.send as any)(OBSRecordingAction.TOGGLE).catch(reject);
     });
   }
 
   private async _safelySetRecordingState(rec: OBSRecordingAction): Promise<void> {
     return new Promise((resolve, reject) => {
       // Attach the handler first
-      this.socket.once(ACTION_STATE_MAP[rec], () => {
+      this.socket.once(ACTION_STATE_MAP[rec as keyof typeof ACTION_STATE_MAP], () => {
         resolve();
       });
 
-      this.socket.send(rec).catch(reject);
+      (this.socket.send as any)(rec).catch(reject);
     });
   }
 

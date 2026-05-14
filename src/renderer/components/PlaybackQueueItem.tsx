@@ -25,7 +25,7 @@ export function PlaybackQueueItem({
   const dirname = path.dirname(file.path);
   return (
     <Draggable draggableId={JSON.stringify(file)} index={index}>
-      {(provided, snapshot) => (
+      {(provided: any, snapshot: any) => (
         <div
           className={clsx(styles.outer, snapshot.isDragging && styles.dragging)}
           {...provided.draggableProps}
