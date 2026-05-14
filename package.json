@@ -109,6 +109,7 @@
     "howler": "^2.1.3",
     "immer": "^9.0.6",
     "insert-text-at-cursor": "^0.3.0",
+    "lucide-react": "^1.14.0",
     "moment": "^2.29.4",
     "node-notifier": "^8.0.1",
     "obs-websocket-js": "^4.0.3",
