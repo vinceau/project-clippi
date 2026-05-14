@@ -1,8 +1,8 @@
-/** @jsx jsx */
-import { css, jsx } from "@emotion/core";
 import type { GameStartType } from "@slippi/slippi-js";
 import { parseFileRenameFormat } from "common/context";
 import * as React from "react";
+
+import styles from "./TemplatePreview.module.css";
 
 export function TemplatePreview({
   template,
@@ -15,11 +15,7 @@ export function TemplatePreview({
 }) {
   const parsedTemplate = parseFileRenameFormat(template, settings, metadata);
   return (
-    <span
-      css={css`
-        word-break: break-all;
-      `}
-    >
+    <span className={styles.preview}>
       {parsedTemplate}
     </span>
   );

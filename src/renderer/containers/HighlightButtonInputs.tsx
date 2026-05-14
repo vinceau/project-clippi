@@ -1,4 +1,3 @@
-import styled from "@emotion/styled";
 import { framesToSeconds, secondsToFrames } from "common/utils";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,21 +9,7 @@ import { DelayInput, InlineDropdown } from "@/components/InlineInputs";
 import type { Dispatch, iRootState } from "@/store";
 import { inputButtonInitialState as defaults } from "@/store/models/inputButtons";
 
-const Outer = styled.div`
-  input {
-    padding: 3px !important;
-  }
-`;
-const AdvancedOptions = styled.ul`
-  margin: 0;
-  margin-left: 20px;
-  padding: 0 1em;
-
-  li {
-    line-height: 25px;
-    margin-bottom: 5px;
-  }
-`;
+import styles from "./HighlightButtonInputs.module.css";
 
 const options = [
   {
@@ -73,14 +58,14 @@ export function HighlightButtonInputs() {
   };
 
   return (
-    <Outer>
-      <div style={{ marginBottom: "10px", lineHeight: "28px" }}>
+    <div className={styles.outer}>
+      <div className={styles.inlineWrapper}>
         {"Highlight the moment someone "}
         <InlineDropdown value={inputButtonHold} onChange={setInputButtonHold} options={options} />
         {inputButtonHold && (
           <>
             {" for "}
-            <span style={{ marginRight: "10px" }}>
+            <span className={styles.inlineMargin}>
               <DelayInput
                 value={inputButtonHoldAmount.toString()}
                 onChange={setHoldAmount}
@@ -100,7 +85,7 @@ export function HighlightButtonInputs() {
           {showAdvanced ? "Hide " : "Show "} advanced options
         </Accordion.Title>
         <Accordion.Content active={showAdvanced}>
-          <AdvancedOptions>
+          <ul className={styles.advancedOptions}>
             <li>
               {"Capture the previous "}{" "}
               <DelayInput
@@ -125,9 +110,9 @@ export function HighlightButtonInputs() {
               />
               {" seconds between moments"}
             </li>
-          </AdvancedOptions>
+          </ul>
         </Accordion.Content>
       </Accordion>
-    </Outer>
+    </div>
   );
 }

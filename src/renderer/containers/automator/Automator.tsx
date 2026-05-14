@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { css, jsx } from "@emotion/core";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@/ui/Button/Button";
@@ -13,6 +11,8 @@ import type { NamedEventConfig } from "@/store/models/automator";
 import { AutomatorPlaceholder } from "./AutomatorPlaceholder";
 import { EventActionLists } from "./EventActionLists";
 import { EventModal } from "./EventModal";
+
+import styles from "./Automator.module.css";
 
 export function Automator() {
   const [opened, setOpened] = React.useState<boolean>(false);
@@ -28,13 +28,11 @@ export function Automator() {
   const disabledTestButton = selectedActions.length === 0;
   const deleteEvent = () => {
     console.log(`deleting event with id: ${selected}/${events.length}`);
-    // Perform some basic validation of the current selected value
     if (invalidSelection) {
       return;
     }
 
     dispatch.automator.removeEvent(selected);
-    // Select the previous value if we deleted the last element
     if (selected > 0 && selected === events.length - 1) {
       setSelected(selected - 1);
     }
@@ -45,20 +43,15 @@ export function Automator() {
   };
   const addEvent = (event: NamedEventConfig) => {
     if (event.id) {
-      // This was an edit
       dispatch.automator.updateEvent({ index: selected, event });
     } else {
-      // This was a new event
       const randomCode = Math.random().toString(36).slice(2);
       dispatch.automator.addEvent({
         ...event,
         id: randomCode,
       });
-      // Select our recently created event
-      // The length of the old value would correctly select the newly added value
       setSelected(events.length);
     }
-    // Reset the form for next time
     reset();
   };
   const editEvent = () => {
@@ -77,22 +70,9 @@ export function Automator() {
     setEdit(null);
   };
   return (
-    <div
-      css={css`
-        display: flex;
-        flex-direction: column;
-        flex: 1;
-        padding-top: 2rem;
-      `}
-    >
+    <div className={styles.outer}>
       <EventModal onSubmit={addEvent} opened={opened} onClose={reset} edit={edit} />
-      <div
-        css={css`
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-        `}
-      >
+      <div className={styles.headerBar}>
         <div>
           <Button onClick={() => setOpened(true)}>
             <Icon name="plus" /> Add event
@@ -115,13 +95,7 @@ export function Automator() {
           </div>
         )}
       </div>
-      <div
-        css={css`
-          display: flex;
-          flex: 1;
-          margin-top: 1rem;
-        `}
-      >
+      <div className={styles.mainContent}>
         {events.length === 0 ? (
           <AutomatorPlaceholder />
         ) : (

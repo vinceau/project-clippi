@@ -1,0 +1,18 @@
+.outer {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding-top: 2rem;
+}
+
+.headerBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mainContent {
+  display: flex;
+  flex: 1;
+  margin-top: 1rem;
+}

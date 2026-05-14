@@ -6,7 +6,6 @@ import "react-reflex/styles.css";
 import "@/styles/index.scss"; // Our custom styles
 import "@/styles/animations.css"; // Keyframe animations
 
-import { ThemeProvider } from "emotion-theming";
 import React from "react";
 import { Provider, useDispatch, useSelector } from "react-redux";
 import { HashRouter as Router, Redirect, Route, Switch } from "react-router-dom";
@@ -17,7 +16,7 @@ import { ToastContainer } from "@/components/toasts/ToastContainer";
 import { checkForNewUpdates } from "@/lib/utils";
 import type { Dispatch, iRootState } from "@/store";
 import { persistor, store } from "@/store";
-import { darkTheme, lightTheme, ThemeManager, ThemeMode, useTheme } from "@/styles";
+import { ThemeManager, ThemeMode, useTheme } from "@/styles";
 import { MainView, SettingsView } from "@/views";
 
 function App() {
@@ -34,15 +33,13 @@ function App() {
     <div className={theme.themeName}>
       <History />
       <ToastContainer />
-      <ThemeProvider theme={theme.themeName === ThemeMode.LIGHT ? lightTheme : darkTheme}>
-        <Switch>
-          <Route path="/main" component={MainView} />
-          <Route path="/settings" component={SettingsView} />
-          <Route exact path="/">
-            <Redirect to="/main" />
-          </Route>
-        </Switch>
-      </ThemeProvider>
+      <Switch>
+        <Route path="/main" component={MainView} />
+        <Route path="/settings" component={SettingsView} />
+        <Route exact path="/">
+          <Redirect to="/main" />
+        </Route>
+      </Switch>
     </div>
   );
 }

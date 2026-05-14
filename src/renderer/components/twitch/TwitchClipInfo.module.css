@@ -1,0 +1,51 @@
+.clipContainer {
+  border: solid 1px var(--color-background3);
+  border-radius: 3px;
+  margin-bottom: 5px;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  background-color: color-mix(in srgb, transparent 30%, var(--color-foreground3));
+}
+
+@media (min-width: 768px) {
+  .clipContainer {
+    flex-direction: row;
+  }
+}
+
+.clipContainer a {
+  color: var(--color-foreground);
+}
+
+.clipContainer h2 {
+  word-break: break-all;
+  font-size: 18px;
+  margin: 0;
+  margin-bottom: 5px;
+}
+
+.buttonsContainer {
+  display: flex;
+  align-self: flex-end;
+  font-size: 20px;
+}
+
+@media (min-width: 768px) {
+  .buttonsContainer {
+    align-self: center;
+  }
+}
+
+.buttonsContainer > span {
+  padding: 5px;
+}
+
+.meta {
+  opacity: 0.7;
+}
+
+.trashIcon {
+  cursor: pointer;
+}

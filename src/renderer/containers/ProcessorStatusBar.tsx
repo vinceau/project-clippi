@@ -1,4 +1,3 @@
-import styled from "@emotion/styled";
 import type { ComboFilterSettings, Input } from "@vinceau/slp-realtime";
 import type { ButtonInputOptions, ComboOptions, FileProcessorOptions } from "common/fileProcessor";
 import { FindComboOption } from "common/fileProcessor";
@@ -14,33 +13,7 @@ import { startProcessing, stopProcessing } from "@/lib/fileProcessor";
 import { mapConfigurationToFilterSettings } from "@/lib/profile";
 import type { iRootState } from "@/store";
 
-const Outer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  flex-grow: 1;
-  z-index: 2;
-`;
-
-const ProcessStatus = styled.div`
-  flex-grow: 1;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-`;
-
-const PercentDisplay = styled.div`
-  font-size: 20px;
-  margin-right: 10px;
-`;
-
-const StopButton = styled(Button)`
-  &&&:hover {
-    background-color: #d01919;
-    color: white;
-  }
-`;
+import styles from "./ProcessorStatusBar.module.css";
 
 export function ProcessorStatusBar() {
   const [confirmOpened, setConfirmOpened] = React.useState(false);
@@ -73,15 +46,12 @@ export function ProcessorStatusBar() {
   const validButtonCombo =
     !findCombos || highlightMethod !== FindComboOption.BUTTON_INPUTS || inputButtonCombo.length > 0;
 
-  // If we're renaming make sure we have a valid rename format
   const isInvalid = renameFiles && invalidFilename(renameFormat, { allowPaths: true });
   const processBtnDisabled = (!findCombos && !renameFiles) || !combosFilePath || !validButtonCombo || isInvalid;
 
   const handleProcessClick = () => {
-    // Check if the output file already exists
     try {
       if (findCombos && fs.existsSync(combosFilePath)) {
-        // Show confirmation dialog
         setConfirmOpened(true);
         return;
       }
@@ -89,7 +59,6 @@ export function ProcessorStatusBar() {
       console.error(err);
     }
 
-    // Actually start the processing
     setupOptionsAndProcess();
   };
 
@@ -148,7 +117,7 @@ export function ProcessorStatusBar() {
   };
 
   return (
-    <Outer>
+    <div className={styles.outer}>
       <Confirm
         open={confirmOpened}
         content="Output file already exists and will be overwritten. Continue anyway?"
@@ -156,26 +125,26 @@ export function ProcessorStatusBar() {
         onCancel={() => setConfirmOpened(false)}
         onConfirm={onConfirm}
       />
-      <ProcessStatus>
+      <div className={styles.processStatus}>
         {(comboFinderProcessing || complete) && (
           <>
-            <PercentDisplay>{comboFinderPercent}%</PercentDisplay>
+            <div className={styles.percentDisplay}>{comboFinderPercent}%</div>
             <div>{comboFinderLog}</div>
           </>
         )}
-      </ProcessStatus>
+      </div>
       <div>
         {comboFinderProcessing ? (
-          <StopButton type="button" onClick={onStop} disabled={stopping}>
+          <Button className={styles.stopButton} type="button" onClick={onStop} disabled={stopping}>
             <Icon name="stop" />
             Stop processing
-          </StopButton>
+          </Button>
         ) : (
           <Button primary type="button" onClick={handleProcessClick} disabled={processBtnDisabled}>
             <Icon name="angle double right" style={{ margin: "0", marginRight: "0.3rem" }} /> Process replays
           </Button>
         )}
       </div>
-    </Outer>
+    </div>
   );
 }

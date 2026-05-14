@@ -1,35 +1,10 @@
-import styled from "@emotion/styled";
-import { transparentize } from "polished";
+import { clsx } from "clsx";
 import React from "react";
 import { Link, Route } from "react-router-dom";
 
 import { TippyLabel } from "../Labelled";
 
-const OuterMenuIcon = styled.div<{
-  active?: boolean;
-}>`
-  position: relative;
-  height: 7rem;
-  width: 100%;
-  color: ${({ theme }) => transparentize(0.5, theme.foreground)};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 2.5rem;
-  border-left: solid 0.4rem transparent;
-  ${(props) =>
-    props.active &&
-    `
-    color: ${props.theme.foreground};
-    border-left-color: ${props.theme.foreground};
-    background-color: ${transparentize(0.7, props.theme.foreground)};
-    `}
-
-  &:hover {
-    color: ${({ theme }) => transparentize(0.25, theme.foreground)};
-    background-color: ${({ theme }) => transparentize(0.85, theme.foreground)};
-  }
-`;
+import styles from "./MenuIcon.module.css";
 
 export function MenuIcon({
   active,
@@ -42,7 +17,7 @@ export function MenuIcon({
 }) {
   return (
     <TippyLabel title={label} size="big" distance={-70} duration={200} position="right" style={{ width: "100%" }}>
-      <OuterMenuIcon active={active}>{children}</OuterMenuIcon>
+      <div className={clsx(styles.outerMenuIcon, active && styles.active)}>{children}</div>
     </TippyLabel>
   );
 }

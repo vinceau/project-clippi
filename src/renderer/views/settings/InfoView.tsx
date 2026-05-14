@@ -1,4 +1,4 @@
-import styled from "@emotion/styled";
+import { clsx } from "clsx";
 import { GITHUB_PAGE } from "common/constants";
 import supporters from "raw-loader!../../../../SUPPORTERS.md";
 import React from "react";
@@ -9,65 +9,14 @@ import { ExternalLink as A } from "@/components/ExternalLink";
 import { FormContainer } from "@/components/Form";
 import { UpdateStatusInfo } from "@/containers/UpdateStatus";
 import type { Dispatch, iRootState } from "@/store";
-import { useTheme } from "@/styles";
 
 import clippiLogo from "../../../../build/icon.png";
 
-const Container = styled(FormContainer)`
-  text-align: center;
-
-  ul {
-    list-style: none;
-    padding: 0;
-  }
-
-  a:hover {
-    text-decoration: underline;
-  }
-`;
-
-const Content = styled.div`
-  padding-bottom: 2rem;
-  p {
-    margin-left: auto;
-    margin-right: auto;
-  }
-`;
-
-const Footer = styled.div`
-  font-style: italic;
-  font-size: 1.6rem;
-  margin-top: 4rem;
-`;
-
-const Logo = styled.img<{
-  flip: boolean;
-}>`
-  height: 6.4rem;
-  width: 6.4rem;
-  ${({ flip }) =>
-    flip &&
-    `
-    transform: scaleX(-1);
-`}
-`;
-
-const UpdateInfo = styled.div<{
-  themeName: string;
-  updateAvailable?: boolean;
-}>`
-  ${(p) => `border: solid 0.2rem ${p.updateAvailable ? "#db2828" : "transparent"};`}
-  max-width: 50rem;
-  padding: 2rem;
-  border-radius: 0.5rem;
-  margin-left: auto;
-  margin-right: auto;
-`;
+import styles from "./InfoView.module.css";
 
 const DEV_THRESHOLD = 7;
 
 export function InfoView() {
-  const theme = useTheme();
   const [clickCount, setClickCount] = React.useState(0);
   const showDevOptions = useSelector((state: iRootState) => state.appContainer.showDevOptions);
   const updateAvailable = useSelector((state: iRootState) => state.tempContainer.updateAvailable);
@@ -82,19 +31,26 @@ export function InfoView() {
     }
   };
   return (
-    <Container>
-      <Logo flip={showDevOptions} src={clippiLogo} onClick={handleLogoClick} />
+    <div className={styles.container}>
+      <FormContainer>
+        <img
+          className={clsx(styles.logo, showDevOptions && styles.logoFlipped)}
+          src={clippiLogo}
+          onClick={handleLogoClick}
+          alt="logo"
+        />
+      </FormContainer>
       <h1>Project Clippi v{__VERSION__}</h1>
-      <Content>
+      <div className={styles.content}>
         <p>
           Commit {__BUILD__}
           <br />
           {__DATE__}
         </p>
-        <UpdateInfo themeName={theme.themeName} updateAvailable={updateAvailable}>
+        <div className={clsx(styles.updateInfo, updateAvailable && styles.updateInfoAvailable)}>
           <UpdateStatusInfo />
-        </UpdateInfo>
-        <div style={{ paddingTop: "2rem" }}>
+        </div>
+        <div className={styles.section}>
           <p>
             Made with love by <A href="https://twitter.com/_vinceau">Vince Au</A> and{" "}
             <A href={`${GITHUB_PAGE}/graphs/contributors`}>contributors</A>.
@@ -105,9 +61,9 @@ export function InfoView() {
             Please report bugs by tweeting at <A href="https://twitter.com/ProjectClippi">@ProjectClippi</A>.
           </p>
         </div>
-      </Content>
+      </div>
       <h1>Acknowledgements</h1>
-      <Content>
+      <div className={styles.content}>
         <p>
           Project Clippi was made possible by <A href="https://github.com/JLaferri">Jas Laferriere</A> and the rest of
           the <A href="https://github.com/project-slippi">Project Slippi</A> team.
@@ -115,11 +71,11 @@ export function InfoView() {
         <p>
           Project Clippi contains icons by <A href="https://icons8.com/">Icons8</A>.
         </p>
-      </Content>
+      </div>
       <ReactMarkdown source={supporters} />
-      <Footer>
+      <div className={styles.footer}>
         <p>To God be the glory</p>
-      </Footer>
-    </Container>
+      </div>
+    </div>
   );
 }

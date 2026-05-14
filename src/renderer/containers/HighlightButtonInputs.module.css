@@ -1,0 +1,23 @@
+.outer input {
+  padding: 3px !important;
+}
+
+.advancedOptions {
+  margin: 0;
+  margin-left: 20px;
+  padding: 0 1em;
+}
+
+.advancedOptions li {
+  line-height: 25px;
+  margin-bottom: 5px;
+}
+
+.inlineWrapper {
+  margin-bottom: 10px;
+  line-height: 28px;
+}
+
+.inlineMargin {
+  margin-right: 10px;
+}

@@ -1,0 +1,140 @@
+.styledMenuItem {
+  font-size: 1.4rem !important;
+  color: var(--color-foreground) !important;
+  margin-top: 0.2rem !important;
+  margin-bottom: 0.2rem !important;
+}
+
+.styledMenuItem:global(.active) {
+  background: color-mix(in srgb, transparent 95%, var(--color-foreground3)) !important;
+}
+
+.styledMenuItem:not(:global(.header)):hover {
+  background: color-mix(in srgb, transparent 70%, var(--color-foreground3)) !important;
+}
+
+.styledMenuItemHeader {
+  font-variant: all-small-caps !important;
+  font-size: 1.6rem !important;
+}
+
+.bottomMenuSection {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  border-top: solid 0.1rem var(--color-foreground3);
+  margin-top: 2rem;
+}
+
+.menuColumn {
+  flex-basis: 100%;
+  overflow: hidden;
+  overflow-y: auto;
+  height: 100vh;
+  color: var(--color-foreground);
+  background-color: var(--color-background);
+  border-right: solid 0.1rem var(--color-background3);
+}
+
+@media (min-width: 426px) {
+  .menuColumn {
+    flex-basis: 40%;
+  }
+}
+
+@media (min-width: 768px) {
+  .menuColumn {
+    flex-basis: 30%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .menuColumn {
+    flex-basis: 25%;
+  }
+}
+
+.contentColumn {
+  flex-basis: 0%;
+  overflow: hidden;
+  overflow-y: auto;
+  height: 100vh;
+  padding-left: 2.5rem;
+}
+
+@media (min-width: 426px) {
+  .contentColumn {
+    flex-basis: 70%;
+  }
+}
+
+@media (min-width: 768px) {
+  .contentColumn {
+    flex-basis: 75%;
+  }
+}
+
+.contentColumn > div {
+  padding-bottom: 5rem;
+  padding-top: 5rem;
+  padding-right: 10rem;
+}
+
+.styledMenu {
+  height: 100%;
+  width: 100%;
+}
+
+.styledMenu a:global(.item) > i:global(.icon) {
+  float: left;
+  margin-right: 1rem;
+  margin-left: 0;
+}
+
+.menuContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  padding: 5rem;
+}
+
+@media (min-width: 426px) {
+  .menuContainer {
+    padding-top: 2rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-bottom: 0;
+  }
+}
+
+.closeButton {
+  font-size: 2rem;
+  position: fixed;
+  top: 2rem;
+  right: 4rem;
+}
+
+.infoLabel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.settingsContainer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  visibility: visible;
+  overflow: auto;
+  background-color: var(--color-background2);
+  z-index: 1;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex1 {
+  flex: 1;
+}

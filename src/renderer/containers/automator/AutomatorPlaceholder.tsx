@@ -1,39 +1,16 @@
-import styled from "@emotion/styled";
-import { darken, lighten } from "polished";
 import React from "react";
 import { Icon } from "@/ui/Icon/Icon";
 
-import { ThemeMode, useTheme } from "@/styles";
-
-const Outer = styled.div<{
-  themeName: string;
-}>`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: ${(p) => {
-    const adjust = p.themeName === ThemeMode.DARK ? lighten : darken;
-    return adjust(0.05, p.theme.background);
-  }};
-  border-radius: 0.5rem;
-`;
-
-const Notice = styled.div`
-  margin: 20px 0;
-  text-align: center;
-`;
+import styles from "./AutomatorPlaceholder.module.css";
 
 export function AutomatorPlaceholder() {
-  const theme = useTheme();
   return (
-    <Outer themeName={theme.themeName}>
+    <div className={styles.outer}>
       <Icon size="huge" name="flag" />
-      <Notice>
+      <div className={styles.notice}>
         <h2>No events added</h2>
         <p>Add an event to get started</p>
-      </Notice>
-    </Outer>
+      </div>
+    </div>
   );
 }

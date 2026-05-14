@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { css, jsx } from "@emotion/core";
 import React from "react";
 import { Button } from "@/ui/Button/Button";
 import { Icon } from "@/ui/Icon/Icon";
@@ -9,6 +7,8 @@ import { generateButtonComboPreview } from "@/lib/inputs";
 import { useTheme } from "@/styles";
 
 import { ControllerLayout } from "./ControllerLayout";
+
+import styles from "./ButtonPicker.module.css";
 
 export function ButtonPicker({
   value,
@@ -47,27 +47,13 @@ export function ButtonPicker({
       <Modal.Header>Choose a button combination</Modal.Header>
       <Modal.Content>
         <div>
-          <div
-            css={css`
-              font-size: 2em;
-              text-align: center;
-              margin-bottom: 2em;
-            `}
-          >
+          <div className={styles.preview}>
             {buttons.length > 0 ? generateButtonComboPreview(buttons) : "No buttons selected"}
           </div>
           <ControllerLayout value={buttons} onChange={setButtons} />
         </div>
       </Modal.Content>
-      <Modal.Actions
-        css={css`
-          display: flex;
-          justify-content: space-between;
-          & > button {
-            margin: 0 !important;
-          }
-        `}
-      >
+      <Modal.Actions className={styles.actions}>
         <Button disabled={buttons.length === 0} onClick={onReset}>
           <Icon name="undo" /> Reset
         </Button>

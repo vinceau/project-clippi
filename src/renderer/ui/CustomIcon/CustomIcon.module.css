@@ -3,10 +3,12 @@
 }
 
 .outer:before {
-  content: "";
-  mask: var(--custom-icon-mask) no-repeat 100% 100%;
+  content: "" !important;
+  mask-image: var(--custom-icon-mask);
+  mask-repeat: no-repeat;
+  mask-position: 100% 100%;
   mask-size: contain;
-  background-color: var(--custom-icon-color, var(--color-foreground));
+  background-color: var(--custom-icon-color, var(--color-foreground)) !important;
   height: 100%;
   width: 100%;
 }

@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { css, jsx } from "@emotion/core";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Header } from "@/ui/Header/Header";
@@ -12,6 +10,8 @@ import { Toggle } from "@/ui/Toggle/Toggle";
 import { TwitchClipList, TwitchConnectButton, TwitchUserStatus } from "@/components/twitch";
 import { TwitchClipClearDialog } from "@/components/twitch/TwitchClipClearDialog";
 import type { Dispatch, iRootState } from "@/store";
+
+import styles from "./TwitchIntegration.module.css";
 
 const TWITCH_CLIPS_PER_PAGE = 10;
 
@@ -50,20 +50,13 @@ export function TwitchIntegration() {
         <Toggle value={reconnectTwitch} onChange={onReconnectChange} label="Auto-connect with Twitch on startup" />
       </Field>
 
-      <div style={{ marginTop: "20px" }}>
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
+      <div className={styles.section}>
+        <div className={styles.sectionHeader}>
           <h2>Clips</h2>
           {allClips.length > 0 && (
             <TwitchClipClearDialog
               trigger={
-                <div
-                  css={css`
-                    cursor: pointer;
-                    &:hover {
-                      text-decoration: underline;
-                    }
-                  `}
-                >
+                <div className={styles.clearTrigger}>
                   Clear all
                 </div>
               }

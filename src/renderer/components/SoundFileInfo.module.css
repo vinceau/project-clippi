@@ -1,0 +1,36 @@
+.container {
+  border: solid 0.1rem var(--color-background3);
+  border-radius: 0.3rem;
+  margin-bottom: 0.5rem;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  word-break: break-all;
+  background-color: color-mix(in srgb, transparent 30%, var(--color-foreground3));
+}
+
+.container a {
+  color: var(--color-foreground);
+}
+
+.container h2 {
+  font-size: 1.8rem;
+  margin: 0;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+}
+
+.container:hover .removeButton {
+  opacity: 1;
+}
+
+.removeButton {
+  opacity: 0;
+  font-size: 2rem;
+  padding-left: 1rem;
+}
+
+.removeButton:hover {
+  cursor: pointer;
+}
