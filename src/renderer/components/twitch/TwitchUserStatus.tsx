@@ -5,7 +5,7 @@ import defaultUserImage from "@/styles/images/user.svg";
 
 import { ExternalLink as A } from "../ExternalLink";
 
-export const TwitchUserStatus: React.SFC<{
+export const TwitchUserStatus: React.FC<{
   displayName: string;
   channel: string;
   image?: any;
