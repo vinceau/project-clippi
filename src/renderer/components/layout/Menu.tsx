@@ -27,12 +27,9 @@ export function Menu({ settingsPage, updateAvailable }: { settingsPage: string; 
           <MenuIcon label="Settings">
             <Icon name="cog" />
             {updateAvailable && (
-              <Label
-                circular
-                color="red"
-                empty
-                style={{ position: "absolute", maxHeight: "0.5em", top: "2rem", right: "2rem" }}
-              />
+              <span style={{ position: "absolute", top: "2rem", right: "2rem" }}>
+                <Label circular color="red" empty />
+              </span>
             )}
           </MenuIcon>
         </Link>

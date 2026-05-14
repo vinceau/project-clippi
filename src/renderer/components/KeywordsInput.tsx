@@ -7,7 +7,7 @@ import styles from "./KeywordsInput.module.css";
 
 function KeywordLabel({ name, onClick }: { name: string; onClick: () => void }) {
   return (
-    <Label style={{ fontSize: "0.8em" }}>
+    <Label size="small">
       {name}
       <Icon name="delete" link onClick={onClick} />
     </Label>

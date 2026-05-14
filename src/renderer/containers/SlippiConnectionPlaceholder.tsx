@@ -13,6 +13,14 @@ import dolphinLogoSVG from "@/styles/images/dolphin.svg";
 
 import styles from "./SlippiConnectionPlaceholder.module.css";
 
+function VerticalDivider({ children }: { children: React.ReactNode }) {
+  return <div className={styles.verticalDivider}><Divider vertical>{children}</Divider></div>;
+}
+
+function HorizontalDivider({ children }: { children: React.ReactNode }) {
+  return <div className={styles.horizontalDivider}><Divider horizontal>{children}</Divider></div>;
+}
+
 export function SlippiConnectionPlaceholder({
   address,
   port,
@@ -26,13 +34,11 @@ export function SlippiConnectionPlaceholder({
   const [port_, setPort] = React.useState(port);
   return (
     <Segment placeholder>
-      <Grid columns={2} stackable textAlign="center">
-        <Divider className={styles.verticalDivider} vertical>
-          Or
-        </Divider>
+        <Grid columns={2} stackable textAlign="center">
+          <VerticalDivider>Or</VerticalDivider>
         <Grid.Row verticalAlign="middle">
           <Grid.Column>
-            <Header className={styles.verticalHeader} icon>
+            <Header vertical icon>
               <SlippiIcon />
               Connect to a Slippi Relay
             </Header>
@@ -60,11 +66,9 @@ export function SlippiConnectionPlaceholder({
               </div>
             </div>
           </Grid.Column>
-          <Divider className={styles.horizontalDivider} horizontal>
-            Or
-          </Divider>
+          <HorizontalDivider>Or</HorizontalDivider>
           <Grid.Column>
-            <Header className={styles.verticalHeader} icon>
+            <Header vertical icon>
               <CustomIcon image={dolphinLogoSVG} />
               Connect to Slippi Dolphin
             </Header>

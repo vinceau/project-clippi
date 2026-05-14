@@ -1,0 +1,39 @@
+.image {
+  display: inline-block;
+  border-radius: 0.3rem;
+}
+
+.floatedLeft {
+  float: left;
+  margin-right: 0.5em;
+}
+
+.floatedRight {
+  float: right;
+  margin-left: 0.5em;
+}
+
+.mini {
+  width: 35px;
+  height: auto;
+}
+
+.tiny {
+  width: 80px;
+  height: auto;
+}
+
+.small {
+  width: 150px;
+  height: auto;
+}
+
+.medium {
+  width: 300px;
+  height: auto;
+}
+
+.large {
+  width: 450px;
+  height: auto;
+}

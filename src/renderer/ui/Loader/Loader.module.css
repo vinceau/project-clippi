@@ -1,0 +1,35 @@
+.loader {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--color-foreground2);
+  font-size: 0.9em;
+}
+
+.inline {
+  display: inline-flex;
+}
+
+.spinner {
+  width: 1.5em;
+  height: 1.5em;
+  border: 2px solid var(--color-background3);
+  border-top-color: var(--color-foreground2);
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+.inline .spinner {
+  width: 1em;
+  height: 1em;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.text {
+  color: var(--color-foreground2);
+}

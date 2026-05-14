@@ -1,0 +1,18 @@
+.segment {
+  padding: 1rem;
+  border-radius: 0.3rem;
+  background: color-mix(in srgb, var(--color-background), white 5%);
+  color: var(--color-foreground);
+  border: 1px solid var(--color-background3);
+}
+
+.placeholder {
+  border: 2px dashed var(--color-background3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 3rem 1rem;
+  text-align: center;
+}
