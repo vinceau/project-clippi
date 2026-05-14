@@ -4,6 +4,7 @@ import "react-toastify/dist/ReactToastify.min.css"; // Toast styles
 import "semantic-ui-css/semantic.min.css"; // Semantic UI styles
 import "react-reflex/styles.css";
 import "@/styles/index.scss"; // Our custom styles
+import "@/styles/animations.css"; // Keyframe animations
 
 import { ThemeProvider } from "emotion-theming";
 import React from "react";
@@ -16,7 +17,7 @@ import { ToastContainer } from "@/components/toasts/ToastContainer";
 import { checkForNewUpdates } from "@/lib/utils";
 import type { Dispatch, iRootState } from "@/store";
 import { persistor, store } from "@/store";
-import { darkTheme, GlobalStyle, lightTheme, ThemeManager, ThemeMode, useTheme } from "@/styles";
+import { darkTheme, lightTheme, ThemeManager, ThemeMode, useTheme } from "@/styles";
 import { MainView, SettingsView } from "@/views";
 
 function App() {
@@ -34,7 +35,6 @@ function App() {
       <History />
       <ToastContainer />
       <ThemeProvider theme={theme.themeName === ThemeMode.LIGHT ? lightTheme : darkTheme}>
-        <GlobalStyle />
         <Switch>
           <Route path="/main" component={MainView} />
           <Route path="/settings" component={SettingsView} />

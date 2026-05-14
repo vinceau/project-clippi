@@ -1,0 +1,11 @@
+.dot {
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.pulse {
+  animation: pulse 1.5s infinite;
+}
