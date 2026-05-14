@@ -49,7 +49,7 @@ export function SlippiConnectionPlaceholder({
                   placeholder="localhost"
                   fluid
                   value={address_}
-                  onChange={(_: any, { value }: any) => setAddress(value)}
+                  onChange={(e: any) => setAddress(e.target.value)}
                   onBlur={() => dispatcher.slippi.setRelayAddress(address_)}
                 />
               </div>
@@ -58,7 +58,7 @@ export function SlippiConnectionPlaceholder({
                 placeholder="1667"
                 fluid
                 value={port_}
-                onChange={(_: any, { value }: any) => setPort(value)}
+                onChange={(e: any) => setPort(e.target.value)}
                 onBlur={() => dispatcher.slippi.setPort(port_)}
               />
               <div className={styles.buttonPadding}>

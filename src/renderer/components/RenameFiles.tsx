@@ -97,8 +97,8 @@ export function RenameFiles({
           ref={textRef}
           placeholder={placeholder}
           value={renameFormat}
-          onChange={(_, { value }) => {
-            setRenameFormat(`${value || ""}`);
+          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
+            setRenameFormat(e.target.value);
           }}
           onBlur={() => onChange(renameFormat)}
         />

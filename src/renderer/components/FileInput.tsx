@@ -51,21 +51,21 @@ export function FileInput({ value, directory, onChange, fileTypeFilters, saveFil
   const actionLabel = saveFile ? "Save as" : "Choose";
   return (
     <div className={styles.outer}>
-      <Input
-        style={{ width: "100%" }}
-        label={
-          <Button onClick={() => openFileOrParentFolder(filesPath)} disabled={!filesPath}>
-            <Labelled title="Open location">
-              <Icon className={styles.noMarginIcon} name="folder open outline" />
-            </Labelled>
-          </Button>
-        }
-        value={filesPath}
-        onChange={(_: any, { value }: any) => setFilesPath(value)}
-        onBlur={() => onChange(filesPath)}
-        action={<Button onClick={() => selectFromFileSystem().catch(console.error)}>{actionLabel}</Button>}
-        placeholder={placeholder}
-      />
+      <div className={styles.inputRow}>
+        <Button onClick={() => openFileOrParentFolder(filesPath)} disabled={!filesPath}>
+          <Labelled title="Open location">
+            <Icon name="folder open outline" />
+          </Labelled>
+        </Button>
+        <Input
+          fluid
+          value={filesPath}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFilesPath(e.target.value)}
+          onBlur={() => onChange(filesPath)}
+          placeholder={placeholder}
+        />
+        <Button onClick={() => selectFromFileSystem().catch(console.error)}>{actionLabel}</Button>
+      </div>
     </div>
   );
 }

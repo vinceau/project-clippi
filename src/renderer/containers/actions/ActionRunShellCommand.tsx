@@ -49,10 +49,10 @@ function RunShellCommandInput({
       </Message>
       <Form>
         <TextArea
-          style={{ fontFamily: "monospace", fontSize: 16 }}
+          monospace
           onBlur={() => onChange({ command: cmd })}
           value={cmd}
-          onChange={(_: any, { value }: any) => setMsg(value)}
+          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setMsg(e.target.value)}
           placeholder="Enter a shell command to run..."
         />
       </Form>

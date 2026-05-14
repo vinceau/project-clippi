@@ -100,10 +100,12 @@ export function OBSStatusBar() {
       </ConnectionStatusDisplay>
       <div>
         {dolphinRunning ? (
-          <Button className={styles.stopButton} type="button" onClick={onStop}>
-            <Icon name="stop" />
-            Stop
-          </Button>
+          <div className={styles.stopButton}>
+            <Button type="button" onClick={onStop}>
+              <Icon name="stop" />
+              Stop
+            </Button>
+          </div>
         ) : (
           <>
             <Labelled title={recordingButtonTitle} disabled={!recordButtonDisabled}>

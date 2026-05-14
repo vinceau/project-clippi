@@ -15,7 +15,7 @@ export function SemanticCheckboxInput(props: any) {
   const { input, label } = props;
   return (
     <SemanticForm.Field>
-      <Checkbox checked={input.value} label={label} onChange={(_, obj) => input.onChange(obj.checked)} />
+      <Checkbox checked={input.value} label={label} onChange={(checked) => input.onChange(checked)} />
     </SemanticForm.Field>
   );
 }
@@ -26,7 +26,7 @@ export function SemanticInput(props: any) {
     <SemanticForm.Field error={meta.error && meta.touched}>
       {/* <RenderCount /> */}
       {inputLabel && <label>{inputLabel}</label>}
-      <Input className={styles.styledInput} {...input} {...rest} />
+      <Input {...input} {...rest} />
       {meta.error && meta.touched && <span className={styles.errorText}>{meta.error}</span>}
     </SemanticForm.Field>
   );

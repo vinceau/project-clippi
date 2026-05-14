@@ -47,7 +47,8 @@ function ButtonContainer({
         Save profile
       </Button>
       <div>
-        <Button className={clsx("delete-button", styles.deleteButton)} type="button" onClick={onDelete}>
+        <div className={clsx("delete-button", styles.deleteButton)}>
+          <Button type="button" onClick={onDelete}>
           {currentProfile === DEFAULT_PROFILE ? (
             <>
               <Icon name="undo" />
@@ -59,7 +60,8 @@ function ButtonContainer({
               Delete profile
             </>
           )}
-        </Button>
+          </Button>
+        </div>
         <ProfileExportContainer currentProfileData={currentProfileData} />
       </div>
     </div>

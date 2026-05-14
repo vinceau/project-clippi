@@ -92,7 +92,7 @@ function MoveInput({
       />
       <div style={{ marginLeft: 5 }}>
         <Labelled title="Remove">
-          <Button type="button" icon onClick={onRemove}>
+          <Button type="button" onClick={onRemove}>
             <Icon name="close" />
           </Button>
         </Labelled>

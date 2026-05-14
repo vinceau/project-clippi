@@ -1,30 +1,29 @@
+import { Switch } from "@base-ui/react";
 import React from "react";
-import { Checkbox } from "semantic-ui-react";
-
-import { Label } from "@/components/Form";
-
 import styles from "./Toggle.module.css";
 
-export function Toggle({
-  label,
-  value,
-  onChange: onChangeProp,
-}: {
+interface ToggleProps {
   label: string;
   value: boolean;
   onChange?: (checked: boolean) => void;
-}) {
-  const onChange = (value: boolean) => {
+}
+
+export function Toggle({ label, value, onChange: onChangeProp }: ToggleProps) {
+  const onChange = (checked: boolean) => {
     if (onChangeProp) {
-      onChangeProp(value);
+      onChangeProp(checked);
     }
   };
   return (
     <div className={styles.toggleOuter}>
-      <Label style={{ cursor: onChangeProp ? "pointer" : "auto", marginBottom: "0" }} onClick={() => onChange(!value)}>
-        {label}
-      </Label>
-      <Checkbox checked={value} onChange={(_, data) => onChange(Boolean(data.checked))} toggle />
+      <span>{label}</span>
+      <Switch.Root
+        checked={value}
+        onCheckedChange={(c) => onChange(c)}
+        className={styles.switchRoot}
+      >
+        <Switch.Thumb className={styles.switchThumb} />
+      </Switch.Root>
     </div>
   );
 }

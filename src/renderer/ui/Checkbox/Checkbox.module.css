@@ -1,0 +1,74 @@
+.wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  cursor: pointer;
+}
+
+.root {
+  width: 1.2em;
+  height: 1.2em;
+  border-radius: 0.2em;
+  border: 1px solid var(--color-background);
+  background: var(--color-foreground3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  font-size: inherit;
+  flex-shrink: 0;
+}
+
+.root[data-pressed] {
+  border-color: var(--color-foreground2);
+}
+
+.indicator {
+  display: none;
+  width: 0.6em;
+  height: 0.6em;
+  background: var(--color-foreground);
+  border-radius: 0.1em;
+}
+
+.root[data-pressed] .indicator {
+  display: block;
+}
+
+.toggleRoot {
+  width: 2.5em;
+  height: 1.4em;
+  border-radius: 0.7em;
+  border: none;
+  background: var(--color-foreground3);
+  cursor: pointer;
+  padding: 0.15em;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  transition: background 0.2s;
+}
+
+.toggleRoot[data-pressed] {
+  background: #2185d0;
+}
+
+.toggleIndicator {
+  width: 1.1em;
+  height: 1.1em;
+  border-radius: 50%;
+  background: var(--color-background);
+  display: block;
+  transition: transform 0.2s;
+}
+
+.toggleRoot[data-pressed] .toggleIndicator {
+  transform: translateX(1.1em);
+}
+
+.label {
+  color: var(--color-foreground);
+  font-size: 1em;
+  cursor: pointer;
+}

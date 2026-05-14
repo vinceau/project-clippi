@@ -70,13 +70,13 @@ export function RecorderView() {
           {validQueue && (
             <div>
               <Labelled title="Add file">
-                <Button onClick={addFileHandler} icon="plus" />
+                <Button onClick={addFileHandler}><Icon name="plus" /></Button>
               </Labelled>
               <Labelled title="Shuffle queue">
-                <Button onClick={shuffleQueueHandler} icon="shuffle" />
+                <Button onClick={shuffleQueueHandler}><Icon name="shuffle" /></Button>
               </Labelled>
               <Labelled title="Clear queue">
-                <Button onClick={clearQueueHandler} icon="trash" />
+                <Button onClick={clearQueueHandler}><Icon name="trash" /></Button>
               </Labelled>
             </div>
           )}

@@ -50,7 +50,7 @@ export function KeywordsInput({ value, onChange }: { value?: string[]; onChange?
           autoCapitalize="none"
           autoComplete="off"
           autoCorrect="off"
-          spellCheck="false"
+          spellCheck={false}
           tabIndex={0}
           type="text"
           onKeyDown={onKeyDown}

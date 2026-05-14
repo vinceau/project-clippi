@@ -57,8 +57,8 @@ export function BufferedInput(props: any) {
       submitValue();
     }
   };
-  const newOnChange = (_: any, data: any) => {
-    setNewValue(data.value);
+  const newOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewValue(e.target.value);
   };
   return <Input value={newValue} onChange={newOnChange} onKeyDown={onKeyDown} onBlur={submitValue} {...rest} />;
 }

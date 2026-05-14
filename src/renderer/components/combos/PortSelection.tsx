@@ -1,6 +1,5 @@
 import React from "react";
 import { Field } from "react-final-form";
-import type { GridColumnProps } from "@/ui/Grid/Grid";
 import { Checkbox } from "@/ui/Checkbox/Checkbox";
 import { Grid } from "@/ui/Grid/Grid";
 
@@ -25,11 +24,6 @@ export function PortSelection({ zeroIndex, onChange, value = [], label = "Port" 
       onChange(newValues);
     }
   };
-  const columnProps: GridColumnProps = {
-    mobile: 8,
-    tablet: 4,
-    computer: 4,
-  };
   let allPorts = [1, 2, 3, 4];
   if (zeroIndex) {
     allPorts = allPorts.map((n) => n - 1);
@@ -37,7 +31,7 @@ export function PortSelection({ zeroIndex, onChange, value = [], label = "Port" 
   return (
     <Grid>
       {allPorts.map((p) => (
-        <Grid.Column key={`port-selection-${p}`} {...columnProps}>
+        <Grid.Column key={`port-selection-${p}`}>
           <Checkbox
             label={`${label} ${zeroIndex ? p + 1 : p}`}
             checked={value.includes(p)}

@@ -27,7 +27,7 @@ export function PerCharPercent({ name, values, push }: { name: string; values: a
                   component={SemanticInput}
                   type="number"
                   parse={(v: string) => parseInt(v, 10)}
-                  action={<Button type="button" onClick={() => fields.remove(index)} content="Remove" />}
+                  action={<Button type="button" onClick={() => fields.remove(index)}>Remove</Button>}
                 />
               </div>
             );

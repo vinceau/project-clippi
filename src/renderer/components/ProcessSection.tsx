@@ -25,7 +25,7 @@ export function ProcessSection({
         <h2 className={styles.sectionLabel} onClick={() => onOpenChange(!open)}>
           {label}
         </h2>
-        <Checkbox toggle checked={open} onChange={(_, data) => onOpenChange(Boolean(data.checked))} />
+        <Checkbox toggle checked={open} onChange={(checked) => onOpenChange(Boolean(checked))} />
       </div>
       <SlideReveal open={open}>
         <div className={styles.content}>{children}</div>

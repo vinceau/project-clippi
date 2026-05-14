@@ -55,7 +55,7 @@ export const ImportProfileModal = React.memo(function ImportProfileModal({
                 fluid
                 placeholder="Profile name"
                 value={profileName}
-                onChange={(_: any, { value }: any) => setProfileName(value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setProfileName(e.target.value)}
               />
             </div>
             <div style={{ marginBottom: 10 }}>
@@ -63,7 +63,7 @@ export const ImportProfileModal = React.memo(function ImportProfileModal({
               <TextArea
                 value={profileData}
                 placeholder="Profile data"
-                onChange={(_: any, { value }: any) => setProfileData(value)}
+                onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setProfileData(e.target.value)}
               />
             </div>
           </Form>

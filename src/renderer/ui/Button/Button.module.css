@@ -1,0 +1,102 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.6em 1.2em;
+  border-radius: 0.3em;
+  border: none;
+  font-size: 1em;
+  font-weight: bold;
+  cursor: pointer;
+  line-height: 1.2;
+  background: #e0e1e2;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.button:hover {
+  background: #cacbcd;
+}
+
+.button:disabled {
+  opacity: 0.6;
+  cursor: default;
+  pointer-events: none;
+}
+
+.primary {
+  background: #2185d0;
+  color: #fff;
+}
+
+.primary:hover {
+  background: #1678c2;
+}
+
+.basic {
+  background: transparent;
+  border: 1px solid var(--color-foreground2);
+  color: var(--color-foreground);
+}
+
+.basic:hover {
+  background: color-mix(in srgb, var(--color-foreground2), transparent 80%);
+}
+
+.colorRed {
+  background: #db2828;
+  color: #fff;
+}
+
+.colorRed:hover {
+  background: #d01919;
+}
+
+.colorGreen {
+  background: #21ba45;
+  color: #fff;
+}
+
+.colorGreen:hover {
+  background: #16ab39;
+}
+
+.colorBlue {
+  background: #2185d0;
+  color: #fff;
+}
+
+.colorBlue:hover {
+  background: #1678c2;
+}
+
+.fluid {
+  width: 100%;
+}
+
+.inverted {
+  background: transparent;
+  border: 1px solid var(--color-foreground2);
+  color: var(--color-foreground2);
+}
+
+.inverted.primary {
+  background: transparent;
+  border: 1px solid #2185d0;
+  color: #2185d0;
+}
+
+.group {
+  display: inline-flex;
+}
+
+.group > * {
+  border-radius: 0;
+}
+
+.group > *:first-child {
+  border-radius: 0.3em 0 0 0.3em;
+}
+
+.group > *:last-child {
+  border-radius: 0 0.3em 0.3em 0;
+}

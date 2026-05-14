@@ -41,7 +41,7 @@ export function ComboFinder() {
             <Checkbox
               label="Include subfolders"
               checked={includeSubFolders}
-              onChange={(_, data) => onSubfolder(Boolean(data.checked))}
+              onChange={(checked) => onSubfolder(Boolean(checked))}
             />
           </Form.Field>
         </Field>
@@ -61,14 +61,14 @@ export function ComboFinder() {
               <Checkbox
                 label="Delete files with no highlights"
                 checked={deleteFilesWithNoCombos}
-                onChange={(_, data) => onSetDeleteFiles(Boolean(data.checked))}
+                onChange={(checked) => onSetDeleteFiles(Boolean(checked))}
               />
             </Form.Field>
             <Form.Field>
               <Checkbox
                 label="Load output file into Dolphin when complete"
                 checked={openCombosWhenDone}
-                onChange={(_, data) => onSetOpenCombosWhenDone(Boolean(data.checked))}
+                onChange={(checked) => onSetOpenCombosWhenDone(Boolean(checked))}
               />
             </Form.Field>
           </Field>

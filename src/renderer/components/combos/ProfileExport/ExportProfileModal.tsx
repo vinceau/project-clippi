@@ -41,7 +41,7 @@ export const ExportProfileModal = React.memo(function ExportProfileModal({
         <Modal.Description>
           <p>Share this profile with your friends!</p>
           <Form>
-            <TextArea style={{ minHeight: 300 }} disabled value={profileData} />
+            <TextArea rows={15} disabled value={profileData} />
           </Form>
         </Modal.Description>
       </Modal.Content>

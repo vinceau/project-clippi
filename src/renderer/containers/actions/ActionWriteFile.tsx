@@ -101,7 +101,7 @@ function WriteFileInput(props: WriteFileProps) {
         <TextArea
           onBlur={onContentChange}
           value={msg}
-          onChange={(_: any, { value }: any) => setMsg(value)}
+          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setMsg(e.target.value)}
           placeholder="Hmmm.. What should I write?"
         />
       </Form>

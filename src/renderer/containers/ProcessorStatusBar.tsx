@@ -135,10 +135,12 @@ export function ProcessorStatusBar() {
       </div>
       <div>
         {comboFinderProcessing ? (
-          <Button className={styles.stopButton} type="button" onClick={onStop} disabled={stopping}>
-            <Icon name="stop" />
-            Stop processing
-          </Button>
+          <div className={styles.stopButton}>
+            <Button type="button" onClick={onStop} disabled={stopping}>
+              <Icon name="stop" />
+              Stop processing
+            </Button>
+          </div>
         ) : (
           <Button primary type="button" onClick={handleProcessClick} disabled={processBtnDisabled}>
             <Icon name="angle double right" style={{ margin: "0", marginRight: "0.3rem" }} /> Process replays

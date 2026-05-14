@@ -39,7 +39,7 @@ function NotifyInput(props: any) {
         <TextArea
           onBlur={() => onChange({ message: msg })}
           value={msg}
-          onChange={(_: any, { value }: any) => setMsg(value)}
+          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setMsg(e.target.value)}
           placeholder="Here's a notification!"
         />
       </Form>

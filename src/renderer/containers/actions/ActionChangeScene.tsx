@@ -45,7 +45,7 @@ function SceneNameInput(props: any) {
   const obsConnected = obsConnectionStatus === OBSConnectionStatus.CONNECTED;
 
   if (!obsConnected) {
-    return <Button content="Connect to OBS" type="button" onClick={connectToOBSAndNotify} />;
+    return <Button type="button" onClick={connectToOBSAndNotify}>Connect to OBS</Button>;
   }
 
   const allScenes = getAllScenes(obsScenes);

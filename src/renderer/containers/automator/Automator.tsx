@@ -84,13 +84,13 @@ export function Automator() {
         {!disableEditButtons && (
           <div>
             <Labelled title="Test run event">
-              <Button disabled={disabledTestButton} onClick={testRunEvent} icon="play" />
+              <Button disabled={disabledTestButton} onClick={testRunEvent}><Icon name="play" /></Button>
             </Labelled>
             <Labelled title="Edit event">
-              <Button onClick={editEvent} icon="pencil" />
+              <Button onClick={editEvent}><Icon name="pencil" /></Button>
             </Labelled>
             <Labelled title={isDisabled ? "Enable event" : "Disable event"}>
-              <Button onClick={toggleEvent} icon={isDisabled ? "check circle" : "window close"} />
+              <Button onClick={toggleEvent}><Icon name={isDisabled ? "check circle" : "window close"} /></Button>
             </Labelled>
           </div>
         )}

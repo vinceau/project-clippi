@@ -1,0 +1,31 @@
+.grid {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  gap: 1em;
+}
+
+.column {
+  flex: 1;
+}
+
+.textCenter {
+  text-align: center;
+}
+
+.alignMiddle {
+  align-items: center;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .stackable .row {
+    flex-direction: column;
+  }
+}
