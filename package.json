@@ -56,7 +56,11 @@
     "extends browserslist-config-erb"
   ],
   "prettier": {
-    "singleQuote": true,
+    "semi": true,
+    "trailingComma": "es5",
+    "singleQuote": false,
+    "printWidth": 120,
+    "tabWidth": 2,
     "overrides": [
       {
         "files": [
