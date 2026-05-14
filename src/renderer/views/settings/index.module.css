@@ -81,7 +81,7 @@
 
 .styledMenu {
   height: 100%;
-  width: 100%;
+  width: 100% !important;
 }
 
 .styledMenu a:global(.item) > i:global(.icon) {
