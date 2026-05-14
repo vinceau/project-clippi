@@ -15,6 +15,7 @@
     "link-modules": "node -r ts-node/register ../../.erb/scripts/link-modules.ts"
   },
   "dependencies": {
+    "@base-ui/react": "^1.4.1",
     "@emotion/core": "^10.0.28",
     "@emotion/styled": "^10.0.27",
     "@octokit/rest": "^18.12.0",
