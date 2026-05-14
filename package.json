@@ -120,6 +120,7 @@
     "@twurple/auth-electron": "^6.2.1",
     "@twurple/chat": "^8.1.4",
     "@vinceau/slp-realtime": "^4.0.0",
+    "clsx": "^2.1.1",
     "comlink": "^4.2.0",
     "electron-context-menu": "^0.15.1",
     "electron-debug": "~3.2.0",
