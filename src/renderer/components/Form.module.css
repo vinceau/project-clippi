@@ -1,0 +1,52 @@
+.label {
+  font-weight: 500;
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+}
+
+.text {
+  font-size: 1.2rem;
+  opacity: 0.8;
+}
+
+.textMargin {
+  margin-top: 1rem;
+}
+
+.field {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.fieldPaddingTop {
+  padding-top: 2rem;
+  padding-bottom: 0;
+}
+
+.fieldPaddingBottom {
+  padding-top: 0;
+  padding-bottom: 2rem;
+}
+
+.fieldPaddingNone {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.borderTop {
+  border-top: solid 0.1rem var(--color-foreground3);
+}
+
+.borderBottom {
+  border-bottom: solid 0.1rem var(--color-foreground3);
+}
+
+.borderBoth {
+  border-top: solid 0.1rem var(--color-foreground3);
+  border-bottom: solid 0.1rem var(--color-foreground3);
+}
+
+.pageHeader {
+  font-variant: all-small-caps;
+  margin-bottom: 2rem;
+}

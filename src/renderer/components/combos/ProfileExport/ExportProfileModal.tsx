@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { css, jsx } from "@emotion/core";
 import { exists } from "common/utils";
 import { clipboard } from "electron";
 import React from "react";
@@ -9,6 +7,8 @@ import { Modal } from "@/ui/Modal/Modal";
 import { TextArea } from "@/ui/TextArea/TextArea";
 
 import { useTheme } from "@/styles";
+
+import styles from "./ExportProfileModal.module.css";
 
 type ExportProfileModalProps = {
   open?: boolean;
@@ -22,7 +22,7 @@ export const ExportProfileModal = React.memo(function ExportProfileModal({
   onDismiss,
 }: ExportProfileModalProps) {
   const theme = useTheme();
-  const timeout = React.useRef<number | undefined>();
+  const timeout = React.useRef<number | undefined>(undefined);
   const [copied, setCopied] = React.useState(false);
 
   const copyProfileToClipboard = React.useCallback(() => {
@@ -45,15 +45,7 @@ export const ExportProfileModal = React.memo(function ExportProfileModal({
           </Form>
         </Modal.Description>
       </Modal.Content>
-      <Modal.Actions
-        css={css`
-          display: flex;
-          justify-content: flex-end;
-          & > button {
-            margin: 0 !important;
-          }
-        `}
-      >
+      <Modal.Actions className={styles.actions}>
         <Button onClick={copyProfileToClipboard}>{copied ? "Copied" : "Copy to clipboard"}</Button>
       </Modal.Actions>
     </Modal>

@@ -1,9 +1,9 @@
-/** @jsx jsx */
-import { css, jsx } from "@emotion/core";
 import React from "react";
 import { FieldArray } from "react-final-form-arrays";
 import { Icon } from "@/ui/Icon/Icon";
 import { Label } from "@/ui/Label/Label";
+
+import styles from "./NameTagForm.module.css";
 
 function NameTagLabel({ name, onClick }: { name: string; onClick: () => void }) {
   return (
@@ -25,7 +25,6 @@ export function NameTagForm({ name, values, push }: { name: string; values: any;
   };
   const onKeyDown = (event: any) => {
     if (event.which === 13) {
-      // Disable sending the related form
       event.preventDefault();
       submit();
     }
@@ -51,16 +50,7 @@ export function NameTagForm({ name, values, push }: { name: string; values: any;
         {({ fields }) => {
           if (fields.length === 0) {
             return (
-              <div
-                css={css`
-                  padding-top: 1rem;
-                  font-size: 0.9em;
-                  font-style: italic;
-                  opacity: 0.5;
-                `}
-              >
-                No tags specified
-              </div>
+              <div className={styles.placeholder}>No tags specified</div>
             );
           }
           return (

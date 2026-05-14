@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { css, jsx } from "@emotion/core";
 import React from "react";
 import { Button } from "@/ui/Button/Button";
 import { Form } from "@/ui/Form/Form";
@@ -10,6 +8,8 @@ import { TextArea } from "@/ui/TextArea/TextArea";
 import { Confirm } from "@/ui/Confirm/Confirm";
 import { Label } from "@/components/Form";
 import { useTheme } from "@/styles";
+
+import styles from "./ImportProfileModal.module.css";
 
 type ImportProfileModalProps = {
   open?: boolean;
@@ -69,15 +69,7 @@ export const ImportProfileModal = React.memo(function ImportProfileModal({
           </Form>
         </Modal.Description>
       </Modal.Content>
-      <Modal.Actions
-        css={css`
-          display: flex;
-          justify-content: flex-end;
-          & > button {
-            margin: 0 !important;
-          }
-        `}
-      >
+      <Modal.Actions className={styles.actions}>
         <Button disabled={!profileName || !profileData} onClick={handleSubmitWithNameCheck}>
           Import
         </Button>

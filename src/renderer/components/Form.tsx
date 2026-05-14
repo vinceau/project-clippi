@@ -1,61 +1,52 @@
-import styled from "@emotion/styled";
+import { clsx } from "clsx";
 import React from "react";
 
-export const FormContainer = styled.div``;
+import styles from "./Form.module.css";
 
-export const PageHeader = styled.h1`
-  font-variant: all-small-caps;
-  margin-bottom: 2rem;
-`;
+export function FormContainer({ children, ...rest }: { children?: React.ReactNode; [key: string]: any }) {
+  return <div {...rest}>{children}</div>;
+}
 
-export const Label = styled.div`
-  &&& {
-    font-weight: 500;
-    font-size: 1.4rem;
-    margin-bottom: 1rem;
-  }
-`;
+export function PageHeader({ children, ...rest }: { children?: React.ReactNode; [key: string]: any }) {
+  return <h1 className={styles.pageHeader} {...rest}>{children}</h1>;
+}
 
-export const Text = styled.p<{
-  margin?: string;
-}>`
-  font-size: 1.2rem;
-  opacity: 0.8;
-  ${(p) =>
-    p.margin !== "none" &&
-    `
-margin-top: 1rem;
-`}
-`;
+export function Label({ children, ...rest }: { children?: React.ReactNode; [key: string]: any }) {
+  return <div className={styles.label} {...rest}>{children}</div>;
+}
 
-export const Field = styled.div<{
+export function Text({ margin, children, ...rest }: { margin?: string; children?: React.ReactNode; [key: string]: any }) {
+  return (
+    <p className={clsx(styles.text, margin !== "none" && styles.textMargin)} {...rest}>
+      {children}
+    </p>
+  );
+}
+
+export function Field({
+  border,
+  padding = "both",
+  children,
+  ...rest
+}: {
   border?: string;
   padding?: string;
-}>`
-  ${(p) =>
-    (p.padding === "top" || p.padding === "both") &&
-    `
-padding-top: 2rem;
-`}
-
-  ${(p) =>
-    (p.padding === "bottom" || p.padding === "both") &&
-    `
-padding-bottom: 2rem;
-`}
-
-${(p) =>
-    (p.border === "top" || p.border === "both") &&
-    `
-border-top: solid 0.1rem ${p.theme.foreground3};
-`}
-
-${(p) =>
-    (p.border === "bottom" || p.border === "both") &&
-    `
-border-bottom: solid 0.1rem ${p.theme.foreground3};
-`}
-`;
-Field.defaultProps = {
-  padding: "both",
-};
+  children?: React.ReactNode;
+  [key: string]: any;
+}) {
+  const borderClass = border === "top" || border === "both" ? (border === "both" ? styles.borderBoth : border === "top" ? styles.borderTop : styles.borderBottom) : border === "bottom" ? styles.borderBottom : undefined;
+  const borderBottomClass = border === "bottom" || border === "both" ? (border === "both" ? styles.borderBoth : border === "bottom" ? styles.borderBottom : undefined) : undefined;
+  const paddingClass = padding === "both" ? styles.field : padding === "top" ? styles.fieldPaddingTop : padding === "bottom" ? styles.fieldPaddingBottom : styles.fieldPaddingNone;
+  return (
+    <div
+      className={clsx(
+        paddingClass,
+        (border === "top" || border === "both") && styles.borderTop,
+        (border === "bottom" || border === "both") && styles.borderBottom,
+      )}
+      {...rest}
+    >
+      {children}
+    </div>
+  );
+}

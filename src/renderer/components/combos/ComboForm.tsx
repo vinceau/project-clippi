@@ -1,4 +1,4 @@
-import styled from "@emotion/styled";
+import { clsx } from "clsx";
 import arrayMutators from "final-form-arrays";
 import React from "react";
 import { Field as FinalField, Form as FinalForm } from "react-final-form";
@@ -25,20 +25,9 @@ import { PerCharPercent } from "./PerCharPercent";
 import { PortSelectAdapter } from "./PortSelection";
 import { ProfileExportContainer } from "./ProfileExport/ProfileExport.container";
 
-type Values = Partial<ComboConfiguration>;
+import styles from "./ComboForm.module.css";
 
-const OuterContainer = styled.div`
-  padding: 2rem 0;
-  display: flex;
-  justify-content: space-between;
-  & > button {
-    margin-bottom: 3px !important;
-  }
-  .delete-button:hover {
-    background-color: #d01919;
-    color: white;
-  }
-`;
+type Values = Partial<ComboConfiguration>;
 
 function ButtonContainer({
   submitting,
@@ -52,13 +41,13 @@ function ButtonContainer({
   onDelete?: () => void;
 }) {
   return (
-    <OuterContainer>
+    <div className={styles.outerContainer}>
       <Button primary type="submit" disabled={submitting}>
         <Icon name="save" />
         Save profile
       </Button>
       <div>
-        <Button className="delete-button" type="button" onClick={onDelete}>
+        <Button className={clsx("delete-button", styles.deleteButton)} type="button" onClick={onDelete}>
           {currentProfile === DEFAULT_PROFILE ? (
             <>
               <Icon name="undo" />
@@ -73,7 +62,7 @@ function ButtonContainer({
         </Button>
         <ProfileExportContainer currentProfileData={currentProfileData} />
       </div>
-    </OuterContainer>
+    </div>
   );
 }
 

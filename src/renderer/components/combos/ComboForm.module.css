@@ -1,0 +1,14 @@
+.outerContainer {
+  padding: 2rem 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.outerContainer > button {
+  margin-bottom: 3px !important;
+}
+
+.deleteButton:hover {
+  background-color: #d01919;
+  color: white;
+}

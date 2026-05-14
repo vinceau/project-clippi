@@ -1,9 +1,9 @@
-/** @jsx jsx */
-import { css, jsx } from "@emotion/core";
 import React from "react";
 import { Icon } from "@/ui/Icon/Icon";
 import { Input } from "@/ui/Input/Input";
 import { Label } from "@/ui/Label/Label";
+
+import styles from "./KeywordsInput.module.css";
 
 function KeywordLabel({ name, onClick }: { name: string; onClick: () => void }) {
   return (
@@ -18,7 +18,6 @@ export function KeywordsInput({ value, onChange }: { value?: string[]; onChange?
   const currentKeywords = value ?? [];
   const [currentInput, setCurrentInput] = React.useState("");
   const submit = () => {
-    // console.log("submit called");
     if (currentInput && !currentKeywords.includes(currentInput)) {
       const newValues = [...currentKeywords, currentInput];
       onChange?.(newValues);
@@ -38,7 +37,6 @@ export function KeywordsInput({ value, onChange }: { value?: string[]; onChange?
   const onKeyDown: React.KeyboardEventHandler = (event) => {
     console.log("keydown");
     if (event.which === 13) {
-      // Disable sending the related form
       event.preventDefault();
       submit();
     }
@@ -62,16 +60,7 @@ export function KeywordsInput({ value, onChange }: { value?: string[]; onChange?
         />
       </div>
       {currentKeywords.length === 0 ? (
-        <div
-          css={css`
-            padding-top: 1rem;
-            font-size: 0.9em;
-            font-style: italic;
-            opacity: 0.5;
-          `}
-        >
-          No tags specified
-        </div>
+        <div className={styles.placeholder}>No tags specified</div>
       ) : (
         <div style={{ paddingTop: "1rem" }}>
           {currentKeywords.map((keyword, index) => (
