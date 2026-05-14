@@ -3,7 +3,7 @@ import type { GameStartType } from "@slippi/slippi-js";
 import { invalidFilename } from "common/utils";
 import insertTextAtCursor from "insert-text-at-cursor";
 import * as React from "react";
-import { TextArea } from "semantic-ui-react";
+import { TextArea } from "@/ui/TextArea/TextArea";
 
 import { ContextOptions } from "@/components/ContextOptions";
 import { Field, Label } from "@/components/Form";

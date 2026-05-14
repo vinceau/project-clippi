@@ -1,7 +1,8 @@
 import { assertExtension } from "common/utils";
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Checkbox, Form } from "semantic-ui-react";
+import { Checkbox } from "@/ui/Checkbox/Checkbox";
+import { Form } from "@/ui/Form/Form";
 
 import { FileInput } from "@/components/FileInput";
 import { Field, FormContainer, Label } from "@/components/Form";

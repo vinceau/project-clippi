@@ -1,7 +1,8 @@
 import React from "react";
 import { Field } from "react-final-form";
-import type { GridColumnProps } from "semantic-ui-react";
-import { Checkbox, Grid } from "semantic-ui-react";
+import type { GridColumnProps } from "@/ui/Grid/Grid";
+import { Checkbox } from "@/ui/Checkbox/Checkbox";
+import { Grid } from "@/ui/Grid/Grid";
 
 export interface PortSelectionProps {
   label?: string;

@@ -3,7 +3,7 @@ import { css, jsx } from "@emotion/core";
 import styled from "@emotion/styled";
 import { darken, lighten, transparentize } from "polished";
 import React from "react";
-import { Icon } from "semantic-ui-react";
+import { Icon } from "@/ui/Icon/Icon";
 
 import { generateEventName } from "@/lib/events";
 import type { NamedEventConfig } from "@/store/models/automator";

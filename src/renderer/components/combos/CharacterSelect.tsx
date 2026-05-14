@@ -8,7 +8,7 @@ import * as React from "react";
 import { Field } from "react-final-form";
 import type { MultiValueProps, OptionProps, OptionTypeBase, SingleValueProps } from "react-select";
 import Select, { components } from "react-select";
-import { Button } from "semantic-ui-react";
+import { Button } from "@/ui/Button/Button";
 
 import { ThemeMode, useTheme } from "@/styles";
 

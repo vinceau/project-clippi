@@ -19,17 +19,16 @@ const Outer = styled.i<{
       background-color: ${(p) => (p.color ? p.color : p.theme.foreground)} !important;
       height: 100%;
       width: 100%;
-      display: block;
     }
   }
 `;
 
 export interface CustomIconProps {
   image: any;
-  color?: string;
   size?: IconSizeProp;
+  color?: string;
 }
 
 export const CustomIcon: React.FC<CustomIconProps> = (props) => {
-  return <Outer image={props.image} color={props.color} aria-hidden="true" className={`icon ${props.size}`} />;
+  return <Outer image={props.image} color={props.color} className={`icon ${props.size || ""}`} />;
 };

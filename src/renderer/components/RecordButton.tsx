@@ -1,5 +1,6 @@
 import React from "react";
-import { Button, Dropdown } from "semantic-ui-react";
+import { Button } from "@/ui/Button/Button";
+import { Dropdown } from "@/ui/Dropdown/Dropdown";
 
 export const RecordButton: React.FC<{
   onClick?: () => void;

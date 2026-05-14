@@ -1,9 +1,13 @@
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 import React from "react";
-import { Button, Form, Input, Modal, TextArea } from "semantic-ui-react";
+import { Button } from "@/ui/Button/Button";
+import { Form } from "@/ui/Form/Form";
+import { Input } from "@/ui/Input/Input";
+import { Modal } from "@/ui/Modal/Modal";
+import { TextArea } from "@/ui/TextArea/TextArea";
 
-import { Confirm } from "@/components/Confirm";
+import { Confirm } from "@/ui/Confirm/Confirm";
 import { Label } from "@/components/Form";
 import { useTheme } from "@/styles";
 

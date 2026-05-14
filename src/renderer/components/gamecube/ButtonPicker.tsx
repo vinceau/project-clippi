@@ -1,7 +1,9 @@
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 import React from "react";
-import { Button, Icon, Modal } from "semantic-ui-react";
+import { Button } from "@/ui/Button/Button";
+import { Icon } from "@/ui/Icon/Icon";
+import { Modal } from "@/ui/Modal/Modal";
 
 import { generateButtonComboPreview } from "@/lib/inputs";
 import { useTheme } from "@/styles";

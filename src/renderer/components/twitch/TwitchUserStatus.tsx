@@ -1,5 +1,7 @@
 import * as React from "react";
-import { Button, Card, Image } from "semantic-ui-react";
+import { Button } from "@/ui/Button/Button";
+import { Card } from "@/ui/Card/Card";
+import { Image } from "@/ui/Image/Image";
 
 import defaultUserImage from "@/styles/images/user.svg";
 

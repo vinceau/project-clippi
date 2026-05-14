@@ -1,7 +1,9 @@
 import styled from "@emotion/styled";
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Form, Icon } from "semantic-ui-react";
+import { Button } from "@/ui/Button/Button";
+import { Form } from "@/ui/Form/Form";
+import { Icon } from "@/ui/Icon/Icon";
 
 import { ConnectionStatusCard } from "@/components/ConnectionStatusCard";
 import { Field, FormContainer, Label, PageHeader } from "@/components/Form";

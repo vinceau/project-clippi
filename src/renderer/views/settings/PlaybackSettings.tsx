@@ -4,7 +4,8 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { FileInput } from "@/components/FileInput";
-import { Field, FormContainer, Label, PageHeader, Text, Toggle } from "@/components/Form";
+import { Field, FormContainer, Label, PageHeader, Text } from "@/components/Form";
+import { Toggle } from "@/ui/Toggle/Toggle";
 import { Labelled } from "@/components/Labelled";
 import { getDolphinExecutableNames, getDolphinPath } from "@/lib/dolphin";
 import type { Dispatch, iRootState } from "@/store";

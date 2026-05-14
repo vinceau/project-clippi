@@ -1,7 +1,8 @@
 import { produce } from "immer";
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Icon } from "semantic-ui-react";
+import { Button } from "@/ui/Button/Button";
+import { Icon } from "@/ui/Icon/Icon";
 
 import { InlineDropdown } from "@/components/InlineInputs";
 import type { ActionTypeGenerator, Context } from "@/lib/event_actions";

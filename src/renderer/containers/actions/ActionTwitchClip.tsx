@@ -2,7 +2,8 @@ import { delay as waitMillis, parseSecondsDelayValue } from "common/utils";
 import { produce } from "immer";
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Icon, Loader } from "semantic-ui-react";
+import { Icon } from "@/ui/Icon/Icon";
+import { Loader } from "@/ui/Loader/Loader";
 
 import { DelayInput, NotifyInput, SimpleInput } from "@/components/InlineInputs";
 import { TwitchConnectButton } from "@/components/twitch";

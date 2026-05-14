@@ -2,7 +2,9 @@ import { writeFile } from "common/utils";
 import formatter from "formatter";
 import { produce } from "immer";
 import * as React from "react";
-import { Form, Icon, TextArea } from "semantic-ui-react";
+import { Form } from "@/ui/Form/Form";
+import { Icon } from "@/ui/Icon/Icon";
+import { TextArea } from "@/ui/TextArea/TextArea";
 
 import { FileInput } from "@/components/FileInput";
 import { InlineDropdown } from "@/components/InlineInputs";

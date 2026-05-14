@@ -2,7 +2,7 @@ import { capitalize, delay as waitMillis, parseSecondsDelayValue } from "common/
 import { produce } from "immer";
 import * as React from "react";
 
-import { CustomIcon } from "@/components/CustomIcon";
+import { CustomIcon } from "@/ui/CustomIcon/CustomIcon";
 import { DelayInput, InlineDropdown, NotifyInput } from "@/components/InlineInputs";
 import type { ActionTypeGenerator, Context } from "@/lib/event_actions";
 import { obsConnection, OBSRecordingAction } from "@/lib/obs";

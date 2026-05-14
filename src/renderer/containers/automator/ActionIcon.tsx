@@ -1,5 +1,5 @@
 import React from "react";
-import { Icon } from "semantic-ui-react";
+import { Icon } from "@/ui/Icon/Icon";
 
 import { actionComponents } from "@/containers/actions";
 

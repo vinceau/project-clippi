@@ -1,6 +1,8 @@
 import formatter from "formatter";
 import * as React from "react";
-import { Form, Icon, TextArea } from "semantic-ui-react";
+import { Form } from "@/ui/Form/Form";
+import { Icon } from "@/ui/Icon/Icon";
+import { TextArea } from "@/ui/TextArea/TextArea";
 
 import type { ActionTypeGenerator, Context } from "@/lib/event_actions";
 import { notify } from "@/lib/utils";

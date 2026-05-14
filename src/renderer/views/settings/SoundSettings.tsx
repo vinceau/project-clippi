@@ -1,7 +1,10 @@
 import styled from "@emotion/styled";
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Header, Icon, Segment } from "semantic-ui-react";
+import { Button } from "@/ui/Button/Button";
+import { Header } from "@/ui/Header/Header";
+import { Icon } from "@/ui/Icon/Icon";
+import { Segment } from "@/ui/Segment/Segment";
 
 import { FormContainer, PageHeader } from "@/components/Form";
 import { SoundFileInfo } from "@/components/SoundFileInfo";

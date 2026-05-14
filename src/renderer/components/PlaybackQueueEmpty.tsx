@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import React from "react";
-import { Button } from "semantic-ui-react";
+import { Button } from "@/ui/Button/Button";
 
 import { SlippiIcon } from "./SlippiIcon";
 

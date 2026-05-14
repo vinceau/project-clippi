@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import type { TwitchClip } from "common/types";
 import { transparentize } from "polished";
 import React from "react";
-import { Icon } from "semantic-ui-react";
+import { Icon } from "@/ui/Icon/Icon";
 import { format } from "timeago.js";
 
 import { device } from "@/styles/device";

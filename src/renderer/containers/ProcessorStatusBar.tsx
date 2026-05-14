@@ -6,9 +6,10 @@ import { invalidFilename } from "common/utils";
 import fs from "fs";
 import React from "react";
 import { useSelector } from "react-redux";
-import { Button, Icon } from "semantic-ui-react";
+import { Button } from "@/ui/Button/Button";
+import { Icon } from "@/ui/Icon/Icon";
 
-import { Confirm } from "@/components/Confirm";
+import { Confirm } from "@/ui/Confirm/Confirm";
 import { startProcessing, stopProcessing } from "@/lib/fileProcessor";
 import { mapConfigurationToFilterSettings } from "@/lib/profile";
 import type { iRootState } from "@/store";

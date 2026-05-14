@@ -1,6 +1,9 @@
 import { exec } from "child_process";
 import * as React from "react";
-import { Form, Icon, Message, TextArea } from "semantic-ui-react";
+import { Form } from "@/ui/Form/Form";
+import { Icon } from "@/ui/Icon/Icon";
+import { Message } from "@/ui/Message/Message";
+import { TextArea } from "@/ui/TextArea/TextArea";
 
 import { Text } from "@/components/Form";
 import type { ActionTypeGenerator, Context } from "@/lib/event_actions";

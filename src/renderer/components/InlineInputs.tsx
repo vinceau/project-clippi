@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import * as React from "react";
-import { Dropdown, Input } from "semantic-ui-react";
+import { Dropdown } from "@/ui/Dropdown/Dropdown";
+import { Input } from "@/ui/Input/Input";
 
 const generateOptions = (
   events: string[],

@@ -7,7 +7,7 @@ import { UpdateStatus } from "common/types";
 import { shell } from "electron";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Button } from "semantic-ui-react";
+import { Button } from "@/ui/Button/Button";
 import { format } from "timeago.js";
 
 import { ExternalLink as A } from "@/components/ExternalLink";

@@ -1,6 +1,6 @@
 import React from "react";
 import { Field } from "react-final-form";
-import { Button } from "semantic-ui-react";
+import { Button } from "@/ui/Button/Button";
 
 import { ThemeMode, useTheme } from "@/styles";
 

@@ -3,9 +3,11 @@ import { transparentize } from "polished";
 import React from "react";
 import { useSelector } from "react-redux";
 import { Redirect, Route, Switch, useHistory, useRouteMatch } from "react-router-dom";
-import { Icon, Label, Menu } from "semantic-ui-react";
+import { Icon } from "@/ui/Icon/Icon";
+import { Label } from "@/ui/Label/Label";
+import { Menu } from "@/ui/Menu/Menu";
 
-import { CustomIcon } from "@/components/CustomIcon";
+import { CustomIcon } from "@/ui/CustomIcon/CustomIcon";
 import { Labelled } from "@/components/Labelled";
 import { SlippiIcon } from "@/components/SlippiIcon";
 import type { iRootState } from "@/store";

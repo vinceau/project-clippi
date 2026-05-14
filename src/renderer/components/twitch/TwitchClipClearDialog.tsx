@@ -1,5 +1,8 @@
 import React from "react";
-import { Button, Header, Icon, Modal } from "semantic-ui-react";
+import { Button } from "@/ui/Button/Button";
+import { Header } from "@/ui/Header/Header";
+import { Icon } from "@/ui/Icon/Icon";
+import { Modal } from "@/ui/Modal/Modal";
 
 import { useTheme } from "@/styles";
 

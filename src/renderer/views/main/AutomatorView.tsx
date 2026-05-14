@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import React from "react";
-import { Icon } from "semantic-ui-react";
+import { Icon } from "@/ui/Icon/Icon";
 
 import { Text } from "@/components/Form";
 import { Automator } from "@/containers/automator/Automator";

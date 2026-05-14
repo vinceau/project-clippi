@@ -4,7 +4,10 @@ import styled from "@emotion/styled";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
-import { Button, Icon, Modal, Select } from "semantic-ui-react";
+import { Button } from "@/ui/Button/Button";
+import { Icon } from "@/ui/Icon/Icon";
+import { Modal } from "@/ui/Modal/Modal";
+import { Select } from "@/ui/Select/Select";
 
 import { PortSelection } from "@/components/combos/PortSelection";
 import { Field, Label, Text } from "@/components/Form";

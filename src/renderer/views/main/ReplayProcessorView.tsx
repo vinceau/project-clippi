@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import React from "react";
 import { useSelector } from "react-redux";
-import { Icon } from "semantic-ui-react";
+import { Icon } from "@/ui/Icon/Icon";
 
 import { Text } from "@/components/Form";
 import { ProgressBar } from "@/components/ProgressBar";

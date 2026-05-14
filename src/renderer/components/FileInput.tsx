@@ -1,6 +1,8 @@
 import styled from "@emotion/styled";
 import * as React from "react";
-import { Button, Icon, Input } from "semantic-ui-react";
+import { Button } from "@/ui/Button/Button";
+import { Icon } from "@/ui/Icon/Icon";
+import { Input } from "@/ui/Input/Input";
 
 import { getFilePath, getFolderPath, openFileOrParentFolder } from "@/lib/utils";
 

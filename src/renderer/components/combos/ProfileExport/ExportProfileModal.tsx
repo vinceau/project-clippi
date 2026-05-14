@@ -3,7 +3,10 @@ import { css, jsx } from "@emotion/core";
 import { exists } from "common/utils";
 import { clipboard } from "electron";
 import React from "react";
-import { Button, Form, Modal, TextArea } from "semantic-ui-react";
+import { Button } from "@/ui/Button/Button";
+import { Form } from "@/ui/Form/Form";
+import { Modal } from "@/ui/Modal/Modal";
+import { TextArea } from "@/ui/TextArea/TextArea";
 
 import { useTheme } from "@/styles";
 

@@ -1,8 +1,13 @@
 import styled from "@emotion/styled";
 import React from "react";
-import { Button, Divider, Grid, Header, Input, Segment } from "semantic-ui-react";
+import { Button } from "@/ui/Button/Button";
+import { Divider } from "@/ui/Divider/Divider";
+import { Grid } from "@/ui/Grid/Grid";
+import { Header } from "@/ui/Header/Header";
+import { Input } from "@/ui/Input/Input";
+import { Segment } from "@/ui/Segment/Segment";
 
-import { CustomIcon } from "@/components/CustomIcon";
+import { CustomIcon } from "@/ui/CustomIcon/CustomIcon";
 import { SlippiIcon } from "@/components/SlippiIcon";
 import { dispatcher } from "@/store";
 import { device } from "@/styles/device";

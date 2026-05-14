@@ -2,9 +2,13 @@
 import { css, jsx } from "@emotion/core";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Header, Icon, Loader, Segment } from "semantic-ui-react";
+import { Header } from "@/ui/Header/Header";
+import { Icon } from "@/ui/Icon/Icon";
+import { Loader } from "@/ui/Loader/Loader";
+import { Segment } from "@/ui/Segment/Segment";
 
-import { Field, FormContainer, PageHeader, Toggle } from "@/components/Form";
+import { Field, FormContainer, PageHeader } from "@/components/Form";
+import { Toggle } from "@/ui/Toggle/Toggle";
 import { TwitchClipList, TwitchConnectButton, TwitchUserStatus } from "@/components/twitch";
 import { TwitchClipClearDialog } from "@/components/twitch/TwitchClipClearDialog";
 import type { Dispatch, iRootState } from "@/store";

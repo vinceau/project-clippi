@@ -2,7 +2,8 @@ import styled from "@emotion/styled";
 import { darken, lighten } from "polished";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Icon } from "semantic-ui-react";
+import { Button } from "@/ui/Button/Button";
+import { Icon } from "@/ui/Icon/Icon";
 
 import { DropPad } from "@/components/DropPad";
 import { Text } from "@/components/Form";

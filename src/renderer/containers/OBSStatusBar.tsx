@@ -2,7 +2,8 @@ import styled from "@emotion/styled";
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { Button, Icon } from "semantic-ui-react";
+import { Button } from "@/ui/Button/Button";
+import { Icon } from "@/ui/Icon/Icon";
 
 import { ConnectionStatusDisplay } from "@/components/ConnectionStatusDisplay";
 import { Labelled } from "@/components/Labelled";

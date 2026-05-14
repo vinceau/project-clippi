@@ -6,7 +6,7 @@ import { transparentize } from "polished";
 import { darken, lighten } from "polished";
 import React from "react";
 import { Draggable } from "react-beautiful-dnd";
-import { Icon } from "semantic-ui-react";
+import { Icon } from "@/ui/Icon/Icon";
 
 import { ThemeMode, useTheme } from "@/styles";
 

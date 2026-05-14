@@ -1,6 +1,6 @@
 import { generateFileRenameContext } from "common/context";
 import * as React from "react";
-import { Label } from "semantic-ui-react";
+import { Label } from "@/ui/Label/Label";
 
 import { contextDescriptions } from "@/lib/contextDescriptions";
 import type { Context } from "@/lib/event_actions";

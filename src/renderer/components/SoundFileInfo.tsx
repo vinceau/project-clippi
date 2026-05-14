@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { transparentize } from "polished";
 import React from "react";
-import { Icon } from "semantic-ui-react";
+import { Icon } from "@/ui/Icon/Icon";
 
 import { Labelled } from "./Labelled";
 

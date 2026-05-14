@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import React from "react";
-import { Header } from "semantic-ui-react";
+import { Header } from "@/ui/Header/Header";
 
 import { Labelled } from "@/components/Labelled";
 import { ScanningDot } from "@/components/ScanningDot";

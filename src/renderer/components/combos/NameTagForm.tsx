@@ -2,7 +2,8 @@
 import { css, jsx } from "@emotion/core";
 import React from "react";
 import { FieldArray } from "react-final-form-arrays";
-import { Icon, Label } from "semantic-ui-react";
+import { Icon } from "@/ui/Icon/Icon";
+import { Label } from "@/ui/Label/Label";
 
 const NameTagLabel: React.FC<{
   name: string;

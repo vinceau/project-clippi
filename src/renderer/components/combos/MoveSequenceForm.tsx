@@ -2,7 +2,9 @@ import { getMoveName, MoveId } from "@vinceau/slp-realtime";
 import React from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { Field } from "react-final-form";
-import { Button, Dropdown, Icon } from "semantic-ui-react";
+import { Button } from "@/ui/Button/Button";
+import { Dropdown } from "@/ui/Dropdown/Dropdown";
+import { Icon } from "@/ui/Icon/Icon";
 
 import { Labelled } from "../Labelled";
 

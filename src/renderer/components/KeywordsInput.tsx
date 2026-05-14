@@ -1,7 +1,9 @@
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 import React from "react";
-import { Icon, Input, Label } from "semantic-ui-react";
+import { Icon } from "@/ui/Icon/Icon";
+import { Input } from "@/ui/Input/Input";
+import { Label } from "@/ui/Label/Label";
 
 const KeywordLabel = ({ name, onClick }: { name: string; onClick: () => void }) => {
   return (

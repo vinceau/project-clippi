@@ -2,8 +2,8 @@ import styled from "@emotion/styled";
 import { darken, lighten } from "polished";
 import * as React from "react";
 import { toast } from "react-toastify";
-import type { DropdownProps } from "semantic-ui-react";
-import { Dropdown } from "semantic-ui-react";
+import type { DropdownProps } from "@/ui/Dropdown/Dropdown";
+import { Dropdown } from "@/ui/Dropdown/Dropdown";
 
 import { ThemeMode, useTheme } from "@/styles";
 

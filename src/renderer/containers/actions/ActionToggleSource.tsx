@@ -2,9 +2,9 @@ import { delay as waitMillis } from "common/utils";
 import { produce } from "immer";
 import * as React from "react";
 import { useSelector } from "react-redux";
-import { Button } from "semantic-ui-react";
+import { Button } from "@/ui/Button/Button";
 
-import { CustomIcon } from "@/components/CustomIcon";
+import { CustomIcon } from "@/ui/CustomIcon/CustomIcon";
 import { DelayInput, InlineDropdown } from "@/components/InlineInputs";
 import type { ActionTypeGenerator, Context } from "@/lib/event_actions";
 import { connectToOBSAndNotify, getAllSceneItems, obsConnection, OBSConnectionStatus } from "@/lib/obs";

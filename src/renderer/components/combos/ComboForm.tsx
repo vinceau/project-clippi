@@ -3,7 +3,10 @@ import arrayMutators from "final-form-arrays";
 import React from "react";
 import { Field as FinalField, Form as FinalForm } from "react-final-form";
 import { useSelector } from "react-redux";
-import { Accordion, Button, Form as SemanticForm, Icon } from "semantic-ui-react";
+import { Accordion } from "@/ui/Accordion/Accordion";
+import { Button } from "@/ui/Button/Button";
+import { Form as SemanticForm } from "@/ui/Form/Form";
+import { Icon } from "@/ui/Icon/Icon";
 
 import { CodeBlock } from "@/components/CodeBlock";
 import { Field, Label, Text } from "@/components/Form";
@@ -11,7 +14,7 @@ import type { ComboConfiguration } from "@/lib/profile";
 import type { iRootState } from "@/store";
 import { DEFAULT_PROFILE } from "@/store/models/slippi";
 
-import { Confirm } from "../Confirm";
+import { Confirm } from "@/ui/Confirm/Confirm";
 import { CharacterSelectAdapter, CustomCharacterListAdapter } from "./CharacterSelect";
 import { ToggleAdapter } from "./FormAdapters";
 import { MoveSequenceFormAdapter } from "./MoveSequenceForm";

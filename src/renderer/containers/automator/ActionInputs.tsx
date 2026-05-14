@@ -1,6 +1,6 @@
 import { produce } from "immer";
 import React from "react";
-import { Icon } from "semantic-ui-react";
+import { Icon } from "@/ui/Icon/Icon";
 
 import { InlineDropdown } from "@/components/InlineInputs";
 import { Labelled } from "@/components/Labelled";

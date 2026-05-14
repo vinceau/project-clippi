@@ -2,7 +2,8 @@
 import { css, jsx } from "@emotion/core";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Icon } from "semantic-ui-react";
+import { Button } from "@/ui/Button/Button";
+import { Icon } from "@/ui/Icon/Icon";
 
 import { Labelled } from "@/components/Labelled";
 import { streamManager } from "@/lib/realtime";
