@@ -20,7 +20,7 @@ const SectionLabel = styled.h2`
   margin-bottom: 0;
 `;
 
-export const ProcessSection = ({
+export function ProcessSection({
   open,
   onOpenChange,
   label,
@@ -30,16 +30,16 @@ export const ProcessSection = ({
   onOpenChange: (open: boolean) => void;
   label: string;
   children?: React.ReactNode;
-}) => {
+}) {
   return (
     <Outer>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <SectionLabel onClick={() => onOpenChange(!open)}>{label}</SectionLabel>
-        <Checkbox toggle={true} checked={open} onChange={(_, data) => onOpenChange(Boolean(data.checked))} />
+        <Checkbox toggle checked={open} onChange={(_, data) => onOpenChange(Boolean(data.checked))} />
       </div>
       <SlideReveal open={open}>
         <div style={{ marginTop: "10px" }}>{children}</div>
       </SlideReveal>
     </Outer>
   );
-};
+}

@@ -34,7 +34,7 @@ const ContentColumn = styled.div`
   background: ${({ theme }) => theme.background};
 `;
 
-export const MainView = () => {
+export function MainView() {
   const match = useRouteMatch();
   const latestPath = useSelector((state: iRootState) => state.tempContainer.latestPath);
   const updateAvailable = useSelector((state: iRootState) => state.tempContainer.updateAvailable);
@@ -67,4 +67,4 @@ export const MainView = () => {
       </div>
     </SettingsContainer>
   );
-};
+}

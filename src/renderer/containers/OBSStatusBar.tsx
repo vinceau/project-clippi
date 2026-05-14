@@ -46,7 +46,7 @@ const StopButton = styled(Button)`
   }
 `;
 
-export const OBSStatusBar = () => {
+export function OBSStatusBar() {
   const history = useHistory();
   const autoNameRecordedFiles = useSelector((state: iRootState) => state.appContainer.autoNameRecordedFiles);
   const recordSeparateClips = useSelector((state: iRootState) => state.filesystem.recordSeparateClips);
@@ -95,10 +95,10 @@ export const OBSStatusBar = () => {
   const recordingButtonTitle = !obsIsConnected
     ? "Connect to OBS to enable recording"
     : obsIsRecording
-    ? "Recording in progress"
-    : recordValue === RecordingMethod.SEPARATE
-    ? "Record each item as a separate video"
-    : "Record all items together as a single video";
+      ? "Recording in progress"
+      : recordValue === RecordingMethod.SEPARATE
+        ? "Record each item as a separate video"
+        : "Record all items together as a single video";
   const options = Object.entries(recordingOptions).map(([key, val]) => ({ ...val, value: key }));
   return (
     <Outer>
@@ -132,7 +132,7 @@ export const OBSStatusBar = () => {
                 {recordButtonText}
               </RecordButton>
             </Labelled>
-            <Button primary={true} onClick={onPlay} disabled={dolphinQueue.length === 0}>
+            <Button primary onClick={onPlay} disabled={dolphinQueue.length === 0}>
               <Icon name="play" />
               Play
             </Button>
@@ -141,7 +141,7 @@ export const OBSStatusBar = () => {
       </div>
     </Outer>
   );
-};
+}
 
 export const displayOBSStatus = (
   connectionStatus: OBSConnectionStatus,

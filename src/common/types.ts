@@ -67,39 +67,39 @@ export type ResponseType<X extends Message> =
   X extends Message.AuthenticateTwitch
     ? TwitchUser | null // Respond with an error message if necessary
     : X extends Message.CreateTwitchClip
-    ? TwitchClip | null // clip ID or null if error
-    : X extends Message.SignOutTwitch
-    ? any
-    : X extends Message.Notify
-    ? void
-    : X extends Message.ToggleTheme
-    ? void // Return any payload to renderer
-    : X extends Message.SelectDirectory
-    ? string[]
-    : X extends Message.CheckForUpdates
-    ? void
-    : X extends Message.InstallUpdateAndRestart
-    ? void
-    : X extends Message.DownloadUpdate
-    ? void
-    : X extends Message.VersionUpdateStatus
-    ? VersionUpdatePayload
-    : never;
+      ? TwitchClip | null // clip ID or null if error
+      : X extends Message.SignOutTwitch
+        ? any
+        : X extends Message.Notify
+          ? void
+          : X extends Message.ToggleTheme
+            ? void // Return any payload to renderer
+            : X extends Message.SelectDirectory
+              ? string[]
+              : X extends Message.CheckForUpdates
+                ? void
+                : X extends Message.InstallUpdateAndRestart
+                  ? void
+                  : X extends Message.DownloadUpdate
+                    ? void
+                    : X extends Message.VersionUpdateStatus
+                      ? VersionUpdatePayload
+                      : never;
 
 export type RequestType<X extends Message> =
   // renderer to main
   X extends Message.AuthenticateTwitch
     ? { scopes: string[] }
     : X extends Message.CreateTwitchClip
-    ? { channel?: string; postToChat?: boolean }
-    : X extends Message.SignOutTwitch
-    ? any
-    : X extends Message.Notify
-    ? { message: string; title?: string }
-    : X extends Message.SelectDirectory
-    ? { options: any; save?: boolean }
-    : X extends Message.ToggleTheme
-    ? { theme: "light" | "dark" } // Tell the main process which theme we want to apply
-    : X extends Message.CheckForUpdates
-    ? void
-    : never;
+      ? { channel?: string; postToChat?: boolean }
+      : X extends Message.SignOutTwitch
+        ? any
+        : X extends Message.Notify
+          ? { message: string; title?: string }
+          : X extends Message.SelectDirectory
+            ? { options: any; save?: boolean }
+            : X extends Message.ToggleTheme
+              ? { theme: "light" | "dark" } // Tell the main process which theme we want to apply
+              : X extends Message.CheckForUpdates
+                ? void
+                : never;

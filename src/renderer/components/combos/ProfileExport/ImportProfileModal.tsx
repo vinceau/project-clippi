@@ -44,7 +44,7 @@ export const ImportProfileModal = React.memo(function ImportProfileModal({
   }, [existingProfileNames, handleSubmit, profileName]);
 
   return (
-    <Modal className={theme.themeName} open={open} closeIcon={true} onClose={onDismiss}>
+    <Modal className={theme.themeName} open={open} closeIcon onClose={onDismiss}>
       <Modal.Header>Import profile</Modal.Header>
       <Modal.Content>
         <Modal.Description>
@@ -52,7 +52,7 @@ export const ImportProfileModal = React.memo(function ImportProfileModal({
             <div style={{ marginBottom: 10 }}>
               <Label>Profile name</Label>
               <Input
-                fluid={true}
+                fluid
                 placeholder="Profile name"
                 value={profileName}
                 onChange={(_: any, { value }: any) => setProfileName(value)}

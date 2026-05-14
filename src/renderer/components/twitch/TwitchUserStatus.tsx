@@ -7,7 +7,7 @@ import defaultUserImage from "@/styles/images/user.svg";
 
 import { ExternalLink as A } from "../ExternalLink";
 
-export const TwitchUserStatus = ({
+export function TwitchUserStatus({
   displayName,
   channel,
   image,
@@ -17,8 +17,8 @@ export const TwitchUserStatus = ({
   channel: string;
   image?: any;
   onSignOut: () => void;
-}) => {
-  const userImage = image ? image : defaultUserImage;
+}) {
+  const userImage = image || defaultUserImage;
   const url = `twitch.tv/${channel}`;
   return (
     <div style={{ padding: "3px" }}>
@@ -38,4 +38,4 @@ export const TwitchUserStatus = ({
       </Card>
     </div>
   );
-};
+}

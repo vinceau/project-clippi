@@ -6,7 +6,7 @@ import { Modal } from "@/ui/Modal/Modal";
 
 import { useTheme } from "@/styles";
 
-export const TwitchClipClearDialog = ({ trigger, onClear }: { trigger: React.ReactNode; onClear: () => void }) => {
+export function TwitchClipClearDialog({ trigger, onClear }: { trigger: React.ReactNode; onClear: () => void }) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const onSubmit = React.useCallback(() => {
@@ -37,4 +37,4 @@ export const TwitchClipClearDialog = ({ trigger, onClear }: { trigger: React.Rea
       </Modal.Actions>
     </Modal>
   );
-};
+}

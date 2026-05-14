@@ -28,7 +28,7 @@ interface FileInputProps extends Record<string, any> {
   saveFile?: boolean;
 }
 
-export const FileInput = ({ value, directory, onChange, fileTypeFilters, saveFile, placeholder }: FileInputProps) => {
+export function FileInput({ value, directory, onChange, fileTypeFilters, saveFile, placeholder }: FileInputProps) {
   const [filesPath, setFilesPath] = React.useState<string>(value);
 
   // Make sure we display the correct value
@@ -66,7 +66,7 @@ export const FileInput = ({ value, directory, onChange, fileTypeFilters, saveFil
       <Input
         style={{ width: "100%" }}
         label={
-          <Button onClick={() => openFileOrParentFolder(filesPath)} disabled={!Boolean(filesPath)}>
+          <Button onClick={() => openFileOrParentFolder(filesPath)} disabled={!filesPath}>
             <Labelled title="Open location">
               <NoMarginIcon name="folder open outline" />
             </Labelled>
@@ -80,4 +80,4 @@ export const FileInput = ({ value, directory, onChange, fileTypeFilters, saveFil
       />
     </Outer>
   );
-};
+}

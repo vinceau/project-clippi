@@ -9,7 +9,7 @@ import type { ComboConfiguration } from "@/lib/profile";
 import type { Dispatch, iRootState } from "@/store";
 import { DEFAULT_PROFILE } from "@/store/models/slippi";
 
-export const FilterOptions = () => {
+export function FilterOptions() {
   const { currentProfile, comboProfiles } = useSelector((state: iRootState) => state.slippi);
   const profileOptions = Object.keys(comboProfiles);
   const initial: ComboConfiguration = JSON.parse(comboProfiles[currentProfile]);
@@ -58,4 +58,4 @@ export const FilterOptions = () => {
       <ComboForm initialValues={initial} onSubmit={onSubmit} onDelete={onDelete} currentProfile={currentProfile} />
     </FormContainer>
   );
-};
+}

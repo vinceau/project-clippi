@@ -7,10 +7,10 @@ import invertedSlippiLogoSVG from "@/styles/images/slippi-logo-invert.svg";
 import { CustomIcon } from "@/ui/CustomIcon/CustomIcon";
 import type { CustomIconProps } from "@/ui/CustomIcon/CustomIcon";
 
-export const SlippiIcon = (props: Omit<CustomIconProps, "image">) => {
+export function SlippiIcon(props: Omit<CustomIconProps, "image">) {
   const { themeName } = useTheme();
   if (themeName === ThemeMode.LIGHT) {
     return <CustomIcon image={invertedSlippiLogoSVG} {...props} />;
   }
   return <CustomIcon image={slippiLogoSVG} {...props} />;
-};
+}

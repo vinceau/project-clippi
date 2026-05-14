@@ -1,1 +1,1 @@
-export { Image } from 'semantic-ui-react';
+export { Image } from "semantic-ui-react";

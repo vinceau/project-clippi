@@ -1,1 +1,1 @@
-export { Checkbox } from 'semantic-ui-react';
+export { Checkbox } from "semantic-ui-react";

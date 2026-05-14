@@ -8,10 +8,10 @@ const Outer = styled.span`
   text-decoration-line: underline;
 `;
 
-export const Hint = ({ text, children }: { text: string; children?: React.ReactNode }) => {
+export function Hint({ text, children }: { text: string; children?: React.ReactNode }) {
   return (
     <Labelled title={text}>
       <Outer>{children}</Outer>
     </Labelled>
   );
-};
+}

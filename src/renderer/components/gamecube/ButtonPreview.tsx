@@ -31,7 +31,7 @@ const Outer = styled.div`
   justify-content: center;
 `;
 
-export const ButtonPreview = ({ value, pressed }: { value: string[]; pressed?: boolean }) => {
+export function ButtonPreview({ value, pressed }: { value: string[]; pressed?: boolean }) {
   return (
     <Outer>
       <ButtonContainer show={value.includes(Input.Z)}>
@@ -72,4 +72,4 @@ export const ButtonPreview = ({ value, pressed }: { value: string[]; pressed?: b
       </ButtonContainer>
     </Outer>
   );
-};
+}

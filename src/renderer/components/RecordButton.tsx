@@ -2,7 +2,7 @@ import React from "react";
 import { Button } from "@/ui/Button/Button";
 import { Dropdown } from "@/ui/Dropdown/Dropdown";
 
-export const RecordButton = ({
+export function RecordButton({
   onClick: onClickProp,
   onChange: onChangeProp,
   disabled,
@@ -20,7 +20,7 @@ export const RecordButton = ({
     value: string;
   }>;
   children?: React.ReactNode;
-}) => {
+}) {
   const onChange = (value: any) => {
     if (onChangeProp) {
       onChangeProp(value);
@@ -45,9 +45,9 @@ export const RecordButton = ({
           floating
           onChange={(_: any, { value }) => onChange(value)}
           options={options}
-          trigger={<React.Fragment />}
+          trigger={<></>}
         />
       )}
     </Button.Group>
   );
-};
+}

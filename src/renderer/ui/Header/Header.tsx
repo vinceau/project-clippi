@@ -1,1 +1,1 @@
-export { Header } from 'semantic-ui-react';
+export { Header } from "semantic-ui-react";

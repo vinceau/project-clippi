@@ -58,7 +58,7 @@ function getCustomMoveName(id: number) {
   }
 }
 
-const MoveInput = ({
+function MoveInput({
   value,
   onBlur,
   onChange,
@@ -68,7 +68,7 @@ const MoveInput = ({
   onChange: (val: number) => void;
   onRemove: () => void;
   onBlur?: () => void;
-}) => {
+}) {
   const handleChange = React.useCallback(
     (_e, { value }) => {
       onChange(value);
@@ -85,21 +85,21 @@ const MoveInput = ({
         onBlur={onBlur}
         onChange={handleChange}
         placeholder="Select move"
-        fluid={true}
-        search={true}
-        selection={true}
+        fluid
+        search
+        selection
         options={moveOptions}
       />
       <div style={{ marginLeft: 5 }}>
         <Labelled title="Remove">
-          <Button type="button" icon={true} onClick={onRemove}>
+          <Button type="button" icon onClick={onRemove}>
             <Icon name="close" />
           </Button>
         </Labelled>
       </div>
     </div>
   );
-};
+}
 
 type MoveSequenceFormProps = {
   value?: (number | undefined)[];
@@ -107,7 +107,7 @@ type MoveSequenceFormProps = {
   onBlur?: () => void;
 };
 
-export const MoveSequenceForm = ({ value, onBlur, onChange }: MoveSequenceFormProps) => {
+export function MoveSequenceForm({ value, onBlur, onChange }: MoveSequenceFormProps) {
   const movesList = React.useMemo(() => {
     return value && value.length > 0 ? value : [undefined];
   }, [value]);
@@ -184,9 +184,9 @@ export const MoveSequenceForm = ({ value, onBlur, onChange }: MoveSequenceFormPr
       </DragDropContext>
     </div>
   );
-};
+}
 
-export const MoveSequenceFormAdapter = (props: any) => {
+export function MoveSequenceFormAdapter(props: any) {
   const { name, ...rest } = props;
   return (
     <Field name={name}>
@@ -196,7 +196,7 @@ export const MoveSequenceFormAdapter = (props: any) => {
       }}
     </Field>
   );
-};
+}
 
 function move<T>(input: T[], from: number, to: number) {
   let numberOfDeletedElm = 1;

@@ -29,7 +29,7 @@ const Outer = styled.div`
   flex-direction: column;
 `;
 
-export const AutomatorView = () => {
+export function AutomatorView() {
   return (
     <Outer>
       <Content>
@@ -44,4 +44,4 @@ export const AutomatorView = () => {
       </Footer>
     </Outer>
   );
-};
+}

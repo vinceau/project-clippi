@@ -17,7 +17,7 @@ const CharacterSelectContainer = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
 `;
 
-export const PerCharPercent = ({ name, values, push }: { name: string; values: any; push: any; pop: any }) => {
+export function PerCharPercent({ name, values, push }: { name: string; values: any; push: any; pop: any }) {
   const selectedChars: CharPercentOption[] = values[name] || [];
   const selectedCharIDs = selectedChars.filter((c) => Boolean(c)).map((c) => c.character);
   return (
@@ -47,4 +47,4 @@ export const PerCharPercent = ({ name, values, push }: { name: string; values: a
       </div>
     </div>
   );
-};
+}

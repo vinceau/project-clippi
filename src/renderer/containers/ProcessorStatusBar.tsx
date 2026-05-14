@@ -42,7 +42,7 @@ const StopButton = styled(Button)`
   }
 `;
 
-export const ProcessorStatusBar = () => {
+export function ProcessorStatusBar() {
   const [confirmOpened, setConfirmOpened] = React.useState(false);
   const [stopping, setStopping] = React.useState(false);
   const { comboFinderPercent, comboFinderLog, comboFinderProcessing } = useSelector(
@@ -159,7 +159,7 @@ export const ProcessorStatusBar = () => {
       <ProcessStatus>
         {(comboFinderProcessing || complete) && (
           <>
-            {<PercentDisplay>{comboFinderPercent}%</PercentDisplay>}
+            <PercentDisplay>{comboFinderPercent}%</PercentDisplay>
             <div>{comboFinderLog}</div>
           </>
         )}
@@ -171,11 +171,11 @@ export const ProcessorStatusBar = () => {
             Stop processing
           </StopButton>
         ) : (
-          <Button primary={true} type="button" onClick={handleProcessClick} disabled={processBtnDisabled}>
+          <Button primary type="button" onClick={handleProcessClick} disabled={processBtnDisabled}>
             <Icon name="angle double right" style={{ margin: "0", marginRight: "0.3rem" }} /> Process replays
           </Button>
         )}
       </div>
     </Outer>
   );
-};
+}

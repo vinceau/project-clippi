@@ -5,16 +5,16 @@ import { FieldArray } from "react-final-form-arrays";
 import { Icon } from "@/ui/Icon/Icon";
 import { Label } from "@/ui/Label/Label";
 
-const NameTagLabel = ({ name, onClick }: { name: string; onClick: () => void }) => {
+function NameTagLabel({ name, onClick }: { name: string; onClick: () => void }) {
   return (
     <Label style={{ fontSize: "0.8em" }}>
       {name}
       <Icon name="delete" link onClick={onClick} />
     </Label>
   );
-};
+}
 
-export const NameTagForm = ({ name, values, push }: { name: string; values: any; push: any; pop: any }) => {
+export function NameTagForm({ name, values, push }: { name: string; values: any; push: any; pop: any }) {
   const [tag, setTag] = React.useState("");
   const currentTags: string[] = values[name] || [];
   const submit = () => {
@@ -78,4 +78,4 @@ export const NameTagForm = ({ name, values, push }: { name: string; values: any;
       </FieldArray>
     </div>
   );
-};
+}

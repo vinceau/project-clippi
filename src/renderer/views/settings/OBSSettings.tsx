@@ -17,7 +17,7 @@ const CustomField = styled(Field)`
   grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
 `;
 
-export const OBSSettings = () => {
+export function OBSSettings() {
   const { obsAddress, obsPort, obsPassword } = useSelector((state: iRootState) => state.slippi);
   const { obsConnectionStatus } = useSelector((state: iRootState) => state.tempContainer);
   const obsConnected = obsConnectionStatus === OBSConnectionStatus.CONNECTED;
@@ -69,7 +69,7 @@ export const OBSSettings = () => {
           <Field>
             <Label>Websocket Password</Label>
             <Form.Input
-              icon={<Icon name={showPass ? "eye slash" : "eye"} link={true} onClick={togglePass} />}
+              icon={<Icon name={showPass ? "eye slash" : "eye"} link onClick={togglePass} />}
               type={showPass ? "text" : "password"}
               placeholder="Password"
               value={obsPassword}
@@ -85,4 +85,4 @@ export const OBSSettings = () => {
       )}
     </FormContainer>
   );
-};
+}

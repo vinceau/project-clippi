@@ -11,7 +11,7 @@ export interface PortSelectionProps {
   onChange?: (value: number[]) => void;
 }
 
-export const PortSelection = ({ zeroIndex, onChange, value = [], label = "Port" }: PortSelectionProps) => {
+export function PortSelection({ zeroIndex, onChange, value = [], label = "Port" }: PortSelectionProps) {
   const newOnChange = (port: number) => {
     let newValues: number[] = Array.from(value);
     if (value.includes(port)) {
@@ -47,10 +47,10 @@ export const PortSelection = ({ zeroIndex, onChange, value = [], label = "Port" 
       ))}
     </Grid>
   );
-};
+}
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const PortSelectAdapter = (props: any) => {
+export function PortSelectAdapter(props: any) {
   const { name, ...rest } = props;
   return (
     <Field name={name}>
@@ -60,4 +60,4 @@ export const PortSelectAdapter = (props: any) => {
       }}
     </Field>
   );
-};
+}

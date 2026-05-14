@@ -11,7 +11,9 @@ import { notify } from "./utils";
 
 class SlpStreamManager {
   private stream: SlpLiveStream | SlpFolderStream | null = null;
+
   private realtime: SlpRealTime;
+
   private eventManager: EventManager;
 
   public constructor() {

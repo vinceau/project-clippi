@@ -69,9 +69,9 @@ const CustomOption: React.ComponentType<OptionProps<OptionTypeBase>> = (props) =
   );
 };
 
-export const CharacterSelect = (props: any) => {
+export function CharacterSelect(props: any) {
   const { value, onChange, options, disabledOptions, components, ...rest } = props;
-  const disabledList = disabledOptions ? disabledOptions : [];
+  const disabledList = disabledOptions || [];
   const optionToValue = (o: any): Character => o.value;
   const valueToOption = (c: Character) => {
     let label: string;
@@ -92,7 +92,7 @@ export const CharacterSelect = (props: any) => {
     val === undefined || val === "" || val === null ? undefined : val.map ? val.map(valueToOption) : valueToOption(val);
   const newValue = formatValue(value);
   const newOnChange = (v: any) => onChange(parseValue(v));
-  const selectOptions = options ? options : sortedCharacterIDs;
+  const selectOptions = options || sortedCharacterIDs;
   const mainTheme = useTheme();
   const minHeight = "3.8rem";
   const customStyles: any = {
@@ -144,16 +144,16 @@ export const CharacterSelect = (props: any) => {
       value={newValue}
       onChange={newOnChange}
       options={selectOptions.map(valueToOption)}
-      searchable={true}
+      searchable
       components={{ ...components, MultiValueRemove, Option: CustomOption, SingleValue }}
       menuColor={mainTheme.theme.background}
       styles={customStyles}
       placeholder={`Choose your character${props.isMulti ? "s" : ""}...`}
     />
   );
-};
+}
 
-export const CharacterSelectAdapter = (props: any) => {
+export function CharacterSelectAdapter(props: any) {
   const { name, ...rest } = props;
   return (
     <Field name={name}>
@@ -163,14 +163,14 @@ export const CharacterSelectAdapter = (props: any) => {
       }}
     </Field>
   );
-};
+}
 
 export interface CustomCharacterListProps {
   value?: Character[];
   onChange?: (value: Character[]) => void;
 }
 
-export const CustomCharacterList = ({ value, onChange }: CustomCharacterListProps) => {
+export function CustomCharacterList({ value, onChange }: CustomCharacterListProps) {
   const [text, setText] = React.useState("");
   const deleteChar = (c: Character) => {
     if (!value || !onChange) {
@@ -245,9 +245,9 @@ export const CustomCharacterList = ({ value, onChange }: CustomCharacterListProp
       </div>
     </div>
   );
-};
+}
 
-export const CustomCharacterListAdapter = (props: any) => {
+export function CustomCharacterListAdapter(props: any) {
   const { name, ...rest } = props;
   return (
     <Field name={name}>
@@ -257,4 +257,4 @@ export const CustomCharacterListAdapter = (props: any) => {
       }}
     </Field>
   );
-};
+}

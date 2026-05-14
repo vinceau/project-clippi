@@ -5,16 +5,16 @@ import { Icon } from "@/ui/Icon/Icon";
 import { Input } from "@/ui/Input/Input";
 import { Label } from "@/ui/Label/Label";
 
-const KeywordLabel = ({ name, onClick }: { name: string; onClick: () => void }) => {
+function KeywordLabel({ name, onClick }: { name: string; onClick: () => void }) {
   return (
     <Label style={{ fontSize: "0.8em" }}>
       {name}
-      <Icon name="delete" link={true} onClick={onClick} />
+      <Icon name="delete" link onClick={onClick} />
     </Label>
   );
-};
+}
 
-export const KeywordsInput = ({ value, onChange }: { value?: string[]; onChange?: (val: string[]) => void }) => {
+export function KeywordsInput({ value, onChange }: { value?: string[]; onChange?: (val: string[]) => void }) {
   const currentKeywords = value ?? [];
   const [currentInput, setCurrentInput] = React.useState("");
   const submit = () => {
@@ -58,7 +58,7 @@ export const KeywordsInput = ({ value, onChange }: { value?: string[]; onChange?
           onKeyDown={onKeyDown}
           value={currentInput}
           onChange={(e) => setCurrentInput(e.target.value)}
-          fluid={true}
+          fluid
         />
       </div>
       {currentKeywords.length === 0 ? (
@@ -81,4 +81,4 @@ export const KeywordsInput = ({ value, onChange }: { value?: string[]; onChange?
       )}
     </div>
   );
-};
+}

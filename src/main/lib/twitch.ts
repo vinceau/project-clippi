@@ -34,10 +34,15 @@ const validScopes = (neededScopes: string[], existingScopes: string[]): boolean 
 
 export class TwitchController {
   private currentUser: HelixUser | null = null;
+
   private client: ApiClient | null = null;
+
   private authProvider: StaticAuthProvider | ElectronAuthProvider | null = null;
+
   private chatClient: ChatClient | null = null;
+
   private accessToken: StoredToken | null = null;
+
   private isChatConnected = false;
 
   public getCurrentUser(): HelixUser | null {
@@ -146,7 +151,9 @@ export class TwitchController {
     this.isChatConnected = false;
   }
 
-  private async _authenticateTwitch(scopes: string[]): Promise<{ apiClient: ApiClient; authProvider: StaticAuthProvider | ElectronAuthProvider }> {
+  private async _authenticateTwitch(
+    scopes: string[]
+  ): Promise<{ apiClient: ApiClient; authProvider: StaticAuthProvider | ElectronAuthProvider }> {
     const stored = store.get(TOKEN_STORE_KEY, null) as StoredToken | null;
 
     if (stored && validScopes(scopes, stored.scopes)) {

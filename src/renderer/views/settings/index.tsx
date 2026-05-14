@@ -138,7 +138,7 @@ const SettingsContainer = styled.div`
   z-index: 1;
 `;
 
-export const SettingsView = () => {
+export function SettingsView() {
   const history = useHistory();
   const { path } = useRouteMatch();
   const latestPath = useSelector((state: iRootState) => state.tempContainer.latestPath);
@@ -176,7 +176,7 @@ export const SettingsView = () => {
       </CloseButton>
       <div style={{ display: "flex" }}>
         <MenuColumn>
-          <StyledMenu secondary={true} vertical={true}>
+          <StyledMenu secondary vertical>
             <MenuContainer>
               <div style={{ flex: "1" }}>
                 <StyledMenuItem header>App Settings</StyledMenuItem>
@@ -253,4 +253,4 @@ export const SettingsView = () => {
       </div>
     </SettingsContainer>
   );
-};
+}

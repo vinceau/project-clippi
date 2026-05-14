@@ -7,14 +7,14 @@ import type { Context } from "@/lib/event_actions";
 
 import { TippyLabel } from "./Labelled";
 
-export const ContextOptions = ({
+export function ContextOptions({
   onLabelClick,
   context: contextProp,
 }: {
   onLabelClick?: (name: string) => void;
   context?: Context;
-}) => {
-  const context = contextProp ? contextProp : generateFileRenameContext();
+}) {
+  const context = contextProp || generateFileRenameContext();
   const allDescriptions = contextDescriptions;
   const keys = Object.keys(context);
   const clickHandler = (name: string) => {
@@ -31,7 +31,7 @@ export const ContextOptions = ({
           <TippyLabel
             key={`${cat.category}--${d.contextName}`}
             title={d.description}
-            arrow={true}
+            arrow
             duration={200}
             position="top"
             size="big"
@@ -44,4 +44,4 @@ export const ContextOptions = ({
     </div>
   ));
   return <div>{descriptions}</div>;
-};
+}

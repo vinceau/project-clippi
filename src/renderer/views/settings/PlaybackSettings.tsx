@@ -29,7 +29,7 @@ const ResetButton = styled.span`
 const defaultDolphinPath = getDolphinPath();
 const dolphinExecNames = getDolphinExecutableNames();
 
-const PlaybackExecutableNames = () => {
+function PlaybackExecutableNames() {
   const elements: React.ReactNode[] = [];
   dolphinExecNames.forEach((el, i) => {
     if (i > 0 && i === dolphinExecNames.length - 1) {
@@ -43,9 +43,9 @@ const PlaybackExecutableNames = () => {
     }
   });
   return React.createElement(React.Fragment, null, ...elements);
-};
+}
 
-export const PlaybackSettings = () => {
+export function PlaybackSettings() {
   const dispatch = useDispatch<Dispatch>();
   const { meleeIsoPath, dolphinPath } = useSelector((state: iRootState) => state.filesystem);
   const showDevOptions = useSelector((state: iRootState) => state.appContainer.showDevOptions);
@@ -78,7 +78,7 @@ export const PlaybackSettings = () => {
               </Labelled>
             )}
           </DolphinPathLabel>
-          <FileInput value={dolphinPath} directory={true} onChange={setDolphinPath} />
+          <FileInput value={dolphinPath} directory onChange={setDolphinPath} />
           <Text>
             The folder containing the <PlaybackExecutableNames /> playback executable. Do NOT modify this unless you're
             using Linux or you <i>really</i> know what you're doing. This path should match the Playback Dolphin Path in
@@ -100,4 +100,4 @@ export const PlaybackSettings = () => {
       </Field>
     </FormContainer>
   );
-};
+}

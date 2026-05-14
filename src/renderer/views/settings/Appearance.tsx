@@ -4,7 +4,7 @@ import { Field, FormContainer, PageHeader } from "@/components/Form";
 import { Toggle } from "@/ui/Toggle/Toggle";
 import { ThemeMode, useTheme } from "@/styles";
 
-export const Appearance = () => {
+export function Appearance() {
   const { themeName, toggle } = useTheme();
   const onOpenChange = (darkModeChecked: boolean) => {
     toggle(darkModeChecked ? ThemeMode.DARK : ThemeMode.LIGHT);
@@ -17,4 +17,4 @@ export const Appearance = () => {
       </Field>
     </FormContainer>
   );
-};
+}

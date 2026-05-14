@@ -1,4 +1,4 @@
-import { Form as SemanticForm } from 'semantic-ui-react';
+import { Form as SemanticForm } from "semantic-ui-react";
 
 export const Form = SemanticForm;
 export const FormField = SemanticForm.Field;

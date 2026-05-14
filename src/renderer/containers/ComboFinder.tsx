@@ -12,15 +12,9 @@ import { HighlightOptions } from "@/containers/HighlightOptions";
 import type { Dispatch, iRootState } from "@/store";
 import { highlightInitialState } from "@/store/models/highlights";
 
-export const ComboFinder = () => {
-  const {
-    openCombosWhenDone,
-    includeSubFolders,
-    deleteFilesWithNoCombos,
-    renameFiles,
-    findCombos,
-    renameFormat,
-  } = useSelector((state: iRootState) => state.highlights);
+export function ComboFinder() {
+  const { openCombosWhenDone, includeSubFolders, deleteFilesWithNoCombos, renameFiles, findCombos, renameFormat } =
+    useSelector((state: iRootState) => state.highlights);
   const { filesPath, combosFilePath } = useSelector((state: iRootState) => state.filesystem);
   const dispatch = useDispatch<Dispatch>();
   const setRenameFormat = (format: string) => dispatch.highlights.setRenameFormat(format);
@@ -31,7 +25,7 @@ export const ComboFinder = () => {
   const onSetOpenCombosWhenDone = (checked: boolean) => dispatch.highlights.setOpenCombosWhenDone(checked);
   const setCombosFilePath = (p: string) => {
     const filepath = assertExtension(p, ".json");
-    console.log("setting combos path to: " + filepath);
+    console.log(`setting combos path to: ${filepath}`);
     dispatch.filesystem.setCombosFilePath(filepath);
   };
   const setFilesPath = (p: string) => dispatch.filesystem.setFilesPath(p);
@@ -41,7 +35,7 @@ export const ComboFinder = () => {
         <Field>
           <Label>SLP Replay Directory</Label>
           <div style={{ marginBottom: "10px" }}>
-            <FileInput value={filesPath} onChange={setFilesPath} directory={true} />
+            <FileInput value={filesPath} onChange={setFilesPath} directory />
           </div>
           <Form.Field>
             <Checkbox
@@ -59,7 +53,7 @@ export const ComboFinder = () => {
               <FileInput
                 value={combosFilePath}
                 onChange={setCombosFilePath}
-                saveFile={true}
+                saveFile
                 fileTypeFilters={[{ name: "JSON files", extensions: ["json"] }]}
               />
             </div>
@@ -90,4 +84,4 @@ export const ComboFinder = () => {
       </Form>
     </FormContainer>
   );
-};
+}

@@ -4,7 +4,15 @@ import { Droppable } from "react-beautiful-dnd";
 
 import { PlaybackQueueItem } from "./PlaybackQueueItem";
 
-export const PlaybackQueue = ({ id, files, removeFile: removeFileProp }: { id: string; files: DolphinEntry[]; removeFile?: (index: number) => void }) => {
+export function PlaybackQueue({
+  id,
+  files,
+  removeFile: removeFileProp,
+}: {
+  id: string;
+  files: DolphinEntry[];
+  removeFile?: (index: number) => void;
+}) {
   const removeFile = (index: number, path: string) => {
     console.log(`Removing file at index ${index} with path: ${path}`);
     if (removeFileProp) {
@@ -29,4 +37,4 @@ export const PlaybackQueue = ({ id, files, removeFile: removeFileProp }: { id: s
       )}
     </Droppable>
   );
-};
+}

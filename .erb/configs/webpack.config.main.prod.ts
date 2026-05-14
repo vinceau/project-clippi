@@ -2,36 +2,36 @@
  * Webpack config for production electron main process
  */
 
-import path from 'path';
-import webpack from 'webpack';
-import { merge } from 'webpack-merge';
-import TerserPlugin from 'terser-webpack-plugin';
-import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
-import baseConfig from './webpack.config.base';
-import webpackPaths from './webpack.paths';
-import checkNodeEnv from '../scripts/check-node-env';
-import deleteSourceMaps from '../scripts/delete-source-maps';
+import path from "path";
+import webpack from "webpack";
+import { merge } from "webpack-merge";
+import TerserPlugin from "terser-webpack-plugin";
+import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
+import baseConfig from "./webpack.config.base";
+import webpackPaths from "./webpack.paths";
+import checkNodeEnv from "../scripts/check-node-env";
+import deleteSourceMaps from "../scripts/delete-source-maps";
 
-checkNodeEnv('production');
+checkNodeEnv("production");
 deleteSourceMaps();
 
 const configuration: webpack.Configuration = {
-  devtool: 'source-map',
+  devtool: "source-map",
 
-  mode: 'production',
+  mode: "production",
 
-  target: 'electron-main',
+  target: "electron-main",
 
   entry: {
-    main: path.join(webpackPaths.srcMainPath, 'main.ts'),
-    preload: path.join(webpackPaths.srcMainPath, 'preload.ts'),
+    main: path.join(webpackPaths.srcMainPath, "main.ts"),
+    preload: path.join(webpackPaths.srcMainPath, "preload.ts"),
   },
 
   output: {
     path: webpackPaths.distMainPath,
-    filename: '[name].js',
+    filename: "[name].js",
     library: {
-      type: 'umd',
+      type: "umd",
     },
   },
 
@@ -45,7 +45,7 @@ const configuration: webpack.Configuration = {
 
   plugins: [
     new BundleAnalyzerPlugin({
-      analyzerMode: process.env.ANALYZE === 'true' ? 'server' : 'disabled',
+      analyzerMode: process.env.ANALYZE === "true" ? "server" : "disabled",
       analyzerPort: 8888,
     }),
 
@@ -59,14 +59,14 @@ const configuration: webpack.Configuration = {
      * development checks
      */
     new webpack.EnvironmentPlugin({
-      NODE_ENV: 'production',
+      NODE_ENV: "production",
       DEBUG_PROD: false,
       START_MINIMIZED: false,
       ELECTRON_WEBPACK_APP_TWITCH_CLIENT_ID: null,
     }),
 
     new webpack.DefinePlugin({
-      'process.type': '"browser"',
+      "process.type": '"browser"',
     }),
   ],
 

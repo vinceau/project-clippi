@@ -29,6 +29,6 @@ export interface CustomIconProps {
   color?: string;
 }
 
-export const CustomIcon = ({ image, color, size }: CustomIconProps) => {
+export function CustomIcon({ image, color, size }: CustomIconProps) {
   return <Outer image={image} color={color} className={`icon ${size || ""}`} />;
-};
+}

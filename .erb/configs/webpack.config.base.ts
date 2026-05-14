@@ -4,15 +4,15 @@
 
 import path from "path";
 import Dotenv from "dotenv-webpack";
-import webpack from 'webpack';
-import TsconfigPathsPlugins from 'tsconfig-paths-webpack-plugin';
-import webpackPaths from './webpack.paths';
-import { dependencies as externals } from '../../release/app/package.json';
+import webpack from "webpack";
+import TsconfigPathsPlugins from "tsconfig-paths-webpack-plugin";
+import webpackPaths from "./webpack.paths";
+import { dependencies as externals } from "../../release/app/package.json";
 
 const configuration: webpack.Configuration = {
   externals: [...Object.keys(externals || {})],
 
-  stats: 'errors-only',
+  stats: "errors-only",
 
   module: {
     rules: [
@@ -20,13 +20,13 @@ const configuration: webpack.Configuration = {
         test: /\.[jt]sx?$/,
         exclude: /node_modules/,
         use: {
-          loader: 'ts-loader',
+          loader: "ts-loader",
           options: {
             // Remove this line to enable type checking in webpack builds
             transpileOnly: true,
             compilerOptions: {
-              module: 'commonjs',
-              moduleResolution: 'node',
+              module: "commonjs",
+              moduleResolution: "node",
             },
           },
         },
@@ -44,20 +44,19 @@ const configuration: webpack.Configuration = {
    * Determine the array of extensions that should be used to resolve modules.
    */
   resolve: {
-    extensions: ['.js', '.jsx', '.json', '.ts', '.tsx'],
-    modules: [webpackPaths.srcPath, 'node_modules'],
+    extensions: [".js", ".jsx", ".json", ".ts", ".tsx"],
+    modules: [webpackPaths.srcPath, "node_modules"],
     // There is no need to add aliases here, the paths in tsconfig get mirrored
     plugins: [new TsconfigPathsPlugins()],
   },
 
   plugins: [
-    new webpack.EnvironmentPlugin({ NODE_ENV: 'production' }),
+    new webpack.EnvironmentPlugin({ NODE_ENV: "production" }),
 
     new Dotenv({
       path: path.join(webpackPaths.rootPath, ".env"),
       silent: true,
     }),
-
   ],
 };
 

@@ -1,1 +1,1 @@
-export { Divider } from 'semantic-ui-react';
+export { Divider } from "semantic-ui-react";

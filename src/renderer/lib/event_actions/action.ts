@@ -13,6 +13,7 @@ export type ActionTypeGenerator = (args?: any) => ActionType;
 
 export class EventManager {
   public eventActions: EventActions = {};
+
   private allActions = new Map<string, ActionTypeGenerator>();
 
   public registerAction(actionName: string, action: ActionTypeGenerator): void {
@@ -24,7 +25,7 @@ export class EventManager {
   }
 
   public async emitEvent(eventName: string, context?: Context): Promise<Context> {
-    const ctx: Context = Object.assign({}, context);
+    const ctx: Context = { ...context };
     const eventActions = this.eventActions[eventName];
     if (!eventActions || eventActions.length === 0) {
       return ctx;
@@ -41,7 +42,7 @@ export class EventManager {
    * @memberof EventManager
    */
   public async execute(eventActions: Action[], context?: Context): Promise<Context> {
-    let ctx: Context = Object.assign({}, context);
+    let ctx: Context = { ...context };
     for (const a of eventActions) {
       const action = this.allActions.get(a.name);
       // Skip if it doesn't exist

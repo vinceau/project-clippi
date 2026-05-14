@@ -18,7 +18,15 @@ const LabelContainer = styled.div<{
       : ""}
 `;
 
-export const CharacterLabel = ({ characterId, name, disabled }: { characterId: Character; name: string; disabled?: boolean }) => {
+export function CharacterLabel({
+  characterId,
+  name,
+  disabled,
+}: {
+  characterId: Character;
+  name: string;
+  disabled?: boolean;
+}) {
   const isDisabled = disabled;
   return (
     <LabelContainer isDisabled={isDisabled}>
@@ -26,4 +34,4 @@ export const CharacterLabel = ({ characterId, name, disabled }: { characterId: C
       <span style={{ marginLeft: "10px" }}>{name}</span>
     </LabelContainer>
   );
-};
+}

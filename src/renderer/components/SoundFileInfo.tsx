@@ -39,7 +39,7 @@ h2 {
 }
 `;
 
-export const SoundFileInfo = ({
+export function SoundFileInfo({
   name,
   path,
   onPathClick,
@@ -49,7 +49,7 @@ export const SoundFileInfo = ({
   path: string;
   onPathClick?: () => void;
   onRemove: () => void;
-}) => {
+}) {
   return (
     <Container>
       <div>
@@ -65,4 +65,4 @@ export const SoundFileInfo = ({
       </div>
     </Container>
   );
-};
+}

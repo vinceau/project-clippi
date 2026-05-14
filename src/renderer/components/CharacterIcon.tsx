@@ -62,7 +62,15 @@ const characterIconMap: Record<string, string> = {
   zelda: zeldaImg,
 };
 
-export const CharacterIcon = ({ character, size, grayscale }: { character: Character; size?: number; grayscale?: boolean }) => {
+export function CharacterIcon({
+  character,
+  size,
+  grayscale,
+}: {
+  character: Character;
+  size?: number;
+  grayscale?: boolean;
+}) {
   const imgSize = size ?? 24;
   const shortName = getCharacterShortName(character).toLowerCase();
   const imgSrc = characterIconMap[shortName] ?? unknownImg;
@@ -76,4 +84,4 @@ export const CharacterIcon = ({ character, size, grayscale }: { character: Chara
       `}
     />
   );
-};
+}

@@ -18,7 +18,7 @@ const generateOptions = (
   }));
 };
 
-export const InlineDropdown = (props: any) => {
+export function InlineDropdown(props: any) {
   const { value, customOptions, options, onChange, mapOptionToLabel, prefix, disabledOptions, ...rest } = props;
   let newOptions;
   if (customOptions && !options) {
@@ -30,8 +30,8 @@ export const InlineDropdown = (props: any) => {
     <span>
       {prefix ? `${prefix} ` : ""}
       <Dropdown
-        scrolling={true}
-        inline={true}
+        scrolling
+        inline
         {...rest}
         options={newOptions}
         value={value}
@@ -39,13 +39,13 @@ export const InlineDropdown = (props: any) => {
       />
     </span>
   );
-};
+}
 
-export const InlineInput = (props: any) => {
-  return <BufferedInput {...props} transparent={true} />;
-};
+export function InlineInput(props: any) {
+  return <BufferedInput {...props} transparent />;
+}
 
-export const BufferedInput = (props: any) => {
+export function BufferedInput(props: any) {
   const { value, onChange, ...rest } = props;
   const [newValue, setNewValue] = React.useState<string>(value || "");
   const submitValue = () => {
@@ -60,7 +60,7 @@ export const BufferedInput = (props: any) => {
     setNewValue(data.value);
   };
   return <Input value={newValue} onChange={newOnChange} onKeyDown={onKeyDown} onBlur={submitValue} {...rest} />;
-};
+}
 
 export const SimpleInput = styled.input`
   padding: 0.3rem;
@@ -71,7 +71,7 @@ export const SimpleInput = styled.input`
   margin: 0 0.5rem;
 `;
 
-export const DelayInput = ({
+export function DelayInput({
   value,
   placeholder,
   onChange: onChangeProp,
@@ -79,7 +79,7 @@ export const DelayInput = ({
   value?: string;
   placeholder?: string;
   onChange?: (delay: string) => void;
-}) => {
+}) {
   const [delayAmount, setDelayAmount] = React.useState(value || "0");
   const onChange = () => {
     if (onChangeProp) {
@@ -95,9 +95,9 @@ export const DelayInput = ({
       placeholder={placeholder}
     />
   );
-};
+}
 
-export const NotifyInput = ({
+export function NotifyInput({
   value,
   onChange,
   options: optionsProp,
@@ -105,20 +105,18 @@ export const NotifyInput = ({
   value?: boolean;
   onChange: (notify: boolean) => void;
   options?: any;
-}) => {
-  const options = optionsProp
-    ? optionsProp
-    : [
-        {
-          key: "notify-me",
-          value: true,
-          text: "notify",
-        },
-        {
-          key: "dont-notify-me",
-          value: false,
-          text: "don't notify",
-        },
-      ];
+}) {
+  const options = optionsProp || [
+    {
+      key: "notify-me",
+      value: true,
+      text: "notify",
+    },
+    {
+      key: "dont-notify-me",
+      value: false,
+      text: "don't notify",
+    },
+  ];
   return <InlineDropdown value={Boolean(value)} onChange={onChange} options={options} />;
-};
+}

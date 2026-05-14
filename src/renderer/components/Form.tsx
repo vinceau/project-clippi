@@ -32,32 +32,30 @@ export const Field = styled.div<{
   border?: string;
   padding?: string;
 }>`
-${(p) =>
-  (p.padding === "top" || p.padding === "both") &&
-  `
+  ${(p) =>
+    (p.padding === "top" || p.padding === "both") &&
+    `
 padding-top: 2rem;
 `}
 
-${(p) =>
-  (p.padding === "bottom" || p.padding === "both") &&
-  `
+  ${(p) =>
+    (p.padding === "bottom" || p.padding === "both") &&
+    `
 padding-bottom: 2rem;
 `}
 
 ${(p) =>
-  (p.border === "top" || p.border === "both") &&
-  `
+    (p.border === "top" || p.border === "both") &&
+    `
 border-top: solid 0.1rem ${p.theme.foreground3};
 `}
 
 ${(p) =>
-  (p.border === "bottom" || p.border === "both") &&
-  `
+    (p.border === "bottom" || p.border === "both") &&
+    `
 border-bottom: solid 0.1rem ${p.theme.foreground3};
 `}
 `;
 Field.defaultProps = {
   padding: "both",
 };
-
-

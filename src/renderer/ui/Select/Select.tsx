@@ -1,1 +1,1 @@
-export { Select } from 'semantic-ui-react';
+export { Select } from "semantic-ui-react";

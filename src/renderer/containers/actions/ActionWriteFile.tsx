@@ -45,16 +45,16 @@ const actionWriteFile: ActionTypeGenerator = (params: ActionWriteFileParams) => 
   };
 };
 
-const ActionIcon = () => {
+function ActionIcon() {
   return <Icon name="file alternate" size="large" />;
-};
+}
 
 interface WriteFileProps extends Record<string, any> {
   value: ActionWriteFileParams;
   onChange(value: ActionWriteFileParams): void;
 }
 
-const WriteFileInput = (props: WriteFileProps) => {
+function WriteFileInput(props: WriteFileProps) {
   const { value, onChange } = props;
   const defaultValue = value && value.content ? value.content : "";
   const [msg, setMsg] = React.useState(defaultValue);
@@ -106,10 +106,10 @@ const WriteFileInput = (props: WriteFileProps) => {
         />
       </Form>
       <div style={{ padding: "5px 0" }}>To the file:</div>
-      <FileInput value={value.outputFileName || ""} onChange={onOutputFileChange} saveFile={true} />
+      <FileInput value={value.outputFileName || ""} onChange={onOutputFileChange} saveFile />
     </div>
   );
-};
+}
 
 export const ActionWriteFile: ActionComponent = {
   label: "write to a file",

@@ -4,7 +4,7 @@ import React from "react";
 
 import { downloadLatestUpdate } from "@/lib/utils";
 
-export const UpdateAvailable = ({ version, dismiss }: { version: string; dismiss: () => void }) => {
+export function UpdateAvailable({ version, dismiss }: { version: string; dismiss: () => void }) {
   const startDownload = () => {
     downloadLatestUpdate();
     dismiss();
@@ -29,4 +29,4 @@ export const UpdateAvailable = ({ version, dismiss }: { version: string; dismiss
       </div>
     </div>
   );
-};
+}

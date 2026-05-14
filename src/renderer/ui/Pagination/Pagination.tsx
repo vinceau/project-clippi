@@ -1,1 +1,1 @@
-export { Pagination } from 'semantic-ui-react';
+export { Pagination } from "semantic-ui-react";

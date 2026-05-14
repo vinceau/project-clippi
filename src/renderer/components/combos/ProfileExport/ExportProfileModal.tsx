@@ -30,18 +30,18 @@ export const ExportProfileModal = React.memo(function ExportProfileModal({
       clearTimeout(timeout.current);
     }
     setCopied(true);
-    timeout.current = (setTimeout(() => setCopied(false), 2000) as unknown) as number;
+    timeout.current = setTimeout(() => setCopied(false), 2000) as unknown as number;
     clipboard.writeText(profileData);
   }, [profileData, setCopied]);
 
   return (
-    <Modal className={theme.themeName} open={open} closeIcon={true} onClose={onDismiss}>
+    <Modal className={theme.themeName} open={open} closeIcon onClose={onDismiss}>
       <Modal.Header>Export profile</Modal.Header>
       <Modal.Content>
         <Modal.Description>
           <p>Share this profile with your friends!</p>
           <Form>
-            <TextArea style={{ minHeight: 300 }} disabled={true} value={profileData} />
+            <TextArea style={{ minHeight: 300 }} disabled value={profileData} />
           </Form>
         </Modal.Description>
       </Modal.Content>

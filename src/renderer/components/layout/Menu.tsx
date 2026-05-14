@@ -20,13 +20,7 @@ const updateNotificationStyles = {
   right: "2rem",
 };
 
-export const Menu = ({
-  settingsPage,
-  updateAvailable,
-}: {
-  settingsPage: string;
-  updateAvailable?: boolean;
-}) => {
+export function Menu({ settingsPage, updateAvailable }: { settingsPage: string; updateAvailable?: boolean }) {
   const match = useRouteMatch();
   return (
     <Outer>
@@ -52,4 +46,4 @@ export const Menu = ({
       </div>
     </Outer>
   );
-};
+}

@@ -1,8 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from './containers/App';
+import App from "./containers/App";
 
-const rootEl = document.getElementById('root') as HTMLElement;
+const rootEl = document.getElementById("root") as HTMLElement;
 
 const render = (Component: any) =>
   // eslint-disable-next-line react/no-render-return-value
@@ -11,8 +11,8 @@ const render = (Component: any) =>
 render(App);
 
 // calling IPC exposed from preload script
-window.electron?.ipcRenderer.once('ipc-example', (arg) => {
+window.electron?.ipcRenderer.once("ipc-example", (arg) => {
   // eslint-disable-next-line no-console
   console.log(arg);
 });
-window.electron?.ipcRenderer.sendMessage('ipc-example', ['ping']);
+window.electron?.ipcRenderer.sendMessage("ipc-example", ["ping"]);

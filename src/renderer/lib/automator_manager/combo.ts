@@ -100,7 +100,7 @@ const handleComboFilter = (
   variables?: EventManagerVariables
 ): Observable<ComboEventPayload> => {
   const eventFilter = event.filter as ComboEventFilter;
-  let comboSettings = Object.assign({}, defaultComboFilterSettings);
+  let comboSettings = { ...defaultComboFilterSettings };
   if (eventFilter && eventFilter.comboCriteria) {
     const options = eventFilter.comboCriteria;
     if (typeof options === "string") {

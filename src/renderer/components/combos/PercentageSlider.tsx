@@ -8,23 +8,15 @@ const Outer = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
 `;
 
-export const PercentageSlider = ({ name, min: minProp, max: maxProp }: { name: string; min?: string; max?: string }) => {
+export function PercentageSlider({ name, min: minProp, max: maxProp }: { name: string; min?: string; max?: string }) {
   const min = minProp || "0";
   const max = maxProp || "100";
   return (
     <Outer>
+      <Field format={parseFloat} formatOnBlur name={name} min={min} max={max} component="input" type="text" />
       <Field
         format={parseFloat}
-        formatOnBlur={true}
-        name={name}
-        min={min}
-        max={max}
-        component="input"
-        type="text"
-      />
-      <Field
-        format={parseFloat}
-        formatOnBlur={true}
+        formatOnBlur
         name={name}
         component="input"
         type="range"
@@ -34,4 +26,4 @@ export const PercentageSlider = ({ name, min: minProp, max: maxProp }: { name: s
       />
     </Outer>
   );
-};
+}

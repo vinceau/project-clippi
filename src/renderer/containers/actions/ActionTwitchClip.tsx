@@ -67,16 +67,16 @@ const actionCreateClip: ActionTypeGenerator = (params: ActionCreateTwitchClipPar
   };
 };
 
-const ActionIcon = () => {
+function ActionIcon() {
   return <Icon name="twitch" size="large" />;
-};
+}
 
 interface TwitchClipInputProps extends Record<string, any> {
   value: ActionCreateTwitchClipParams;
   onChange(value: ActionCreateTwitchClipParams): void;
 }
 
-const TwitchClipInput = (props: TwitchClipInputProps) => {
+function TwitchClipInput(props: TwitchClipInputProps) {
   const { value, onChange } = props;
   const { twitchUser, twitchLoading } = useSelector((state: iRootState) => state.tempContainer);
   const [channel, setChannel] = React.useState<string>(value.channel || "");
@@ -84,7 +84,7 @@ const TwitchClipInput = (props: TwitchClipInputProps) => {
 
   if (!twitchUser) {
     if (twitchLoading) {
-      return <Loader active={true} inline={true} content="Loading" />;
+      return <Loader active inline content="Loading" />;
     }
     return <TwitchConnectButton onClick={() => dispatch.tempContainer.authenticateTwitch()} />;
   }
@@ -125,7 +125,7 @@ const TwitchClipInput = (props: TwitchClipInputProps) => {
       </div>
     </div>
   );
-};
+}
 
 export const ActionTwitchClip: ActionComponent = {
   label: "create a Twitch clip",

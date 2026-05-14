@@ -7,7 +7,7 @@ import { Image } from "@/ui/Image/Image";
 
 import { ScanningDot } from "@/components/ScanningDot";
 
-export const ConnectionStatusCard = ({
+export function ConnectionStatusCard({
   userImage,
   header,
   subHeader,
@@ -23,7 +23,7 @@ export const ConnectionStatusCard = ({
   shouldPulse?: boolean;
   onDisconnect?: () => void;
   buttonText?: string;
-}) => {
+}) {
   const handleButtonClick = () => {
     if (onDisconnect) {
       onDisconnect();
@@ -58,4 +58,4 @@ export const ConnectionStatusCard = ({
       </Card>
     </div>
   );
-};
+}

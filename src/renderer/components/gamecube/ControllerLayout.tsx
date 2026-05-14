@@ -2,7 +2,13 @@ import React from "react";
 import type { ControllerInputState } from "react-gamecube";
 import { ButtonInput, Controller } from "react-gamecube";
 
-export const ControllerLayout = ({ value: valueProp, onChange }: { value?: string[]; onChange?: (values: string[]) => void }) => {
+export function ControllerLayout({
+  value: valueProp,
+  onChange,
+}: {
+  value?: string[];
+  onChange?: (values: string[]) => void;
+}) {
   const value = valueProp || [];
   const isPressed = (input: ButtonInput) => {
     return value.includes(input);
@@ -18,8 +24,8 @@ export const ControllerLayout = ({ value: valueProp, onChange }: { value?: strin
       onChange(filtered);
     }
   };
-  return <Controller hideAnalogSticks={true} value={mapButtonStringToControllerValue(value)} onClick={onClick} />;
-};
+  return <Controller hideAnalogSticks value={mapButtonStringToControllerValue(value)} onClick={onClick} />;
+}
 
 const mapButtonStringToControllerValue = (values: string[]): Partial<ControllerInputState> => {
   const newState: Partial<ControllerInputState> = {};

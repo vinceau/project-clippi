@@ -15,7 +15,7 @@ import type { Dispatch, iRootState } from "@/store";
 
 const TWITCH_CLIPS_PER_PAGE = 10;
 
-export const TwitchIntegration = () => {
+export function TwitchIntegration() {
   const { twitchUser, twitchLoading } = useSelector((state: iRootState) => state.tempContainer);
   const { reconnectTwitch } = useSelector((state: iRootState) => state.twitch);
   const dispatch = useDispatch<Dispatch>();
@@ -41,7 +41,7 @@ export const TwitchIntegration = () => {
           onSignOut={onSignOut}
         />
       ) : twitchLoading ? (
-        <Loader active={true} inline={true} content="Loading" />
+        <Loader active inline content="Loading" />
       ) : (
         <TwitchConnectButton onClick={() => dispatch.tempContainer.authenticateTwitch()} />
       )}
@@ -88,4 +88,4 @@ export const TwitchIntegration = () => {
       </div>
     </FormContainer>
   );
-};
+}

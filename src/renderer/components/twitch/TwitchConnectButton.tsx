@@ -25,15 +25,15 @@ const TwitchButton = styled.button<{
   }
 `;
 
-export const TwitchConnectButton = ({
+export function TwitchConnectButton({
   onClick,
 }: {
   onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
-}) => {
+}) {
   return (
     <TwitchButton backgroundColor="#6441A4" onClick={onClick}>
       <Icon name="twitch" />
       <ButtonText>Connect with Twitch</ButtonText>
     </TwitchButton>
   );
-};
+}

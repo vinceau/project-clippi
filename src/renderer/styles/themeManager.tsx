@@ -25,7 +25,7 @@ export const ManageThemeContext: React.Context<ThemeContext> = React.createConte
 
 export const useTheme = (): ThemeContext => React.useContext(ManageThemeContext);
 
-export const ThemeManager = ({ children }) => {
+export function ThemeManager({ children }) {
   const currentTheme = ThemeMode.LIGHT as string; // (remote.getCurrentWindow() as any).getCurrentTheme();
 
   const [themeState, setThemeState] = React.useState({
@@ -64,4 +64,4 @@ export const ThemeManager = ({ children }) => {
       {children}
     </ManageThemeContext.Provider>
   );
-};
+}

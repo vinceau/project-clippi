@@ -1,1 +1,1 @@
-export { TextArea } from 'semantic-ui-react';
+export { TextArea } from "semantic-ui-react";

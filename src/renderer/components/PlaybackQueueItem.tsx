@@ -2,8 +2,7 @@ import styled from "@emotion/styled";
 import type { DolphinEntry } from "@vinceau/slp-realtime";
 import { exists } from "common/utils";
 import path from "path";
-import { transparentize } from "polished";
-import { darken, lighten } from "polished";
+import { transparentize, darken, lighten } from "polished";
 import React from "react";
 import { Draggable } from "react-beautiful-dnd";
 import { Icon } from "@/ui/Icon/Icon";
@@ -74,7 +73,7 @@ const DetailsContent = styled.div`
   }
 `;
 
-export const PlaybackQueueItem = ({
+export function PlaybackQueueItem({
   index,
   file,
   onRemove,
@@ -84,7 +83,7 @@ export const PlaybackQueueItem = ({
   total?: number;
   file: DolphinEntry;
   onRemove?: () => void;
-}) => {
+}) {
   const theme = useTheme();
   const basename = path.basename(file.path);
   const dirname = path.dirname(file.path);
@@ -116,4 +115,4 @@ export const PlaybackQueueItem = ({
       )}
     </Draggable>
   );
-};
+}

@@ -50,12 +50,12 @@ export interface EventActionListsProps {
   onSelect: (i: number) => void;
 }
 
-export const EventActionLists = ({ selected, onSelect }: EventActionListsProps) => {
+export function EventActionLists({ selected, onSelect }: EventActionListsProps) {
   const val = useSelector((state: iRootState) => state.automator.events);
   const actions = useSelector((state: iRootState) => state.automator.actions);
   const dispatch = useDispatch<Dispatch>();
   const selectedEvent = val[selected];
-  const selectedEventName = selectedEvent.name ? selectedEvent.name : generateEventName(selectedEvent) + "...";
+  const selectedEventName = selectedEvent.name ? selectedEvent.name : `${generateEventName(selectedEvent)}...`;
   const selectedActions = selectedEvent ? actions[selectedEvent.id] || [] : [];
   const disabledActions = selectedActions.map((a) => a.name);
   const onActionChange = (index: number, action: Action) => {
@@ -133,4 +133,4 @@ export const EventActionLists = ({ selected, onSelect }: EventActionListsProps) 
       </ReflexElement>
     </ReflexContainer>
   );
-};
+}

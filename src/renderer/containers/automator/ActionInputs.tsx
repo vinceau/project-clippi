@@ -12,7 +12,7 @@ import { ActionIcon } from "./ActionIcon";
 
 const allActions = Object.keys(actionComponents);
 
-const ActionSelector = (props: any) => {
+function ActionSelector(props: any) {
   const { options, ...rest } = props;
   return (
     <InlineDropdown
@@ -22,9 +22,9 @@ const ActionSelector = (props: any) => {
       fontSize={18}
     />
   );
-};
+}
 
-export const ActionInput = ({
+export function ActionInput({
   selectPrefix,
   value,
   onChange,
@@ -36,7 +36,7 @@ export const ActionInput = ({
   onChange: (a: ActionDefinition) => void;
   disabledActions: string[];
   onRemove: () => void;
-}) => {
+}) {
   const outerRef = React.createRef<HTMLDivElement>();
   const onActionChange = (action: string) => {
     const params = actionComponents[action].defaultParams;
@@ -76,9 +76,15 @@ export const ActionInput = ({
       <ActionArgsInput value={value.args} onChange={onArgsChange} />
     </ActionComponentBlock>
   );
-};
+}
 
-export const AddActionInput = ({ onChange, disabledActions }: { onChange: (action: string) => void; disabledActions: string[] }) => {
+export function AddActionInput({
+  onChange,
+  disabledActions,
+}: {
+  onChange: (action: string) => void;
+  disabledActions: string[];
+}) {
   const unusedOptions = allActions.filter((a) => !disabledActions.includes(a));
   const noOtherActions = unusedOptions.length === allActions.length;
   const addText = noOtherActions ? "Then..." : "And also...";
@@ -88,9 +94,9 @@ export const AddActionInput = ({ onChange, disabledActions }: { onChange: (actio
 
   return (
     <ActionComponentBlock
-      hideBorder={true}
+      hideBorder
       icon={<Icon name="add" size="large" />}
       header={<ActionSelector text={addText} selectOnBlur={false} onChange={onChange} options={unusedOptions} />}
     />
   );
-};
+}

@@ -36,17 +36,17 @@ const actionToggleSource: ActionTypeGenerator = (params: ActionToggleSourceParam
   };
 };
 
-const ActionIcon = () => {
+function ActionIcon() {
   return <CustomIcon image={obsIcon} size="large" />;
-};
+}
 
-const SourceNameInput = (props: { value: ActionToggleSourceParams; onChange: any }) => {
+function SourceNameInput(props: { value: ActionToggleSourceParams; onChange: any }) {
   const { value, onChange } = props;
   const { obsConnectionStatus, obsScenes } = useSelector((state: iRootState) => state.tempContainer);
   const obsConnected = obsConnectionStatus === OBSConnectionStatus.CONNECTED;
 
   if (!obsConnected) {
-    return <Button content={`Connect to OBS`} type="button" onClick={connectToOBSAndNotify} />;
+    return <Button content="Connect to OBS" type="button" onClick={connectToOBSAndNotify} />;
   }
 
   const allSources = getAllSceneItems(obsScenes);
@@ -104,7 +104,7 @@ const SourceNameInput = (props: { value: ActionToggleSourceParams; onChange: any
       </div>
     </div>
   );
-};
+}
 
 export const ActionToggleSource: ActionComponent = {
   label: "toggle OBS source",

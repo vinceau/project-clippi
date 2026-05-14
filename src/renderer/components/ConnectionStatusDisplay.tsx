@@ -16,7 +16,7 @@ const ConnectInfo = styled.div`
   justify-content: center;
 `;
 
-export const ConnectionStatusDisplay = ({
+export function ConnectionStatusDisplay({
   icon,
   iconHoverText,
   onIconClick,
@@ -36,7 +36,7 @@ export const ConnectionStatusDisplay = ({
   color?: string;
   shouldPulse?: boolean;
   children?: React.ReactNode;
-}) => {
+}) {
   return (
     <Outer>
       {icon && (
@@ -53,12 +53,7 @@ export const ConnectionStatusDisplay = ({
         </Labelled>
       )}
       <ConnectInfo>
-        <Labelled
-          disabled={!Boolean(headerHoverTitle)}
-          title={headerHoverTitle}
-          onClick={onHeaderClick}
-          position="right"
-        >
+        <Labelled disabled={!headerHoverTitle} title={headerHoverTitle} onClick={onHeaderClick} position="right">
           <Header sub>
             <ScanningDot shouldPulse={shouldPulse} color={color || "red"} /> {headerText}
           </Header>
@@ -67,4 +62,4 @@ export const ConnectionStatusDisplay = ({
       </ConnectInfo>
     </Outer>
   );
-};
+}

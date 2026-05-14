@@ -47,13 +47,13 @@ const ButtonsContainer = styled.div`
   }
 `;
 
-export const TwitchClipInfo = ({
+export function TwitchClipInfo({
   clip,
   onRemove: onRemoveProp,
 }: {
   clip: TwitchClip;
   onRemove?: (clipID: string) => void;
-}) => {
+}) {
   const timestamp = format(clip.timestamp);
   const url = `https://clips.twitch.tv/${clip.clipID}`;
   const onRemove = () => {
@@ -84,7 +84,7 @@ export const TwitchClipInfo = ({
       </div>
       <ButtonsContainer>
         <Labelled title="Edit">
-          <A href={url + "/edit"}>
+          <A href={`${url}/edit`}>
             <Icon name="pencil" />
           </A>
         </Labelled>
@@ -94,4 +94,4 @@ export const TwitchClipInfo = ({
       </ButtonsContainer>
     </ClipContainer>
   );
-};
+}

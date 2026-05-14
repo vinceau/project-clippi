@@ -36,7 +36,7 @@ export const automator = createModel({
       payload: { index: number; event: Omit<NamedEventConfig, "id"> }
     ): AutomatorState =>
       produce(state, (draft) => {
-        const id = draft.events[payload.index].id;
+        const { id } = draft.events[payload.index];
         draft.events[payload.index] = { ...payload.event, id };
       }),
     removeEvent: (state: AutomatorState, payload: number): AutomatorState =>

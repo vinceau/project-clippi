@@ -8,11 +8,13 @@ import alertIcon from "@/styles/images/icons/alert.svg";
 import infoIcon from "@/styles/images/icons/info.svg";
 import successIcon from "@/styles/images/icons/success.svg";
 
-const CloseButton = ({ closeToast }: { closeToast?: () => void }) => (
-  <span role="button" className="close-button" onClick={closeToast}>
-    ✕
-  </span>
-);
+function CloseButton({ closeToast }: { closeToast?: () => void }) {
+  return (
+    <span role="button" className="close-button" onClick={closeToast}>
+      ✕
+    </span>
+  );
+}
 
 interface ToastTheme {
   primary: string;
@@ -55,7 +57,7 @@ const getToastStyles = (themeName: string) => {
       background: ${primary};
       color: ${secondary};
     }
-    `;
+  `;
 };
 
 const StyledToastContainer = styled(TC)`
@@ -134,6 +136,6 @@ const StyledToastContainer = styled(TC)`
   }
 `;
 
-export const ToastContainer = (): JSX.Element => (
-  <StyledToastContainer autoClose={3000} transition={Slide} hideProgressBar={true} closeButton={<CloseButton />} />
-);
+export function ToastContainer(): JSX.Element {
+  return <StyledToastContainer autoClose={3000} transition={Slide} hideProgressBar closeButton={<CloseButton />} />;
+}

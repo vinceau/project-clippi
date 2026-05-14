@@ -4,10 +4,9 @@ import React from "react";
 import type { ConfirmProps } from "semantic-ui-react";
 import { Confirm as SemanticConfirm } from "semantic-ui-react";
 
-import { useTheme } from "@/styles";
-import { modalTheme, ThemeMode } from "@/styles";
+import { useTheme, modalTheme, ThemeMode } from "@/styles";
 
-export const Confirm = (props: ConfirmProps) => {
+export function Confirm(props: ConfirmProps) {
   const theme = useTheme();
   return (
     <SemanticConfirm
@@ -26,4 +25,4 @@ export const Confirm = (props: ConfirmProps) => {
       {...props}
     />
   );
-};
+}

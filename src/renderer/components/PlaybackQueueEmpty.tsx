@@ -17,7 +17,7 @@ const Notice = styled.div`
   text-align: center;
 `;
 
-export const PlaybackQueueEmpty = ({ onOpen }: { onOpen?: () => void }) => {
+export function PlaybackQueueEmpty({ onOpen }: { onOpen?: () => void }) {
   return (
     <Outer>
       <SlippiIcon size="huge" />
@@ -28,4 +28,4 @@ export const PlaybackQueueEmpty = ({ onOpen }: { onOpen?: () => void }) => {
       <Button onClick={onOpen}>Select files</Button>
     </Outer>
   );
-};
+}

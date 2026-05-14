@@ -8,7 +8,7 @@ type TippyLabelProps = {
   style?: React.CSSProperties;
 } & TooltipProps;
 
-export const TippyLabel = ({ children, style, ...rest }: React.PropsWithChildren<TippyLabelProps>) => {
+export function TippyLabel({ children, style, ...rest }: React.PropsWithChildren<TippyLabelProps>) {
   const { themeName } = useTheme();
   return (
     <Tooltip
@@ -19,22 +19,22 @@ export const TippyLabel = ({ children, style, ...rest }: React.PropsWithChildren
       {children}
     </Tooltip>
   );
-};
+}
 
 type LabelledProps = {
   onClick?: () => void;
   style?: React.CSSProperties;
 } & Pick<TippyLabelProps, "position" | "title" | "disabled">;
 
-export const Labelled = ({ onClick, children, ...rest }: React.PropsWithChildren<LabelledProps>) => {
+export function Labelled({ onClick, children, ...rest }: React.PropsWithChildren<LabelledProps>) {
   const pointerStyle = {
     cursor: "pointer",
   };
   return (
     <span style={onClick ? pointerStyle : undefined} onClick={onClick}>
-      <TippyLabel size="big" arrow={true} duration={200} position="bottom" {...rest}>
+      <TippyLabel size="big" arrow duration={200} position="bottom" {...rest}>
         {children}
       </TippyLabel>
     </span>
   );
-};
+}

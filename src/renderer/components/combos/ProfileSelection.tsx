@@ -33,7 +33,7 @@ export interface ProfileSelectorProps extends DropdownProps {
   onChange: (value: any) => void;
 }
 
-export const ProfileSelector = ({ initialOptions, value, onChange, ...rest }: ProfileSelectorProps) => {
+export function ProfileSelector({ initialOptions, value, onChange, ...rest }: ProfileSelectorProps) {
   const theme = useTheme();
   const options = generateOptions(initialOptions);
   const handleNewItem = (_: any, data: any) => {
@@ -70,4 +70,4 @@ export const ProfileSelector = ({ initialOptions, value, onChange, ...rest }: Pr
       </Field>
     </Outer>
   );
-};
+}

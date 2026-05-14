@@ -10,7 +10,7 @@ import { useTheme } from "@/styles";
 
 import { ControllerLayout } from "./ControllerLayout";
 
-export const ButtonPicker = ({
+export function ButtonPicker({
   value,
   onChange,
   children,
@@ -18,7 +18,7 @@ export const ButtonPicker = ({
   value?: string[];
   onChange?: (newButtons: string[]) => void;
   children?: React.ReactNode;
-}) => {
+}) {
   const theme = useTheme();
   const [opened, setOpened] = React.useState<boolean>(false);
   const [buttons, setButtons] = React.useState<string[]>(value || []);
@@ -77,4 +77,4 @@ export const ButtonPicker = ({
       </Modal.Actions>
     </Modal>
   );
-};
+}

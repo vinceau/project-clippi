@@ -66,7 +66,7 @@ const UpdateInfo = styled.div<{
 
 const DEV_THRESHOLD = 7;
 
-export const InfoView = () => {
+export function InfoView() {
   const theme = useTheme();
   const [clickCount, setClickCount] = React.useState(0);
   const showDevOptions = useSelector((state: iRootState) => state.appContainer.showDevOptions);
@@ -122,4 +122,4 @@ export const InfoView = () => {
       </Footer>
     </Container>
   );
-};
+}

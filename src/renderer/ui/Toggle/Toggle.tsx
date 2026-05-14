@@ -12,7 +12,15 @@ const ToggleOuter = styled(Label)`
   margin-bottom: 1rem;
 `;
 
-export const Toggle = ({ label, value, onChange: onChangeProp }: { label: string; value: boolean; onChange?: (checked: boolean) => void }) => {
+export function Toggle({
+  label,
+  value,
+  onChange: onChangeProp,
+}: {
+  label: string;
+  value: boolean;
+  onChange?: (checked: boolean) => void;
+}) {
   const onChange = (value: boolean) => {
     if (onChangeProp) {
       onChangeProp(value);
@@ -20,13 +28,10 @@ export const Toggle = ({ label, value, onChange: onChangeProp }: { label: string
   };
   return (
     <ToggleOuter>
-      <Label
-        style={{ cursor: onChangeProp ? "pointer" : "auto", marginBottom: "0" }}
-        onClick={() => onChange(!value)}
-      >
+      <Label style={{ cursor: onChangeProp ? "pointer" : "auto", marginBottom: "0" }} onClick={() => onChange(!value)}>
         {label}
       </Label>
-      <Checkbox checked={value} onChange={(_, data) => onChange(Boolean(data.checked))} toggle={true} />
+      <Checkbox checked={value} onChange={(_, data) => onChange(Boolean(data.checked))} toggle />
     </ToggleOuter>
   );
-};
+}

@@ -19,7 +19,7 @@ import { persistor, store } from "@/store";
 import { darkTheme, GlobalStyle, lightTheme, ThemeManager, ThemeMode, useTheme } from "@/styles";
 import { MainView, SettingsView } from "@/views";
 
-const App = () => {
+function App() {
   const dispatch = useDispatch<Dispatch>();
   const { reconnectTwitch } = useSelector((state: iRootState) => state.twitch);
   const theme = useTheme();
@@ -45,9 +45,9 @@ const App = () => {
       </ThemeProvider>
     </div>
   );
-};
+}
 
-const AppWithProviders = () => {
+function AppWithProviders() {
   // ThemedManager must be declared and instantiated before useTheme() is called
   return (
     <Provider store={store}>
@@ -60,7 +60,7 @@ const AppWithProviders = () => {
       </PersistGate>
     </Provider>
   );
-};
+}
 
 // eslint-disable-next-line import/no-default-export
 export default AppWithProviders;

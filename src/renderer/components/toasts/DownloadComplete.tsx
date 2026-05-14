@@ -2,7 +2,7 @@ import React from "react";
 
 import { installUpdateAndRestart } from "@/lib/utils";
 
-export const DownloadComplete = () => {
+export function DownloadComplete() {
   const onClick = () => {
     installUpdateAndRestart();
   };
@@ -15,4 +15,4 @@ export const DownloadComplete = () => {
       </div>
     </div>
   );
-};
+}

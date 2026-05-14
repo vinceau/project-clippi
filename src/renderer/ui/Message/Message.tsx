@@ -1,1 +1,1 @@
-export { Message } from 'semantic-ui-react';
+export { Message } from "semantic-ui-react";

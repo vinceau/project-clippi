@@ -25,11 +25,11 @@ const ActionNotifyFunc: ActionTypeGenerator = (params: ActionNotifyParams) => {
   };
 };
 
-const ActionIcon = () => {
+function ActionIcon() {
   return <Icon name="exclamation circle" size="large" />;
-};
+}
 
-const NotifyInput = (props: any) => {
+function NotifyInput(props: any) {
   const { value, onChange } = props;
   const defaultValue = value && value.message ? value.message : "";
   const [msg, setMsg] = React.useState(defaultValue);
@@ -45,7 +45,7 @@ const NotifyInput = (props: any) => {
       </Form>
     </div>
   );
-};
+}
 
 export const ActionNotify: ActionComponent = {
   label: "show a notification",

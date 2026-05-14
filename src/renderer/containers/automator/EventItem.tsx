@@ -50,9 +50,9 @@ const Outer = styled.div<{
   }}
 `;
 
-export const EventItem = ({ event, onClick, selected, disabled }: EventItemProps) => {
+export function EventItem({ event, onClick, selected, disabled }: EventItemProps) {
   const theme = useTheme();
-  const eventName = event.name ? event.name : generateEventName(event) + "...";
+  const eventName = event.name ? event.name : `${generateEventName(event)}...`;
   return (
     <Outer disabled={disabled} themeName={theme.themeName} onClick={onClick} selected={selected}>
       <div
@@ -65,4 +65,4 @@ export const EventItem = ({ event, onClick, selected, disabled }: EventItemProps
       <div>{eventName}</div>
     </Outer>
   );
-};
+}

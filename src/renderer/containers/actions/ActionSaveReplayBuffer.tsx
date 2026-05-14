@@ -44,16 +44,16 @@ const actionSaveBuffer: ActionTypeGenerator = (params: ActionSaveReplayBufferPar
   };
 };
 
-const ActionIcon = () => {
+function ActionIcon() {
   return <CustomIcon image={obsIcon} size="large" />;
-};
+}
 
 interface ReplayBufferInputProps extends Record<string, any> {
   value: ActionSaveReplayBufferParams;
   onChange(value: ActionSaveReplayBufferParams): void;
 }
 
-const ReplayBufferInput = (props: ReplayBufferInputProps) => {
+function ReplayBufferInput(props: ReplayBufferInputProps) {
   const { value, onChange } = props;
   const onDelayChange = (delay?: string) => {
     const newValue = produce(value, (draft) => {
@@ -78,7 +78,7 @@ const ReplayBufferInput = (props: ReplayBufferInputProps) => {
       </div>
     </div>
   );
-};
+}
 
 export const ActionSaveReplayBuffer: ActionComponent = {
   label: "save OBS replay buffer",

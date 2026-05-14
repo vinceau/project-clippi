@@ -25,7 +25,7 @@ const Notice = styled.div`
   text-align: center;
 `;
 
-export const AutomatorPlaceholder = () => {
+export function AutomatorPlaceholder() {
   const theme = useTheme();
   return (
     <Outer themeName={theme.themeName}>
@@ -36,4 +36,4 @@ export const AutomatorPlaceholder = () => {
       </Notice>
     </Outer>
   );
-};
+}

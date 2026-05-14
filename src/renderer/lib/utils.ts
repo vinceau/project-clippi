@@ -19,7 +19,7 @@ const fileOptions = {
 };
 
 export const getFolderPath = async (options?: any): Promise<string | null> => {
-  const dialogOptions = options ? options : folderOptions;
+  const dialogOptions = options || folderOptions;
   const paths = await getFilePath(dialogOptions);
   if (paths && paths.length > 0) {
     return paths[0];
@@ -28,7 +28,7 @@ export const getFolderPath = async (options?: any): Promise<string | null> => {
 };
 
 export const getFilePath = async (options?: any, save?: boolean): Promise<string[] | null> => {
-  const dialogOptions = options ? options : fileOptions;
+  const dialogOptions = options || fileOptions;
   try {
     const p = await ipc.sendSyncWithTimeout(
       Message.SelectDirectory,

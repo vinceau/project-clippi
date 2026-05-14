@@ -29,11 +29,10 @@ async function fetchLatestUpdateVersion(): Promise<string> {
     // Check using the auto updater
     const info = await autoUpdater.checkForUpdates();
     return info.updateInfo.version;
-  } else {
-    // Check via Github
-    const latest = await getLatestVersion(GITHUB_AUTHOR, pkg.name);
-    return latest;
   }
+  // Check via Github
+  const latest = await getLatestVersion(GITHUB_AUTHOR, pkg.name);
+  return latest;
 }
 
 export async function checkForUpdates() {

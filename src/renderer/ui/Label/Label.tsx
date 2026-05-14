@@ -1,1 +1,1 @@
-export { Label } from 'semantic-ui-react';
+export { Label } from "semantic-ui-react";

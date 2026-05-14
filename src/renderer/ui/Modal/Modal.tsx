@@ -1,4 +1,4 @@
-import { Modal as SemanticModal } from 'semantic-ui-react';
+import { Modal as SemanticModal } from "semantic-ui-react";
 
 export const Modal = SemanticModal;
 export const ModalHeader = SemanticModal.Header;

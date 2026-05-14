@@ -26,7 +26,7 @@ const Outer = styled.div`
   }
 `;
 
-export const DropPad = ({
+export function DropPad({
   id,
   files,
   onDrop: onDropProp,
@@ -38,12 +38,12 @@ export const DropPad = ({
   onDrop: (files: any) => void;
   onDragEnd: (result: any) => void;
   onRemove?: (index: number) => void;
-}) => {
+}) {
   const accept = ".slp";
   const onDrop = useCallback((acceptedFiles: File[]) => {
     onDropProp(acceptedFiles.map((f) => f.path));
   }, []);
-  const { open, getRootProps, getInputProps /*, isDragActive */ } = useDropzone({
+  const { open, getRootProps, getInputProps /* , isDragActive */ } = useDropzone({
     multiple: true,
     onDrop,
     accept,
@@ -62,4 +62,4 @@ export const DropPad = ({
       )}
     </Outer>
   );
-};
+}

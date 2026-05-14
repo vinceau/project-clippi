@@ -60,7 +60,7 @@ const Toolbar = styled.div`
   margin-bottom: 1rem;
 `;
 
-export const RecorderView = () => {
+export function RecorderView() {
   const theme = useTheme();
   const { dolphinQueue } = useSelector((state: iRootState) => state.tempContainer);
   const dispatch = useDispatch<Dispatch>();
@@ -145,4 +145,4 @@ export const RecorderView = () => {
       </Footer>
     </Outer>
   );
-};
+}

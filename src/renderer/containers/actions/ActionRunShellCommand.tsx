@@ -28,22 +28,22 @@ const ActionRunShellCommandFunc: ActionTypeGenerator = (params: ActionRunShellCo
   };
 };
 
-const ActionIcon = () => {
+function ActionIcon() {
   return <Icon name="terminal" size="large" />;
-};
+}
 
-const RunShellCommandInput = ({
+function RunShellCommandInput({
   value,
   onChange,
 }: {
   value: ActionRunShellCommandParams;
   onChange: (val: ActionRunShellCommandParams) => void;
-}) => {
+}) {
   const defaultValue = value && value.command ? value.command : "";
   const [cmd, setMsg] = React.useState(defaultValue);
   return (
     <div style={{ marginTop: 10 }}>
-      <Message warning={true}>
+      <Message warning>
         <Icon name="warning sign" />
         Running unknown commands can be very dangerous! Only run commands that you fully understand!
       </Message>
@@ -59,7 +59,7 @@ const RunShellCommandInput = ({
       <Text>Pro tip: Use &#123;event&#125; to get the event data as a JSON string.</Text>
     </div>
   );
-};
+}
 
 export const ActionRunShellCommand: ActionComponent = {
   label: "run a shell command",

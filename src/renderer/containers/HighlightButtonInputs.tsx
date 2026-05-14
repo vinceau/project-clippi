@@ -40,7 +40,7 @@ const options = [
 ];
 const holdOptions = ["frames", "seconds"].map((o) => ({ key: o, value: o, text: o }));
 
-export const HighlightButtonInputs = () => {
+export function HighlightButtonInputs() {
   const [showAdvanced, setShowAdvanced] = React.useState(false);
   const dispatch = useDispatch<Dispatch>();
   const {
@@ -130,4 +130,4 @@ export const HighlightButtonInputs = () => {
       </Accordion>
     </Outer>
   );
-};
+}

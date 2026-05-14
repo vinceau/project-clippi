@@ -37,7 +37,7 @@ const HorizontalDivider = styled(Divider)`
   }
 `;
 
-export const SlippiConnectionPlaceholder = ({
+export function SlippiConnectionPlaceholder({
   address,
   port,
   onClick,
@@ -45,7 +45,7 @@ export const SlippiConnectionPlaceholder = ({
   address: string;
   port: string;
   onClick: (value: { address: string; port: string }) => void;
-}) => {
+}) {
   const [address_, setAddress] = React.useState(address);
   const [port_, setPort] = React.useState(port);
   return (
@@ -72,7 +72,7 @@ export const SlippiConnectionPlaceholder = ({
                 <Input
                   label="Address"
                   placeholder="localhost"
-                  fluid={true}
+                  fluid
                   value={address_}
                   onChange={(_: any, { value }: any) => setAddress(value)}
                   onBlur={() => dispatcher.slippi.setRelayAddress(address_)}
@@ -81,7 +81,7 @@ export const SlippiConnectionPlaceholder = ({
               <Input
                 label="Port"
                 placeholder="1667"
-                fluid={true}
+                fluid
                 value={port_}
                 onChange={(_: any, { value }: any) => setPort(value)}
                 onBlur={() => dispatcher.slippi.setPort(port_)}
@@ -105,4 +105,4 @@ export const SlippiConnectionPlaceholder = ({
       </Grid>
     </Segment>
   );
-};
+}

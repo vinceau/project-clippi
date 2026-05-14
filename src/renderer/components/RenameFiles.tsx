@@ -40,13 +40,13 @@ const ErrorContainer = styled.div`
 const metadata = {
   startAt: "2001-11-21T17:33:54.000Z",
   players: {
-    [0]: {
+    0: {
       names: {
         netplay: "Bort",
         code: "BORT#123",
       },
     },
-    [2]: {
+    2: {
       names: {
         netplay: "Yort",
         code: "YORT#456",
@@ -58,7 +58,7 @@ const metadata = {
 const gameStartString = `{"slpVersion":"2.0.1","isTeams":false,"isPAL":false,"stageId":2,"players":[{"playerIndex":0,"port":1,"characterId":0,"characterColor":3,"startStocks":4,"type":0,"teamId":0,"controllerFix":"UCF","nametag":"BORT"},{"playerIndex":2,"port":3,"characterId":25,"characterColor":0,"startStocks":4,"type":1,"teamId":0,"controllerFix":"None","nametag":"YORT"}]}`;
 const exampleGameStart: GameStartType = JSON.parse(gameStartString);
 
-export const RenameFiles = ({
+export function RenameFiles({
   value,
   onChange,
   placeholder,
@@ -66,7 +66,7 @@ export const RenameFiles = ({
   value: string;
   onChange: (value: string) => void;
   placeholder?: string;
-}) => {
+}) {
   const [showOptions, setShowOptions] = React.useState(false);
   const [renameFormat, setRenameFormat] = React.useState(value);
   const textRef: any = React.useRef();
@@ -137,4 +137,4 @@ export const RenameFiles = ({
       </Field>
     </div>
   );
-};
+}

@@ -13,14 +13,14 @@ import { openFileOrParentFolder } from "@/lib/utils";
 import type { Dispatch, iRootState } from "@/store";
 import { device } from "@/styles/device";
 
-const AddSoundButton = (props: any) => {
+function AddSoundButton(props: any) {
   return (
     <Button {...props}>
       <Icon name="add" />
       Add sound
     </Button>
   );
-};
+}
 
 const ButtonContainer = styled.div`
   margin-bottom: 1rem;
@@ -34,7 +34,7 @@ const ButtonContainer = styled.div`
   }
 `;
 
-export const SoundSettings = () => {
+export function SoundSettings() {
   const soundFiles = useSelector((state: iRootState) => state.filesystem.soundFiles);
   const soundsExist = Object.keys(soundFiles).length > 0;
   const dispatch = useDispatch<Dispatch>();
@@ -68,15 +68,15 @@ export const SoundSettings = () => {
               <Icon name="music" />
               You have not added any sounds
             </Header>
-            <AddSoundButton onClick={() => dispatch.filesystem.addSound()} primary={true} />
+            <AddSoundButton onClick={() => dispatch.filesystem.addSound()} primary />
           </Segment>
         )}
       </div>
     </FormContainer>
   );
-};
+}
 
-const SoundTable = ({
+function SoundTable({
   sounds,
   onPathClick,
   onRemove,
@@ -84,7 +84,7 @@ const SoundTable = ({
   sounds: { [name: string]: string };
   onPathClick: (name: string) => void;
   onRemove: (name: string) => void;
-}) => {
+}) {
   const allSounds = Object.keys(sounds);
   allSounds.sort();
   return (
@@ -103,4 +103,4 @@ const SoundTable = ({
       })}
     </div>
   );
-};
+}

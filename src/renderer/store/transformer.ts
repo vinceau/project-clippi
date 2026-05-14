@@ -21,13 +21,13 @@ export const transformer = createTransform(
             // Get the current stored profiles
             const converted = mapConfigurationToFilterSettings(JSON.parse(value));
             // Join it with the default settings
-            const newConverted = Object.assign({}, defaultComboFilterSettings, converted);
+            const newConverted = { ...defaultComboFilterSettings, ...converted };
             (draft as SlippiState).comboProfiles[key] = JSON.stringify(mapFilterSettingsToConfiguration(newConverted));
           }
           break;
         case "twitch":
           // Rehydrate the Date object for timestamps
-          const clips = (draft as TwitchState).clips;
+          const { clips } = draft as TwitchState;
           (draft as TwitchState).clips = {};
           Object.entries(clips).forEach(([name, value]) => {
             // We used to store dates as a number in seconds so handle that case
@@ -40,7 +40,7 @@ export const transformer = createTransform(
           });
           break;
         case "filesystem":
-          const soundFiles = (draft as FileSystemState).soundFiles;
+          const { soundFiles } = draft as FileSystemState;
           (draft as FileSystemState).soundFiles = {};
           Object.entries(soundFiles).forEach(([name, value]) => {
             if (fs.existsSync(value)) {

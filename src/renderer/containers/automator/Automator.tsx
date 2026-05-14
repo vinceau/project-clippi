@@ -14,7 +14,7 @@ import { AutomatorPlaceholder } from "./AutomatorPlaceholder";
 import { EventActionLists } from "./EventActionLists";
 import { EventModal } from "./EventModal";
 
-export const Automator = () => {
+export function Automator() {
   const [opened, setOpened] = React.useState<boolean>(false);
   const [selected, setSelected] = React.useState<number>(0);
   const [edit, setEdit] = React.useState<NamedEventConfig | null>(null);
@@ -130,4 +130,4 @@ export const Automator = () => {
       </div>
     </div>
   );
-};
+}

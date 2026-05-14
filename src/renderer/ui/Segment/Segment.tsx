@@ -1,1 +1,1 @@
-export { Segment } from 'semantic-ui-react';
+export { Segment } from "semantic-ui-react";

@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
-import { AUTO_UPDATES_ENABLED } from "common/constants";
-import { GITHUB_RELEASES_PAGE } from "common/constants";
+import { AUTO_UPDATES_ENABLED, GITHUB_RELEASES_PAGE } from "common/constants";
 import type { VersionUpdatePayload } from "common/types";
 import { UpdateStatus } from "common/types";
 import { shell } from "electron";
@@ -14,7 +13,7 @@ import { ExternalLink as A } from "@/components/ExternalLink";
 import { checkForNewUpdates, downloadLatestUpdate, installUpdateAndRestart } from "@/lib/utils";
 import type { Dispatch, iRootState } from "@/store";
 
-export const UpdateStatusInfo = () => {
+export function UpdateStatusInfo() {
   const updateStatus = useSelector((state: iRootState) => state.tempContainer.updateStatus);
   const updateAvailable = useSelector((state: iRootState) => state.tempContainer.updateAvailable);
 
@@ -66,9 +65,9 @@ export const UpdateStatusInfo = () => {
       )}
     </div>
   );
-};
+}
 
-const ShowUpdateMessage = ({ versionPayload }: { versionPayload: VersionUpdatePayload | null }) => {
+function ShowUpdateMessage({ versionPayload }: { versionPayload: VersionUpdatePayload | null }) {
   if (!versionPayload) {
     return null;
   }
@@ -97,11 +96,11 @@ const ShowUpdateMessage = ({ versionPayload }: { versionPayload: VersionUpdatePa
     case UpdateStatus.DOWNLOAD_COMPLETE:
       return <span>Update is ready to install.</span>;
   }
-};
+}
 
-const UpdateAvailableMessage = () => {
+function UpdateAvailableMessage() {
   if (!AUTO_UPDATES_ENABLED) {
     return <Button onClick={() => shell.openExternal(GITHUB_RELEASES_PAGE)}>Open releases page</Button>;
   }
   return <Button onClick={() => downloadLatestUpdate()}>Download now</Button>;
-};
+}
