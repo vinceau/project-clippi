@@ -20,7 +20,7 @@ export function Checkbox({ checked, label, disabled, toggle, onChange }: Checkbo
         onCheckedChange={(c) => onChange?.(c)}
         className={styles.toggleRoot}
       >
-        <BaseCheckbox.Indicator className={styles.toggleIndicator} />
+        <span className={styles.toggleIndicator} />
       </BaseCheckbox.Root>
     );
   }
