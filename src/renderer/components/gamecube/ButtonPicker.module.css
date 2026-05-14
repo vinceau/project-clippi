@@ -1,0 +1,14 @@
+.preview {
+  font-size: 2em;
+  text-align: center;
+  margin-bottom: 2em;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.actions button {
+  margin: 0 !important;
+}

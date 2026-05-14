@@ -1,6 +1,4 @@
-/** @jsx jsx */
-import { css, jsx } from "@emotion/core";
-import styled from "@emotion/styled";
+import { clsx } from "clsx";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
@@ -19,6 +17,8 @@ import type { CustomInputEventFilter } from "@/lib/inputs";
 import type { iRootState } from "@/store";
 import type { NamedEventConfig } from "@/store/models/automator";
 import { useTheme } from "@/styles";
+
+import styles from "./EventModal.module.css";
 
 type FilterValues = Required<CustomInputEventFilter>;
 
@@ -58,10 +58,9 @@ const holdOptions = ["held", "pressed"].map(stringToOptions);
 const holdDurationOptions = ["frames", "seconds"].map(stringToOptions);
 const playerSelectionOptions = ["name", "port"].map(stringToOptions);
 
-const ErrorText = styled(Text)`
-  color: red;
-  font-weight: bold;
-`;
+function ErrorText({ children }: { children?: React.ReactNode }) {
+  return <Text className={styles.errorText}>{children}</Text>;
+}
 
 export function EventModal({
   edit,
@@ -79,12 +78,10 @@ export function EventModal({
   const { currentProfile, comboProfiles } = useSelector((state: iRootState) => state.slippi);
   const theme = useTheme();
 
-  // Set current values to be the default values
   React.useLayoutEffect(() => {
     reset(defaultValues);
   }, [edit]);
 
-  // Prefix the value with "$" so we can use the object replacement in the event manager
   const profileOptions = Object.keys(comboProfiles).map((o: string) => ({ key: o, value: `$${o}`, text: o }));
 
   const closeAction = () => {
@@ -120,25 +117,6 @@ export function EventModal({
     <Modal className={theme.themeName} open={opened} closeIcon onClose={closeAction} closeOnDimmerClick={false}>
       <Modal.Header>
         {headerText}
-        {/* <Controller
-          as={
-            <Input
-              css={css`
-                width: 100%;
-              `}
-              placeholder="Give this event a meaningful name..."
-              transparent={true}
-            />
-          }
-          control={control}
-          onChange={([_, x]) => {
-            console.log("value changed:");
-            console.log(x.value);
-            return x.value;
-          }}
-          name="name"
-        />
-        {errors.name && <ErrorText>Events must have a unique name</ErrorText>} */}
       </Modal.Header>
       <Modal.Content>
         <Field padding="bottom">
@@ -146,9 +124,7 @@ export function EventModal({
           <Controller
             as={
               <Select
-                css={css`
-                  width: 100%;
-                `}
+                className={styles.fullWidth}
                 placeholder="Choose an event"
                 options={eventOptions.map((o) => ({ ...o, key: o.value }))}
               />
@@ -171,9 +147,7 @@ export function EventModal({
             <Controller
               as={
                 <Select
-                  css={css`
-                    width: 100%;
-                  `}
+                  className={styles.fullWidth}
                   placeholder="Combo profile"
                   options={profileOptions}
                 />
@@ -189,7 +163,7 @@ export function EventModal({
         {showButtonInputs && (
           <Field padding="bottom">
             <Label>Button Combination</Label>
-            <div style={{ marginBottom: "10px", lineHeight: "28px" }}>
+            <div className={styles.inlineWrapper}>
               {"Trigger event when the following combination is "}
               <Controller
                 as={<InlineDropdown options={holdOptions} />}
@@ -201,7 +175,7 @@ export function EventModal({
               {filter.inputButtonHold === "held" && (
                 <span>
                   {" for "}
-                  <span style={{ marginRight: "10px" }}>
+                  <span className={styles.inlineMargin}>
                     <Controller
                       as={<DelayInput placeholder="2" />}
                       onChange={([val]) => val}
@@ -233,7 +207,7 @@ export function EventModal({
               <ErrorText>Button combination must be specified</ErrorText>
             )}
 
-            <div style={{ marginTop: 10 }}>
+            <div className={styles.sectionMargin}>
               {"Match player by "}
               <Controller
                 as={<InlineDropdown options={playerSelectionOptions} />}
@@ -244,7 +218,7 @@ export function EventModal({
               />
             </div>
             {filter.playerSelectionOption === "name" && (
-              <div style={{ marginTop: 10 }}>
+              <div className={styles.sectionMargin}>
                 <Controller
                   as={<KeywordsInput />}
                   control={control}
@@ -264,7 +238,7 @@ export function EventModal({
               </div>
             )}
             {filter.playerSelectionOption === "port" && (
-              <div style={{ marginTop: 10 }}>
+              <div className={styles.sectionMargin}>
                 <Controller
                   as={<PortSelection label="Player" zeroIndex />}
                   control={control}
@@ -283,15 +257,7 @@ export function EventModal({
           </Field>
         )}
       </Modal.Content>
-      <Modal.Actions
-        css={css`
-          display: flex;
-          justify-content: flex-end;
-          & > button {
-            margin: 0 !important;
-          }
-        `}
-      >
+      <Modal.Actions className={styles.actions}>
         <Button color="green" onClick={saveAction}>
           <Icon name="checkmark" /> Save
         </Button>

@@ -1,30 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import styled from "@emotion/styled";
 import React, { useCallback } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
 import { useDropzone } from "react-dropzone";
 
+import styles from "./DropPad.module.css";
 import { PlaybackQueue } from "./PlaybackQueue";
 import { PlaybackQueueEmpty } from "./PlaybackQueueEmpty";
-
-const Outer = styled.div`
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  &&:after {
-    content: "";
-    background-color: white;
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    top: 0;
-    left: 0;
-    opacity: 0.95;
-    z-index: -1;
-  }
-`;
 
 export function DropPad({
   id,
@@ -51,7 +32,7 @@ export function DropPad({
     noKeyboard: true,
   });
   return (
-    <Outer {...getRootProps()}>
+    <div className={styles.outer} {...getRootProps()}>
       <input {...getInputProps()} />
       {files.length > 0 ? (
         <DragDropContext onDragEnd={onDragEnd}>
@@ -60,6 +41,6 @@ export function DropPad({
       ) : (
         <PlaybackQueueEmpty onOpen={open} />
       )}
-    </Outer>
+    </div>
   );
 }

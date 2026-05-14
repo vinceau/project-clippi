@@ -1,24 +1,16 @@
-import styled from "@emotion/styled";
+import { clsx } from "clsx";
 import * as React from "react";
 import { Checkbox } from "@/ui/Checkbox/Checkbox";
 
-export const SlideReveal = styled.div<{
-  open: boolean;
-}>`
-  overflow-y: ${({ open }) => (open ? "visible" : "hidden")};
-  max-height: ${({ open }) => (open ? "1000px" : "0")};
-  transition: all 0.3s ease-in-out;
-`;
+import styles from "./ProcessSection.module.css";
 
-const Outer = styled.div`
-  padding: 20px 0;
-  border-top: solid 1px ${({ theme }) => theme.foreground3};
-`;
-
-const SectionLabel = styled.h2`
-  cursor: pointer;
-  margin-bottom: 0;
-`;
+export function SlideReveal({ open, children }: { open: boolean; children?: React.ReactNode }) {
+  return (
+    <div className={clsx(styles.slideReveal, open && styles.slideRevealOpen)}>
+      {children}
+    </div>
+  );
+}
 
 export function ProcessSection({
   open,
@@ -32,14 +24,16 @@ export function ProcessSection({
   children?: React.ReactNode;
 }) {
   return (
-    <Outer>
-      <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <SectionLabel onClick={() => onOpenChange(!open)}>{label}</SectionLabel>
+    <div className={styles.outer}>
+      <div className={styles.toolbar}>
+        <h2 className={styles.sectionLabel} onClick={() => onOpenChange(!open)}>
+          {label}
+        </h2>
         <Checkbox toggle checked={open} onChange={(_, data) => onOpenChange(Boolean(data.checked))} />
       </div>
       <SlideReveal open={open}>
-        <div style={{ marginTop: "10px" }}>{children}</div>
+        <div className={styles.content}>{children}</div>
       </SlideReveal>
-    </Outer>
+    </div>
   );
 }

@@ -1,4 +1,3 @@
-import styled from "@emotion/styled";
 import React from "react";
 import { Button } from "@/ui/Button/Button";
 import { Divider } from "@/ui/Divider/Divider";
@@ -10,32 +9,9 @@ import { Segment } from "@/ui/Segment/Segment";
 import { CustomIcon } from "@/ui/CustomIcon/CustomIcon";
 import { SlippiIcon } from "@/components/SlippiIcon";
 import { dispatcher } from "@/store";
-import { device } from "@/styles/device";
 import dolphinLogoSVG from "@/styles/images/dolphin.svg";
 
-const VerticalHeader = styled(Header)`
-  &&& {
-    display: flex;
-    flex-direction: column;
-  }
-`;
-const VerticalDivider = styled(Divider)`
-  &&& {
-    display: none !important;
-    @media ${device.laptop} {
-      display: block !important;
-    }
-  }
-`;
-const HorizontalDivider = styled(Divider)`
-  &&& {
-    width: 100%;
-    display: block !important;
-    @media ${device.laptop} {
-      display: none !important;
-    }
-  }
-`;
+import styles from "./SlippiConnectionPlaceholder.module.css";
 
 export function SlippiConnectionPlaceholder({
   address,
@@ -51,24 +27,15 @@ export function SlippiConnectionPlaceholder({
   return (
     <Segment placeholder>
       <Grid columns={2} stackable textAlign="center">
-        <VerticalDivider vertical>Or</VerticalDivider>
+        <Divider className={styles.verticalDivider} vertical>Or</Divider>
         <Grid.Row verticalAlign="middle">
           <Grid.Column>
-            <VerticalHeader icon>
+            <Header className={styles.verticalHeader} icon>
               <SlippiIcon />
               Connect to a Slippi Relay
-            </VerticalHeader>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                maxWidth: 300,
-                marginLeft: "auto",
-                marginRight: "auto",
-                marginTop: 20,
-              }}
-            >
-              <div style={{ marginBottom: 5 }}>
+            </Header>
+            <div className={styles.formContainer}>
+              <div className={styles.fieldMargin}>
                 <Input
                   label="Address"
                   placeholder="localhost"
@@ -86,18 +53,18 @@ export function SlippiConnectionPlaceholder({
                 onChange={(_: any, { value }: any) => setPort(value)}
                 onBlur={() => dispatcher.slippi.setPort(port_)}
               />
-              <div style={{ padding: "10px 0" }}>
+              <div className={styles.buttonPadding}>
                 <Button onClick={() => onClick({ address_, port_ })}>Connect</Button>
               </div>
             </div>
           </Grid.Column>
-          <HorizontalDivider horizontal>Or</HorizontalDivider>
+          <Divider className={styles.horizontalDivider} horizontal>Or</Divider>
           <Grid.Column>
-            <VerticalHeader icon>
+            <Header className={styles.verticalHeader} icon>
               <CustomIcon image={dolphinLogoSVG} />
               Connect to Slippi Dolphin
-            </VerticalHeader>
-            <div style={{ padding: "10px 0" }}>
+            </Header>
+            <div className={styles.buttonPadding}>
               <Button onClick={() => dispatcher.slippi.connectToDolphin()}>Find Dolphin Instance</Button>
             </div>
           </Grid.Column>

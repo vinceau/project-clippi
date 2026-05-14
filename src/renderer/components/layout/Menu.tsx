@@ -1,4 +1,3 @@
-import styled from "@emotion/styled";
 import * as React from "react";
 import { Link, useRouteMatch } from "react-router-dom";
 import { Icon } from "@/ui/Icon/Icon";
@@ -6,24 +5,12 @@ import { Label } from "@/ui/Label/Label";
 
 import { MenuIcon, MenuIconLink } from "@/components/layout/MenuIcon";
 
-const Outer = styled.div`
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-`;
-
-const updateNotificationStyles = {
-  position: "absolute",
-  maxHeight: "0.5em",
-  top: "2rem",
-  right: "2rem",
-};
+import styles from "./Menu.module.css";
 
 export function Menu({ settingsPage, updateAvailable }: { settingsPage: string; updateAvailable?: boolean }) {
   const match = useRouteMatch();
   return (
-    <Outer>
+    <div className={styles.outer}>
       <div>
         <MenuIconLink to={`${match.url}/automator`} label="Automator">
           <Icon name="bolt" />
@@ -34,16 +21,22 @@ export function Menu({ settingsPage, updateAvailable }: { settingsPage: string; 
         <MenuIconLink to={`${match.url}/recorder`} label="Playback Queue">
           <Icon name="play circle" />
         </MenuIconLink>
-        {/* <MenuIconLink to={`${match.url}/streamer`} label="Stream Assistant"><Icon name="tv" /></MenuIconLink> */}
       </div>
       <div>
         <Link to={settingsPage}>
           <MenuIcon label="Settings">
             <Icon name="cog" />
-            {updateAvailable && <Label circular color="red" empty style={updateNotificationStyles} />}
+            {updateAvailable && (
+              <Label
+                circular
+                color="red"
+                empty
+                style={{ position: "absolute", maxHeight: "0.5em", top: "2rem", right: "2rem" }}
+              />
+            )}
           </MenuIcon>
         </Link>
       </div>
-    </Outer>
+    </div>
   );
 }

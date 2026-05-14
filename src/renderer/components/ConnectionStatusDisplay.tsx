@@ -1,20 +1,9 @@
-import styled from "@emotion/styled";
 import React from "react";
 import { Header } from "@/ui/Header/Header";
 
+import styles from "./ConnectionStatusDisplay.module.css";
 import { Labelled } from "@/components/Labelled";
 import { ScanningDot } from "@/components/ScanningDot";
-
-const Outer = styled.div`
-  padding: 10px 0;
-  display: flex;
-`;
-const ConnectInfo = styled.div`
-  margin-left: 10px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-`;
 
 export function ConnectionStatusDisplay({
   icon,
@@ -38,7 +27,7 @@ export function ConnectionStatusDisplay({
   children?: React.ReactNode;
 }) {
   return (
-    <Outer>
+    <div className={styles.outer}>
       {icon && (
         <Labelled disabled={!iconHoverText} title={iconHoverText}>
           <img
@@ -52,14 +41,14 @@ export function ConnectionStatusDisplay({
           />
         </Labelled>
       )}
-      <ConnectInfo>
+      <div className={styles.connectInfo}>
         <Labelled disabled={!headerHoverTitle} title={headerHoverTitle} onClick={onHeaderClick} position="right">
           <Header sub>
             <ScanningDot shouldPulse={shouldPulse} color={color || "red"} /> {headerText}
           </Header>
         </Labelled>
         {children && <span>{children}</span>}
-      </ConnectInfo>
-    </Outer>
+      </div>
+    </div>
   );
 }

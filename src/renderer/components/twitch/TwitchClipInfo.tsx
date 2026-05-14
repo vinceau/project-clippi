@@ -1,51 +1,12 @@
-import styled from "@emotion/styled";
 import type { TwitchClip } from "common/types";
-import { transparentize } from "polished";
 import React from "react";
 import { Icon } from "@/ui/Icon/Icon";
 import { format } from "timeago.js";
 
-import { device } from "@/styles/device";
-
 import { ExternalLink as A } from "../ExternalLink";
 import { Labelled } from "../Labelled";
 
-const ClipContainer = styled.div`
-border: solid 1px ${({ theme }) => theme.background3}
-border-radius: 3px;
-margin-bottom: 5px;
-padding: 10px;
-display: flex;
-justify-content: space-between;
-flex-direction: column;
-@media ${device.tablet} {
-    flex-direction: row;
-}
-background-color: ${({ theme }) => transparentize(0.3, theme.foreground3)};
-a {
-    color: ${({ theme }) => theme.foreground}
-
-}
-h2 {
-    word-break: break-all;
-    font-size: 18px;
-    margin: 0;
-    margin-bottom: 5px;
-}
-`;
-
-const ButtonsContainer = styled.div`
-  display: flex;
-  align-self: flex-end;
-  font-size: 20px;
-
-  @media ${device.tablet} {
-    align-self: center;
-  }
-  & > span {
-    padding: 5px;
-  }
-`;
+import styles from "./TwitchClipInfo.module.css";
 
 export function TwitchClipInfo({
   clip,
@@ -63,14 +24,14 @@ export function TwitchClipInfo({
   };
   const channelUrl = clip.channel ? `https://twitch.tv/${clip.channel}` : undefined;
   return (
-    <ClipContainer>
+    <div className={styles.clipContainer}>
       <div>
         <Labelled title="Show clip in browser">
           <A href={url}>
             <h2>{clip.clipID}</h2>
           </A>
         </Labelled>
-        <div style={{ opacity: "0.7" }}>
+        <div className={styles.meta}>
           {clip.channel && (
             <span>
               <Labelled title="Go to Twitch channel">
@@ -82,16 +43,16 @@ export function TwitchClipInfo({
           {timestamp}
         </div>
       </div>
-      <ButtonsContainer>
+      <div className={styles.buttonsContainer}>
         <Labelled title="Edit">
           <A href={`${url}/edit`}>
             <Icon name="pencil" />
           </A>
         </Labelled>
         <Labelled title="Remove">
-          <Icon name="trash" onClick={onRemove} style={{ cursor: "pointer" }} />
+          <Icon name="trash" onClick={onRemove} className={styles.trashIcon} />
         </Labelled>
-      </ButtonsContainer>
-    </ClipContainer>
+      </div>
+    </div>
   );
 }

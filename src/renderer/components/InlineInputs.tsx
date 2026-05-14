@@ -1,7 +1,8 @@
-import styled from "@emotion/styled";
 import * as React from "react";
 import { Dropdown } from "@/ui/Dropdown/Dropdown";
 import { Input } from "@/ui/Input/Input";
+
+import styles from "./InlineInputs.module.css";
 
 const generateOptions = (
   events: string[],
@@ -62,15 +63,6 @@ export function BufferedInput(props: any) {
   return <Input value={newValue} onChange={newOnChange} onKeyDown={onKeyDown} onBlur={submitValue} {...rest} />;
 }
 
-export const SimpleInput = styled.input`
-  padding: 0.3rem;
-  text-align: center;
-  border-radius: 0.3rem;
-  border: solid 0.1rem #d4d4d5;
-  font-weight: bold;
-  margin: 0 0.5rem;
-`;
-
 export function DelayInput({
   value,
   placeholder,
@@ -87,14 +79,18 @@ export function DelayInput({
     }
   };
   return (
-    <SimpleInput
-      style={{ width: "100px" }}
+    <input
+      className={styles.simpleInput}
       value={delayAmount}
       onBlur={onChange}
       onChange={(e) => setDelayAmount(e.target.value)}
       placeholder={placeholder}
     />
   );
+}
+
+export function SimpleInput(props: any) {
+  return <input className={styles.simpleInput} {...props} />;
 }
 
 export function NotifyInput({

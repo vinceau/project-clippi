@@ -1,0 +1,12 @@
+.outer {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stopButton:hover {
+  background-color: #d01919;
+  color: white;
+}

@@ -1,10 +1,10 @@
-import styled from "@emotion/styled";
 import type { GameStartType } from "@slippi/slippi-js";
 import { invalidFilename } from "common/utils";
 import insertTextAtCursor from "insert-text-at-cursor";
 import * as React from "react";
 import { TextArea } from "@/ui/TextArea/TextArea";
 
+import styles from "./RenameFiles.module.css";
 import { ContextOptions } from "@/components/ContextOptions";
 import { Field, Label } from "@/components/Form";
 import { SlideReveal } from "@/components/ProcessSection";
@@ -12,30 +12,6 @@ import { TemplatePreview } from "@/components/TemplatePreview";
 import { defaultRenameFormat } from "@/store/models/highlights";
 
 import { Labelled } from "./Labelled";
-
-const FormatLabel = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-`;
-
-const ResetButton = styled.span`
-  font-size: 1.2rem;
-  opacity: 0.8;
-  &:hover {
-    cursor: pointer;
-    text-decoration: underline;
-  }
-`;
-
-const PreviewContainer = styled.div`
-  margin-top: 1rem;
-`;
-
-const ErrorContainer = styled.div`
-  color: red;
-`;
 
 const metadata = {
   startAt: "2001-11-21T17:33:54.000Z",
@@ -91,9 +67,9 @@ export function RenameFiles({
   const isInvalid = invalidFilename(renameFormat, { allowPaths: true });
   return (
     <div>
-      <div style={{ textAlign: "right", marginBottom: "5px" }}>
+      <div className={styles.optionsRow}>
         <a
-          style={{ color: "#999" }}
+          className={styles.optionLink}
           href="#"
           onClick={(e) => {
             e.preventDefault();
@@ -107,14 +83,14 @@ export function RenameFiles({
         <ContextOptions onLabelClick={insertText} />
       </SlideReveal>
       <Field>
-        <FormatLabel>
+        <div className={styles.formatLabel}>
           <Label>Format</Label>
           {showResetButton && (
             <Labelled title="Restore default value">
-              <ResetButton onClick={resetFormat}>Reset</ResetButton>
+              <span className={styles.resetButton} onClick={resetFormat}>Reset</span>
             </Labelled>
           )}
-        </FormatLabel>
+        </div>
         <TextArea
           ref={textRef}
           placeholder={placeholder}
@@ -124,16 +100,16 @@ export function RenameFiles({
           }}
           onBlur={() => onChange(renameFormat)}
         />
-        <PreviewContainer>
+        <div className={styles.previewContainer}>
           {isInvalid ? (
-            <ErrorContainer>Invalid filename format. Please check that there are no invalid characters.</ErrorContainer>
+            <div className={styles.errorContainer}>Invalid filename format. Please check that there are no invalid characters.</div>
           ) : (
             <div>
               <b>Preview: </b>
               <TemplatePreview template={renameFormat} metadata={metadata} settings={exampleGameStart} />
             </div>
           )}
-        </PreviewContainer>
+        </div>
       </Field>
     </div>
   );

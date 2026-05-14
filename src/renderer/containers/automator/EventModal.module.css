@@ -1,0 +1,30 @@
+.fullWidth {
+  width: 100%;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.actions button {
+  margin: 0 !important;
+}
+
+.errorText {
+  color: red;
+  font-weight: bold;
+}
+
+.inlineWrapper {
+  margin-bottom: 10px;
+  line-height: 28px;
+}
+
+.inlineMargin {
+  margin-right: 10px;
+}
+
+.sectionMargin {
+  margin-top: 10px;
+}

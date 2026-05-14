@@ -1,0 +1,18 @@
+.outer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.5rem;
+  background-color: color-mix(in srgb, black 5%, var(--color-background));
+}
+
+[data-theme="dark"] .outer {
+  background-color: color-mix(in srgb, white 5%, var(--color-background));
+}
+
+.notice {
+  margin: 20px 0;
+  text-align: center;
+}

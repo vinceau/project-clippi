@@ -1,0 +1,7 @@
+.noMarginIcon {
+  margin: 0 !important;
+}
+
+.outer input[type="text"] {
+  width: auto !important;
+}

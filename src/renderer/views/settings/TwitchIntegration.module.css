@@ -1,0 +1,16 @@
+.clearTrigger {
+  cursor: pointer;
+}
+
+.clearTrigger:hover {
+  text-decoration: underline;
+}
+
+.section {
+  margin-top: 20px;
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+}

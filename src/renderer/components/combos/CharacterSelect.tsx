@@ -1,6 +1,3 @@
-/** @jsx jsx */
-import { css, jsx } from "@emotion/core";
-import styled from "@emotion/styled";
 import type { Character } from "@slippi/slippi-js";
 import type { CharacterInfo } from "@vinceau/slp-realtime";
 import { getAllCharacters, getCharacterName } from "@vinceau/slp-realtime";
@@ -15,6 +12,8 @@ import { ThemeMode, useTheme } from "@/styles";
 import { CharacterIcon } from "../CharacterIcon";
 import { Labelled } from "../Labelled";
 import { CharacterLabel } from "./CharacterLabel";
+
+import styles from "./CharacterSelect.module.css";
 
 export const sortedCharacterInfos: CharacterInfo[] = getAllCharacters().sort((a, b) => {
   if (a.name < b.name) {
@@ -44,28 +43,12 @@ const MultiValueRemove: React.ComponentType<MultiValueProps<OptionTypeBase>> = (
   );
 };
 
-const OuterOption = styled.div<{
-  themeName: string;
-}>`
-  padding: 5px 10px;
-  ${({ theme, themeName }) => `
-  &:hover {
-    background-color: ${themeName === ThemeMode.DARK ? theme.foreground2 : "#F8F8F8"};
-    ${
-      themeName === ThemeMode.DARK &&
-      `
-      color: ${theme.foreground};
-    `
-    }
-  }`}
-`;
 const CustomOption: React.ComponentType<OptionProps<OptionTypeBase>> = (props) => {
-  const { themeName } = useTheme();
   const { innerProps, innerRef } = props;
   return (
-    <OuterOption {...innerProps} ref={innerRef} themeName={themeName}>
+    <div className={styles.outerOption} ref={innerRef} {...innerProps}>
       <CharacterLabel characterId={props.data.value} name={props.data.label} disabled={props.data.isDisabled} />
-    </OuterOption>
+    </div>
   );
 };
 
@@ -188,45 +171,17 @@ export function CustomCharacterList({ value, onChange }: CustomCharacterListProp
   };
   return (
     <div>
-      <div
-        css={css`
-          display: flex;
-          margin-bottom: 0.5rem;
-        `}
-      >
+      <div className={styles.flexRow}>
         {(value ?? []).map((c, i) => (
           <Labelled title={`Delete ${c}`} key={`item-${i}-${c}`} onClick={() => deleteChar(c)}>
-            <div
-              css={css`
-                border-radius: 0.3rem;
-                padding: 0.3rem 0.6rem;
-                margin: 0.2rem;
-                background-color: rgba(255, 255, 255, 0.1);
-                display: flex;
-                flex-wrap: wrap;
-                align-items: center;
-                font-size: 1.8rem;
-                cursor: pointer;
-                &:hover {
-                  color: black;
-                  background-color: #fbbfae;
-                }
-                & > span {
-                  margin-right: 0.3rem;
-                }
-              `}
-            >
+            <div className={styles.chip}>
               <span>{c}</span>
               <CharacterIcon character={c} />
             </div>
           </Labelled>
         ))}
       </div>
-      <div
-        css={css`
-          display: flex;
-        `}
-      >
+      <div className={styles.addRow}>
         <input
           placeholder="Enter a character ID and press Add"
           value={text}

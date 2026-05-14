@@ -1,18 +1,13 @@
-import styled from "@emotion/styled";
 import React from "react";
 import { Field } from "react-final-form";
 
-const Outer = styled.div`
-  display: grid;
-  grid-gap: 2rem;
-  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
-`;
+import styles from "./PercentageSlider.module.css";
 
 export function PercentageSlider({ name, min: minProp, max: maxProp }: { name: string; min?: string; max?: string }) {
   const min = minProp || "0";
   const max = maxProp || "100";
   return (
-    <Outer>
+    <div className={styles.outer}>
       <Field format={parseFloat} formatOnBlur name={name} min={min} max={max} component="input" type="text" />
       <Field
         format={parseFloat}
@@ -24,6 +19,6 @@ export function PercentageSlider({ name, min: minProp, max: maxProp }: { name: s
         max={max}
         step={`${parseInt(max, 10) / 100}`}
       />
-    </Outer>
+    </div>
   );
 }

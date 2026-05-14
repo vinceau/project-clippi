@@ -1,0 +1,11 @@
+.outer {
+  padding: 10px 0;
+  display: flex;
+}
+
+.connectInfo {
+  margin-left: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}

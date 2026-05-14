@@ -1,0 +1,53 @@
+.container {
+  text-align: center;
+}
+
+.container ul {
+  list-style: none;
+  padding: 0;
+}
+
+.container a:hover {
+  text-decoration: underline;
+}
+
+.content {
+  padding-bottom: 2rem;
+}
+
+.content p {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.footer {
+  font-style: italic;
+  font-size: 1.6rem;
+  margin-top: 4rem;
+}
+
+.logo {
+  height: 6.4rem;
+  width: 6.4rem;
+}
+
+.logoFlipped {
+  transform: scaleX(-1);
+}
+
+.updateInfo {
+  max-width: 50rem;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  margin-left: auto;
+  margin-right: auto;
+  border: solid 0.2rem transparent;
+}
+
+.updateInfoAvailable {
+  border-color: #db2828;
+}
+
+.section {
+  padding-top: 2rem;
+}

@@ -1,0 +1,22 @@
+.outerMenuIcon {
+  position: relative;
+  height: 7rem;
+  width: 100%;
+  color: color-mix(in srgb, transparent 50%, var(--color-foreground));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.5rem;
+  border-left: solid 0.4rem transparent;
+}
+
+.outerMenuIcon:hover {
+  color: color-mix(in srgb, transparent 25%, var(--color-foreground));
+  background-color: color-mix(in srgb, transparent 85%, var(--color-foreground));
+}
+
+.active {
+  color: var(--color-foreground);
+  border-left-color: var(--color-foreground);
+  background-color: color-mix(in srgb, transparent 70%, var(--color-foreground));
+}

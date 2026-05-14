@@ -1,0 +1,42 @@
+.verticalHeader {
+  display: flex;
+  flex-direction: column;
+}
+
+.verticalDivider {
+  display: none !important;
+}
+
+@media (min-width: 1024px) {
+  .verticalDivider {
+    display: block !important;
+  }
+}
+
+.horizontalDivider {
+  width: 100%;
+  display: block !important;
+}
+
+@media (min-width: 1024px) {
+  .horizontalDivider {
+    display: none !important;
+  }
+}
+
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+}
+
+.fieldMargin {
+  margin-bottom: 5px;
+}
+
+.buttonPadding {
+  padding: 10px 0;
+}

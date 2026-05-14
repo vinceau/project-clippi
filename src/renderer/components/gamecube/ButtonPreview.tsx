@@ -1,4 +1,3 @@
-import styled from "@emotion/styled";
 import { Input } from "@vinceau/slp-realtime";
 import React from "react";
 import {
@@ -16,60 +15,47 @@ import {
   ZButton,
 } from "react-gamecube";
 
-const ButtonContainer = styled.div<{
-  show?: boolean;
-}>`
-  display: ${({ show }) => (show ? "block" : "none")};
-  margin: 5px;
-`;
-
-const Outer = styled.div`
-  font-size: 0.4em;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-`;
+import styles from "./ButtonPreview.module.css";
 
 export function ButtonPreview({ value, pressed }: { value: string[]; pressed?: boolean }) {
   return (
-    <Outer>
-      <ButtonContainer show={value.includes(Input.Z)}>
+    <div className={styles.outer}>
+      <div className={styles.buttonContainer} style={{ display: value.includes(Input.Z) ? "block" : "none" }}>
         <ZButton pressed={pressed} />
-      </ButtonContainer>
-      <ButtonContainer show={value.includes(Input.L)}>
+      </div>
+      <div className={styles.buttonContainer} style={{ display: value.includes(Input.L) ? "block" : "none" }}>
         <LTrigger pressed={pressed} />
-      </ButtonContainer>
-      <ButtonContainer show={value.includes(Input.R)}>
+      </div>
+      <div className={styles.buttonContainer} style={{ display: value.includes(Input.R) ? "block" : "none" }}>
         <RTrigger pressed={pressed} />
-      </ButtonContainer>
-      <ButtonContainer show={value.includes(Input.A)}>
+      </div>
+      <div className={styles.buttonContainer} style={{ display: value.includes(Input.A) ? "block" : "none" }}>
         <AButton pressed={pressed} />
-      </ButtonContainer>
-      <ButtonContainer show={value.includes(Input.B)}>
+      </div>
+      <div className={styles.buttonContainer} style={{ display: value.includes(Input.B) ? "block" : "none" }}>
         <BButton pressed={pressed} />
-      </ButtonContainer>
-      <ButtonContainer show={value.includes(Input.X)}>
+      </div>
+      <div className={styles.buttonContainer} style={{ display: value.includes(Input.X) ? "block" : "none" }}>
         <XButton pressed={pressed} />
-      </ButtonContainer>
-      <ButtonContainer show={value.includes(Input.Y)}>
+      </div>
+      <div className={styles.buttonContainer} style={{ display: value.includes(Input.Y) ? "block" : "none" }}>
         <YButton pressed={pressed} />
-      </ButtonContainer>
-      <ButtonContainer show={value.includes(Input.START)}>
+      </div>
+      <div className={styles.buttonContainer} style={{ display: value.includes(Input.START) ? "block" : "none" }}>
         <StartButton pressed={pressed} />
-      </ButtonContainer>
-      <ButtonContainer show={value.includes(Input.D_UP)}>
+      </div>
+      <div className={styles.buttonContainer} style={{ display: value.includes(Input.D_UP) ? "block" : "none" }}>
         <DpadUp pressed={pressed} />
-      </ButtonContainer>
-      <ButtonContainer show={value.includes(Input.D_DOWN)}>
+      </div>
+      <div className={styles.buttonContainer} style={{ display: value.includes(Input.D_DOWN) ? "block" : "none" }}>
         <DpadDown pressed={pressed} />
-      </ButtonContainer>
-      <ButtonContainer show={value.includes(Input.D_LEFT)}>
+      </div>
+      <div className={styles.buttonContainer} style={{ display: value.includes(Input.D_LEFT) ? "block" : "none" }}>
         <DpadLeft pressed={pressed} />
-      </ButtonContainer>
-      <ButtonContainer show={value.includes(Input.D_RIGHT)}>
+      </div>
+      <div className={styles.buttonContainer} style={{ display: value.includes(Input.D_RIGHT) ? "block" : "none" }}>
         <DpadRight pressed={pressed} />
-      </ButtonContainer>
-    </Outer>
+      </div>
+    </div>
   );
 }

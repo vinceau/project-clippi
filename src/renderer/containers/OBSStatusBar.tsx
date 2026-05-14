@@ -1,4 +1,3 @@
-import styled from "@emotion/styled";
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
@@ -12,6 +11,8 @@ import { dolphinRecorder, loadQueueIntoDolphin } from "@/lib/dolphin";
 import { OBSConnectionStatus, OBSRecordingStatus } from "@/lib/obs";
 import type { Dispatch, iRootState } from "@/store";
 import obsLogo from "@/styles/images/obs.png";
+
+import styles from "./OBSStatusBar.module.css";
 
 enum RecordingMethod {
   TOGETHER = "together",
@@ -30,21 +31,6 @@ const recordingOptions = {
     text: "Seperate clips",
   },
 };
-
-const Outer = styled.div`
-  display: flex;
-  flex-grow: 1;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const StopButton = styled(Button)`
-  &&&:hover {
-    background-color: #d01919;
-    color: white;
-  }
-`;
 
 export function OBSStatusBar() {
   const history = useHistory();
@@ -101,7 +87,7 @@ export function OBSStatusBar() {
         : "Record all items together as a single video";
   const options = Object.entries(recordingOptions).map(([key, val]) => ({ ...val, value: key }));
   return (
-    <Outer>
+    <div className={styles.outer}>
       <ConnectionStatusDisplay
         icon={obsLogo}
         iconHoverText="Open OBS settings"
@@ -114,10 +100,10 @@ export function OBSStatusBar() {
       </ConnectionStatusDisplay>
       <div>
         {dolphinRunning ? (
-          <StopButton type="button" onClick={onStop}>
+          <Button className={styles.stopButton} type="button" onClick={onStop}>
             <Icon name="stop" />
             Stop
-          </StopButton>
+          </Button>
         ) : (
           <>
             <Labelled title={recordingButtonTitle} disabled={!recordButtonDisabled}>
@@ -139,7 +125,7 @@ export function OBSStatusBar() {
           </>
         )}
       </div>
-    </Outer>
+    </div>
   );
 }
 

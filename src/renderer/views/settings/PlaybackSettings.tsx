@@ -1,4 +1,3 @@
-import styled from "@emotion/styled";
 import { IS_MAC_OR_WIN } from "common/constants";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,21 +9,7 @@ import { Labelled } from "@/components/Labelled";
 import { getDolphinExecutableNames, getDolphinPath } from "@/lib/dolphin";
 import type { Dispatch, iRootState } from "@/store";
 
-const DolphinPathLabel = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-`;
-
-const ResetButton = styled.span`
-  font-size: 1.2rem;
-  opacity: 0.8;
-  &:hover {
-    cursor: pointer;
-    text-decoration: underline;
-  }
-`;
+import styles from "./PlaybackSettings.module.css";
 
 const defaultDolphinPath = getDolphinPath();
 const dolphinExecNames = getDolphinExecutableNames();
@@ -33,12 +18,10 @@ function PlaybackExecutableNames() {
   const elements: React.ReactNode[] = [];
   dolphinExecNames.forEach((el, i) => {
     if (i > 0 && i === dolphinExecNames.length - 1) {
-      // This is the last element
       elements.push(<> or </>);
     }
     elements.push(<i>{el}</i>);
     if (i < dolphinExecNames.length - 2) {
-      // If have more than one element left to come
       elements.push(<>, </>);
     }
   });
@@ -70,14 +53,14 @@ export function PlaybackSettings() {
 
       {showDolphinPathField && (
         <Field padding="bottom">
-          <DolphinPathLabel>
+          <div className={styles.dolphinPathLabel}>
             <Label>Playback Dolphin Path</Label>
             {showResetButton && (
               <Labelled title="Restore default value">
-                <ResetButton onClick={resetDolphinPath}>Reset</ResetButton>
+                <span className={styles.resetButton} onClick={resetDolphinPath}>Reset</span>
               </Labelled>
             )}
-          </DolphinPathLabel>
+          </div>
           <FileInput value={dolphinPath} directory onChange={setDolphinPath} />
           <Text>
             The folder containing the <PlaybackExecutableNames /> playback executable. Do NOT modify this unless you're

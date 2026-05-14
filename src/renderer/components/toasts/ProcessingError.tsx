@@ -1,8 +1,8 @@
-/** @jsx jsx */
-import { css, jsx } from "@emotion/core";
 import React from "react";
 
 import { ExternalLink as A } from "../ExternalLink";
+
+import styles from "./ProcessingError.module.css";
 
 export function ProcessingError({ errorMessage }: { errorMessage: string }) {
   const url = `https://twitter.com/ProjectClippi`;
@@ -12,12 +12,7 @@ export function ProcessingError({ errorMessage }: { errorMessage: string }) {
       <p>
         Please tweet this error to <A href={url}>@ProjectClippi</A> for assistance.
       </p>
-      <pre
-        css={css`
-          white-space: initial;
-          word-break: break-all;
-        `}
-      >
+      <pre className={styles.errorBlock}>
         {errorMessage}
       </pre>
     </div>

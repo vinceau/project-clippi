@@ -1,4 +1,3 @@
-import styled from "@emotion/styled";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ReflexContainer, ReflexElement, ReflexSplitter } from "react-reflex";
@@ -11,39 +10,7 @@ import type { Dispatch, iRootState } from "@/store";
 import { ActionInput, AddActionInput } from "./ActionInputs";
 import { EventItem } from "./EventItem";
 
-const Header = styled.div`
-  position: sticky;
-  top: 0;
-  z-index: 1;
-  font-size: 1.6rem;
-  background-color: ${(props) => props.theme.foreground3};
-  text-align: center;
-  padding: 0.5rem 0;
-  h2 {
-    display: inline;
-    margin-right: 1rem;
-  }
-`;
-
-const EventName = styled.div`
-  margin: 2.5rem;
-  font-size: 1.8rem;
-  font-weight: 600;
-`;
-
-const ColumnContent = styled.div`
-  overflow: hidden;
-  overflow-y: auto;
-  position: relative;
-  height: 100%;
-  width: 100%;
-`;
-
-const ColumnInner = styled.div`
-  position: absolute;
-  height: 100%;
-  width: 100%;
-`;
+import styles from "./EventActionLists.module.css";
 
 export interface EventActionListsProps {
   selected: number;
@@ -78,11 +45,11 @@ export function EventActionLists({ selected, onSelect }: EventActionListsProps) 
   return (
     <ReflexContainer orientation="vertical">
       <ReflexElement>
-        <ColumnContent>
-          <ColumnInner>
-            <Header>
+        <div className={styles.columnContent}>
+          <div className={styles.columnInner}>
+            <div className={styles.header}>
               <h2>Events</h2>
-            </Header>
+            </div>
             <div>
               {val.map((e, i) => {
                 return (
@@ -96,19 +63,19 @@ export function EventActionLists({ selected, onSelect }: EventActionListsProps) 
                 );
               })}
             </div>
-          </ColumnInner>
-        </ColumnContent>
+          </div>
+        </div>
       </ReflexElement>
 
       <ReflexSplitter />
 
       <ReflexElement>
-        <ColumnContent>
-          <ColumnInner>
-            <Header>
+        <div className={styles.columnContent}>
+          <div className={styles.columnInner}>
+            <div className={styles.header}>
               <h2>Actions</h2>
-            </Header>
-            <EventName>{selectedEventName}</EventName>
+            </div>
+            <div className={styles.eventName}>{selectedEventName}</div>
             <div>
               {selectedActions.map((a, i) => {
                 const onInnerActionChange = (newVal: Action) => {
@@ -128,8 +95,8 @@ export function EventActionLists({ selected, onSelect }: EventActionListsProps) 
               })}
               <AddActionInput onChange={onActionAdd} disabledActions={disabledActions} />
             </div>
-          </ColumnInner>
-        </ColumnContent>
+          </div>
+        </div>
       </ReflexElement>
     </ReflexContainer>
   );

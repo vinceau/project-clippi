@@ -1,0 +1,38 @@
+.outer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  border-radius: 0.5rem;
+  margin: 1.5rem 2rem;
+  margin-left: 1rem;
+  opacity: 1;
+  background-color: transparent;
+  border: solid 0.1rem color-mix(in srgb, transparent 80%, var(--color-foreground));
+}
+
+.selected {
+  border-color: transparent;
+  background-color: color-mix(in srgb, black 20%, var(--color-background));
+}
+
+[data-theme="dark"] .selected {
+  background-color: color-mix(in srgb, white 20%, var(--color-background));
+}
+
+.disabled {
+  opacity: 0.4;
+}
+
+.clickable:hover {
+  cursor: pointer;
+  background-color: color-mix(in srgb, black 10%, var(--color-background));
+}
+
+[data-theme="dark"] .clickable:hover {
+  background-color: color-mix(in srgb, white 10%, var(--color-background));
+}
+
+.iconCell {
+  margin-right: 1rem;
+}

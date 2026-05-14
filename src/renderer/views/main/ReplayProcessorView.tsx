@@ -1,4 +1,3 @@
-import styled from "@emotion/styled";
 import React from "react";
 import { useSelector } from "react-redux";
 import { Icon } from "@/ui/Icon/Icon";
@@ -9,44 +8,23 @@ import { ComboFinder } from "@/containers/ComboFinder";
 import { ProcessorStatusBar } from "@/containers/ProcessorStatusBar";
 import type { iRootState } from "@/store";
 
-const Content = styled.div`
-  padding: 20px;
-  height: calc(100% - 56px);
-  overflow: hidden;
-  overflow-y: auto;
-`;
-
-const Footer = styled.div`
-  border-top: solid 1px ${({ theme }) => theme.background3};
-  background-color: ${(props) => props.theme.background};
-  height: 55px;
-  padding: 0 20px;
-  position: relative;
-  display: flex;
-`;
-
-const Outer = styled.div`
-  display: flex;
-  height: 100%;
-  overflow: hidden;
-  flex-direction: column;
-`;
+import styles from "./ReplayProcessorView.module.css";
 
 export function ReplayProcessorView() {
   const { comboFinderPercent } = useSelector((state: iRootState) => state.tempContainer);
   return (
-    <Outer>
-      <Content>
+    <div className={styles.outer}>
+      <div className={styles.content}>
         <h1>
           Replay Processor <Icon name="angle double right" />
         </h1>
         <Text>Find combos and highlights from your replay files</Text>
         <ComboFinder />
-      </Content>
-      <Footer>
+      </div>
+      <div className={styles.footer}>
         <ProcessorStatusBar />
         {comboFinderPercent !== 100 && <ProgressBar percent={comboFinderPercent} />}
-      </Footer>
-    </Outer>
+      </div>
+    </div>
   );
 }

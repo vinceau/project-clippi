@@ -34,6 +34,10 @@ export function ThemeManager({ children }) {
   });
 
   React.useEffect(() => {
+    document.documentElement.dataset.theme = themeState.themeName;
+  }, [themeState.themeName]);
+
+  React.useEffect(() => {
     remote.nativeTheme.on("updated", () => {
       const useDarkMode = remote.nativeTheme.shouldUseDarkColors;
       setThemeState({

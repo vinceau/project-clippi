@@ -1,4 +1,3 @@
-import styled from "@emotion/styled";
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@/ui/Button/Button";
@@ -11,11 +10,7 @@ import { connectToOBSAndNotify, obsConnection, OBSConnectionStatus } from "@/lib
 import type { Dispatch, iRootState } from "@/store";
 import OBSLogo from "@/styles/images/obs.png";
 
-const CustomField = styled(Field)`
-  display: grid;
-  grid-gap: 2rem;
-  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
-`;
+import styles from "./OBSSettings.module.css";
 
 export function OBSSettings() {
   const { obsAddress, obsPort, obsPassword } = useSelector((state: iRootState) => state.slippi);
@@ -44,8 +39,8 @@ export function OBSSettings() {
         />
       ) : (
         <Form onSubmit={connectToOBSAndNotify}>
-          <CustomField padding="bottom">
-            <div>
+          <div className={styles.customField}>
+            <Field padding="bottom">
               <Label>IP Address</Label>
               <Form.Input
                 placeholder="localhost"
@@ -54,8 +49,8 @@ export function OBSSettings() {
                   dispatch.slippi.setOBSAddress(e.target.value);
                 }}
               />
-            </div>
-            <div>
+            </Field>
+            <Field padding="bottom">
               <Label>Port</Label>
               <Form.Input
                 placeholder="4444"
@@ -64,8 +59,8 @@ export function OBSSettings() {
                   dispatch.slippi.setOBSPort(e.target.value);
                 }}
               />
-            </div>
-          </CustomField>
+            </Field>
+          </div>
           <Field>
             <Label>Websocket Password</Label>
             <Form.Input

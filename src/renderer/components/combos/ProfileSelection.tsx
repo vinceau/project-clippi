@@ -1,13 +1,11 @@
-import styled from "@emotion/styled";
-import { darken, lighten } from "polished";
 import * as React from "react";
 import { toast } from "react-toastify";
 import type { DropdownProps } from "@/ui/Dropdown/Dropdown";
 import { Dropdown } from "@/ui/Dropdown/Dropdown";
 
-import { ThemeMode, useTheme } from "@/styles";
-
 import { Field, Label, Text } from "../Form";
+
+import styles from "./ProfileSelection.module.css";
 
 const generateOptions = (opts: string[]) => {
   return opts.map((o) => ({
@@ -17,24 +15,12 @@ const generateOptions = (opts: string[]) => {
   }));
 };
 
-const Outer = styled.div<{
-  themeName: string;
-}>`
-  padding: 0 2rem;
-  border-radius: 0.5rem;
-  background-color: ${(p) => {
-    const adjust = p.themeName === ThemeMode.DARK ? lighten : darken;
-    return adjust(0.05, p.theme.background);
-  }};
-`;
-
 export interface ProfileSelectorProps extends DropdownProps {
   initialOptions: string[];
   onChange: (value: any) => void;
 }
 
 export function ProfileSelector({ initialOptions, value, onChange, ...rest }: ProfileSelectorProps) {
-  const theme = useTheme();
   const options = generateOptions(initialOptions);
   const handleNewItem = (_: any, data: any) => {
     const notification = (
@@ -48,7 +34,7 @@ export function ProfileSelector({ initialOptions, value, onChange, ...rest }: Pr
     onChange(data.value);
   };
   return (
-    <Outer themeName={theme.themeName}>
+    <div className={styles.outer}>
       <Field>
         <Label>Current Profile</Label>
         <Dropdown
@@ -68,6 +54,6 @@ export function ProfileSelector({ initialOptions, value, onChange, ...rest }: Pr
           <b>Replay Processor</b>. You can create new profiles by typing a new profile name in the dropdown.
         </Text>
       </Field>
-    </Outer>
+    </div>
   );
 }

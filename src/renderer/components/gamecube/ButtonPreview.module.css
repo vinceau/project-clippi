@@ -1,0 +1,11 @@
+.outer {
+  font-size: 0.4em;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.buttonContainer {
+  margin: 5px;
+}

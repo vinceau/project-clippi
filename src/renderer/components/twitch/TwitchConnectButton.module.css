@@ -1,0 +1,22 @@
+.button {
+  color: white;
+  background-color: #6441A4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 220px;
+  border: 0;
+  border-radius: 3px;
+  padding: 5px 0;
+}
+
+.button :global(i.icon) {
+  font-size: 25px;
+  margin: 5px 0;
+}
+
+.buttonText {
+  margin-left: 5px;
+  font-size: 14px;
+}

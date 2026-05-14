@@ -1,21 +1,7 @@
-/** @jsx jsx */
-import { css, jsx } from "@emotion/core";
-import styled from "@emotion/styled";
+import { clsx } from "clsx";
 import React from "react";
 
-const Outer = styled.div<{
-  hideBorder?: boolean;
-}>`
-  margin: 2rem;
-  padding-bottom: 2rem;
-  ${({ theme, hideBorder }) => (hideBorder ? "" : `border-bottom: solid 0.3rem ${theme.foreground3}`)};
-`;
-
-const Inner = styled.div`
-  margin: 0 2rem;
-  display: flex;
-  flex-direction: column;
-`;
+import styles from "./ActionComponentBlock.module.css";
 
 export interface ActionComponentBlockProps {
   hideBorder?: boolean;
@@ -27,36 +13,20 @@ export interface ActionComponentBlockProps {
 export const ActionComponentBlock = React.forwardRef<HTMLDivElement, ActionComponentBlockProps>((props, ref) => {
   const { hideBorder, icon, header, children } = props;
   return (
-    <Outer hideBorder={hideBorder}>
-      <Inner ref={ref}>
-        <div
-          css={css`
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            ${!hideBorder && `padding-bottom: 1rem;`}
-          `}
-        >
-          <div
-            css={css`
-              margin-right: 1rem;
-            `}
-          >
+    <div className={clsx(styles.outer, !hideBorder && styles.outerBorder)}>
+      <div className={styles.inner} ref={ref}>
+        <div className={clsx(styles.headerRow, !hideBorder && styles.headerRowBorder)}>
+          <div className={styles.iconCell}>
             {icon}
           </div>
           <div>{header}</div>
         </div>
         {children && (
-          <div
-            css={css`
-              width: 100%;
-              line-height: 3rem;
-            `}
-          >
+          <div className={styles.children}>
             {children}
           </div>
         )}
-      </Inner>
-    </Outer>
+      </div>
+    </div>
   );
 });

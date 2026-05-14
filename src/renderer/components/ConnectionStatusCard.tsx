@@ -1,11 +1,11 @@
-/** @jsx jsx */
-import { css, jsx } from "@emotion/core";
 import React from "react";
 import { Button } from "@/ui/Button/Button";
 import { Card } from "@/ui/Card/Card";
 import { Image } from "@/ui/Image/Image";
 
 import { ScanningDot } from "@/components/ScanningDot";
+
+import styles from "./ConnectionStatusCard.module.css";
 
 export function ConnectionStatusCard({
   userImage,
@@ -36,12 +36,7 @@ export function ConnectionStatusCard({
         <Card.Content>
           <Image floated="right" size="mini" src={userImage} />
           <Card.Header>
-            <span
-              css={css`
-                text-transform: capitalize;
-                margin-right: 10px;
-              `}
-            >
+            <span className={styles.header}>
               {header}
             </span>
             <ScanningDot color={color} shouldPulse={shouldPulse} />

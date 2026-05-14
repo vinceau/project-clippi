@@ -1,4 +1,3 @@
-import styled from "@emotion/styled";
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@/ui/Button/Button";
@@ -11,7 +10,8 @@ import { SoundFileInfo } from "@/components/SoundFileInfo";
 import { soundPlayer } from "@/lib/sounds";
 import { openFileOrParentFolder } from "@/lib/utils";
 import type { Dispatch, iRootState } from "@/store";
-import { device } from "@/styles/device";
+
+import styles from "./SoundSettings.module.css";
 
 function AddSoundButton(props: any) {
   return (
@@ -21,18 +21,6 @@ function AddSoundButton(props: any) {
     </Button>
   );
 }
-
-const ButtonContainer = styled.div`
-  margin-bottom: 1rem;
-
-  button {
-    width: 100% !important;
-    margin-bottom: 0.25em !important;
-    @media ${device.tablet} {
-      width: auto !important;
-    }
-  }
-`;
 
 export function SoundSettings() {
   const soundFiles = useSelector((state: iRootState) => state.filesystem.soundFiles);
@@ -50,16 +38,16 @@ export function SoundSettings() {
   return (
     <FormContainer>
       <PageHeader>Sounds</PageHeader>
-      <div style={{ paddingBottom: "50px" }}>
+      <div className={styles.content}>
         {soundsExist ? (
           <>
-            <ButtonContainer>
+            <div className={styles.buttonContainer}>
               <AddSoundButton onClick={() => dispatch.filesystem.addSound()} />
               <Button onClick={() => soundPlayer.stop()}>
                 <Icon name="stop" />
                 Stop current sound
               </Button>
-            </ButtonContainer>
+            </div>
             <SoundTable onPathClick={onOpenFile} onRemove={removeSound} sounds={soundFiles} />
           </>
         ) : (

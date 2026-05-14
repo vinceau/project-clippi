@@ -1,0 +1,62 @@
+.outer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: solid 1px color-mix(in srgb, transparent 80%, var(--color-foreground));
+  background-color: color-mix(in srgb, black 10%, var(--color-background));
+}
+
+[data-theme="dark"] .outer {
+  background-color: color-mix(in srgb, white 10%, var(--color-background));
+}
+
+.dragging {
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+
+.outer:hover {
+  background-color: color-mix(in srgb, black 15%, var(--color-background));
+}
+
+[data-theme="dark"] .outer:hover {
+  background-color: color-mix(in srgb, white 15%, var(--color-background));
+}
+
+.removeIcon {
+  cursor: pointer;
+  opacity: 0;
+  padding: 5px;
+}
+
+.outer:hover .removeIcon {
+  opacity: 1;
+}
+
+.details {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  min-width: 0;
+  padding-right: 20px;
+  opacity: 0.8;
+}
+
+.detailsContent {
+  margin-left: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.detailsContent h3 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0;
+}
+
+.detailsContent span {
+  font-size: 12px;
+  font-weight: 100;
+}

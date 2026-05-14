@@ -1,0 +1,19 @@
+.buttonWrapper button {
+  margin: 0;
+}
+
+.message {
+  margin-top: 1rem;
+  font-size: 1.3rem;
+  min-height: 1.25em;
+  line-height: 1.25em;
+}
+
+.actionWrapper {
+  margin-top: 2rem;
+}
+
+.bold {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}

@@ -13,6 +13,7 @@ html {
 
 body {
   font-size: 1.4em;
+  color: var(--color-foreground);
 }
 
 #app {
@@ -48,4 +49,8 @@ button,
 textarea,
 :focus {
   outline: none; // You should add some other style for :focus to help UX/a11y
+}
+
+.ui.message {
+  border-radius: 0.5rem;
 }

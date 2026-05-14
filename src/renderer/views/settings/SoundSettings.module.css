@@ -1,0 +1,18 @@
+.buttonContainer {
+  margin-bottom: 1rem;
+}
+
+.buttonContainer button {
+  width: 100% !important;
+  margin-bottom: 0.25em !important;
+}
+
+@media (min-width: 768px) {
+  .buttonContainer button {
+    width: auto !important;
+  }
+}
+
+.content {
+  padding-bottom: 50px;
+}

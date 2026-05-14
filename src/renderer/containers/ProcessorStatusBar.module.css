@@ -1,0 +1,25 @@
+.outer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex-grow: 1;
+  z-index: 2;
+}
+
+.processStatus {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.percentDisplay {
+  font-size: 20px;
+  margin-right: 10px;
+}
+
+.stopButton:hover {
+  background-color: #d01919;
+  color: white;
+}

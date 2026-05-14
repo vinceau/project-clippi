@@ -1,13 +1,11 @@
-/** @jsx jsx */
-import { css, jsx } from "@emotion/core";
-import styled from "@emotion/styled";
-import { darken, lighten, transparentize } from "polished";
+import { clsx } from "clsx";
 import React from "react";
 import { Icon } from "@/ui/Icon/Icon";
 
 import { generateEventName } from "@/lib/events";
 import type { NamedEventConfig } from "@/store/models/automator";
-import { ThemeMode, useTheme } from "@/styles";
+
+import styles from "./EventItem.module.css";
 
 export interface EventItemProps {
   event: NamedEventConfig;
@@ -16,53 +14,23 @@ export interface EventItemProps {
   onClick?: () => void;
 }
 
-const Outer = styled.div<{
-  disabled?: boolean;
-  themeName: string;
-  selected?: boolean;
-  onClick?: () => void;
-}>`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 1.5rem 2rem;
-  border-radius: 0.5rem;
-  margin: 1.5rem 2rem;
-  margin-left: 1rem;
-  ${(p) => {
-    const adjust = p.themeName === ThemeMode.DARK ? lighten : darken;
-    return `
-    opacity: ${p.disabled ? "0.4" : "1"};
-    background-color: ${p.selected ? adjust(0.2, p.theme.background) : "transparent"};
-    border: solid 0.1rem ${transparentize(0.8, p.theme.foreground)};
-    ${p.selected ? `border-color: transparent;` : ""}
-    ${
-      p.onClick &&
-      !p.selected &&
-      `
-    &:hover {
-      cursor: pointer;
-      background-color: ${adjust(0.1, p.theme.background)};
-    }
-    `
-    }
-    `;
-  }}
-`;
-
 export function EventItem({ event, onClick, selected, disabled }: EventItemProps) {
-  const theme = useTheme();
   const eventName = event.name ? event.name : `${generateEventName(event)}...`;
+  const isClickable = !selected && !disabled && !!onClick;
   return (
-    <Outer disabled={disabled} themeName={theme.themeName} onClick={onClick} selected={selected}>
-      <div
-        css={css`
-          margin-right: 1rem;
-        `}
-      >
+    <div
+      className={clsx(
+        styles.outer,
+        selected && styles.selected,
+        disabled && styles.disabled,
+        isClickable && styles.clickable,
+      )}
+      onClick={isClickable ? onClick : undefined}
+    >
+      <div className={styles.iconCell}>
         <Icon name={disabled ? "window close" : "flag"} />
       </div>
       <div>{eventName}</div>
-    </Outer>
+    </div>
   );
 }
