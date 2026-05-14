@@ -7,3 +7,7 @@
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+.nameLabel {
+  margin-left: 10px;
+}

@@ -17,7 +17,7 @@ export function CharacterLabel({
   return (
     <div className={clsx(styles.container, disabled && styles.disabled)}>
       <CharacterIcon character={characterId} grayscale={disabled} />
-      <span style={{ marginLeft: "10px" }}>{name}</span>
+      <span className={styles.nameLabel}>{name}</span>
     </div>
   );
 }

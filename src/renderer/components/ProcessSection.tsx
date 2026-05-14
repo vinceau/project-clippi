@@ -25,14 +25,14 @@ export function ProcessSection({
 }) {
   return (
     <div className={styles.outer}>
-      <div style={{ display: "flex", justifyContent: "space-between" }}>
+      <div className={styles.toolbar}>
         <h2 className={styles.sectionLabel} onClick={() => onOpenChange(!open)}>
           {label}
         </h2>
         <Checkbox toggle checked={open} onChange={(_, data) => onOpenChange(Boolean(data.checked))} />
       </div>
       <SlideReveal open={open}>
-        <div style={{ marginTop: "10px" }}>{children}</div>
+        <div className={styles.content}>{children}</div>
       </SlideReveal>
     </div>
   );

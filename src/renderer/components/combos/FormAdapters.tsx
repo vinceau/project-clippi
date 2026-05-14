@@ -27,7 +27,7 @@ export function SemanticInput(props: any) {
       {/* <RenderCount /> */}
       {inputLabel && <label>{inputLabel}</label>}
       <Input className={styles.styledInput} {...input} {...rest} />
-      {meta.error && meta.touched && <span style={{ color: "red" }}>{meta.error}</span>}
+      {meta.error && meta.touched && <span className={styles.errorText}>{meta.error}</span>}
     </SemanticForm.Field>
   );
 }

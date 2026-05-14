@@ -34,7 +34,7 @@ export function PerCharPercent({ name, values, push }: { name: string; values: a
           });
         }}
       </FieldArray>
-      <div style={{ padding: "10px 0" }}>
+      <div className={styles.buttonRow}>
         <Button type="button" onClick={() => push(name, undefined)}>
           <Icon name="add user" /> Add character
         </Button>

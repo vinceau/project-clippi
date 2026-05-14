@@ -81,7 +81,6 @@ export function DelayInput({
   return (
     <input
       className={styles.simpleInput}
-      style={{ width: "100px" }}
       value={delayAmount}
       onBlur={onChange}
       onChange={(e) => setDelayAmount(e.target.value)}

@@ -67,9 +67,9 @@ export function RenameFiles({
   const isInvalid = invalidFilename(renameFormat, { allowPaths: true });
   return (
     <div>
-      <div style={{ textAlign: "right", marginBottom: "5px" }}>
+      <div className={styles.optionsRow}>
         <a
-          style={{ color: "#999" }}
+          className={styles.optionLink}
           href="#"
           onClick={(e) => {
             e.preventDefault();

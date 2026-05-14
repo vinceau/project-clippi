@@ -18,3 +18,12 @@
   overflow-y: visible;
   max-height: 1000px;
 }
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+}
+
+.content {
+  margin-top: 10px;
+}

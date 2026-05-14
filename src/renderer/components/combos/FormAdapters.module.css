@@ -1,3 +1,7 @@
 .styledInput input {
   width: 20px !important;
 }
+
+.errorText {
+  color: red;
+}

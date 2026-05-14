@@ -22,3 +22,12 @@
 .errorContainer {
   color: red;
 }
+
+.optionsRow {
+  text-align: right;
+  margin-bottom: 5px;
+}
+
+.optionLink {
+  color: #999;
+}
