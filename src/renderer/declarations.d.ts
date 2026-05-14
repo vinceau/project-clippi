@@ -7,6 +7,7 @@ declare module "*.bmp";
 declare module "*.tiff";
 
 declare module "*.md";
+declare module "*.module.css";
 
 declare module "node-notifier";
 declare module "filename-reserved-regex";

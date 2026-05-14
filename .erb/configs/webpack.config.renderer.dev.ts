@@ -71,7 +71,9 @@ const configuration: webpack.Configuration = {
           {
             loader: 'css-loader',
             options: {
-              modules: true,
+              modules: {
+                namedExport: false,
+              },
               sourceMap: true,
               importLoaders: 1,
             },
