@@ -20,7 +20,7 @@
   flex-shrink: 0;
 }
 
-.root[data-pressed] {
+.root[data-checked] {
   border-color: var(--color-foreground2);
 }
 
@@ -32,7 +32,7 @@
   border-radius: 0.1em;
 }
 
-.root[data-pressed] .indicator {
+.root[data-checked] .indicator {
   display: block;
 }
 
@@ -50,7 +50,7 @@
   transition: background 0.2s;
 }
 
-.toggleRoot[data-pressed] {
+.toggleRoot[data-checked] {
   background: #2185d0;
 }
 
@@ -63,7 +63,7 @@
   transition: transform 0.2s;
 }
 
-.toggleRoot[data-pressed] .toggleIndicator {
+.toggleRoot[data-checked] .toggleIndicator {
   transform: translateX(1.1em);
 }
 
