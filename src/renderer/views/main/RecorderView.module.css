@@ -1,0 +1,45 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  height: calc(100% - 5.6rem);
+  overflow: hidden;
+  overflow-y: auto;
+}
+
+.footer {
+  display: flex;
+  border-top: solid 0.1rem var(--color-background3);
+  background-color: var(--color-background);
+  height: 5.5rem;
+  padding: 0 2rem;
+}
+
+.outer {
+  display: flex;
+  height: 100%;
+  overflow: hidden;
+  flex-direction: column;
+}
+
+.mainBody {
+  flex-grow: 1;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  overflow-y: auto;
+  position: relative;
+  background-color: color-mix(in srgb, black 5%, var(--color-background));
+}
+
+[data-theme="dark"] .mainBody {
+  background-color: color-mix(in srgb, white 5%, var(--color-background));
+}
+
+.toolbar {
+  padding-top: 2rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}

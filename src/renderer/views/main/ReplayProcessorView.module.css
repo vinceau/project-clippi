@@ -1,0 +1,22 @@
+.content {
+  padding: 20px;
+  height: calc(100% - 56px);
+  overflow: hidden;
+  overflow-y: auto;
+}
+
+.footer {
+  border-top: solid 1px var(--color-background3);
+  background-color: var(--color-background);
+  height: 55px;
+  padding: 0 20px;
+  position: relative;
+  display: flex;
+}
+
+.outer {
+  display: flex;
+  height: 100%;
+  overflow: hidden;
+  flex-direction: column;
+}

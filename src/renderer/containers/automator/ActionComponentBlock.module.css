@@ -1,0 +1,33 @@
+.outer {
+  margin: 2rem;
+  padding-bottom: 2rem;
+}
+
+.outerBorder {
+  border-bottom: solid 0.3rem var(--color-foreground3);
+}
+
+.inner {
+  margin: 0 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.headerRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.headerRowBorder {
+  padding-bottom: 1rem;
+}
+
+.iconCell {
+  margin-right: 1rem;
+}
+
+.children {
+  width: 100%;
+  line-height: 3rem;
+}

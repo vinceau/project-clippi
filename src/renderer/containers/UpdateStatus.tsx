@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { css, jsx } from "@emotion/core";
 import { AUTO_UPDATES_ENABLED, GITHUB_RELEASES_PAGE } from "common/constants";
 import type { VersionUpdatePayload } from "common/types";
 import { UpdateStatus } from "common/types";
@@ -13,53 +11,31 @@ import { ExternalLink as A } from "@/components/ExternalLink";
 import { checkForNewUpdates, downloadLatestUpdate, installUpdateAndRestart } from "@/lib/utils";
 import type { Dispatch, iRootState } from "@/store";
 
+import styles from "./UpdateStatus.module.css";
+
 export function UpdateStatusInfo() {
   const updateStatus = useSelector((state: iRootState) => state.tempContainer.updateStatus);
   const updateAvailable = useSelector((state: iRootState) => state.tempContainer.updateAvailable);
 
   const dispatch = useDispatch<Dispatch>();
   const onUpdateCheckClick = () => {
-    // Clear the update status first
     dispatch.tempContainer.setUpdateStatus(null);
     checkForNewUpdates();
   };
 
   return (
-    <div
-      css={css`
-        &&& {
-          button {
-            margin: 0;
-          }
-        }
-      `}
-    >
+    <div className={styles.buttonWrapper}>
       {!updateAvailable && <Button onClick={onUpdateCheckClick}>Check for updates</Button>}
-      <div
-        css={css`
-          margin-top: 1rem;
-          font-size: 1.3rem;
-          min-height: 1.25em;
-          line-height: 1.25em;
-        `}
-      >
+      <div className={styles.message}>
         <ShowUpdateMessage versionPayload={updateStatus} />
       </div>
       {updateStatus && updateStatus.status === UpdateStatus.UPDATE_AVAILABLE && (
-        <div
-          css={css`
-            margin-top: 2rem;
-          `}
-        >
+        <div className={styles.actionWrapper}>
           <UpdateAvailableMessage />
         </div>
       )}
       {updateStatus && updateStatus.status === UpdateStatus.DOWNLOAD_COMPLETE && (
-        <div
-          css={css`
-            margin-top: 2rem;
-          `}
-        >
+        <div className={styles.actionWrapper}>
           <Button onClick={() => installUpdateAndRestart()}>Restart now</Button>
         </div>
       )}
@@ -80,12 +56,7 @@ function ShowUpdateMessage({ versionPayload }: { versionPayload: VersionUpdatePa
     case UpdateStatus.UPDATE_AVAILABLE:
       return (
         <div>
-          <div
-            css={css`
-              font-weight: bold;
-              margin-bottom: 0.5rem;
-            `}
-          >
+          <div className={styles.bold}>
             New update v{versionPayload.payload.version} is now available!
           </div>
           <div>
