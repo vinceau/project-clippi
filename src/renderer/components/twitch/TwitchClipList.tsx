@@ -1,7 +1,7 @@
 import type { TwitchClip } from "common/types";
 import React from "react";
-import { Pagination } from "@/ui/Pagination/Pagination";
 
+import { Pagination } from "./Pagination/Pagination";
 import { TwitchClipInfo } from "./TwitchClipInfo";
 
 export function TwitchClipList({

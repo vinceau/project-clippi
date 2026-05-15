@@ -10,18 +10,18 @@ interface PaginationProps {
   disabled?: boolean;
 }
 
-export function Pagination({ activePage, totalPages, onChange, disabled }: PaginationProps) {
-  const siblingRange = 2;
+const WINDOW_SIZE = 5;
 
-  const pages = new Set<number>();
-  pages.add(1);
-  pages.add(totalPages);
-  for (let i = activePage - siblingRange; i <= activePage + siblingRange; i++) {
-    if (i >= 1 && i <= totalPages) {
-      pages.add(i);
-    }
+export function Pagination({ activePage, totalPages, onChange, disabled }: PaginationProps) {
+  const half = Math.floor(WINDOW_SIZE / 2);
+  let start = Math.max(1, activePage - half);
+  let end = Math.min(totalPages, start + WINDOW_SIZE - 1);
+  start = Math.max(1, end - WINDOW_SIZE + 1);
+
+  const pageNumbers: number[] = [];
+  for (let i = start; i <= end; i++) {
+    pageNumbers.push(i);
   }
-  const pageNumbers = [...pages].sort((a, b) => a - b);
 
   const handlePageClick = (page: number) => {
     if (page !== activePage) {
