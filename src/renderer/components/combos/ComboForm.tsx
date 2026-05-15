@@ -5,7 +5,7 @@ import { Field as FinalField, Form as FinalForm } from "react-final-form";
 import { useSelector } from "react-redux";
 import { Accordion } from "@/ui/Accordion/Accordion";
 import { Button } from "@/ui/Button/Button";
-import { Form as SemanticForm } from "@/ui/Form/Form";
+import { Form } from "@/ui/Form/Form";
 import { Save, Trash, Undo } from "lucide-react";
 
 import { CodeBlock } from "@/components/CodeBlock";
@@ -94,7 +94,7 @@ export function ComboForm(props: {
           values,
         }) => (
           <div>
-            <SemanticForm onSubmit={handleSubmit}>
+            <Form onSubmit={handleSubmit}>
               <ButtonContainer
                 submitting={submitting}
                 currentProfile={props.currentProfile}
@@ -252,7 +252,7 @@ export function ComboForm(props: {
                 onDelete={() => setShouldConfirm(true)}
               />
               <CodeBlock values={values} />
-            </SemanticForm>
+            </Form>
           </div>
         )}
       />
