@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "@/ui/Button/Button";
-import { Dropdown } from "@/ui/Dropdown/Dropdown";
+import { Select } from "@/ui/Select/Select";
 
 export function RecordButton({
   onClick: onClickProp,
@@ -38,14 +38,13 @@ export function RecordButton({
         {children}
       </Button>
       {options.length > 0 && (
-        <Dropdown
+        <Select
           value={value}
           disabled={disabled}
-          className="button icon"
+          button
           floating
           onChange={(_: any, { value }) => onChange(value)}
           options={options}
-          trigger={<></>}
         />
       )}
     </Button.Group>

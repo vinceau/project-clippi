@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Dropdown } from "@/ui/Dropdown/Dropdown";
+import { Select } from "@/ui/Select/Select";
 import { Input } from "@/ui/Input/Input";
 
 import styles from "./InlineInputs.module.css";
@@ -30,7 +30,7 @@ export function InlineDropdown(props: any) {
   return (
     <span>
       {prefix ? `${prefix} ` : ""}
-      <Dropdown
+      <Select
         scrolling
         inline
         {...rest}

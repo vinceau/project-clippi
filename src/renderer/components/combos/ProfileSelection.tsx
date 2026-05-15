@@ -1,7 +1,7 @@
 import * as React from "react";
 import { toast } from "react-toastify";
-import type { DropdownProps } from "@/ui/Dropdown/Dropdown";
-import { Dropdown } from "@/ui/Dropdown/Dropdown";
+import type { SelectProps } from "@/ui/Select/Select";
+import { Select } from "@/ui/Select/Select";
 
 import { Field, Label, Text } from "../Form";
 
@@ -15,7 +15,7 @@ const generateOptions = (opts: string[]) => {
   }));
 };
 
-export interface ProfileSelectorProps extends DropdownProps {
+export interface ProfileSelectorProps extends SelectProps {
   initialOptions: string[];
   onChange: (value: any) => void;
 }
@@ -37,16 +37,14 @@ export function ProfileSelector({ initialOptions, value, onChange, ...rest }: Pr
     <div className={styles.outer}>
       <Field>
         <Label>Current Profile</Label>
-        <Dropdown
-          style={{ width: "100%" }}
+        <Select
+          fluid
           options={options}
           placeholder="Select a profile"
           search
-          selection
-          allowAdditions
           value={value}
-          onAddItem={handleNewItem}
           onChange={(_: any, data: any) => onChange(data.value)}
+          onAddItem={handleNewItem}
           {...rest}
         />
         <Text>

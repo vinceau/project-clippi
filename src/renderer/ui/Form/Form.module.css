@@ -1,0 +1,20 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+
+.error {
+  color: var(--color-error, red);
+}
+
+.field.error input,
+.field.error :global(input) {
+  border-color: var(--color-error, red);
+}

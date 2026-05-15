@@ -5,7 +5,7 @@ import { Redirect, Route, Switch, useHistory, useRouteMatch } from "react-router
 import { Icon } from "@/ui/Icon/Icon";
 import { X as Close } from "lucide-react";
 import { Label } from "@/ui/Label/Label";
-import { Menu } from "@/ui/Menu/Menu";
+import { Menu } from "@/views/settings/menu/Menu";
 
 import { CustomIcon } from "@/ui/CustomIcon/CustomIcon";
 import { Labelled } from "@/components/Labelled";

@@ -1,0 +1,12 @@
+.title {
+  cursor: pointer;
+  padding: 0.5em 0;
+}
+
+.title.active {
+  font-weight: bold;
+}
+
+.content {
+  padding: 0.5em 0;
+}

@@ -3,7 +3,7 @@ import React from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { Field } from "react-final-form";
 import { Button } from "@/ui/Button/Button";
-import { Dropdown } from "@/ui/Dropdown/Dropdown";
+import { Select } from "@/ui/Select/Select";
 import { Icon } from "@/ui/Icon/Icon";
 import { X as Close, Plus } from "lucide-react";
 
@@ -41,8 +41,8 @@ const moveOptions = [
   MoveId.EDGE_SLOW,
   MoveId.MISC,
 ].map((id) => ({
-  key: id,
-  value: id,
+  key: String(id),
+  value: String(id),
   text: `${getCustomMoveName(id)} [${id}]`,
 }));
 
@@ -72,7 +72,7 @@ function MoveInput({
 }) {
   const handleChange = React.useCallback(
     (_e: any, data: any) => {
-      onChange(data.value);
+      onChange(Number(data.value));
     },
     [onChange]
   );
@@ -81,14 +81,12 @@ function MoveInput({
       <div style={{ paddingLeft: 5, paddingRight: 10 }}>
         <Icon name="sort" />
       </div>
-      <Dropdown
-        value={value}
-        onBlur={onBlur}
+      <Select
+        value={value !== undefined ? String(value) : undefined}
         onChange={handleChange}
         placeholder="Select move"
         fluid
         search
-        selection
         options={moveOptions}
       />
       <div style={{ marginLeft: 5 }}>
