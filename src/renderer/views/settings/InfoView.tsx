@@ -11,7 +11,7 @@ import { UpdateStatusInfo } from "@/containers/UpdateStatus";
 import type { Dispatch, iRootState } from "@/store";
 import { useTheme } from "@/styles";
 
-import clippiLogo from "../../../../build/icon.png";
+import clippiLogo from "@/styles/images/clippi-icon.png";
 
 const Container = styled(FormContainer)`
   text-align: center;
