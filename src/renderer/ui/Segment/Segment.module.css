@@ -7,7 +7,7 @@
 }
 
 .placeholder {
-  border: 2px dashed var(--color-background3);
+  border: 2px solid var(--color-background3);
   display: flex;
   flex-direction: column;
   align-items: center;

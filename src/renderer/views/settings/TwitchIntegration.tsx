@@ -70,9 +70,9 @@ export function TwitchIntegration() {
           />
         ) : (
           <Segment placeholder>
-            <Header icon>
-                    <CustomIcon image={twitchIcon} />
-              You have not created any Twitch clips
+            <Header icon vertical>
+              <CustomIcon image={twitchIcon} style={{ width: "64px", height: "64px" }} />
+              <div>You have not created any Twitch clips</div>
             </Header>
           </Segment>
         )}

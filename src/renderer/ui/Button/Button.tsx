@@ -14,6 +14,7 @@ interface ButtonProps {
   content?: string;
   onClick?: () => void;
   children?: React.ReactNode;
+  padding?: "none" | "default";
 }
 
 export function Button({
@@ -27,6 +28,7 @@ export function Button({
   content,
   onClick,
   children,
+  padding = "default",
 }: ButtonProps) {
   return (
     <BaseButton
@@ -39,6 +41,7 @@ export function Button({
         color === "red" && styles.colorRed,
         color === "green" && styles.colorGreen,
         color === "blue" && styles.colorBlue,
+        padding === "default" && styles.padding
       )}
       disabled={disabled}
       type={type}

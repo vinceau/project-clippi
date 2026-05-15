@@ -79,9 +79,7 @@ export function HighlightButtonInputs() {
       <ButtonInput value={inputButtonCombo} onChange={setInputButtonCombo} />
 
       <Accordion.Root open={showAdvanced} onOpenChange={setShowAdvanced}>
-        <Accordion.Trigger>
-          {showAdvanced ? "Hide " : "Show "} advanced options
-        </Accordion.Trigger>
+        <Accordion.Trigger>{showAdvanced ? "Hide " : "Show "} advanced options</Accordion.Trigger>
         <Accordion.Panel>
           <ul className={styles.advancedOptions}>
             <li>

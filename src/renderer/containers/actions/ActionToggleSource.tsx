@@ -37,7 +37,7 @@ const actionToggleSource: ActionTypeGenerator = (params: ActionToggleSourceParam
 };
 
 function ActionIcon() {
-  return <CustomIcon image={obsIcon} size="large" />;
+  return <CustomIcon image={obsIcon} style={{ width: "20px", height: "20px" }} />;
 }
 
 function SourceNameInput(props: { value: ActionToggleSourceParams; onChange: any }) {
@@ -46,7 +46,11 @@ function SourceNameInput(props: { value: ActionToggleSourceParams; onChange: any
   const obsConnected = obsConnectionStatus === OBSConnectionStatus.CONNECTED;
 
   if (!obsConnected) {
-    return <Button type="button" onClick={connectToOBSAndNotify}>Connect to OBS</Button>;
+    return (
+      <Button type="button" onClick={connectToOBSAndNotify}>
+        Connect to OBS
+      </Button>
+    );
   }
 
   const allSources = getAllSceneItems(obsScenes);

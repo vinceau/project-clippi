@@ -69,7 +69,7 @@ const actionCreateClip: ActionTypeGenerator = (params: ActionCreateTwitchClipPar
 };
 
 function ActionIcon() {
-  return <CustomIcon image={twitchIcon} />;
+  return <CustomIcon image={twitchIcon} style={{ width: "20px", height: "20px" }} />;
 }
 
 interface TwitchClipInputProps extends Record<string, any> {

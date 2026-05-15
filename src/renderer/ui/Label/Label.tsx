@@ -24,7 +24,7 @@ export function Label({ circular, color, empty, size, as: Tag = "span", children
         color === "red" && styles.colorRed,
         color === "blue" && styles.colorBlue,
         color === "green" && styles.colorGreen,
-        color === "yellow" && styles.colorYellow,
+        color === "yellow" && styles.colorYellow
       )}
       onClick={onClick}
     >

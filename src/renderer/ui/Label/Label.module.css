@@ -4,19 +4,19 @@
   gap: 0.3em;
   padding: 0.2em 0.6em;
   border-radius: 0.3em;
-  background: color-mix(in srgb, var(--color-foreground2), white 5%);
-  color: var(--color-foreground);
+  background: color-mix(in srgb, var(--color-foreground3), white 5%);
+  color: var(--color-secondary);
   font-size: 0.9em;
   line-height: 1.5;
 }
 
 .small {
-  font-size: 0.72em;
+  font-size: 0.8em;
   padding: 0.15em 0.5em;
 }
 
 .large {
-  font-size: 1.1rem;
+  font-size: 1.0em;
 }
 
 .circular {

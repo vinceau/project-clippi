@@ -73,7 +73,7 @@ export function EventModal({
   onSubmit?: (event: NamedEventConfig) => void;
   onClose?: () => void;
 }) {
-  const defaultValues = { ...DEFAULT_FORM_VALUES, ...edit as Partial<FormValues> };
+  const defaultValues = { ...DEFAULT_FORM_VALUES, ...(edit as Partial<FormValues>) };
   const { watch, errors, handleSubmit, control, reset } = useForm<FormValues>({ defaultValues });
   const { currentProfile, comboProfiles } = useSelector((state: iRootState) => state.slippi);
   const theme = useTheme();

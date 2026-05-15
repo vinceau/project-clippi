@@ -80,9 +80,7 @@ export function Select({
       >
         <BaseSelect.Trigger className={styles.trigger}>
           {trigger ??
-            (iconNode ? (
-              iconNode
-            ) : (
+            (iconNode || (
               <>
                 <BaseSelect.Value placeholder={placeholder} className={styles.text} />
                 <BaseSelect.Icon />

@@ -112,7 +112,7 @@ export function SettingsView() {
                   active={isActive("slippi-settings")}
                   onClick={handleItemClick}
                 >
-                  <SlippiIcon />
+                  <SlippiIcon style={{ width: "18px", height: "18px" }} />
                   Slippi Connection
                 </Menu.Item>
                 <Menu.Item
@@ -121,7 +121,7 @@ export function SettingsView() {
                   active={isActive("obs-settings")}
                   onClick={handleItemClick}
                 >
-                  <CustomIcon image={OBSLogo} />
+                  <CustomIcon image={OBSLogo} style={{ width: "18px", height: "18px" }} />
                   OBS Configuration
                 </Menu.Item>
                 <Menu.Item
@@ -130,7 +130,7 @@ export function SettingsView() {
                   active={isActive("account-settings")}
                   onClick={handleItemClick}
                 >
-                        <CustomIcon image={twitchIcon} />
+                  <CustomIcon image={twitchIcon} style={{ width: "18px", height: "18px" }} />
                   Twitch Integration
                 </Menu.Item>
               </div>

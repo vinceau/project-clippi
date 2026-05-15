@@ -36,7 +36,7 @@ const actionChangeScene: ActionTypeGenerator = (params: ActionChangeSceneParams)
 };
 
 function ActionIcon() {
-  return <CustomIcon image={obsIcon} size="large" />;
+  return <CustomIcon image={obsIcon} style={{ width: "20px", height: "20px" }} />;
 }
 
 function SceneNameInput(props: any) {
@@ -45,7 +45,11 @@ function SceneNameInput(props: any) {
   const obsConnected = obsConnectionStatus === OBSConnectionStatus.CONNECTED;
 
   if (!obsConnected) {
-    return <Button type="button" onClick={connectToOBSAndNotify}>Connect to OBS</Button>;
+    return (
+      <Button type="button" onClick={connectToOBSAndNotify}>
+        Connect to OBS
+      </Button>
+    );
   }
 
   const allScenes = getAllScenes(obsScenes);

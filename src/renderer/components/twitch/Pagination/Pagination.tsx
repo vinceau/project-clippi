@@ -15,7 +15,7 @@ const WINDOW_SIZE = 5;
 export function Pagination({ activePage, totalPages, onChange, disabled }: PaginationProps) {
   const half = Math.floor(WINDOW_SIZE / 2);
   let start = Math.max(1, activePage - half);
-  let end = Math.min(totalPages, start + WINDOW_SIZE - 1);
+  const end = Math.min(totalPages, start + WINDOW_SIZE - 1);
   start = Math.max(1, end - WINDOW_SIZE + 1);
 
   const pageNumbers: number[] = [];

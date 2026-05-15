@@ -135,7 +135,13 @@ export function MoveSequenceForm({ value, onBlur, onChange }: MoveSequenceFormPr
   );
 
   const onDragEnd = React.useCallback(
-    ({ destination, source }: { destination?: { index: number; droppableId: string }; source: { index: number; droppableId: string } }) => {
+    ({
+      destination,
+      source,
+    }: {
+      destination?: { index: number; droppableId: string };
+      source: { index: number; droppableId: string };
+    }) => {
       if (!destination) {
         return;
       }

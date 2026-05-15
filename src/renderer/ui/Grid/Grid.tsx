@@ -11,13 +11,7 @@ interface GridProps {
 
 export function Grid({ columns, stackable, textAlign, children }: GridProps) {
   return (
-    <div
-      className={clsx(
-        styles.grid,
-        stackable && styles.stackable,
-        textAlign === "center" && styles.textCenter,
-      )}
-    >
+    <div className={clsx(styles.grid, stackable && styles.stackable, textAlign === "center" && styles.textCenter)}>
       {children}
     </div>
   );
@@ -29,16 +23,7 @@ interface GridRowProps {
 }
 
 export function GridRow({ verticalAlign, children }: GridRowProps) {
-  return (
-    <div
-      className={clsx(
-        styles.row,
-        verticalAlign === "middle" && styles.alignMiddle,
-      )}
-    >
-      {children}
-    </div>
-  );
+  return <div className={clsx(styles.row, verticalAlign === "middle" && styles.alignMiddle)}>{children}</div>;
 }
 
 export interface GridColumnProps {

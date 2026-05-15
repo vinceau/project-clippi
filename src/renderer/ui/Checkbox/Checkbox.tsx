@@ -19,7 +19,7 @@ export function Checkbox({ checked, label, disabled, onChange }: CheckboxProps) 
         className={styles.root}
       >
         <BaseCheckbox.Indicator className={styles.indicator}>
-          <CheckIcon className={styles.icon}/>
+          <CheckIcon className={styles.icon} />
         </BaseCheckbox.Indicator>
       </BaseCheckbox.Root>
       {label && <span className={styles.label}>{label}</span>}

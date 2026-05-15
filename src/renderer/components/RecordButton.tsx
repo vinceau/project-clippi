@@ -38,14 +38,7 @@ export function RecordButton({
         {children}
       </Button>
       {options.length > 0 && (
-        <Select
-          value={value}
-          disabled={disabled}
-          button
-          floating
-          onChange={(v) => onChange(v)}
-          options={options}
-        />
+        <Select value={value} disabled={disabled} button floating onChange={(v) => onChange(v)} options={options} />
       )}
     </Button.Group>
   );

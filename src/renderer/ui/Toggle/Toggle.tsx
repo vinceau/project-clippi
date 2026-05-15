@@ -17,11 +17,7 @@ export function Toggle({ label, value, onChange: onChangeProp }: ToggleProps) {
   return (
     <div className={styles.toggleOuter}>
       {label && <span>{label}</span>}
-      <Switch.Root
-        checked={value}
-        onCheckedChange={(c) => onChange(c)}
-        className={styles.switchRoot}
-      >
+      <Switch.Root checked={value} onCheckedChange={(c) => onChange(c)} className={styles.switchRoot}>
         <Switch.Thumb className={styles.switchThumb} />
       </Switch.Root>
     </div>

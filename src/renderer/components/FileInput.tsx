@@ -52,18 +52,20 @@ export function FileInput({ value, directory, onChange, fileTypeFilters, saveFil
   return (
     <div className={styles.outer}>
       <div className={styles.inputRow}>
-        <Button onClick={() => openFileOrParentFolder(filesPath)} disabled={!filesPath}>
-          <Labelled title="Open location">
+        <Button padding="none" onClick={() => openFileOrParentFolder(filesPath)} disabled={!filesPath}>
+          <Labelled title="Open location" style={{ display: "flex", alignItems: "center" }}>
             <FolderOpen size={20} />
           </Labelled>
         </Button>
-        <Input
-          fluid
-          value={filesPath}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFilesPath(e.target.value)}
-          onBlur={() => onChange(filesPath)}
-          placeholder={placeholder}
-        />
+        <div className={styles.inputWrapper}>
+          <Input
+            fluid
+            value={filesPath}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFilesPath(e.target.value)}
+            onBlur={() => onChange(filesPath)}
+            placeholder={placeholder}
+          />
+        </div>
         <Button onClick={() => selectFromFileSystem().catch(console.error)}>{actionLabel}</Button>
       </div>
     </div>

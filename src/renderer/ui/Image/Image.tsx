@@ -18,7 +18,7 @@ export function Image({ src, alt, floated, size }: ImageProps) {
         styles.image,
         floated === "left" && styles.floatedLeft,
         floated === "right" && styles.floatedRight,
-        size && styles[size],
+        size && styles[size]
       )}
     />
   );

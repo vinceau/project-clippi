@@ -19,29 +19,30 @@ const highlightHints = {
   [FindComboOption.CONVERSIONS]: "Requires the opponent to be hit again within 45 frames of touching the ground",
 };
 
+const options = [
+  {
+    key: "onlyCombos",
+    value: FindComboOption.COMBOS,
+    text: "combos",
+  },
+  {
+    key: "onlyConversions",
+    value: FindComboOption.CONVERSIONS,
+    text: "conversions",
+  },
+  {
+    key: "buttonInputs",
+    value: FindComboOption.BUTTON_INPUTS,
+    text: "button combinations",
+  },
+];
+
 export function HighlightOptions() {
   const { comboProfiles } = useSelector((state: iRootState) => state.slippi);
   const dispatch = useDispatch<Dispatch>();
   const { highlightMethod, findComboProfile } = useSelector((state: iRootState) => state.highlights);
   const setHighlightMethod = (val: FindComboOption) => dispatch.highlights.setHighlightMethod(val);
   const setFindComboProfile = (val: string) => dispatch.highlights.setFindComboProfile(val);
-  const options = [
-    {
-      key: "onlyCombos",
-      value: FindComboOption.COMBOS,
-      text: "combos",
-    },
-    {
-      key: "onlyConversions",
-      value: FindComboOption.CONVERSIONS,
-      text: "conversions",
-    },
-    {
-      key: "buttonInputs",
-      value: FindComboOption.BUTTON_INPUTS,
-      text: "button combinations",
-    },
-  ];
   const allProfiles = Object.keys(comboProfiles);
   const profileOptions = allProfiles.map((profileName) => ({
     key: profileName,

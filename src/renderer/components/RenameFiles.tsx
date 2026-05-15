@@ -9,6 +9,7 @@ import { Field, Label } from "@/components/Form";
 import { SlideReveal } from "@/components/ProcessSection";
 import { TemplatePreview } from "@/components/TemplatePreview";
 import { defaultRenameFormat } from "@/store/models/highlights";
+import { Accordion } from "@/ui/Accordion/Accordion";
 import styles from "./RenameFiles.module.css";
 
 import { Labelled } from "./Labelled";
@@ -68,20 +69,13 @@ export function RenameFiles({
   return (
     <div>
       <div className={styles.optionsRow}>
-        <a
-          className={styles.optionLink}
-          href="#"
-          onClick={(e) => {
-            e.preventDefault();
-            setShowOptions(!showOptions);
-          }}
-        >
-          {showOptions ? "Hide" : "Show"} format options
-        </a>
+        <Accordion.Root open={showOptions} onOpenChange={setShowOptions}>
+          <Accordion.Trigger>{showOptions ? "Hide" : "Show"} format options</Accordion.Trigger>
+          <Accordion.Panel>
+            <ContextOptions onLabelClick={insertText} />
+          </Accordion.Panel>
+        </Accordion.Root>
       </div>
-      <SlideReveal open={showOptions}>
-        <ContextOptions onLabelClick={insertText} />
-      </SlideReveal>
       <Field>
         <div className={styles.formatLabel}>
           <Label>Format</Label>

@@ -5,18 +5,19 @@ import styles from "./CustomIcon.module.css";
 
 export interface CustomIconProps {
   image: any;
-  size?: string;
   color?: string;
+  style?: React.CSSProperties;
 }
 
-export function CustomIcon({ image, color, size }: CustomIconProps) {
+export function CustomIcon({ image, color, style }: CustomIconProps) {
   return (
     <i
-      className={clsx(styles.outer, styles.icon, size)}
+      className={clsx(styles.outer, styles.icon)}
       style={
         {
           "--custom-icon-mask": `url("${image}")`,
-          "--custom-icon-color": color || undefined,
+          "--custom-icon-color": color || "inherit",
+          ...style,
         } as React.CSSProperties
       }
     />

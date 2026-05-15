@@ -23,9 +23,9 @@ export function ContextOptions({
     }
   };
   const descriptions = allDescriptions.map((cat) => (
-    <div key={cat.category}>
+    <div key={cat.category} style={{ marginTop: "4px" }}>
       <b style={{ marginRight: "5px" }}>{cat.category}</b>
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "2px" }}>
+      <div style={{ display: "inline-flex", flexWrap: "wrap", gap: "2px", marginTop: "4px" }}>
         {cat.descriptions
           .filter((d) => keys.includes(d.contextName))
           .map((d) => (
@@ -37,7 +37,7 @@ export function ContextOptions({
               position="top"
               size="big"
             >
-              <Label as="a" onClick={() => clickHandler(d.contextName)} size="large">
+              <Label as="a" onClick={() => clickHandler(d.contextName)}>
                 {d.contextName}
               </Label>
             </TippyLabel>

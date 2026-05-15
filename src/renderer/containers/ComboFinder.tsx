@@ -57,20 +57,22 @@ export function ComboFinder() {
                 fileTypeFilters={[{ name: "JSON files", extensions: ["json"] }]}
               />
             </div>
-            <Form.Field>
-              <Checkbox
-                label="Delete files with no highlights"
-                checked={deleteFilesWithNoCombos}
-                onChange={(checked) => onSetDeleteFiles(Boolean(checked))}
-              />
-            </Form.Field>
-            <Form.Field>
-              <Checkbox
-                label="Load output file into Dolphin when complete"
-                checked={openCombosWhenDone}
-                onChange={(checked) => onSetOpenCombosWhenDone(Boolean(checked))}
-              />
-            </Form.Field>
+            <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
+              <Form.Field>
+                <Checkbox
+                  label="Delete files with no highlights"
+                  checked={deleteFilesWithNoCombos}
+                  onChange={(checked) => onSetDeleteFiles(Boolean(checked))}
+                />
+              </Form.Field>
+              <Form.Field>
+                <Checkbox
+                  label="Load output file into Dolphin when complete"
+                  checked={openCombosWhenDone}
+                  onChange={(checked) => onSetOpenCombosWhenDone(Boolean(checked))}
+                />
+              </Form.Field>
+            </div>
           </Field>
         </ProcessSection>
 

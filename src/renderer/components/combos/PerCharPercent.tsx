@@ -27,7 +27,11 @@ export function PerCharPercent({ name, values, push }: { name: string; values: a
                   component={InputAdaptor}
                   type="number"
                   parse={(v: string) => parseInt(v, 10)}
-                  action={<Button type="button" onClick={() => fields.remove(index)}>Remove</Button>}
+                  action={
+                    <Button type="button" onClick={() => fields.remove(index)}>
+                      Remove
+                    </Button>
+                  }
                 />
               </div>
             );

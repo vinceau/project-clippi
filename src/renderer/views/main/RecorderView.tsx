@@ -4,13 +4,13 @@ import { Button } from "@/ui/Button/Button";
 import { Plus, Save, Shuffle, Trash, CirclePlay, Folder } from "lucide-react";
 
 import { DropPad } from "@/components/DropPad";
-import { Text } from "@/components/Form";
 import { Labelled } from "@/components/Labelled";
 import { OBSStatusBar } from "@/containers/OBSStatusBar";
 import { saveQueueToFile } from "@/lib/dolphin";
 import type { Dispatch, iRootState } from "@/store";
 
 import styles from "./RecorderView.module.css";
+import { Header } from "./Header/Header";
 
 export function RecorderView() {
   const { dolphinQueue } = useSelector((state: iRootState) => state.tempContainer);
@@ -54,19 +54,18 @@ export function RecorderView() {
   return (
     <div className={styles.outer}>
       <div className={styles.content}>
-        <h1>
-          Playback Queue <CirclePlay size={16} />
-        </h1>
-        <Text margin="none">Create a playlist of replays and load them into Dolphin</Text>
+        <Header
+          title="Playback Queue"
+          icon={<CirclePlay />}
+          description="Create a playlist of replays and load them into Dolphin"
+        />
         <div className={styles.toolbar}>
-          <div>
-            <Button type="button" onClick={loadFileHandler}>
-              <Folder size={16} /> Load JSON
-            </Button>
-            <Button type="button" disabled={!validQueue} onClick={onSaveHandler}>
-              <Save size={20} /> Save JSON
-            </Button>
-          </div>
+          <Button type="button" onClick={loadFileHandler}>
+            <Folder /> Load JSON
+          </Button>
+          <Button type="button" disabled={!validQueue} onClick={onSaveHandler}>
+            <Save /> Save JSON
+          </Button>
           {validQueue && (
             <div>
               <Labelled title="Add file">

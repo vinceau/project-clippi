@@ -49,17 +49,17 @@ function ButtonContainer({
       <div>
         <div className={clsx("delete-button", styles.deleteButton)}>
           <Button type="button" onClick={onDelete}>
-          {currentProfile === DEFAULT_PROFILE ? (
-            <>
-              <Undo size={20}/>
-              Reset profile
-            </>
-          ) : (
-            <>
-              <Trash size={20} />
-              Delete profile
-            </>
-          )}
+            {currentProfile === DEFAULT_PROFILE ? (
+              <>
+                <Undo size={20} />
+                Reset profile
+              </>
+            ) : (
+              <>
+                <Trash size={20} />
+                Delete profile
+              </>
+            )}
           </Button>
         </div>
         <ProfileExportContainer currentProfileData={currentProfileData} />
@@ -186,9 +186,7 @@ export function ComboForm(props: {
 
               <div style={{ marginTop: "10px" }}>
                 <Accordion.Root open={showAdvanced} onOpenChange={setShowAdvanced}>
-                  <Accordion.Trigger>
-                    {showAdvanced ? "Hide " : "Show "} advanced options
-                  </Accordion.Trigger>
+                  <Accordion.Trigger>{showAdvanced ? "Hide " : "Show "} advanced options</Accordion.Trigger>
                   <Accordion.Panel>
                     <Field>
                       <FinalField
@@ -242,7 +240,7 @@ export function ComboForm(props: {
                         to be excluded.
                       </Text>
                     </Field>
-                    </Accordion.Panel>
+                  </Accordion.Panel>
                 </Accordion.Root>
               </div>
               <ButtonContainer

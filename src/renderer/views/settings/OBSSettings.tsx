@@ -63,7 +63,13 @@ export function OBSSettings() {
           <Field>
             <Label>Websocket Password</Label>
             <Form.Input
-              icon={showPass ? <EyeOff size={16} onClick={togglePass} style={{ cursor: "pointer" }} /> : <Eye size={16} onClick={togglePass} style={{ cursor: "pointer" }} />}
+              icon={
+                showPass ? (
+                  <EyeOff size={16} onClick={togglePass} style={{ cursor: "pointer" }} />
+                ) : (
+                  <Eye size={16} onClick={togglePass} style={{ cursor: "pointer" }} />
+                )
+              }
               type={showPass ? "text" : "password"}
               placeholder="Password"
               value={obsPassword}

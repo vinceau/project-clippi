@@ -1,9 +1,10 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ReflexContainer as ReflexContainerBase, ReflexElement as ReflexElementBase, ReflexSplitter } from "react-reflex";
-
-const ReflexContainer = ReflexContainerBase as unknown as React.ComponentType<{ orientation?: string; children?: React.ReactNode }>;
-const ReflexElement = ReflexElementBase as unknown as React.ComponentType<{ style?: React.CSSProperties; children?: React.ReactNode }>;
+import {
+  ReflexContainer as ReflexContainerBase,
+  ReflexElement as ReflexElementBase,
+  ReflexSplitter,
+} from "react-reflex";
 
 import { actionComponents } from "@/containers/actions";
 import type { Action } from "@/lib/event_actions";
@@ -14,6 +15,15 @@ import { ActionInput, AddActionInput } from "./ActionInputs";
 import { EventItem } from "./EventItem";
 
 import styles from "./EventActionLists.module.css";
+
+const ReflexContainer = ReflexContainerBase as unknown as React.ComponentType<{
+  orientation?: string;
+  children?: React.ReactNode;
+}>;
+const ReflexElement = ReflexElementBase as unknown as React.ComponentType<{
+  style?: React.CSSProperties;
+  children?: React.ReactNode;
+}>;
 
 export interface EventActionListsProps {
   selected: number;

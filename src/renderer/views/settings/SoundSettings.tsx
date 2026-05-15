@@ -53,7 +53,7 @@ export function SoundSettings() {
         ) : (
           <Segment placeholder>
             <Header icon>
-              <Music size={20}/>
+              <Music size={20} />
               You have not added any sounds
             </Header>
             <AddSoundButton onClick={() => dispatch.filesystem.addSound()} primary />

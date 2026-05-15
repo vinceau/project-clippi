@@ -12,19 +12,20 @@ interface TextAreaProps {
   onChange?: React.ChangeEventHandler<HTMLTextAreaElement>;
 }
 
-export const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
-  function TextArea({ value, placeholder, disabled, rows, monospace, onBlur, onChange }, ref) {
-    return (
-      <textarea
-        ref={ref}
-        className={clsx(styles.textarea, monospace && styles.monospace)}
-        value={value}
-        placeholder={placeholder}
-        disabled={disabled}
-        rows={rows}
-        onBlur={onBlur}
-        onChange={onChange}
-      />
-    );
-  },
-);
+export const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(function TextArea(
+  { value, placeholder, disabled, rows, monospace, onBlur, onChange },
+  ref
+) {
+  return (
+    <textarea
+      ref={ref}
+      className={clsx(styles.textarea, monospace && styles.monospace)}
+      value={value}
+      placeholder={placeholder}
+      disabled={disabled}
+      rows={rows}
+      onBlur={onBlur}
+      onChange={onChange}
+    />
+  );
+});

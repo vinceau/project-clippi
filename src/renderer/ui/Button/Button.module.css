@@ -2,7 +2,6 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5em;
-  padding: 0.6em 1.2em;
   border-radius: 0.3em;
   border: none;
   font-size: 1em;
@@ -11,6 +10,10 @@
   line-height: 1.2;
   background: #e0e1e2;
   color: rgba(0, 0, 0, 0.6);
+}
+
+.padding {
+  padding: 0.6em 1.2em;
 }
 
 .button:hover {

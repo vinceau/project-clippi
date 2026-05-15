@@ -30,14 +30,7 @@ export function InlineDropdown(props: any) {
   return (
     <span>
       {prefix ? `${prefix} ` : ""}
-      <Select
-        scrolling
-        inline
-        {...rest}
-        options={newOptions}
-        value={value}
-        onChange={(v) => onChange(v)}
-      />
+      <Select scrolling inline {...rest} options={newOptions} value={value} onChange={(v) => onChange(v)} />
     </span>
   );
 }

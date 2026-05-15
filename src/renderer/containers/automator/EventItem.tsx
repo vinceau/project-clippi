@@ -27,9 +27,7 @@ export function EventItem({ event, onClick, selected, disabled }: EventItemProps
       )}
       onClick={isClickable ? onClick : undefined}
     >
-      <div className={styles.iconCell}>
-        {disabled ? <PowerOff size={16} /> : <Flag size={16} />}
-      </div>
+      <div className={styles.iconCell}>{disabled ? <PowerOff size={16} /> : <Flag size={16} />}</div>
       <div>{eventName}</div>
     </div>
   );

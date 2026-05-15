@@ -10,13 +10,7 @@ export function Card({ children }: CardProps) {
   return <div className={styles.card}>{children}</div>;
 }
 
-export function CardContent({
-  children,
-  extra,
-}: {
-  children?: React.ReactNode;
-  extra?: boolean;
-}) {
+export function CardContent({ children, extra }: { children?: React.ReactNode; extra?: boolean }) {
   return <div className={clsx(styles.content, extra && styles.extra)}>{children}</div>;
 }
 
