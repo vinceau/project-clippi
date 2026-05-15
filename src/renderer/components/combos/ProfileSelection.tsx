@@ -1,7 +1,7 @@
 import * as React from "react";
 import { toast } from "react-toastify";
-import type { SelectProps } from "@/ui/Select/Select";
-import { Select } from "@/ui/Select/Select";
+import type { DropdownProps } from "semantic-ui-react";
+import { Dropdown } from "semantic-ui-react";
 
 import { Field, Label, Text } from "../Form";
 
@@ -15,36 +15,38 @@ const generateOptions = (opts: string[]) => {
   }));
 };
 
-export interface ProfileSelectorProps extends SelectProps {
+export interface ProfileSelectorProps extends DropdownProps {
   initialOptions: string[];
   onChange: (value: any) => void;
 }
 
 export function ProfileSelector({ initialOptions, value, onChange, ...rest }: ProfileSelectorProps) {
   const options = generateOptions(initialOptions);
-  const handleNewItem = (value: string) => {
+  const handleNewItem = (_: any, data: any) => {
     const notification = (
       <>
-        Created <b>{value}</b> profile.
+        Created <b>{data.value}</b> profile.
       </>
     );
     toast.info(notification, {
-      toastId: `${value}-profile-created`,
+      toastId: `${data.value}-profile-created`,
     });
-    onChange(value);
+    onChange(data.value);
   };
   return (
     <div className={styles.outer}>
       <Field>
         <Label>Current Profile</Label>
-        <Select
-          fluid
+        <Dropdown
+          style={{ width: "100%" }}
           options={options}
           placeholder="Select a profile"
           search
+          selection
+          allowAdditions
           value={value}
-          onChange={(v) => onChange(v)}
           onAddItem={handleNewItem}
+          onChange={(_: any, data: any) => onChange(data.value)}
           {...rest}
         />
         <Text>
