@@ -2,7 +2,6 @@
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.6);
-  z-index: 2000;
 }
 
 .popup {
@@ -13,7 +12,6 @@
   background: var(--bg-color, #fff);
   border-radius: 8px;
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
-  z-index: 2001;
   min-width: 360px;
   max-width: 480px;
   padding: 24px;

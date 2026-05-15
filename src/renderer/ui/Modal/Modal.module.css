@@ -33,7 +33,6 @@
   cursor: pointer;
   padding: 4px;
   color: inherit;
-  z-index: 1;
 }
 
 .content {
