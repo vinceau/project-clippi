@@ -22,16 +22,16 @@ export interface ProfileSelectorProps extends SelectProps {
 
 export function ProfileSelector({ initialOptions, value, onChange, ...rest }: ProfileSelectorProps) {
   const options = generateOptions(initialOptions);
-  const handleNewItem = (_: any, data: any) => {
+  const handleNewItem = (value: string) => {
     const notification = (
       <>
-        Created <b>{data.value}</b> profile.
+        Created <b>{value}</b> profile.
       </>
     );
     toast.info(notification, {
-      toastId: `${data.value}-profile-created`,
+      toastId: `${value}-profile-created`,
     });
-    onChange(data.value);
+    onChange(value);
   };
   return (
     <div className={styles.outer}>
@@ -43,7 +43,7 @@ export function ProfileSelector({ initialOptions, value, onChange, ...rest }: Pr
           placeholder="Select a profile"
           search
           value={value}
-          onChange={(_: any, data: any) => onChange(data.value)}
+          onChange={(v) => onChange(v)}
           onAddItem={handleNewItem}
           {...rest}
         />

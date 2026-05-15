@@ -36,7 +36,7 @@ export function InlineDropdown(props: any) {
         {...rest}
         options={newOptions}
         value={value}
-        onChange={(_: any, { value }) => onChange(value)}
+        onChange={(v) => onChange(v)}
       />
     </span>
   );

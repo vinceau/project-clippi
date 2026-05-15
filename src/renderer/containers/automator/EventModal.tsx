@@ -128,10 +128,10 @@ export function EventModal({
               />
             }
             control={control}
-            onChange={([_, x]) => {
+            onChange={([v]) => {
               console.log("value changed:");
-              console.log(x.value);
-              return x.value;
+              console.log(v);
+              return v;
             }}
             rules={{ required: true }}
             name="type"
@@ -145,7 +145,7 @@ export function EventModal({
             <Controller
               as={<Select className={styles.fullWidth} placeholder="Combo profile" options={profileOptions} />}
               control={control}
-              onChange={([_, x]) => x.value}
+              onChange={([v]) => v}
               name="filter.comboCriteria"
               defaultValue={`$${currentProfile}`}
             />

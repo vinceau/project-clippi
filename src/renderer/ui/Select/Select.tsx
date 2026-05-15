@@ -26,9 +26,8 @@ export interface SelectProps {
   options?: SelectOption[];
   trigger?: React.ReactElement;
   className?: string;
-  onChange?: (event: React.MouseEvent | null, data: { value: string }) => void;
-  // eslint-disable-next-line react/no-unused-prop-types
-  onAddItem?: (event: React.MouseEvent | null, data: { value: string }) => void;
+  onChange?: (value: string) => void;
+  onAddItem?: (value: string) => void;
   children?: React.ReactNode;
 }
 
@@ -50,7 +49,7 @@ export function Select({
   children,
 }: SelectProps) {
   const handleValueChange = (newValue: string | null) => {
-    onChange?.(null, { value: newValue ?? "" });
+    onChange?.(newValue ?? "");
   };
 
   const items = React.useMemo(() => {

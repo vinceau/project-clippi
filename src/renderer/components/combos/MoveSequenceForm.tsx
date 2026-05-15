@@ -71,8 +71,8 @@ function MoveInput({
   onBlur?: () => void;
 }) {
   const handleChange = React.useCallback(
-    (_e: any, data: any) => {
-      onChange(Number(data.value));
+    (value: string) => {
+      onChange(Number(value));
     },
     [onChange]
   );

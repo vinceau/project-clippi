@@ -43,7 +43,7 @@ export function RecordButton({
           disabled={disabled}
           button
           floating
-          onChange={(_: any, { value }) => onChange(value)}
+          onChange={(v) => onChange(v)}
           options={options}
         />
       )}
