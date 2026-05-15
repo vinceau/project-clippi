@@ -9,6 +9,7 @@ import type { ActionTypeGenerator, Context } from "@/lib/event_actions";
 import { soundPlayer } from "@/lib/sounds";
 import type { Dispatch, iRootState } from "@/store";
 
+import { Plus } from "lucide-react";
 import type { ActionComponent } from "./types";
 
 interface ActionPlaySoundParams {
@@ -34,7 +35,7 @@ function PlaySoundInput(props: any) {
   if (allSounds.length === 0) {
     return (
       <Button onClick={() => dispatch.filesystem.addSound()}>
-        <Icon name="add" />
+        <Plus size={20} />
         Add sound
       </Button>
     );

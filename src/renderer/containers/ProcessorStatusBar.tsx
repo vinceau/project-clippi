@@ -13,6 +13,7 @@ import { startProcessing, stopProcessing } from "@/lib/fileProcessor";
 import { mapConfigurationToFilterSettings } from "@/lib/profile";
 import type { iRootState } from "@/store";
 
+import { CircleStop } from "lucide-react";
 import styles from "./ProcessorStatusBar.module.css";
 
 export function ProcessorStatusBar() {
@@ -137,7 +138,7 @@ export function ProcessorStatusBar() {
         {comboFinderProcessing ? (
           <div className={styles.stopButton}>
             <Button type="button" onClick={onStop} disabled={stopping}>
-              <Icon name="stop" />
+              <CircleStop size={20} />
               Stop processing
             </Button>
           </div>

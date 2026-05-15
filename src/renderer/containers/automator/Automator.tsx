@@ -1,13 +1,13 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@/ui/Button/Button";
-import { Icon } from "@/ui/Icon/Icon";
 
 import { Labelled } from "@/components/Labelled";
 import { streamManager } from "@/lib/realtime";
 import type { Dispatch, iRootState } from "@/store";
 import type { NamedEventConfig } from "@/store/models/automator";
 
+import { Pencil, Play, Plus, Power, PowerOff, Trash } from "lucide-react";
 import { AutomatorPlaceholder } from "./AutomatorPlaceholder";
 import { EventActionLists } from "./EventActionLists";
 import { EventModal } from "./EventModal";
@@ -75,22 +75,26 @@ export function Automator() {
       <div className={styles.headerBar}>
         <div>
           <Button onClick={() => setOpened(true)}>
-            <Icon name="plus" /> Add event
+            <Plus size={20} /> Add event
           </Button>
           <Button onClick={deleteEvent} disabled={disableEditButtons}>
-            <Icon name="trash" /> Delete event
+            <Trash size={20} /> Delete event
           </Button>
         </div>
         {!disableEditButtons && (
           <div>
             <Labelled title="Test run event">
-              <Button disabled={disabledTestButton} onClick={testRunEvent}><Icon name="play" /></Button>
+              <Button disabled={disabledTestButton} onClick={testRunEvent}>
+                <Play size={20} />
+              </Button>
             </Labelled>
             <Labelled title="Edit event">
-              <Button onClick={editEvent}><Icon name="pencil" /></Button>
+              <Button onClick={editEvent}>
+                <Pencil size={20} />
+              </Button>
             </Labelled>
             <Labelled title={isDisabled ? "Enable event" : "Disable event"}>
-              <Button onClick={toggleEvent}><Icon name={isDisabled ? "check circle" : "window close"} /></Button>
+              <Button onClick={toggleEvent}>{isDisabled ? <Power size={20} /> : <PowerOff size={20} />}</Button>
             </Labelled>
           </div>
         )}

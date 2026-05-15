@@ -5,6 +5,7 @@ import { Field } from "react-final-form";
 import { Button } from "@/ui/Button/Button";
 import { Dropdown } from "@/ui/Dropdown/Dropdown";
 import { Icon } from "@/ui/Icon/Icon";
+import { X as Close, Plus } from "lucide-react";
 
 import { Labelled } from "../Labelled";
 
@@ -93,7 +94,7 @@ function MoveInput({
       <div style={{ marginLeft: 5 }}>
         <Labelled title="Remove">
           <Button type="button" onClick={onRemove}>
-            <Icon name="close" />
+            <Close size={20} />
           </Button>
         </Labelled>
       </div>
@@ -179,7 +180,7 @@ export function MoveSequenceForm({ value, onBlur, onChange }: MoveSequenceFormPr
           )}
         </Droppable>
         <Button type="button" onClick={addNewMove}>
-          <Icon name="plus" /> Add move
+          <Plus size={20} /> Add move
         </Button>
       </DragDropContext>
     </div>

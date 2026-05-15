@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@/ui/Button/Button";
 import { Icon } from "@/ui/Icon/Icon";
+import { Plus, Save, Shuffle, Trash } from "lucide-react";
 
 import { DropPad } from "@/components/DropPad";
 import { Text } from "@/components/Form";
@@ -64,19 +65,25 @@ export function RecorderView() {
               <Icon name="folder" /> Load JSON
             </Button>
             <Button type="button" disabled={!validQueue} onClick={onSaveHandler}>
-              <Icon name="save" /> Save JSON
+              <Save size={20} /> Save JSON
             </Button>
           </div>
           {validQueue && (
             <div>
               <Labelled title="Add file">
-                <Button onClick={addFileHandler}><Icon name="plus" /></Button>
+                <Button onClick={addFileHandler}>
+                  <Plus size={20} />
+                </Button>
               </Labelled>
               <Labelled title="Shuffle queue">
-                <Button onClick={shuffleQueueHandler}><Icon name="shuffle" /></Button>
+                <Button onClick={shuffleQueueHandler}>
+                  <Shuffle size={20} />
+                </Button>
               </Labelled>
               <Labelled title="Clear queue">
-                <Button onClick={clearQueueHandler}><Icon name="trash" /></Button>
+                <Button onClick={clearQueueHandler}>
+                  <Trash size={20} />
+                </Button>
               </Labelled>
             </div>
           )}

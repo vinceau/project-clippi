@@ -2,7 +2,6 @@ import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@/ui/Button/Button";
 import { Header } from "@/ui/Header/Header";
-import { Icon } from "@/ui/Icon/Icon";
 import { Segment } from "@/ui/Segment/Segment";
 
 import { FormContainer, PageHeader } from "@/components/Form";
@@ -11,12 +10,13 @@ import { soundPlayer } from "@/lib/sounds";
 import { openFileOrParentFolder } from "@/lib/utils";
 import type { Dispatch, iRootState } from "@/store";
 
+import { CircleStop, Music, Plus } from "lucide-react";
 import styles from "./SoundSettings.module.css";
 
 function AddSoundButton(props: any) {
   return (
     <Button {...props}>
-      <Icon name="add" />
+      <Plus size={20} />
       Add sound
     </Button>
   );
@@ -44,7 +44,7 @@ export function SoundSettings() {
             <div className={styles.buttonContainer}>
               <AddSoundButton onClick={() => dispatch.filesystem.addSound()} />
               <Button onClick={() => soundPlayer.stop()}>
-                <Icon name="stop" />
+                <CircleStop size={20} />
                 Stop current sound
               </Button>
             </div>
@@ -53,7 +53,7 @@ export function SoundSettings() {
         ) : (
           <Segment placeholder>
             <Header icon>
-              <Icon name="music" />
+              <Music size={20}/>
               You have not added any sounds
             </Header>
             <AddSoundButton onClick={() => dispatch.filesystem.addSound()} primary />

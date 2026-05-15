@@ -1,7 +1,7 @@
 import React from "react";
-import { Icon } from "@/ui/Icon/Icon";
 import { Input } from "@/ui/Input/Input";
 import { Label } from "@/ui/Label/Label";
+import { X as CloseIcon } from "lucide-react";
 
 import styles from "./KeywordsInput.module.css";
 
@@ -9,7 +9,9 @@ function KeywordLabel({ name, onClick }: { name: string; onClick: () => void }) 
   return (
     <Label size="small">
       {name}
-      <Icon name="delete" link onClick={onClick} />
+      <span onClick={onClick} style={{ cursor: "pointer" }}>
+        <CloseIcon size={16} />
+      </span>
     </Label>
   );
 }

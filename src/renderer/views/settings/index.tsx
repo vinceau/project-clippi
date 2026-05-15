@@ -3,6 +3,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Redirect, Route, Switch, useHistory, useRouteMatch } from "react-router-dom";
 import { Icon } from "@/ui/Icon/Icon";
+import { X as Close } from "lucide-react";
 import { Label } from "@/ui/Label/Label";
 import { Menu } from "@/ui/Menu/Menu";
 
@@ -55,7 +56,7 @@ export function SettingsView() {
     <div className={styles.settingsContainer}>
       <div className={styles.closeButton}>
         <Labelled onClick={onClose} title="Close">
-          <Icon name="close" />
+          <Close size={20} />
         </Labelled>
       </div>
       <div className={styles.flex}>

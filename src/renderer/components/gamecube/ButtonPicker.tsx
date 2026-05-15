@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "@/ui/Button/Button";
-import { Icon } from "@/ui/Icon/Icon";
+import { Check, Undo } from "lucide-react";
 import { Modal } from "@/ui/Modal/Modal";
 
 import { generateButtonComboPreview } from "@/lib/inputs";
@@ -55,10 +55,10 @@ export function ButtonPicker({
       </Modal.Content>
       <Modal.Actions className={styles.actions}>
         <Button disabled={buttons.length === 0} onClick={onReset}>
-          <Icon name="undo" /> Reset
+          <Undo size={20} /> Reset
         </Button>
         <Button disabled={buttons.length === 0} color="green" onClick={onSave}>
-          <Icon name="checkmark" /> Save
+          <Check size={20} /> Save
         </Button>
       </Modal.Actions>
     </Modal>

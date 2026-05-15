@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Button } from "@/ui/Button/Button";
-import { Icon } from "@/ui/Icon/Icon";
 import { Input } from "@/ui/Input/Input";
+import { FolderOpen } from "lucide-react";
 
 import { getFilePath, getFolderPath, openFileOrParentFolder } from "@/lib/utils";
 
@@ -54,7 +54,7 @@ export function FileInput({ value, directory, onChange, fileTypeFilters, saveFil
       <div className={styles.inputRow}>
         <Button onClick={() => openFileOrParentFolder(filesPath)} disabled={!filesPath}>
           <Labelled title="Open location">
-            <Icon name="folder open outline" />
+            <FolderOpen size={20} />
           </Labelled>
         </Button>
         <Input

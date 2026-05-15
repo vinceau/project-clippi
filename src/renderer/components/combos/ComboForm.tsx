@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { Accordion } from "@/ui/Accordion/Accordion";
 import { Button } from "@/ui/Button/Button";
 import { Form as SemanticForm } from "@/ui/Form/Form";
-import { Icon } from "@/ui/Icon/Icon";
+import { ChevronDown, Save, Trash, Undo } from "lucide-react";
 
 import { CodeBlock } from "@/components/CodeBlock";
 import { Field, Label, Text } from "@/components/Form";
@@ -43,7 +43,7 @@ function ButtonContainer({
   return (
     <div className={styles.outerContainer}>
       <Button primary type="submit" disabled={submitting}>
-        <Icon name="save" />
+        <Save size={20} />
         Save profile
       </Button>
       <div>
@@ -51,12 +51,12 @@ function ButtonContainer({
           <Button type="button" onClick={onDelete}>
           {currentProfile === DEFAULT_PROFILE ? (
             <>
-              <Icon name="undo" />
+              <Undo size={20}/>
               Reset profile
             </>
           ) : (
             <>
-              <Icon name="trash" />
+              <Trash size={20} />
               Delete profile
             </>
           )}
@@ -187,7 +187,7 @@ export function ComboForm(props: {
               <div style={{ marginTop: "10px" }}>
                 <Accordion>
                   <Accordion.Title active={showAdvanced} onClick={() => setShowAdvanced(!showAdvanced)}>
-                    <Icon name="dropdown" />
+                    <ChevronDown size={20} />
                     {showAdvanced ? "Hide " : "Show "} advanced options
                   </Accordion.Title>
                   <Accordion.Content active={showAdvanced}>

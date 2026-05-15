@@ -12,6 +12,7 @@ import { OBSConnectionStatus, OBSRecordingStatus } from "@/lib/obs";
 import type { Dispatch, iRootState } from "@/store";
 import obsLogo from "@/styles/images/obs.png";
 
+import { CircleStop } from "lucide-react";
 import styles from "./OBSStatusBar.module.css";
 
 enum RecordingMethod {
@@ -102,7 +103,7 @@ export function OBSStatusBar() {
         {dolphinRunning ? (
           <div className={styles.stopButton}>
             <Button type="button" onClick={onStop}>
-              <Icon name="stop" />
+              <CircleStop size={20} />
               Stop
             </Button>
           </div>
