@@ -2,7 +2,8 @@
 import { css, jsx } from "@emotion/core";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Icon } from "semantic-ui-react";
+import { Button } from "@/ui/Button/Button";
+import { Icon } from "@/ui/Icon/Icon";
 
 import { Labelled } from "@/components/Labelled";
 import { streamManager } from "@/lib/realtime";
@@ -13,7 +14,7 @@ import { AutomatorPlaceholder } from "./AutomatorPlaceholder";
 import { EventActionLists } from "./EventActionLists";
 import { EventModal } from "./EventModal";
 
-export const Automator: React.FC = () => {
+export function Automator() {
   const [opened, setOpened] = React.useState<boolean>(false);
   const [selected, setSelected] = React.useState<number>(0);
   const [edit, setEdit] = React.useState<NamedEventConfig | null>(null);
@@ -129,4 +130,4 @@ export const Automator: React.FC = () => {
       </div>
     </div>
   );
-};
+}

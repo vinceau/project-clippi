@@ -1,7 +1,7 @@
 import React from "react";
-import { Dropdown } from "semantic-ui-react";
+import { Dropdown } from "@/ui/Dropdown/Dropdown";
 
-export const ProfileExport = ({ onImport, onExport }: { onImport: () => void; onExport: () => void }) => {
+export function ProfileExport({ onImport, onExport }: { onImport: () => void; onExport: () => void }) {
   return (
     <Dropdown icon="bars" floating button className="icon">
       <Dropdown.Menu>
@@ -10,4 +10,4 @@ export const ProfileExport = ({ onImport, onExport }: { onImport: () => void; on
       </Dropdown.Menu>
     </Dropdown>
   );
-};
+}

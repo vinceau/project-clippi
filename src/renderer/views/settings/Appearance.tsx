@@ -1,9 +1,10 @@
 import React from "react";
 
-import { Field, FormContainer, PageHeader, Toggle } from "@/components/Form";
+import { Field, FormContainer, PageHeader } from "@/components/Form";
+import { Toggle } from "@/ui/Toggle/Toggle";
 import { ThemeMode, useTheme } from "@/styles";
 
-export const Appearance: React.FC = () => {
+export function Appearance() {
   const { themeName, toggle } = useTheme();
   const onOpenChange = (darkModeChecked: boolean) => {
     toggle(darkModeChecked ? ThemeMode.DARK : ThemeMode.LIGHT);
@@ -16,4 +17,4 @@ export const Appearance: React.FC = () => {
       </Field>
     </FormContainer>
   );
-};
+}

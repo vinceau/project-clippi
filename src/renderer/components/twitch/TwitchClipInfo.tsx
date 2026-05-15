@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import type { TwitchClip } from "common/types";
 import { transparentize } from "polished";
 import React from "react";
-import { Icon } from "semantic-ui-react";
+import { Icon } from "@/ui/Icon/Icon";
 import { format } from "timeago.js";
 
 import { device } from "@/styles/device";
@@ -47,31 +47,34 @@ const ButtonsContainer = styled.div`
   }
 `;
 
-export const TwitchClipInfo: React.FC<{
+export function TwitchClipInfo({
+  clip,
+  onRemove: onRemoveProp,
+}: {
   clip: TwitchClip;
   onRemove?: (clipID: string) => void;
-}> = (props) => {
-  const timestamp = format(props.clip.timestamp);
-  const url = `https://clips.twitch.tv/${props.clip.clipID}`;
+}) {
+  const timestamp = format(clip.timestamp);
+  const url = `https://clips.twitch.tv/${clip.clipID}`;
   const onRemove = () => {
-    if (props.onRemove) {
-      props.onRemove(props.clip.clipID);
+    if (onRemoveProp) {
+      onRemoveProp(clip.clipID);
     }
   };
-  const channelUrl = props.clip.channel ? `https://twitch.tv/${props.clip.channel}` : undefined;
+  const channelUrl = clip.channel ? `https://twitch.tv/${clip.channel}` : undefined;
   return (
     <ClipContainer>
       <div>
         <Labelled title="Show clip in browser">
           <A href={url}>
-            <h2>{props.clip.clipID}</h2>
+            <h2>{clip.clipID}</h2>
           </A>
         </Labelled>
         <div style={{ opacity: "0.7" }}>
-          {props.clip.channel && (
+          {clip.channel && (
             <span>
               <Labelled title="Go to Twitch channel">
-                <A href={channelUrl}>{props.clip.channel}</A>
+                <A href={channelUrl}>{clip.channel}</A>
               </Labelled>{" "}
               {" | "}
             </span>
@@ -81,7 +84,7 @@ export const TwitchClipInfo: React.FC<{
       </div>
       <ButtonsContainer>
         <Labelled title="Edit">
-          <A href={url + "/edit"}>
+          <A href={`${url}/edit`}>
             <Icon name="pencil" />
           </A>
         </Labelled>
@@ -91,4 +94,4 @@ export const TwitchClipInfo: React.FC<{
       </ButtonsContainer>
     </ClipContainer>
   );
-};
+}

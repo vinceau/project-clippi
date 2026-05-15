@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import React from "react";
-import { Icon } from "semantic-ui-react";
+import { Icon } from "@/ui/Icon/Icon";
 
 import { Text } from "@/components/Form";
 import { Automator } from "@/containers/automator/Automator";
@@ -29,7 +29,7 @@ const Outer = styled.div`
   flex-direction: column;
 `;
 
-export const AutomatorView: React.FC = () => {
+export function AutomatorView() {
   return (
     <Outer>
       <Content>
@@ -44,4 +44,4 @@ export const AutomatorView: React.FC = () => {
       </Footer>
     </Outer>
   );
-};
+}

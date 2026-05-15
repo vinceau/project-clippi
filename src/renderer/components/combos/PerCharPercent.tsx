@@ -2,7 +2,8 @@ import styled from "@emotion/styled";
 import * as React from "react";
 import { Field } from "react-final-form";
 import { FieldArray } from "react-final-form-arrays";
-import { Button, Icon } from "semantic-ui-react";
+import { Button } from "@/ui/Button/Button";
+import { Icon } from "@/ui/Icon/Icon";
 
 import type { CharPercentOption } from "@/lib/profile";
 
@@ -16,8 +17,7 @@ const CharacterSelectContainer = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
 `;
 
-export const PerCharPercent: React.FC<{ name: string; values: any; push: any; pop: any }> = (props) => {
-  const { name, values, push } = props;
+export function PerCharPercent({ name, values, push }: { name: string; values: any; push: any; pop: any }) {
   const selectedChars: CharPercentOption[] = values[name] || [];
   const selectedCharIDs = selectedChars.filter((c) => Boolean(c)).map((c) => c.character);
   return (
@@ -47,4 +47,4 @@ export const PerCharPercent: React.FC<{ name: string; values: any; push: any; po
       </div>
     </div>
   );
-};
+}

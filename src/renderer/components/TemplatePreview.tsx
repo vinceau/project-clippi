@@ -4,12 +4,16 @@ import type { GameStartType } from "@slippi/slippi-js";
 import { parseFileRenameFormat } from "common/context";
 import * as React from "react";
 
-export const TemplatePreview: React.FC<{
+export function TemplatePreview({
+  template,
+  settings,
+  metadata,
+}: {
   template: string;
   settings?: GameStartType;
   metadata?: any;
-}> = (props) => {
-  const parsedTemplate = parseFileRenameFormat(props.template, props.settings, props.metadata);
+}) {
+  const parsedTemplate = parseFileRenameFormat(template, settings, metadata);
   return (
     <span
       css={css`
@@ -19,4 +23,4 @@ export const TemplatePreview: React.FC<{
       {parsedTemplate}
     </span>
   );
-};
+}

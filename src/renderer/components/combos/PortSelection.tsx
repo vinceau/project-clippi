@@ -1,7 +1,8 @@
 import React from "react";
 import { Field } from "react-final-form";
-import type { GridColumnProps } from "semantic-ui-react";
-import { Checkbox, Grid } from "semantic-ui-react";
+import type { GridColumnProps } from "@/ui/Grid/Grid";
+import { Checkbox } from "@/ui/Checkbox/Checkbox";
+import { Grid } from "@/ui/Grid/Grid";
 
 export interface PortSelectionProps {
   label?: string;
@@ -10,10 +11,7 @@ export interface PortSelectionProps {
   onChange?: (value: number[]) => void;
 }
 
-export const PortSelection: React.FC<PortSelectionProps> = (props) => {
-  const { zeroIndex, onChange } = props;
-  const value = props.value || [];
-  const label = props.label || "Port";
+export function PortSelection({ zeroIndex, onChange, value = [], label = "Port" }: PortSelectionProps) {
   const newOnChange = (port: number) => {
     let newValues: number[] = Array.from(value);
     if (value.includes(port)) {
@@ -49,10 +47,10 @@ export const PortSelection: React.FC<PortSelectionProps> = (props) => {
       ))}
     </Grid>
   );
-};
+}
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const PortSelectAdapter: React.FC<any> = (props) => {
+export function PortSelectAdapter(props: any) {
   const { name, ...rest } = props;
   return (
     <Field name={name}>
@@ -62,4 +60,4 @@ export const PortSelectAdapter: React.FC<any> = (props) => {
       }}
     </Field>
   );
-};
+}

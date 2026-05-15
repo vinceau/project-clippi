@@ -1,6 +1,8 @@
 import formatter from "formatter";
 import * as React from "react";
-import { Form, Icon, TextArea } from "semantic-ui-react";
+import { Form } from "@/ui/Form/Form";
+import { Icon } from "@/ui/Icon/Icon";
+import { TextArea } from "@/ui/TextArea/TextArea";
 
 import type { ActionTypeGenerator, Context } from "@/lib/event_actions";
 import { notify } from "@/lib/utils";
@@ -23,11 +25,11 @@ const ActionNotifyFunc: ActionTypeGenerator = (params: ActionNotifyParams) => {
   };
 };
 
-const ActionIcon = () => {
+function ActionIcon() {
   return <Icon name="exclamation circle" size="large" />;
-};
+}
 
-const NotifyInput = (props: any) => {
+function NotifyInput(props: any) {
   const { value, onChange } = props;
   const defaultValue = value && value.message ? value.message : "";
   const [msg, setMsg] = React.useState(defaultValue);
@@ -43,7 +45,7 @@ const NotifyInput = (props: any) => {
       </Form>
     </div>
   );
-};
+}
 
 export const ActionNotify: ActionComponent = {
   label: "show a notification",

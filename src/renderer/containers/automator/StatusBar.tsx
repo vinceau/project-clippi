@@ -8,7 +8,7 @@ import { statusToColor, statusToLabel } from "@/lib/status";
 import type { iRootState } from "@/store";
 import slippiLogo from "@/styles/images/slippi.png";
 
-export const StatusBar: React.FC = () => {
+export function StatusBar() {
   const history = useHistory();
 
   const port = useSelector((state: iRootState) => state.slippi.port);
@@ -21,8 +21,8 @@ export const StatusBar: React.FC = () => {
   const innerText = !connected
     ? "Please connect to Slippi"
     : isDolphinConnection
-    ? "Slippi Dolphin"
-    : `Relay Port: ${port}`;
+      ? "Slippi Dolphin"
+      : `Relay Port: ${port}`;
   const color = statusToColor(slippiConnectionStatus);
   return (
     <div>
@@ -38,4 +38,4 @@ export const StatusBar: React.FC = () => {
       </ConnectionStatusDisplay>
     </div>
   );
-};
+}

@@ -1,7 +1,8 @@
 import { produce } from "immer";
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Icon } from "semantic-ui-react";
+import { Button } from "@/ui/Button/Button";
+import { Icon } from "@/ui/Icon/Icon";
 
 import { InlineDropdown } from "@/components/InlineInputs";
 import type { ActionTypeGenerator, Context } from "@/lib/event_actions";
@@ -21,11 +22,11 @@ const ActionPlaySoundFunc: ActionTypeGenerator = (params: ActionPlaySoundParams)
   };
 };
 
-const ActionIcon = () => {
+function ActionIcon() {
   return <Icon name="music" size="large" />;
-};
+}
 
-const PlaySoundInput = (props: any) => {
+function PlaySoundInput(props: any) {
   const { value, onChange } = props;
   const soundFiles = useSelector((state: iRootState) => state.filesystem.soundFiles);
   const dispatch = useDispatch<Dispatch>();
@@ -46,7 +47,7 @@ const PlaySoundInput = (props: any) => {
     onChange(newValue);
   };
   return <InlineDropdown value={value.sound} prefix="Play" onChange={onSoundChange} customOptions={allSounds} />;
-};
+}
 
 export const ActionPlaySound: ActionComponent = {
   label: "play a sound",

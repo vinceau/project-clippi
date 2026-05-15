@@ -1,6 +1,6 @@
 import { produce } from "immer";
 import React from "react";
-import { Icon } from "semantic-ui-react";
+import { Icon } from "@/ui/Icon/Icon";
 
 import { InlineDropdown } from "@/components/InlineInputs";
 import { Labelled } from "@/components/Labelled";
@@ -12,7 +12,7 @@ import { ActionIcon } from "./ActionIcon";
 
 const allActions = Object.keys(actionComponents);
 
-const ActionSelector = (props: any) => {
+function ActionSelector(props: any) {
   const { options, ...rest } = props;
   return (
     <InlineDropdown
@@ -22,17 +22,22 @@ const ActionSelector = (props: any) => {
       fontSize={18}
     />
   );
-};
+}
 
-export const ActionInput: React.FC<{
+export function ActionInput({
+  selectPrefix,
+  value,
+  onChange,
+  disabledActions,
+  onRemove,
+}: {
   selectPrefix: string;
   value: ActionDefinition;
   onChange: (a: ActionDefinition) => void;
   disabledActions: string[];
   onRemove: () => void;
-}> = (props) => {
+}) {
   const outerRef = React.createRef<HTMLDivElement>();
-  const { value, onChange, onRemove, selectPrefix, disabledActions } = props;
   const onActionChange = (action: string) => {
     const params = actionComponents[action].defaultParams;
     const newValue = produce(value, (draft: ActionDefinition) => {
@@ -71,13 +76,15 @@ export const ActionInput: React.FC<{
       <ActionArgsInput value={value.args} onChange={onArgsChange} />
     </ActionComponentBlock>
   );
-};
+}
 
-export const AddActionInput: React.FC<{
+export function AddActionInput({
+  onChange,
+  disabledActions,
+}: {
   onChange: (action: string) => void;
   disabledActions: string[];
-}> = (props) => {
-  const { onChange, disabledActions } = props;
+}) {
   const unusedOptions = allActions.filter((a) => !disabledActions.includes(a));
   const noOtherActions = unusedOptions.length === allActions.length;
   const addText = noOtherActions ? "Then..." : "And also...";
@@ -87,9 +94,9 @@ export const AddActionInput: React.FC<{
 
   return (
     <ActionComponentBlock
-      hideBorder={true}
+      hideBorder
       icon={<Icon name="add" size="large" />}
       header={<ActionSelector text={addText} selectOnBlur={false} onChange={onChange} options={unusedOptions} />}
     />
   );
-};
+}

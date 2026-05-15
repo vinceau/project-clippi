@@ -2,7 +2,8 @@ import styled from "@emotion/styled";
 import { darken, lighten } from "polished";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Icon } from "semantic-ui-react";
+import { Button } from "@/ui/Button/Button";
+import { Icon } from "@/ui/Icon/Icon";
 
 import { DropPad } from "@/components/DropPad";
 import { Text } from "@/components/Form";
@@ -59,7 +60,7 @@ const Toolbar = styled.div`
   margin-bottom: 1rem;
 `;
 
-export const RecorderView: React.FC = () => {
+export function RecorderView() {
   const theme = useTheme();
   const { dolphinQueue } = useSelector((state: iRootState) => state.tempContainer);
   const dispatch = useDispatch<Dispatch>();
@@ -144,4 +145,4 @@ export const RecorderView: React.FC = () => {
       </Footer>
     </Outer>
   );
-};
+}

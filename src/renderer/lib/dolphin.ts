@@ -14,7 +14,7 @@ import type { DolphinLauncherOptions, DolphinPlaybackPayload, DolphinQueueFormat
 import { DolphinLauncher, DolphinPlaybackStatus } from "@vinceau/slp-realtime";
 import { IS_MAC_OR_WIN } from "common/constants";
 import { delay, onlyFilename } from "common/utils";
-import { remote } from "electron";
+import * as remote from "@electron/remote";
 import fs from "fs-extra";
 import path from "path";
 import type { Observable } from "rxjs";
@@ -57,7 +57,7 @@ export const getDolphinExecutableNames = (): string[] => {
 };
 
 const getDolphinExecutablePath = async (parent?: string): Promise<string> => {
-  const dolphinPath = parent ? parent : getDolphinPath();
+  const dolphinPath = parent || getDolphinPath();
   const execNames = getDolphinExecutableNames();
   for (const name of execNames) {
     let dolphinExec = path.join(dolphinPath, name);
@@ -79,13 +79,14 @@ export class DolphinRecorder extends DolphinLauncher {
   private userFilenameFormat = "";
 
   private readonly currentJSONFileSource = new BehaviorSubject<string>("");
+
   public currentJSONFile$ = this.currentJSONFileSource.asObservable();
 
   public currentBasename$: Observable<string>;
 
   public constructor(options?: Partial<DolphinLauncherOptions>) {
     super(options);
-    this.recordOptions = Object.assign({}, defaultDolphinRecorderOptions);
+    this.recordOptions = { ...defaultDolphinRecorderOptions };
 
     // Observable with every new file basename
     const newBasename$ = this.output.playbackStatus$.pipe(
@@ -119,7 +120,7 @@ export class DolphinRecorder extends DolphinLauncher {
   }
 
   public async recordJSON(comboFilePath: string, options?: Partial<DolphinRecorderOptions>): Promise<void> {
-    this.recordOptions = Object.assign({}, defaultDolphinRecorderOptions, options);
+    this.recordOptions = { ...defaultDolphinRecorderOptions, ...options };
     if (this.recordOptions.record) {
       // First store the current filename format so we can restore it later
       this.userFilenameFormat = await obsConnection.getFilenameFormat();
@@ -177,7 +178,6 @@ export class DolphinRecorder extends DolphinLauncher {
 
     // Actually set the filename
     await obsConnection.setFilenameFormat(newFilename);
-    return;
   }
 
   private async _startRecording(): Promise<void> {

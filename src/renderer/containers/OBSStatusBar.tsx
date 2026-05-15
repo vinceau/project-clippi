@@ -2,7 +2,8 @@ import styled from "@emotion/styled";
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { Button, Icon } from "semantic-ui-react";
+import { Button } from "@/ui/Button/Button";
+import { Icon } from "@/ui/Icon/Icon";
 
 import { ConnectionStatusDisplay } from "@/components/ConnectionStatusDisplay";
 import { Labelled } from "@/components/Labelled";
@@ -45,7 +46,7 @@ const StopButton = styled(Button)`
   }
 `;
 
-export const OBSStatusBar: React.FC = () => {
+export function OBSStatusBar() {
   const history = useHistory();
   const autoNameRecordedFiles = useSelector((state: iRootState) => state.appContainer.autoNameRecordedFiles);
   const recordSeparateClips = useSelector((state: iRootState) => state.filesystem.recordSeparateClips);
@@ -94,10 +95,10 @@ export const OBSStatusBar: React.FC = () => {
   const recordingButtonTitle = !obsIsConnected
     ? "Connect to OBS to enable recording"
     : obsIsRecording
-    ? "Recording in progress"
-    : recordValue === RecordingMethod.SEPARATE
-    ? "Record each item as a separate video"
-    : "Record all items together as a single video";
+      ? "Recording in progress"
+      : recordValue === RecordingMethod.SEPARATE
+        ? "Record each item as a separate video"
+        : "Record all items together as a single video";
   const options = Object.entries(recordingOptions).map(([key, val]) => ({ ...val, value: key }));
   return (
     <Outer>
@@ -131,7 +132,7 @@ export const OBSStatusBar: React.FC = () => {
                 {recordButtonText}
               </RecordButton>
             </Labelled>
-            <Button primary={true} onClick={onPlay} disabled={dolphinQueue.length === 0}>
+            <Button primary onClick={onPlay} disabled={dolphinQueue.length === 0}>
               <Icon name="play" />
               Play
             </Button>
@@ -140,7 +141,7 @@ export const OBSStatusBar: React.FC = () => {
       </div>
     </Outer>
   );
-};
+}
 
 export const displayOBSStatus = (
   connectionStatus: OBSConnectionStatus,

@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import * as React from "react";
-import { Dropdown, Input } from "semantic-ui-react";
+import { Dropdown } from "@/ui/Dropdown/Dropdown";
+import { Input } from "@/ui/Input/Input";
 
 const generateOptions = (
   events: string[],
@@ -17,7 +18,7 @@ const generateOptions = (
   }));
 };
 
-export const InlineDropdown = (props: any) => {
+export function InlineDropdown(props: any) {
   const { value, customOptions, options, onChange, mapOptionToLabel, prefix, disabledOptions, ...rest } = props;
   let newOptions;
   if (customOptions && !options) {
@@ -29,8 +30,8 @@ export const InlineDropdown = (props: any) => {
     <span>
       {prefix ? `${prefix} ` : ""}
       <Dropdown
-        scrolling={true}
-        inline={true}
+        scrolling
+        inline
         {...rest}
         options={newOptions}
         value={value}
@@ -38,13 +39,13 @@ export const InlineDropdown = (props: any) => {
       />
     </span>
   );
-};
+}
 
-export const InlineInput = (props: any) => {
-  return <BufferedInput {...props} transparent={true} />;
-};
+export function InlineInput(props: any) {
+  return <BufferedInput {...props} transparent />;
+}
 
-export const BufferedInput = (props: any) => {
+export function BufferedInput(props: any) {
   const { value, onChange, ...rest } = props;
   const [newValue, setNewValue] = React.useState<string>(value || "");
   const submitValue = () => {
@@ -59,7 +60,7 @@ export const BufferedInput = (props: any) => {
     setNewValue(data.value);
   };
   return <Input value={newValue} onChange={newOnChange} onKeyDown={onKeyDown} onBlur={submitValue} {...rest} />;
-};
+}
 
 export const SimpleInput = styled.input`
   padding: 0.3rem;
@@ -70,15 +71,19 @@ export const SimpleInput = styled.input`
   margin: 0 0.5rem;
 `;
 
-export const DelayInput: React.FC<{
+export function DelayInput({
+  value,
+  placeholder,
+  onChange: onChangeProp,
+}: {
   value?: string;
   placeholder?: string;
   onChange?: (delay: string) => void;
-}> = (props) => {
-  const [delayAmount, setDelayAmount] = React.useState(props.value || "0");
+}) {
+  const [delayAmount, setDelayAmount] = React.useState(value || "0");
   const onChange = () => {
-    if (props.onChange) {
-      props.onChange(delayAmount);
+    if (onChangeProp) {
+      onChangeProp(delayAmount);
     }
   };
   return (
@@ -87,29 +92,31 @@ export const DelayInput: React.FC<{
       value={delayAmount}
       onBlur={onChange}
       onChange={(e) => setDelayAmount(e.target.value)}
-      placeholder={props.placeholder}
+      placeholder={placeholder}
     />
   );
-};
+}
 
-export const NotifyInput: React.FC<{
+export function NotifyInput({
+  value,
+  onChange,
+  options: optionsProp,
+}: {
   value?: boolean;
   onChange: (notify: boolean) => void;
   options?: any;
-}> = (props) => {
-  const options = props.options
-    ? props.options
-    : [
-        {
-          key: "notify-me",
-          value: true,
-          text: "notify",
-        },
-        {
-          key: "dont-notify-me",
-          value: false,
-          text: "don't notify",
-        },
-      ];
-  return <InlineDropdown value={Boolean(props.value)} onChange={props.onChange} options={options} />;
-};
+}) {
+  const options = optionsProp || [
+    {
+      key: "notify-me",
+      value: true,
+      text: "notify",
+    },
+    {
+      key: "dont-notify-me",
+      value: false,
+      text: "don't notify",
+    },
+  ];
+  return <InlineDropdown value={Boolean(value)} onChange={onChange} options={options} />;
+}

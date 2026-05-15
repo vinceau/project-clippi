@@ -2,7 +2,8 @@ import styled from "@emotion/styled";
 import { framesToSeconds, secondsToFrames } from "common/utils";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Accordion, Icon } from "semantic-ui-react";
+import { Accordion } from "@/ui/Accordion/Accordion";
+import { Icon } from "@/ui/Icon/Icon";
 
 import { ButtonInput } from "@/components/gamecube/ButtonInput";
 import { DelayInput, InlineDropdown } from "@/components/InlineInputs";
@@ -39,7 +40,7 @@ const options = [
 ];
 const holdOptions = ["frames", "seconds"].map((o) => ({ key: o, value: o, text: o }));
 
-export const HighlightButtonInputs: React.FC = () => {
+export function HighlightButtonInputs() {
   const [showAdvanced, setShowAdvanced] = React.useState(false);
   const dispatch = useDispatch<Dispatch>();
   const {
@@ -129,4 +130,4 @@ export const HighlightButtonInputs: React.FC = () => {
       </Accordion>
     </Outer>
   );
-};
+}

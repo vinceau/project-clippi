@@ -4,23 +4,20 @@ import React from "react";
 
 import { downloadLatestUpdate } from "@/lib/utils";
 
-export const UpdateAvailable: React.FC<{
-  version: string;
-  dismiss: () => void;
-}> = (props) => {
+export function UpdateAvailable({ version, dismiss }: { version: string; dismiss: () => void }) {
   const startDownload = () => {
     downloadLatestUpdate();
-    props.dismiss();
+    dismiss();
   };
   const openReleases = () => {
     shell.openExternal(GITHUB_RELEASES_PAGE);
-    props.dismiss();
+    dismiss();
   };
   return (
     <div>
       <h3>New update available</h3>
       <p>
-        Project Clippi v{props.version} is now available.
+        Project Clippi v{version} is now available.
         {AUTO_UPDATES_ENABLED ? <> Download and install the update?</> : <> Visit the releases page to download.</>}
       </p>
       <div className="buttons">
@@ -32,4 +29,4 @@ export const UpdateAvailable: React.FC<{
       </div>
     </div>
   );
-};
+}

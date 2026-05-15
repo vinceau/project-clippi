@@ -1,5 +1,5 @@
 import { Message } from "common/types";
-import { remote } from "electron";
+import * as remote from "@electron/remote";
 import React from "react";
 
 import { ipc } from "@/lib/rendererIpc";
@@ -14,7 +14,7 @@ interface ThemeContext {
 }
 
 // Get the theme synchronously
-const initialTheme = (remote.getCurrentWindow() as any).getCurrentTheme();
+const initialTheme = ThemeMode.LIGHT as string; // (remote.getCurrentWindow() as any).getCurrentTheme();
 
 export const ManageThemeContext: React.Context<ThemeContext> = React.createContext({
   themeName: initialTheme,
@@ -25,8 +25,8 @@ export const ManageThemeContext: React.Context<ThemeContext> = React.createConte
 
 export const useTheme = (): ThemeContext => React.useContext(ManageThemeContext);
 
-export const ThemeManager: React.FC = ({ children }) => {
-  const currentTheme = (remote.getCurrentWindow() as any).getCurrentTheme();
+export function ThemeManager({ children }) {
+  const currentTheme = ThemeMode.LIGHT as string; // (remote.getCurrentWindow() as any).getCurrentTheme();
 
   const [themeState, setThemeState] = React.useState({
     themeName: currentTheme,
@@ -64,4 +64,4 @@ export const ThemeManager: React.FC = ({ children }) => {
       {children}
     </ManageThemeContext.Provider>
   );
-};
+}

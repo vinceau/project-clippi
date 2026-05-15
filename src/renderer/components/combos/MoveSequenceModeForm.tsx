@@ -1,12 +1,12 @@
 import React from "react";
 import { Field } from "react-final-form";
-import { Button } from "semantic-ui-react";
+import { Button } from "@/ui/Button/Button";
 
 import { ThemeMode, useTheme } from "@/styles";
 
 type MoveSequenceMode = "include" | "start" | "end" | "exact";
 
-const MoveSequenceModeButton = ({
+function MoveSequenceModeButton({
   type,
   currentValue,
   onChange,
@@ -15,7 +15,7 @@ const MoveSequenceModeButton = ({
   type: MoveSequenceMode;
   currentValue: MoveSequenceMode;
   onChange: (mode: MoveSequenceMode) => void;
-}>) => {
+}>) {
   const theme = useTheme();
   const isSelected = currentValue === type;
   return (
@@ -28,15 +28,15 @@ const MoveSequenceModeButton = ({
       {children}
     </Button>
   );
-};
+}
 
-export const MoveSequenceModeForm = ({
+export function MoveSequenceModeForm({
   value = "include",
   onChange,
 }: {
   value?: MoveSequenceMode;
   onChange: (value: MoveSequenceMode) => void;
-}) => {
+}) {
   return (
     <Button.Group>
       <MoveSequenceModeButton type="include" currentValue={value} onChange={onChange}>
@@ -53,9 +53,9 @@ export const MoveSequenceModeForm = ({
       </MoveSequenceModeButton>
     </Button.Group>
   );
-};
+}
 
-export const MoveSequenceModeFormAdapter = (props: any) => {
+export function MoveSequenceModeFormAdapter(props: any) {
   const { name, ...rest } = props;
   return (
     <Field name={name}>
@@ -65,4 +65,4 @@ export const MoveSequenceModeFormAdapter = (props: any) => {
       }}
     </Field>
   );
-};
+}

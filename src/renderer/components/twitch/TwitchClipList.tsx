@@ -1,10 +1,10 @@
 import type { TwitchClip } from "common/types";
 import React from "react";
-import { Pagination } from "semantic-ui-react";
+import { Pagination } from "@/ui/Pagination/Pagination";
 
 import { TwitchClipInfo } from "./TwitchClipInfo";
 
-export const TwitchClipList = ({
+export function TwitchClipList({
   clips,
   onRemove,
   clipsPerPage = 20,
@@ -12,7 +12,7 @@ export const TwitchClipList = ({
   clips: TwitchClip[];
   onRemove: (key: string) => void;
   clipsPerPage?: number;
-}) => {
+}) {
   const totalPages = Math.ceil(clips.length / clipsPerPage);
   const [activePage, setActivePage] = React.useState(1); // Pagination needs to start from 1
 
@@ -41,4 +41,4 @@ export const TwitchClipList = ({
       </div>
     </div>
   );
-};
+}

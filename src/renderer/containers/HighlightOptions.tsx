@@ -19,7 +19,7 @@ const highlightHints = {
   [FindComboOption.CONVERSIONS]: "Requires the opponent to be hit again within 45 frames of touching the ground",
 };
 
-export const HighlightOptions: React.FC = () => {
+export function HighlightOptions() {
   const { comboProfiles } = useSelector((state: iRootState) => state.slippi);
   const dispatch = useDispatch<Dispatch>();
   const { highlightMethod, findComboProfile } = useSelector((state: iRootState) => state.highlights);
@@ -70,4 +70,4 @@ export const HighlightOptions: React.FC = () => {
       )}
     </div>
   );
-};
+}

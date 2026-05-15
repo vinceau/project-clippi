@@ -53,7 +53,7 @@ export const setupListeners = (ipc: IPC): void => {
       });
       log.log(`Created a clip: ${clipID}`);
       const clip = {
-        channel: channel ? channel : currentUser.name,
+        channel: channel || currentUser.name,
         clipID,
         timestamp: new Date(),
       };

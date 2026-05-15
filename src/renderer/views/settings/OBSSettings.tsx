@@ -1,7 +1,9 @@
 import styled from "@emotion/styled";
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Form, Icon } from "semantic-ui-react";
+import { Button } from "@/ui/Button/Button";
+import { Form } from "@/ui/Form/Form";
+import { Icon } from "@/ui/Icon/Icon";
 
 import { ConnectionStatusCard } from "@/components/ConnectionStatusCard";
 import { Field, FormContainer, Label, PageHeader } from "@/components/Form";
@@ -15,7 +17,7 @@ const CustomField = styled(Field)`
   grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
 `;
 
-export const OBSSettings = () => {
+export function OBSSettings() {
   const { obsAddress, obsPort, obsPassword } = useSelector((state: iRootState) => state.slippi);
   const { obsConnectionStatus } = useSelector((state: iRootState) => state.tempContainer);
   const obsConnected = obsConnectionStatus === OBSConnectionStatus.CONNECTED;
@@ -67,7 +69,7 @@ export const OBSSettings = () => {
           <Field>
             <Label>Websocket Password</Label>
             <Form.Input
-              icon={<Icon name={showPass ? "eye slash" : "eye"} link={true} onClick={togglePass} />}
+              icon={<Icon name={showPass ? "eye slash" : "eye"} link onClick={togglePass} />}
               type={showPass ? "text" : "password"}
               placeholder="Password"
               value={obsPassword}
@@ -83,4 +85,4 @@ export const OBSSettings = () => {
       )}
     </FormContainer>
   );
-};
+}

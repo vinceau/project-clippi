@@ -26,18 +26,24 @@ const Outer = styled.div`
   }
 `;
 
-export const DropPad: React.FC<{
+export function DropPad({
+  id,
+  files,
+  onDrop: onDropProp,
+  onDragEnd,
+  onRemove,
+}: {
   id: string;
   files: any[];
   onDrop: (files: any) => void;
   onDragEnd: (result: any) => void;
   onRemove?: (index: number) => void;
-}> = (props) => {
+}) {
   const accept = ".slp";
   const onDrop = useCallback((acceptedFiles: File[]) => {
-    props.onDrop(acceptedFiles.map((f) => f.path));
+    onDropProp(acceptedFiles.map((f) => f.path));
   }, []);
-  const { open, getRootProps, getInputProps /*, isDragActive */ } = useDropzone({
+  const { open, getRootProps, getInputProps /* , isDragActive */ } = useDropzone({
     multiple: true,
     onDrop,
     accept,
@@ -47,13 +53,13 @@ export const DropPad: React.FC<{
   return (
     <Outer {...getRootProps()}>
       <input {...getInputProps()} />
-      {props.files.length > 0 ? (
-        <DragDropContext onDragEnd={props.onDragEnd}>
-          <PlaybackQueue id={props.id} files={props.files} removeFile={props.onRemove} />
+      {files.length > 0 ? (
+        <DragDropContext onDragEnd={onDragEnd}>
+          <PlaybackQueue id={id} files={files} removeFile={onRemove} />
         </DragDropContext>
       ) : (
         <PlaybackQueueEmpty onOpen={open} />
       )}
     </Outer>
   );
-};
+}

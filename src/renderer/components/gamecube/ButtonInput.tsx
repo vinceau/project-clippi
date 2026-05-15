@@ -16,18 +16,14 @@ const SelectButton = styled.div`
   text-align: center;
 `;
 
-export const ButtonInput: React.FC<{
-  value?: string[];
-  onChange?: (newButtons: string[]) => void;
-}> = (props) => {
-  const { value, onChange } = props;
+export function ButtonInput({ value, onChange }: { value?: string[]; onChange?: (newButtons: string[]) => void }) {
   return (
     <div>
       <ButtonPicker value={value} onChange={onChange}>
         <Labelled title="Click to select a button combination" style={{ width: "100%" }}>
           <Target>
             {value && value.length > 0 ? (
-              <ButtonPreview value={value} pressed={true} />
+              <ButtonPreview value={value} pressed />
             ) : (
               <SelectButton>No buttons selected</SelectButton>
             )}
@@ -36,4 +32,4 @@ export const ButtonInput: React.FC<{
       </ButtonPicker>
     </div>
   );
-};
+}

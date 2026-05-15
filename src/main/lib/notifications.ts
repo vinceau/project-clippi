@@ -5,7 +5,7 @@ import notifier from "node-notifier";
 import * as path from "path";
 
 export const showNotification = (message: string, title?: string): void => {
-  const notificationTitle = title ? title : "Project Clippi";
+  const notificationTitle = title || "Project Clippi";
   switch (process.platform) {
     case "win32":
       showWindowsNotification(message, notificationTitle);

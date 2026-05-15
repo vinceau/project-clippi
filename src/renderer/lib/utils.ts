@@ -1,7 +1,8 @@
 import type { DolphinQueueFormat } from "@vinceau/slp-realtime";
 import { IS_DEV } from "common/constants";
 import { Message } from "common/types";
-import { remote, shell } from "electron";
+import { shell } from "electron";
+import * as remote from "@electron/remote";
 import fs from "fs-extra";
 import * as path from "path";
 import * as url from "url";
@@ -18,7 +19,7 @@ const fileOptions = {
 };
 
 export const getFolderPath = async (options?: any): Promise<string | null> => {
-  const dialogOptions = options ? options : folderOptions;
+  const dialogOptions = options || folderOptions;
   const paths = await getFilePath(dialogOptions);
   if (paths && paths.length > 0) {
     return paths[0];
@@ -27,7 +28,7 @@ export const getFolderPath = async (options?: any): Promise<string | null> => {
 };
 
 export const getFilePath = async (options?: any, save?: boolean): Promise<string[] | null> => {
-  const dialogOptions = options ? options : fileOptions;
+  const dialogOptions = options || fileOptions;
   try {
     const p = await ipc.sendSyncWithTimeout(
       Message.SelectDirectory,

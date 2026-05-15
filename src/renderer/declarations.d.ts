@@ -7,10 +7,16 @@ declare module "*.bmp";
 declare module "*.tiff";
 
 declare module "*.md";
+declare module "*.module.css";
 
 declare module "node-notifier";
 declare module "filename-reserved-regex";
 declare module "insert-text-at-cursor";
+
+declare module "raw-loader!*.md" {
+  const content: string;
+  export default content;
+}
 
 declare module "formatter" {
   export type Formatter = (ctx: Record<string, any>) => string;

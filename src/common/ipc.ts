@@ -13,6 +13,7 @@ export const routeResponse = <X extends Message>(msg: X): string => `${msg}-resp
 
 export class IPC {
   private readonly self: IpcRenderer | IpcMain;
+
   private readonly other: () => IpcRenderer | WebContents;
 
   public constructor(self: IpcRenderer | IpcMain, other: () => IpcRenderer | WebContents) {

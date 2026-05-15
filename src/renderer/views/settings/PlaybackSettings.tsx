@@ -4,7 +4,8 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { FileInput } from "@/components/FileInput";
-import { Field, FormContainer, Label, PageHeader, Text, Toggle } from "@/components/Form";
+import { Field, FormContainer, Label, PageHeader, Text } from "@/components/Form";
+import { Toggle } from "@/ui/Toggle/Toggle";
 import { Labelled } from "@/components/Labelled";
 import { getDolphinExecutableNames, getDolphinPath } from "@/lib/dolphin";
 import type { Dispatch, iRootState } from "@/store";
@@ -28,7 +29,7 @@ const ResetButton = styled.span`
 const defaultDolphinPath = getDolphinPath();
 const dolphinExecNames = getDolphinExecutableNames();
 
-const PlaybackExecutableNames: React.FC = () => {
+function PlaybackExecutableNames() {
   const elements: React.ReactNode[] = [];
   dolphinExecNames.forEach((el, i) => {
     if (i > 0 && i === dolphinExecNames.length - 1) {
@@ -42,9 +43,9 @@ const PlaybackExecutableNames: React.FC = () => {
     }
   });
   return React.createElement(React.Fragment, null, ...elements);
-};
+}
 
-export const PlaybackSettings: React.FC = () => {
+export function PlaybackSettings() {
   const dispatch = useDispatch<Dispatch>();
   const { meleeIsoPath, dolphinPath } = useSelector((state: iRootState) => state.filesystem);
   const showDevOptions = useSelector((state: iRootState) => state.appContainer.showDevOptions);
@@ -77,7 +78,7 @@ export const PlaybackSettings: React.FC = () => {
               </Labelled>
             )}
           </DolphinPathLabel>
-          <FileInput value={dolphinPath} directory={true} onChange={setDolphinPath} />
+          <FileInput value={dolphinPath} directory onChange={setDolphinPath} />
           <Text>
             The folder containing the <PlaybackExecutableNames /> playback executable. Do NOT modify this unless you're
             using Linux or you <i>really</i> know what you're doing. This path should match the Playback Dolphin Path in
@@ -99,4 +100,4 @@ export const PlaybackSettings: React.FC = () => {
       </Field>
     </FormContainer>
   );
-};
+}

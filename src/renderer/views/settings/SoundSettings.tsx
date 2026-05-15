@@ -1,7 +1,10 @@
 import styled from "@emotion/styled";
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Header, Icon, Segment } from "semantic-ui-react";
+import { Button } from "@/ui/Button/Button";
+import { Header } from "@/ui/Header/Header";
+import { Icon } from "@/ui/Icon/Icon";
+import { Segment } from "@/ui/Segment/Segment";
 
 import { FormContainer, PageHeader } from "@/components/Form";
 import { SoundFileInfo } from "@/components/SoundFileInfo";
@@ -10,14 +13,14 @@ import { openFileOrParentFolder } from "@/lib/utils";
 import type { Dispatch, iRootState } from "@/store";
 import { device } from "@/styles/device";
 
-const AddSoundButton = (props: any) => {
+function AddSoundButton(props: any) {
   return (
     <Button {...props}>
       <Icon name="add" />
       Add sound
     </Button>
   );
-};
+}
 
 const ButtonContainer = styled.div`
   margin-bottom: 1rem;
@@ -31,7 +34,7 @@ const ButtonContainer = styled.div`
   }
 `;
 
-export const SoundSettings: React.FC = () => {
+export function SoundSettings() {
   const soundFiles = useSelector((state: iRootState) => state.filesystem.soundFiles);
   const soundsExist = Object.keys(soundFiles).length > 0;
   const dispatch = useDispatch<Dispatch>();
@@ -65,35 +68,39 @@ export const SoundSettings: React.FC = () => {
               <Icon name="music" />
               You have not added any sounds
             </Header>
-            <AddSoundButton onClick={() => dispatch.filesystem.addSound()} primary={true} />
+            <AddSoundButton onClick={() => dispatch.filesystem.addSound()} primary />
           </Segment>
         )}
       </div>
     </FormContainer>
   );
-};
+}
 
-const SoundTable: React.FC<{
+function SoundTable({
+  sounds,
+  onPathClick,
+  onRemove,
+}: {
   sounds: { [name: string]: string };
   onPathClick: (name: string) => void;
   onRemove: (name: string) => void;
-}> = (props) => {
-  const allSounds = Object.keys(props.sounds);
+}) {
+  const allSounds = Object.keys(sounds);
   allSounds.sort();
   return (
     <div>
       {allSounds.map((key) => {
-        const value = props.sounds[key];
+        const value = sounds[key];
         return (
           <SoundFileInfo
             key={`${value}--${key}`}
             name={key}
             path={value}
-            onPathClick={() => props.onPathClick(key)}
-            onRemove={() => props.onRemove(key)}
+            onPathClick={() => onPathClick(key)}
+            onRemove={() => onRemove(key)}
           />
         );
       })}
     </div>
   );
-};
+}

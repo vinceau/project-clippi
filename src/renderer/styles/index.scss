@@ -1,4 +1,5 @@
-@import "./semantic-override";
+@use "./variables";
+@use "./semantic-override";
 
 html,
 body {

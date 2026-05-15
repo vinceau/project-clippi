@@ -1,9 +1,13 @@
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 import React from "react";
-import { Button, Form, Input, Modal, TextArea } from "semantic-ui-react";
+import { Button } from "@/ui/Button/Button";
+import { Form } from "@/ui/Form/Form";
+import { Input } from "@/ui/Input/Input";
+import { Modal } from "@/ui/Modal/Modal";
+import { TextArea } from "@/ui/TextArea/TextArea";
 
-import { Confirm } from "@/components/Confirm";
+import { Confirm } from "@/ui/Confirm/Confirm";
 import { Label } from "@/components/Form";
 import { useTheme } from "@/styles";
 
@@ -40,7 +44,7 @@ export const ImportProfileModal = React.memo(function ImportProfileModal({
   }, [existingProfileNames, handleSubmit, profileName]);
 
   return (
-    <Modal className={theme.themeName} open={open} closeIcon={true} onClose={onDismiss}>
+    <Modal className={theme.themeName} open={open} closeIcon onClose={onDismiss}>
       <Modal.Header>Import profile</Modal.Header>
       <Modal.Content>
         <Modal.Description>
@@ -48,7 +52,7 @@ export const ImportProfileModal = React.memo(function ImportProfileModal({
             <div style={{ marginBottom: 10 }}>
               <Label>Profile name</Label>
               <Input
-                fluid={true}
+                fluid
                 placeholder="Profile name"
                 value={profileName}
                 onChange={(_: any, { value }: any) => setProfileName(value)}

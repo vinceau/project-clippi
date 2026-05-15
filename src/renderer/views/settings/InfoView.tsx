@@ -11,7 +11,7 @@ import { UpdateStatusInfo } from "@/containers/UpdateStatus";
 import type { Dispatch, iRootState } from "@/store";
 import { useTheme } from "@/styles";
 
-import clippiLogo from "../../../../build/icon.png";
+import clippiLogo from "@/styles/images/clippi-icon.png";
 
 const Container = styled(FormContainer)`
   text-align: center;
@@ -66,7 +66,7 @@ const UpdateInfo = styled.div<{
 
 const DEV_THRESHOLD = 7;
 
-export const InfoView: React.FC = () => {
+export function InfoView() {
   const theme = useTheme();
   const [clickCount, setClickCount] = React.useState(0);
   const showDevOptions = useSelector((state: iRootState) => state.appContainer.showDevOptions);
@@ -122,4 +122,4 @@ export const InfoView: React.FC = () => {
       </Footer>
     </Container>
   );
-};
+}

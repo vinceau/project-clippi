@@ -1,5 +1,5 @@
 import { createModel } from "@rematch/core";
-import { remote } from "electron";
+import * as remote from "@electron/remote";
 import produce from "immer";
 import * as path from "path";
 

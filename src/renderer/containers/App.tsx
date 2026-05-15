@@ -7,7 +7,6 @@ import "@/styles/index.scss"; // Our custom styles
 
 import { ThemeProvider } from "emotion-theming";
 import React from "react";
-import { hot } from "react-hot-loader/root";
 import { Provider, useDispatch, useSelector } from "react-redux";
 import { HashRouter as Router, Redirect, Route, Switch } from "react-router-dom";
 import { PersistGate } from "redux-persist/integration/react";
@@ -20,7 +19,7 @@ import { persistor, store } from "@/store";
 import { darkTheme, GlobalStyle, lightTheme, ThemeManager, ThemeMode, useTheme } from "@/styles";
 import { MainView, SettingsView } from "@/views";
 
-const App: React.FC = () => {
+function App() {
   const dispatch = useDispatch<Dispatch>();
   const { reconnectTwitch } = useSelector((state: iRootState) => state.twitch);
   const theme = useTheme();
@@ -46,9 +45,9 @@ const App: React.FC = () => {
       </ThemeProvider>
     </div>
   );
-};
+}
 
-const AppWithProviders: React.FC = () => {
+function AppWithProviders() {
   // ThemedManager must be declared and instantiated before useTheme() is called
   return (
     <Provider store={store}>
@@ -61,7 +60,7 @@ const AppWithProviders: React.FC = () => {
       </PersistGate>
     </Provider>
   );
-};
+}
 
 // eslint-disable-next-line import/no-default-export
-export default hot(AppWithProviders);
+export default AppWithProviders;

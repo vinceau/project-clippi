@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import React from "react";
 import { useSelector } from "react-redux";
-import { Icon } from "semantic-ui-react";
+import { Icon } from "@/ui/Icon/Icon";
 
 import { Text } from "@/components/Form";
 import { ProgressBar } from "@/components/ProgressBar";
@@ -32,7 +32,7 @@ const Outer = styled.div`
   flex-direction: column;
 `;
 
-export const ReplayProcessorView: React.FC = () => {
+export function ReplayProcessorView() {
   const { comboFinderPercent } = useSelector((state: iRootState) => state.tempContainer);
   return (
     <Outer>
@@ -49,4 +49,4 @@ export const ReplayProcessorView: React.FC = () => {
       </Footer>
     </Outer>
   );
-};
+}

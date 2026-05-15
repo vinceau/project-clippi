@@ -16,8 +16,7 @@ import fg from "fast-glob";
 import fs from "fs-extra";
 import moment from "moment";
 import path from "path";
-import { Observable } from "rxjs";
-import { from } from "rxjs";
+import { Observable, from } from "rxjs";
 import { map } from "rxjs/operators";
 
 import { parseFileRenameFormat } from "./context";
@@ -110,9 +109,12 @@ export interface ProcessResult {
 
 export class FileProcessor {
   private queue = new Array<DolphinPlaybackItem>();
+
   private stopRequested = false;
+
   // private readonly realtime = new SlpRealTime();
   private processing = false;
+
   private result: ProcessResult | null = null;
 
   public isProcessing(): boolean {
@@ -290,7 +292,7 @@ export class FileProcessor {
     frames: FrameEntryType[],
     options: Partial<ButtonInputOptions>
   ): Observable<DolphinPlaybackItem> {
-    const inputOptions = Object.assign({}, defaultButtonInputOptions, options);
+    const inputOptions = { ...defaultButtonInputOptions, ...options };
     const frames$ = from(frames);
     // const inputs$ = this.realtime.input.buttonCombo(inputOptions.buttonCombo, inputOptions.holdDurationFrames);
     const inputs$ = forAllPlayerIndices((i) =>
@@ -320,7 +322,7 @@ export class FileProcessor {
     comboOptions: ComboOptions,
     metadata?: Metadata
   ): Observable<DolphinPlaybackItem> {
-    const comboSettings = Object.assign({}, defaultComboFilterSettings, comboOptions.findComboCriteria);
+    const comboSettings = { ...defaultComboFilterSettings, ...comboOptions.findComboCriteria };
     const validCombos = combos
       .filter(({ combo, settings }) => checkCombo(comboSettings, combo, settings, metadata))
       .map(({ combo }) => ({
@@ -364,7 +366,7 @@ const populateHighlightMetadata = (highlight: DolphinPlaybackItem, metadata?: Me
   return highlight;
 };
 
-/***
+/** *
  * Returns true if we already know that combos will not match
  */
 function canShortCircuit(options: FileProcessorOptions, settings: GameStartType, metadata?: any): boolean {

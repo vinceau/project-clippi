@@ -1,6 +1,8 @@
 import styled from "@emotion/styled";
 import * as React from "react";
-import { Button, Icon, Input } from "semantic-ui-react";
+import { Button } from "@/ui/Button/Button";
+import { Icon } from "@/ui/Icon/Icon";
+import { Input } from "@/ui/Input/Input";
 
 import { getFilePath, getFolderPath, openFileOrParentFolder } from "@/lib/utils";
 
@@ -26,8 +28,7 @@ interface FileInputProps extends Record<string, any> {
   saveFile?: boolean;
 }
 
-export const FileInput: React.FC<FileInputProps> = (props) => {
-  const { value, directory, onChange, fileTypeFilters, saveFile, placeholder } = props;
+export function FileInput({ value, directory, onChange, fileTypeFilters, saveFile, placeholder }: FileInputProps) {
   const [filesPath, setFilesPath] = React.useState<string>(value);
 
   // Make sure we display the correct value
@@ -65,7 +66,7 @@ export const FileInput: React.FC<FileInputProps> = (props) => {
       <Input
         style={{ width: "100%" }}
         label={
-          <Button onClick={() => openFileOrParentFolder(filesPath)} disabled={!Boolean(filesPath)}>
+          <Button onClick={() => openFileOrParentFolder(filesPath)} disabled={!filesPath}>
             <Labelled title="Open location">
               <NoMarginIcon name="folder open outline" />
             </Labelled>
@@ -79,4 +80,4 @@ export const FileInput: React.FC<FileInputProps> = (props) => {
       />
     </Outer>
   );
-};
+}

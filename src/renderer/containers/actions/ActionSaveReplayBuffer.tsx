@@ -2,7 +2,7 @@ import { delay as waitMillis, parseSecondsDelayValue } from "common/utils";
 import { produce } from "immer";
 import * as React from "react";
 
-import { CustomIcon } from "@/components/CustomIcon";
+import { CustomIcon } from "@/ui/CustomIcon/CustomIcon";
 import { DelayInput, NotifyInput } from "@/components/InlineInputs";
 import type { ActionTypeGenerator, Context } from "@/lib/event_actions";
 import { obsConnection } from "@/lib/obs";
@@ -44,16 +44,16 @@ const actionSaveBuffer: ActionTypeGenerator = (params: ActionSaveReplayBufferPar
   };
 };
 
-const ActionIcon = () => {
+function ActionIcon() {
   return <CustomIcon image={obsIcon} size="large" />;
-};
+}
 
 interface ReplayBufferInputProps extends Record<string, any> {
   value: ActionSaveReplayBufferParams;
   onChange(value: ActionSaveReplayBufferParams): void;
 }
 
-const ReplayBufferInput = (props: ReplayBufferInputProps) => {
+function ReplayBufferInput(props: ReplayBufferInputProps) {
   const { value, onChange } = props;
   const onDelayChange = (delay?: string) => {
     const newValue = produce(value, (draft) => {
@@ -78,7 +78,7 @@ const ReplayBufferInput = (props: ReplayBufferInputProps) => {
       </div>
     </div>
   );
-};
+}
 
 export const ActionSaveReplayBuffer: ActionComponent = {
   label: "save OBS replay buffer",

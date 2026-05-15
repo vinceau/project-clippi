@@ -31,34 +31,45 @@ const OuterMenuIcon = styled.div<{
   }
 `;
 
-export const MenuIcon: React.FC<{
+export function MenuIcon({
+  active,
+  label,
+  children,
+}: {
   active?: boolean;
   label?: string;
-}> = (props) => {
+  children?: React.ReactNode;
+}) {
   return (
-    <TippyLabel title={props.label} size="big" distance={-70} duration={200} position="right" style={{ width: "100%" }}>
-      <OuterMenuIcon active={props.active}>{props.children}</OuterMenuIcon>
+    <TippyLabel title={label} size="big" distance={-70} duration={200} position="right" style={{ width: "100%" }}>
+      <OuterMenuIcon active={active}>{children}</OuterMenuIcon>
     </TippyLabel>
   );
-};
+}
 
-export const MenuIconLink: React.FC<{
+export function MenuIconLink({
+  label,
+  to,
+  hidden,
+  children,
+}: {
   label: string;
   to: string;
   hidden?: boolean;
-}> = (props) => {
-  if (props.hidden) {
+  children?: React.ReactNode;
+}) {
+  if (hidden) {
     return null;
   }
   return (
-    <Link to={props.to}>
-      <Route path={props.to}>
+    <Link to={to}>
+      <Route path={to}>
         {({ match }) => (
-          <MenuIcon active={Boolean(match)} label={props.label}>
-            {props.children}
+          <MenuIcon active={Boolean(match)} label={label}>
+            {children}
           </MenuIcon>
         )}
       </Route>
     </Link>
   );
-};
+}

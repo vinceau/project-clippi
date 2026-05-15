@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { darken, lighten } from "polished";
 import React from "react";
-import { Icon } from "semantic-ui-react";
+import { Icon } from "@/ui/Icon/Icon";
 
 import { ThemeMode, useTheme } from "@/styles";
 
@@ -25,7 +25,7 @@ const Notice = styled.div`
   text-align: center;
 `;
 
-export const AutomatorPlaceholder: React.FC = () => {
+export function AutomatorPlaceholder() {
   const theme = useTheme();
   return (
     <Outer themeName={theme.themeName}>
@@ -36,4 +36,4 @@ export const AutomatorPlaceholder: React.FC = () => {
       </Notice>
     </Outer>
   );
-};
+}

@@ -1,7 +1,8 @@
 import styled from "@emotion/styled";
 import * as React from "react";
 import { Link, useRouteMatch } from "react-router-dom";
-import { Icon, Label } from "semantic-ui-react";
+import { Icon } from "@/ui/Icon/Icon";
+import { Label } from "@/ui/Label/Label";
 
 import { MenuIcon, MenuIconLink } from "@/components/layout/MenuIcon";
 
@@ -19,12 +20,8 @@ const updateNotificationStyles = {
   right: "2rem",
 };
 
-export const Menu: React.FC<{
-  settingsPage: string;
-  updateAvailable?: boolean;
-}> = (props) => {
+export function Menu({ settingsPage, updateAvailable }: { settingsPage: string; updateAvailable?: boolean }) {
   const match = useRouteMatch();
-  const { settingsPage } = props;
   return (
     <Outer>
       <div>
@@ -43,10 +40,10 @@ export const Menu: React.FC<{
         <Link to={settingsPage}>
           <MenuIcon label="Settings">
             <Icon name="cog" />
-            {props.updateAvailable && <Label circular color="red" empty style={updateNotificationStyles} />}
+            {updateAvailable && <Label circular color="red" empty style={updateNotificationStyles} />}
           </MenuIcon>
         </Link>
       </div>
     </Outer>
   );
-};
+}

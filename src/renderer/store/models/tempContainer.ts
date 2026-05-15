@@ -59,7 +59,7 @@ const initialState: TempContainerState = {
     settings: "/settings/combo-settings",
   },
   dolphinQueue: [],
-  dolphinQueueOptions: Object.assign({}, initialDolphinQueueOptions),
+  dolphinQueueOptions: { ...initialDolphinQueueOptions },
   dolphinPlaybackFile: "",
   dolphinRunning: false,
   updateStatus: null,
@@ -169,7 +169,7 @@ export const tempContainer = createModel({
     },
     setDolphinQueueOptions: (state: TempContainerState, payload: Partial<DolphinQueueOptions>): TempContainerState => {
       const newState = produce(state.dolphinQueueOptions, (draft) => {
-        const merged = Object.assign({}, draft, payload);
+        const merged = { ...draft, ...payload };
         draft = merged;
       });
       return produce(state, (draft) => {
@@ -179,13 +179,13 @@ export const tempContainer = createModel({
     setDolphinQueueFromJson: (state: TempContainerState, payload: DolphinQueueFormat): TempContainerState => {
       const { queue, ...rest } = payload;
       return produce(state, (draft) => {
-        draft.dolphinQueueOptions = Object.assign({}, state.dolphinQueueOptions, rest);
+        draft.dolphinQueueOptions = { ...state.dolphinQueueOptions, ...rest };
         draft.dolphinQueue = queue || [];
       });
     },
     resetDolphinQueue: (state: TempContainerState): TempContainerState =>
       produce(state, (draft) => {
-        draft.dolphinQueueOptions = Object.assign({}, initialDolphinQueueOptions);
+        draft.dolphinQueueOptions = { ...initialDolphinQueueOptions };
         draft.dolphinQueue = [];
       }),
     setDolphinPlaybackFile: (state: TempContainerState, payload: string): TempContainerState =>

@@ -3,7 +3,10 @@ import { css, jsx } from "@emotion/core";
 import { exists } from "common/utils";
 import { clipboard } from "electron";
 import React from "react";
-import { Button, Form, Modal, TextArea } from "semantic-ui-react";
+import { Button } from "@/ui/Button/Button";
+import { Form } from "@/ui/Form/Form";
+import { Modal } from "@/ui/Modal/Modal";
+import { TextArea } from "@/ui/TextArea/TextArea";
 
 import { useTheme } from "@/styles";
 
@@ -27,18 +30,18 @@ export const ExportProfileModal = React.memo(function ExportProfileModal({
       clearTimeout(timeout.current);
     }
     setCopied(true);
-    timeout.current = (setTimeout(() => setCopied(false), 2000) as unknown) as number;
+    timeout.current = setTimeout(() => setCopied(false), 2000) as unknown as number;
     clipboard.writeText(profileData);
   }, [profileData, setCopied]);
 
   return (
-    <Modal className={theme.themeName} open={open} closeIcon={true} onClose={onDismiss}>
+    <Modal className={theme.themeName} open={open} closeIcon onClose={onDismiss}>
       <Modal.Header>Export profile</Modal.Header>
       <Modal.Content>
         <Modal.Description>
           <p>Share this profile with your friends!</p>
           <Form>
-            <TextArea style={{ minHeight: 300 }} disabled={true} value={profileData} />
+            <TextArea style={{ minHeight: 300 }} disabled value={profileData} />
           </Form>
         </Modal.Description>
       </Modal.Content>

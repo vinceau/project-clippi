@@ -1,9 +1,9 @@
 import React from "react";
 
-export const ExternalLink: React.FC<React.HTMLProps<HTMLAnchorElement>> = (props) => {
+export function ExternalLink(props: React.HTMLProps<HTMLAnchorElement>) {
   return (
     <a target="_blank" rel="noopener noreferrer" {...props}>
       {props.children}
     </a>
   );
-};
+}

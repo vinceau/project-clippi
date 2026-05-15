@@ -3,7 +3,10 @@ import arrayMutators from "final-form-arrays";
 import React from "react";
 import { Field as FinalField, Form as FinalForm } from "react-final-form";
 import { useSelector } from "react-redux";
-import { Accordion, Button, Form as SemanticForm, Icon } from "semantic-ui-react";
+import { Accordion } from "@/ui/Accordion/Accordion";
+import { Button } from "@/ui/Button/Button";
+import { Form as SemanticForm } from "@/ui/Form/Form";
+import { Icon } from "@/ui/Icon/Icon";
 
 import { CodeBlock } from "@/components/CodeBlock";
 import { Field, Label, Text } from "@/components/Form";
@@ -11,7 +14,7 @@ import type { ComboConfiguration } from "@/lib/profile";
 import type { iRootState } from "@/store";
 import { DEFAULT_PROFILE } from "@/store/models/slippi";
 
-import { Confirm } from "../Confirm";
+import { Confirm } from "@/ui/Confirm/Confirm";
 import { CharacterSelectAdapter, CustomCharacterListAdapter } from "./CharacterSelect";
 import { ToggleAdapter } from "./FormAdapters";
 import { MoveSequenceFormAdapter } from "./MoveSequenceForm";
@@ -37,7 +40,7 @@ const OuterContainer = styled.div`
   }
 `;
 
-const ButtonContainer = ({
+function ButtonContainer({
   submitting,
   currentProfile,
   currentProfileData,
@@ -47,7 +50,7 @@ const ButtonContainer = ({
   currentProfile?: string;
   currentProfileData: string;
   onDelete?: () => void;
-}) => {
+}) {
   return (
     <OuterContainer>
       <Button primary type="submit" disabled={submitting}>
@@ -72,14 +75,14 @@ const ButtonContainer = ({
       </div>
     </OuterContainer>
   );
-};
+}
 
-export const ComboForm = (props: {
+export function ComboForm(props: {
   initialValues: Values;
   currentProfile?: string;
   onDelete: () => void;
   onSubmit: (values: Values) => void;
-}) => {
+}) {
   const [shouldConfirm, setShouldConfirm] = React.useState(false);
   const [showAdvanced, setShowAdvanced] = React.useState(false);
   const showDevOptions = useSelector((state: iRootState) => state.appContainer.showDevOptions);
@@ -112,7 +115,7 @@ export const ComboForm = (props: {
                 {showDevOptions ? (
                   <CustomCharacterListAdapter name="characterFilter" />
                 ) : (
-                  <CharacterSelectAdapter name="characterFilter" isMulti={true} />
+                  <CharacterSelectAdapter name="characterFilter" isMulti />
                 )}
                 <Text>
                   Only match combos performed by these characters. Leave this empty to find combos for all characters.
@@ -138,7 +141,7 @@ export const ComboForm = (props: {
                   component="input"
                   type="number"
                   format={(val) => parseInt(val)}
-                  formatOnBlur={true}
+                  formatOnBlur
                 />
                 <Text>Only match combos which contain at least this many moves.</Text>
               </Field>
@@ -149,7 +152,7 @@ export const ComboForm = (props: {
                   component="input"
                   type="number"
                   format={(val) => parseInt(val)}
-                  formatOnBlur={true}
+                  formatOnBlur
                 />
                 <Text>Only match combos which do at least this much percent damage.</Text>
               </Field>
@@ -210,7 +213,7 @@ export const ComboForm = (props: {
                     </Field>
                     <Field>
                       <Label>Chain-grab Characters</Label>
-                      <CharacterSelectAdapter name="chainGrabbers" isMulti={true} />
+                      <CharacterSelectAdapter name="chainGrabbers" isMulti />
                       <Text>Only exclude chain-grabs performed by these characters.</Text>
                     </Field>
                     <Field>
@@ -242,7 +245,7 @@ export const ComboForm = (props: {
                         component="input"
                         type="number"
                         format={(val) => parseInt(val)}
-                        formatOnBlur={true}
+                        formatOnBlur
                       />
                       <Text>
                         When excluding Wobbles, the Ice Climbers must pummel at least this many times in a Wobble for it
@@ -275,7 +278,7 @@ export const ComboForm = (props: {
       />
     </div>
   );
-};
+}
 
 const getComboSequenceText = (mode: "include" | "start" | "end" | "exact" = "include") => {
   switch (mode) {

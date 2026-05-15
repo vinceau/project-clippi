@@ -1,22 +1,25 @@
 import { generateFileRenameContext } from "common/context";
 import * as React from "react";
-import { Label } from "semantic-ui-react";
+import { Label } from "@/ui/Label/Label";
 
 import { contextDescriptions } from "@/lib/contextDescriptions";
 import type { Context } from "@/lib/event_actions";
 
 import { TippyLabel } from "./Labelled";
 
-export const ContextOptions: React.FC<{
+export function ContextOptions({
+  onLabelClick,
+  context: contextProp,
+}: {
   onLabelClick?: (name: string) => void;
   context?: Context;
-}> = (props) => {
-  const context = props.context ? props.context : generateFileRenameContext();
+}) {
+  const context = contextProp || generateFileRenameContext();
   const allDescriptions = contextDescriptions;
   const keys = Object.keys(context);
   const clickHandler = (name: string) => {
-    if (props.onLabelClick) {
-      props.onLabelClick(name);
+    if (onLabelClick) {
+      onLabelClick(name);
     }
   };
   const descriptions = allDescriptions.map((cat) => (
@@ -28,7 +31,7 @@ export const ContextOptions: React.FC<{
           <TippyLabel
             key={`${cat.category}--${d.contextName}`}
             title={d.description}
-            arrow={true}
+            arrow
             duration={200}
             position="top"
             size="big"
@@ -41,4 +44,4 @@ export const ContextOptions: React.FC<{
     </div>
   ));
   return <div>{descriptions}</div>;
-};
+}

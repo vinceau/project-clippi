@@ -3,9 +3,11 @@ import { transparentize } from "polished";
 import React from "react";
 import { useSelector } from "react-redux";
 import { Redirect, Route, Switch, useHistory, useRouteMatch } from "react-router-dom";
-import { Icon, Label, Menu } from "semantic-ui-react";
+import { Icon } from "@/ui/Icon/Icon";
+import { Label } from "@/ui/Label/Label";
+import { Menu } from "@/ui/Menu/Menu";
 
-import { CustomIcon } from "@/components/CustomIcon";
+import { CustomIcon } from "@/ui/CustomIcon/CustomIcon";
 import { Labelled } from "@/components/Labelled";
 import { SlippiIcon } from "@/components/SlippiIcon";
 import type { iRootState } from "@/store";
@@ -136,7 +138,7 @@ const SettingsContainer = styled.div`
   z-index: 1;
 `;
 
-export const SettingsView: React.FC = () => {
+export function SettingsView() {
   const history = useHistory();
   const { path } = useRouteMatch();
   const latestPath = useSelector((state: iRootState) => state.tempContainer.latestPath);
@@ -174,7 +176,7 @@ export const SettingsView: React.FC = () => {
       </CloseButton>
       <div style={{ display: "flex" }}>
         <MenuColumn>
-          <StyledMenu secondary={true} vertical={true}>
+          <StyledMenu secondary vertical>
             <MenuContainer>
               <div style={{ flex: "1" }}>
                 <StyledMenuItem header>App Settings</StyledMenuItem>
@@ -251,4 +253,4 @@ export const SettingsView: React.FC = () => {
       </div>
     </SettingsContainer>
   );
-};
+}

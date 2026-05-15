@@ -28,7 +28,9 @@ export interface SoundMap {
 
 export class SoundPlayer {
   public sounds: SoundMap;
+
   private readonly howls: Map<string, Howl>;
+
   private currentSound: Howl | undefined;
 
   public constructor(oldData?: string) {

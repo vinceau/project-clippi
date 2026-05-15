@@ -4,13 +4,13 @@ import { useHistory } from "react-router-dom";
 
 import type { Dispatch } from "@/store";
 
-export const History: React.FC = () => {
+export function History() {
   const dispatch = useDispatch<Dispatch>();
   const history = useHistory();
 
   React.useEffect(() => {
     const unsubscribe = history.listen((location) => {
-      const pathname = location.pathname;
+      const { pathname } = location;
       const page = pathname.split("/")[1];
       dispatch.tempContainer.setLatestPath({
         page,
@@ -22,4 +22,4 @@ export const History: React.FC = () => {
   }, []);
 
   return null;
-};
+}

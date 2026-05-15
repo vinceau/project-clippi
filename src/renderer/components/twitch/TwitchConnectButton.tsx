@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import React from "react";
-import { Icon } from "semantic-ui-react";
+import { Icon } from "@/ui/Icon/Icon";
 
 const ButtonText = styled.span`
   margin-left: 5px;
@@ -25,13 +25,15 @@ const TwitchButton = styled.button<{
   }
 `;
 
-export const TwitchConnectButton: React.FC<{
+export function TwitchConnectButton({
+  onClick,
+}: {
   onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
-}> = (props) => {
+}) {
   return (
-    <TwitchButton backgroundColor="#6441A4" onClick={props.onClick}>
+    <TwitchButton backgroundColor="#6441A4" onClick={onClick}>
       <Icon name="twitch" />
       <ButtonText>Connect with Twitch</ButtonText>
     </TwitchButton>
   );
-};
+}

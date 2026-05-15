@@ -6,9 +6,10 @@ import { invalidFilename } from "common/utils";
 import fs from "fs";
 import React from "react";
 import { useSelector } from "react-redux";
-import { Button, Icon } from "semantic-ui-react";
+import { Button } from "@/ui/Button/Button";
+import { Icon } from "@/ui/Icon/Icon";
 
-import { Confirm } from "@/components/Confirm";
+import { Confirm } from "@/ui/Confirm/Confirm";
 import { startProcessing, stopProcessing } from "@/lib/fileProcessor";
 import { mapConfigurationToFilterSettings } from "@/lib/profile";
 import type { iRootState } from "@/store";
@@ -41,7 +42,7 @@ const StopButton = styled(Button)`
   }
 `;
 
-export const ProcessorStatusBar: React.FC = () => {
+export function ProcessorStatusBar() {
   const [confirmOpened, setConfirmOpened] = React.useState(false);
   const [stopping, setStopping] = React.useState(false);
   const { comboFinderPercent, comboFinderLog, comboFinderProcessing } = useSelector(
@@ -158,7 +159,7 @@ export const ProcessorStatusBar: React.FC = () => {
       <ProcessStatus>
         {(comboFinderProcessing || complete) && (
           <>
-            {<PercentDisplay>{comboFinderPercent}%</PercentDisplay>}
+            <PercentDisplay>{comboFinderPercent}%</PercentDisplay>
             <div>{comboFinderLog}</div>
           </>
         )}
@@ -170,11 +171,11 @@ export const ProcessorStatusBar: React.FC = () => {
             Stop processing
           </StopButton>
         ) : (
-          <Button primary={true} type="button" onClick={handleProcessClick} disabled={processBtnDisabled}>
+          <Button primary type="button" onClick={handleProcessClick} disabled={processBtnDisabled}>
             <Icon name="angle double right" style={{ margin: "0", marginRight: "0.3rem" }} /> Process replays
           </Button>
         )}
       </div>
     </Outer>
   );
-};
+}

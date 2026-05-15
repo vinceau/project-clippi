@@ -4,7 +4,10 @@ import styled from "@emotion/styled";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
-import { Button, Icon, Modal, Select } from "semantic-ui-react";
+import { Button } from "@/ui/Button/Button";
+import { Icon } from "@/ui/Icon/Icon";
+import { Modal } from "@/ui/Modal/Modal";
+import { Select } from "@/ui/Select/Select";
 
 import { PortSelection } from "@/components/combos/PortSelection";
 import { Field, Label, Text } from "@/components/Form";
@@ -60,13 +63,18 @@ const ErrorText = styled(Text)`
   font-weight: bold;
 `;
 
-export const EventModal: React.FC<{
+export function EventModal({
+  edit,
+  opened,
+  onClose,
+  onSubmit,
+}: {
   edit?: NamedEventConfig | null;
   opened?: boolean;
   onSubmit?: (event: NamedEventConfig) => void;
   onClose?: () => void;
-}> = ({ edit, opened, onClose, onSubmit }) => {
-  const defaultValues = Object.assign({}, DEFAULT_FORM_VALUES, edit);
+}) {
+  const defaultValues = { ...DEFAULT_FORM_VALUES, ...edit };
   const { watch, errors, handleSubmit, control, reset } = useForm<FormValues>({ defaultValues });
   const { currentProfile, comboProfiles } = useSelector((state: iRootState) => state.slippi);
   const theme = useTheme();
@@ -77,7 +85,7 @@ export const EventModal: React.FC<{
   }, [edit]);
 
   // Prefix the value with "$" so we can use the object replacement in the event manager
-  const profileOptions = Object.keys(comboProfiles).map((o: string) => ({ key: o, value: "$" + o, text: o }));
+  const profileOptions = Object.keys(comboProfiles).map((o: string) => ({ key: o, value: `$${o}`, text: o }));
 
   const closeAction = () => {
     if (onClose) {
@@ -173,7 +181,7 @@ export const EventModal: React.FC<{
               control={control}
               onChange={([_, x]) => x.value}
               name="filter.comboCriteria"
-              defaultValue={"$" + currentProfile}
+              defaultValue={`$${currentProfile}`}
             />
           </Field>
         )}
@@ -258,7 +266,7 @@ export const EventModal: React.FC<{
             {filter.playerSelectionOption === "port" && (
               <div style={{ marginTop: 10 }}>
                 <Controller
-                  as={<PortSelection label="Player" zeroIndex={true} />}
+                  as={<PortSelection label="Player" zeroIndex />}
                   control={control}
                   onChange={([v]) => v}
                   defaultValue={[0, 1, 2, 3]}
@@ -290,4 +298,4 @@ export const EventModal: React.FC<{
       </Modal.Actions>
     </Modal>
   );
-};
+}

@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import * as React from "react";
-import { Checkbox } from "semantic-ui-react";
+import { Checkbox } from "@/ui/Checkbox/Checkbox";
 
 export const SlideReveal = styled.div<{
   open: boolean;
@@ -20,21 +20,26 @@ const SectionLabel = styled.h2`
   margin-bottom: 0;
 `;
 
-export const ProcessSection: React.FC<{
+export function ProcessSection({
+  open,
+  onOpenChange,
+  label,
+  children,
+}: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   label: string;
-}> = (props) => {
-  const { open, onOpenChange, label } = props;
+  children?: React.ReactNode;
+}) {
   return (
     <Outer>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <SectionLabel onClick={() => onOpenChange(!open)}>{label}</SectionLabel>
-        <Checkbox toggle={true} checked={open} onChange={(_, data) => onOpenChange(Boolean(data.checked))} />
+        <Checkbox toggle checked={open} onChange={(_, data) => onOpenChange(Boolean(data.checked))} />
       </div>
       <SlideReveal open={open}>
-        <div style={{ marginTop: "10px" }}>{props.children}</div>
+        <div style={{ marginTop: "10px" }}>{children}</div>
       </SlideReveal>
     </Outer>
   );
-};
+}

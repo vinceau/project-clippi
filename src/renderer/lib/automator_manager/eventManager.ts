@@ -11,7 +11,9 @@ import type { EventEmit, EventManagerConfig } from "./types";
 
 export class EventManager {
   public realtime: SlpRealTime;
+
   public events$: Observable<EventEmit>;
+
   private config$ = new ReplaySubject<EventManagerConfig>();
 
   public constructor(realtime: SlpRealTime) {

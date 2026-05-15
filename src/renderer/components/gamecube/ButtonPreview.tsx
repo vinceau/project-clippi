@@ -31,11 +31,7 @@ const Outer = styled.div`
   justify-content: center;
 `;
 
-export const ButtonPreview: React.FC<{
-  value: string[];
-  pressed?: boolean;
-}> = (props) => {
-  const { value, pressed } = props;
+export function ButtonPreview({ value, pressed }: { value: string[]; pressed?: boolean }) {
   return (
     <Outer>
       <ButtonContainer show={value.includes(Input.Z)}>
@@ -76,4 +72,4 @@ export const ButtonPreview: React.FC<{
       </ButtonContainer>
     </Outer>
   );
-};
+}

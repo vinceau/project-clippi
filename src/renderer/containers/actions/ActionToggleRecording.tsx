@@ -2,7 +2,7 @@ import { capitalize, delay as waitMillis, parseSecondsDelayValue } from "common/
 import { produce } from "immer";
 import * as React from "react";
 
-import { CustomIcon } from "@/components/CustomIcon";
+import { CustomIcon } from "@/ui/CustomIcon/CustomIcon";
 import { DelayInput, InlineDropdown, NotifyInput } from "@/components/InlineInputs";
 import type { ActionTypeGenerator, Context } from "@/lib/event_actions";
 import { obsConnection, OBSRecordingAction } from "@/lib/obs";
@@ -58,7 +58,7 @@ const recordActions = [
 ].map((a) => ({
   key: obsRecordingLabel(a),
   value: a,
-  text: capitalize(obsRecordingLabel(a)) + " ",
+  text: `${capitalize(obsRecordingLabel(a))} `,
 }));
 
 interface ActionToggleRecordingParams {
@@ -94,11 +94,11 @@ const actionToggleRecording: ActionTypeGenerator = (params: ActionToggleRecordin
   };
 };
 
-const ActionIcon = () => {
+function ActionIcon() {
   return <CustomIcon image={obsIcon} size="large" />;
-};
+}
 
-const RecordingNameInput = (props: { value: ActionToggleRecordingParams; onChange: any }) => {
+function RecordingNameInput(props: { value: ActionToggleRecordingParams; onChange: any }) {
   const { value, onChange } = props;
 
   const onRecordingChange = (rec: OBSRecordingAction) => {
@@ -132,7 +132,7 @@ const RecordingNameInput = (props: { value: ActionToggleRecordingParams; onChang
       </div>
     </div>
   );
-};
+}
 
 export const ActionToggleRecording: ActionComponent = {
   label: "toggle OBS recording",

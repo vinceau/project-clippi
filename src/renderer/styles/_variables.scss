@@ -1,0 +1,22 @@
+:root {
+  --color-primary: #FFF;
+  --color-secondary: #000;
+  --color-foreground: #333;
+  --color-foreground2: #111329;
+  --color-foreground3: #ddd;
+  --color-background: #FAFAFA;
+  --color-background2: #F9FAFB;
+  --color-background3: #d4d4d5;
+}
+
+/* Color palette: https://paletton.com/#uid=13X0u0k8Zaw6JmT8khnfM8Ll-7w */
+[data-theme="dark"] {
+  --color-primary: #000;
+  --color-secondary: #FFF;
+  --color-foreground: #cbcbce;
+  --color-foreground2: #67697E;
+  --color-foreground3: #4A4C60;
+  --color-background: #22222C;
+  --color-background2: #1C1D30;
+  --color-background3: #111329;
+}

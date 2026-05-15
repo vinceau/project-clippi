@@ -35,13 +35,19 @@ const ACTION_STATE_MAP = {
 
 class OBSConnection {
   private readonly socket: OBSWebSocket;
+
   private readonly refreshScenesSource$ = new Subject<void>();
+
   private readonly scenesSource$ = new BehaviorSubject<Scene[]>([]);
+
   private readonly connectionSource$ = new BehaviorSubject<OBSConnectionStatus>(OBSConnectionStatus.DISCONNECTED);
+
   private readonly recordingSource$ = new BehaviorSubject<OBSRecordingStatus>(OBSRecordingStatus.STOPPED);
 
   public connectionStatus$ = this.connectionSource$.asObservable();
+
   public recordingStatus$ = this.recordingSource$.asObservable();
+
   public scenes$ = this.scenesSource$.asObservable();
 
   public constructor() {

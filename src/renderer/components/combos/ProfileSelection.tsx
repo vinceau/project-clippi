@@ -2,8 +2,8 @@ import styled from "@emotion/styled";
 import { darken, lighten } from "polished";
 import * as React from "react";
 import { toast } from "react-toastify";
-import type { DropdownProps } from "semantic-ui-react";
-import { Dropdown } from "semantic-ui-react";
+import type { DropdownProps } from "@/ui/Dropdown/Dropdown";
+import { Dropdown } from "@/ui/Dropdown/Dropdown";
 
 import { ThemeMode, useTheme } from "@/styles";
 
@@ -33,9 +33,8 @@ export interface ProfileSelectorProps extends DropdownProps {
   onChange: (value: any) => void;
 }
 
-export const ProfileSelector: React.FC<ProfileSelectorProps> = (props) => {
+export function ProfileSelector({ initialOptions, value, onChange, ...rest }: ProfileSelectorProps) {
   const theme = useTheme();
-  const { initialOptions, value, onChange, ...rest } = props;
   const options = generateOptions(initialOptions);
   const handleNewItem = (_: any, data: any) => {
     const notification = (
@@ -71,4 +70,4 @@ export const ProfileSelector: React.FC<ProfileSelectorProps> = (props) => {
       </Field>
     </Outer>
   );
-};
+}

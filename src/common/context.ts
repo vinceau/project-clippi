@@ -41,7 +41,7 @@ export const generateGameStartContext = (
   let ctx: Context = {
     numPlayers,
   };
-  const stageId = gameStart.stageId;
+  const { stageId } = gameStart;
   if (exists(stageId)) {
     ctx.stage = getStageName(stageId);
     ctx.shortStage = getStageShortName(stageId);
@@ -198,7 +198,7 @@ const momentSnippets = [
 ];
 
 export const generateGlobalContext = (context?: Context, date?: Moment): Context => {
-  const m = date ? date : moment();
+  const m = date || moment();
   const d = m.toDate();
   const newContext = {
     date: sanitizeFilename(d.toLocaleDateString()),
@@ -211,7 +211,7 @@ export const generateGlobalContext = (context?: Context, date?: Moment): Context
 };
 
 const addFilenameContext = (context?: Context, filename?: string): Context => {
-  const name = filename ? filename : exampleFilename;
+  const name = filename || exampleFilename;
   const onlyExt = path.extname(name);
   const fullFilename = path.basename(name);
   const onlyFilename = path.basename(name, onlyExt);
@@ -228,7 +228,7 @@ export const generateFileRenameContext = (
   metadata?: Metadata,
   filename?: string
 ): Context => {
-  const gameStart = settings ? settings : exampleGameStart;
+  const gameStart = settings || exampleGameStart;
   let ctx = generateGameStartContext(gameStart, undefined, undefined, metadata);
   const gameStartTime = metadata && metadata.startAt ? metadata.startAt : undefined;
   ctx = generateGlobalContext(ctx, moment(gameStartTime));

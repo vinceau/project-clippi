@@ -40,11 +40,11 @@ const storeSync = () => {
   const state = store.getState();
 
   // Restore actions
-  const actions = state.automator.actions;
+  const { actions } = state.automator;
   updateEventActionManager(actions);
 
   // Restore sound files
-  const soundFiles = state.filesystem.soundFiles;
+  const { soundFiles } = state.filesystem;
   soundPlayer.sounds = soundFiles;
 
   // Restore combo settings
@@ -58,20 +58,18 @@ const storeSync = () => {
     variables: eventConfigVars,
     events: state.automator.events
       .filter((e) => !e.disabled)
-      .map(
-        (event): EventConfig => {
-          const { type, filter } = event;
-          switch (type) {
-            case InputEvent.BUTTON_COMBO:
-              const newButtonConfig = {
-                ...event,
-                filter: mapInputEventConfig(filter as any),
-              };
-              return newButtonConfig;
-          }
-          return event;
+      .map((event): EventConfig => {
+        const { type, filter } = event;
+        switch (type) {
+          case InputEvent.BUTTON_COMBO:
+            const newButtonConfig = {
+              ...event,
+              filter: mapInputEventConfig(filter as any),
+            };
+            return newButtonConfig;
         }
-      ),
+        return event;
+      }),
   });
 };
 

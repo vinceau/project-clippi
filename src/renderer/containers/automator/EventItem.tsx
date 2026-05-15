@@ -3,7 +3,7 @@ import { css, jsx } from "@emotion/core";
 import styled from "@emotion/styled";
 import { darken, lighten, transparentize } from "polished";
 import React from "react";
-import { Icon } from "semantic-ui-react";
+import { Icon } from "@/ui/Icon/Icon";
 
 import { generateEventName } from "@/lib/events";
 import type { NamedEventConfig } from "@/store/models/automator";
@@ -50,9 +50,9 @@ const Outer = styled.div<{
   }}
 `;
 
-export const EventItem: React.FC<EventItemProps> = ({ event, onClick, selected, disabled }) => {
+export function EventItem({ event, onClick, selected, disabled }: EventItemProps) {
   const theme = useTheme();
-  const eventName = event.name ? event.name : generateEventName(event) + "...";
+  const eventName = event.name ? event.name : `${generateEventName(event)}...`;
   return (
     <Outer disabled={disabled} themeName={theme.themeName} onClick={onClick} selected={selected}>
       <div
@@ -65,4 +65,4 @@ export const EventItem: React.FC<EventItemProps> = ({ event, onClick, selected, 
       <div>{eventName}</div>
     </Outer>
   );
-};
+}

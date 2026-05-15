@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { transparentize } from "polished";
 import React from "react";
-import { Icon } from "semantic-ui-react";
+import { Icon } from "@/ui/Icon/Icon";
 
 import { Labelled } from "./Labelled";
 
@@ -39,25 +39,30 @@ h2 {
 }
 `;
 
-export const SoundFileInfo: React.FC<{
+export function SoundFileInfo({
+  name,
+  path,
+  onPathClick,
+  onRemove,
+}: {
   name: string;
   path: string;
   onPathClick?: () => void;
   onRemove: () => void;
-}> = (props) => {
+}) {
   return (
     <Container>
       <div>
         <Labelled title="Open location">
-          <h2 onClick={props.onPathClick}>{props.name}</h2>
+          <h2 onClick={onPathClick}>{name}</h2>
         </Labelled>
-        <div>{props.path}</div>
+        <div>{path}</div>
       </div>
       <div className="remove-button">
         <Labelled title="Remove">
-          <Icon name="trash" onClick={props.onRemove} />
+          <Icon name="trash" onClick={onRemove} />
         </Labelled>
       </div>
     </Container>
   );
-};
+}

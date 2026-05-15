@@ -1,20 +1,19 @@
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
-import { AUTO_UPDATES_ENABLED } from "common/constants";
-import { GITHUB_RELEASES_PAGE } from "common/constants";
+import { AUTO_UPDATES_ENABLED, GITHUB_RELEASES_PAGE } from "common/constants";
 import type { VersionUpdatePayload } from "common/types";
 import { UpdateStatus } from "common/types";
 import { shell } from "electron";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Button } from "semantic-ui-react";
+import { Button } from "@/ui/Button/Button";
 import { format } from "timeago.js";
 
 import { ExternalLink as A } from "@/components/ExternalLink";
 import { checkForNewUpdates, downloadLatestUpdate, installUpdateAndRestart } from "@/lib/utils";
 import type { Dispatch, iRootState } from "@/store";
 
-export const UpdateStatusInfo: React.FC = () => {
+export function UpdateStatusInfo() {
   const updateStatus = useSelector((state: iRootState) => state.tempContainer.updateStatus);
   const updateAvailable = useSelector((state: iRootState) => state.tempContainer.updateAvailable);
 
@@ -66,11 +65,9 @@ export const UpdateStatusInfo: React.FC = () => {
       )}
     </div>
   );
-};
+}
 
-const ShowUpdateMessage: React.FC<{
-  versionPayload: VersionUpdatePayload | null;
-}> = ({ versionPayload }) => {
+function ShowUpdateMessage({ versionPayload }: { versionPayload: VersionUpdatePayload | null }) {
   if (!versionPayload) {
     return null;
   }
@@ -99,11 +96,11 @@ const ShowUpdateMessage: React.FC<{
     case UpdateStatus.DOWNLOAD_COMPLETE:
       return <span>Update is ready to install.</span>;
   }
-};
+}
 
-const UpdateAvailableMessage: React.FC = () => {
+function UpdateAvailableMessage() {
   if (!AUTO_UPDATES_ENABLED) {
     return <Button onClick={() => shell.openExternal(GITHUB_RELEASES_PAGE)}>Open releases page</Button>;
   }
   return <Button onClick={() => downloadLatestUpdate()}>Download now</Button>;
-};
+}

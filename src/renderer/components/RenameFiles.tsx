@@ -3,7 +3,7 @@ import type { GameStartType } from "@slippi/slippi-js";
 import { invalidFilename } from "common/utils";
 import insertTextAtCursor from "insert-text-at-cursor";
 import * as React from "react";
-import { TextArea } from "semantic-ui-react";
+import { TextArea } from "@/ui/TextArea/TextArea";
 
 import { ContextOptions } from "@/components/ContextOptions";
 import { Field, Label } from "@/components/Form";
@@ -40,13 +40,13 @@ const ErrorContainer = styled.div`
 const metadata = {
   startAt: "2001-11-21T17:33:54.000Z",
   players: {
-    [0]: {
+    0: {
       names: {
         netplay: "Bort",
         code: "BORT#123",
       },
     },
-    [2]: {
+    2: {
       names: {
         netplay: "Yort",
         code: "YORT#456",
@@ -58,18 +58,22 @@ const metadata = {
 const gameStartString = `{"slpVersion":"2.0.1","isTeams":false,"isPAL":false,"stageId":2,"players":[{"playerIndex":0,"port":1,"characterId":0,"characterColor":3,"startStocks":4,"type":0,"teamId":0,"controllerFix":"UCF","nametag":"BORT"},{"playerIndex":2,"port":3,"characterId":25,"characterColor":0,"startStocks":4,"type":1,"teamId":0,"controllerFix":"None","nametag":"YORT"}]}`;
 const exampleGameStart: GameStartType = JSON.parse(gameStartString);
 
-export const RenameFiles: React.FC<{
+export function RenameFiles({
+  value,
+  onChange,
+  placeholder,
+}: {
   value: string;
   onChange: (value: string) => void;
   placeholder?: string;
-}> = (props) => {
+}) {
   const [showOptions, setShowOptions] = React.useState(false);
-  const [renameFormat, setRenameFormat] = React.useState(props.value);
+  const [renameFormat, setRenameFormat] = React.useState(value);
   const textRef: any = React.useRef();
   const showResetButton = renameFormat !== defaultRenameFormat;
   const resetFormat = () => {
     setRenameFormat(defaultRenameFormat);
-    props.onChange(defaultRenameFormat);
+    onChange(defaultRenameFormat);
   };
   const insertText = (text: string) => {
     const el = textRef.current;
@@ -113,12 +117,12 @@ export const RenameFiles: React.FC<{
         </FormatLabel>
         <TextArea
           ref={textRef}
-          placeholder={props.placeholder}
+          placeholder={placeholder}
           value={renameFormat}
           onChange={(_, { value }) => {
             setRenameFormat(`${value || ""}`);
           }}
-          onBlur={() => props.onChange(renameFormat)}
+          onBlur={() => onChange(renameFormat)}
         />
         <PreviewContainer>
           {isInvalid ? (
@@ -133,4 +137,4 @@ export const RenameFiles: React.FC<{
       </Field>
     </div>
   );
-};
+}

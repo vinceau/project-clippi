@@ -18,12 +18,20 @@ const LabelContainer = styled.div<{
       : ""}
 `;
 
-export const CharacterLabel: React.FC<{ characterId: Character; name: string; disabled?: boolean }> = (props) => {
-  const isDisabled = props.disabled;
+export function CharacterLabel({
+  characterId,
+  name,
+  disabled,
+}: {
+  characterId: Character;
+  name: string;
+  disabled?: boolean;
+}) {
+  const isDisabled = disabled;
   return (
     <LabelContainer isDisabled={isDisabled}>
-      <CharacterIcon character={props.characterId} grayscale={isDisabled} />
-      <span style={{ marginLeft: "10px" }}>{props.name}</span>
+      <CharacterIcon character={characterId} grayscale={isDisabled} />
+      <span style={{ marginLeft: "10px" }}>{name}</span>
     </LabelContainer>
   );
-};
+}

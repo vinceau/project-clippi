@@ -2,9 +2,9 @@ import { delay as waitMillis } from "common/utils";
 import { produce } from "immer";
 import * as React from "react";
 import { useSelector } from "react-redux";
-import { Button } from "semantic-ui-react";
+import { Button } from "@/ui/Button/Button";
 
-import { CustomIcon } from "@/components/CustomIcon";
+import { CustomIcon } from "@/ui/CustomIcon/CustomIcon";
 import { DelayInput, InlineDropdown } from "@/components/InlineInputs";
 import type { ActionTypeGenerator, Context } from "@/lib/event_actions";
 import { connectToOBSAndNotify, getAllScenes, obsConnection, OBSConnectionStatus } from "@/lib/obs";
@@ -35,17 +35,17 @@ const actionChangeScene: ActionTypeGenerator = (params: ActionChangeSceneParams)
   };
 };
 
-const ActionIcon = () => {
+function ActionIcon() {
   return <CustomIcon image={obsIcon} size="large" />;
-};
+}
 
-const SceneNameInput = (props: any) => {
+function SceneNameInput(props: any) {
   const { value, onChange } = props;
   const { obsConnectionStatus, obsScenes } = useSelector((state: iRootState) => state.tempContainer);
   const obsConnected = obsConnectionStatus === OBSConnectionStatus.CONNECTED;
 
   if (!obsConnected) {
-    return <Button content={`Connect to OBS`} type="button" onClick={connectToOBSAndNotify} />;
+    return <Button content="Connect to OBS" type="button" onClick={connectToOBSAndNotify} />;
   }
 
   const allScenes = getAllScenes(obsScenes);
@@ -80,7 +80,7 @@ const SceneNameInput = (props: any) => {
       {" millisecond delay"}
     </div>
   );
-};
+}
 
 export const ActionChangeScene: ActionComponent = {
   label: "change OBS scene",

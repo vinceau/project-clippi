@@ -2,16 +2,20 @@
 import { css, jsx } from "@emotion/core";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Header, Icon, Loader, Segment } from "semantic-ui-react";
+import { Header } from "@/ui/Header/Header";
+import { Icon } from "@/ui/Icon/Icon";
+import { Loader } from "@/ui/Loader/Loader";
+import { Segment } from "@/ui/Segment/Segment";
 
-import { Field, FormContainer, PageHeader, Toggle } from "@/components/Form";
+import { Field, FormContainer, PageHeader } from "@/components/Form";
+import { Toggle } from "@/ui/Toggle/Toggle";
 import { TwitchClipList, TwitchConnectButton, TwitchUserStatus } from "@/components/twitch";
 import { TwitchClipClearDialog } from "@/components/twitch/TwitchClipClearDialog";
 import type { Dispatch, iRootState } from "@/store";
 
 const TWITCH_CLIPS_PER_PAGE = 10;
 
-export const TwitchIntegration: React.FC = () => {
+export function TwitchIntegration() {
   const { twitchUser, twitchLoading } = useSelector((state: iRootState) => state.tempContainer);
   const { reconnectTwitch } = useSelector((state: iRootState) => state.twitch);
   const dispatch = useDispatch<Dispatch>();
@@ -37,7 +41,7 @@ export const TwitchIntegration: React.FC = () => {
           onSignOut={onSignOut}
         />
       ) : twitchLoading ? (
-        <Loader active={true} inline={true} content="Loading" />
+        <Loader active inline content="Loading" />
       ) : (
         <TwitchConnectButton onClick={() => dispatch.tempContainer.authenticateTwitch()} />
       )}
@@ -84,4 +88,4 @@ export const TwitchIntegration: React.FC = () => {
       </div>
     </FormContainer>
   );
-};
+}
