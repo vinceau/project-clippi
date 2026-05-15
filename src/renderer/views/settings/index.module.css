@@ -134,7 +134,6 @@
   visibility: visible;
   overflow: auto;
   background-color: var(--color-background2);
-  z-index: 1;
 }
 
 .flex {
