@@ -1,5 +1,5 @@
 import React from "react";
-import { Dropdown } from "@/ui/Dropdown/Dropdown";
+import { Dropdown } from "./Dropdown/Dropdown";
 
 export function ProfileExport({ onImport, onExport }: { onImport: () => void; onExport: () => void }) {
   return (
