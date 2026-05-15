@@ -293,8 +293,8 @@
     ],
     "publish": {
       "provider": "github",
-      "owner": "electron-react-boilerplate",
-      "repo": "electron-react-boilerplate"
+      "owner": "vinceau",
+      "repo": "project-clippi"
     }
   },
   "collective": {
@@ -303,7 +303,7 @@
   "devEngines": {
     "runtime": {
       "name": "node",
-      "version": ">=14.x",
+      "version": ">=18.x",
       "onFail": "error"
     },
     "packageManager": {
