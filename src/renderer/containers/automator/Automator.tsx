@@ -73,26 +73,28 @@ export function Automator() {
     <div className={styles.outer}>
       <EventModal onSubmit={addEvent} opened={opened} onClose={reset} edit={edit} />
       <div className={styles.headerBar}>
+<div className={styles.buttonGroup}>
         <Button onClick={() => setOpened(true)}>
           <Plus /> Add event
         </Button>
         <Button onClick={deleteEvent} disabled={disableEditButtons}>
           <Trash /> Delete event
         </Button>
+</div>
         {!disableEditButtons && (
-          <div>
+          <div className={styles.buttonGroup}>
             <Labelled title="Test run event">
               <Button disabled={disabledTestButton} onClick={testRunEvent}>
-                <Play size={20} />
+                <Play />
               </Button>
             </Labelled>
             <Labelled title="Edit event">
               <Button onClick={editEvent}>
-                <Pencil size={20} />
+                <Pencil />
               </Button>
             </Labelled>
             <Labelled title={isDisabled ? "Enable event" : "Disable event"}>
-              <Button onClick={toggleEvent}>{isDisabled ? <Power size={20} /> : <PowerOff size={20} />}</Button>
+              <Button onClick={toggleEvent}>{isDisabled ? <Power /> : <PowerOff />}</Button>
             </Labelled>
           </div>
         )}
