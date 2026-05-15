@@ -1,0 +1,52 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 1000;
+}
+
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--bg-color, #fff);
+  border-radius: 8px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+  z-index: 1001;
+  max-height: 90vh;
+  overflow-y: auto;
+  min-width: 400px;
+  outline: none;
+}
+
+.trigger {
+  display: inline-block;
+}
+
+.closeIcon {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  color: inherit;
+  z-index: 1;
+}
+
+.content {
+  padding: 16px 20px;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 12px 20px;
+  gap: 8px;
+}
+
+.description {
+  padding: 0;
+}
