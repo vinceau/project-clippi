@@ -1,12 +1,12 @@
 {
-  "name": "electron-react-boilerplate",
+  "name": "project-clippi",
   "version": "4.6.0",
-  "description": "A foundation for scalable desktop apps",
+  "description": "A Melee Automation Framework",
   "license": "MIT",
   "author": {
-    "name": "Electron React Boilerplate Maintainers",
-    "email": "electronreactboilerplate@gmail.com",
-    "url": "https://github.com/electron-react-boilerplate"
+    "name": "Vince Au",
+    "email": "vinceau09@gmail.com",
+    "url": "https://github.com/vinceau"
   },
   "main": "./dist/main/main.js",
   "scripts": {
