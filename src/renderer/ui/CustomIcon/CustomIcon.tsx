@@ -19,6 +19,7 @@ const Outer = styled.i<{
       background-color: ${(p) => (p.color ? p.color : p.theme.foreground)} !important;
       height: 100%;
       width: 100%;
+      display: block;
     }
   }
 `;
