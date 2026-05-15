@@ -1,5 +1,5 @@
 import React from "react";
-import { Icon } from "@/ui/Icon/Icon";
+import { Trash } from "lucide-react";
 
 import { Labelled } from "./Labelled";
 
@@ -26,7 +26,7 @@ export function SoundFileInfo({
       </div>
       <div className={styles.removeButton}>
         <Labelled title="Remove">
-          <Icon name="trash" onClick={onRemove} />
+          <Trash size={16} onClick={onRemove} />
         </Labelled>
       </div>
     </div>

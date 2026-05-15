@@ -1,12 +1,12 @@
 import React from "react";
-import { Icon } from "@/ui/Icon/Icon";
+import { Flag } from "lucide-react";
 
 import styles from "./AutomatorPlaceholder.module.css";
 
 export function AutomatorPlaceholder() {
   return (
     <div className={styles.outer}>
-      <Icon size="huge" name="flag" />
+      <Flag size={48} />
       <div className={styles.notice}>
         <h2>No events added</h2>
         <p>Add an event to get started</p>

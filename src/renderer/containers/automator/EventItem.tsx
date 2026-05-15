@@ -1,6 +1,6 @@
 import { clsx } from "clsx";
 import React from "react";
-import { Icon } from "@/ui/Icon/Icon";
+import { Flag, PowerOff } from "lucide-react";
 
 import { generateEventName } from "@/lib/events";
 import type { NamedEventConfig } from "@/store/models/automator";
@@ -28,7 +28,7 @@ export function EventItem({ event, onClick, selected, disabled }: EventItemProps
       onClick={isClickable ? onClick : undefined}
     >
       <div className={styles.iconCell}>
-        <Icon name={disabled ? "window close" : "flag"} />
+        {disabled ? <PowerOff size={16} /> : <Flag size={16} />}
       </div>
       <div>{eventName}</div>
     </div>

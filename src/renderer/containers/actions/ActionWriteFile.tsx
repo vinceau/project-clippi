@@ -3,8 +3,8 @@ import formatter from "formatter";
 import { produce } from "immer";
 import * as React from "react";
 import { Form } from "@/ui/Form/Form";
-import { Icon } from "@/ui/Icon/Icon";
 import { TextArea } from "@/ui/TextArea/TextArea";
+import { FileText } from "lucide-react";
 
 import { FileInput } from "@/components/FileInput";
 import { InlineDropdown } from "@/components/InlineInputs";
@@ -46,7 +46,7 @@ const actionWriteFile: ActionTypeGenerator = (params: ActionWriteFileParams) => 
 };
 
 function ActionIcon() {
-  return <Icon name="file alternate" size="large" />;
+  return <FileText size={20} />;
 }
 
 interface WriteFileProps extends Record<string, any> {

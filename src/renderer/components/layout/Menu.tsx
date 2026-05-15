@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Link, useRouteMatch } from "react-router-dom";
-import { Icon } from "@/ui/Icon/Icon";
+import { Bolt, ChevronsRight, CirclePlay, Settings } from "lucide-react";
 import { Label } from "@/ui/Label/Label";
 
 import { MenuIcon, MenuIconLink } from "@/components/layout/MenuIcon";
@@ -13,19 +13,19 @@ export function Menu({ settingsPage, updateAvailable }: { settingsPage: string; 
     <div className={styles.outer}>
       <div>
         <MenuIconLink to={`${match.url}/automator`} label="Automator">
-          <Icon name="bolt" />
+          <Bolt size={20} />
         </MenuIconLink>
         <MenuIconLink to={`${match.url}/processor`} label="Replay Processor">
-          <Icon name="angle double right" />
+          <ChevronsRight size={20} />
         </MenuIconLink>
         <MenuIconLink to={`${match.url}/recorder`} label="Playback Queue">
-          <Icon name="play circle" />
+          <CirclePlay size={20} />
         </MenuIconLink>
       </div>
       <div>
         <Link to={settingsPage}>
           <MenuIcon label="Settings">
-            <Icon name="cog" />
+            <Settings size={20} />
             {updateAvailable && (
               <span style={{ position: "absolute", top: "2rem", right: "2rem" }}>
                 <Label circular color="red" empty />

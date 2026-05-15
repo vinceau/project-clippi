@@ -2,9 +2,8 @@ import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@/ui/Button/Button";
 import { Form } from "@/ui/Form/Form";
-import { Icon } from "@/ui/Icon/Icon";
-
 import { ConnectionStatusCard } from "@/components/ConnectionStatusCard";
+import { Eye, EyeOff } from "lucide-react";
 import { Field, FormContainer, Label, PageHeader } from "@/components/Form";
 import { connectToOBSAndNotify, obsConnection, OBSConnectionStatus } from "@/lib/obs";
 import type { Dispatch, iRootState } from "@/store";
@@ -64,7 +63,7 @@ export function OBSSettings() {
           <Field>
             <Label>Websocket Password</Label>
             <Form.Input
-              icon={<Icon name={showPass ? "eye slash" : "eye"} link onClick={togglePass} />}
+              icon={showPass ? <EyeOff size={16} onClick={togglePass} style={{ cursor: "pointer" }} /> : <Eye size={16} onClick={togglePass} style={{ cursor: "pointer" }} />}
               type={showPass ? "text" : "password"}
               placeholder="Password"
               value={obsPassword}

@@ -4,8 +4,7 @@ import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { Field } from "react-final-form";
 import { Button } from "@/ui/Button/Button";
 import { Select } from "@/ui/Select/Select";
-import { Icon } from "@/ui/Icon/Icon";
-import { X as Close, Plus } from "lucide-react";
+import { X as Close, Plus, ChevronsUpDown } from "lucide-react";
 
 import { Labelled } from "../Labelled";
 
@@ -79,7 +78,7 @@ function MoveInput({
   return (
     <div style={{ display: "flex", paddingBottom: 10, alignItems: "center" }}>
       <div style={{ paddingLeft: 5, paddingRight: 10 }}>
-        <Icon name="sort" />
+        <ChevronsUpDown size={16} />
       </div>
       <Select
         value={value !== undefined ? String(value) : undefined}

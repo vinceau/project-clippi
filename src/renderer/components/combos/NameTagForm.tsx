@@ -1,6 +1,6 @@
 import React from "react";
 import { FieldArray } from "react-final-form-arrays";
-import { Icon } from "@/ui/Icon/Icon";
+import { X } from "lucide-react";
 import { Label } from "@/ui/Label/Label";
 
 import styles from "./NameTagForm.module.css";
@@ -9,7 +9,7 @@ function NameTagLabel({ name, onClick }: { name: string; onClick: () => void }) 
   return (
     <Label size="small">
       {name}
-      <Icon name="delete" link onClick={onClick} />
+      <X size={12} onClick={onClick} style={{ cursor: "pointer" }} />
     </Label>
   );
 }

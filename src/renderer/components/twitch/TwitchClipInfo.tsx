@@ -1,6 +1,6 @@
 import type { TwitchClip } from "common/types";
 import React from "react";
-import { Icon } from "@/ui/Icon/Icon";
+import { Pencil, Trash } from "lucide-react";
 import { format } from "timeago.js";
 
 import { ExternalLink as A } from "../ExternalLink";
@@ -46,11 +46,11 @@ export function TwitchClipInfo({
       <div className={styles.buttonsContainer}>
         <Labelled title="Edit">
           <A href={`${url}/edit`}>
-            <Icon name="pencil" />
+            <Pencil size={16} />
           </A>
         </Labelled>
         <Labelled title="Remove">
-          <Icon name="trash" onClick={onRemove} className={styles.trashIcon} />
+          <Trash size={16} onClick={onRemove} className={styles.trashIcon} />
         </Labelled>
       </div>
     </div>

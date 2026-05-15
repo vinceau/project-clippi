@@ -1,5 +1,5 @@
 import React from "react";
-import { Icon } from "@/ui/Icon/Icon";
+import { X } from "lucide-react";
 
 import { actionComponents } from "@/containers/actions";
 
@@ -33,7 +33,7 @@ export function ActionIcon({ name, outer }: { name: string; outer: React.RefObje
   }
 
   if (hover) {
-    return <Icon name="close" size="large" />;
+    return <X size={20} />;
   }
 
   const CompIcon = actionComponents[name].Icon;

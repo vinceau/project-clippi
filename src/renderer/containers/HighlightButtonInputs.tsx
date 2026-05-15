@@ -2,7 +2,7 @@ import { framesToSeconds, secondsToFrames } from "common/utils";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Accordion } from "@/ui/Accordion/Accordion";
-import { Icon } from "@/ui/Icon/Icon";
+import { SquareChevronDown } from "lucide-react";
 
 import { ButtonInput } from "@/components/gamecube/ButtonInput";
 import { DelayInput, InlineDropdown } from "@/components/InlineInputs";
@@ -81,7 +81,7 @@ export function HighlightButtonInputs() {
 
       <Accordion>
         <Accordion.Title active={showAdvanced} onClick={() => setShowAdvanced(!showAdvanced)}>
-          <Icon name="dropdown" />
+          <SquareChevronDown size={16} />
           {showAdvanced ? "Hide " : "Show "} advanced options
         </Accordion.Title>
         <Accordion.Content active={showAdvanced}>

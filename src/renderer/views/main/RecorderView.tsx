@@ -1,8 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@/ui/Button/Button";
-import { Icon } from "@/ui/Icon/Icon";
-import { Plus, Save, Shuffle, Trash } from "lucide-react";
+import { Plus, Save, Shuffle, Trash, CirclePlay, Folder } from "lucide-react";
 
 import { DropPad } from "@/components/DropPad";
 import { Text } from "@/components/Form";
@@ -56,13 +55,13 @@ export function RecorderView() {
     <div className={styles.outer}>
       <div className={styles.content}>
         <h1>
-          Playback Queue <Icon name="play circle" />
+          Playback Queue <CirclePlay size={16} />
         </h1>
         <Text margin="none">Create a playlist of replays and load them into Dolphin</Text>
         <div className={styles.toolbar}>
           <div>
             <Button type="button" onClick={loadFileHandler}>
-              <Icon name="folder" /> Load JSON
+              <Folder size={16} /> Load JSON
             </Button>
             <Button type="button" disabled={!validQueue} onClick={onSaveHandler}>
               <Save size={20} /> Save JSON

@@ -1,8 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Icon } from "@/ui/Icon/Icon";
-
 import { Text } from "@/components/Form";
+import { ChevronsRight } from "lucide-react";
 import { ProgressBar } from "@/components/ProgressBar";
 import { ComboFinder } from "@/containers/ComboFinder";
 import { ProcessorStatusBar } from "@/containers/ProcessorStatusBar";
@@ -16,7 +15,7 @@ export function ReplayProcessorView() {
     <div className={styles.outer}>
       <div className={styles.content}>
         <h1>
-          Replay Processor <Icon name="angle double right" />
+          Replay Processor <ChevronsRight size={16} />
         </h1>
         <Text>Find combos and highlights from your replay files</Text>
         <ComboFinder />

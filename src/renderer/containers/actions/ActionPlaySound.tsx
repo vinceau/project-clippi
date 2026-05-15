@@ -2,14 +2,12 @@ import { produce } from "immer";
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@/ui/Button/Button";
-import { Icon } from "@/ui/Icon/Icon";
-
 import { InlineDropdown } from "@/components/InlineInputs";
 import type { ActionTypeGenerator, Context } from "@/lib/event_actions";
 import { soundPlayer } from "@/lib/sounds";
 import type { Dispatch, iRootState } from "@/store";
 
-import { Plus } from "lucide-react";
+import { Plus, Music } from "lucide-react";
 import type { ActionComponent } from "./types";
 
 interface ActionPlaySoundParams {
@@ -24,7 +22,7 @@ const ActionPlaySoundFunc: ActionTypeGenerator = (params: ActionPlaySoundParams)
 };
 
 function ActionIcon() {
-  return <Icon name="music" size="large" />;
+  return <Music size={20} />;
 }
 
 function PlaySoundInput(props: any) {

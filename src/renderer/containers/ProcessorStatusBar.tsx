@@ -6,14 +6,12 @@ import fs from "fs";
 import React from "react";
 import { useSelector } from "react-redux";
 import { Button } from "@/ui/Button/Button";
-import { Icon } from "@/ui/Icon/Icon";
-
 import { Confirm } from "@/ui/Confirm/Confirm";
 import { startProcessing, stopProcessing } from "@/lib/fileProcessor";
 import { mapConfigurationToFilterSettings } from "@/lib/profile";
 import type { iRootState } from "@/store";
 
-import { CircleStop } from "lucide-react";
+import { CircleStop, ChevronsRight } from "lucide-react";
 import styles from "./ProcessorStatusBar.module.css";
 
 export function ProcessorStatusBar() {
@@ -144,7 +142,7 @@ export function ProcessorStatusBar() {
           </div>
         ) : (
           <Button primary type="button" onClick={handleProcessClick} disabled={processBtnDisabled}>
-            <Icon name="angle double right" style={{ margin: "0", marginRight: "0.3rem" }} /> Process replays
+            <ChevronsRight size={18} style={{ margin: "0", marginRight: "0.3rem" }} /> Process replays
           </Button>
         )}
       </div>

@@ -1,11 +1,10 @@
 import React from "react";
-import type { IconSizeProp } from "semantic-ui-react/dist/commonjs/elements/Icon/Icon";
 
 import styles from "./CustomIcon.module.css";
 
 export interface CustomIconProps {
   image: any;
-  size?: IconSizeProp;
+  size?: string;
   color?: string;
 }
 

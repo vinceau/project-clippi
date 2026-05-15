@@ -1,8 +1,8 @@
 import { exec } from "child_process";
 import * as React from "react";
 import { Form } from "@/ui/Form/Form";
-import { Icon } from "@/ui/Icon/Icon";
 import { Message } from "@/ui/Message/Message";
+import { Terminal, TriangleAlert } from "lucide-react";
 import { TextArea } from "@/ui/TextArea/TextArea";
 
 import { Text } from "@/components/Form";
@@ -29,7 +29,7 @@ const ActionRunShellCommandFunc: ActionTypeGenerator = (params: ActionRunShellCo
 };
 
 function ActionIcon() {
-  return <Icon name="terminal" size="large" />;
+  return <Terminal size={20} />;
 }
 
 function RunShellCommandInput({
@@ -44,7 +44,7 @@ function RunShellCommandInput({
   return (
     <div style={{ marginTop: 10 }}>
       <Message warning>
-        <Icon name="warning sign" />
+        <TriangleAlert size={16} />
         Running unknown commands can be very dangerous! Only run commands that you fully understand!
       </Message>
       <Form>

@@ -3,7 +3,7 @@ import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { Button } from "@/ui/Button/Button";
-import { Icon } from "@/ui/Icon/Icon";
+import { Check } from "lucide-react";
 import { Modal } from "@/ui/Modal/Modal";
 import { Select } from "@/ui/Select/Select";
 
@@ -251,7 +251,7 @@ export function EventModal({
       </Modal.Content>
       <Modal.Actions className={styles.actions}>
         <Button color="green" onClick={saveAction}>
-          <Icon name="checkmark" /> Save
+          <Check size={16} /> Save
         </Button>
       </Modal.Actions>
     </Modal>

@@ -3,7 +3,7 @@ import * as React from "react";
 import { Field } from "react-final-form";
 import { FieldArray } from "react-final-form-arrays";
 import { Button } from "@/ui/Button/Button";
-import { Icon } from "@/ui/Icon/Icon";
+import { UserPlus } from "lucide-react";
 
 import type { CharPercentOption } from "@/lib/profile";
 import styles from "./PerCharPercent.module.css";
@@ -36,7 +36,7 @@ export function PerCharPercent({ name, values, push }: { name: string; values: a
       </FieldArray>
       <div className={styles.buttonRow}>
         <Button type="button" onClick={() => push(name, undefined)}>
-          <Icon name="add user" /> Add character
+          <UserPlus size={16} /> Add character
         </Button>
       </div>
     </div>

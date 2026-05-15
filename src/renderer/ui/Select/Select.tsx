@@ -1,7 +1,6 @@
 import { Select as BaseSelect } from "@base-ui/react";
 import { clsx } from "clsx";
 import React from "react";
-import { Icon } from "@/ui/Icon/Icon";
 import styles from "./Select.module.css";
 
 export interface SelectOption {
@@ -22,7 +21,7 @@ export interface SelectProps {
   floating?: boolean;
   button?: boolean;
   inline?: boolean;
-  icon?: string;
+  icon?: React.ReactNode;
   options?: SelectOption[];
   trigger?: React.ReactElement;
   className?: string;
@@ -41,7 +40,7 @@ export function Select({
   floating,
   button: buttonProp,
   inline,
-  icon: iconName,
+  icon: iconNode,
   options,
   trigger,
   className,
@@ -81,8 +80,8 @@ export function Select({
       >
         <BaseSelect.Trigger className={styles.trigger}>
           {trigger ??
-            (iconName ? (
-              <Icon name={iconName as any} />
+            (iconNode ? (
+              iconNode
             ) : (
               <>
                 <BaseSelect.Value placeholder={placeholder} className={styles.text} />
