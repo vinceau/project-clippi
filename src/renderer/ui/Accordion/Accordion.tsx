@@ -1,39 +1,35 @@
+import { Collapsible } from "@base-ui/react/collapsible";
 import { clsx } from "clsx";
 import React from "react";
 import styles from "./Accordion.module.css";
 
-interface AccordionTitleProps {
-  active?: boolean;
-  onClick?: () => void;
-  children?: React.ReactNode;
+function AccordionRoot({ className, ...props }: React.ComponentProps<typeof Collapsible.Root>) {
+  return <Collapsible.Root className={clsx(styles.root, className)} {...props} />;
 }
 
-interface AccordionContentProps {
-  active?: boolean;
-  children?: React.ReactNode;
-}
-
-function Accordion({ children }: { children?: React.ReactNode }) {
-  return <div>{children}</div>;
-}
-
-function AccordionTitle({ active, onClick, children }: AccordionTitleProps) {
+function AccordionTrigger({ className, children, ...props }: React.ComponentProps<typeof Collapsible.Trigger>) {
   return (
-    <div
-      className={clsx(styles.title, active && styles.active)}
-      onClick={onClick}
-    >
+    <Collapsible.Trigger className={clsx(styles.trigger, className as string | undefined)} {...props}>
+      <ChevronIcon className={styles.chevronIcon} />
       {children}
-    </div>
+    </Collapsible.Trigger>
   );
 }
 
-function AccordionContent({ active, children }: AccordionContentProps) {
-  if (!active) return null;
-  return <div className={styles.content}>{children}</div>;
+function AccordionPanel({ className, ...props }: React.ComponentProps<typeof Collapsible.Panel>) {
+  return <Collapsible.Panel className={clsx(styles.panel, className as string | undefined)} {...props} />;
 }
 
-Accordion.Title = AccordionTitle;
-Accordion.Content = AccordionContent;
+export const Accordion = {
+  Root: AccordionRoot,
+  Trigger: AccordionTrigger,
+  Panel: AccordionPanel,
+};
 
-export { Accordion, AccordionTitle, AccordionContent };
+export function ChevronIcon(props: React.ComponentProps<"svg">) {
+  return (
+    <svg width="10" height="10" viewBox="0 0 10 10" fill="none" {...props}>
+      <path d="M3.5 9L7.5 5L3.5 1" stroke="currentcolor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}

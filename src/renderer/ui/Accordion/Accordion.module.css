@@ -1,12 +1,48 @@
-.title {
-  cursor: pointer;
-  padding: 0.5em 0;
+.root {
+  display: flex;
+  flex-direction: column;
 }
 
-.title.active {
+.trigger {
+  cursor: pointer;
+  padding: 0.5em 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  background: none;
+  border: none;
+  font: inherit;
+  color: inherit;
+  width: 100%;
+  text-align: left;
+}
+
+.trigger[data-panel-open] {
   font-weight: bold;
 }
 
-.content {
+.chevronIcon {
+  transition: transform 150ms ease-out;
+}
+
+.trigger[data-panel-open] .chevronIcon {
+  transform: rotate(90deg);
+}
+
+.panel {
   padding: 0.5em 0;
+  overflow: hidden;
+  transition: all 150ms ease-out;
+}
+
+.panel[hidden]:not([hidden="until-found"]) {
+  display: none;
+}
+
+.panel[data-starting-style],
+.panel[data-ending-style] {
+  height: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  opacity: 0;
 }

@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { Accordion } from "@/ui/Accordion/Accordion";
 import { Button } from "@/ui/Button/Button";
 import { Form as SemanticForm } from "@/ui/Form/Form";
-import { ChevronDown, Save, Trash, Undo } from "lucide-react";
+import { Save, Trash, Undo } from "lucide-react";
 
 import { CodeBlock } from "@/components/CodeBlock";
 import { Field, Label, Text } from "@/components/Form";
@@ -185,12 +185,11 @@ export function ComboForm(props: {
               </Field>
 
               <div style={{ marginTop: "10px" }}>
-                <Accordion>
-                  <Accordion.Title active={showAdvanced} onClick={() => setShowAdvanced(!showAdvanced)}>
-                    <ChevronDown size={20} />
+                <Accordion.Root open={showAdvanced} onOpenChange={setShowAdvanced}>
+                  <Accordion.Trigger>
                     {showAdvanced ? "Hide " : "Show "} advanced options
-                  </Accordion.Title>
-                  <Accordion.Content active={showAdvanced}>
+                  </Accordion.Trigger>
+                  <Accordion.Panel>
                     <Field>
                       <FinalField
                         name="fuzzyNameTagMatching"
@@ -243,8 +242,8 @@ export function ComboForm(props: {
                         to be excluded.
                       </Text>
                     </Field>
-                  </Accordion.Content>
-                </Accordion>
+                    </Accordion.Panel>
+                </Accordion.Root>
               </div>
               <ButtonContainer
                 submitting={submitting}
