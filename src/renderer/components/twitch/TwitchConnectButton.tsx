@@ -1,6 +1,7 @@
 import React from "react";
-import { Icon } from "@/ui/Icon/Icon";
+import { CustomIcon } from "@/ui/CustomIcon/CustomIcon";
 
+import twitchIcon from "@/styles/images/twitch.svg";
 import styles from "./TwitchConnectButton.module.css";
 
 export function TwitchConnectButton({
@@ -10,7 +11,7 @@ export function TwitchConnectButton({
 }) {
   return (
     <button className={styles.button} style={{ backgroundColor: "#6441A4" }} onClick={onClick}>
-      <Icon name="twitch" />
+      <CustomIcon image={twitchIcon} color="#fff" />
       <span className={styles.buttonText}>Connect with Twitch</span>
     </button>
   );

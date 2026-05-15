@@ -6,6 +6,7 @@ import { Icon } from "@/ui/Icon/Icon";
 import { X as Close } from "lucide-react";
 import { Label } from "@/ui/Label/Label";
 import { Menu } from "@/views/settings/menu/Menu";
+import twitchIcon from "@/styles/images/twitch.svg";
 
 import { CustomIcon } from "@/ui/CustomIcon/CustomIcon";
 import { Labelled } from "@/components/Labelled";
@@ -130,7 +131,7 @@ export function SettingsView() {
                   active={isActive("account-settings")}
                   onClick={handleItemClick}
                 >
-                  <Icon name="twitch" />
+                        <CustomIcon image={twitchIcon} />
                   Twitch Integration
                 </Menu.Item>
               </div>
