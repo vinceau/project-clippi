@@ -1,3 +1,4 @@
+import { Input as BaseInput } from "@base-ui/react";
 import { clsx } from "clsx";
 import React from "react";
 import styles from "./Input.module.css";
@@ -44,7 +45,7 @@ export function Input({
   return (
     <div className={clsx(styles.wrapper, fluid && styles.fluid)}>
       {label && <span className={styles.labelText}>{label}</span>}
-      <input
+      <BaseInput
         className={clsx(styles.input, fluid && styles.fluid, transparent && styles.transparent)}
         name={name}
         placeholder={placeholder}
