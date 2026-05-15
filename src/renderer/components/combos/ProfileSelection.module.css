@@ -3,7 +3,18 @@
   border-radius: 0.5rem;
   background-color: color-mix(in srgb, black 5%, var(--color-background));
 }
-
 [data-theme="dark"] .outer {
   background-color: color-mix(in srgb, white 5%, var(--color-background));
+}
+
+.row {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.error {
+  color: var(--color-red, red);
+  font-size: 1.2rem;
+  margin-top: 0.5rem;
 }

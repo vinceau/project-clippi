@@ -1,59 +1,104 @@
 import * as React from "react";
+import { Plus } from "lucide-react";
 import { toast } from "react-toastify";
-import type { DropdownProps } from "semantic-ui-react";
-import { Dropdown } from "semantic-ui-react";
 
+import { Select } from "@/ui/Select/Select";
+import { Button } from "@/ui/Button/Button";
+import { Input } from "@/ui/Input/Input";
+import { Modal } from "@/ui/Modal/Modal";
 import { Field, Label, Text } from "../Form";
 
 import styles from "./ProfileSelection.module.css";
 
-const generateOptions = (opts: string[]) => {
-  return opts.map((o) => ({
+const generateOptions = (opts: string[]) =>
+  opts.map((o) => ({
     key: o,
     text: o,
     value: o,
   }));
-};
 
-export interface ProfileSelectorProps extends DropdownProps {
+export interface ProfileSelectorProps {
   initialOptions: string[];
-  onChange: (value: any) => void;
+  value: string;
+  onChange: (value: string) => void;
+  onCreateProfile: (name: string) => void;
 }
 
-export function ProfileSelector({ initialOptions, value, onChange, ...rest }: ProfileSelectorProps) {
-  const options = generateOptions(initialOptions);
-  const handleNewItem = (_: any, data: any) => {
-    const notification = (
-      <>
-        Created <b>{data.value}</b> profile.
-      </>
-    );
-    toast.info(notification, {
-      toastId: `${data.value}-profile-created`,
-    });
-    onChange(data.value);
+export function ProfileSelector({ initialOptions, value, onChange, onCreateProfile }: ProfileSelectorProps) {
+  const [modalOpen, setModalOpen] = React.useState(false);
+  const [newName, setNewName] = React.useState("");
+
+  const trimmed = newName.trim();
+
+  const isDuplicate = trimmed.length > 0 && initialOptions.some((o) => o.toLowerCase() === trimmed.toLowerCase());
+
+  const openModal = () => {
+    setNewName("");
+    setModalOpen(true);
   };
+
+  const closeModal = () => {
+    setNewName("");
+    setModalOpen(false);
+  };
+
+  const handleCreate = () => {
+    if (!trimmed || isDuplicate) return;
+    onCreateProfile(trimmed);
+    toast.info(
+      <>
+        Created <b>{trimmed}</b> profile.
+      </>,
+      {
+        toastId: `${trimmed}-profile-created`,
+      }
+    );
+    setModalOpen(false);
+    setNewName("");
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && !isDuplicate) {
+      handleCreate();
+    }
+  };
+
+  const options = generateOptions(initialOptions);
   return (
     <div className={styles.outer}>
       <Field>
         <Label>Current Profile</Label>
-        <Dropdown
-          style={{ width: "100%" }}
-          options={options}
-          placeholder="Select a profile"
-          search
-          selection
-          allowAdditions
-          value={value}
-          onAddItem={handleNewItem}
-          onChange={(_: any, data: any) => onChange(data.value)}
-          {...rest}
-        />
+        <div className={styles.row}>
+          <Select fluid options={options} placeholder="Select a profile" value={value} onChange={(v) => onChange(v)} />
+          <Button primary onClick={openModal}>
+            <Plus size={16} /> New profile
+          </Button>
+        </div>
         <Text>
           Combo profiles are used to determine the combo and conversion events as well as the combos found by the{" "}
-          <b>Replay Processor</b>. You can create new profiles by typing a new profile name in the dropdown.
+          <b>Replay Processor</b>. You can create new profiles by clicking the New button.
         </Text>
       </Field>
+
+      <Modal open={modalOpen} onClose={closeModal}>
+        <Modal.Header>Create New Profile</Modal.Header>
+        <Modal.Content>
+          <Input
+            fluid
+            placeholder="Profile name"
+            value={newName}
+            onChange={(e) => setNewName(e.target.value)}
+            onKeyDown={handleKeyDown}
+          />
+          {isDuplicate && <p className={styles.error}>A profile with this name already exists.</p>}
+        </Modal.Content>
+        <Modal.Actions>
+          <Button onClick={closeModal}>Cancel</Button>
+          <Button primary disabled={!trimmed || isDuplicate} onClick={handleCreate}>
+            Save
+          </Button>
+        </Modal.Actions>
+      </Modal>
     </div>
   );
 }
