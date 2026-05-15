@@ -1,4 +1,5 @@
 import React from "react";
+import { clsx } from "clsx";
 
 import styles from "./CustomIcon.module.css";
 
@@ -11,7 +12,7 @@ export interface CustomIconProps {
 export function CustomIcon({ image, color, size }: CustomIconProps) {
   return (
     <i
-      className={`${styles.outer} icon ${size || ""}`}
+      className={clsx(styles.outer, styles.icon, size)}
       style={
         {
           "--custom-icon-mask": `url("${image}")`,

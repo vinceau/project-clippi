@@ -14,7 +14,6 @@
   color: var(--color-error, red);
 }
 
-.field.error input,
-.field.error :global(input) {
+.field.error input {
   border-color: var(--color-error, red);
 }
