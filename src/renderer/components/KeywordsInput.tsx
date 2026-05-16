@@ -7,11 +7,9 @@ import styles from "./KeywordsInput.module.css";
 
 function KeywordLabel({ name, onClick }: { name: string; onClick: () => void }) {
   return (
-    <Label size="small">
+    <Label>
       {name}
-      <span onClick={onClick} style={{ cursor: "pointer" }}>
-        <CloseIcon size={16} />
-      </span>
+      <CloseIcon size={12} onClick={onClick} style={{ cursor: "pointer" }} />
     </Label>
   );
 }
@@ -64,7 +62,7 @@ export function KeywordsInput({ value, onChange }: { value?: string[]; onChange?
       {currentKeywords.length === 0 ? (
         <div className={styles.placeholder}>No tags specified</div>
       ) : (
-        <div style={{ paddingTop: "1rem" }}>
+        <div style={{ paddingTop: "1rem", display: "flex", gap: "0.5rem" }}>
           {currentKeywords.map((keyword, index) => (
             <KeywordLabel key={keyword} name={keyword} onClick={() => removeKeyword(index)} />
           ))}

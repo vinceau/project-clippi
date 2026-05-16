@@ -35,8 +35,7 @@ export const ExportProfileModal = React.memo(function ExportProfileModal({
   }, [profileData, setCopied]);
 
   return (
-    <Modal className={theme.themeName} open={open} closeIcon onClose={onDismiss}>
-      <Modal.Header>Export profile</Modal.Header>
+    <Modal title="Export profile" className={theme.themeName} open={open} closeIcon onClose={onDismiss}>
       <Modal.Content>
         <Modal.Description>
           <p>Share this profile with your friends!</p>

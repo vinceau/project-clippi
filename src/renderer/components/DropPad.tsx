@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { clsx } from "clsx";
 import React, { useCallback } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
 import { useDropzone } from "react-dropzone";
@@ -24,7 +25,7 @@ export function DropPad({
   const onDrop = useCallback((acceptedFiles: File[]) => {
     onDropProp(acceptedFiles.map((f) => f.path));
   }, []);
-  const { open, getRootProps, getInputProps /* , isDragActive */ } = useDropzone({
+  const { open, getRootProps, getInputProps, isDragActive } = useDropzone({
     multiple: true,
     onDrop,
     accept,
@@ -32,7 +33,7 @@ export function DropPad({
     noKeyboard: true,
   });
   return (
-    <div className={styles.outer} {...getRootProps()}>
+    <div className={clsx(styles.outer, isDragActive && styles.active)} {...getRootProps()}>
       <input {...getInputProps()} />
       {files.length > 0 ? (
         <DragDropContext onDragEnd={onDragEnd}>

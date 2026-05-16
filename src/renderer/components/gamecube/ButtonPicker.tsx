@@ -38,13 +38,14 @@ export function ButtonPicker({
   };
   return (
     <Modal
+      title="Choose a button combination"
       className={theme.themeName}
       open={opened}
       onClose={() => setOpened(false)}
       closeIcon
       trigger={<div onClick={onOpen}>{children}</div>}
+      fluid
     >
-      <Modal.Header>Choose a button combination</Modal.Header>
       <Modal.Content>
         <div>
           <div className={styles.preview}>

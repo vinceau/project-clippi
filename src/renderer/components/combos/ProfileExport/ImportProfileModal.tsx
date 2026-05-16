@@ -44,8 +44,7 @@ export const ImportProfileModal = React.memo(function ImportProfileModal({
   }, [existingProfileNames, handleSubmit, profileName]);
 
   return (
-    <Modal className={theme.themeName} open={open} closeIcon onClose={onDismiss}>
-      <Modal.Header>Import profile</Modal.Header>
+    <Modal title="Import profile" className={theme.themeName} open={open} closeIcon onClose={onDismiss}>
       <Modal.Content>
         <Modal.Description>
           <Form>

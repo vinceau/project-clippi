@@ -7,6 +7,7 @@ import styles from "./Modal.module.css";
 /* eslint-disable react/require-default-props */
 
 interface ModalProps {
+  title: string;
   open?: boolean;
   onClose?: () => void;
   onOpen?: () => void;
@@ -15,10 +16,12 @@ interface ModalProps {
   trigger?: React.ReactNode;
   className?: string;
   children?: React.ReactNode;
+  fluid?: boolean;
 }
 
 /* eslint-disable react/require-default-props */
 export function Modal({
+  title,
   open,
   onClose,
   onOpen,
@@ -26,6 +29,7 @@ export function Modal({
   closeOnDimmerClick,
   trigger,
   className,
+  fluid,
   children,
 }: ModalProps) {
   const handleOpenChange = (nextOpen: boolean) => {
@@ -44,18 +48,20 @@ export function Modal({
       disablePointerDismissal={closeOnDimmerClick === false}
     >
       {trigger && (
-        <Dialog.Trigger className={styles.trigger} nativeButton={false}>
+        <Dialog.Trigger className={clsx(styles.trigger, fluid && styles.fluid)} nativeButton={false}>
           {trigger}
         </Dialog.Trigger>
       )}
       <Dialog.Portal>
         <Dialog.Backdrop className={styles.backdrop} />
         <Dialog.Popup className={clsx(styles.popup, className)}>
+          <Modal.Header className={styles.header}>{title}</Modal.Header>
           {closeIcon && (
             <Dialog.Close className={styles.closeIcon}>
               <X size={16} />
             </Dialog.Close>
           )}
+
           {children}
         </Dialog.Popup>
       </Dialog.Portal>

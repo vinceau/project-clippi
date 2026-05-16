@@ -80,8 +80,7 @@ export function ProfileSelector({ initialOptions, value, onChange, onCreateProfi
         </Text>
       </Field>
 
-      <Modal open={modalOpen} onClose={closeModal}>
-        <Modal.Header>Create New Profile</Modal.Header>
+      <Modal open={modalOpen} onClose={closeModal} title="Create New Profile">
         <Modal.Content>
           <Input
             fluid

@@ -43,7 +43,7 @@
   border: 1px solid var(--color-foreground2);
   background: var(--color-background2);
   overflow: hidden;
-  min-width: max-content;
+  min-width: var(--anchor-width);
   max-height: 12em;
   overflow-y: auto;
 }
@@ -94,6 +94,10 @@
 
 .inline {
   display: inline-flex;
+}
+
+.inline .text {
+  font-weight: 800;
 }
 
 .inline .trigger {

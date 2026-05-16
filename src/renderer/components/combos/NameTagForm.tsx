@@ -1,15 +1,15 @@
 import React from "react";
 import { FieldArray } from "react-final-form-arrays";
-import { X } from "lucide-react";
+import { X as CloseIcon } from "lucide-react";
 import { Label } from "@/ui/Label/Label";
 
 import styles from "./NameTagForm.module.css";
 
 function NameTagLabel({ name, onClick }: { name: string; onClick: () => void }) {
   return (
-    <Label size="small">
+    <Label>
       {name}
-      <X size={12} onClick={onClick} style={{ cursor: "pointer" }} />
+      <CloseIcon size={12} onClick={onClick} style={{ cursor: "pointer" }} />
     </Label>
   );
 }
@@ -52,7 +52,7 @@ export function NameTagForm({ name, values, push }: { name: string; values: any;
             return <div className={styles.placeholder}>No tags specified</div>;
           }
           return (
-            <div style={{ paddingTop: "1rem" }}>
+            <div style={{ paddingTop: "1rem", display: "flex", gap: "0.5rem" }}>
               {fields.map((n, index) => (
                 <NameTagLabel
                   key={`fields--${n}--${index}--${fields.value[index]}`}

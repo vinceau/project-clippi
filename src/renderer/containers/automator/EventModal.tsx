@@ -114,8 +114,14 @@ export function EventModal({
   const headerText = edit === null ? "Create new event" : "Edit event";
 
   return (
-    <Modal className={theme.themeName} open={opened} closeIcon onClose={closeAction} closeOnDimmerClick={false}>
-      <Modal.Header>{headerText}</Modal.Header>
+    <Modal
+      title={headerText}
+      className={theme.themeName}
+      open={opened}
+      closeIcon
+      onClose={closeAction}
+      closeOnDimmerClick={false}
+    >
       <Modal.Content>
         <Field padding="bottom">
           <Label>Event Type</Label>
