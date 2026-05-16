@@ -1,10 +1,6 @@
+import { clsx } from "clsx";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  ReflexContainer as ReflexContainerBase,
-  ReflexElement as ReflexElementBase,
-  ReflexSplitter,
-} from "react-reflex";
 
 import { actionComponents } from "@/containers/actions";
 import type { Action } from "@/lib/event_actions";
@@ -15,15 +11,6 @@ import { ActionInput, AddActionInput } from "./ActionInputs";
 import { EventItem } from "./EventItem";
 
 import styles from "./EventActionLists.module.css";
-
-const ReflexContainer = ReflexContainerBase as unknown as React.ComponentType<{
-  orientation?: string;
-  children?: React.ReactNode;
-}>;
-const ReflexElement = ReflexElementBase as unknown as React.ComponentType<{
-  style?: React.CSSProperties;
-  children?: React.ReactNode;
-}>;
 
 export interface EventActionListsProps {
   selected: number;
@@ -56,61 +43,54 @@ export function EventActionLists({ selected, onSelect }: EventActionListsProps) 
     dispatch.automator.addNewEventAction({ eventId, action });
   };
   return (
-    <ReflexContainer orientation="vertical">
-      <ReflexElement style={{ display: "flex" }}>
-        <div className={styles.columnContent}>
-          <div className={styles.columnInner}>
-            <div className={styles.header}>
-              <h2>Events</h2>
-            </div>
-            <div>
-              {val.map((e, i) => {
-                return (
-                  <EventItem
-                    key={e.id}
-                    selected={selected === i}
-                    disabled={e.disabled}
-                    onClick={() => onSelect(i)}
-                    event={e}
-                  />
-                );
-              })}
-            </div>
+    <div className={styles.container}>
+      <div className={styles.columnContent}>
+        <div className={styles.columnInner}>
+          <div className={styles.header}>
+            <h2>Events</h2>
+          </div>
+          <div>
+            {val.map((e, i) => {
+              return (
+                <EventItem
+                  key={e.id}
+                  selected={selected === i}
+                  disabled={e.disabled}
+                  onClick={() => onSelect(i)}
+                  event={e}
+                />
+              );
+            })}
           </div>
         </div>
-      </ReflexElement>
-
-      <ReflexSplitter />
-
-      <ReflexElement style={{ display: "flex" }}>
-        <div className={styles.columnContent}>
-          <div className={styles.columnInner}>
-            <div className={styles.header}>
-              <h2>Actions</h2>
-            </div>
-            <div className={styles.eventName}>{selectedEventName}</div>
-            <div>
-              {selectedActions.map((a, i) => {
-                const onInnerActionChange = (newVal: Action) => {
-                  onActionChange(i, newVal);
-                };
-                const prefix = i === 0 ? "Then " : "And ";
-                return (
-                  <ActionInput
-                    key={`${selectedEvent.id}--${a.name}`}
-                    selectPrefix={prefix}
-                    value={a}
-                    onChange={onInnerActionChange}
-                    disabledActions={[]}
-                    onRemove={() => onActionRemove(i)}
-                  />
-                );
-              })}
-              <AddActionInput onChange={onActionAdd} disabledActions={disabledActions} />
-            </div>
+      </div>
+      <div className={clsx(styles.columnContent, styles.actionColumn)}>
+        <div className={styles.columnInner}>
+          <div className={styles.header}>
+            <h2>Actions</h2>
+          </div>
+          <div className={styles.eventName}>{selectedEventName}</div>
+          <div>
+            {selectedActions.map((a, i) => {
+              const onInnerActionChange = (newVal: Action) => {
+                onActionChange(i, newVal);
+              };
+              const prefix = i === 0 ? "Then " : "And ";
+              return (
+                <ActionInput
+                  key={`${selectedEvent.id}--${a.name}`}
+                  selectPrefix={prefix}
+                  value={a}
+                  onChange={onInnerActionChange}
+                  disabledActions={[]}
+                  onRemove={() => onActionRemove(i)}
+                />
+              );
+            })}
+            <AddActionInput onChange={onActionAdd} disabledActions={disabledActions} />
           </div>
         </div>
-      </ReflexElement>
-    </ReflexContainer>
+      </div>
+    </div>
   );
 }
