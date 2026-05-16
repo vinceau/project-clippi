@@ -44,31 +44,29 @@ export function EventActionLists({ selected, onSelect }: EventActionListsProps) 
   };
   return (
     <div className={styles.container}>
-      <div className={styles.columnContent}>
-        <div className={styles.columnInner}>
-          <div className={styles.header}>
-            <h2>Events</h2>
-          </div>
-          <div>
-            {val.map((e, i) => {
-              return (
-                <EventItem
-                  key={e.id}
-                  selected={selected === i}
-                  disabled={e.disabled}
-                  onClick={() => onSelect(i)}
-                  event={e}
-                />
-              );
-            })}
-          </div>
+      <div className={styles.column}>
+        <div className={styles.header}>
+          <h2>Events</h2>
+        </div>
+        <div className={styles.columnContent}>
+          {val.map((e, i) => {
+            return (
+              <EventItem
+                key={e.id}
+                selected={selected === i}
+                disabled={e.disabled}
+                onClick={() => onSelect(i)}
+                event={e}
+              />
+            );
+          })}
         </div>
       </div>
-      <div className={clsx(styles.columnContent, styles.actionColumn)}>
-        <div className={styles.columnInner}>
-          <div className={styles.header}>
-            <h2>Actions</h2>
-          </div>
+      <div className={clsx(styles.column, styles.actionColumn)}>
+        <div className={styles.header}>
+          <h2>Actions</h2>
+        </div>
+        <div className={styles.columnContent}>
           <div className={styles.eventName}>{selectedEventName}</div>
           <div>
             {selectedActions.map((a, i) => {
