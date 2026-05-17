@@ -2,8 +2,6 @@ import React from "react";
 import { Field } from "react-final-form";
 import { Button } from "@/ui/Button/Button";
 
-import { ThemeMode, useTheme } from "@/styles";
-
 type MoveSequenceMode = "include" | "start" | "end" | "exact";
 
 function MoveSequenceModeButton({
@@ -16,15 +14,9 @@ function MoveSequenceModeButton({
   currentValue: MoveSequenceMode;
   onChange: (mode: MoveSequenceMode) => void;
 }>) {
-  const theme = useTheme();
   const isSelected = currentValue === type;
   return (
-    <Button
-      type="button"
-      inverted={theme.themeName === ThemeMode.DARK}
-      primary={isSelected}
-      onClick={() => onChange(type)}
-    >
+    <Button type="button" primary={isSelected} onClick={() => onChange(type)}>
       {children}
     </Button>
   );
