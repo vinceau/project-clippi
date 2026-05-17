@@ -42,50 +42,50 @@ export function SlippiConnectionPlaceholder({
   const [port_, setPort] = React.useState(port);
   return (
     <Segment placeholder>
-      <Grid columns={2} stackable textAlign="center">
-        <VerticalDivider>Or</VerticalDivider>
-        <Grid.Row verticalAlign="middle">
-          <Grid.Column>
-            <Header vertical icon>
-              <SlippiIcon style={{ width: "64px", height: "64px" }} />
-              Connect to a Slippi Relay
-            </Header>
-            <div className={styles.formContainer}>
-              <div className={styles.fieldMargin}>
-                <Input
-                  label="Address"
-                  placeholder="localhost"
-                  fluid
-                  value={address_}
-                  onChange={(e: any) => setAddress(e.target.value)}
-                  onBlur={() => dispatcher.slippi.setRelayAddress(address_)}
-                />
-              </div>
+      <div className={styles.container}>
+        <div>
+          <Header vertical icon>
+            <SlippiIcon style={{ width: "64px", height: "64px" }} />
+            Connect to a Slippi Relay
+          </Header>
+          <div className={styles.formContainer}>
+            <div className={styles.fieldMargin}>
               <Input
-                label="Port"
-                placeholder="1667"
+                label="Address"
+                placeholder="localhost"
                 fluid
-                value={port_}
-                onChange={(e: any) => setPort(e.target.value)}
-                onBlur={() => dispatcher.slippi.setPort(port_)}
+                value={address_}
+                onChange={(e: any) => setAddress(e.target.value)}
+                onBlur={() => dispatcher.slippi.setRelayAddress(address_)}
               />
-              <div className={styles.buttonPadding}>
-                <Button onClick={() => onClick({ address: address_, port: port_ })}>Connect</Button>
-              </div>
             </div>
-          </Grid.Column>
-          <VerticalDivider>Or</VerticalDivider>
-          <Grid.Column>
-            <Header vertical icon>
-              <CustomIcon image={dolphinLogoSVG} style={{ width: "64px", height: "64px" }} />
-              Connect to Slippi Dolphin
-            </Header>
+            <Input
+              label="Port"
+              placeholder="1667"
+              fluid
+              value={port_}
+              onChange={(e: any) => setPort(e.target.value)}
+              onBlur={() => dispatcher.slippi.setPort(port_)}
+            />
             <div className={styles.buttonPadding}>
-              <Button onClick={() => dispatcher.slippi.connectToDolphin()}>Find Dolphin Instance</Button>
+              <Button onClick={() => onClick({ address: address_, port: port_ })}>Connect</Button>
             </div>
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
+          </div>
+        </div>
+        <div className={styles.dividerContainer}>
+          <VerticalDivider>Or</VerticalDivider>
+          <HorizontalDivider>Or</HorizontalDivider>
+        </div>
+        <div>
+          <Header vertical icon>
+            <CustomIcon image={dolphinLogoSVG} style={{ width: "64px", height: "64px" }} />
+            Connect to Slippi Dolphin
+          </Header>
+          <div className={styles.buttonPadding}>
+            <Button onClick={() => dispatcher.slippi.connectToDolphin()}>Find Dolphin Instance</Button>
+          </div>
+        </div>
+      </div>
     </Segment>
   );
 }

@@ -1,22 +1,20 @@
 .verticalDivider {
-  display: none !important;
-}
-
-@media (min-width: 1024px) {
-  .verticalDivider {
-    display: block !important;
-  }
+  display: none;
 }
 
 .horizontalDivider {
   width: 100%;
-  display: block !important;
+  display: none;
 }
 
-@media (min-width: 1024px) {
-  .horizontalDivider {
-    display: none !important;
-  }
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  height: 100%;
+  width: 100%;
 }
 
 .formContainer {
@@ -34,4 +32,25 @@
 
 .buttonPadding {
   padding: 10px 0;
+}
+
+@media (min-width: 1024px) {
+  .verticalDivider {
+    display: block;
+  }
+  .dividerContainer {
+    height: 100%;
+  }
+}
+
+@media (max-width: 1024px) {
+  .container {
+    flex-direction: column;
+  }
+  .horizontalDivider {
+    display: block;
+  }
+  .dividerContainer {
+    width: 100%;
+  }
 }
