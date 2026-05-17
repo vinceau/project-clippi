@@ -12,7 +12,7 @@
 .horizontal::after {
   content: "";
   flex: 1;
-  border-bottom: 1px solid var(--color-background3);
+  border-bottom: 1px solid var(--color-foreground);
 }
 
 .vertical {
@@ -26,11 +26,11 @@
 .vertical::after {
   content: "";
   flex: 1;
-  border-right: 1px solid var(--color-background3);
+  border-right: 1px solid var(--color-foreground);
 }
 
 .text {
   font-size: 1.2rem;
-  color: var(--color-foreground2);
+  color: var(--color-foreground);
   white-space: nowrap;
 }

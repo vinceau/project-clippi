@@ -27,7 +27,7 @@
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  background: var(--color-background);
+  background: white;
   display: block;
   transition: transform 0.2s;
   margin-left: 1px; /* i don't know why i need this but the style looks off without it */

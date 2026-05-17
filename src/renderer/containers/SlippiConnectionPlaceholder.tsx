@@ -73,8 +73,8 @@ export function SlippiConnectionPlaceholder({
           </div>
         </div>
         <div className={styles.dividerContainer}>
-          <VerticalDivider>Or</VerticalDivider>
-          <HorizontalDivider>Or</HorizontalDivider>
+          <VerticalDivider>OR</VerticalDivider>
+          <HorizontalDivider>OR</HorizontalDivider>
         </div>
         <div>
           <Header vertical icon>

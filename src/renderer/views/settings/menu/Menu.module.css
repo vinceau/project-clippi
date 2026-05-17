@@ -23,11 +23,11 @@
 }
 
 .item:hover {
-  background: color-mix(in srgb, var(--color-background3), transparent 50%);
+  background: color-mix(in srgb, var(--color-foreground3), transparent 50%);
 }
 
 .active {
-  background: var(--color-background3);
+  background: var(--color-foreground3);
   font-weight: 600;
 }
 
