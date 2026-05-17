@@ -16,7 +16,7 @@ import { DEFAULT_PROFILE } from "@/store/models/slippi";
 
 import { Confirm } from "@/ui/Confirm/Confirm";
 import { CharacterSelectAdapter, CustomCharacterListAdapter } from "./CharacterSelect";
-import { ToggleAdapter } from "./FormAdapters";
+import { InputAdaptor, ToggleAdapter } from "./FormAdapters";
 import { MoveSequenceFormAdapter } from "./MoveSequenceForm";
 import { MoveSequenceModeFormAdapter } from "./MoveSequenceModeForm";
 import { NameTagForm } from "./NameTagForm";
@@ -46,17 +46,17 @@ function ButtonContainer({
         <Save size={20} />
         Save profile
       </Button>
-      <div>
+      <div style={{ display: "flex", gap: "0.5rem" }}>
         <div className={clsx("delete-button", styles.deleteButton)}>
           <Button type="button" onClick={onDelete}>
             {currentProfile === DEFAULT_PROFILE ? (
               <>
-                <Undo size={20} />
+                <Undo />
                 Reset profile
               </>
             ) : (
               <>
-                <Trash size={20} />
+                <Trash />
                 Delete profile
               </>
             )}
@@ -129,9 +129,9 @@ export function ComboForm(props: {
                 <Label>Minimum Combo Length</Label>
                 <FinalField
                   name="minComboLength"
-                  component="input"
+                  component={InputAdaptor}
                   type="number"
-                  format={(val) => parseInt(val)}
+                  format={(val) => parseInt(val, 10)}
                   formatOnBlur
                 />
                 <Text>Only match combos which contain at least this many moves.</Text>
@@ -140,9 +140,9 @@ export function ComboForm(props: {
                 <Label>Minimum Combo Percent</Label>
                 <FinalField
                   name="minComboPercent"
-                  component="input"
+                  component={InputAdaptor}
                   type="number"
-                  format={(val) => parseInt(val)}
+                  format={(val) => parseInt(val, 10)}
                   formatOnBlur
                 />
                 <Text>Only match combos which do at least this much percent damage.</Text>
@@ -230,9 +230,9 @@ export function ComboForm(props: {
                       <Label>Minimum Pummels per Wobble</Label>
                       <FinalField
                         name="wobbleThreshold"
-                        component="input"
+                        component={InputAdaptor}
                         type="number"
-                        format={(val) => parseInt(val)}
+                        format={(val) => parseInt(val, 10)}
                         formatOnBlur
                       />
                       <Text>

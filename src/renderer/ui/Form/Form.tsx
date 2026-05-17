@@ -1,6 +1,7 @@
 import { Field as BaseField, Form as BaseForm } from "@base-ui/react";
 import { clsx } from "clsx";
 import React from "react";
+import { Input, InputProps } from "@/ui/Input/Input";
 import styles from "./Form.module.css";
 
 interface FormProps {
@@ -13,7 +14,7 @@ interface FormFieldProps {
   children?: React.ReactNode;
 }
 
-interface FormInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+interface FormInputProps extends InputProps {
   icon?: React.ReactNode;
 }
 
@@ -34,17 +35,6 @@ function FormField({ error, children }: FormFieldProps) {
   );
 }
 
-function FormInput({ icon, ...props }: FormInputProps) {
-  return (
-    <>
-      {icon && <span>{icon}</span>}
-      {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-      <input {...props} />
-    </>
-  );
-}
-
 Form.Field = FormField;
-Form.Input = FormInput;
 
-export { Form, FormField, FormInput };
+export { Form, FormField };

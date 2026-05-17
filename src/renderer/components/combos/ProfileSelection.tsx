@@ -70,13 +70,15 @@ export function ProfileSelector({ initialOptions, value, onChange, onCreateProfi
         <Label>Current Profile</Label>
         <div className={styles.row}>
           <Select fluid options={options} placeholder="Select a profile" value={value} onChange={(v) => onChange(v)} />
-          <Button primary onClick={openModal}>
-            <Plus size={16} /> New profile
-          </Button>
+          <div className={styles.newProfileButton}>
+            <Button onClick={openModal}>
+              <Plus size={16} /> New profile
+            </Button>
+          </div>
         </div>
         <Text>
           Combo profiles are used to determine the combo and conversion events as well as the combos found by the{" "}
-          <b>Replay Processor</b>. You can create new profiles by clicking the New button.
+          <b>Replay Processor</b>. You can create new profiles by clicking the "New profile" button.
         </Text>
       </Field>
 

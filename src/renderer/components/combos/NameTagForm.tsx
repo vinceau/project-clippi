@@ -3,6 +3,7 @@ import { FieldArray } from "react-final-form-arrays";
 import { X as CloseIcon } from "lucide-react";
 import { Label } from "@/ui/Label/Label";
 
+import { Input } from "@/ui/Input/Input";
 import styles from "./NameTagForm.module.css";
 
 function NameTagLabel({ name, onClick }: { name: string; onClick: () => void }) {
@@ -32,12 +33,12 @@ export function NameTagForm({ name, values, push }: { name: string; values: any;
   return (
     <div>
       <div>
-        <input
+        <Input
           placeholder="Type tags here and press enter..."
           autoCapitalize="none"
           autoComplete="off"
           autoCorrect="off"
-          spellCheck="false"
+          spellCheck={false}
           tabIndex={0}
           type="text"
           aria-autocomplete="list"

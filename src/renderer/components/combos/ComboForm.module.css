@@ -7,8 +7,3 @@
 .outerContainer > button {
   margin-bottom: 3px !important;
 }
-
-.deleteButton:hover {
-  background-color: #d01919;
-  color: white;
-}

@@ -74,7 +74,7 @@ export function SlippiConnectionPlaceholder({
               </div>
             </div>
           </Grid.Column>
-          <HorizontalDivider>Or</HorizontalDivider>
+          <VerticalDivider>Or</VerticalDivider>
           <Grid.Column>
             <Header vertical icon>
               <CustomIcon image={dolphinLogoSVG} style={{ width: "64px", height: "64px" }} />

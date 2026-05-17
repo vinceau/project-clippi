@@ -3,7 +3,7 @@ import { clsx } from "clsx";
 import React from "react";
 import styles from "./Input.module.css";
 
-interface InputProps {
+export interface InputProps {
   label?: string;
   name?: string;
   placeholder?: string;
