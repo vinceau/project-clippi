@@ -3,17 +3,17 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1em;
+  margin-bottom: 16px;
 }
 
 .switchRoot {
-  width: 2.5em;
-  height: 1.4em;
-  border-radius: 0.7em;
+  width: 45px;
+  height: 22px;
+  border-radius: 22px;
   border: none;
   background: var(--color-foreground3);
   cursor: pointer;
-  padding: 0.15em;
+  padding: 2px;
   display: flex;
   align-items: center;
   transition: background 0.2s;
@@ -24,14 +24,15 @@
 }
 
 .switchThumb {
-  width: 1.1em;
-  height: 1.1em;
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
   background: var(--color-background);
   display: block;
   transition: transform 0.2s;
+  margin-left: 1px; /* i don't know why i need this but the style looks off without it */
 }
 
 .switchRoot[data-checked] .switchThumb {
-  transform: translateX(1.1em);
+  transform: translateX(24px);
 }
