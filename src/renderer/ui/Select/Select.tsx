@@ -24,6 +24,7 @@ export interface SelectProps {
   icon?: React.ReactNode;
   options?: SelectOption[];
   trigger?: React.ReactElement;
+  triggerClassName?: string;
   className?: string;
   onChange?: (value: string) => void;
   onAddItem?: (value: string) => void;
@@ -43,6 +44,7 @@ export function Select({
   icon: iconNode,
   options,
   trigger,
+  triggerClassName,
   className,
   onChange,
   children,
@@ -78,7 +80,7 @@ export function Select({
         disabled={disabled}
         items={items}
       >
-        <BaseSelect.Trigger className={styles.trigger}>
+        <BaseSelect.Trigger className={clsx(styles.trigger, triggerClassName)}>
           {trigger ??
             (iconNode || (
               <>

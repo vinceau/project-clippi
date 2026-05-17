@@ -106,7 +106,7 @@ export function OBSStatusBar() {
             </Button>
           </div>
         ) : (
-          <>
+          <div style={{ display: "flex", gap: "0.5em" }}>
             <Labelled title={recordingButtonTitle} disabled={!recordButtonDisabled}>
               <RecordButton
                 onClick={onRecord}
@@ -123,7 +123,7 @@ export function OBSStatusBar() {
               <Play size={16} />
               Play
             </Button>
-          </>
+          </div>
         )}
       </div>
     </div>
