@@ -47,11 +47,7 @@ export function Modal({
       modal
       disablePointerDismissal={closeOnDimmerClick === false}
     >
-      {trigger && (
-        <Dialog.Trigger className={clsx(styles.trigger, fluid && styles.fluid)} nativeButton={false}>
-          {trigger}
-        </Dialog.Trigger>
-      )}
+      {trigger && <Dialog.Trigger className={clsx(styles.trigger, fluid && styles.fluid)}>{trigger}</Dialog.Trigger>}
       <Dialog.Portal>
         <Dialog.Backdrop className={styles.backdrop} />
         <Dialog.Popup className={clsx(styles.popup, className)}>

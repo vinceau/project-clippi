@@ -5,8 +5,8 @@ import { FolderOpen } from "lucide-react";
 
 import { getFilePath, getFolderPath, openFileOrParentFolder } from "@/lib/utils";
 
-import styles from "./FileInput.module.css";
 import { Tooltip } from "@/ui/Tooltip/Tooltip";
+import styles from "./FileInput.module.css";
 
 interface FileInputProps extends Record<string, any> {
   value: string;

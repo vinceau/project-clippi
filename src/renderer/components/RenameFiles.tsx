@@ -10,9 +10,8 @@ import { SlideReveal } from "@/components/ProcessSection";
 import { TemplatePreview } from "@/components/TemplatePreview";
 import { defaultRenameFormat } from "@/store/models/highlights";
 import { Accordion } from "@/ui/Accordion/Accordion";
-import styles from "./RenameFiles.module.css";
-
 import { Tooltip } from "@/ui/Tooltip/Tooltip";
+import styles from "./RenameFiles.module.css";
 
 const metadata = {
   startAt: "2001-11-21T17:33:54.000Z",

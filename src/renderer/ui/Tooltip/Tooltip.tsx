@@ -19,7 +19,13 @@ export function Tooltip({ title, position = "bottom", disabled, onClick, trigger
 
   return (
     <BaseTooltip.Root>
-      <BaseTooltip.Trigger className={clsx(styles.trigger, triggerClassName)} onClick={onClick} render={onClick ? undefined : <span />}>{children}</BaseTooltip.Trigger>
+      <BaseTooltip.Trigger
+        className={clsx(styles.trigger, triggerClassName)}
+        onClick={onClick}
+        render={onClick ? undefined : <span />}
+      >
+        {children}
+      </BaseTooltip.Trigger>
       <BaseTooltip.Portal>
         <BaseTooltip.Positioner side={position} sideOffset={8}>
           <BaseTooltip.Popup className={styles.popup}>

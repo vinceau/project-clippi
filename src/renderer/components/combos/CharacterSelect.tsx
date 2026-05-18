@@ -9,8 +9,8 @@ import { Button } from "@/ui/Button/Button";
 
 import { ThemeMode, useTheme } from "@/styles";
 
-import { CharacterIcon } from "../CharacterIcon";
 import { Tooltip } from "@/ui/Tooltip/Tooltip";
+import { CharacterIcon } from "../CharacterIcon";
 import { CharacterLabel } from "./CharacterLabel";
 
 import styles from "./CharacterSelect.module.css";

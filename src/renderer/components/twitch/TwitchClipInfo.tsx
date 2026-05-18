@@ -3,8 +3,8 @@ import React from "react";
 import { Pencil, Trash } from "lucide-react";
 import { format } from "timeago.js";
 
-import { ExternalLink as A } from "../ExternalLink";
 import { Tooltip } from "@/ui/Tooltip/Tooltip";
+import { ExternalLink as A } from "../ExternalLink";
 
 import styles from "./TwitchClipInfo.module.css";
 
