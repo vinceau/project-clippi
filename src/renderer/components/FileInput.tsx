@@ -53,7 +53,7 @@ export function FileInput({ value, directory, onChange, fileTypeFilters, saveFil
     <div className={styles.outer}>
       <div className={styles.inputRow}>
         <Button padding="none" onClick={() => openFileOrParentFolder(filesPath)} disabled={!filesPath}>
-          <Tooltip title="Open location" style={{ display: "flex", alignItems: "center" }}>
+          <Tooltip title="Open location" triggerClassName={styles.tooltipTrigger}>
             <FolderOpen size={20} />
           </Tooltip>
         </Button>

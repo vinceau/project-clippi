@@ -7,10 +7,10 @@ import styles from "./ConnectionStatusDisplay.module.css";
 
 export function ConnectionStatusDisplay({
   icon,
-  iconHoverText,
+  iconHoverText = "",
   onIconClick,
   headerText,
-  headerHoverTitle,
+  headerHoverTitle = "",
   onHeaderClick,
   color,
   shouldPulse,
