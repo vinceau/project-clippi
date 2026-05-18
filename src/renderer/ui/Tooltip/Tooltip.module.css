@@ -8,12 +8,13 @@
   box-sizing: border-box;
   padding: 0.35em 0.65em;
   border-radius: 0.35em;
-  background: var(--color-foreground3);
-  color: var(--color-secondary);
+  background: var(--color-foreground);
+  color: var(--color-background);
   font-size: 0.85em;
   line-height: 1.4;
   transform-origin: var(--transform-origin);
   transition: transform 150ms, opacity 150ms;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
 
   &[data-starting-style],
   &[data-ending-style] {
@@ -28,7 +29,7 @@
 
 .arrow {
   display: flex;
-  color: var(--color-foreground3);
+  color: var(--color-foreground);
 
   &[data-side="top"] {
     bottom: -8px;
