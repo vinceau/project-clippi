@@ -2,13 +2,12 @@ import { clsx } from "clsx";
 import React from "react";
 import { Link, Route } from "react-router-dom";
 
-import { TippyLabel } from "../Labelled";
-
+import { Tooltip } from "@/ui/Tooltip/Tooltip";
 import styles from "./MenuIcon.module.css";
 
 export function MenuIcon({
   active,
-  label,
+  label = "",
   children,
 }: {
   active?: boolean;
@@ -16,9 +15,9 @@ export function MenuIcon({
   children?: React.ReactNode;
 }) {
   return (
-    <TippyLabel title={label} size="big" distance={-70} duration={200} position="right" style={{ width: "100%" }}>
+    <Tooltip title={label} position="right">
       <div className={clsx(styles.outerMenuIcon, active && styles.active)}>{children}</div>
-    </TippyLabel>
+    </Tooltip>
   );
 }
 

@@ -6,17 +6,18 @@ export interface TooltipProps {
   title: string;
   position?: "top" | "bottom" | "left" | "right";
   disabled?: boolean;
+  onClick?: () => void;
   children: React.ReactNode;
 }
 
-export function Tooltip({ title, position = "bottom", disabled, children }: TooltipProps) {
+export function Tooltip({ title, position = "bottom", disabled, onClick, children }: TooltipProps) {
   if (disabled || !title) {
     return children;
   }
 
   return (
     <BaseTooltip.Root>
-      <BaseTooltip.Trigger className={styles.trigger}>{children}</BaseTooltip.Trigger>
+      <BaseTooltip.Trigger className={styles.trigger} onClick={onClick}>{children}</BaseTooltip.Trigger>
       <BaseTooltip.Portal>
         <BaseTooltip.Positioner side={position} sideOffset={8}>
           <BaseTooltip.Popup className={styles.popup}>
