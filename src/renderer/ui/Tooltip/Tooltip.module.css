@@ -1,5 +1,7 @@
 .trigger {
+  all: unset;
   display: inline-block;
+  width: 100%;
 }
 
 .popup {

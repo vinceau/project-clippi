@@ -5,7 +5,6 @@ import "@/styles/animations.css"; // Keyframe animations
 
 import React from "react";
 import { Provider, useDispatch, useSelector } from "react-redux";
-import { Tooltip } from "@base-ui/react/tooltip";
 import { HashRouter as Router, Redirect, Route, Switch } from "react-router-dom";
 import { PersistGate } from "redux-persist/integration/react";
 
@@ -16,6 +15,7 @@ import type { Dispatch, iRootState } from "@/store";
 import { persistor, store } from "@/store";
 import { ThemeManager, ThemeMode, useTheme } from "@/styles";
 import { MainView, SettingsView } from "@/views";
+import { TooltipProvider } from "@/ui/Tooltip/Tooltip";
 
 function App() {
   const dispatch = useDispatch<Dispatch>();
@@ -28,7 +28,7 @@ function App() {
     }
   }, []);
   return (
-    <Tooltip.Provider>
+    <TooltipProvider>
       <div className={theme.themeName}>
         <History />
         <ToastContainer />
@@ -40,7 +40,7 @@ function App() {
           </Route>
         </Switch>
       </div>
-    </Tooltip.Provider>
+    </TooltipProvider>
   );
 }
 

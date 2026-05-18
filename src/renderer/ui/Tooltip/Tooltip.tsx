@@ -53,3 +53,5 @@ function ArrowSvg(props: React.ComponentProps<"svg">) {
     </svg>
   );
 }
+
+export const TooltipProvider = BaseTooltip.Provider;
