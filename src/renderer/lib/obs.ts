@@ -1,26 +1,24 @@
 import { OBSWebSocket } from "obs-websocket-js";
 import { BehaviorSubject, from, Subject } from "rxjs";
-import { map, skip, switchMap, take } from "rxjs/operators";
+import { skip, switchMap, take } from "rxjs/operators";
 
 import { store } from "@/store";
 
 import { notify } from "./utils";
 
-// I don't know where this type is defined so we're just going to manually define it here
-// based on the actual data received from OBS
 interface SceneItem {
-  sceneName: string;
-  sceneUuid: string;
   sourceName: string;
   sourceUuid: string;
   sceneItemId: number;
   sceneItemIndex: number;
+  sceneItemEnabled: boolean;
 }
 
 export interface Scene {
   sceneIndex: number;
   sceneName: string;
   sceneUuid: string;
+  sources: SceneItem[];
 }
 
 export enum OBSRecordingAction {
@@ -72,7 +70,25 @@ class OBSConnection {
     this.refreshScenesSource$
       .pipe(
         switchMap(() => from(this.socket.call("GetSceneList"))),
-        map((data) => data.scenes as unknown as Scene[])
+        switchMap(async (data) => {
+          const scenes = data.scenes as unknown as Scene[];
+          const scenesWithItems = await Promise.all(
+            scenes.map(async (scene) => {
+              try {
+                const result = await this.socket.call("GetSceneItemList", {
+                  sceneName: scene.sceneName,
+                });
+                return {
+                  ...scene,
+                  sources: result.sceneItems as unknown as SceneItem[],
+                };
+              } catch {
+                return { ...scene, sources: [] };
+              }
+            })
+          );
+          return scenesWithItems;
+        })
       )
       .subscribe(this.scenesSource$);
   }
@@ -164,21 +180,20 @@ class OBSConnection {
 
   public async setSourceItemVisibility(sourceName: string, visible?: boolean) {
     const scenes = this.scenesSource$.value;
-    const promises = scenes.map(async (scene) => {
-      const items = scene.sources.map((source) => source.name);
+    for (const scene of scenes) {
+      const items = scene.sources.map((source) => source.sourceName);
       if (items.includes(sourceName)) {
         const result = await this.socket.call("GetSceneItemId", {
-          sceneName: scene.name,
+          sceneName: scene.sceneName,
           sourceName,
         });
         await this.socket.call("SetSceneItemEnabled", {
-          sceneName: scene.name,
+          sceneName: scene.sceneName,
           sceneItemId: result.sceneItemId,
           sceneItemEnabled: Boolean(visible),
         });
       }
-    });
-    await Promise.all(promises);
+    }
   }
 
   private _setupListeners() {
@@ -231,23 +246,19 @@ export const connectToOBSAndNotify = (): void => {
 };
 
 export const getAllSceneItems = (scenes: Scene[]): string[] => {
-  console.log({ scenes });
   const allItems: string[] = [];
   scenes.forEach((scene) => {
-    const items = scene.sources.map((source) => source.sceneName);
+    const items = scene.sources.map((source) => source.sourceName);
     allItems.push(...items);
   });
   const set = new Set(allItems);
   const uniqueNames = Array.from(set);
   uniqueNames.sort();
-  console.log({uniqueNames});
   return uniqueNames;
 };
 
 export const getAllScenes = (scenes: Scene[]): string[] => {
-  console.log();
   const sceneNames = scenes.map((s) => s.sceneName);
   sceneNames.sort();
-  console.log({sceneNames});
   return sceneNames;
 };
