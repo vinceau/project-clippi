@@ -1,0 +1,50 @@
+.trigger {
+  display: inline-block;
+}
+
+.popup {
+  box-sizing: border-box;
+  padding: 0.35em 0.65em;
+  border-radius: 0.35em;
+  background: var(--color-foreground3);
+  color: var(--color-secondary);
+  font-size: 0.85em;
+  line-height: 1.4;
+  transform-origin: var(--transform-origin);
+  transition: transform 150ms, opacity 150ms;
+
+  &[data-starting-style],
+  &[data-ending-style] {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  &[data-instant] {
+    transition: none;
+  }
+}
+
+.arrow {
+  display: flex;
+  color: var(--color-foreground3);
+
+  &[data-side="top"] {
+    bottom: -8px;
+    rotate: 180deg;
+  }
+
+  &[data-side="bottom"] {
+    top: -8px;
+    rotate: 0deg;
+  }
+
+  &[data-side="left"] {
+    right: -13px;
+    rotate: 90deg;
+  }
+
+  &[data-side="right"] {
+    left: -13px;
+    rotate: -90deg;
+  }
+}

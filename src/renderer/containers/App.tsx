@@ -1,11 +1,11 @@
 // Import all the styles first since they will be overwritten
-import "react-tippy/dist/tippy.css"; // React-tippy styles
 import "react-toastify/dist/ReactToastify.min.css"; // Toast styles
 import "@/styles/index.scss"; // Our custom styles
 import "@/styles/animations.css"; // Keyframe animations
 
 import React from "react";
 import { Provider, useDispatch, useSelector } from "react-redux";
+import { Tooltip } from "@base-ui/react/tooltip";
 import { HashRouter as Router, Redirect, Route, Switch } from "react-router-dom";
 import { PersistGate } from "redux-persist/integration/react";
 
@@ -28,17 +28,19 @@ function App() {
     }
   }, []);
   return (
-    <div className={theme.themeName}>
-      <History />
-      <ToastContainer />
-      <Switch>
-        <Route path="/main" component={MainView} />
-        <Route path="/settings" component={SettingsView} />
-        <Route exact path="/">
-          <Redirect to="/main" />
-        </Route>
-      </Switch>
-    </div>
+    <Tooltip.Provider>
+      <div className={theme.themeName}>
+        <History />
+        <ToastContainer />
+        <Switch>
+          <Route path="/main" component={MainView} />
+          <Route path="/settings" component={SettingsView} />
+          <Route exact path="/">
+            <Redirect to="/main" />
+          </Route>
+        </Switch>
+      </div>
+    </Tooltip.Provider>
   );
 }
 
