@@ -3,7 +3,7 @@ import { Tooltip as BaseTooltip } from "@base-ui/react/tooltip";
 import React from "react";
 import styles from "./Tooltip.module.css";
 
-export interface TooltipProps {
+interface TooltipProps {
   title: string;
   position?: "top" | "bottom" | "left" | "right";
   disabled?: boolean;
