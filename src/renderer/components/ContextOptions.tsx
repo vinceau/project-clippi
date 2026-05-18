@@ -5,7 +5,7 @@ import { Label } from "@/ui/Label/Label";
 import { contextDescriptions } from "@/lib/contextDescriptions";
 import type { Context } from "@/lib/event_actions";
 
-import { TippyLabel } from "./Labelled";
+import { Tooltip } from "@/ui/Tooltip/Tooltip";
 
 export function ContextOptions({
   onLabelClick,
@@ -29,18 +29,11 @@ export function ContextOptions({
         {cat.descriptions
           .filter((d) => keys.includes(d.contextName))
           .map((d) => (
-            <TippyLabel
-              key={`${cat.category}--${d.contextName}`}
-              title={d.description}
-              arrow
-              duration={200}
-              position="top"
-              size="big"
-            >
+            <Tooltip key={`${cat.category}--${d.contextName}`} title={d.description} position="top">
               <Label as="a" onClick={() => clickHandler(d.contextName)}>
                 {d.contextName}
               </Label>
-            </TippyLabel>
+            </Tooltip>
           ))}
       </div>
     </div>

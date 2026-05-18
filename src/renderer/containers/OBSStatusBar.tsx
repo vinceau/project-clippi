@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Button } from "@/ui/Button/Button";
 import { ConnectionStatusDisplay } from "@/components/ConnectionStatusDisplay";
-import { Labelled } from "@/components/Labelled";
+import { Tooltip } from "@/ui/Tooltip/Tooltip";
 import { RecordButton } from "@/components/RecordButton";
 import { dolphinRecorder, loadQueueIntoDolphin } from "@/lib/dolphin";
 import { OBSConnectionStatus, OBSRecordingStatus } from "@/lib/obs";
@@ -107,7 +107,7 @@ export function OBSStatusBar() {
           </div>
         ) : (
           <div style={{ display: "flex", gap: "0.5em" }}>
-            <Labelled title={recordingButtonTitle} disabled={!recordButtonDisabled}>
+            <Tooltip title={recordingButtonTitle} disabled={!recordButtonDisabled}>
               <RecordButton
                 onClick={onRecord}
                 disabled={recordButtonDisabled}
@@ -118,7 +118,7 @@ export function OBSStatusBar() {
                 <Circle size={16} />
                 {recordButtonText}
               </RecordButton>
-            </Labelled>
+            </Tooltip>
             <Button primary onClick={onPlay} disabled={dolphinQueue.length === 0}>
               <Play size={16} />
               Play

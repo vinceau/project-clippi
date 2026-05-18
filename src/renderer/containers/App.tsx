@@ -1,5 +1,4 @@
 // Import all the styles first since they will be overwritten
-import "react-tippy/dist/tippy.css"; // React-tippy styles
 import "react-toastify/dist/ReactToastify.min.css"; // Toast styles
 import "@/styles/index.scss"; // Our custom styles
 import "@/styles/animations.css"; // Keyframe animations
@@ -16,6 +15,7 @@ import type { Dispatch, iRootState } from "@/store";
 import { persistor, store } from "@/store";
 import { ThemeManager, ThemeMode, useTheme } from "@/styles";
 import { MainView, SettingsView } from "@/views";
+import { TooltipProvider } from "@/ui/Tooltip/Tooltip";
 
 function App() {
   const dispatch = useDispatch<Dispatch>();
@@ -28,17 +28,19 @@ function App() {
     }
   }, []);
   return (
-    <div className={theme.themeName}>
-      <History />
-      <ToastContainer />
-      <Switch>
-        <Route path="/main" component={MainView} />
-        <Route path="/settings" component={SettingsView} />
-        <Route exact path="/">
-          <Redirect to="/main" />
-        </Route>
-      </Switch>
-    </div>
+    <TooltipProvider>
+      <div className={theme.themeName}>
+        <History />
+        <ToastContainer />
+        <Switch>
+          <Route path="/main" component={MainView} />
+          <Route path="/settings" component={SettingsView} />
+          <Route exact path="/">
+            <Redirect to="/main" />
+          </Route>
+        </Switch>
+      </div>
+    </TooltipProvider>
   );
 }
 

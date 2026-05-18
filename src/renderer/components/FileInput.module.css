@@ -14,3 +14,7 @@
 .inputWrapper {
   flex: 1;
 }
+
+.tooltipTrigger {
+  display: flex;
+}

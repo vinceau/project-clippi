@@ -8,6 +8,7 @@
   align-items: center;
   font-size: 2.5rem;
   border-left: solid 0.4rem transparent;
+  box-sizing: border-box;
 }
 
 .outerMenuIcon:hover {
@@ -19,4 +20,8 @@
   color: var(--color-foreground);
   border-left-color: var(--color-foreground);
   background-color: color-mix(in srgb, transparent 70%, var(--color-foreground));
+}
+
+.fullWidth {
+  width: 100%;
 }

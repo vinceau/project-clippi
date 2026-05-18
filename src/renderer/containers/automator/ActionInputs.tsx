@@ -3,7 +3,7 @@ import React from "react";
 
 import { InlineDropdown } from "@/components/InlineInputs";
 import { Plus } from "lucide-react";
-import { Labelled } from "@/components/Labelled";
+import { Tooltip } from "@/ui/Tooltip/Tooltip";
 import { actionComponents } from "@/containers/actions";
 import type { Action as ActionDefinition } from "@/lib/event_actions";
 
@@ -60,9 +60,9 @@ export function ActionInput({
     <ActionComponentBlock
       ref={outerRef}
       icon={
-        <Labelled title="Remove" onClick={onRemove}>
+        <Tooltip title="Remove" onClick={onRemove}>
           <ActionIcon name={value.name} outer={outerRef} />
-        </Labelled>
+        </Tooltip>
       }
       header={
         <ActionSelector

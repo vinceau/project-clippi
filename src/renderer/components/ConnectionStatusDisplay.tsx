@@ -1,16 +1,16 @@
 import React from "react";
 import { Header } from "@/ui/Header/Header";
 
-import { Labelled } from "@/components/Labelled";
+import { Tooltip } from "@/ui/Tooltip/Tooltip";
 import { ScanningDot } from "@/components/ScanningDot";
 import styles from "./ConnectionStatusDisplay.module.css";
 
 export function ConnectionStatusDisplay({
   icon,
-  iconHoverText,
+  iconHoverText = "",
   onIconClick,
   headerText,
-  headerHoverTitle,
+  headerHoverTitle = "",
   onHeaderClick,
   color,
   shouldPulse,
@@ -29,7 +29,7 @@ export function ConnectionStatusDisplay({
   return (
     <div className={styles.outer}>
       {icon && (
-        <Labelled disabled={!iconHoverText} title={iconHoverText}>
+        <Tooltip disabled={!iconHoverText} title={iconHoverText}>
           <img
             src={icon}
             onClick={onIconClick}
@@ -39,14 +39,14 @@ export function ConnectionStatusDisplay({
               cursor: onIconClick ? "pointer" : "auto",
             }}
           />
-        </Labelled>
+        </Tooltip>
       )}
       <div className={styles.connectInfo}>
-        <Labelled disabled={!headerHoverTitle} title={headerHoverTitle} onClick={onHeaderClick} position="right">
+        <Tooltip disabled={!headerHoverTitle} title={headerHoverTitle} onClick={onHeaderClick} position="right">
           <Header sub uppercase>
             <ScanningDot shouldPulse={shouldPulse} color={color || "red"} /> {headerText}
           </Header>
-        </Labelled>
+        </Tooltip>
         {children && <span>{children}</span>}
       </div>
     </div>

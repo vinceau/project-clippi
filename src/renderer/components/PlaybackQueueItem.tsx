@@ -6,7 +6,7 @@ import React from "react";
 import { Draggable } from "react-beautiful-dnd";
 import { X as CloseIcon, File as FileIcon } from "lucide-react";
 
-import { Labelled } from "./Labelled";
+import { Tooltip } from "@/ui/Tooltip/Tooltip";
 
 import styles from "./PlaybackQueueItem.module.css";
 
@@ -33,19 +33,19 @@ export function PlaybackQueueItem({
           ref={provided.innerRef}
         >
           <div className={styles.details}>
-            <Labelled title={`${index + 1}${exists(total) && ` of ${total}`}`}>
+            <Tooltip title={`${index + 1}${exists(total) && ` of ${total}`}`}>
               <FileIcon size={24} />
-            </Labelled>
+            </Tooltip>
             <div className={styles.detailsContent}>
               <h3>{basename}</h3>
               <span>{dirname}</span>
             </div>
           </div>
-          <Labelled title="Remove">
+          <Tooltip title="Remove">
             <div className={styles.removeIcon} onClick={onRemove}>
               <CloseIcon size={24} />
             </div>
-          </Labelled>
+          </Tooltip>
         </div>
       )}
     </Draggable>

@@ -42,8 +42,9 @@ export function ButtonPicker({
       className={theme.themeName}
       open={opened}
       onClose={() => setOpened(false)}
+      onOpen={onOpen}
       closeIcon
-      trigger={<div onClick={onOpen}>{children}</div>}
+      trigger={children}
       fluid
     >
       <Modal.Content>

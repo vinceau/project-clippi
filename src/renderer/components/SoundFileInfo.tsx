@@ -1,7 +1,7 @@
 import React from "react";
 import { Trash } from "lucide-react";
 
-import { Labelled } from "./Labelled";
+import { Tooltip } from "@/ui/Tooltip/Tooltip";
 
 import styles from "./SoundFileInfo.module.css";
 
@@ -19,15 +19,15 @@ export function SoundFileInfo({
   return (
     <div className={styles.container}>
       <div>
-        <Labelled title="Open location">
+        <Tooltip title="Open location">
           <h2 onClick={onPathClick}>{name}</h2>
-        </Labelled>
+        </Tooltip>
         <div>{path}</div>
       </div>
       <div className={styles.removeButton}>
-        <Labelled title="Remove">
+        <Tooltip title="Remove">
           <Trash size={16} onClick={onRemove} />
-        </Labelled>
+        </Tooltip>
       </div>
     </div>
   );

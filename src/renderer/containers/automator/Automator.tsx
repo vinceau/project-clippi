@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@/ui/Button/Button";
 
-import { Labelled } from "@/components/Labelled";
+import { Tooltip } from "@/ui/Tooltip/Tooltip";
 import { streamManager } from "@/lib/realtime";
 import type { Dispatch, iRootState } from "@/store";
 import type { NamedEventConfig } from "@/store/models/automator";
@@ -83,19 +83,19 @@ export function Automator() {
         </div>
         {!disableEditButtons && (
           <div className={styles.buttonGroup}>
-            <Labelled title="Test run event">
+            <Tooltip title="Test run event">
               <Button disabled={disabledTestButton} onClick={testRunEvent}>
                 <Play />
               </Button>
-            </Labelled>
-            <Labelled title="Edit event">
+            </Tooltip>
+            <Tooltip title="Edit event">
               <Button onClick={editEvent}>
                 <Pencil />
               </Button>
-            </Labelled>
-            <Labelled title={isDisabled ? "Enable event" : "Disable event"}>
+            </Tooltip>
+            <Tooltip title={isDisabled ? "Enable event" : "Disable event"}>
               <Button onClick={toggleEvent}>{isDisabled ? <Power /> : <PowerOff />}</Button>
-            </Labelled>
+            </Tooltip>
           </div>
         )}
       </div>
