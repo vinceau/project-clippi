@@ -24,6 +24,7 @@ module.exports = {
     "no-underscore-dangle": "off",
     "no-undef": "off",
     "no-use-before-define": "off",
+    "react/require-default-props": "off",
   },
   parserOptions: {
     ecmaVersion: 2022,
