@@ -1,4 +1,3 @@
-import type { Scene } from "obs-websocket-js";
 import { OBSWebSocket } from "obs-websocket-js";
 import { BehaviorSubject, from, Subject } from "rxjs";
 import { map, skip, switchMap, take } from "rxjs/operators";
@@ -7,12 +6,21 @@ import { store } from "@/store";
 
 import { notify } from "./utils";
 
+interface SceneItem {
+  name: string;
+}
+
+export interface Scene {
+  name: string;
+  sources: SceneItem[];
+}
+
 export enum OBSRecordingAction {
-  TOGGLE = "StartStopRecording",
-  START = "StartRecording",
-  STOP = "StopRecording",
-  PAUSE = "PauseRecording",
-  UNPAUSE = "ResumeRecording",
+  TOGGLE = "ToggleRecord",
+  START = "StartRecord",
+  STOP = "StopRecord",
+  PAUSE = "PauseRecord",
+  UNPAUSE = "ResumeRecord",
 }
 
 export enum OBSRecordingStatus {
@@ -26,11 +34,11 @@ export enum OBSConnectionStatus {
   DISCONNECTED = "DISCONNECTED",
 }
 
-const ACTION_STATE_MAP = {
-  [OBSRecordingAction.START]: "RecordingStarted",
-  [OBSRecordingAction.PAUSE]: "RecordingPaused",
-  [OBSRecordingAction.UNPAUSE]: "RecordingResumed",
-  [OBSRecordingAction.STOP]: "RecordingStopped",
+const RECORDING_OUTPUT_STATE_MAP = {
+  [OBSRecordingAction.START]: "OBS_WEBSOCKET_OUTPUT_STARTED",
+  [OBSRecordingAction.PAUSE]: "OBS_WEBSOCKET_OUTPUT_PAUSED",
+  [OBSRecordingAction.UNPAUSE]: "OBS_WEBSOCKET_OUTPUT_RESUMED",
+  [OBSRecordingAction.STOP]: "OBS_WEBSOCKET_OUTPUT_STOPPED",
 };
 
 class OBSConnection {
@@ -56,7 +64,7 @@ class OBSConnection {
     this.refreshScenesSource$
       .pipe(
         switchMap(() => from(this.socket.call("GetSceneList"))),
-        map((data) => data.scenes)
+        map((data) => data.scenes as unknown as Scene[])
       )
       .subscribe(this.scenesSource$);
   }
@@ -82,18 +90,25 @@ class OBSConnection {
   }
 
   public async setFilenameFormat(format: string): Promise<boolean> {
-    await this.socket.call("SetFilenameFormatting", {"filename-formatting": format});
+    await this.socket.call("SetProfileParameter", {
+      parameterCategory: "Output",
+      parameterName: "FilenameFormatting",
+      parameterValue: format,
+    });
     const confirmFormat = await this.getFilenameFormat();
     return confirmFormat === format;
   }
 
   public async getFilenameFormat(): Promise<string> {
-    const response = await this.socket.call("GetFilenameFormatting");
-    return response["filename-formatting"];
+    const response = await this.socket.call("GetProfileParameter", {
+      parameterCategory: "Output",
+      parameterName: "FilenameFormatting",
+    });
+    return response.parameterValue;
   }
 
   public async setScene(scene: string) {
-    await this.socket.call("SetCurrentScene", {"scene-name": scene});
+    await this.socket.call("SetCurrentProgramScene", { sceneName: scene });
   }
 
   public async saveReplayBuffer() {
@@ -127,11 +142,14 @@ class OBSConnection {
 
   private async _safelySetRecordingState(rec: OBSRecordingAction): Promise<void> {
     return new Promise((resolve, reject) => {
-      // Attach the handler first
-      this.socket.once(ACTION_STATE_MAP[rec as keyof typeof ACTION_STATE_MAP], () => {
-        resolve();
-      });
-
+      const expectedState = RECORDING_OUTPUT_STATE_MAP[rec as keyof typeof RECORDING_OUTPUT_STATE_MAP];
+      const handler = (data: { outputState: string }) => {
+        if (data.outputState === expectedState) {
+          this.socket.off("RecordStateChanged", handler);
+          resolve();
+        }
+      };
+      this.socket.on("RecordStateChanged", handler);
       this.socket.call(rec).catch(reject);
     });
   }
@@ -141,7 +159,15 @@ class OBSConnection {
     for (const scene of scenes) {
       const items = scene.sources.map((source) => source.name);
       if (items.includes(sourceName)) {
-        await this.socket.call("SetSceneItemProperties", {"scene-name": scene.name, item: sourceName, visible: Boolean(visible)});
+        const result = await this.socket.call("GetSceneItemId", {
+          sceneName: scene.name,
+          sourceName,
+        });
+        await this.socket.call("SetSceneItemEnabled", {
+          sceneName: scene.name,
+          sceneItemId: result.sceneItemId,
+          sceneItemEnabled: Boolean(visible),
+        });
       }
     }
   }
@@ -150,24 +176,26 @@ class OBSConnection {
     this.socket.on("ConnectionClosed", () => {
       this.connectionSource$.next(OBSConnectionStatus.DISCONNECTED);
     });
-    this.socket.on("RecordingStarted", () => {
-      this.recordingSource$.next(OBSRecordingStatus.RECORDING);
-    });
-    this.socket.on("RecordingPaused", () => {
-      this.recordingSource$.next(OBSRecordingStatus.PAUSED);
-    });
-    this.socket.on("RecordingResumed", () => {
-      this.recordingSource$.next(OBSRecordingStatus.RECORDING);
-    });
-    this.socket.on("RecordingStopped", () => {
-      this.recordingSource$.next(OBSRecordingStatus.STOPPED);
+    this.socket.on("RecordStateChanged", (data) => {
+      switch (data.outputState) {
+        case "OBS_WEBSOCKET_OUTPUT_STARTED":
+        case "OBS_WEBSOCKET_OUTPUT_RESUMED":
+          this.recordingSource$.next(OBSRecordingStatus.RECORDING);
+          break;
+        case "OBS_WEBSOCKET_OUTPUT_PAUSED":
+          this.recordingSource$.next(OBSRecordingStatus.PAUSED);
+          break;
+        case "OBS_WEBSOCKET_OUTPUT_STOPPED":
+          this.recordingSource$.next(OBSRecordingStatus.STOPPED);
+          break;
+      }
     });
 
     // Refresh the scenes on these events
-    this.socket.on("ScenesChanged", () => {
+    this.socket.on("SceneListChanged", () => {
       this.refreshScenesSource$.next();
     });
-    this.socket.on("SceneItemAdded", () => {
+    this.socket.on("SceneItemCreated", () => {
       this.refreshScenesSource$.next();
     });
     this.socket.on("SceneItemRemoved", () => {

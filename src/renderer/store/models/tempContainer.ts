@@ -5,7 +5,7 @@ import type { TwitchUser, VersionUpdatePayload } from "common/types";
 import { UpdateStatus } from "common/types";
 import { shuffle } from "common/utils";
 import produce from "immer";
-import type { Scene } from "obs-websocket-js";
+import type { Scene } from "@/lib/obs";
 
 import { OBSConnectionStatus, OBSRecordingStatus } from "@/lib/obs";
 import { getFilePath, loadDolphinQueue } from "@/lib/utils";
