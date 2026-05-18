@@ -1,5 +1,5 @@
 import type { Scene } from "obs-websocket-js";
-import OBSWebSocket from "obs-websocket-js";
+import { OBSWebSocket } from "obs-websocket-js";
 import { BehaviorSubject, from, Subject } from "rxjs";
 import { map, skip, switchMap, take } from "rxjs/operators";
 
@@ -55,7 +55,7 @@ class OBSConnection {
     // Pipe the result of the refresh scenes to the scenes source
     this.refreshScenesSource$
       .pipe(
-        switchMap(() => from(this.socket.send("GetSceneList"))),
+        switchMap(() => from(this.socket.call("GetSceneList"))),
         map((data) => data.scenes)
       )
       .subscribe(this.scenesSource$);
@@ -70,10 +70,7 @@ class OBSConnection {
   }
 
   public async connect(obsAddress: string, obsPort: string, obsPassword?: string) {
-    await this.socket.connect({
-      address: `${obsAddress}:${obsPort}`,
-      password: obsPassword,
-    });
+    await this.socket.connect(`ws://${obsAddress}:${obsPort}`, obsPassword);
     this._setupListeners();
     this.refreshScenesSource$.next();
     this.connectionSource$.next(OBSConnectionStatus.CONNECTED);
@@ -85,7 +82,7 @@ class OBSConnection {
   }
 
   public async setFilenameFormat(format: string): Promise<boolean> {
-    await this.socket.send("SetFilenameFormatting", {
+    await this.socket.call("SetFilenameFormatting", {"filename-formatting": format});
       "filename-formatting": format,
     });
     const confirmFormat = await this.getFilenameFormat();
@@ -93,18 +90,18 @@ class OBSConnection {
   }
 
   public async getFilenameFormat(): Promise<string> {
-    const response = await this.socket.send("GetFilenameFormatting");
+    const response = await this.socket.call("GetFilenameFormatting");
     return response["filename-formatting"];
   }
 
   public async setScene(scene: string) {
-    await this.socket.send("SetCurrentScene", {
+    await this.socket.call("SetCurrentScene", {"scene-name": scene});
       "scene-name": scene,
     });
   }
 
   public async saveReplayBuffer() {
-    await this.socket.send("SaveReplayBuffer");
+    await this.socket.call("SaveReplayBuffer");
   }
 
   public async setRecordingState(rec: OBSRecordingAction): Promise<void> {
@@ -128,7 +125,7 @@ class OBSConnection {
         .subscribe(() => {
           resolve();
         });
-      (this.socket.send as any)(OBSRecordingAction.TOGGLE).catch(reject);
+      (this.socket.call as any)(OBSRecordingAction.TOGGLE).catch(reject);
     });
   }
 
@@ -139,7 +136,7 @@ class OBSConnection {
         resolve();
       });
 
-      (this.socket.send as any)(rec).catch(reject);
+      (this.socket.call as any)(rec).catch(reject);
     });
   }
 
@@ -148,7 +145,7 @@ class OBSConnection {
     for (const scene of scenes) {
       const items = scene.sources.map((source) => source.name);
       if (items.includes(sourceName)) {
-        await this.socket.send("SetSceneItemProperties", {
+        await this.socket.call("SetSceneItemProperties", {"scene-name": scene.name, item: sourceName, visible: Boolean(visible)} as any);
           "scene-name": scene.name,
           item: sourceName,
           visible: Boolean(visible),
