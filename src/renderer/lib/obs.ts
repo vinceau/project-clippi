@@ -6,13 +6,21 @@ import { store } from "@/store";
 
 import { notify } from "./utils";
 
+// I don't know where this type is defined so we're just going to manually define it here
+// based on the actual data received from OBS
 interface SceneItem {
-  name: string;
+  sceneName: string;
+  sceneUuid: string;
+  sourceName: string;
+  sourceUuid: string;
+  sceneItemId: number;
+  sceneItemIndex: number;
 }
 
 export interface Scene {
-  name: string;
-  sources: SceneItem[];
+  sceneIndex: number;
+  sceneName: string;
+  sceneUuid: string;
 }
 
 export enum OBSRecordingAction {
@@ -156,7 +164,7 @@ class OBSConnection {
 
   public async setSourceItemVisibility(sourceName: string, visible?: boolean) {
     const scenes = this.scenesSource$.value;
-    for (const scene of scenes) {
+    const promises = scenes.map(async (scene) => {
       const items = scene.sources.map((source) => source.name);
       if (items.includes(sourceName)) {
         const result = await this.socket.call("GetSceneItemId", {
@@ -169,7 +177,8 @@ class OBSConnection {
           sceneItemEnabled: Boolean(visible),
         });
       }
-    }
+    });
+    await Promise.all(promises);
   }
 
   private _setupListeners() {
@@ -187,6 +196,8 @@ class OBSConnection {
           break;
         case "OBS_WEBSOCKET_OUTPUT_STOPPED":
           this.recordingSource$.next(OBSRecordingStatus.STOPPED);
+          break;
+        default:
           break;
       }
     });
@@ -220,19 +231,23 @@ export const connectToOBSAndNotify = (): void => {
 };
 
 export const getAllSceneItems = (scenes: Scene[]): string[] => {
+  console.log({ scenes });
   const allItems: string[] = [];
   scenes.forEach((scene) => {
-    const items = scene.sources.map((source) => source.name);
+    const items = scene.sources.map((source) => source.sceneName);
     allItems.push(...items);
   });
   const set = new Set(allItems);
   const uniqueNames = Array.from(set);
   uniqueNames.sort();
+  console.log({uniqueNames});
   return uniqueNames;
 };
 
 export const getAllScenes = (scenes: Scene[]): string[] => {
-  const sceneNames = scenes.map((s) => s.name);
+  console.log();
+  const sceneNames = scenes.map((s) => s.sceneName);
   sceneNames.sort();
+  console.log({sceneNames});
   return sceneNames;
 };
