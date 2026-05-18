@@ -21,7 +21,7 @@ export interface Scene {
   sources: SceneItem[];
 }
 
-export enum OBSRecordingAction {
+export const enum OBSRecordingAction {
   TOGGLE = "ToggleRecord",
   START = "StartRecord",
   STOP = "StopRecord",
@@ -29,13 +29,13 @@ export enum OBSRecordingAction {
   UNPAUSE = "ResumeRecord",
 }
 
-export enum OBSRecordingStatus {
+export const enum OBSRecordingStatus {
   RECORDING = "RECORDING",
   PAUSED = "PAUSED",
   STOPPED = "STOPPED",
 }
 
-export enum OBSConnectionStatus {
+export const enum OBSConnectionStatus {
   CONNECTED = "CONNECTED",
   DISCONNECTED = "DISCONNECTED",
 }
