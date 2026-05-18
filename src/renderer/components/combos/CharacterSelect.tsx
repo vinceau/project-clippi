@@ -10,7 +10,7 @@ import { Button } from "@/ui/Button/Button";
 import { ThemeMode, useTheme } from "@/styles";
 
 import { CharacterIcon } from "../CharacterIcon";
-import { Labelled } from "../Labelled";
+import { Tooltip } from "@/ui/Tooltip/Tooltip";
 import { CharacterLabel } from "./CharacterLabel";
 
 import styles from "./CharacterSelect.module.css";
@@ -173,12 +173,12 @@ export function CustomCharacterList({ value, onChange }: CustomCharacterListProp
     <div>
       <div className={styles.flexRow}>
         {(value ?? []).map((c, i) => (
-          <Labelled title={`Delete ${c}`} key={`item-${i}-${c}`} onClick={() => deleteChar(c)}>
+          <Tooltip title={`Delete ${c}`} key={`item-${i}-${c}`} onClick={() => deleteChar(c)}>
             <div className={styles.chip}>
               <span>{c}</span>
               <CharacterIcon character={c} />
             </div>
-          </Labelled>
+          </Tooltip>
         ))}
       </div>
       <div className={styles.addRow}>

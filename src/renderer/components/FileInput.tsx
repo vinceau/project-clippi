@@ -6,7 +6,7 @@ import { FolderOpen } from "lucide-react";
 import { getFilePath, getFolderPath, openFileOrParentFolder } from "@/lib/utils";
 
 import styles from "./FileInput.module.css";
-import { Labelled } from "./Labelled";
+import { Tooltip } from "@/ui/Tooltip/Tooltip";
 
 interface FileInputProps extends Record<string, any> {
   value: string;
@@ -53,9 +53,9 @@ export function FileInput({ value, directory, onChange, fileTypeFilters, saveFil
     <div className={styles.outer}>
       <div className={styles.inputRow}>
         <Button padding="none" onClick={() => openFileOrParentFolder(filesPath)} disabled={!filesPath}>
-          <Labelled title="Open location" style={{ display: "flex", alignItems: "center" }}>
+          <Tooltip title="Open location" style={{ display: "flex", alignItems: "center" }}>
             <FolderOpen size={20} />
-          </Labelled>
+          </Tooltip>
         </Button>
         <div className={styles.inputWrapper}>
           <Input

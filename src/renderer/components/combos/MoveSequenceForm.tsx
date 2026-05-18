@@ -6,7 +6,7 @@ import { Button } from "@/ui/Button/Button";
 import { Select } from "@/ui/Select/Select";
 import { X as Close, Plus, ChevronsUpDown } from "lucide-react";
 
-import { Labelled } from "../Labelled";
+import { Tooltip } from "@/ui/Tooltip/Tooltip";
 
 const moveOptions = [
   MoveId.NEUTRAL_AIR,
@@ -89,11 +89,11 @@ function MoveInput({
         options={moveOptions}
       />
       <div style={{ marginLeft: 5 }}>
-        <Labelled title="Remove">
+        <Tooltip title="Remove">
           <Button type="button" onClick={onRemove}>
             <Close size={20} />
           </Button>
-        </Labelled>
+        </Tooltip>
       </div>
     </div>
   );

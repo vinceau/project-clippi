@@ -12,7 +12,7 @@ import { defaultRenameFormat } from "@/store/models/highlights";
 import { Accordion } from "@/ui/Accordion/Accordion";
 import styles from "./RenameFiles.module.css";
 
-import { Labelled } from "./Labelled";
+import { Tooltip } from "@/ui/Tooltip/Tooltip";
 
 const metadata = {
   startAt: "2001-11-21T17:33:54.000Z",
@@ -80,11 +80,11 @@ export function RenameFiles({
         <div className={styles.formatLabel}>
           <Label>Format</Label>
           {showResetButton && (
-            <Labelled title="Restore default value">
+            <Tooltip title="Restore default value">
               <span className={styles.resetButton} onClick={resetFormat}>
                 Reset
               </span>
-            </Labelled>
+            </Tooltip>
           )}
         </div>
         <TextArea

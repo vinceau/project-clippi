@@ -8,7 +8,7 @@ import { Menu } from "@/views/settings/menu/Menu";
 import twitchIcon from "@/styles/images/twitch.svg";
 
 import { CustomIcon } from "@/ui/CustomIcon/CustomIcon";
-import { Labelled } from "@/components/Labelled";
+import { Tooltip } from "@/ui/Tooltip/Tooltip";
 import { SlippiIcon } from "@/components/SlippiIcon";
 import type { iRootState } from "@/store";
 import OBSLogo from "@/styles/images/obs.svg";
@@ -55,9 +55,9 @@ export function SettingsView() {
   return (
     <div className={styles.settingsContainer}>
       <div className={styles.closeButton}>
-        <Labelled onClick={onClose} title="Close">
+        <Tooltip onClick={onClose} title="Close">
           <Close size={20} />
-        </Labelled>
+        </Tooltip>
       </div>
       <div className={styles.flex}>
         <div className={styles.menuColumn}>

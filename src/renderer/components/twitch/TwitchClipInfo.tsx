@@ -4,7 +4,7 @@ import { Pencil, Trash } from "lucide-react";
 import { format } from "timeago.js";
 
 import { ExternalLink as A } from "../ExternalLink";
-import { Labelled } from "../Labelled";
+import { Tooltip } from "@/ui/Tooltip/Tooltip";
 
 import styles from "./TwitchClipInfo.module.css";
 
@@ -26,17 +26,17 @@ export function TwitchClipInfo({
   return (
     <div className={styles.clipContainer}>
       <div>
-        <Labelled title="Show clip in browser">
+        <Tooltip title="Show clip in browser">
           <A href={url}>
             <h2>{clip.clipID}</h2>
           </A>
-        </Labelled>
+        </Tooltip>
         <div className={styles.meta}>
           {clip.channel && (
             <span>
-              <Labelled title="Go to Twitch channel">
+              <Tooltip title="Go to Twitch channel">
                 <A href={channelUrl}>{clip.channel}</A>
-              </Labelled>{" "}
+              </Tooltip>{" "}
               {" | "}
             </span>
           )}{" "}
@@ -44,14 +44,14 @@ export function TwitchClipInfo({
         </div>
       </div>
       <div className={styles.buttonsContainer}>
-        <Labelled title="Edit">
+        <Tooltip title="Edit">
           <A href={`${url}/edit`}>
             <Pencil size={16} />
           </A>
-        </Labelled>
-        <Labelled title="Remove">
+        </Tooltip>
+        <Tooltip title="Remove">
           <Trash size={16} onClick={onRemove} className={styles.trashIcon} />
-        </Labelled>
+        </Tooltip>
       </div>
     </div>
   );

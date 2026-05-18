@@ -1,12 +1,12 @@
 import React from "react";
 
 import styles from "./Hint.module.css";
-import { Labelled } from "./Labelled";
+import { Tooltip } from "@/ui/Tooltip/Tooltip";
 
 export function Hint({ text, children }: { text: string; children?: React.ReactNode }) {
   return (
-    <Labelled title={text}>
+    <Tooltip title={text}>
       <span className={styles.outer}>{children}</span>
-    </Labelled>
+    </Tooltip>
   );
 }

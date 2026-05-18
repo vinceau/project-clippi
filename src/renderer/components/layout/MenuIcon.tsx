@@ -15,7 +15,7 @@ export function MenuIcon({
   children?: React.ReactNode;
 }) {
   return (
-    <Tooltip title={label} position="right">
+    <Tooltip title={label} position="right" triggerClassName={styles.fullWidth}>
       <div className={clsx(styles.outerMenuIcon, active && styles.active)}>{children}</div>
     </Tooltip>
   );

@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { FileInput } from "@/components/FileInput";
 import { Field, FormContainer, Label, PageHeader, Text } from "@/components/Form";
 import { Toggle } from "@/ui/Toggle/Toggle";
-import { Labelled } from "@/components/Labelled";
+import { Tooltip } from "@/ui/Tooltip/Tooltip";
 import { getDolphinExecutableNames, getDolphinPath } from "@/lib/dolphin";
 import type { Dispatch, iRootState } from "@/store";
 
@@ -56,11 +56,11 @@ export function PlaybackSettings() {
           <div className={styles.dolphinPathLabel}>
             <Label>Playback Dolphin Path</Label>
             {showResetButton && (
-              <Labelled title="Restore default value">
+              <Tooltip title="Restore default value">
                 <span className={styles.resetButton} onClick={resetDolphinPath}>
                   Reset
                 </span>
-              </Labelled>
+              </Tooltip>
             )}
           </div>
           <FileInput value={dolphinPath} directory onChange={setDolphinPath} />

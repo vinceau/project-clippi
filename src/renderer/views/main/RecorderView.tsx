@@ -4,7 +4,7 @@ import { Button } from "@/ui/Button/Button";
 import { Plus, Save, Shuffle, Trash, CirclePlay, Folder } from "lucide-react";
 
 import { DropPad } from "@/components/DropPad";
-import { Labelled } from "@/components/Labelled";
+import { Tooltip } from "@/ui/Tooltip/Tooltip";
 import { OBSStatusBar } from "@/containers/OBSStatusBar";
 import { saveQueueToFile } from "@/lib/dolphin";
 import type { Dispatch, iRootState } from "@/store";
@@ -68,21 +68,21 @@ export function RecorderView() {
           </Button>
           {validQueue && (
             <div>
-              <Labelled title="Add file">
+              <Tooltip title="Add file">
                 <Button onClick={addFileHandler}>
                   <Plus size={20} />
                 </Button>
-              </Labelled>
-              <Labelled title="Shuffle queue">
+              </Tooltip>
+              <Tooltip title="Shuffle queue">
                 <Button onClick={shuffleQueueHandler}>
                   <Shuffle size={20} />
                 </Button>
-              </Labelled>
-              <Labelled title="Clear queue">
+              </Tooltip>
+              <Tooltip title="Clear queue">
                 <Button onClick={clearQueueHandler}>
                   <Trash size={20} />
                 </Button>
-              </Labelled>
+              </Tooltip>
             </div>
           )}
         </div>

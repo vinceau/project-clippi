@@ -1,3 +1,4 @@
+import { clsx } from "clsx";
 import { Tooltip as BaseTooltip } from "@base-ui/react/tooltip";
 import React from "react";
 import styles from "./Tooltip.module.css";
@@ -8,16 +9,17 @@ export interface TooltipProps {
   disabled?: boolean;
   onClick?: () => void;
   children: React.ReactNode;
+  triggerClassName?: string;
 }
 
-export function Tooltip({ title, position = "bottom", disabled, onClick, children }: TooltipProps) {
+export function Tooltip({ title, position = "bottom", disabled, onClick, triggerClassName, children }: TooltipProps) {
   if (disabled || !title) {
     return children;
   }
 
   return (
     <BaseTooltip.Root>
-      <BaseTooltip.Trigger className={styles.trigger} onClick={onClick}>{children}</BaseTooltip.Trigger>
+      <BaseTooltip.Trigger className={clsx(styles.trigger, triggerClassName)} onClick={onClick}>{children}</BaseTooltip.Trigger>
       <BaseTooltip.Portal>
         <BaseTooltip.Positioner side={position} sideOffset={8}>
           <BaseTooltip.Popup className={styles.popup}>
