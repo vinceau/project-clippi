@@ -1,9 +1,7 @@
 .message {
-  padding: 1rem;
+  padding: 8px 16px;
   border-radius: 0.5rem;
-  display: flex;
   align-items: center;
-  gap: 0.5rem;
   background: #fff3cd;
   color: #856404;
   border: 1px solid #ffc107;

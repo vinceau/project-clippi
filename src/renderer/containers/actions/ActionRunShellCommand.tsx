@@ -1,6 +1,5 @@
 import { exec } from "child_process";
 import * as React from "react";
-import { Form } from "@/ui/Form/Form";
 import { Message } from "@/ui/Message/Message";
 import { Terminal, TriangleAlert } from "lucide-react";
 import { TextArea } from "@/ui/TextArea/TextArea";
@@ -44,10 +43,12 @@ function RunShellCommandInput({
   return (
     <div style={{ marginTop: 10 }}>
       <Message warning>
-        <TriangleAlert size={16} />
-        Running unknown commands can be very dangerous! Only run commands that you fully understand!
+        <TriangleAlert size={24} />
+        <span style={{ marginLeft: 10 }}>
+          Running unknown commands can be very dangerous! Only run commands that you fully understand!
+        </span>
       </Message>
-      <Form>
+      <div style={{ marginTop: 16 }}>
         <TextArea
           monospace
           onBlur={() => onChange({ command: cmd })}
@@ -55,7 +56,7 @@ function RunShellCommandInput({
           onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setMsg(e.target.value)}
           placeholder="Enter a shell command to run..."
         />
-      </Form>
+      </div>
       <Text>Pro tip: Use &#123;event&#125; to get the event data as a JSON string.</Text>
     </div>
   );
