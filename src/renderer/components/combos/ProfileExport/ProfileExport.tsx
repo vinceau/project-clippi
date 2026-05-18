@@ -1,12 +1,13 @@
 import React from "react";
-import { Dropdown } from "@/ui/Dropdown/Dropdown";
+import { Menu, HardDriveDownload, HardDriveUpload } from "lucide-react";
+import { Dropdown } from "./Dropdown/Dropdown";
 
 export function ProfileExport({ onImport, onExport }: { onImport: () => void; onExport: () => void }) {
   return (
-    <Dropdown icon="bars" floating button className="icon">
+    <Dropdown icon={<Menu size={16} />} button>
       <Dropdown.Menu>
-        <Dropdown.Item icon="download" text="Import profile" onClick={onImport} />
-        <Dropdown.Item icon="upload" text="Export profile" onClick={onExport} />
+        <Dropdown.Item icon={<HardDriveDownload size={16} />} text="Import profile" onClick={onImport} />
+        <Dropdown.Item icon={<HardDriveUpload size={16} />} text="Export profile" onClick={onExport} />
       </Dropdown.Menu>
     </Dropdown>
   );

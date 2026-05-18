@@ -1,5 +1,40 @@
-import { Form as SemanticForm } from "semantic-ui-react";
+import { Field as BaseField, Form as BaseForm } from "@base-ui/react";
+import { clsx } from "clsx";
+import React from "react";
+import { Input, InputProps } from "@/ui/Input/Input";
+import styles from "./Form.module.css";
 
-export const Form = SemanticForm;
-export const FormField = SemanticForm.Field;
-export const FormInput = SemanticForm.Input;
+interface FormProps {
+  onSubmit?: () => void;
+  children?: React.ReactNode;
+}
+
+interface FormFieldProps {
+  error?: boolean;
+  children?: React.ReactNode;
+}
+
+interface FormInputProps extends InputProps {
+  icon?: React.ReactNode;
+}
+
+function Form({ onSubmit, children }: FormProps) {
+  return (
+    <BaseForm className={styles.form} onFormSubmit={() => onSubmit?.()}>
+      {children}
+    </BaseForm>
+  );
+}
+Form.defaultProps = { onSubmit: undefined, children: undefined };
+
+function FormField({ error, children }: FormFieldProps) {
+  return (
+    <BaseField.Root invalid={error} className={clsx(styles.field, error && styles.error)}>
+      {children}
+    </BaseField.Root>
+  );
+}
+
+Form.Field = FormField;
+
+export { Form, FormField };

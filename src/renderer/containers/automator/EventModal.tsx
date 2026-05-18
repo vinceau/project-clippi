@@ -3,7 +3,7 @@ import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { Button } from "@/ui/Button/Button";
-import { Icon } from "@/ui/Icon/Icon";
+import { Check } from "lucide-react";
 import { Modal } from "@/ui/Modal/Modal";
 import { Select } from "@/ui/Select/Select";
 
@@ -73,7 +73,7 @@ export function EventModal({
   onSubmit?: (event: NamedEventConfig) => void;
   onClose?: () => void;
 }) {
-  const defaultValues = { ...DEFAULT_FORM_VALUES, ...edit as Partial<FormValues> };
+  const defaultValues = { ...DEFAULT_FORM_VALUES, ...(edit as Partial<FormValues>) };
   const { watch, errors, handleSubmit, control, reset } = useForm<FormValues>({ defaultValues });
   const { currentProfile, comboProfiles } = useSelector((state: iRootState) => state.slippi);
   const theme = useTheme();
@@ -114,8 +114,14 @@ export function EventModal({
   const headerText = edit === null ? "Create new event" : "Edit event";
 
   return (
-    <Modal className={theme.themeName} open={opened} closeIcon onClose={closeAction} closeOnDimmerClick={false}>
-      <Modal.Header>{headerText}</Modal.Header>
+    <Modal
+      title={headerText}
+      className={theme.themeName}
+      open={opened}
+      closeIcon
+      onClose={closeAction}
+      closeOnDimmerClick={false}
+    >
       <Modal.Content>
         <Field padding="bottom">
           <Label>Event Type</Label>
@@ -128,10 +134,10 @@ export function EventModal({
               />
             }
             control={control}
-            onChange={([_, x]) => {
+            onChange={([v]) => {
               console.log("value changed:");
-              console.log(x.value);
-              return x.value;
+              console.log(v);
+              return v;
             }}
             rules={{ required: true }}
             name="type"
@@ -145,7 +151,7 @@ export function EventModal({
             <Controller
               as={<Select className={styles.fullWidth} placeholder="Combo profile" options={profileOptions} />}
               control={control}
-              onChange={([_, x]) => x.value}
+              onChange={([v]) => v}
               name="filter.comboCriteria"
               defaultValue={`$${currentProfile}`}
             />
@@ -251,7 +257,7 @@ export function EventModal({
       </Modal.Content>
       <Modal.Actions className={styles.actions}>
         <Button color="green" onClick={saveAction}>
-          <Icon name="checkmark" /> Save
+          <Check size={16} /> Save
         </Button>
       </Modal.Actions>
     </Modal>

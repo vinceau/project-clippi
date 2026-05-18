@@ -7,18 +7,16 @@ import { ButtonPreview } from "./ButtonPreview";
 
 export function ButtonInput({ value, onChange }: { value?: string[]; onChange?: (newButtons: string[]) => void }) {
   return (
-    <div>
-      <ButtonPicker value={value} onChange={onChange}>
-        <Labelled title="Click to select a button combination" style={{ width: "100%" }}>
-          <div className={styles.target}>
-            {value && value.length > 0 ? (
-              <ButtonPreview value={value} pressed />
-            ) : (
-              <div className={styles.selectButton}>No buttons selected</div>
-            )}
-          </div>
-        </Labelled>
-      </ButtonPicker>
-    </div>
+    <ButtonPicker value={value} onChange={onChange}>
+      <Labelled title="Click to select a button combination" style={{ width: "100%" }}>
+        <div className={styles.target}>
+          {value && value.length > 0 ? (
+            <ButtonPreview value={value} pressed />
+          ) : (
+            <div className={styles.selectButton}>No buttons selected</div>
+          )}
+        </div>
+      </Labelled>
+    </ButtonPicker>
   );
 }

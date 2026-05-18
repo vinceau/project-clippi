@@ -23,24 +23,26 @@ export function ContextOptions({
     }
   };
   const descriptions = allDescriptions.map((cat) => (
-    <div key={cat.category}>
+    <div key={cat.category} style={{ marginTop: "4px" }}>
       <b style={{ marginRight: "5px" }}>{cat.category}</b>
-      {cat.descriptions
-        .filter((d) => keys.includes(d.contextName))
-        .map((d) => (
-          <TippyLabel
-            key={`${cat.category}--${d.contextName}`}
-            title={d.description}
-            arrow
-            duration={200}
-            position="top"
-            size="big"
-          >
-            <Label as="a" onClick={() => clickHandler(d.contextName)} style={{ margin: "2px", fontSize: "1.1rem" }}>
-              {d.contextName}
-            </Label>
-          </TippyLabel>
-        ))}
+      <div style={{ display: "inline-flex", flexWrap: "wrap", gap: "2px", marginTop: "4px" }}>
+        {cat.descriptions
+          .filter((d) => keys.includes(d.contextName))
+          .map((d) => (
+            <TippyLabel
+              key={`${cat.category}--${d.contextName}`}
+              title={d.description}
+              arrow
+              duration={200}
+              position="top"
+              size="big"
+            >
+              <Label as="a" onClick={() => clickHandler(d.contextName)}>
+                {d.contextName}
+              </Label>
+            </TippyLabel>
+          ))}
+      </div>
     </div>
   ));
   return <div>{descriptions}</div>;

@@ -1,8 +1,8 @@
 import formatter from "formatter";
 import * as React from "react";
 import { Form } from "@/ui/Form/Form";
-import { Icon } from "@/ui/Icon/Icon";
 import { TextArea } from "@/ui/TextArea/TextArea";
+import { CircleAlert } from "lucide-react";
 
 import type { ActionTypeGenerator, Context } from "@/lib/event_actions";
 import { notify } from "@/lib/utils";
@@ -26,7 +26,7 @@ const ActionNotifyFunc: ActionTypeGenerator = (params: ActionNotifyParams) => {
 };
 
 function ActionIcon() {
-  return <Icon name="exclamation circle" size="large" />;
+  return <CircleAlert size={20} />;
 }
 
 function NotifyInput(props: any) {
@@ -39,7 +39,7 @@ function NotifyInput(props: any) {
         <TextArea
           onBlur={() => onChange({ message: msg })}
           value={msg}
-          onChange={(_: any, { value }: any) => setMsg(value)}
+          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setMsg(e.target.value)}
           placeholder="Here's a notification!"
         />
       </Form>

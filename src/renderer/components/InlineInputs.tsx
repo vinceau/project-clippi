@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Dropdown } from "@/ui/Dropdown/Dropdown";
+import { Select } from "@/ui/Select/Select";
 import { Input } from "@/ui/Input/Input";
 
 import styles from "./InlineInputs.module.css";
@@ -30,14 +30,7 @@ export function InlineDropdown(props: any) {
   return (
     <span>
       {prefix ? `${prefix} ` : ""}
-      <Dropdown
-        scrolling
-        inline
-        {...rest}
-        options={newOptions}
-        value={value}
-        onChange={(_: any, { value }) => onChange(value)}
-      />
+      <Select scrolling inline {...rest} options={newOptions} value={value} onChange={(v) => onChange(v)} />
     </span>
   );
 }
@@ -57,8 +50,8 @@ export function BufferedInput(props: any) {
       submitValue();
     }
   };
-  const newOnChange = (_: any, data: any) => {
-    setNewValue(data.value);
+  const newOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewValue(e.target.value);
   };
   return <Input value={newValue} onChange={newOnChange} onKeyDown={onKeyDown} onBlur={submitValue} {...rest} />;
 }

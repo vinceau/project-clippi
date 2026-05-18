@@ -1,0 +1,61 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--color-background);
+  border-radius: 8px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+  max-height: 90vh;
+  min-width: 90vw;
+  overflow-y: auto;
+  outline: none;
+}
+
+.trigger {
+  display: inline-block;
+}
+
+.trigger.fluid {
+  width: 100%;
+}
+
+.closeIcon {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  color: inherit;
+}
+
+.content {
+  padding: 16px;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 12px 20px;
+  gap: 8px;
+  border-top: solid 1px var(--color-foreground3);
+  background-color: var(--color-background2);
+}
+
+.description {
+  padding: 0;
+}
+
+.header {
+  margin: 0;
+  padding: 16px;
+  border-bottom: solid 1px var(--color-foreground3);
+}

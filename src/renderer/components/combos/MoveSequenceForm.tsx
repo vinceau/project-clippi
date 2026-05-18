@@ -3,8 +3,8 @@ import React from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { Field } from "react-final-form";
 import { Button } from "@/ui/Button/Button";
-import { Dropdown } from "@/ui/Dropdown/Dropdown";
-import { Icon } from "@/ui/Icon/Icon";
+import { Select } from "@/ui/Select/Select";
+import { X as Close, Plus, ChevronsUpDown } from "lucide-react";
 
 import { Labelled } from "../Labelled";
 
@@ -40,8 +40,8 @@ const moveOptions = [
   MoveId.EDGE_SLOW,
   MoveId.MISC,
 ].map((id) => ({
-  key: id,
-  value: id,
+  key: String(id),
+  value: String(id),
   text: `${getCustomMoveName(id)} [${id}]`,
 }));
 
@@ -70,30 +70,28 @@ function MoveInput({
   onBlur?: () => void;
 }) {
   const handleChange = React.useCallback(
-    (_e: any, data: any) => {
-      onChange(data.value);
+    (value: string) => {
+      onChange(Number(value));
     },
     [onChange]
   );
   return (
     <div style={{ display: "flex", paddingBottom: 10, alignItems: "center" }}>
       <div style={{ paddingLeft: 5, paddingRight: 10 }}>
-        <Icon name="sort" />
+        <ChevronsUpDown size={16} />
       </div>
-      <Dropdown
-        value={value}
-        onBlur={onBlur}
+      <Select
+        value={value !== undefined ? String(value) : undefined}
         onChange={handleChange}
         placeholder="Select move"
         fluid
         search
-        selection
         options={moveOptions}
       />
       <div style={{ marginLeft: 5 }}>
         <Labelled title="Remove">
-          <Button type="button" icon onClick={onRemove}>
-            <Icon name="close" />
+          <Button type="button" onClick={onRemove}>
+            <Close size={20} />
           </Button>
         </Labelled>
       </div>
@@ -137,7 +135,13 @@ export function MoveSequenceForm({ value, onBlur, onChange }: MoveSequenceFormPr
   );
 
   const onDragEnd = React.useCallback(
-    ({ destination, source }: { destination?: { index: number; droppableId: string }; source: { index: number; droppableId: string } }) => {
+    ({
+      destination,
+      source,
+    }: {
+      destination?: { index: number; droppableId: string };
+      source: { index: number; droppableId: string };
+    }) => {
       if (!destination) {
         return;
       }
@@ -179,7 +183,7 @@ export function MoveSequenceForm({ value, onBlur, onChange }: MoveSequenceFormPr
           )}
         </Droppable>
         <Button type="button" onClick={addNewMove}>
-          <Icon name="plus" /> Add move
+          <Plus size={20} /> Add move
         </Button>
       </DragDropContext>
     </div>

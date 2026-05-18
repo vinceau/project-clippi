@@ -2,9 +2,10 @@ import { clsx } from "clsx";
 import React from "react";
 import { useSelector } from "react-redux";
 import { Redirect, Route, Switch, useHistory, useRouteMatch } from "react-router-dom";
-import { Icon } from "@/ui/Icon/Icon";
+import { X as Close, Filter, Music, CirclePlay, Brush, Info } from "lucide-react";
 import { Label } from "@/ui/Label/Label";
-import { Menu } from "@/ui/Menu/Menu";
+import { Menu } from "@/views/settings/menu/Menu";
+import twitchIcon from "@/styles/images/twitch.svg";
 
 import { CustomIcon } from "@/ui/CustomIcon/CustomIcon";
 import { Labelled } from "@/components/Labelled";
@@ -55,7 +56,7 @@ export function SettingsView() {
     <div className={styles.settingsContainer}>
       <div className={styles.closeButton}>
         <Labelled onClick={onClose} title="Close">
-          <Icon name="close" />
+          <Close size={20} />
         </Labelled>
       </div>
       <div className={styles.flex}>
@@ -72,7 +73,7 @@ export function SettingsView() {
                   active={isActive("combo-settings")}
                   onClick={handleItemClick}
                 >
-                  <Icon name="filter" />
+                  <Filter size={16} />
                   Combo Filter
                 </Menu.Item>
                 <Menu.Item
@@ -81,7 +82,7 @@ export function SettingsView() {
                   active={isActive("sound-settings")}
                   onClick={handleItemClick}
                 >
-                  <Icon name="music" />
+                  <Music size={16} />
                   Sounds
                 </Menu.Item>
                 <Menu.Item
@@ -90,7 +91,7 @@ export function SettingsView() {
                   active={isActive("playback-settings")}
                   onClick={handleItemClick}
                 >
-                  <Icon name="play circle" />
+                  <CirclePlay size={16} />
                   Playback
                 </Menu.Item>
                 <Menu.Item
@@ -99,7 +100,7 @@ export function SettingsView() {
                   active={isActive("appearance-settings")}
                   onClick={handleItemClick}
                 >
-                  <Icon name="paint brush" />
+                  <Brush size={16} />
                   Appearance
                 </Menu.Item>
                 <Menu.Item className={clsx(styles.styledMenuItem, styles.styledMenuItemHeader)} header>
@@ -111,7 +112,7 @@ export function SettingsView() {
                   active={isActive("slippi-settings")}
                   onClick={handleItemClick}
                 >
-                  <SlippiIcon />
+                  <SlippiIcon style={{ width: "18px", height: "18px" }} />
                   Slippi Connection
                 </Menu.Item>
                 <Menu.Item
@@ -120,7 +121,7 @@ export function SettingsView() {
                   active={isActive("obs-settings")}
                   onClick={handleItemClick}
                 >
-                  <CustomIcon image={OBSLogo} />
+                  <CustomIcon image={OBSLogo} style={{ width: "18px", height: "18px" }} />
                   OBS Configuration
                 </Menu.Item>
                 <Menu.Item
@@ -129,7 +130,7 @@ export function SettingsView() {
                   active={isActive("account-settings")}
                   onClick={handleItemClick}
                 >
-                  <Icon name="twitch" />
+                  <CustomIcon image={twitchIcon} style={{ width: "18px", height: "18px" }} />
                   Twitch Integration
                 </Menu.Item>
               </div>
@@ -142,7 +143,7 @@ export function SettingsView() {
                 >
                   <div className={styles.infoLabel}>
                     <span>
-                      <Icon name="info circle" /> Info
+                      <Info size={16} /> Info
                     </span>
                     {updateAvailable && <Label circular color="red" empty />}
                   </div>

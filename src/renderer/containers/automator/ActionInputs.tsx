@@ -1,8 +1,8 @@
 import { produce } from "immer";
 import React from "react";
-import { Icon } from "@/ui/Icon/Icon";
 
 import { InlineDropdown } from "@/components/InlineInputs";
+import { Plus } from "lucide-react";
 import { Labelled } from "@/components/Labelled";
 import { actionComponents } from "@/containers/actions";
 import type { Action as ActionDefinition } from "@/lib/event_actions";
@@ -95,7 +95,7 @@ export function AddActionInput({
   return (
     <ActionComponentBlock
       hideBorder
-      icon={<Icon name="add" size="large" />}
+      icon={<Plus size={20} />}
       header={<ActionSelector text={addText} selectOnBlur={false} onChange={onChange} options={unusedOptions} />}
     />
   );

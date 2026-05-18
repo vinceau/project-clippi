@@ -1,0 +1,27 @@
+.card {
+  border: 1px solid var(--color-background3);
+  border-radius: 0.3rem;
+  background: color-mix(in srgb, var(--color-background), white 5%);
+  box-shadow: none;
+  overflow: hidden;
+}
+
+.content {
+  padding: 1rem;
+}
+
+.extra {
+  border-top: 1px solid var(--color-background3);
+}
+
+.header {
+  font-weight: 600;
+  font-size: 1.1em;
+  color: var(--color-foreground);
+}
+
+.meta {
+  font-size: 0.9em;
+  color: var(--color-foreground2);
+  margin-top: 0.3rem;
+}

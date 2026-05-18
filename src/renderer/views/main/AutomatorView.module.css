@@ -4,7 +4,6 @@
   padding: 20px;
   height: calc(100% - 56px);
   overflow: hidden;
-  overflow-y: auto;
 }
 
 .footer {

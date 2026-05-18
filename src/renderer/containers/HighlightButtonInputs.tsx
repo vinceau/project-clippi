@@ -2,7 +2,6 @@ import { framesToSeconds, secondsToFrames } from "common/utils";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Accordion } from "@/ui/Accordion/Accordion";
-import { Icon } from "@/ui/Icon/Icon";
 
 import { ButtonInput } from "@/components/gamecube/ButtonInput";
 import { DelayInput, InlineDropdown } from "@/components/InlineInputs";
@@ -79,12 +78,9 @@ export function HighlightButtonInputs() {
       </div>
       <ButtonInput value={inputButtonCombo} onChange={setInputButtonCombo} />
 
-      <Accordion>
-        <Accordion.Title active={showAdvanced} onClick={() => setShowAdvanced(!showAdvanced)}>
-          <Icon name="dropdown" />
-          {showAdvanced ? "Hide " : "Show "} advanced options
-        </Accordion.Title>
-        <Accordion.Content active={showAdvanced}>
+      <Accordion.Root open={showAdvanced} onOpenChange={setShowAdvanced}>
+        <Accordion.Trigger>{showAdvanced ? "Hide " : "Show "} advanced options</Accordion.Trigger>
+        <Accordion.Panel>
           <ul className={styles.advancedOptions}>
             <li>
               {"Capture the previous "}{" "}
@@ -111,8 +107,8 @@ export function HighlightButtonInputs() {
               {" seconds between moments"}
             </li>
           </ul>
-        </Accordion.Content>
-      </Accordion>
+        </Accordion.Panel>
+      </Accordion.Root>
     </div>
   );
 }

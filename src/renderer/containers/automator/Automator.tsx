@@ -1,13 +1,13 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@/ui/Button/Button";
-import { Icon } from "@/ui/Icon/Icon";
 
 import { Labelled } from "@/components/Labelled";
 import { streamManager } from "@/lib/realtime";
 import type { Dispatch, iRootState } from "@/store";
 import type { NamedEventConfig } from "@/store/models/automator";
 
+import { Pencil, Play, Plus, Power, PowerOff, Trash } from "lucide-react";
 import { AutomatorPlaceholder } from "./AutomatorPlaceholder";
 import { EventActionLists } from "./EventActionLists";
 import { EventModal } from "./EventModal";
@@ -73,24 +73,28 @@ export function Automator() {
     <div className={styles.outer}>
       <EventModal onSubmit={addEvent} opened={opened} onClose={reset} edit={edit} />
       <div className={styles.headerBar}>
-        <div>
+        <div className={styles.buttonGroup}>
           <Button onClick={() => setOpened(true)}>
-            <Icon name="plus" /> Add event
+            <Plus /> Add event
           </Button>
           <Button onClick={deleteEvent} disabled={disableEditButtons}>
-            <Icon name="trash" /> Delete event
+            <Trash /> Delete event
           </Button>
         </div>
         {!disableEditButtons && (
-          <div>
+          <div className={styles.buttonGroup}>
             <Labelled title="Test run event">
-              <Button disabled={disabledTestButton} onClick={testRunEvent} icon="play" />
+              <Button disabled={disabledTestButton} onClick={testRunEvent}>
+                <Play />
+              </Button>
             </Labelled>
             <Labelled title="Edit event">
-              <Button onClick={editEvent} icon="pencil" />
+              <Button onClick={editEvent}>
+                <Pencil />
+              </Button>
             </Labelled>
             <Labelled title={isDisabled ? "Enable event" : "Disable event"}>
-              <Button onClick={toggleEvent} icon={isDisabled ? "check circle" : "window close"} />
+              <Button onClick={toggleEvent}>{isDisabled ? <Power /> : <PowerOff />}</Button>
             </Labelled>
           </div>
         )}

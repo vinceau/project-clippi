@@ -1,0 +1,55 @@
+.label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  padding: 0.2em 0.6em;
+  border-radius: 0.3em;
+  background: color-mix(in srgb, var(--color-foreground3), white 5%);
+  color: var(--color-secondary);
+  font-size: 0.9em;
+  line-height: 1.5;
+}
+
+.small {
+  font-size: 0.8em;
+  padding: 0.15em 0.5em;
+}
+
+.large {
+  font-size: 1.0em;
+}
+
+.circular {
+  border-radius: 50%;
+  padding: 0;
+  width: 0.6em;
+  height: 0.6em;
+}
+
+.empty {
+  padding: 0;
+  width: 0.6em;
+  height: 0.6em;
+  display: inline-block;
+  border-radius: 50%;
+}
+
+.colorRed {
+  background: #d01919;
+  color: white;
+}
+
+.colorBlue {
+  background: #2185d0;
+  color: white;
+}
+
+.colorGreen {
+  background: #21ba45;
+  color: white;
+}
+
+.colorYellow {
+  background: #fbbd08;
+  color: white;
+}

@@ -4,7 +4,7 @@ import { exists } from "common/utils";
 import path from "path";
 import React from "react";
 import { Draggable } from "react-beautiful-dnd";
-import { Icon } from "@/ui/Icon/Icon";
+import { X as CloseIcon, File as FileIcon } from "lucide-react";
 
 import { Labelled } from "./Labelled";
 
@@ -34,7 +34,7 @@ export function PlaybackQueueItem({
         >
           <div className={styles.details}>
             <Labelled title={`${index + 1}${exists(total) && ` of ${total}`}`}>
-              <Icon size="big" name="file outline" />
+              <FileIcon size={24} />
             </Labelled>
             <div className={styles.detailsContent}>
               <h3>{basename}</h3>
@@ -43,7 +43,7 @@ export function PlaybackQueueItem({
           </div>
           <Labelled title="Remove">
             <div className={styles.removeIcon} onClick={onRemove}>
-              <Icon size="large" name="close" />
+              <CloseIcon size={24} />
             </div>
           </Labelled>
         </div>

@@ -2,14 +2,14 @@ import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@/ui/Button/Button";
 import { Form } from "@/ui/Form/Form";
-import { Icon } from "@/ui/Icon/Icon";
-
 import { ConnectionStatusCard } from "@/components/ConnectionStatusCard";
 import { Field, FormContainer, Label, PageHeader } from "@/components/Form";
 import { connectToOBSAndNotify, obsConnection, OBSConnectionStatus } from "@/lib/obs";
 import type { Dispatch, iRootState } from "@/store";
 import OBSLogo from "@/styles/images/obs.png";
 
+import { Input } from "@/ui/Input/Input";
+import { PasswordInput } from "@/ui/PasswordInput/PasswordInput";
 import styles from "./OBSSettings.module.css";
 
 export function OBSSettings() {
@@ -20,11 +20,6 @@ export function OBSSettings() {
   const header = obsConnected ? "Connected" : "Disconnected";
   const color = obsConnected ? "#00E461" : "#F30807";
   const subHeader = `${obsAddress}:${obsPort}`;
-  const [showPass, setShowPass] = React.useState(false);
-  const togglePass = () => {
-    setShowPass(!showPass);
-  };
-
   return (
     <FormContainer>
       <PageHeader>OBS Configuration</PageHeader>
@@ -42,7 +37,7 @@ export function OBSSettings() {
           <div className={styles.customField}>
             <Field padding="bottom">
               <Label>IP Address</Label>
-              <Form.Input
+              <Input
                 placeholder="localhost"
                 value={obsAddress}
                 onChange={(e) => {
@@ -52,7 +47,7 @@ export function OBSSettings() {
             </Field>
             <Field padding="bottom">
               <Label>Port</Label>
-              <Form.Input
+              <Input
                 placeholder="4444"
                 value={obsPort}
                 onChange={(e) => {
@@ -63,9 +58,7 @@ export function OBSSettings() {
           </div>
           <Field>
             <Label>Websocket Password</Label>
-            <Form.Input
-              icon={<Icon name={showPass ? "eye slash" : "eye"} link onClick={togglePass} />}
-              type={showPass ? "text" : "password"}
+            <PasswordInput
               placeholder="Password"
               value={obsPassword}
               onChange={(e) => {
@@ -73,9 +66,11 @@ export function OBSSettings() {
               }}
             />
           </Field>
-          <Button primary type="submit">
-            Connect
-          </Button>
+          <div>
+            <Button primary type="submit">
+              Connect
+            </Button>
+          </div>
         </Form>
       )}
     </FormContainer>

@@ -45,7 +45,7 @@ const actionSaveBuffer: ActionTypeGenerator = (params: ActionSaveReplayBufferPar
 };
 
 function ActionIcon() {
-  return <CustomIcon image={obsIcon} size="large" />;
+  return <CustomIcon image={obsIcon} style={{ width: "20px", height: "20px" }} />;
 }
 
 interface ReplayBufferInputProps extends Record<string, any> {

@@ -1,15 +1,15 @@
 import React from "react";
-import { Icon } from "@/ui/Icon/Icon";
 import { Input } from "@/ui/Input/Input";
 import { Label } from "@/ui/Label/Label";
+import { X as CloseIcon } from "lucide-react";
 
 import styles from "./KeywordsInput.module.css";
 
 function KeywordLabel({ name, onClick }: { name: string; onClick: () => void }) {
   return (
-    <Label style={{ fontSize: "0.8em" }}>
+    <Label>
       {name}
-      <Icon name="delete" link onClick={onClick} />
+      <CloseIcon size={12} onClick={onClick} style={{ cursor: "pointer" }} />
     </Label>
   );
 }
@@ -50,7 +50,7 @@ export function KeywordsInput({ value, onChange }: { value?: string[]; onChange?
           autoCapitalize="none"
           autoComplete="off"
           autoCorrect="off"
-          spellCheck="false"
+          spellCheck={false}
           tabIndex={0}
           type="text"
           onKeyDown={onKeyDown}
@@ -62,7 +62,7 @@ export function KeywordsInput({ value, onChange }: { value?: string[]; onChange?
       {currentKeywords.length === 0 ? (
         <div className={styles.placeholder}>No tags specified</div>
       ) : (
-        <div style={{ paddingTop: "1rem" }}>
+        <div style={{ paddingTop: "1rem", display: "flex", gap: "0.5rem" }}>
           {currentKeywords.map((keyword, index) => (
             <KeywordLabel key={keyword} name={keyword} onClick={() => removeKeyword(index)} />
           ))}

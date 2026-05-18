@@ -1,22 +1,23 @@
 import React from "react";
-import type { IconSizeProp } from "semantic-ui-react/dist/commonjs/elements/Icon/Icon";
+import { clsx } from "clsx";
 
 import styles from "./CustomIcon.module.css";
 
 export interface CustomIconProps {
   image: any;
-  size?: IconSizeProp;
   color?: string;
+  style?: React.CSSProperties;
 }
 
-export function CustomIcon({ image, color, size }: CustomIconProps) {
+export function CustomIcon({ image, color, style }: CustomIconProps) {
   return (
     <i
-      className={`${styles.outer} icon ${size || ""}`}
+      className={clsx(styles.outer, styles.icon)}
       style={
         {
           "--custom-icon-mask": `url("${image}")`,
-          "--custom-icon-color": color || undefined,
+          "--custom-icon-color": color || "inherit",
+          ...style,
         } as React.CSSProperties
       }
     />

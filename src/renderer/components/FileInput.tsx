@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Button } from "@/ui/Button/Button";
-import { Icon } from "@/ui/Icon/Icon";
 import { Input } from "@/ui/Input/Input";
+import { FolderOpen } from "lucide-react";
 
 import { getFilePath, getFolderPath, openFileOrParentFolder } from "@/lib/utils";
 
@@ -51,21 +51,23 @@ export function FileInput({ value, directory, onChange, fileTypeFilters, saveFil
   const actionLabel = saveFile ? "Save as" : "Choose";
   return (
     <div className={styles.outer}>
-      <Input
-        style={{ width: "100%" }}
-        label={
-          <Button onClick={() => openFileOrParentFolder(filesPath)} disabled={!filesPath}>
-            <Labelled title="Open location">
-              <Icon className={styles.noMarginIcon} name="folder open outline" />
-            </Labelled>
-          </Button>
-        }
-        value={filesPath}
-        onChange={(_: any, { value }: any) => setFilesPath(value)}
-        onBlur={() => onChange(filesPath)}
-        action={<Button onClick={() => selectFromFileSystem().catch(console.error)}>{actionLabel}</Button>}
-        placeholder={placeholder}
-      />
+      <div className={styles.inputRow}>
+        <Button padding="none" onClick={() => openFileOrParentFolder(filesPath)} disabled={!filesPath}>
+          <Labelled title="Open location" style={{ display: "flex", alignItems: "center" }}>
+            <FolderOpen size={20} />
+          </Labelled>
+        </Button>
+        <div className={styles.inputWrapper}>
+          <Input
+            fluid
+            value={filesPath}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFilesPath(e.target.value)}
+            onBlur={() => onChange(filesPath)}
+            placeholder={placeholder}
+          />
+        </div>
+        <Button onClick={() => selectFromFileSystem().catch(console.error)}>{actionLabel}</Button>
+      </div>
     </div>
   );
 }

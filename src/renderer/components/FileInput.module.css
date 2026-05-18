@@ -5,3 +5,12 @@
 .outer input[type="text"] {
   width: auto !important;
 }
+
+.inputRow {
+  display: flex;
+  gap: 4px;
+}
+
+.inputWrapper {
+  flex: 1;
+}

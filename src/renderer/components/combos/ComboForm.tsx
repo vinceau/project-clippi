@@ -5,8 +5,8 @@ import { Field as FinalField, Form as FinalForm } from "react-final-form";
 import { useSelector } from "react-redux";
 import { Accordion } from "@/ui/Accordion/Accordion";
 import { Button } from "@/ui/Button/Button";
-import { Form as SemanticForm } from "@/ui/Form/Form";
-import { Icon } from "@/ui/Icon/Icon";
+import { Form } from "@/ui/Form/Form";
+import { Save, Trash, Undo } from "lucide-react";
 
 import { CodeBlock } from "@/components/CodeBlock";
 import { Field, Label, Text } from "@/components/Form";
@@ -16,7 +16,7 @@ import { DEFAULT_PROFILE } from "@/store/models/slippi";
 
 import { Confirm } from "@/ui/Confirm/Confirm";
 import { CharacterSelectAdapter, CustomCharacterListAdapter } from "./CharacterSelect";
-import { ToggleAdapter } from "./FormAdapters";
+import { InputAdaptor, ToggleAdapter } from "./FormAdapters";
 import { MoveSequenceFormAdapter } from "./MoveSequenceForm";
 import { MoveSequenceModeFormAdapter } from "./MoveSequenceModeForm";
 import { NameTagForm } from "./NameTagForm";
@@ -43,23 +43,25 @@ function ButtonContainer({
   return (
     <div className={styles.outerContainer}>
       <Button primary type="submit" disabled={submitting}>
-        <Icon name="save" />
+        <Save size={20} />
         Save profile
       </Button>
-      <div>
-        <Button className={clsx("delete-button", styles.deleteButton)} type="button" onClick={onDelete}>
-          {currentProfile === DEFAULT_PROFILE ? (
-            <>
-              <Icon name="undo" />
-              Reset profile
-            </>
-          ) : (
-            <>
-              <Icon name="trash" />
-              Delete profile
-            </>
-          )}
-        </Button>
+      <div style={{ display: "flex", gap: "0.5rem" }}>
+        <div className={clsx("delete-button", styles.deleteButton)}>
+          <Button type="button" onClick={onDelete}>
+            {currentProfile === DEFAULT_PROFILE ? (
+              <>
+                <Undo />
+                Reset profile
+              </>
+            ) : (
+              <>
+                <Trash />
+                Delete profile
+              </>
+            )}
+          </Button>
+        </div>
         <ProfileExportContainer currentProfileData={currentProfileData} />
       </div>
     </div>
@@ -92,7 +94,7 @@ export function ComboForm(props: {
           values,
         }) => (
           <div>
-            <SemanticForm onSubmit={handleSubmit}>
+            <Form onSubmit={handleSubmit}>
               <ButtonContainer
                 submitting={submitting}
                 currentProfile={props.currentProfile}
@@ -127,9 +129,9 @@ export function ComboForm(props: {
                 <Label>Minimum Combo Length</Label>
                 <FinalField
                   name="minComboLength"
-                  component="input"
+                  component={InputAdaptor}
                   type="number"
-                  format={(val) => parseInt(val)}
+                  format={(val) => parseInt(val, 10)}
                   formatOnBlur
                 />
                 <Text>Only match combos which contain at least this many moves.</Text>
@@ -138,9 +140,9 @@ export function ComboForm(props: {
                 <Label>Minimum Combo Percent</Label>
                 <FinalField
                   name="minComboPercent"
-                  component="input"
+                  component={InputAdaptor}
                   type="number"
-                  format={(val) => parseInt(val)}
+                  format={(val) => parseInt(val, 10)}
                   formatOnBlur
                 />
                 <Text>Only match combos which do at least this much percent damage.</Text>
@@ -183,12 +185,9 @@ export function ComboForm(props: {
               </Field>
 
               <div style={{ marginTop: "10px" }}>
-                <Accordion>
-                  <Accordion.Title active={showAdvanced} onClick={() => setShowAdvanced(!showAdvanced)}>
-                    <Icon name="dropdown" />
-                    {showAdvanced ? "Hide " : "Show "} advanced options
-                  </Accordion.Title>
-                  <Accordion.Content active={showAdvanced}>
+                <Accordion.Root open={showAdvanced} onOpenChange={setShowAdvanced}>
+                  <Accordion.Trigger>{showAdvanced ? "Hide " : "Show "} advanced options</Accordion.Trigger>
+                  <Accordion.Panel>
                     <Field>
                       <FinalField
                         name="fuzzyNameTagMatching"
@@ -231,9 +230,9 @@ export function ComboForm(props: {
                       <Label>Minimum Pummels per Wobble</Label>
                       <FinalField
                         name="wobbleThreshold"
-                        component="input"
+                        component={InputAdaptor}
                         type="number"
-                        format={(val) => parseInt(val)}
+                        format={(val) => parseInt(val, 10)}
                         formatOnBlur
                       />
                       <Text>
@@ -241,8 +240,8 @@ export function ComboForm(props: {
                         to be excluded.
                       </Text>
                     </Field>
-                  </Accordion.Content>
-                </Accordion>
+                  </Accordion.Panel>
+                </Accordion.Root>
               </div>
               <ButtonContainer
                 submitting={submitting}
@@ -251,7 +250,7 @@ export function ComboForm(props: {
                 onDelete={() => setShouldConfirm(true)}
               />
               <CodeBlock values={values} />
-            </SemanticForm>
+            </Form>
           </div>
         )}
       />

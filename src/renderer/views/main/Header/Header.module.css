@@ -1,0 +1,23 @@
+.container {
+  margin-bottom: 16px;
+}
+
+.header {
+  margin: 0;
+  font-size: 2rem;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.header svg {
+    height: 20px;
+    width: 20px;
+}
+
+.description {
+  margin: 0;
+  margin-top: 8px;
+  font-size: 1.2rem;
+  opacity: 0.8;
+}

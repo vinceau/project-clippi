@@ -3,5 +3,36 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1rem;
+  margin-bottom: 16px;
+}
+
+.switchRoot {
+  width: 45px;
+  height: 22px;
+  border-radius: 22px;
+  border: none;
+  background: var(--color-foreground3);
+  cursor: pointer;
+  padding: 2px;
+  display: flex;
+  align-items: center;
+  transition: background 0.2s;
+}
+
+.switchRoot[data-checked] {
+  background: #2185d0;
+}
+
+.switchThumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: white;
+  display: block;
+  transition: transform 0.2s;
+  margin-left: 1px; /* i don't know why i need this but the style looks off without it */
+}
+
+.switchRoot[data-checked] .switchThumb {
+  transform: translateX(24px);
 }

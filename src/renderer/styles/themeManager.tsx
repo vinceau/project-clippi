@@ -54,7 +54,11 @@ export function ThemeManager({ children }: { children: React.ReactNode }) {
     }
 
     // Tell the main process we want to change themes
-    ipc.sendMessage(Message.ToggleTheme, { theme: newMode });
+    // ipc.sendMessage(Message.ToggleTheme, { theme: newMode });
+    setThemeState({
+      themeName: newMode,
+      theme: newMode === ThemeMode.DARK ? darkTheme : lightTheme,
+    });
   };
 
   return (

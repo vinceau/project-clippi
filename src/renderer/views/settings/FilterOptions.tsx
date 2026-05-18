@@ -33,6 +33,13 @@ export function FilterOptions() {
   const setProfile = (profile: string) => {
     dispatch.slippi.setCurrentProfile(profile);
   };
+  const handleCreateProfile = (name: string) => {
+    dispatch.slippi.saveProfile({
+      name,
+      settings: JSON.stringify(initial),
+    });
+    dispatch.slippi.setCurrentProfile(name);
+  };
   const onDelete = () => {
     dispatch.slippi.deleteProfile(currentProfile);
     let notification = (
@@ -54,7 +61,12 @@ export function FilterOptions() {
   return (
     <FormContainer>
       <PageHeader>Combo Filter</PageHeader>
-      <ProfileSelector initialOptions={profileOptions} value={currentProfile} onChange={setProfile} />
+      <ProfileSelector
+        initialOptions={profileOptions}
+        value={currentProfile}
+        onChange={setProfile}
+        onCreateProfile={handleCreateProfile}
+      />
       <ComboForm initialValues={initial} onSubmit={onSubmit} onDelete={onDelete} currentProfile={currentProfile} />
     </FormContainer>
   );

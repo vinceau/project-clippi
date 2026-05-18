@@ -1,0 +1,50 @@
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: 0.2em;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.2em;
+  height: 2.2em;
+  padding: 0.3em 0.5em;
+  border: 1px solid var(--color-foreground2);
+  border-radius: 0.3em;
+  background: transparent;
+  color: var(--color-foreground);
+  font-size: 0.9em;
+  font-weight: bold;
+  cursor: pointer;
+  line-height: 1;
+  user-select: none;
+  transition: background 0.15s, color 0.15s;
+}
+
+.button:hover:not(.disabled) {
+  background: color-mix(in srgb, var(--color-foreground2), transparent 80%);
+}
+
+.button:focus-visible {
+  outline: 2px solid #2185d0;
+  outline-offset: 2px;
+}
+
+.active {
+  background: #2185d0;
+  border-color: #2185d0;
+  color: #fff;
+}
+
+.active:hover:not(.disabled) {
+  background: #1678c2;
+  border-color: #1678c2;
+}
+
+.disabled {
+  opacity: 0.4;
+  cursor: default;
+  pointer-events: none;
+}

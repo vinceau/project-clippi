@@ -1,9 +1,11 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Header } from "@/ui/Header/Header";
-import { Icon } from "@/ui/Icon/Icon";
 import { Loader } from "@/ui/Loader/Loader";
 import { Segment } from "@/ui/Segment/Segment";
+import { CustomIcon } from "@/ui/CustomIcon/CustomIcon";
+
+import twitchIcon from "@/styles/images/twitch.svg";
 
 import { Field, FormContainer, PageHeader } from "@/components/Form";
 import { Toggle } from "@/ui/Toggle/Toggle";
@@ -68,9 +70,9 @@ export function TwitchIntegration() {
           />
         ) : (
           <Segment placeholder>
-            <Header icon>
-              <Icon name="twitch" />
-              You have not created any Twitch clips
+            <Header icon vertical>
+              <CustomIcon image={twitchIcon} style={{ width: "64px", height: "64px" }} />
+              <div>You have not created any Twitch clips</div>
             </Header>
           </Segment>
         )}

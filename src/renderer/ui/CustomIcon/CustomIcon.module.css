@@ -1,8 +1,9 @@
 .outer {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
 }
 
-.outer.outer:before {
+.outer:before {
   content: "";
   mask-image: var(--custom-icon-mask);
   mask-repeat: no-repeat;
@@ -12,4 +13,9 @@
   height: 100%;
   width: 100%;
   display: block;
+}
+
+.icon {
+  display: inline-block;
+  opacity: 1;
 }

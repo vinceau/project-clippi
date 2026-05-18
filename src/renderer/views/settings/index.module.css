@@ -5,14 +5,6 @@
   margin-bottom: 0.2rem !important;
 }
 
-.styledMenuItem:global(.active) {
-  background: color-mix(in srgb, transparent 95%, var(--color-foreground3)) !important;
-}
-
-.styledMenuItem:not(:global(.header)):hover {
-  background: color-mix(in srgb, transparent 70%, var(--color-foreground3)) !important;
-}
-
 .styledMenuItemHeader {
   font-variant: all-small-caps !important;
   font-size: 1.6rem !important;
@@ -84,18 +76,6 @@
   width: 100% !important;
 }
 
-.styledMenu a:global(.item) > i:global(.icon) {
-  float: left !important;
-  margin-right: 1rem !important;
-  margin-left: 0 !important;
-}
-
-.styledMenu a:global(.item) > i:global(.icon) {
-  float: left;
-  margin-right: 1rem;
-  margin-left: 0;
-}
-
 .menuContainer {
   display: flex;
   flex-direction: column;
@@ -134,7 +114,6 @@
   visibility: visible;
   overflow: auto;
   background-color: var(--color-background2);
-  z-index: 1;
 }
 
 .flex {

@@ -2,8 +2,6 @@ import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Button } from "@/ui/Button/Button";
-import { Icon } from "@/ui/Icon/Icon";
-
 import { ConnectionStatusDisplay } from "@/components/ConnectionStatusDisplay";
 import { Labelled } from "@/components/Labelled";
 import { RecordButton } from "@/components/RecordButton";
@@ -12,6 +10,7 @@ import { OBSConnectionStatus, OBSRecordingStatus } from "@/lib/obs";
 import type { Dispatch, iRootState } from "@/store";
 import obsLogo from "@/styles/images/obs.png";
 
+import { CircleStop, Circle, Play } from "lucide-react";
 import styles from "./OBSStatusBar.module.css";
 
 enum RecordingMethod {
@@ -100,12 +99,14 @@ export function OBSStatusBar() {
       </ConnectionStatusDisplay>
       <div>
         {dolphinRunning ? (
-          <Button className={styles.stopButton} type="button" onClick={onStop}>
-            <Icon name="stop" />
-            Stop
-          </Button>
+          <div className={styles.stopButton}>
+            <Button type="button" onClick={onStop}>
+              <CircleStop size={20} />
+              Stop
+            </Button>
+          </div>
         ) : (
-          <>
+          <div style={{ display: "flex", gap: "0.5em" }}>
             <Labelled title={recordingButtonTitle} disabled={!recordButtonDisabled}>
               <RecordButton
                 onClick={onRecord}
@@ -114,15 +115,15 @@ export function OBSStatusBar() {
                 value={recordValue}
                 options={options}
               >
-                <Icon name="circle" />
+                <Circle size={16} />
                 {recordButtonText}
               </RecordButton>
             </Labelled>
             <Button primary onClick={onPlay} disabled={dolphinQueue.length === 0}>
-              <Icon name="play" />
+              <Play size={16} />
               Play
             </Button>
-          </>
+          </div>
         )}
       </div>
     </div>

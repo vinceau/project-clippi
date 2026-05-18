@@ -1,7 +1,7 @@
 import type { TwitchClip } from "common/types";
 import React from "react";
-import { Pagination } from "@/ui/Pagination/Pagination";
 
+import { Pagination } from "./Pagination/Pagination";
 import { TwitchClipInfo } from "./TwitchClipInfo";
 
 export function TwitchClipList({
@@ -31,11 +31,8 @@ export function TwitchClipList({
         </div>
         <Pagination
           activePage={activePage}
-          onPageChange={(_e, { activePage }) => setActivePage(activePage as number)}
+          onChange={(activePage) => setActivePage(activePage)}
           totalPages={totalPages}
-          ellipsisItem={null}
-          siblingRange={2}
-          boundaryRange={0}
         />
         <div>{clips.length} clips</div>
       </div>

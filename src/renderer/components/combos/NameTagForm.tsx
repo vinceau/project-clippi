@@ -1,15 +1,16 @@
 import React from "react";
 import { FieldArray } from "react-final-form-arrays";
-import { Icon } from "@/ui/Icon/Icon";
+import { X as CloseIcon } from "lucide-react";
 import { Label } from "@/ui/Label/Label";
 
+import { Input } from "@/ui/Input/Input";
 import styles from "./NameTagForm.module.css";
 
 function NameTagLabel({ name, onClick }: { name: string; onClick: () => void }) {
   return (
-    <Label style={{ fontSize: "0.8em" }}>
+    <Label>
       {name}
-      <Icon name="delete" link onClick={onClick} />
+      <CloseIcon size={12} onClick={onClick} style={{ cursor: "pointer" }} />
     </Label>
   );
 }
@@ -32,12 +33,12 @@ export function NameTagForm({ name, values, push }: { name: string; values: any;
   return (
     <div>
       <div>
-        <input
+        <Input
           placeholder="Type tags here and press enter..."
           autoCapitalize="none"
           autoComplete="off"
           autoCorrect="off"
-          spellCheck="false"
+          spellCheck={false}
           tabIndex={0}
           type="text"
           aria-autocomplete="list"
@@ -52,7 +53,7 @@ export function NameTagForm({ name, values, push }: { name: string; values: any;
             return <div className={styles.placeholder}>No tags specified</div>;
           }
           return (
-            <div style={{ paddingTop: "1rem" }}>
+            <div style={{ paddingTop: "1rem", display: "flex", gap: "0.5rem" }}>
               {fields.map((n, index) => (
                 <NameTagLabel
                   key={`fields--${n}--${index}--${fields.value[index]}`}

@@ -1,0 +1,14 @@
+.message {
+  padding: 8px 16px;
+  border-radius: 0.5rem;
+  align-items: center;
+  background: #fff3cd;
+  color: #856404;
+  border: 1px solid #ffc107;
+}
+
+[data-theme="dark"] .message {
+  background: #3d3200;
+  color: #ffc107;
+  border-color: #665500;
+}

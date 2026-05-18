@@ -1,16 +1,16 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@/ui/Button/Button";
-import { Icon } from "@/ui/Icon/Icon";
+import { Plus, Save, Shuffle, Trash, CirclePlay, Folder } from "lucide-react";
 
 import { DropPad } from "@/components/DropPad";
-import { Text } from "@/components/Form";
 import { Labelled } from "@/components/Labelled";
 import { OBSStatusBar } from "@/containers/OBSStatusBar";
 import { saveQueueToFile } from "@/lib/dolphin";
 import type { Dispatch, iRootState } from "@/store";
 
 import styles from "./RecorderView.module.css";
+import { Header } from "./Header/Header";
 
 export function RecorderView() {
   const { dolphinQueue } = useSelector((state: iRootState) => state.tempContainer);
@@ -54,29 +54,34 @@ export function RecorderView() {
   return (
     <div className={styles.outer}>
       <div className={styles.content}>
-        <h1>
-          Playback Queue <Icon name="play circle" />
-        </h1>
-        <Text margin="none">Create a playlist of replays and load them into Dolphin</Text>
+        <Header
+          title="Playback Queue"
+          icon={<CirclePlay />}
+          description="Create a playlist of replays and load them into Dolphin"
+        />
         <div className={styles.toolbar}>
-          <div>
-            <Button type="button" onClick={loadFileHandler}>
-              <Icon name="folder" /> Load JSON
-            </Button>
-            <Button type="button" disabled={!validQueue} onClick={onSaveHandler}>
-              <Icon name="save" /> Save JSON
-            </Button>
-          </div>
+          <Button type="button" onClick={loadFileHandler}>
+            <Folder /> Load JSON
+          </Button>
+          <Button type="button" disabled={!validQueue} onClick={onSaveHandler}>
+            <Save /> Save JSON
+          </Button>
           {validQueue && (
             <div>
               <Labelled title="Add file">
-                <Button onClick={addFileHandler} icon="plus" />
+                <Button onClick={addFileHandler}>
+                  <Plus size={20} />
+                </Button>
               </Labelled>
               <Labelled title="Shuffle queue">
-                <Button onClick={shuffleQueueHandler} icon="shuffle" />
+                <Button onClick={shuffleQueueHandler}>
+                  <Shuffle size={20} />
+                </Button>
               </Labelled>
               <Labelled title="Clear queue">
-                <Button onClick={clearQueueHandler} icon="trash" />
+                <Button onClick={clearQueueHandler}>
+                  <Trash size={20} />
+                </Button>
               </Labelled>
             </div>
           )}

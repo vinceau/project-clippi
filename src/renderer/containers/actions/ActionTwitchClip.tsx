@@ -2,7 +2,6 @@ import { delay as waitMillis, parseSecondsDelayValue } from "common/utils";
 import { produce } from "immer";
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Icon } from "@/ui/Icon/Icon";
 import { Loader } from "@/ui/Loader/Loader";
 
 import { DelayInput, NotifyInput, SimpleInput } from "@/components/InlineInputs";
@@ -12,6 +11,8 @@ import { notify as sendNotification } from "@/lib/utils";
 import type { Dispatch, iRootState } from "@/store";
 import { dispatcher, store } from "@/store";
 
+import { CustomIcon } from "@/ui/CustomIcon/CustomIcon";
+import twitchIcon from "@/styles/images/twitch.svg";
 import { createTwitchClip } from "../../lib/twitch";
 import type { ActionComponent } from "./types";
 
@@ -68,7 +69,7 @@ const actionCreateClip: ActionTypeGenerator = (params: ActionCreateTwitchClipPar
 };
 
 function ActionIcon() {
-  return <Icon name="twitch" size="large" />;
+  return <CustomIcon image={twitchIcon} style={{ width: "20px", height: "20px" }} />;
 }
 
 interface TwitchClipInputProps extends Record<string, any> {

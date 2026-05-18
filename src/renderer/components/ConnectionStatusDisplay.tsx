@@ -43,7 +43,7 @@ export function ConnectionStatusDisplay({
       )}
       <div className={styles.connectInfo}>
         <Labelled disabled={!headerHoverTitle} title={headerHoverTitle} onClick={onHeaderClick} position="right">
-          <Header sub>
+          <Header sub uppercase>
             <ScanningDot shouldPulse={shouldPulse} color={color || "red"} /> {headerText}
           </Header>
         </Labelled>

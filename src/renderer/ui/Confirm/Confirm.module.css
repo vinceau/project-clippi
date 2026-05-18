@@ -1,8 +1,56 @@
-.confirm :global(.actions) {
-  display: flex;
-  justify-content: space-between;
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
 }
 
-.confirm :global(.actions) > button {
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--bg-color, #fff);
+  border-radius: 8px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+  min-width: 360px;
+  max-width: 480px;
+  padding: 24px;
+  outline: none;
+}
+
+.title {
+  margin: 0 0 12px;
+  font-size: 1.2em;
+  font-weight: 600;
+}
+
+.description {
+  margin: 0 0 20px;
+  font-size: 0.95em;
+  line-height: 1.4;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.actions button {
   margin: 0 !important;
+}
+
+.cancelButton, .confirmButton {
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9em;
+  border: 1px solid #ccc;
+  background: transparent;
+}
+
+.confirmButton {
+  background: #db2828;
+  color: #fff;
+  border-color: #db2828;
 }

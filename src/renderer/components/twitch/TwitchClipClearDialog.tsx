@@ -1,8 +1,7 @@
 import React from "react";
 import { Button } from "@/ui/Button/Button";
-import { Header } from "@/ui/Header/Header";
-import { Icon } from "@/ui/Icon/Icon";
 import { Modal } from "@/ui/Modal/Modal";
+import { Check, X } from "lucide-react";
 
 import { useTheme } from "@/styles";
 
@@ -16,6 +15,7 @@ export function TwitchClipClearDialog({ trigger, onClear }: { trigger: React.Rea
 
   return (
     <Modal
+      title="Delete all Twitch clips?"
       className={theme.themeName}
       closeIcon
       open={open}
@@ -23,16 +23,15 @@ export function TwitchClipClearDialog({ trigger, onClear }: { trigger: React.Rea
       onClose={() => setOpen(false)}
       onOpen={() => setOpen(true)}
     >
-      <Header icon="trash" content="Delete all Twitch clips" />
       <Modal.Content>
         <p>You are about to delete all saved Twitch clips. This cannot be undone.</p>
       </Modal.Content>
       <Modal.Actions>
         <Button onClick={() => setOpen(false)}>
-          <Icon name="remove" /> Cancel
+          <X size={16} /> Cancel
         </Button>
         <Button color="green" onClick={onSubmit}>
-          <Icon name="checkmark" /> Delete
+          <Check size={16} /> Delete
         </Button>
       </Modal.Actions>
     </Modal>
