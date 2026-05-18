@@ -9,7 +9,6 @@ import { CustomIcon } from "@/ui/CustomIcon/CustomIcon";
 import { SlippiIcon } from "@/components/SlippiIcon";
 import { dispatcher } from "@/store";
 import dolphinLogoSVG from "@/styles/images/dolphin.svg";
-import { Grid } from "@/ui/Grid/Grid";
 
 import styles from "./SlippiConnectionPlaceholder.module.css";
 

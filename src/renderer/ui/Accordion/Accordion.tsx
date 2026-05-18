@@ -1,4 +1,4 @@
-import { Collapsible } from "@base-ui/react/collapsible";
+import { Collapsible } from "@base-ui/react";
 import { clsx } from "clsx";
 import React from "react";
 import styles from "./Accordion.module.css";
