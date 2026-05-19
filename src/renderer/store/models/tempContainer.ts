@@ -231,11 +231,16 @@ export const tempContainer = createModel({
       dispatch.tempContainer.setTwitchLoading(true);
       const scopes = ["user_read", "clips:edit", "chat:read", "chat:edit"];
       console.log(`Authenticating with Twitch using the scopes: ${scopes}`);
-      const user = await authenticateTwitch(scopes);
-      console.log("Got the following user object back from Twitch:");
-      console.log(user);
-      dispatch.tempContainer.setTwitchUser(user);
-      dispatch.tempContainer.setTwitchLoading(false);
+      try {
+        const user = await authenticateTwitch(scopes);
+        console.log("Got the following user object back from Twitch:");
+        console.log(user);
+        dispatch.tempContainer.setTwitchUser(user);
+      } catch (err) {
+        console.error("Twitch authentication failed:", err);
+      } finally {
+        dispatch.tempContainer.setTwitchLoading(false);
+      }
     },
     async logOutTwitch() {
       await signOutTwitch();
