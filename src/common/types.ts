@@ -11,6 +11,11 @@ export interface TwitchClip {
   timestamp: Date;
 }
 
+export interface TwitchDeviceCode {
+  userCode: string;
+  verificationUri: string;
+}
+
 // Types to bind update status and payload type
 export enum UpdateStatus {
   NO_UPDATE = "NO_UPDATE",
@@ -60,6 +65,7 @@ export enum Message {
 
   // main to renderer
   VersionUpdateStatus = "versionUpdateStatus",
+  TwitchDeviceCode = "twitchDeviceCode",
 }
 
 export type ResponseType<X extends Message> =
@@ -84,7 +90,9 @@ export type ResponseType<X extends Message> =
                     ? void
                     : X extends Message.VersionUpdateStatus
                       ? VersionUpdatePayload
-                      : never;
+                      : X extends Message.TwitchDeviceCode
+                        ? TwitchDeviceCode
+                        : never;
 
 export type RequestType<X extends Message> =
   // renderer to main
@@ -102,4 +110,6 @@ export type RequestType<X extends Message> =
               ? { theme: "light" | "dark" } // Tell the main process which theme we want to apply
               : X extends Message.CheckForUpdates
                 ? void
-                : never;
+                : X extends Message.TwitchDeviceCode
+                  ? TwitchDeviceCode
+                  : never;

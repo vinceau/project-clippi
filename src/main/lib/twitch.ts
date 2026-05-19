@@ -6,6 +6,7 @@ import type { HelixUser } from "@twurple/api";
 import { ChatClient } from "@twurple/chat";
 import { getTokenInfo } from "@twurple/auth";
 import type { AccessToken } from "@twurple/auth";
+import type { TwitchDeviceCode } from "common/types";
 
 import { clearAllCookies } from "./session";
 import { DeviceCodeAuthProvider, postForm } from "./DeviceCodeAuthProvider";
@@ -57,7 +58,9 @@ const pollForToken = async (
     throw new Error("Authorization timed out");
   }
 
-  await new Promise<void>((resolve) => { setTimeout(resolve, interval); });
+  await new Promise<void>((resolve) => {
+    setTimeout(resolve, interval);
+  });
 
   const params = new URLSearchParams({
     client_id: clientId,
@@ -88,7 +91,10 @@ const pollForToken = async (
   throw new Error(`Device code flow failed: ${body.message || JSON.stringify(body)}`);
 };
 
-const performDeviceCodeOAuth = async (scopes: string[]): Promise<{ token: AccessToken; userId: string }> => {
+const performDeviceCodeOAuth = async (
+  scopes: string[],
+  onDeviceCode?: (code: TwitchDeviceCode) => void
+): Promise<{ token: AccessToken; userId: string }> => {
   if (!TWITCH_CLIENT_ID) {
     throw new Error("Twitch client ID is not configured");
   }
@@ -97,17 +103,17 @@ const performDeviceCodeOAuth = async (scopes: string[]): Promise<{ token: Access
   const deviceCodeData = await requestDeviceCode(scopes);
   log.log(`Device code obtained. User code: ${deviceCodeData.user_code}`);
 
+  onDeviceCode?.({
+    userCode: deviceCodeData.user_code,
+    verificationUri: deviceCodeData.verification_uri,
+  });
+
   shell.openExternal(deviceCodeData.verification_uri);
 
   const interval = (deviceCodeData.interval || 5) * 1000;
   const expiresAt = Date.now() + (deviceCodeData.expires_in || 1800) * 1000;
 
-  const token = await pollForToken(
-    TWITCH_CLIENT_ID,
-    deviceCodeData.device_code,
-    interval,
-    expiresAt
-  );
+  const token = await pollForToken(TWITCH_CLIENT_ID, deviceCodeData.device_code, interval, expiresAt);
   const info = await getTokenInfo(token.accessToken, TWITCH_CLIENT_ID);
   const userId = info.userId || "";
 
@@ -116,6 +122,8 @@ const performDeviceCodeOAuth = async (scopes: string[]): Promise<{ token: Access
 };
 
 export class TwitchController {
+  public onDeviceCode: ((code: TwitchDeviceCode) => void) | null = null;
+
   private currentUser: HelixUser | null = null;
 
   private client: ApiClient | null = null;
@@ -271,7 +279,7 @@ export class TwitchController {
     }
 
     log.log("Starting Twitch Device Code Grant OAuth flow...");
-    const { token, userId } = await performDeviceCodeOAuth(scopes);
+    const { token, userId } = await performDeviceCodeOAuth(scopes, this.onDeviceCode ?? undefined);
 
     this.accessToken = {
       accessToken: token.accessToken,

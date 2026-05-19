@@ -64,14 +64,20 @@ export class DeviceCodeAuthProvider implements AuthProvider {
     return this._token?.scope || [];
   }
 
-  async getAccessTokenForUser(user: UserIdResolvable, ..._scopeSets: Array<string[] | undefined>): Promise<AccessTokenWithUserId | null> {
+  async getAccessTokenForUser(
+    user: UserIdResolvable,
+    ..._scopeSets: Array<string[] | undefined>
+  ): Promise<AccessTokenWithUserId | null> {
     const userId = typeof user === "string" ? user : (user as { id: string }).id;
     if (!this._token || this._token.userId !== userId) return null;
     await this._ensureValidToken();
     return this._token;
   }
 
-  async getAccessTokenForIntent(intent: string, ..._scopeSets: Array<string[] | undefined>): Promise<AccessTokenWithUserId | null> {
+  async getAccessTokenForIntent(
+    intent: string,
+    ..._scopeSets: Array<string[] | undefined>
+  ): Promise<AccessTokenWithUserId | null> {
     const userId = this._intentToUserId.get(intent);
     if (!userId || !this._token) return null;
     await this._ensureValidToken();

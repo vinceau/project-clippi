@@ -1,7 +1,7 @@
 import { createModel } from "@rematch/core";
 import { ConnectionStatus } from "@slippi/slippi-js";
 import type { DolphinEntry, DolphinQueueFormat, DolphinQueueOptions } from "@vinceau/slp-realtime";
-import type { TwitchUser, VersionUpdatePayload } from "common/types";
+import type { TwitchDeviceCode, TwitchUser, VersionUpdatePayload } from "common/types";
 import { UpdateStatus } from "common/types";
 import { shuffle } from "common/utils";
 import produce from "immer";
@@ -20,6 +20,7 @@ export interface TempContainerState {
   obsScenes: Scene[];
   twitchUser: TwitchUser | null;
   twitchLoading: boolean;
+  twitchDeviceCode: TwitchDeviceCode | null;
   showSettings: boolean;
   currentSlpFolderStream: string;
   comboFinderPercent: number;
@@ -49,6 +50,7 @@ const initialState: TempContainerState = {
   obsScenes: [],
   twitchUser: null,
   twitchLoading: false,
+  twitchDeviceCode: null,
   showSettings: false,
   currentSlpFolderStream: "",
   comboFinderPercent: 0,
@@ -96,6 +98,10 @@ export const tempContainer = createModel({
     setTwitchLoading: (state: TempContainerState, payload: boolean): TempContainerState =>
       produce(state, (draft) => {
         draft.twitchLoading = payload;
+      }),
+    setTwitchDeviceCode: (state: TempContainerState, payload: TwitchDeviceCode | null): TempContainerState =>
+      produce(state, (draft) => {
+        draft.twitchDeviceCode = payload;
       }),
     toggleSettings: (state: TempContainerState): TempContainerState =>
       produce(state, (draft) => {
@@ -240,6 +246,7 @@ export const tempContainer = createModel({
         console.error("Twitch authentication failed:", err);
       } finally {
         dispatch.tempContainer.setTwitchLoading(false);
+        dispatch.tempContainer.setTwitchDeviceCode(null);
       }
     },
     async logOutTwitch() {
