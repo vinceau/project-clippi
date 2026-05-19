@@ -27,11 +27,11 @@ export function TwitchUserStatus({
           <Image floated="left" size="mini" src={userImage} />
           <Card.Header>{displayName}</Card.Header>
           <Card.Meta>
-            <A href={`https://${url}`}>{url}</A>
+            <A style={{ color: "var(--color-secondary)" }} href={`https://${url}`}>{url}</A>
           </Card.Meta>
         </Card.Content>
         <Card.Content extra>
-          <Button basic fluid color="red" onClick={onSignOut}>
+          <Button basic color="red" onClick={onSignOut}>
             Sign out
           </Button>
         </Card.Content>
