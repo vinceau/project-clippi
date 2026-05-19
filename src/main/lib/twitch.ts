@@ -13,7 +13,7 @@ import { DeviceCodeAuthProvider, postForm } from "./DeviceCodeAuthProvider";
 
 const store = new Store();
 
-const TWITCH_CLIENT_ID = process.env.ELECTRON_WEBPACK_APP_TWITCH_CLIENT_ID || "";
+const TWITCH_CLIENT_ID = process.env.TWITCH_CLIENT_ID || "";
 const TOKEN_STORE_KEY = "twitch-access-token-2";
 
 interface StoredToken extends AccessToken {
