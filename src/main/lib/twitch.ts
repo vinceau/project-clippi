@@ -173,10 +173,12 @@ export class TwitchController {
       channelId = user.id;
     }
 
-    const clipId = await this.client.clips.createClip({
-      channel: channelId,
-      createAfterDelay: options && options.createAfterDelay,
-    });
+    const clipId = await this.client.asUser(this.currentUser.id, async (ctx) =>
+      ctx.clips.createClip({
+        channel: channelId,
+        createAfterDelay: options && options.createAfterDelay,
+      })
+    );
 
     if (options && options.postToChat) {
       try {
