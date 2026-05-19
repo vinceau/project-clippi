@@ -50,6 +50,11 @@ const createProvider = async (tokenData: AccessToken, intents?: string[]): Promi
 
 const performOAuth = async (scopes: string[]): Promise<{ code: string; redirectUri: string }> =>
   new Promise<{ code: string; redirectUri: string }>((resolve, reject) => {
+    if (!TWITCH_CLIENT_ID || !TWITCH_CLIENT_SECRET) {
+      reject(new Error("Twitch client ID or secret is not configured"));
+      return;
+    }
+
     let port = 5743;
     const maxPort = 5800;
 
