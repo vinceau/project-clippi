@@ -62,7 +62,6 @@ const configuration: webpack.Configuration = {
       NODE_ENV: "production",
       DEBUG_PROD: false,
       START_MINIMIZED: false,
-      ELECTRON_WEBPACK_APP_TWITCH_CLIENT_ID: null,
     }),
 
     new webpack.DefinePlugin({

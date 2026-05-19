@@ -1,19 +1,18 @@
-import http from "http";
 import log from "electron-log";
 import Store from "electron-store";
 import { shell } from "electron";
 import { ApiClient } from "@twurple/api";
 import type { HelixUser } from "@twurple/api";
 import { ChatClient } from "@twurple/chat";
-import { RefreshingAuthProvider, exchangeCode, getTokenInfo } from "@twurple/auth";
+import { getTokenInfo } from "@twurple/auth";
 import type { AccessToken } from "@twurple/auth";
 
 import { clearAllCookies } from "./session";
+import { DeviceCodeAuthProvider, postForm } from "./DeviceCodeAuthProvider";
 
 const store = new Store();
 
 const TWITCH_CLIENT_ID = process.env.ELECTRON_WEBPACK_APP_TWITCH_CLIENT_ID || "";
-const TWITCH_CLIENT_SECRET = process.env.ELECTRON_WEBPACK_APP_TWITCH_CLIENT_SECRET || "";
 const TOKEN_STORE_KEY = "twitch-access-token";
 
 interface StoredToken extends AccessToken {
@@ -23,108 +22,105 @@ interface StoredToken extends AccessToken {
 const validScopes = (neededScopes: string[], existingScopes: string[]): boolean =>
   neededScopes.every((s) => existingScopes.includes(s));
 
-const SUCCESS_PAGE = `<html>
-<body style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:sans-serif;background:#1a1a2e;color:#fff;margin:0">
-<div style="text-align:center">
-<h1 style="color:#9147ff">Authorization successful!</h1>
-<p>You can close this window and return to Project Clippi.</p>
-</div>
-</body>
-</html>`;
-
-const createProvider = async (tokenData: AccessToken, intents?: string[]): Promise<RefreshingAuthProvider> => {
-  const authProvider = new RefreshingAuthProvider({
-    clientId: TWITCH_CLIENT_ID,
-    clientSecret: TWITCH_CLIENT_SECRET,
-  });
-  authProvider.onRefresh(async (userId, newTokenData) => {
-    log.log("Token refreshed for user", userId);
+const createProvider = async (
+  tokenData: AccessToken,
+  userId: string,
+  intents?: string[]
+): Promise<DeviceCodeAuthProvider> => {
+  const authProvider = new DeviceCodeAuthProvider(TWITCH_CLIENT_ID);
+  authProvider.onRefresh(async (refreshedUserId, newTokenData) => {
+    log.log("Token refreshed for user", refreshedUserId);
     const current = store.get(TOKEN_STORE_KEY, null) as StoredToken | null;
-    if (current && current.userId === userId) {
-      store.set(TOKEN_STORE_KEY, { ...current, ...newTokenData, userId });
+    if (current && current.userId === refreshedUserId) {
+      store.set(TOKEN_STORE_KEY, { ...current, ...newTokenData, userId: refreshedUserId });
     }
   });
-  await authProvider.addUserForToken(tokenData, intents);
+  authProvider.addUser(userId, tokenData, intents);
   return authProvider;
 };
 
-const performOAuth = async (scopes: string[]): Promise<{ code: string; redirectUri: string }> =>
-  new Promise<{ code: string; redirectUri: string }>((resolve, reject) => {
-    if (!TWITCH_CLIENT_ID || !TWITCH_CLIENT_SECRET) {
-      reject(new Error("Twitch client ID or secret is not configured"));
-      return;
-    }
-
-    let port = 5743;
-    const maxPort = 5800;
-
-    const tryListen = () => {
-      const server = http.createServer((req, res) => {
-        const parsedUrl = new URL(req.url!, `http://localhost:${port}`);
-        if (parsedUrl.pathname === "/auth/twitch/callback") {
-          const code = parsedUrl.searchParams.get("code");
-          const error = parsedUrl.searchParams.get("error");
-          if (error) {
-            res.writeHead(400, { "Content-Type": "text/html" });
-            res.end(`Authorization failed: ${error}`);
-            server.close();
-            reject(new Error(`Twitch authorization failed: ${error}`));
-            return;
-          }
-          if (code) {
-            res.writeHead(200, { "Content-Type": "text/html" });
-            res.end(SUCCESS_PAGE);
-            server.close();
-            resolve({
-              code,
-              redirectUri: `http://localhost:${port}/auth/twitch/callback`,
-            });
-          } else {
-            res.writeHead(400, { "Content-Type": "text/html" });
-            res.end("No authorization code received.");
-            server.close();
-            reject(new Error("No authorization code received"));
-          }
-        }
-      });
-
-      server.listen(port, () => {
-        const redirectUri = `http://localhost:${port}/auth/twitch/callback`;
-        const params = new URLSearchParams({
-          client_id: TWITCH_CLIENT_ID,
-          redirect_uri: redirectUri,
-          response_type: "code",
-          scope: scopes.join(" "),
-        });
-        const authUrl = `https://id.twitch.tv/oauth2/authorize?${params}`;
-        log.log(`Opening browser for Twitch auth: ${authUrl}`);
-        shell.openExternal(authUrl);
-      });
-
-      server.on("error", (err: Error & { code?: string }) => {
-        if (err.code === "EADDRINUSE" && port < maxPort) {
-          port += 1;
-          tryListen();
-        } else {
-          reject(err);
-        }
-      });
-
-      setTimeout(() => {
-        server.close();
-        reject(new Error("Authorization timed out"));
-      }, 300000);
-    };
-
-    tryListen();
+const requestDeviceCode = async (scopes: string[]) => {
+  const params = new URLSearchParams({
+    client_id: TWITCH_CLIENT_ID,
+    scopes: scopes.join(" "),
   });
+  return postForm("https://id.twitch.tv/oauth2/device", params);
+};
+
+const pollForToken = async (
+  clientId: string,
+  deviceCode: string,
+  interval: number,
+  expiresAt: number
+): Promise<AccessToken> => {
+  if (Date.now() >= expiresAt) {
+    throw new Error("Authorization timed out");
+  }
+
+  await new Promise<void>((resolve) => { setTimeout(resolve, interval); });
+
+  const params = new URLSearchParams({
+    client_id: clientId,
+    device_code: deviceCode,
+    grant_type: "urn:ietf:params:oauth:grant-type:device_code",
+  });
+
+  const body = await postForm("https://id.twitch.tv/oauth2/token", params);
+
+  if (body.access_token) {
+    return {
+      accessToken: body.access_token,
+      refreshToken: body.refresh_token,
+      scope: body.scope,
+      expiresIn: body.expires_in,
+      obtainmentTimestamp: Date.now(),
+    };
+  }
+
+  if (body.message === "slow_down") {
+    return pollForToken(clientId, deviceCode, interval + 1000, expiresAt);
+  }
+
+  if (body.message === "authorization_pending") {
+    return pollForToken(clientId, deviceCode, interval, expiresAt);
+  }
+
+  throw new Error(`Device code flow failed: ${body.message || JSON.stringify(body)}`);
+};
+
+const performDeviceCodeOAuth = async (scopes: string[]): Promise<{ token: AccessToken; userId: string }> => {
+  if (!TWITCH_CLIENT_ID) {
+    throw new Error("Twitch client ID is not configured");
+  }
+
+  log.log("Requesting device code from Twitch...");
+  const deviceCodeData = await requestDeviceCode(scopes);
+  log.log(`Device code obtained. User code: ${deviceCodeData.user_code}`);
+
+  shell.openExternal(deviceCodeData.verification_uri);
+
+  const interval = (deviceCodeData.interval || 5) * 1000;
+  const expiresAt = Date.now() + (deviceCodeData.expires_in || 1800) * 1000;
+
+  const token = await pollForToken(
+    TWITCH_CLIENT_ID,
+    deviceCodeData.device_code,
+    interval,
+    expiresAt
+  );
+  const info = await getTokenInfo(token.accessToken, TWITCH_CLIENT_ID);
+  const userId = info.userId || "";
+
+  log.log("Successfully obtained Twitch access token via DCF");
+  return { token, userId };
+};
 
 export class TwitchController {
   private currentUser: HelixUser | null = null;
 
   private client: ApiClient | null = null;
 
-  private authProvider: RefreshingAuthProvider | null = null;
+  private authProvider: DeviceCodeAuthProvider | null = null;
 
   private chatClient: ChatClient | null = null;
 
@@ -240,7 +236,7 @@ export class TwitchController {
 
   private async _authenticateTwitch(
     scopes: string[]
-  ): Promise<{ apiClient: ApiClient; authProvider: RefreshingAuthProvider }> {
+  ): Promise<{ apiClient: ApiClient; authProvider: DeviceCodeAuthProvider }> {
     const stored = store.get(TOKEN_STORE_KEY, null) as (StoredToken & { scopes?: string[] }) | null;
 
     if (stored) {
@@ -256,6 +252,7 @@ export class TwitchController {
               expiresIn: stored.expiresIn,
               obtainmentTimestamp: stored.obtainmentTimestamp,
             },
+            stored.userId,
             ["chat"]
           );
           const apiClient = new ApiClient({ authProvider });
@@ -271,23 +268,20 @@ export class TwitchController {
       }
     }
 
-    log.log("Opening Twitch OAuth dialog...");
-    const { code, redirectUri } = await performOAuth(scopes);
-
-    const tokenData = await exchangeCode(TWITCH_CLIENT_ID, TWITCH_CLIENT_SECRET, code, redirectUri);
-    const info = await getTokenInfo(tokenData.accessToken, TWITCH_CLIENT_ID);
+    log.log("Starting Twitch Device Code Grant OAuth flow...");
+    const { token, userId } = await performDeviceCodeOAuth(scopes);
 
     this.accessToken = {
-      accessToken: tokenData.accessToken,
-      refreshToken: tokenData.refreshToken,
-      scope: tokenData.scope,
-      expiresIn: tokenData.expiresIn,
-      obtainmentTimestamp: tokenData.obtainmentTimestamp,
-      userId: info.userId || "",
+      accessToken: token.accessToken,
+      refreshToken: token.refreshToken,
+      scope: token.scope,
+      expiresIn: token.expiresIn,
+      obtainmentTimestamp: token.obtainmentTimestamp,
+      userId,
     };
     store.set(TOKEN_STORE_KEY, this.accessToken);
 
-    const authProvider = await createProvider(tokenData, ["chat"]);
+    const authProvider = await createProvider(token, userId, ["chat"]);
     const apiClient = new ApiClient({ authProvider });
     return { apiClient, authProvider };
   }
