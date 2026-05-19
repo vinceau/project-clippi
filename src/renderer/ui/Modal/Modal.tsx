@@ -17,6 +17,7 @@ interface ModalProps {
   className?: string;
   children?: React.ReactNode;
   fluid?: boolean;
+  triggerClassName?: string;
 }
 
 /* eslint-disable react/require-default-props */
@@ -31,6 +32,7 @@ export function Modal({
   className,
   fluid,
   children,
+  triggerClassName,
 }: ModalProps) {
   const handleOpenChange = (nextOpen: boolean) => {
     if (nextOpen) {
@@ -47,7 +49,11 @@ export function Modal({
       modal
       disablePointerDismissal={closeOnDimmerClick === false}
     >
-      {trigger && <Dialog.Trigger className={clsx(styles.trigger, fluid && styles.fluid)}>{trigger}</Dialog.Trigger>}
+      {trigger && (
+        <Dialog.Trigger className={clsx(styles.trigger, fluid && styles.fluid, triggerClassName)}>
+          {trigger}
+        </Dialog.Trigger>
+      )}
       <Dialog.Portal>
         <Dialog.Backdrop className={styles.backdrop} />
         <Dialog.Popup className={clsx(styles.popup, className)}>

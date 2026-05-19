@@ -56,10 +56,13 @@ export function TwitchIntegration() {
         <div className={styles.sectionHeader}>
           <h2>Clips</h2>
           {allClips.length > 0 && (
-            <TwitchClipClearDialog
-              trigger={<div className={styles.clearTrigger}>Clear all</div>}
-              onClear={dispatch.twitch.clearAllTwitchClips}
-            />
+            <div>
+              <TwitchClipClearDialog
+                trigger={<span>Clear all</span>}
+                triggerClassName={styles.clearTrigger}
+                onClear={dispatch.twitch.clearAllTwitchClips}
+              />
+            </div>
           )}
         </div>
         {allClips.length > 0 ? (
