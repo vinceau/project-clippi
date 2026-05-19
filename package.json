@@ -89,7 +89,6 @@
     "@slippi/slippi-js": "^6.7.0",
     "@twurple/api": "^8.1.4",
     "@twurple/auth": "^8.1.4",
-    "@twurple/auth-electron": "^6.2.1",
     "@twurple/chat": "^8.1.4",
     "@vinceau/slp-realtime": "^4.0.0",
     "clsx": "^2.1.1",

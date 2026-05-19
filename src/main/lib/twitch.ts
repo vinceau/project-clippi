@@ -1,43 +1,134 @@
 import log from "electron-log";
 import Store from "electron-store";
+import { shell } from "electron";
 import { ApiClient } from "@twurple/api";
 import type { HelixUser } from "@twurple/api";
 import { ChatClient } from "@twurple/chat";
-import { StaticAuthProvider, getTokenInfo, accessTokenIsExpired } from "@twurple/auth";
-import { ElectronAuthProvider } from "@twurple/auth-electron";
+import { getTokenInfo } from "@twurple/auth";
+import type { AccessToken } from "@twurple/auth";
+import type { TwitchDeviceCode } from "common/types";
 
 import { clearAllCookies } from "./session";
+import { DeviceCodeAuthProvider, postForm } from "./DeviceCodeAuthProvider";
 
 const store = new Store();
 
-const TWITCH_CLIENT_ID = process.env.ELECTRON_WEBPACK_APP_TWITCH_CLIENT_ID || "";
-const TWITCH_REDIRECT_URI = "http://localhost:3000/auth/twitch/callback";
-const TOKEN_STORE_KEY = "twitch-access-token";
+const TWITCH_CLIENT_ID = process.env.TWITCH_CLIENT_ID || "";
+const TOKEN_STORE_KEY = "twitch-access-token-2";
 
-interface StoredToken {
-  accessToken: string;
-  refreshToken: string | null;
-  expiresIn: number | null;
-  obtainmentTimestamp: number;
+interface StoredToken extends AccessToken {
   userId: string;
-  scopes: string[];
 }
 
-const validScopes = (neededScopes: string[], existingScopes: string[]): boolean => {
-  for (const s of neededScopes) {
-    if (!existingScopes.includes(s)) {
-      return false;
+const validScopes = (neededScopes: string[], existingScopes: string[]): boolean =>
+  neededScopes.every((s) => existingScopes.includes(s));
+
+const createProvider = async (
+  tokenData: AccessToken,
+  userId: string,
+  intents?: string[]
+): Promise<DeviceCodeAuthProvider> => {
+  const authProvider = new DeviceCodeAuthProvider(TWITCH_CLIENT_ID);
+  authProvider.onRefresh(async (refreshedUserId, newTokenData) => {
+    log.log("Token refreshed for user", refreshedUserId);
+    const current = store.get(TOKEN_STORE_KEY, null) as StoredToken | null;
+    if (current && current.userId === refreshedUserId) {
+      store.set(TOKEN_STORE_KEY, { ...current, ...newTokenData, userId: refreshedUserId });
     }
+  });
+  authProvider.addUser(userId, tokenData, intents);
+  return authProvider;
+};
+
+const requestDeviceCode = async (scopes: string[]) => {
+  const params = new URLSearchParams({
+    client_id: TWITCH_CLIENT_ID,
+    scopes: scopes.join(" "),
+  });
+  return postForm("https://id.twitch.tv/oauth2/device", params);
+};
+
+const pollForToken = async (
+  clientId: string,
+  deviceCode: string,
+  interval: number,
+  expiresAt: number
+): Promise<AccessToken> => {
+  if (Date.now() >= expiresAt) {
+    throw new Error("Authorization timed out");
   }
-  return true;
+
+  await new Promise<void>((resolve) => {
+    setTimeout(resolve, interval);
+  });
+
+  const params = new URLSearchParams({
+    client_id: clientId,
+    device_code: deviceCode,
+    grant_type: "urn:ietf:params:oauth:grant-type:device_code",
+  });
+
+  const body = await postForm("https://id.twitch.tv/oauth2/token", params);
+
+  if (body.access_token) {
+    return {
+      accessToken: body.access_token,
+      refreshToken: body.refresh_token,
+      scope: body.scope,
+      expiresIn: body.expires_in,
+      obtainmentTimestamp: Date.now(),
+    };
+  }
+
+  if (body.message === "slow_down") {
+    return pollForToken(clientId, deviceCode, interval + 1000, expiresAt);
+  }
+
+  if (body.message === "authorization_pending") {
+    return pollForToken(clientId, deviceCode, interval, expiresAt);
+  }
+
+  throw new Error(`Device code flow failed: ${body.message || JSON.stringify(body)}`);
+};
+
+const performDeviceCodeOAuth = async (
+  scopes: string[],
+  onDeviceCode?: (code: TwitchDeviceCode) => void
+): Promise<{ token: AccessToken; userId: string }> => {
+  if (!TWITCH_CLIENT_ID) {
+    throw new Error("Twitch client ID is not configured");
+  }
+
+  log.log("Requesting device code from Twitch...");
+  const deviceCodeData = await requestDeviceCode(scopes);
+  log.log(`Device code obtained. User code: ${deviceCodeData.user_code}`);
+
+  onDeviceCode?.({
+    userCode: deviceCodeData.user_code,
+    verificationUri: deviceCodeData.verification_uri,
+  });
+
+  shell.openExternal(deviceCodeData.verification_uri);
+
+  const interval = (deviceCodeData.interval || 5) * 1000;
+  const expiresAt = Date.now() + (deviceCodeData.expires_in || 1800) * 1000;
+
+  const token = await pollForToken(TWITCH_CLIENT_ID, deviceCodeData.device_code, interval, expiresAt);
+  const info = await getTokenInfo(token.accessToken, TWITCH_CLIENT_ID);
+  const userId = info.userId || "";
+
+  log.log("Successfully obtained Twitch access token via DCF");
+  return { token, userId };
 };
 
 export class TwitchController {
+  public onDeviceCode: ((code: TwitchDeviceCode) => void) | null = null;
+
   private currentUser: HelixUser | null = null;
 
   private client: ApiClient | null = null;
 
-  private authProvider: StaticAuthProvider | ElectronAuthProvider | null = null;
+  private authProvider: DeviceCodeAuthProvider | null = null;
 
   private chatClient: ChatClient | null = null;
 
@@ -90,10 +181,12 @@ export class TwitchController {
       channelId = user.id;
     }
 
-    const clipId = await this.client.clips.createClip({
-      channel: channelId,
-      createAfterDelay: options && options.createAfterDelay,
-    });
+    const clipId = await this.client.asUser(this.currentUser.id, async (ctx) =>
+      ctx.clips.createClip({
+        channel: channelId,
+        createAfterDelay: options && options.createAfterDelay,
+      })
+    );
 
     if (options && options.postToChat) {
       try {
@@ -153,19 +246,29 @@ export class TwitchController {
 
   private async _authenticateTwitch(
     scopes: string[]
-  ): Promise<{ apiClient: ApiClient; authProvider: StaticAuthProvider | ElectronAuthProvider }> {
-    const stored = store.get(TOKEN_STORE_KEY, null) as StoredToken | null;
+  ): Promise<{ apiClient: ApiClient; authProvider: DeviceCodeAuthProvider }> {
+    const stored = store.get(TOKEN_STORE_KEY, null) as (StoredToken & { scopes?: string[] }) | null;
 
-    if (stored && validScopes(scopes, stored.scopes)) {
-      const { expiresIn, obtainmentTimestamp } = stored;
-      if (!expiresIn || !accessTokenIsExpired({ expiresIn, obtainmentTimestamp })) {
+    if (stored) {
+      const existingScopes = stored.scope || stored.scopes || [];
+      if (validScopes(scopes, existingScopes)) {
         try {
           log.log("Instantiating Twitch client using stored token");
-          const authProvider = new StaticAuthProvider(TWITCH_CLIENT_ID, stored.accessToken);
+          const authProvider = await createProvider(
+            {
+              accessToken: stored.accessToken,
+              refreshToken: stored.refreshToken,
+              scope: existingScopes,
+              expiresIn: stored.expiresIn,
+              obtainmentTimestamp: stored.obtainmentTimestamp,
+            },
+            stored.userId,
+            ["chat"]
+          );
           const apiClient = new ApiClient({ authProvider });
           log.log("Testing valid Twitch client");
           await apiClient.users.getUserById(stored.userId);
-          this.accessToken = stored;
+          this.accessToken = stored as StoredToken;
           return { apiClient, authProvider };
         } catch (err) {
           log.error(`Error creating Twitch client with token: ${err}`);
@@ -175,29 +278,20 @@ export class TwitchController {
       }
     }
 
-    log.log("Opening Twitch OAuth dialog...");
-    const authProvider = new ElectronAuthProvider({
-      clientId: TWITCH_CLIENT_ID,
-      redirectUri: TWITCH_REDIRECT_URI,
-    });
+    log.log("Starting Twitch Device Code Grant OAuth flow...");
+    const { token, userId } = await performDeviceCodeOAuth(scopes, this.onDeviceCode ?? undefined);
 
-    const token = await authProvider.getAccessTokenForUser("0", scopes);
-    if (!token) {
-      throw new Error("Could not authenticate with Twitch");
-    }
-
-    const info = await getTokenInfo(token.accessToken, TWITCH_CLIENT_ID);
     this.accessToken = {
       accessToken: token.accessToken,
       refreshToken: token.refreshToken,
+      scope: token.scope,
       expiresIn: token.expiresIn,
       obtainmentTimestamp: token.obtainmentTimestamp,
-      userId: info.userId || "",
-      scopes: info.scopes,
+      userId,
     };
-
     store.set(TOKEN_STORE_KEY, this.accessToken);
 
+    const authProvider = await createProvider(token, userId, ["chat"]);
     const apiClient = new ApiClient({ authProvider });
     return { apiClient, authProvider };
   }

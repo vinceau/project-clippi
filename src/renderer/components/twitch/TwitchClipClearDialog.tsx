@@ -5,7 +5,15 @@ import { Check, X } from "lucide-react";
 
 import { useTheme } from "@/styles";
 
-export function TwitchClipClearDialog({ trigger, onClear }: { trigger: React.ReactNode; onClear: () => void }) {
+export function TwitchClipClearDialog({
+  trigger,
+  triggerClassName,
+  onClear,
+}: {
+  trigger: React.ReactNode;
+  triggerClassName?: string;
+  onClear: () => void;
+}) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const onSubmit = React.useCallback(() => {
@@ -20,6 +28,7 @@ export function TwitchClipClearDialog({ trigger, onClear }: { trigger: React.Rea
       closeIcon
       open={open}
       trigger={trigger}
+      triggerClassName={triggerClassName}
       onClose={() => setOpen(false)}
       onOpen={() => setOpen(true)}
     >

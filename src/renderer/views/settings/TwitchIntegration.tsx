@@ -1,7 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Header } from "@/ui/Header/Header";
-import { Loader } from "@/ui/Loader/Loader";
 import { Segment } from "@/ui/Segment/Segment";
 import { CustomIcon } from "@/ui/CustomIcon/CustomIcon";
 
@@ -9,16 +8,18 @@ import twitchIcon from "@/styles/images/twitch.svg";
 
 import { Field, FormContainer, PageHeader } from "@/components/Form";
 import { Toggle } from "@/ui/Toggle/Toggle";
-import { TwitchClipList, TwitchConnectButton, TwitchUserStatus } from "@/components/twitch";
+import { TwitchClipList, TwitchUserStatus } from "@/components/twitch";
+import { TwitchConnectContainer } from "@/components/twitch/TwitchConnectContainer";
 import { TwitchClipClearDialog } from "@/components/twitch/TwitchClipClearDialog";
 import type { Dispatch, iRootState } from "@/store";
 
+import { Button } from "@/ui/Button/Button";
 import styles from "./TwitchIntegration.module.css";
 
 const TWITCH_CLIPS_PER_PAGE = 10;
 
 export function TwitchIntegration() {
-  const { twitchUser, twitchLoading } = useSelector((state: iRootState) => state.tempContainer);
+  const { twitchUser } = useSelector((state: iRootState) => state.tempContainer);
   const { reconnectTwitch } = useSelector((state: iRootState) => state.twitch);
   const dispatch = useDispatch<Dispatch>();
   const { clips } = useSelector((state: iRootState) => state.twitch);
@@ -42,10 +43,8 @@ export function TwitchIntegration() {
           channel={twitchUser.name}
           onSignOut={onSignOut}
         />
-      ) : twitchLoading ? (
-        <Loader active inline content="Loading" />
       ) : (
-        <TwitchConnectButton onClick={() => dispatch.tempContainer.authenticateTwitch()} />
+        <TwitchConnectContainer />
       )}
 
       <Field padding="both" border="bottom">
@@ -56,10 +55,13 @@ export function TwitchIntegration() {
         <div className={styles.sectionHeader}>
           <h2>Clips</h2>
           {allClips.length > 0 && (
-            <TwitchClipClearDialog
-              trigger={<div className={styles.clearTrigger}>Clear all</div>}
-              onClear={dispatch.twitch.clearAllTwitchClips}
-            />
+            <div>
+              <TwitchClipClearDialog
+                trigger={<span>Clear all</span>}
+                triggerClassName={styles.clearTrigger}
+                onClear={dispatch.twitch.clearAllTwitchClips}
+              />
+            </div>
           )}
         </div>
         {allClips.length > 0 ? (

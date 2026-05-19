@@ -1,5 +1,5 @@
 import { IPC } from "common/ipc";
-import type { VersionUpdatePayload } from "common/types";
+import type { TwitchDeviceCode, VersionUpdatePayload } from "common/types";
 import { Message, UpdateStatus } from "common/types";
 import { ipcRenderer } from "electron";
 
@@ -25,4 +25,8 @@ ipcRenderer.on(Message.VersionUpdateStatus, (_, payload: VersionUpdatePayload) =
       break;
     }
   }
+});
+
+ipcRenderer.on(Message.TwitchDeviceCode, (_, code: TwitchDeviceCode) => {
+  dispatcher.tempContainer.setTwitchDeviceCode(code);
 });

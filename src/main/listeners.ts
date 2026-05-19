@@ -16,6 +16,10 @@ export const setupListeners = (ipc: IPC): void => {
 
     const { scopes } = value;
 
+    twitchController.onDeviceCode = (code) => {
+      ipc.sendMessage(Message.TwitchDeviceCode, code);
+    };
+
     try {
       const user = await twitchController.authenticate(scopes);
       if (!user) {
@@ -30,6 +34,8 @@ export const setupListeners = (ipc: IPC): void => {
       log.error(err);
       showNotification("Error authenticating with Twitch");
       return null;
+    } finally {
+      twitchController.onDeviceCode = null;
     }
   });
 
