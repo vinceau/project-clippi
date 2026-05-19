@@ -24,7 +24,7 @@ export function TwitchUserStatus({
     <div style={{ padding: "3px" }}>
       <Card>
         <Card.Content>
-          <Image floated="right" size="mini" src={userImage} />
+          <Image floated="left" size="mini" src={userImage} />
           <Card.Header>{displayName}</Card.Header>
           <Card.Meta>
             <A href={`https://${url}`}>{url}</A>
