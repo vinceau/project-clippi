@@ -35,7 +35,7 @@ export function TwitchConnectContainer() {
   return <TwitchConnectButton onClick={() => dispatch({ type: "tempContainer/authenticateTwitch" })} />;
 }
 
-const stripQuery = (u) => {
+const stripQuery = (u: string): string => {
   const url = new URL(u);
   return url.origin + url.pathname;
 };
