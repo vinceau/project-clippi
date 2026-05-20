@@ -32,7 +32,7 @@ export const setupListeners = (ipc: IPC): void => {
       };
     } catch (err) {
       log.error(err);
-      showNotification("Error authenticating with Twitch");
+      await showNotification("Error authenticating with Twitch");
       return null;
     } finally {
       twitchController.onDeviceCode = null;
@@ -66,7 +66,7 @@ export const setupListeners = (ipc: IPC): void => {
       return clip;
     } catch (err) {
       log.error(err);
-      showNotification("Error creating Twitch clip");
+      await showNotification("Error creating Twitch clip");
       return null;
     }
   });
@@ -80,7 +80,7 @@ export const setupListeners = (ipc: IPC): void => {
       await twitchController.signOut();
     } catch (err) {
       log.error(err);
-      showNotification("Error signing out of Twitch");
+      await showNotification("Error signing out of Twitch");
       return err;
     }
   });
@@ -101,7 +101,9 @@ export const setupListeners = (ipc: IPC): void => {
     }
 
     const { title, message } = value;
-    showNotification(message, title);
+    showNotification(message, title).catch((err) => {
+      log.error("Failed to show notification:", err);
+    });
   });
 
   ipc.on(Message.CheckForUpdates, (_, _error?: Error) => {

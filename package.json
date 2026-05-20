@@ -110,7 +110,6 @@
     "insert-text-at-cursor": "^0.3.0",
     "lucide-react": "^0.453.0",
     "moment": "^2.29.4",
-    "node-notifier": "^8.0.1",
     "obs-websocket-js": "^5.0.8",
     "polished": "^3.4.2",
     "react": "^17.0.2",
