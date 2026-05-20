@@ -87,6 +87,7 @@ export const filesystem = createModel({
           name,
           filePath: p[0],
         });
+        return name;
       }
     },
   }),

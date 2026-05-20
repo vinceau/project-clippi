@@ -32,7 +32,15 @@ function PlaySoundInput(props: any) {
   const allSounds = Object.keys(soundFiles);
   if (allSounds.length === 0) {
     return (
-      <Button onClick={() => dispatch.filesystem.addSound()}>
+      <Button onClick={async () => {
+        const name = await dispatch.filesystem.addSound();
+        if (name) {
+          const newValue = produce(value, (draft: ActionPlaySoundParams) => {
+            draft.sound = name;
+          });
+          onChange(newValue);
+        }
+      }}>
         <Plus size={20} />
         Add sound
       </Button>
