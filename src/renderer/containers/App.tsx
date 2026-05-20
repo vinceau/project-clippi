@@ -13,7 +13,7 @@ import type { Dispatch, iRootState } from "@/store";
 import { persistor, store } from "@/store";
 import { ThemeManager, ThemeMode, useTheme } from "@/styles";
 import { MainView, SettingsView } from "@/views";
-import { Toast } from "@/ui/Toast/Toast";
+import { ToastProvider } from "@/ui/Toast/Toast";
 import { TooltipProvider } from "@/ui/Tooltip/Tooltip";
 
 function App() {
@@ -27,7 +27,7 @@ function App() {
     }
   }, []);
   return (
-    <Toast.Provider>
+    <ToastProvider>
       <TooltipProvider>
         <div className={theme.themeName}>
           <History />
@@ -40,7 +40,7 @@ function App() {
           </Switch>
         </div>
       </TooltipProvider>
-    </Toast.Provider>
+    </ToastProvider>
   );
 }
 

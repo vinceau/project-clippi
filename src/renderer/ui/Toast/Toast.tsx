@@ -83,7 +83,7 @@ function ToastList() {
   });
 }
 
-function ToastProvider({ children }: { children: React.ReactNode }) {
+export function ToastProvider({ children }: { children: React.ReactNode }) {
   return (
     <BaseToast.Provider toastManager={manager}>
       {children}
@@ -95,7 +95,3 @@ function ToastProvider({ children }: { children: React.ReactNode }) {
     </BaseToast.Provider>
   );
 }
-
-export const Toast = {
-  Provider: ToastProvider,
-};
