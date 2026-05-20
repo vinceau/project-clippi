@@ -58,6 +58,11 @@ jobs:
       - name: Install dependencies
         run: |
           npm install
+      - name: Build App
+        run: npm run package
+        env:
+          CI: true
+          TWITCH_CLIENT_ID: ${{ secrets.TWITCH_CLIENT_ID }}
       - name: Test
         if: matrix.os == 'ubuntu-latest'
         run: |
@@ -66,11 +71,6 @@ jobs:
 #     - name: Lint
 #       if: matrix.os == 'ubuntu-latest'
 #       run: npm run lint
-      - name: Build App
-        run: npm run package
-        env:
-          CI: true
-          TWITCH_CLIENT_ID: ${{ secrets.TWITCH_CLIENT_ID }}
       - name: Prepare artifacts
         if: matrix.os != 'windows-latest'
         run: |
