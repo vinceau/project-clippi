@@ -25,7 +25,7 @@ interface ToastOptions {
 function addToast(type: ToastType, content: string | React.ReactNode, opts?: ToastOptions): string {
   const options: Record<string, unknown> = {
     type,
-    timeout: 0, // opts?.autoClose === false ? 0 : (opts?.autoClose ?? 5000),
+    timeout: opts?.autoClose === false ? 0 : (opts?.autoClose ?? 5000),
     onClose: opts?.onClose,
     onRemove: opts?.onRemove,
   };
@@ -63,7 +63,7 @@ function ToastList() {
       <BaseToast.Root key={t.id} toast={t} className={clsx(styles.toast, styles[toastType])}>
         <div className={styles.coloredBar} />
         <div className={styles.iconWrapper}>
-          <Icon size={16} />
+          <Icon size={22} />
         </div>
         <BaseToast.Content className={styles.content}>
           {hasCustomContent ? (
@@ -76,7 +76,7 @@ function ToastList() {
           )}
         </BaseToast.Content>
         <BaseToast.Close className={styles.close} aria-label="Close">
-          <X size={14} />
+          <X size={18} />
         </BaseToast.Close>
       </BaseToast.Root>
     );
