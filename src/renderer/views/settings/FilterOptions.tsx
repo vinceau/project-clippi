@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
+import { toast } from "@/ui/Toast/Toast";
 
 import { ComboForm } from "@/components/combos/ComboForm";
 import { ProfileSelector } from "@/components/combos/ProfileSelection";

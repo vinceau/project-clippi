@@ -1,10 +1,10 @@
 import React from "react";
-import { toast } from "react-toastify";
 
 import { DownloadComplete } from "@/components/toasts/DownloadComplete";
 import { NoDolphinToast } from "@/components/toasts/NoDolphinToast";
 import { ProcessingError } from "@/components/toasts/ProcessingError";
 import { UpdateAvailable } from "@/components/toasts/UpdateAvailable";
+import { toast } from "@/ui/Toast/Toast";
 
 export const toastNoDolphin = (): void => {
   toast.error(<NoDolphinToast />, {
@@ -17,7 +17,6 @@ export const toastProcessingError = (errorMessage: string): void => {
   toast.error(<ProcessingError errorMessage={errorMessage} />, {
     autoClose: false,
     toastId: "processing-error-toast",
-    closeOnClick: false,
   });
 };
 
@@ -25,7 +24,6 @@ export const toastDownloadComplete = (): void => {
   toast.info(<DownloadComplete />, {
     autoClose: false,
     toastId: "update-download-complete",
-    closeOnClick: false,
   });
 };
 
@@ -34,6 +32,5 @@ export const toastNewUpdateAvailable = (version: string): void => {
   toast.info(<UpdateAvailable version={version} dismiss={() => toast.dismiss(toastId)} />, {
     autoClose: false,
     toastId,
-    closeOnClick: false,
   });
 };

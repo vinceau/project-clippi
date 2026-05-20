@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Plus } from "lucide-react";
-import { toast } from "react-toastify";
+import { toast } from "@/ui/Toast/Toast";
 
 import { Select } from "@/ui/Select/Select";
 import { Button } from "@/ui/Button/Button";
