@@ -4,7 +4,7 @@ import { Toggle } from "@/ui/Toggle/Toggle";
 
 import styles from "./ProcessSection.module.css";
 
-export function SlideReveal({ open, children }: { open: boolean; children?: React.ReactNode }) {
+function SlideReveal({ open, children }: { open: boolean; children?: React.ReactNode }) {
   return <div className={clsx(styles.slideReveal, open && styles.slideRevealOpen)}>{children}</div>;
 }
 

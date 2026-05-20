@@ -6,7 +6,6 @@ import { TextArea } from "@/ui/TextArea/TextArea";
 
 import { ContextOptions } from "@/components/ContextOptions";
 import { Field, Label } from "@/components/Form";
-import { SlideReveal } from "@/components/ProcessSection";
 import { TemplatePreview } from "@/components/TemplatePreview";
 import { defaultRenameFormat } from "@/store/models/highlights";
 import { Accordion } from "@/ui/Accordion/Accordion";
@@ -45,7 +44,7 @@ export function RenameFiles({
 }) {
   const [showOptions, setShowOptions] = React.useState(false);
   const [renameFormat, setRenameFormat] = React.useState(value);
-  const textRef: any = React.useRef(null);
+  const textRef = React.useRef<HTMLTextAreaElement>(null);
   const showResetButton = renameFormat !== defaultRenameFormat;
   const resetFormat = () => {
     setRenameFormat(defaultRenameFormat);
@@ -57,8 +56,8 @@ export function RenameFiles({
       return;
     }
     const numCharsToCheck = 2;
-    const leftmostPos = Math.max(0, el.ref.current.selectionStart - numCharsToCheck);
-    const rightmostPos = Math.min(el.ref.current.selectionEnd + numCharsToCheck, renameFormat.length);
+    const leftmostPos = Math.max(0, el.selectionStart - numCharsToCheck);
+    const rightmostPos = Math.min(el.selectionEnd + numCharsToCheck, renameFormat.length);
     const leftChars = renameFormat.substring(leftmostPos, leftmostPos + numCharsToCheck);
     const rightChars = renameFormat.substring(rightmostPos - numCharsToCheck, rightmostPos);
     const alreadyHasBrackets = leftChars === "{{" && rightChars === "}}";
@@ -79,10 +78,8 @@ export function RenameFiles({
         <div className={styles.formatLabel}>
           <Label>Format</Label>
           {showResetButton && (
-            <Tooltip title="Restore default value">
-              <span className={styles.resetButton} onClick={resetFormat}>
-                Reset
-              </span>
+            <Tooltip title="Restore default value" triggerClassName={styles.resetButton} onClick={resetFormat}>
+              Reset
             </Tooltip>
           )}
         </div>
