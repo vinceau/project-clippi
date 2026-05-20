@@ -124,7 +124,6 @@
     "react-router": "^5.1.2",
     "react-router-dom": "^5.1.2",
     "react-select": "^3.0.8",
-    "react-toastify": "^5.5.0",
     "readable-stream": "^1.0.33",
     "redux": "^4.0.1",
     "rxjs": "^6.5.4",

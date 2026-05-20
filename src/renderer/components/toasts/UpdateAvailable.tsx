@@ -3,6 +3,7 @@ import { shell } from "electron";
 import React from "react";
 
 import { downloadLatestUpdate } from "@/lib/utils";
+import { Button } from "@/ui/Button/Button";
 
 export function UpdateAvailable({ version, dismiss }: { version: string; dismiss: () => void }) {
   const startDownload = () => {
@@ -22,9 +23,9 @@ export function UpdateAvailable({ version, dismiss }: { version: string; dismiss
       </p>
       <div className="buttons">
         {AUTO_UPDATES_ENABLED ? (
-          <button onClick={startDownload}>Download now</button>
+          <Button onClick={startDownload}>Download now</Button>
         ) : (
-          <button onClick={openReleases}>Show release</button>
+          <Button onClick={openReleases}>Show release</Button>
         )}
       </div>
     </div>
