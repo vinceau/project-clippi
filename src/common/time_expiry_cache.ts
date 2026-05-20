@@ -9,9 +9,8 @@ export class TimeExpiryCache<K, V> {
       const elapsedMs = Date.now() - cachedValue.time;
       if (elapsedMs <= this.expiresInMs) {
         return cachedValue.value;
-      } else {
-        this.cache.delete(key);
       }
+      this.cache.delete(key);
     }
     return undefined;
   }
