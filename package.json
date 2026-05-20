@@ -223,9 +223,7 @@
         ]
       },
       "type": "distribution",
-      "hardenedRuntime": true,
-      "entitlements": "assets/entitlements.mac.plist",
-      "entitlementsInherit": "assets/entitlements.mac.plist",
+      "hardenedRuntime": false,
       "gatekeeperAssess": false
     },
     "dmg": {
