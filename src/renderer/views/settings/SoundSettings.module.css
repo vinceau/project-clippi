@@ -1,16 +1,7 @@
 .buttonContainer {
+  display: flex;
+  gap: 0.4rem;
   margin-bottom: 1rem;
-}
-
-.buttonContainer button {
-  width: 100% !important;
-  margin-bottom: 0.25em !important;
-}
-
-@media (min-width: 768px) {
-  .buttonContainer button {
-    width: auto !important;
-  }
 }
 
 .content {

@@ -28,13 +28,13 @@
 }
 
 .button:focus-visible {
-  outline: 2px solid #2185d0;
+  outline: 2px solid var(--color-light-blue);
   outline-offset: 2px;
 }
 
 .active {
-  background: #2185d0;
-  border-color: #2185d0;
+  background: var(--color-light-blue);
+  border-color: var(--color-light-blue);
   color: #fff;
 }
 

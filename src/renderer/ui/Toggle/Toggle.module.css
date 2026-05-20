@@ -20,7 +20,7 @@
 }
 
 .switchRoot[data-checked] {
-  background: #2185d0;
+  background: var(--color-light-blue);
 }
 
 .switchThumb {

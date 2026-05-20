@@ -17,8 +17,8 @@
 
 .sub {
   font-size: 0.9em;
-  color: var(--color-foreground2);
-  font-weight: 400;
+  color: var(--color-foreground);
+  font-weight: 700;
 }
 
 .h1 {

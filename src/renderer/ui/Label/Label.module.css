@@ -40,7 +40,7 @@
 }
 
 .colorBlue {
-  background: #2185d0;
+  background: var(--color-light-blue);
   color: white;
 }
 

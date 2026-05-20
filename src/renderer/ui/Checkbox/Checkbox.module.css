@@ -9,7 +9,6 @@
   width: 1.2em;
   height: 1.2em;
   border-radius: 0.2em;
-  border: 1px solid var(--color-background);
   background: var(--color-foreground3);
   display: flex;
   align-items: center;
@@ -30,9 +29,9 @@
   height: 100%;
   align-items: center;
   justify-content: center;
-  background: var(--color-foreground);
+  background: var(--color-light-blue);
   border-radius: 0.15em;
-  color: var(--color-background);
+  color: white;
 }
 
 .root[data-checked] .indicator {
