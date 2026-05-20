@@ -34,7 +34,7 @@ export function ConnectionStatusCard({
     <div style={{ padding: "3px" }}>
       <Card>
         <Card.Content>
-          <Image floated="right" size="mini" src={userImage} />
+          <Image floated="left" size="mini" src={userImage} />
           <Card.Header>
             <span className={styles.header}>{header}</span>
             <ScanningDot color={color} shouldPulse={shouldPulse} />
@@ -44,7 +44,7 @@ export function ConnectionStatusCard({
           </Card.Meta>
         </Card.Content>
         <Card.Content extra>
-          <Button basic fluid color="red" onClick={handleButtonClick}>
+          <Button basic color="red" onClick={handleButtonClick}>
             {buttonText || "Disconnect"}
           </Button>
         </Card.Content>
