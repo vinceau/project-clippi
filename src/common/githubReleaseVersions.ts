@@ -1,6 +1,6 @@
 import semver from "semver";
 
-import pkg from "../../package.json";
+import pkg from "../../release/app/package.json";
 import { getLatestRelease } from "./github";
 
 /**
@@ -25,7 +25,7 @@ export async function updateAvailable(owner: string, repo: string): Promise<bool
 
 export function needsUpdate(latestVersion: string): boolean {
   try {
-    return semver.lt((pkg as any).version, latestVersion);
+    return semver.lt(pkg.version, latestVersion);
   } catch (err) {
     console.error(err);
     return false;
