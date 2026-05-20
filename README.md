@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="build/icon.png" alt="Project Clippi Logo" width="100" height="100" />
+  <img src="assets/icon.png" alt="Project Clippi Logo" width="100" height="100" />
 </p>
 <h1 align="center">Project Clippi</h1>
 
@@ -7,7 +7,7 @@
 
 An Automation Framework for Super Smash Bros. Melee
 
-[![Build Status](https://github.com/vinceau/project-clippi/workflows/build/badge.svg)](https://github.com/vinceau/project-clippi/actions?workflow=build)
+[![Build Status](https://github.com/vinceau/project-clippi/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/vinceau/project-clippi/actions/workflows/build.yml?query=branch%3Amaster)
 [![License](https://img.shields.io/badge/license-MIT-brightgreen)](https://github.com/vinceau/project-clippi/blob/master/LICENSE)
 
 Project Clippi is your must-have Slippi toolkit for tapping into real-time game data and processing replay files. Automatically execute actions when an in-game event occurs. Automatically find and curate combos for that sick combo video. Automatically rename and reorganise your SLP files.
@@ -45,6 +45,16 @@ _Easily play and record SLP files with a single click!_
 ## Download
 
 Project Clippi is available on Windows, MacOS, and Linux. Check out [the releases page](https://github.com/vinceau/project-clippi/releases/latest) to download the latest version.
+
+### Running on MacOS
+
+Project Clippi is currently unsigned. To run Project Clippi, you must first move the app to the `/Applications` folder, then run:
+
+~~~bash
+xattr -cr "/Applications/Project Clippi.app"
+~~~
+
+Then launch the app normally. If that doesn't work, try right-clicking the app and selecting "Open" from the context menu.
 
 ## Usage
 
