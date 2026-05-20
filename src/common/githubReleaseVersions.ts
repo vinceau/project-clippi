@@ -1,9 +1,7 @@
-import { Octokit } from "@octokit/rest";
 import semver from "semver";
 
 import pkg from "../../package.json";
-
-const octokit = new Octokit();
+import { getLatestRelease } from "./github";
 
 /**
  * Returns the latest version on Github.
@@ -15,8 +13,8 @@ const octokit = new Octokit();
  * @returns {Promise<string>}
  */
 export async function getLatestVersion(owner: string, repo: string): Promise<string> {
-  const release = await octokit.repos.getLatestRelease({ owner, repo });
-  const version = release.data.tag_name;
+  const release = await getLatestRelease(owner, repo);
+  const version = release.tag_name;
   return semver.clean(version) as string;
 }
 
