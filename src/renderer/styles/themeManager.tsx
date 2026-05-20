@@ -1,4 +1,5 @@
 import { Message } from "common/types";
+import { ipcRenderer } from "electron";
 import * as remote from "@electron/remote";
 import React from "react";
 
@@ -14,7 +15,7 @@ interface ThemeContext {
 }
 
 // Get the theme synchronously
-const initialTheme = ThemeMode.LIGHT as string; // (remote.getCurrentWindow() as any).getCurrentTheme();
+const initialTheme = ipcRenderer.sendSync("getThemeSync") as string;
 
 export const ManageThemeContext: React.Context<ThemeContext> = React.createContext({
   themeName: initialTheme,
@@ -26,7 +27,7 @@ export const ManageThemeContext: React.Context<ThemeContext> = React.createConte
 export const useTheme = (): ThemeContext => React.useContext(ManageThemeContext);
 
 export function ThemeManager({ children }: { children: React.ReactNode }) {
-  const currentTheme = ThemeMode.LIGHT as string; // (remote.getCurrentWindow() as any).getCurrentTheme();
+  const currentTheme = initialTheme;
 
   const [themeState, setThemeState] = React.useState({
     themeName: currentTheme,
@@ -47,29 +48,26 @@ export function ThemeManager({ children }: { children: React.ReactNode }) {
     });
   }, []);
 
-  const toggle = (mode?: string): void => {
-    let newMode: "light" | "dark" = themeState.themeName === ThemeMode.LIGHT ? ThemeMode.DARK : ThemeMode.LIGHT;
-    if (mode && (mode === ThemeMode.LIGHT || mode === ThemeMode.DARK)) {
-      newMode = mode;
-    }
+  const themeProviderValue = React.useMemo(() => {
+    const toggle = (mode?: string): void => {
+      let newMode: "light" | "dark" = themeState.themeName === ThemeMode.LIGHT ? ThemeMode.DARK : ThemeMode.LIGHT;
+      if (mode && (mode === ThemeMode.LIGHT || mode === ThemeMode.DARK)) {
+        newMode = mode;
+      }
 
-    // Tell the main process we want to change themes
-    // ipc.sendMessage(Message.ToggleTheme, { theme: newMode });
-    setThemeState({
-      themeName: newMode,
-      theme: newMode === ThemeMode.DARK ? darkTheme : lightTheme,
-    });
-  };
+      // Tell the main process we want to change themes
+      ipc.sendMessage(Message.ToggleTheme, { theme: newMode });
+      setThemeState({
+        themeName: newMode,
+        theme: newMode === ThemeMode.DARK ? darkTheme : lightTheme,
+      });
+    };
+    return {
+      themeName: themeState.themeName,
+      theme: themeState.theme,
+      toggle,
+    };
+  }, [themeState.themeName, themeState.theme]);
 
-  return (
-    <ManageThemeContext.Provider
-      value={{
-        themeName: themeState.themeName,
-        theme: themeState.theme,
-        toggle,
-      }}
-    >
-      {children}
-    </ManageThemeContext.Provider>
-  );
+  return <ManageThemeContext.Provider value={themeProviderValue}>{children}</ManageThemeContext.Provider>;
 }

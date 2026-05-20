@@ -17,7 +17,6 @@ import MenuBuilder from "./menu";
 import { resolveHtmlPath } from "./util";
 import { setupIPC } from "./mainIpc";
 import { setupListeners } from "./listeners";
-import { getCurrentTheme } from "./lib/toggleTheme";
 
 class AppUpdater {
   constructor() {
@@ -87,7 +86,6 @@ const createWindow = async () => {
       sandbox: false,
     },
   });
-  (mainWindow as any).getCurrentTheme = getCurrentTheme;
   enable(mainWindow.webContents);
   mainWindow.webContents.on("render-process-gone", (_, details) => {
     console.error("renderer crashed", details);
