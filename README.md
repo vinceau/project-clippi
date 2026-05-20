@@ -81,7 +81,7 @@ If you found Project Clippi useful and would like to give back here's how you ca
 Start the development server using:
 
 ```bash
-yarn run start
+npm run start
 ```
 
 The development server includes HMR and auto-reloading so changes to both the main and renderer processes should auto-update.
@@ -89,7 +89,7 @@ The development server includes HMR and auto-reloading so changes to both the ma
 To create a binary package:
 
 ```bash
-yarn run dist
+npm run package
 ```
 
 For more detailed instructions on development and building the project from source, check out the [Build Process](CONTRIBUTING.md#build-process) section.

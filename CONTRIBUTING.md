@@ -13,7 +13,7 @@ If you found Project Clippi useful and would like to give back here's how you ca
 
 No buts. Double quotes. Format strings use back-ticks.
 
-Run `yarn run lint --fix` to automatically convert single-quoted strings to use double quotes.
+Run `npm run lint --fix` to automatically convert single-quoted strings to use double quotes.
 
 ### Components should fit into one of 3 categories
 
@@ -38,8 +38,7 @@ Buttons must have a label in the button text itself or shown when the user hover
 You'll need the following tools installed:
 
 - [Git](https://git-scm.com/)
-- [Node.JS](https://nodejs.org/en/) (version `10.x`)
-- [Yarn](https://yarnpkg.com/en/docs/install)
+- [Node.JS](https://nodejs.org/en/) (version `22.x`)
 
 ### Setup
 
@@ -48,7 +47,7 @@ Clone the repo and install dependencies:
 ```bash
 git clone https://github.com/vinceau/project-clippi
 cd project-clippi
-yarn install
+npm install
 ```
 
 ### Build
@@ -56,7 +55,7 @@ yarn install
 Start the development server using:
 
 ```bash
-yarn run start
+npm run start
 ```
 
 The development server includes HMR and auto-reloading so changes to both the main and renderer processes should auto-update.
@@ -64,27 +63,37 @@ The development server includes HMR and auto-reloading so changes to both the ma
 To create a binary package:
 
 ```bash
-yarn run dist
+npm run package
 ```
 
 ## FAQ
 
 ### I get a 'missing client id' error when connecting to Twitch!
 
+Project Clippi uses the [Device Code OAuth flow](https://dev.twitch.tv/docs/authentication/getting-tokens-oauth/#device-code-grant-flow) which requires a client ID.
+
 To get Twitch authentication working locally you'll need to supply your own [Twitch Client ID](https://dev.twitch.tv/docs/authentication). If you don't, you'll get a `{"status":400,"message":"missing client id"}` error when you try to connect to Twitch.
 
-When asked to specify a Redirect URI enter: `http://localhost:3000/auth/twitch/callback`.
+When asked to specify a Redirect URI enter: `http://localhost:5743/auth/twitch/callback`.
 
-Once you have your client ID, you'll need to set it as an environmental variable.
+For Client Type, ensure "Public" is selected.
+
+Once you have your client ID, you'll need to set it as an environmental variable. You can update the `.env` file in the root of the project with the following:
+
+```
+TWITCH_CLIENT_ID=YourTwitchClientID
+```
+
+Or set it as an environmental variable per your operating system:
 
 #### Windows
 
 ```cmd
-set ELECTRON_WEBPACK_APP_TWITCH_CLIENT_ID=YourTwitchClientID
+set TWITCH_CLIENT_ID=YourTwitchClientID
 ```
 
 #### Mac and Linux
 
 ```bash
-export ELECTRON_WEBPACK_APP_TWITCH_CLIENT_ID="YourTwitchClientID";
+export TWITCH_CLIENT_ID="YourTwitchClientID";
 ```
