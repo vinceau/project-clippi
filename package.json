@@ -205,7 +205,6 @@
   "build": {
     "appId": "au.id.vince.clippi",
     "asar": true,
-    "afterSign": ".erb/scripts/notarize.js",
     "asarUnpack": "**\\*.{node,dll}",
     "files": [
       "dist",
@@ -222,7 +221,6 @@
           "x64"
         ]
       },
-      "type": "distribution",
       "hardenedRuntime": false,
       "gatekeeperAssess": false
     },
