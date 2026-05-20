@@ -25,6 +25,8 @@ module.exports = {
     "no-undef": "off",
     "no-use-before-define": "off",
     "react/require-default-props": "off",
+    "no-useless-constructor": "off",
+    "no-empty-function": "off",
   },
   parserOptions: {
     ecmaVersion: 2022,
