@@ -100,9 +100,15 @@
   right: 4rem;
 }
 
+.infoContainer {
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .infoLabel {
   display: flex;
-  justify-content: space-between;
   align-items: center;
 }
 

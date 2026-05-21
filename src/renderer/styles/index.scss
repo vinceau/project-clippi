@@ -56,6 +56,6 @@ textarea,
   outline: none; // You should add some other style for :focus to help UX/a11y
 }
 
-.ui.message {
-  border-radius: 0.5rem;
+[data-theme="dark"] a {
+  color: var(--color-foreground2);
 }

@@ -141,9 +141,11 @@ export function SettingsView() {
                   active={isActive("app-info")}
                   onClick={handleItemClick}
                 >
-                  <div className={styles.infoLabel}>
-                    <Info size={16} />
-                    <span style={{ marginLeft: 8 }}>Info</span>
+                  <div className={styles.infoContainer}>
+                    <div className={styles.infoLabel}>
+                      <Info size={16} />
+                      <span style={{ marginLeft: 8 }}>Info</span>
+                    </div>
                     {updateAvailable && <Label circular color="red" empty />}
                   </div>
                 </Menu.Item>

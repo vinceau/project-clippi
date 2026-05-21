@@ -68,9 +68,6 @@ export function InfoView() {
           Project Clippi was made possible by <A href="https://github.com/JLaferri">Jas Laferriere</A> and the rest of
           the <A href="https://github.com/project-slippi">Project Slippi</A> team.
         </p>
-        <p>
-          Project Clippi contains icons by <A href="https://icons8.com/">Icons8</A>.
-        </p>
       </div>
       <ReactMarkdown source={supporters} />
       <div className={styles.footer}>
