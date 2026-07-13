@@ -1,13 +1,23 @@
 import fs from "fs";
 import webpackPaths from "../configs/webpack.paths";
 
+const ensureSymlink = (target: string, source: string): void => {
+  try {
+    const stat = fs.lstatSync(target);
+    if (stat.isSymbolicLink()) {
+      fs.unlinkSync(target);
+    } else {
+      return;
+    }
+  } catch {
+    // target doesn't exist, proceed to create symlink
+  }
+  fs.symlinkSync(source, target, "junction");
+};
+
 const { srcNodeModulesPath, appNodeModulesPath, erbNodeModulesPath } = webpackPaths;
 
 if (fs.existsSync(appNodeModulesPath)) {
-  if (!fs.existsSync(srcNodeModulesPath)) {
-    fs.symlinkSync(appNodeModulesPath, srcNodeModulesPath, "junction");
-  }
-  if (!fs.existsSync(erbNodeModulesPath)) {
-    fs.symlinkSync(appNodeModulesPath, erbNodeModulesPath, "junction");
-  }
+  ensureSymlink(srcNodeModulesPath, appNodeModulesPath);
+  ensureSymlink(erbNodeModulesPath, appNodeModulesPath);
 }
