@@ -98,7 +98,9 @@ const createWindow = async () => {
   mainWindow.webContents.on("console-message", (_, level, message) => {
     console.log("renderer console:", message);
   });
-  mainWindow.webContents.openDevTools();
+  if (isDebug) {
+    mainWindow.webContents.openDevTools();
+  }
 
   mainWindow.loadURL(resolveHtmlPath("index.html"));
 
