@@ -18,9 +18,13 @@ import { resolveHtmlPath } from "./util";
 import { setupIPC } from "./mainIpc";
 import { setupListeners } from "./listeners";
 
+// Prevent EPIPE errors on Linux when stdout pipe is closed during shutdown
+process.on("SIGPIPE", () => {});
+
 class AppUpdater {
   constructor() {
     log.transports.file.level = "info";
+    log.transports.console.level = "info";
     autoUpdater.logger = log;
     autoUpdater.checkForUpdatesAndNotify();
   }
@@ -146,6 +150,10 @@ app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
     app.quit();
   }
+});
+
+app.on("before-quit", () => {
+  log.transports.console.level = false;
 });
 
 app
