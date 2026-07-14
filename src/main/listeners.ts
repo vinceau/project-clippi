@@ -88,6 +88,7 @@ export const setupListeners = (ipc: IPC): void => {
 
   ipc.on(Message.TrashItem, async ({ path }) => {
     await shell.trashItem(path);
+    log.info(`Trashed item: ${path}`);
   });
 
   ipc.on(Message.SelectDirectory, async (value, _error?: Error) => {
