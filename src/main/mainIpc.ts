@@ -17,7 +17,5 @@ export const setupIPC = (app: App, window: BrowserWindow): IPC => {
     event.returnValue = getCurrentTheme();
   });
 
-  const ipc = new IPC(ipcMain, () => window.webContents);
-
-  return ipc;
+  return new IPC(ipcMain, () => window.webContents);
 };
