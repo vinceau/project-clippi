@@ -62,6 +62,7 @@ export enum Message {
   CheckForUpdates = "checkForUpdates",
   DownloadUpdate = "downloadUpdate",
   InstallUpdateAndRestart = "installUpdateAndRestart",
+  TrashItem = "trashItem",
 
   // main to renderer
   VersionUpdateStatus = "versionUpdateStatus",
@@ -88,11 +89,13 @@ export type ResponseType<X extends Message> =
                   ? void
                   : X extends Message.DownloadUpdate
                     ? void
-                    : X extends Message.VersionUpdateStatus
-                      ? VersionUpdatePayload
-                      : X extends Message.TwitchDeviceCode
-                        ? TwitchDeviceCode
-                        : never;
+                    : X extends Message.TrashItem
+                      ? void
+                      : X extends Message.VersionUpdateStatus
+                        ? VersionUpdatePayload
+                        : X extends Message.TwitchDeviceCode
+                          ? TwitchDeviceCode
+                          : never;
 
 export type RequestType<X extends Message> =
   // renderer to main
@@ -112,4 +115,6 @@ export type RequestType<X extends Message> =
                 ? void
                 : X extends Message.TwitchDeviceCode
                   ? TwitchDeviceCode
-                  : never;
+                  : X extends Message.TrashItem
+                    ? { path: string }
+                    : never;

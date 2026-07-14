@@ -1,13 +1,15 @@
 import * as Comlink from "comlink";
 import type { ComboOptions, FileProcessorOptions } from "common/fileProcessor";
 import { secondsToString } from "common/utils";
-import { shell } from "electron";
+import { Message } from "common/types";
 import log from "electron-log";
 import path from "path";
 
 import { dispatcher, store } from "@/store";
 import type { CompletePayload, ProgressingPayload } from "@/workers/fileProcessor.worker";
 import { fileProcessorIsBusy, startFileProcessor, stopFileProcessor } from "@/workers/fileProcessor.worker";
+
+import { ipc } from "@/lib/rendererIpc";
 
 import { openComboInDolphin } from "./dolphin";
 import { toastProcessingError } from "./toasts";
@@ -26,7 +28,7 @@ const handleProgress = async (payload: ProgressingPayload): Promise<void> => {
     const base = path.basename(result.filename || filename);
     if (result.numCombos === 0 && config.deleteZeroComboFiles) {
       try {
-        await shell.trashItem(result.filename);
+        await ipc.sendSyncWithTimeout(Message.TrashItem, 0, { path: result.filename });
         dispatcher.tempContainer.setComboLog(`Deleted: ${base}`);
       } catch {
         const message = `Failed to delete file: ${result.filename}`;

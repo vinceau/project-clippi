@@ -1,6 +1,7 @@
 import { IPC } from "common/ipc";
+import { Message } from "common/types";
 import type { App, BrowserWindow } from "electron";
-import { ipcMain } from "electron";
+import { ipcMain, shell } from "electron";
 import { getCurrentTheme } from "./lib/toggleTheme";
 
 export const reset = "\x1b[0m";
@@ -17,5 +18,11 @@ export const setupIPC = (app: App, window: BrowserWindow): IPC => {
     event.returnValue = getCurrentTheme();
   });
 
-  return new IPC(ipcMain, () => window.webContents);
+  const ipc = new IPC(ipcMain, () => window.webContents);
+
+  ipc.on(Message.TrashItem, async ({ path }) => {
+    await shell.trashItem(path);
+  });
+
+  return ipc;
 };
