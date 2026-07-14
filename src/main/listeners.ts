@@ -2,6 +2,7 @@ import type { IPC } from "common/ipc";
 import { Message } from "common/types";
 import log from "electron-log";
 
+import { shell } from "electron";
 import { checkForUpdates, downloadUpdates, installUpdatesAndRestart } from "./lib/checkForUpdates";
 import { openFileSystemDialog } from "./lib/fileSystem";
 import { showNotification } from "./lib/notifications";
@@ -83,6 +84,10 @@ export const setupListeners = (ipc: IPC): void => {
       await showNotification("Error signing out of Twitch");
       return err;
     }
+  });
+
+  ipc.on(Message.TrashItem, async ({ path }) => {
+    await shell.trashItem(path);
   });
 
   ipc.on(Message.SelectDirectory, async (value, _error?: Error) => {
