@@ -82,7 +82,7 @@ export const setupListeners = (ipc: IPC): void => {
     } catch (err) {
       log.error(err);
       await showNotification("Error signing out of Twitch");
-      return err;
+      throw err;
     }
   });
 
@@ -97,7 +97,7 @@ export const setupListeners = (ipc: IPC): void => {
 
     const { options, save } = value;
 
-    return await openFileSystemDialog(options, save);
+    return openFileSystemDialog(options, save);
   });
 
   ipc.on(Message.Notify, (value, _error?: Error) => {
