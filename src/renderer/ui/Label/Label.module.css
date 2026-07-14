@@ -8,6 +8,11 @@
   color: var(--color-secondary);
   font-size: 0.9em;
   line-height: 1.5;
+  cursor: pointer;
+}
+
+[data-theme=dark] .label {
+  color: var(--color-foreground);
 }
 
 .small {
