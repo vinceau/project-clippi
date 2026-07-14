@@ -2,6 +2,7 @@ import type { IPC } from "common/ipc";
 import { Message } from "common/types";
 import log from "electron-log";
 
+import { shell } from "electron";
 import { checkForUpdates, downloadUpdates, installUpdatesAndRestart } from "./lib/checkForUpdates";
 import { openFileSystemDialog } from "./lib/fileSystem";
 import { showNotification } from "./lib/notifications";
@@ -81,8 +82,13 @@ export const setupListeners = (ipc: IPC): void => {
     } catch (err) {
       log.error(err);
       await showNotification("Error signing out of Twitch");
-      return err;
+      throw err;
     }
+  });
+
+  ipc.on(Message.TrashItem, async ({ path }) => {
+    await shell.trashItem(path);
+    log.info(`Trashed item: ${path}`);
   });
 
   ipc.on(Message.SelectDirectory, async (value, _error?: Error) => {
@@ -92,7 +98,7 @@ export const setupListeners = (ipc: IPC): void => {
 
     const { options, save } = value;
 
-    return await openFileSystemDialog(options, save);
+    return openFileSystemDialog(options, save);
   });
 
   ipc.on(Message.Notify, (value, _error?: Error) => {

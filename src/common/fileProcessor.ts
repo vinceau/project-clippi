@@ -223,9 +223,10 @@ export class FileProcessor {
     if (options.renameFiles && options.renameTemplate) {
       const fullFilename = path.basename(filename);
       // Update the filename
-      res.filename = parseFileRenameFormat(options.renameTemplate, settings, metadata, fullFilename);
-      res.filename = assertExtension(res.filename, SLP_FILE_EXT);
-      filename = await renameFile(filename, res.filename);
+      const newFilename = parseFileRenameFormat(options.renameTemplate, settings, metadata, fullFilename);
+      const newBasename = assertExtension(newFilename, SLP_FILE_EXT);
+      filename = await renameFile(filename, newBasename);
+      res.filename = filename;
     }
 
     // Handle combo finding
